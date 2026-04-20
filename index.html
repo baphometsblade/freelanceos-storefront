@@ -819,6 +819,25 @@
       });
     });
   })();
+
+  // --- Simple analytics: page view + UTM tracking
+  (function() {
+    var data = {
+      page: location.pathname,
+      ref: document.referrer || 'direct',
+      utm_source: new URLSearchParams(location.search).get('utm_source') || '',
+      utm_medium: new URLSearchParams(location.search).get('utm_medium') || '',
+      utm_campaign: new URLSearchParams(location.search).get('utm_campaign') || '',
+      screen: screen.width + 'x' + screen.height,
+      ts: Date.now()
+    };
+    console.log('[Analytics] Page view:', JSON.stringify(data));
+    var startTime = Date.now();
+    window.addEventListener('beforeunload', function() {
+      var duration = Math.round((Date.now() - startTime) / 1000);
+      console.log('[Analytics] Session duration:', duration, 'seconds');
+    });
+  })();
 </script>
 </body>
 </html>
