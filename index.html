@@ -284,6 +284,17 @@
       display: flex; gap: 1rem; margin-top: 1.5rem;
     }
     .product-tiers .btn { flex: 1; text-align: center; font-size: .9rem; }
+    .stripe-alt {
+      display: block; text-align: center; margin-top: .75rem;
+      font-size: .8rem; color: var(--txt-3);
+    }
+    .stripe-alt a {
+      color: var(--txt-2); text-decoration: none;
+      border-bottom: 1px dashed var(--txt-3); padding-bottom: 1px;
+      transition: color .2s, border-color .2s;
+    }
+    .stripe-alt a:hover { color: var(--txt-1); border-color: var(--txt-1); }
+    .stripe-alt svg { width: 14px; height: 14px; vertical-align: -2px; margin-right: 3px; fill: var(--txt-3); }
 
     /* ─── FEATURE COMPARISON ─── */
     .compare-table {
@@ -510,6 +521,7 @@
             <a href="https://markmma1985.gumroad.com/l/fvjgxo" class="gumroad-button btn btn-ghost btn-sm" data-gumroad-product-id="fvjgxo" rel="noopener">Free Lite</a>
             <a href="https://markmma1985.gumroad.com/l/fbbmmc" class="gumroad-button btn btn-primary btn-sm" data-gumroad-product-id="fbbmmc" rel="noopener">Pro &mdash; $29</a>
           </div>
+          <div class="stripe-alt">or <a href="https://buy.stripe.com/00wbJ1d375Rfb2feua6kg00" target="_blank" rel="noopener" data-product="freelanceos-pro-stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7zm0-3a2 2 0 012-2h14a2 2 0 012 2v1H3V7z"/></svg>pay directly with card</a></div>
         </div>
       </div>
 
@@ -534,6 +546,7 @@
             <a href="https://markmma1985.gumroad.com/l/rkdnli" class="gumroad-button btn btn-ghost btn-sm" data-gumroad-product-id="rkdnli" rel="noopener">Free Lite</a>
             <a href="https://markmma1985.gumroad.com/l/fldlij" class="gumroad-button btn btn-creator btn-sm" data-gumroad-product-id="fldlij" rel="noopener">Pro &mdash; $29</a>
           </div>
+          <div class="stripe-alt">or <a href="https://buy.stripe.com/00wcN5d37djH5HVcm26kg01" target="_blank" rel="noopener" data-product="creatorhq-pro-stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7zm0-3a2 2 0 012-2h14a2 2 0 012 2v1H3V7z"/></svg>pay directly with card</a></div>
         </div>
       </div>
     </div>
@@ -633,6 +646,7 @@
         <div class="bundle-item"><span class="icon">&#127912;</span> CreatorHQ Pro</div>
       </div>
       <a href="https://markmma1985.gumroad.com/l/xmfbm" class="gumroad-button btn btn-primary" data-gumroad-product-id="xmfbm" rel="noopener">Get the Bundle &mdash; $49 &rarr;</a>
+      <div class="stripe-alt" style="margin-top:1rem;">or <a href="https://buy.stripe.com/5kQ9ATfbfbbz7Q3gCi6kg02" target="_blank" rel="noopener" data-product="bundle-stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7zm0-3a2 2 0 012-2h14a2 2 0 012 2v1H3V7z"/></svg>pay directly with card</a></div>
     </div>
   </div>
 </section>
@@ -803,6 +817,13 @@
 
   // ─── CTA click tracking
   (function() {
+        document.querySelectorAll('.stripe-alt a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        var product = link.getAttribute('data-product') || 'stripe-unknown';
+        var source = new URLSearchParams(window.location.search).get('utm_source') || 'direct';
+        console.log('[Storefront] Stripe CTA click:', product, '| source:', source);
+      });
+    });
     document.querySelectorAll('.gumroad-button, a[href*="gumroad.com"]').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var text = btn.textContent.trim().toLowerCase();
