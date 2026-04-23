@@ -976,6 +976,58 @@
     });
   })();
 </script>
+
+<!-- STICKY PROMO + COUNTDOWN -->
+<div class="sticky-promo" id="stickyPromo">
+  <span>Use code <strong>LAUNCH20</strong> for 20% off</span>
+  <button onclick="this.parentElement.style.display='none'" aria-label="Dismiss" style="background:none;border:none;color:#fff;font-size:1.1rem;cursor:pointer;margin-left:.75rem;opacity:.7;">&#10005;</button>
+</div>
+<style>
+.sticky-promo {
+  position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 9999;
+  background: linear-gradient(135deg, #7c3aed, #3b82f6); color: #fff;
+  padding: .6rem 1.25rem; border-radius: 2rem;
+  font-size: .8rem; font-weight: 600;
+  box-shadow: 0 4px 20px rgba(124,58,237,.4);
+  display: none; align-items: center;
+  animation: slideInPromo .4s ease;
+}
+@keyframes slideInPromo { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@media (max-width: 600px) { .sticky-promo { bottom: .75rem; right: .75rem; left: .75rem; justify-content: center; font-size: .75rem; } }
+</style>
+<script>
+// Countdown to Sunday April 26, 2026 11:59 PM UTC
+(function() {
+  var end = new Date('2026-04-27T00:00:00Z').getTime();
+  function tick() {
+    var now = Date.now(), diff = end - now;
+    var el = document.getElementById('countdown');
+    if (!el) return;
+    if (diff <= 0) { el.textContent = 'EXPIRED'; return; }
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    var parts = [];
+    if (d > 0) parts.push(d + 'd');
+    parts.push(h + 'h ' + m + 'm ' + s + 's');
+    el.textContent = parts.join(' ');
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Show sticky promo after scrolling past hero
+  var shown = false;
+  window.addEventListener('scroll', function() {
+    if (shown) return;
+    if (window.scrollY > 600) {
+      var sp = document.getElementById('stickyPromo');
+      if (sp) { sp.style.display = 'flex'; shown = true; }
+    }
+  });
+})();
+</script>
 </body>
 </html>
+
 
