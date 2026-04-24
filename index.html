@@ -393,6 +393,23 @@
     }
     .faq-item.open .faq-answer { max-height: 300px; }
 
+<!-- EMAIL CAPTURE -->
+<section id="newsletter" style="padding:4rem 0 2rem;">
+  <div class="container">
+    <div style="max-width:600px;margin:0 auto;text-align:center;background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(59,130,246,.08));border:1px solid rgba(71,85,105,.3);border-radius:16px;padding:2.5rem 2rem;" class="reveal">
+      <div style="font-size:2rem;margin-bottom:.75rem;">&#9889;</div>
+      <h2 style="font-size:1.35rem;font-weight:700;margin-bottom:.5rem;">Get free Notion tips + template updates</h2>
+      <p style="color:var(--txt-2);font-size:.92rem;margin-bottom:1.5rem;line-height:1.6;">Join 100+ freelancers and creators. One email per week with Notion workflows, productivity tips, and early access to new templates. No spam, unsubscribe anytime.</p>
+      <form id="emailForm" style="display:flex;gap:.5rem;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center;" onsubmit="return handleEmailSubmit(event)">
+        <input type="email" id="emailInput" name="email" required placeholder="your@email.com" style="flex:1;min-width:220px;padding:.7rem 1rem;border-radius:8px;border:1px solid rgba(71,85,105,.4);background:rgba(15,23,42,.6);color:var(--txt);font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='var(--purple)'" onblur="this.style.borderColor='rgba(71,85,105,.4)'" >
+        <button type="submit" style="padding:.7rem 1.5rem;border-radius:8px;border:none;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-weight:600;font-size:.9rem;cursor:pointer;transition:transform .15s,opacity .15s;font-family:inherit;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">Subscribe</button>
+      </form>
+      <p id="emailSuccess" style="display:none;color:var(--green);font-size:.85rem;margin-top:.75rem;font-weight:500;">&#10003; You're in! Check your inbox for a welcome email.</p>
+      <p style="color:var(--txt-3);font-size:.75rem;margin-top:.75rem;">Free forever. No credit card needed.</p>
+    </div>
+  </div>
+</section>
+
     /* â”€â”€â”€ FOOTER â”€â”€â”€ */
     footer {
       background: var(--bg-dark); border-top: 1px solid var(--border-soft);
@@ -1057,6 +1074,23 @@
     localStorage.setItem('fos_views', JSON.stringify(views));
   } catch(e) {}
 })();
+
+  // --- Email form handler
+  function handleEmailSubmit(e) {
+    e.preventDefault();
+    var email = document.getElementById('emailInput').value;
+    if (!email) return false;
+    try {
+      var subs = JSON.parse(localStorage.getItem('fos_subscribers') || '[]');
+      subs.push({email: email, time: new Date().toISOString(), page: 'index'});
+      localStorage.setItem('fos_subscribers', JSON.stringify(subs));
+    } catch(err) {}
+    console.log('[Newsletter] Signup:', email, new Date().toISOString());
+    document.getElementById('emailForm').style.display = 'none';
+    document.getElementById('emailSuccess').style.display = 'block';
+    window.open('https://markmma1985.gumroad.com/follow', '_blank');
+    return false;
+  }
 </script>
 </body>
 </html>
