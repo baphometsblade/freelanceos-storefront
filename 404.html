@@ -3,46 +3,159 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Not Found — Notion Template Packs</title>
+  <title>Page Not Found — Notion Templates</title>
+  <meta name="description" content="The page you're looking for doesn't exist. Browse our Notion template packs for freelancers and content creators.">
+  <meta name="robots" content="noindex, nofollow">
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E2%9A%A1</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --purple: #7c3aed; --blue: #3b82f6; --green: #10b981;
+      --bg: #020617; --bg-card: #1e293b; --border: #334155;
+      --txt-1: #f8fafc; --txt-2: #cbd5e1; --txt-3: #a3b3c6;
+      --grad-main: linear-gradient(135deg, #7c3aed, #3b82f6);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+    .skip-link { position: absolute; left: -9999px; top: auto; padding: .5rem 1rem; background: var(--purple); color: #fff; z-index: 999; font-size: .9rem; border-radius: 4px; text-decoration: none; }
+    .skip-link:focus { left: 1rem; top: 1rem; }
+    a:focus-visible, button:focus-visible { outline: 2px solid #a78bfa; outline-offset: 2px; }
+
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #020617;
-      color: #f1f5f9;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg); color: var(--txt-2); line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh; display: flex; flex-direction: column;
     }
-    .wrap { max-width: 520px; }
-    .code { font-size: 6rem; font-weight: 800; background: linear-gradient(135deg, #7c3aed, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
-    h1 { font-size: 1.5rem; font-weight: 600; margin: 1rem 0 .5rem; }
-    p { color: #94a3b8; margin-bottom: 2rem; line-height: 1.6; }
-    .links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .links a {
-      display: inline-block; padding: .65rem 1.5rem; border-radius: 8px;
-      text-decoration: none; font-weight: 600; font-size: .9rem; transition: transform .15s, opacity .15s;
+
+    nav { background: rgba(2,6,23,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: .75rem 2rem; position: sticky; top: 0; z-index: 100; }
+    .nav-inner { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo { color: var(--txt-1); text-decoration: none; font-weight: 700; font-size: 1rem; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--txt-3); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--txt-1); }
+
+    .error-section {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 4rem 1.5rem; text-align: center;
     }
-    .links a:hover { transform: translateY(-1px); opacity: .9; }
-    .btn-primary { background: linear-gradient(135deg, #7c3aed, #3b82f6); color: #fff; }
-    .btn-ghost { border: 1px solid #475569; color: #f1f5f9; }
+    .error-content { max-width: 560px; }
+    .error-emoji { font-size: 4rem; margin-bottom: 1rem; display: block; }
+    .error-code {
+      font-size: clamp(4rem, 10vw, 6rem); font-weight: 900; line-height: 1;
+      background: var(--grad-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: .5rem;
+    }
+    .error-title { font-size: 1.5rem; font-weight: 700; color: var(--txt-1); margin-bottom: .75rem; }
+    .error-subtitle { font-size: 1rem; color: var(--txt-2); margin-bottom: 2.5rem; line-height: 1.7; }
+
+    .helpful-links { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin-bottom: 2.5rem; }
+    .helpful-link {
+      display: inline-flex; align-items: center; gap: .4rem; padding: .6rem 1.25rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 2rem;
+      color: var(--txt-2); text-decoration: none; font-size: .9rem; font-weight: 500;
+      transition: border-color .2s, color .2s, transform .15s;
+    }
+    .helpful-link:hover { border-color: var(--purple); color: var(--txt-1); transform: translateY(-1px); }
+
+    .cta-box {
+      background: linear-gradient(135deg, rgba(124,58,237,.1), rgba(59,130,246,.1));
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 2rem; text-align: center;
+    }
+    .cta-box h3 { font-size: 1.2rem; font-weight: 700; color: var(--txt-1); margin-bottom: .5rem; }
+    .cta-box p { color: var(--txt-2); margin-bottom: 1.25rem; font-size: .95rem; }
+    .cta-buttons { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+    .cta-btn {
+      display: inline-block; padding: .75rem 2rem; border-radius: 8px;
+      background: var(--grad-main); color: #fff; text-decoration: none;
+      font-weight: 600; font-size: .95rem; transition: transform .15s, opacity .15s;
+    }
+    .cta-btn:hover { transform: translateY(-1px); opacity: .9; }
+    .cta-btn-ghost {
+      display: inline-block; padding: .75rem 2rem; border-radius: 8px;
+      background: transparent; border: 1px solid var(--border); color: var(--txt-1);
+      text-decoration: none; font-weight: 600; font-size: .95rem; transition: transform .15s, border-color .2s;
+    }
+    .cta-btn-ghost:hover { transform: translateY(-1px); border-color: var(--txt-3); }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: .8rem; color: var(--txt-3); }
+    footer a { color: var(--txt-3); text-decoration: none; margin: 0 .5rem; }
+    footer a:hover { color: var(--txt-1); }
+
+    @media (max-width: 600px) {
+      .error-section { padding: 3rem 1rem; }
+      .error-emoji { font-size: 3rem; }
+      .cta-box { padding: 1.5rem; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="code">404</div>
-    <h1>This page doesn't exist</h1>
-    <p>The page you're looking for may have been moved or doesn't exist. Check out our Notion template packs instead.</p>
-    <div class="links">
-      <a href="./" class="btn-primary">Browse Templates</a>
-      <a href="freelanceos.html" class="btn-ghost">FreelanceOS</a>
-      <a href="creatorhq.html" class="btn-ghost">CreatorHQ</a>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="./" class="nav-logo">&#9889; Notion Templates</a>
+    <ul class="nav-links">
+      <li><a href="freelanceos.html">FreelanceOS</a></li>
+      <li><a href="creatorhq.html">CreatorHQ</a></li>
+      <li><a href="blog/">Blog</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main" class="error-section">
+  <div class="error-content">
+    <span class="error-emoji" aria-hidden="true">&#128269;</span>
+    <div class="error-code" aria-label="Error 404">404</div>
+    <h1 class="error-title">This page wandered off</h1>
+    <p class="error-subtitle">The page you're looking for doesn't exist or may have been moved. No worries — here are some places that definitely work.</p>
+
+    <nav aria-label="Helpful links" class="helpful-links">
+      <a href="./" class="helpful-link">&#127968; Home</a>
+      <a href="freelanceos.html" class="helpful-link">&#9889; FreelanceOS</a>
+      <a href="creatorhq.html" class="helpful-link">&#127916; CreatorHQ</a>
+      <a href="blog/" class="helpful-link">&#128221; Blog</a>
+    </nav>
+
+    <div class="cta-box">
+      <h3>Grab a free Notion template</h3>
+      <p>Both FreelanceOS Lite and CreatorHQ Lite are completely free. Start organizing your work in minutes.</p>
+      <div class="cta-buttons">
+        <a href="freelanceos.html" class="cta-btn">&#9889; FreelanceOS Lite — Free</a>
+        <a href="creatorhq.html" class="cta-btn-ghost">&#127916; CreatorHQ Lite — Free</a>
+      </div>
     </div>
   </div>
+</main>
+
+<footer>
+  <div>&copy; 2026 FreelanceOS &nbsp;&middot;&nbsp;
+    <a href="./">All Templates</a>
+    <a href="freelanceos.html">FreelanceOS</a>
+    <a href="creatorhq.html">CreatorHQ</a>
+    <a href="mailto:markmma1985@gmail.com">Contact</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  console.log('[Analytics] 404:', window.location.pathname, document.referrer, new Date().toISOString());
+  try {
+    var views = JSON.parse(localStorage.getItem('fos_404') || '[]');
+    views.push({path: window.location.pathname, ref: document.referrer, time: new Date().toISOString()});
+    if (views.length > 50) views = views.slice(-50);
+    localStorage.setItem('fos_404', JSON.stringify(views));
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>
