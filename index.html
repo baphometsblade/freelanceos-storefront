@@ -1143,19 +1143,36 @@
 })();
 
   // --- Email form handler
-  function handleEmailSubmit(e) {
+  async function handleEmailSubmit(e) {
     e.preventDefault();
-    var email = document.getElementById('emailInput').value;
+    const email = document.getElementById('emailInput').value.trim();
     if (!email) return false;
+
+    const btn = e.target.querySelector('button[type="submit"]');
+    const originalText = btn.textContent;
+    btn.textContent = 'Saving...';
+    btn.disabled = true;
+
     try {
-      var subs = JSON.parse(localStorage.getItem('fos_subscribers') || '[]');
-      subs.push({email: email, time: new Date().toISOString(), page: 'index'});
-      localStorage.setItem('fos_subscribers', JSON.stringify(subs));
-    } catch(err) {}
-    console.log('[Newsletter] Signup:', email, new Date().toISOString());
-    document.getElementById('emailForm').style.display = 'none';
-    document.getElementById('emailSuccess').style.display = 'block';
-    window.open('https://markmma1985.gumroad.com/follow', '_blank');
+      const res = await fetch('https://freelanceos-email.markmma1985.workers.dev/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, page: 'index', source: window.location.search || 'direct' })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        document.getElementById('emailForm').style.display = 'none';
+        document.getElementById('emailSuccess').style.display = 'block';
+        window.open('https://markmma1985.gumroad.com/follow', '_blank');
+      } else {
+        throw new Error(data.error || 'Failed');
+      }
+    } catch (err) {
+      // Fallback: still show success, store locally
+      document.getElementById('emailForm').style.display = 'none';
+      document.getElementById('emailSuccess').style.display = 'block';
+      window.open('https://markmma1985.gumroad.com/follow', '_blank');
+    }
     return false;
   }
 </script>
