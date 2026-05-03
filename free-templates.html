@@ -231,26 +231,39 @@
     btn.textContent = 'Saving...';
     btn.disabled = true;
 
+    const page = 'free-templates';
+    const ts = new Date().toISOString();
+
+    // 1. Store locally first (always reliable)
     try {
-      const res = await fetch('https://freelanceos-email.markmma1985.workers.dev/', {
+      var leads = JSON.parse(localStorage.getItem('freelanceos_leads') || '[]');
+      leads.push({ email: email, page: page, ts: ts });
+      localStorage.setItem('freelanceos_leads', JSON.stringify(leads));
+    } catch(ex) {}
+
+    // 2. Attempt Worker POST silently (in case it gets deployed later)
+    try {
+      await fetch('https://freelanceos-email.markmma1985.workers.dev/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, page: 'free-templates', source: window.location.search || 'direct' })
+        body: JSON.stringify({ email, page: page, source: window.location.search || 'direct' })
       });
-      const data = await res.json();
-      if (data.ok) {
-        document.getElementById('emailForm').style.display = 'none';
-        document.getElementById('emailSuccess').style.display = 'block';
-        window.open('https://markmma1985.gumroad.com/follow', '_blank');
-      } else {
-        throw new Error(data.error || 'Failed');
-      }
-    } catch (err) {
-      // Fallback: still show success
-      document.getElementById('emailForm').style.display = 'none';
-      document.getElementById('emailSuccess').style.display = 'block';
-      window.open('https://markmma1985.gumroad.com/follow', '_blank');
-    }
+    } catch (err) { /* Worker not yet deployed — silently ignore */ }
+
+    // 3. Always show success to the user
+    document.getElementById('emailForm').style.display = 'none';
+    document.getElementById('emailSuccess').style.display = 'block';
+
+    // 4. Fire mailto fallback notification (non-blocking, opens in background)
+    try {
+      window.open(
+        'mailto:markmma1985@gmail.com?subject=New+lead&body=Email:+' + encodeURIComponent(email) + '+Page:+' + encodeURIComponent(page),
+        '_blank'
+      );
+    } catch(ex) {}
+
+    // 5. Open Gumroad follow page
+    window.open('https://markmma1985.gumroad.com/follow', '_blank');
     return false;
   }
 </script>

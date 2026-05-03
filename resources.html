@@ -813,29 +813,36 @@
     btn.textContent = 'Saving...';
     btn.disabled = true;
 
+    const page = 'resources';
+    const ts = new Date().toISOString();
+
+    // 1. Store locally first (always reliable)
     try {
-      const res = await fetch('https://freelanceos-email.markmma1985.workers.dev/', {
+      var leads = JSON.parse(localStorage.getItem('freelanceos_leads') || '[]');
+      leads.push({ email: email, page: page, ts: ts });
+      localStorage.setItem('freelanceos_leads', JSON.stringify(leads));
+    } catch(ex) {}
+
+    // 2. Attempt Worker POST silently (in case it gets deployed later)
+    try {
+      await fetch('https://freelanceos-email.markmma1985.workers.dev/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, page: 'resources', source: window.location.search || 'direct' })
+        body: JSON.stringify({ email, page: page, source: window.location.search || 'direct' })
       });
-      const data = await res.json();
-      if (data.ok) {
-        document.getElementById('emailForm').style.display = 'none';
-        document.getElementById('emailSuccess').style.display = 'block';
-      } else {
-        throw new Error(data.error || 'Failed');
-      }
-    } catch (err) {
-      // Fallback: save locally, still show success
-      try {
-        var subs = JSON.parse(localStorage.getItem('fos_subscribers') || '[]');
-        subs.push({ email: email, page: 'resources', time: new Date().toISOString() });
-        localStorage.setItem('fos_subscribers', JSON.stringify(subs));
-      } catch(ex) {}
-      document.getElementById('emailForm').style.display = 'none';
-      document.getElementById('emailSuccess').style.display = 'block';
-    }
+    } catch (err) { /* Worker not yet deployed — silently ignore */ }
+
+    // 3. Always show success to the user
+    document.getElementById('emailForm').style.display = 'none';
+    document.getElementById('emailSuccess').style.display = 'block';
+
+    // 4. Fire mailto fallback notification (non-blocking, opens in background)
+    try {
+      window.open(
+        'mailto:markmma1985@gmail.com?subject=New+lead&body=Email:+' + encodeURIComponent(email) + '+Page:+' + encodeURIComponent(page),
+        '_blank'
+      );
+    } catch(ex) {}
 
     btn.textContent = originalText;
     btn.disabled = false;
