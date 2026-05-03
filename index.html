@@ -657,48 +657,66 @@
     /* --- EXIT INTENT POPUP --- */
     .exit-overlay {
       position: fixed; inset: 0; z-index: 1000;
-      background: rgba(2,6,23,0.85); backdrop-filter: blur(6px);
+      background: rgba(2,6,23,0.88); backdrop-filter: blur(6px);
       display: flex; align-items: center; justify-content: center; padding: 1.5rem;
       opacity: 0; pointer-events: none; transition: opacity .3s;
     }
     .exit-overlay.show { opacity: 1; pointer-events: auto; }
-    .exit-popup {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 2.5rem 2rem;
-      max-width: 460px; width: 100%; text-align: center;
-      position: relative;
-      transform: scale(.94) translateY(8px); transition: transform .3s;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(124,58,237,0.12);
+    @keyframes exitSlideDown {
+      from { opacity: 0; transform: translateY(-32px) scale(.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .exit-overlay.show .exit-popup { transform: scale(1) translateY(0); }
+    .exit-popup {
+      background: #0f172a; border: 1px solid rgba(239,68,68,0.45);
+      border-radius: var(--radius-lg); padding: 2.5rem 2rem;
+      max-width: 420px; width: 100%; text-align: center;
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 40px rgba(239,68,68,0.12);
+    }
+    .exit-overlay.show .exit-popup { animation: exitSlideDown .32s cubic-bezier(0.34,1.56,0.64,1) both; }
     .exit-popup-close {
-      position: absolute; top: 1rem; right: 1rem;
+      position: absolute; top: .9rem; right: .9rem;
       background: none; border: none; color: var(--txt-3);
-      font-size: 1.25rem; cursor: pointer; line-height: 1; padding: .25rem;
+      font-size: 1.3rem; cursor: pointer; line-height: 1; padding: .25rem;
     }
     .exit-popup-close:hover { color: var(--txt-1); }
-    .exit-popup-gift { font-size: 2.5rem; margin-bottom: .75rem; }
-    .exit-popup h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: .5rem; }
-    .exit-popup p { font-size: .9rem; color: var(--txt-2); margin-bottom: 1.5rem; line-height: 1.6; }
-    .exit-popup-links { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.25rem; }
-    .exit-popup-link {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: .75rem 1rem; border-radius: var(--radius);
-      background: var(--bg-card-2); border: 1px solid var(--border);
-      text-decoration: none; transition: border-color .2s, background .2s;
+    .exit-popup-icon { font-size: 2.25rem; margin-bottom: .6rem; }
+    .exit-popup-eyebrow {
+      font-size: .72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .1em; color: #ef4444; margin-bottom: .5rem;
     }
-    .exit-popup-link:hover { border-color: rgba(124,58,237,0.5); background: rgba(124,58,237,0.06); }
-    .exit-popup-link-left { display: flex; align-items: center; gap: .6rem; }
-    .exit-popup-link-icon { font-size: 1.1rem; }
-    .exit-popup-link-name { font-size: .9rem; font-weight: 700; color: var(--txt-1); }
-    .exit-popup-link-sub { font-size: .75rem; color: var(--txt-3); }
-    .exit-popup-link-badge {
-      font-size: .72rem; font-weight: 700; color: var(--green);
-      background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25);
-      border-radius: 1rem; padding: .2rem .6rem;
+    .exit-popup h3 { font-size: 1.35rem; font-weight: 900; margin-bottom: .5rem; color: var(--txt-1); }
+    .exit-popup-sub { font-size: .9rem; color: var(--txt-2); margin-bottom: 1.25rem; line-height: 1.6; }
+    .exit-popup-code-box {
+      background: rgba(239,68,68,0.08); border: 1px dashed rgba(239,68,68,0.45);
+      border-radius: .6rem; padding: .7rem 1rem; margin-bottom: 1.25rem;
+      font-size: 1.6rem; font-weight: 900; letter-spacing: .12em;
+      color: #fca5a5; font-family: 'Courier New', monospace;
     }
-    .exit-popup-dismiss { font-size: .8rem; color: var(--txt-3); cursor: pointer; background: none; border: none; text-decoration: underline; text-underline-offset: 2px; }
+    .exit-popup-btn {
+      display: block; width: 100%;
+      background: #ef4444; color: #fff;
+      border: none; border-radius: .65rem;
+      padding: .95rem 1.5rem; font-size: 1rem; font-weight: 800;
+      text-decoration: none; cursor: pointer; margin-bottom: .6rem;
+      transition: filter .2s, transform .15s;
+    }
+    .exit-popup-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .exit-popup-small { font-size: .75rem; color: var(--txt-3); margin-bottom: .6rem; }
+    .exit-popup-dismiss { font-size: .8rem; color: var(--txt-3); cursor: pointer; background: none; border: none; text-decoration: underline; text-underline-offset: 2px; display: block; width: 100%; }
     .exit-popup-dismiss:hover { color: var(--txt-2); }
+
+    /* --- GUARANTEE BAR --- */
+    .guarantee-bar {
+      font-size: .8rem; color: #64748b; text-align: center;
+      border-top: 1px solid var(--border-soft); padding-top: .6rem;
+      margin-top: .6rem; line-height: 1.6;
+    }
+
+    /* Mobile exit intent via scroll */
+    @media (max-width: 768px) {
+      .exit-overlay.mobile-show { opacity: 1; pointer-events: auto; }
+    }
 
     /* --- RESPONSIVE --- */
     @media (max-width: 900px) {
@@ -786,35 +804,17 @@
 </div>
 
 <!-- --- EXIT INTENT POPUP --- -->
-<div class="exit-overlay" id="exitOverlay" role="dialog" aria-modal="true" aria-label="Free template offer">
+<div class="exit-overlay" id="exitOverlay" role="dialog" aria-modal="true" aria-label="Flash sale offer">
   <div class="exit-popup">
     <button class="exit-popup-close" id="exitClose" aria-label="Close">&times;</button>
-    <div class="exit-popup-gift">&#127873;</div>
-    <h3>Wait &mdash; grab the free templates first</h3>
-    <p>Both Lite versions are completely free. No credit card, no signup. Just duplicate to Notion and start building.</p>
-    <div class="exit-popup-links">
-      <a href="https://markmma1985.gumroad.com/l/fvjgxo" target="_blank" rel="noopener" class="exit-popup-link">
-        <div class="exit-popup-link-left">
-          <span class="exit-popup-link-icon">&#9889;</span>
-          <div>
-            <div class="exit-popup-link-name">FreelanceOS Lite</div>
-            <div class="exit-popup-link-sub">Client tracker, project boards, invoice log</div>
-          </div>
-        </div>
-        <span class="exit-popup-link-badge">FREE</span>
-      </a>
-      <a href="https://markmma1985.gumroad.com/l/rkdnli" target="_blank" rel="noopener" class="exit-popup-link">
-        <div class="exit-popup-link-left">
-          <span class="exit-popup-link-icon">&#127912;</span>
-          <div>
-            <div class="exit-popup-link-name">CreatorHQ Lite</div>
-            <div class="exit-popup-link-sub">Content calendar, idea vault, growth tracker</div>
-          </div>
-        </div>
-        <span class="exit-popup-link-badge">FREE</span>
-      </a>
-    </div>
-    <button class="exit-popup-dismiss" id="exitDismiss">No thanks, I'll pass on free templates</button>
+    <div class="exit-popup-icon">&#128293;</div>
+    <div class="exit-popup-eyebrow">WAIT &mdash; Don&rsquo;t leave empty-handed</div>
+    <h3>Get 40% off any Notion template</h3>
+    <p class="exit-popup-sub">Use code <strong>FLASH40</strong> at checkout. Limited to 100 uses.</p>
+    <div class="exit-popup-code-box">FLASH40</div>
+    <a href="sale.html" class="exit-popup-btn">Claim 40% off now &rarr;</a>
+    <div class="exit-popup-small">Discount auto-applied at checkout</div>
+    <button class="exit-popup-dismiss" id="exitDismiss">No thanks, I&rsquo;ll pay full price</button>
   </div>
 </div>
 
@@ -1017,6 +1017,7 @@
             <span class="guarantee-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 12l2 2 4-4"/></svg>30-day money-back guarantee</span>
           </div>
           <div class="stripe-alt">or <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" data-product="freelanceos-pro-stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7zm0-3a2 2 0 012-2h14a2 2 0 012 2v1H3V7z"/></svg>pay directly with card</a></div>
+          <div class="guarantee-bar">&#128737;&#65039; 30-day money-back guarantee &nbsp;&middot;&nbsp; &#9889; Instant download &nbsp;&middot;&nbsp; &#128179; Stripe-secured</div>
           <a href="freelanceos.html" style="display:block;text-align:center;margin-top:1rem;color:var(--txt-3);font-size:.85rem;text-decoration:none;transition:color .2s;">See full details &rarr;</a>
         </div>
       </div>
@@ -1047,6 +1048,7 @@
             <span class="guarantee-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 12l2 2 4-4"/></svg>30-day money-back guarantee</span>
           </div>
           <div class="stripe-alt">or <a href="https://buy.stripe.com/bJe14nbZ3gvTdan0Dk6kg0w?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" data-product="creatorhq-pro-stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7zm0-3a2 2 0 012-2h14a2 2 0 012 2v1H3V7z"/></svg>pay directly with card</a></div>
+          <div class="guarantee-bar">&#128737;&#65039; 30-day money-back guarantee &nbsp;&middot;&nbsp; &#9889; Instant download &nbsp;&middot;&nbsp; &#128179; Stripe-secured</div>
           <a href="creatorhq.html" style="display:block;text-align:center;margin-top:1rem;color:var(--txt-3);font-size:.85rem;text-decoration:none;transition:color .2s;">See full details &rarr;</a>
         </div>
       </div>
@@ -1635,19 +1637,19 @@
     }
   })();
 
-  // --- Exit intent popup (mouse leaves toward top of page)
+  // --- Exit intent popup (mouse leaves toward top of page; mobile: 80% scroll)
   (function() {
     var overlay = document.getElementById('exitOverlay');
     var closeBtn = document.getElementById('exitClose');
     var dismissBtn = document.getElementById('exitDismiss');
-    var shown = sessionStorage.getItem('exitShown') === '1';
+    var shown = localStorage.getItem('flash_popup_shown') === '1';
 
     if (!overlay || shown) return;
 
     function showPopup() {
       if (shown) return;
       shown = true;
-      sessionStorage.setItem('exitShown', '1');
+      localStorage.setItem('flash_popup_shown', '1');
       overlay.classList.add('show');
     }
 
@@ -1655,12 +1657,22 @@
       overlay.classList.remove('show');
     }
 
-    // Fire on mouse moving toward top of viewport
+    // Desktop: fire when cursor heads toward browser chrome
     document.addEventListener('mouseleave', function(e) {
-      if (e.clientY <= 10) {
+      if (e.clientY < 10) {
         showPopup();
       }
     });
+
+    // Mobile: fire when user has scrolled past 80% of page height
+    window.addEventListener('scroll', function() {
+      if (shown) return;
+      var scrolled = window.scrollY + window.innerHeight;
+      var total = document.documentElement.scrollHeight;
+      if (scrolled / total >= 0.80) {
+        showPopup();
+      }
+    }, { passive: true });
 
     if (closeBtn) closeBtn.addEventListener('click', hidePopup);
     if (dismissBtn) dismissBtn.addEventListener('click', hidePopup);
