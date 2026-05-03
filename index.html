@@ -812,6 +812,107 @@
       font-style: italic;
     }
     .exit-popup-btn-secondary:hover { color: rgba(148,163,184,0.75); }
+
+    /* --- EMAIL CAPTURE SECTION --- */
+    .email-capture-section {
+      background: linear-gradient(135deg, #1a0533 0%, #0d1f4a 50%, #0a1628 100%);
+      border-top: 1px solid rgba(124,58,237,0.3);
+      border-bottom: 1px solid rgba(124,58,237,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .email-capture-section::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(124,58,237,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .email-capture-inner {
+      position: relative;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+    .email-capture-gift {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(124,58,237,0.18); border: 1px solid rgba(124,58,237,0.4);
+      border-radius: 2rem; padding: .35rem 1rem;
+      font-size: .8rem; font-weight: 700; color: #c4b5fd;
+      text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: 1.25rem;
+    }
+    .email-capture-inner h2 {
+      font-size: clamp(1.65rem, 3.5vw, 2.4rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: .75rem;
+      color: #f8fafc;
+    }
+    .email-capture-inner h2 .highlight {
+      background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .email-capture-sub {
+      font-size: 1rem; color: #94a3b8;
+      margin-bottom: 2rem;
+    }
+    .email-capture-form {
+      display: flex; gap: .6rem;
+      max-width: 480px; margin: 0 auto 1rem;
+    }
+    .email-capture-input {
+      flex: 1; min-width: 0;
+      background: rgba(15,23,42,0.8);
+      border: 1.5px solid rgba(124,58,237,0.45);
+      border-radius: 2rem;
+      padding: .85rem 1.3rem;
+      font-size: .95rem; color: #f8fafc;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .email-capture-input::placeholder { color: #475569; }
+    .email-capture-input:focus {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
+    }
+    .email-capture-btn {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .85rem 1.6rem;
+      background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+      color: #fff; font-weight: 700; font-size: .9rem;
+      border: none; border-radius: 2rem; cursor: pointer;
+      font-family: inherit;
+      transition: transform .15s, box-shadow .2s;
+      white-space: nowrap;
+    }
+    .email-capture-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(124,58,237,0.5);
+    }
+    .email-capture-btn:disabled {
+      opacity: .7; cursor: not-allowed; transform: none;
+    }
+    .email-capture-success {
+      display: none;
+      align-items: center; justify-content: center; gap: .6rem;
+      background: rgba(16,185,129,0.12); border: 1.5px solid rgba(16,185,129,0.35);
+      border-radius: 2rem; padding: .85rem 1.5rem;
+      font-size: .95rem; font-weight: 600; color: #6ee7b7;
+      max-width: 480px; margin: 0 auto 1rem;
+    }
+    .email-capture-trust {
+      font-size: .8rem; color: #475569;
+    }
+    @media (max-width: 520px) {
+      .email-capture-form { flex-direction: column; gap: .75rem; }
+      .email-capture-btn { width: 100%; justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -1052,6 +1153,36 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- --- EMAIL CAPTURE --- -->
+<section class="email-capture-section" id="email-capture">
+  <div class="email-capture-inner">
+    <div class="email-capture-gift">&#127873; Limited-time offer</div>
+    <h2>Get <span class="highlight">40% off</span> — just enter your email</h2>
+    <p class="email-capture-sub">We'll send you the <strong style="color:#c4b5fd;">FLASH40</strong> discount code + a free Notion setup guide to get you started fast.</p>
+
+    <form class="email-capture-form" id="emailCaptureForm" onsubmit="handleEmailCapture(event)">
+      <input
+        type="email"
+        id="emailCaptureInput"
+        class="email-capture-input"
+        placeholder="your@email.com"
+        required
+        autocomplete="email"
+        aria-label="Email address"
+      >
+      <button type="submit" class="email-capture-btn" id="emailCaptureBtn">
+        Send Me the Code &#8594;
+      </button>
+    </form>
+
+    <div class="email-capture-success" id="emailCaptureSuccess">
+      &#10003; Code sent! Check your email for <strong>FLASH40</strong>
+    </div>
+
+    <p class="email-capture-trust">&#128274; No spam. Unsubscribe any time. Code valid for 48 hours.</p>
   </div>
 </section>
 
@@ -1758,6 +1889,43 @@
       if (e.target === overlay) hidePopup();
     });
   })();
+
+  /* --- EMAIL CAPTURE --- */
+  async function captureEmail(email) {
+    // Always save locally
+    const leads = JSON.parse(localStorage.getItem('freelanceos_leads') || '[]');
+    leads.push({email, page: 'storefront', source: 'email-capture', timestamp: Date.now()});
+    localStorage.setItem('freelanceos_leads', JSON.stringify(leads));
+
+    // Try Worker (will fail gracefully if not deployed)
+    try {
+      await fetch('YOUR_WORKER_URL', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email, page: 'storefront', source: 'email-capture'})
+      });
+    } catch(e) { /* Worker not deployed yet - localStorage fallback active */ }
+
+    return true;
+  }
+
+  async function handleEmailCapture(e) {
+    e.preventDefault();
+    const input = document.getElementById('emailCaptureInput');
+    const btn = document.getElementById('emailCaptureBtn');
+    const form = document.getElementById('emailCaptureForm');
+    const success = document.getElementById('emailCaptureSuccess');
+    const email = input.value.trim();
+    if (!email) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    await captureEmail(email);
+
+    form.style.display = 'none';
+    success.style.display = 'flex';
+  }
 
 </script>
 </body>
