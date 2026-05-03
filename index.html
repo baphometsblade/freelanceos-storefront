@@ -621,8 +621,9 @@
     }
     .announce-bar span { opacity: .85; }
     .announce-bar strong { color: #fde68a; }
-    nav { top: 36px !important; }
-    .hero { padding-top: 12rem !important; }
+    .social-ticker { top: 36px; position: fixed; width: 100%; z-index: 198; }
+    nav { top: 72px !important; }
+    .hero { padding-top: 14rem !important; }
 
     /* --- TRUST BADGES --- */
     .trust-row {
@@ -746,7 +747,7 @@
       .featured-divider { display: none; }
       .value-compare-table { font-size: .8rem; }
       .value-compare-table th, .value-compare-table td { padding: .65rem .75rem; }
-      nav { top: 36px !important; }
+      nav { top: 72px !important; }
       .announce-bar { font-size: .75rem; padding: .45rem .75rem; }
       .trust-row { gap: 1rem; }
       .trust-badge { font-size: .78rem; }
@@ -755,7 +756,62 @@
       .testimonials-grid { grid-template-columns: 1fr; }
       .hero-countdown { flex-direction: column; gap: .4rem; text-align: center; }
     }
-    @media print { nav, .float-cta, .announce-bar, .sticky-bar, .exit-overlay { display: none; } }
+    @media print { nav, .float-cta, .announce-bar, .sticky-bar, .exit-overlay, .social-ticker { display: none; } }
+
+    /* --- SOCIAL PROOF TICKER --- */
+    .social-ticker {
+      height: 36px; background: linear-gradient(90deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+      border-bottom: 1px solid rgba(124,58,237,0.25);
+      overflow: hidden; display: flex; align-items: center;
+      position: relative; z-index: 199;
+    }
+    .social-ticker::before, .social-ticker::after {
+      content: ''; position: absolute; top: 0; width: 80px; height: 100%; z-index: 2; pointer-events: none;
+    }
+    .social-ticker::before { left: 0; background: linear-gradient(90deg, #0d1117, transparent); }
+    .social-ticker::after  { right: 0; background: linear-gradient(270deg, #0d1117, transparent); }
+    .social-ticker-track {
+      display: flex; align-items: center; gap: 0;
+      white-space: nowrap;
+      animation: tickerScroll 38s linear infinite;
+    }
+    .social-ticker-track:hover { animation-play-state: paused; }
+    @keyframes tickerScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: 11.5px; color: rgba(203,213,225,0.88); font-weight: 500;
+      padding: 0 2rem;
+    }
+    .ticker-item .ticker-dot {
+      display: inline-block; width: 5px; height: 5px; border-radius: 50%;
+      background: #7c3aed; margin-right: .2rem; flex-shrink: 0;
+    }
+    .ticker-item .ticker-time { color: rgba(148,163,184,0.6); font-size: 10px; margin-left: .2rem; }
+
+    /* --- ENHANCED EXIT POPUP PRICE ROW --- */
+    .exit-price-row {
+      display: flex; align-items: center; justify-content: center; gap: .75rem;
+      background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2);
+      border-radius: .6rem; padding: .65rem 1rem; margin-bottom: 1.1rem;
+    }
+    .exit-price-original {
+      font-size: .9rem; color: var(--txt-3); text-decoration: line-through;
+    }
+    .exit-price-arrow { color: var(--txt-3); font-size: .8rem; }
+    .exit-price-new {
+      font-size: 1.2rem; font-weight: 900; color: #4ade80;
+    }
+    .exit-price-label { font-size: .72rem; color: var(--txt-3); }
+    .exit-popup-btn-secondary {
+      display: block; width: 100%; background: none; border: none;
+      color: rgba(148,163,184,0.5); font-size: .78rem; cursor: pointer;
+      text-decoration: underline; text-underline-offset: 2px; padding: .2rem;
+      font-style: italic;
+    }
+    .exit-popup-btn-secondary:hover { color: rgba(148,163,184,0.75); }
   </style>
 </head>
 <body>
@@ -763,6 +819,22 @@
 <!-- --- ANNOUNCEMENT BAR --- -->
 <div class="announce-bar">
   &#128293; <strong>Flash Sale</strong> &mdash; All 5 products on sale &mdash; Use code <strong style="background:rgba(0,0,0,.3);padding:2px 8px;border-radius:4px;letter-spacing:1px;font-family:monospace;">FLASH40</strong> for <strong>40% off</strong> &mdash; <a href="#products" style="color:#fde68a;text-decoration:underline;text-underline-offset:2px;">Shop now</a>
+</div>
+
+<!-- --- SOCIAL PROOF TICKER --- -->
+<div class="social-ticker" aria-hidden="true">
+  <div class="social-ticker-track" id="tickerTrack">
+    <span class="ticker-item"><span class="ticker-dot"></span>&#127881; Alex from Austin just grabbed FreelanceOS Pro<span class="ticker-time">2 min ago</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>&#128161; Sarah in London duplicated CreatorHQ Lite<span class="ticker-time">5 min ago</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>&#128293; Marcus in Toronto is using FLASH40 right now</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>&#11088; &ldquo;Replaced my entire project management setup&rdquo; &mdash; Jennifer K.</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>&#128230; YouTube Empire template: analytics tracker used by 200+ creators</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>&#127881; Alex from Austin just grabbed FreelanceOS Pro<span class="ticker-time">2 min ago</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>&#128161; Sarah in London duplicated CreatorHQ Lite<span class="ticker-time">5 min ago</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>&#128293; Marcus in Toronto is using FLASH40 right now</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>&#11088; &ldquo;Replaced my entire project management setup&rdquo; &mdash; Jennifer K.</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>&#128230; YouTube Empire template: analytics tracker used by 200+ creators</span>
+  </div>
 </div>
 
 <!-- --- NAV --- -->
@@ -795,26 +867,28 @@
   <button class="sticky-bar-dismiss" id="stickyBarDismiss" aria-label="Dismiss">&#10005;</button>
   <div class="sticky-bar-text">
     <span class="fire">&#128293;</span>
-    <span><strong>Early Access Pricing ends June 1st</strong> &mdash; FreelanceOS Pro only $29</span>
+    <span><strong>FLASH40 ends in <span class="sticky-bar-timer" id="stickyCountdown">--:--:--</span></strong> &mdash; 40% OFF everything</span>
   </div>
-  <div class="sticky-bar-text" style="font-size:.82rem;">
-    Time left: <span class="sticky-bar-timer" id="stickyCountdown">--:--:--</span>
-  </div>
-  <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="animation:none;">Buy Now &rarr;</a>
+  <a href="sale.html" class="btn btn-primary btn-sm" style="animation:none;background:linear-gradient(90deg,#ef4444,#7c3aed);border:none;">Shop the Sale &rarr;</a>
 </div>
 
 <!-- --- EXIT INTENT POPUP --- -->
 <div class="exit-overlay" id="exitOverlay" role="dialog" aria-modal="true" aria-label="Flash sale offer">
   <div class="exit-popup">
     <button class="exit-popup-close" id="exitClose" aria-label="Close">&times;</button>
-    <div class="exit-popup-icon">&#128293;</div>
-    <div class="exit-popup-eyebrow">WAIT &mdash; Don&rsquo;t leave empty-handed</div>
-    <h3>Get 40% off any Notion template</h3>
-    <p class="exit-popup-sub">Use code <strong>FLASH40</strong> at checkout. Limited to 100 uses.</p>
+    <div class="exit-popup-icon">&#9203;</div>
+    <div class="exit-popup-eyebrow">WAIT &mdash; Your FLASH40 code expires soon</div>
+    <h3>FreelanceOS Pro &mdash; still yours for $17.40</h3>
+    <div class="exit-price-row">
+      <span class="exit-price-original">$29.00</span>
+      <span class="exit-price-arrow">&#8594;</span>
+      <span class="exit-price-new">$17.40</span>
+      <span class="exit-price-label">with FLASH40</span>
+    </div>
     <div class="exit-popup-code-box">FLASH40</div>
-    <a href="sale.html" class="exit-popup-btn">Claim 40% off now &rarr;</a>
-    <div class="exit-popup-small">Discount auto-applied at checkout</div>
-    <button class="exit-popup-dismiss" id="exitDismiss">No thanks, I&rsquo;ll pay full price</button>
+    <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="exit-popup-btn">Use FLASH40 Now &rarr;</a>
+    <div class="exit-popup-small">Code auto-applied &mdash; one-time payment, lifetime access</div>
+    <button class="exit-popup-dismiss" id="exitDismiss" class="exit-popup-btn-secondary">No thanks, I&rsquo;ll pay full price later</button>
   </div>
 </div>
 
