@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>See Inside the Templates | FreelanceOS Storefront</title>
+<meta name="description" content="Explore realistic Notion-style previews of FreelanceOS, CreatorHQ, AgencyOS, and YouTube Empire before you buy.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"See Inside the Templates","description":"Interactive demo previews of Notion template products.","url":"https://baphometsblade.github.io/freelanceos-storefront/demo.html","isPartOf":{"@type":"WebSite","url":"https://baphometsblade.github.io/freelanceos-storefront/"}}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#e5e5e5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+a{color:#a78bfa;text-decoration:none}a:hover{text-decoration:underline}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid #1f1f1f}
+.nav-logo{font-weight:700;font-size:18px;color:#fff}
+.nav-links{display:flex;gap:20px;font-size:14px}
+.hero{text-align:center;padding:72px 24px 48px}
+.hero h1{font-size:clamp(32px,5vw,56px);font-weight:800;color:#fff;margin-bottom:16px}
+.hero h1 span{color:#7c3aed}
+.hero p{font-size:18px;color:#9ca3af;max-width:520px;margin:0 auto}
+.tabs-section{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+.tab-bar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:32px;border-bottom:2px solid #1f1f1f}
+.tab-btn{background:none;border:none;padding:12px 24px;color:#9ca3af;font-size:15px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:#e5e5e5}.tab-btn.active{color:#7c3aed;border-bottom-color:#7c3aed}
+.product-panel{display:none}.product-panel.active{display:block}
+.screen-label{font-size:13px;color:#6b7280;text-align:center;margin-bottom:12px;letter-spacing:.05em;text-transform:uppercase}
+.screen-title{font-size:20px;font-weight:700;color:#fff;text-align:center;margin-bottom:20px}
+.mockup-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,.5);min-height:420px;position:relative}
+.preview-note{position:absolute;top:10px;right:10px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.4);color:#a78bfa;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;z-index:10}
+.notion-chrome{background:#f7f7f5;padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e5e5e5}
+.notion-chrome .dot{width:10px;height:10px;border-radius:50%}
+.notion-chrome .dot.r{background:#ff5f57}.notion-chrome .dot.y{background:#febc2e}.notion-chrome .dot.g{background:#28c840}
+.notion-chrome .page-title{font-size:13px;font-weight:600;color:#37352f;margin-left:12px}
+.notion-table{width:100%;border-collapse:collapse;font-size:13px}
+.notion-table th{background:#f7f7f5;color:#9b9a97;font-weight:500;padding:6px 12px;text-align:left;border-bottom:1px solid #e5e5e5;font-size:12px}
+.notion-table td{padding:9px 12px;border-bottom:1px solid #f0f0ee;color:#37352f;vertical-align:middle}
+.notion-table tr:last-child td{border-bottom:none}.notion-table tr:hover td{background:#f7f7f5}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.bg{background:#dcfce7;color:#166534}.by{background:#fef9c3;color:#854d0e}.bgr{background:#f3f4f6;color:#4b5563}
+.br{background:#fee2e2;color:#991b1b}.bb{background:#dbeafe;color:#1e40af}.bp{background:#ede9fe;color:#6d28d9}.bo{background:#ffedd5;color:#9a3412}
+.invoice-wrap{padding:32px}
+.invoice-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px}
+.invoice-from{font-size:13px;color:#6b7280}.invoice-from strong{display:block;font-size:18px;color:#111;margin-bottom:4px}
+.invoice-num{text-align:right}.invoice-num h2{font-size:28px;font-weight:800;color:#111}
+.invoice-parties{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;font-size:13px;color:#374151}
+.invoice-parties label{font-size:11px;color:#9ca3af;font-weight:600;text-transform:uppercase;display:block;margin-bottom:4px}
+.invoice-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px}
+.invoice-table th{background:#f9fafb;color:#6b7280;font-weight:600;padding:8px 12px;text-align:left;border-bottom:2px solid #e5e7eb;font-size:12px}
+.invoice-table td{padding:10px 12px;border-bottom:1px solid #f3f4f6;color:#374151}
+.invoice-total-row{display:flex;justify-content:flex-end;gap:48px;font-size:15px;font-weight:700;color:#111;padding:12px 12px 0}
+.invoice-caption{text-align:center;margin-top:20px;font-size:12px;color:#9ca3af;font-style:italic}
+.planner-wrap{padding:20px;overflow-x:auto}
+.planner-grid{display:grid;grid-template-columns:52px repeat(5,1fr);gap:2px;min-width:500px}
+.planner-hdr{font-size:11px;font-weight:700;color:#6b7280;text-align:center;padding:6px 4px;background:#f7f7f5;border-radius:4px;text-transform:uppercase}
+.planner-time{font-size:11px;color:#9ca3af;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;height:44px}
+.pcell{height:44px;border-radius:4px;background:#f7f7f5;border:1px solid #e5e5e5}
+.pblock{border-radius:4px;display:flex;align-items:center;padding:4px 8px;font-size:11px;font-weight:600;overflow:hidden;height:44px}
+.pp{background:#ede9fe;color:#6d28d9;border-left:3px solid #7c3aed}
+.pbl{background:#dbeafe;color:#1e40af;border-left:3px solid #3b82f6}
+.pgr{background:#dcfce7;color:#166534;border-left:3px solid #22c55e}
+.pgy{background:#f3f4f6;color:#6b7280;border-left:3px solid #9ca3af}
+.cal-wrap{padding:16px}
+.cal-grid{display:grid;grid-template-columns:80px 1fr;gap:4px}
+.cal-day{font-size:12px;font-weight:700;color:#6b7280;padding:8px 8px 8px 0;text-transform:uppercase}
+.cal-entries{display:flex;flex-direction:column;gap:4px;padding:4px 0}
+.cal-entry{display:flex;align-items:center;gap:8px;background:#f7f7f5;border-radius:6px;padding:7px 10px;font-size:12px;color:#374151}
+.cal-entry .pl{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.cal-entry .es{margin-left:auto;font-size:10px;color:#9ca3af}
+.cal-sep{grid-column:1/-1;height:1px;background:#f0f0ee;margin:4px 0}
+.kanban-wrap{padding:20px;overflow-x:auto}
+.kanban-board{display:flex;gap:12px;min-width:600px}
+.kanban-col{flex:1;min-width:130px}
+.kch{font-size:12px;font-weight:700;color:#374151;padding:8px 10px;background:#f3f4f6;border-radius:6px 6px 0 0;border-bottom:2px solid #e5e5e5;margin-bottom:8px}
+.kcard{background:#fff;border:1px solid #e5e5e5;border-radius:6px;padding:10px;margin-bottom:6px;font-size:12px;color:#374151;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.kcard .kt{font-weight:600;color:#111;margin-bottom:4px}.kcard .km{color:#9ca3af;font-size:11px}
+.brand-wrap{padding:28px;font-size:13px;color:#374151}
+.brand-section{margin-bottom:24px}
+.brand-section h3{font-size:12px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.color-swatches{display:flex;gap:10px;flex-wrap:wrap}
+.swatch{width:44px;height:44px;border-radius:8px;border:1px solid rgba(0,0,0,.08)}
+.swatch-label{font-size:10px;color:#6b7280;text-align:center;margin-top:4px}
+.font-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0ee}
+.vp{display:inline-block;background:#ede9fe;color:#6d28d9;border-radius:4px;padding:3px 10px;font-size:12px;font-weight:600;margin:3px}
+.portal-wrap{padding:24px;font-size:13px}
+.portal-hdr{background:#f7f7f5;border-radius:8px;padding:16px 20px;margin-bottom:20px}
+.portal-hdr h2{font-size:16px;font-weight:800;color:#111}
+.portal-hdr .ps{font-size:12px;color:#6b7280;margin-top:2px}
+.portal-sec{margin-bottom:18px}
+.portal-sec h4{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.progress-bar{background:#e5e7eb;border-radius:99px;height:8px;overflow:hidden;margin-bottom:4px}
+.progress-fill{background:#7c3aed;height:100%;border-radius:99px}
+.plist{list-style:none}
+.plist li{padding:7px 0;border-bottom:1px solid #f0f0ee;display:flex;align-items:center;gap:8px;color:#374151}
+.plist li:last-child{border-bottom:none}
+.ck{color:#22c55e;font-weight:700}
+.analytics-wrap{padding:20px;overflow-x:auto}
+.analytics-cap{font-size:12px;color:#9ca3af;margin-bottom:12px;text-align:center}
+.script-wrap{padding:24px;font-size:13px;color:#374151}
+.script-title{font-size:17px;font-weight:800;color:#111;margin-bottom:20px;border-bottom:2px solid #7c3aed;padding-bottom:12px}
+.ssec{margin-bottom:12px;background:#f7f7f5;border-radius:8px;overflow:hidden}
+.ssec-hdr{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f0f0ee}
+.ssec-hdr .lbl{font-weight:700;color:#111;font-size:13px}
+.ssec-hdr .tim{font-size:11px;color:#9ca3af;margin-left:auto}
+.ssec-body{padding:10px 14px;font-size:12px;color:#6b7280;line-height:1.6}
+.screen-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin:20px 0}
+.nav-btn{background:#1a1a1a;border:1px solid #333;color:#e5e5e5;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.nav-btn:hover{background:#7c3aed;border-color:#7c3aed}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.nav-btn:disabled:hover{background:#1a1a1a;border-color:#333}
+.dots{display:flex;gap:8px}
+.dot-btn{width:8px;height:8px;border-radius:50%;background:#333;border:none;cursor:pointer;transition:background .2s,transform .2s;padding:0}
+.dot-btn.active{background:#7c3aed;transform:scale(1.3)}
+.cta-wrap{text-align:center;margin-top:28px;padding-bottom:16px}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:#7c3aed;color:#fff;font-weight:700;font-size:16px;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background .2s,transform .2s;box-shadow:0 4px 20px rgba(124,58,237,.4)}
+.cta-btn:hover{background:#6d28d9;transform:translateY(-2px);text-decoration:none}
+.cta-price{font-size:14px;opacity:.85;font-weight:500}
+.cta-note{margin-top:8px;font-size:12px;color:#6b7280}
+.faq-section{max-width:720px;margin:0 auto;padding:0 24px 80px}
+.faq-section h2{font-size:28px;font-weight:800;color:#fff;text-align:center;margin-bottom:32px}
+.faq-item{border:1px solid #1f1f1f;border-radius:8px;margin-bottom:10px;overflow:hidden}
+.faq-q{width:100%;background:#141414;border:none;text-align:left;color:#e5e5e5;font-size:15px;font-weight:600;padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q:hover{background:#1a1a1a}
+.faq-q .arrow{transition:transform .3s;font-size:12px;color:#7c3aed}
+.faq-q.open .arrow{transform:rotate(180deg)}
+.faq-a{display:none;padding:16px 20px;font-size:14px;color:#9ca3af;line-height:1.7;border-top:1px solid #1f1f1f}
+.faq-a.open{display:block}
+.footer{text-align:center;padding:32px;border-top:1px solid #1a1a1a;font-size:13px;color:#4b5563}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">FreelanceOS</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="demo.html" style="color:#a78bfa">Demo</a>
+  </div>
+</nav>
+<section class="hero">
+  <h1>See <span>What You're Getting</span></h1>
+  <p>Explore the templates before you buy. Real screens, realistic data, no fluff.</p>
+</section>
+<section class="tabs-section">
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="freelanceos">FreelanceOS</button>
+    <button class="tab-btn" data-tab="creatorhq">CreatorHQ</button>
+    <button class="tab-btn" data-tab="agencyos">AgencyOS</button>
+    <button class="tab-btn" data-tab="youtube">YouTube Empire</button>
+  </div>
+
+  <!-- FREELANCEOS -->
+  <div class="product-panel active" id="panel-freelanceos">
+    <div class="screen-label">FreelanceOS Pro &mdash; <span class="sc-freelanceos">Screen 1 of 3</span></div>
+    <div class="screen-title" id="title-freelanceos">Client Dashboard</div>
+    <!-- Screen 1 -->
+    <div class="mockup-card sc-panel-freelanceos" id="fos-0">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#128101; Clients &mdash; FreelanceOS</span></div>
+      <div style="padding:16px;overflow-x:auto">
+        <table class="notion-table">
+          <thead><tr><th>Name</th><th>Status</th><th>Project</th><th>Rate</th><th>Next Due</th><th>Revenue</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Acme Corp</strong></td><td><span class="badge bg">Active</span></td><td>Web redesign</td><td>$95/hr</td><td>Dec 15</td><td>$2,850</td></tr>
+            <tr><td><strong>TechStart</strong></td><td><span class="badge bg">Active</span></td><td>SEO campaign</td><td>$75/hr</td><td>Dec 20</td><td>$1,500</td></tr>
+            <tr><td><strong>BlueBird Co</strong></td><td><span class="badge by">Proposal</span></td><td>Brand identity</td><td>$85/hr</td><td>&mdash;</td><td>&mdash;</td></tr>
+            <tr><td><strong>RetailCo</strong></td><td><span class="badge bgr">Completed</span></td><td>Email campaign</td><td>$70/hr</td><td>&mdash;</td><td>$4,200</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Screen 2 -->
+    <div class="mockup-card sc-panel-freelanceos" id="fos-1" style="display:none">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#128196; Invoice #0042</span></div>
+      <div class="invoice-wrap">
+        <div class="invoice-header">
+          <div class="invoice-from"><strong>Your Business Name</strong>hello@yourbusiness.com<br>yourbusiness.com</div>
+          <div class="invoice-num"><h2>INVOICE</h2><div style="font-size:18px;color:#6b7280;font-weight:600">#0042</div><div style="margin-top:8px"><span class="badge br" style="font-size:13px;padding:4px 12px">UNPAID</span></div></div>
+        </div>
+        <div class="invoice-parties">
+          <div><label>Bill To</label><strong style="color:#111">Acme Corp</strong><br>accounts@acmecorp.com</div>
+          <div><label>Due Date</label><strong style="color:#111">December 15, 2025</strong></div>
+        </div>
+        <table class="invoice-table">
+          <thead><tr><th>Description</th><th>Qty</th><th>Rate</th><th style="text-align:right">Amount</th></tr></thead>
+          <tbody><tr><td>Website Redesign &mdash; Phase 2</td><td>30 hrs</td><td>$95/hr</td><td style="text-align:right;font-weight:600">$2,850.00</td></tr></tbody>
+        </table>
+        <div class="invoice-total-row"><span>Total Due</span><span style="color:#7c3aed">$2,850.00</span></div>
+        <p class="invoice-caption">&#9889; Generated in 60 seconds with FreelanceOS Invoice Template</p>
+      </div>
+    </div>
+    <!-- Screen 3 -->
+    <div class="mockup-card sc-panel-freelanceos" id="fos-2" style="display:none">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#128197; Weekly Focus Planner</span></div>
+      <div class="planner-wrap">
+        <div class="planner-grid">
+          <div></div><div class="planner-hdr">Mon</div><div class="planner-hdr">Tue</div><div class="planner-hdr">Wed</div><div class="planner-hdr">Thu</div><div class="planner-hdr">Fri</div>
+          <div class="planner-time">9am</div><div class="pblock pp">Deep Work: Acme Corp</div><div class="pcell"></div><div class="pcell"></div><div class="pblock pbl">Thu Calls</div><div class="pcell"></div>
+          <div class="planner-time">10am</div><div class="pblock pp">Deep Work cont.</div><div class="pcell"></div><div class="pcell"></div><div class="pblock pbl">Thu Calls cont.</div><div class="pcell"></div>
+          <div class="planner-time">11am</div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div>
+          <div class="planner-time">12pm</div><div class="pblock pgy">Lunch</div><div class="pblock pgy">Lunch</div><div class="pblock pgy">Lunch</div><div class="pblock pgy">Lunch</div><div class="pblock pgy">Lunch</div>
+          <div class="planner-time">1pm</div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div>
+          <div class="planner-time">2pm</div><div class="pcell"></div><div class="pblock pbl">Client Calls</div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div>
+          <div class="planner-time">3pm</div><div class="pcell"></div><div class="pblock pbl">Client Calls cont.</div><div class="pcell"></div><div class="pcell"></div><div class="pblock pgr">Admin+Invoicing</div>
+          <div class="planner-time">4pm</div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div><div class="pblock pgr">Admin+Invoicing</div>
+          <div class="planner-time">5pm</div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div><div class="pcell"></div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-nav">
+      <button class="nav-btn" id="prev-freelanceos" onclick="changeScreen('freelanceos',-1)" disabled>&#8592;</button>
+      <div class="dots" id="dots-freelanceos">
+        <button class="dot-btn active" onclick="goScreen('freelanceos',0)"></button>
+        <button class="dot-btn" onclick="goScreen('freelanceos',1)"></button>
+        <button class="dot-btn" onclick="goScreen('freelanceos',2)"></button>
+      </div>
+      <button class="nav-btn" id="next-freelanceos" onclick="changeScreen('freelanceos',1)">&#8594;</button>
+    </div>
+    <div class="cta-wrap">
+      <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="cta-btn" target="_blank" rel="noopener">Get FreelanceOS Pro <span class="cta-price">$17.40 with FLASH40</span></a>
+      <div class="cta-note">Instant Notion template delivery &mdash; customize everything in minutes</div>
+    </div>
+  </div>
+  <!-- CREATORHQ -->
+  <div class="product-panel" id="panel-creatorhq">
+    <div class="screen-label">CreatorHQ Pro &mdash; <span class="sc-creatorhq">Screen 1 of 3</span></div>
+    <div class="screen-title" id="title-creatorhq">Content Calendar</div>
+    <!-- Screen 1 -->
+    <div class="mockup-card sc-panel-creatorhq" id="chq-0">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#128197; Content Calendar &mdash; Week View</span></div>
+      <div class="cal-wrap">
+        <div class="cal-grid">
+          <div class="cal-day">MON</div>
+          <div class="cal-entries">
+            <div class="cal-entry"><span class="pl badge br">YouTube</span>5 Notion templates you need<span class="es">Filming</span></div>
+            <div class="cal-entry"><span class="pl badge bp">Instagram</span>BTS workspace<span class="es">Scheduled</span></div>
+            <div class="cal-entry"><span class="pl badge bb">Twitter/X</span>Thread: productivity tips<span class="es">Draft</span></div>
+          </div>
+          <div class="cal-sep"></div>
+          <div class="cal-day">TUE</div>
+          <div class="cal-entries"><div class="cal-entry" style="color:#9ca3af;font-style:italic">No posts scheduled</div></div>
+          <div class="cal-sep"></div>
+          <div class="cal-day">WED</div>
+          <div class="cal-entries"><div class="cal-entry"><span class="pl badge bo">Newsletter</span>Weekly roundup<span class="es">Writing</span></div></div>
+          <div class="cal-sep"></div>
+          <div class="cal-day">THU</div>
+          <div class="cal-entries"><div class="cal-entry" style="color:#9ca3af;font-style:italic">No posts scheduled</div></div>
+          <div class="cal-sep"></div>
+          <div class="cal-day">FRI</div>
+          <div class="cal-entries"><div class="cal-entry"><span class="pl badge br">YouTube</span>Review: best productivity apps<span class="es">Editing</span></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Screen 2 -->
+    <div class="mockup-card sc-panel-creatorhq" id="chq-1" style="display:none">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#128161; Idea Vault</span></div>
+      <div class="kanban-wrap">
+        <div class="kanban-board">
+          <div class="kanban-col">
+            <div class="kch">&#128161; Ideas</div>
+            <div class="kcard"><div class="kt">My morning routine as a creator</div><div class="km">YouTube &bull; Long-form</div></div>
+            <div class="kcard"><div class="kt">Top 10 free Notion templates</div><div class="km">YouTube &bull; List video</div></div>
+            <div class="kcard"><div class="kt">How I batch record content</div><div class="km">Instagram &bull; Reel</div></div>
+            <div class="kcard"><div class="kt">Creator burnout thread</div><div class="km">Twitter/X &bull; Thread</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch">&#9997;&#65039; Writing</div>
+            <div class="kcard"><div class="kt">5 tools I use every day</div><div class="km">YouTube &bull; Script 60%</div></div>
+            <div class="kcard"><div class="kt">Newsletter #24 draft</div><div class="km">Newsletter &bull; Body done</div></div>
+            <div class="kcard"><div class="kt">Notion for beginners guide</div><div class="km">Blog &bull; Outline</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch">&#127909; Production</div>
+            <div class="kcard"><div class="kt">5 Notion templates you need</div><div class="km">YouTube &bull; Filming today</div></div>
+            <div class="kcard"><div class="kt">BTS workspace tour</div><div class="km">Instagram &bull; Editing</div></div>
+            <div class="kcard"><div class="kt">Review: productivity apps</div><div class="km">YouTube &bull; B-roll needed</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch">&#9989; Published</div>
+            <div class="kcard"><div class="kt">How I went from 0 to 10K subs</div><div class="km">YouTube &bull; 42K views</div></div>
+            <div class="kcard"><div class="kt">My Notion setup 2025</div><div class="km">YouTube &bull; 18K views</div></div>
+            <div class="kcard"><div class="kt">Weekly roundup #23</div><div class="km">Newsletter &bull; 68% open rate</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Screen 3 -->
+    <div class="mockup-card sc-panel-creatorhq" id="chq-2" style="display:none">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#127912; Brand Kit</span></div>
+      <div class="brand-wrap">
+        <div class="brand-section">
+          <h3>Brand Colors</h3>
+          <div class="color-swatches">
+            <div><div class="swatch" style="background:#7C3AED"></div><div class="swatch-label">#7C3AED</div></div>
+            <div><div class="swatch" style="background:#DB2777"></div><div class="swatch-label">#DB2777</div></div>
+            <div><div class="swatch" style="background:#F59E0B"></div><div class="swatch-label">#F59E0B</div></div>
+            <div><div class="swatch" style="background:#0F0F0F;border:1px solid #e5e5e5"></div><div class="swatch-label">#0F0F0F</div></div>
+          </div>
+        </div>
+        <div class="brand-section">
+          <h3>Typography</h3>
+          <div class="font-row"><span style="font-weight:700;color:#111">Headings</span><span style="color:#6b7280">Inter Bold, 700</span></div>
+          <div class="font-row"><span style="color:#374151">Body</span><span style="color:#6b7280">Inter Regular, 400</span></div>
+        </div>
+        <div class="brand-section">
+          <h3>Brand Voice</h3>
+          <span class="vp">Authentic</span><span class="vp">Educational</span><span class="vp">Energetic</span>
+          <p style="margin-top:10px;font-size:12px;color:#6b7280;line-height:1.6">We speak directly to creators who want systems, not shortcuts. Honest, practical, never preachy.</p>
+        </div>
+        <div class="brand-section">
+          <h3>Target Audience</h3>
+          <ul style="list-style:none;font-size:13px;color:#374151">
+            <li style="padding:5px 0">&#8226; Content creators earning $1K&ndash;$10K/month</li>
+            <li style="padding:5px 0">&#8226; YouTubers and newsletter writers scaling their output</li>
+            <li style="padding:5px 0">&#8226; Freelancers who create content as a lead gen strategy</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="screen-nav">
+      <button class="nav-btn" id="prev-creatorhq" onclick="changeScreen('creatorhq',-1)" disabled>&#8592;</button>
+      <div class="dots" id="dots-creatorhq">
+        <button class="dot-btn active" onclick="goScreen('creatorhq',0)"></button>
+        <button class="dot-btn" onclick="goScreen('creatorhq',1)"></button>
+        <button class="dot-btn" onclick="goScreen('creatorhq',2)"></button>
+      </div>
+      <button class="nav-btn" id="next-creatorhq" onclick="changeScreen('creatorhq',1)">&#8594;</button>
+    </div>
+    <div class="cta-wrap">
+      <a href="https://buy.stripe.com/bJe14nbZ3gvTdan0Dk6kg0w?prefilled_promo_code=FLASH40" class="cta-btn" target="_blank" rel="noopener">Get CreatorHQ Pro <span class="cta-price">$17.40 with FLASH40</span></a>
+      <div class="cta-note">Instant Notion template delivery &mdash; customize everything in minutes</div>
+    </div>
+  </div>
+  <!-- AGENCYOS -->
+  <div class="product-panel" id="panel-agencyos">
+    <div class="screen-label">AgencyOS Pro &mdash; <span class="sc-agencyos">Screen 1 of 3</span></div>
+    <div class="screen-title" id="title-agencyos">Projects Pipeline</div>
+    <!-- Screen 1 -->
+    <div class="mockup-card sc-panel-agencyos" id="aos-0">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#128203; Projects Pipeline &mdash; AgencyOS</span></div>
+      <div class="kanban-wrap">
+        <div class="kanban-board">
+          <div class="kanban-col">
+            <div class="kch"><span class="badge bb">&#128269;</span> Discovery</div>
+            <div class="kcard"><div class="kt">Zenith Media</div><div class="km">Brand strategy &bull; Due Jan 10</div></div>
+            <div class="kcard"><div class="kt">Harbor Goods</div><div class="km">Web audit &bull; Intro call done</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch"><span class="badge by">&#128203;</span> Proposal</div>
+            <div class="kcard"><div class="kt">BlueBird Co</div><div class="km">Full rebrand &bull; $18K proposed</div></div>
+            <div class="kcard"><div class="kt">NovaTech</div><div class="km">SEO retainer &bull; $2.5K/mo</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch"><span class="badge bg">&#9889;</span> Active</div>
+            <div class="kcard"><div class="kt">Acme Corp</div><div class="km">Web redesign &bull; Phase 2</div></div>
+            <div class="kcard"><div class="kt">RetailFlow</div><div class="km">Email marketing &bull; Week 3/8</div></div>
+            <div class="kcard"><div class="kt">SkyBridge</div><div class="km">Social media mgmt</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch"><span class="badge bo">&#128065;</span> Review</div>
+            <div class="kcard"><div class="kt">GreenPath</div><div class="km">Logo revisions &bull; Round 2</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch"><span class="badge bgr">&#9989;</span> Complete</div>
+            <div class="kcard"><div class="kt">StartupX</div><div class="km">Brand identity &bull; $12,400</div></div>
+            <div class="kcard"><div class="kt">LocalBiz</div><div class="km">Website &bull; $6,200</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Screen 2 -->
+    <div class="mockup-card sc-panel-agencyos" id="aos-1" style="display:none">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#127968; Client Portal &mdash; Shared View</span></div>
+      <div class="portal-wrap">
+        <div class="portal-hdr">
+          <h2>CLIENT: Acme Corp</h2>
+          <div class="ps">Web Redesign Project &bull; Started Nov 1, 2025 &bull; Est. Completion Jan 15, 2026</div>
+        </div>
+        <div class="portal-sec">
+          <h4>Project Status</h4>
+          <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+          <div style="font-size:12px;color:#6b7280;margin-top:4px">65% complete &mdash; Phase 2 in progress</div>
+        </div>
+        <div class="portal-sec">
+          <h4>Deliverables</h4>
+          <ul class="plist">
+            <li><span class="ck">&#10003;</span> Discovery &amp; Sitemap</li>
+            <li><span class="ck">&#10003;</span> Wireframes (approved)</li>
+            <li><span class="ck">&#10003;</span> Design mockups &mdash; Desktop</li>
+            <li><span style="color:#f59e0b">&#9203;</span> Design mockups &mdash; Mobile (in review)</li>
+            <li style="color:#9ca3af">&#9675; Development build</li>
+            <li style="color:#9ca3af">&#9675; QA &amp; Launch</li>
+          </ul>
+        </div>
+        <div class="portal-sec">
+          <h4>Recent Updates</h4>
+          <div style="font-size:12px;color:#374151;background:#f7f7f5;border-radius:6px;padding:10px 14px">Dec 5 &mdash; Mobile mockups sent for review. Feedback needed by Dec 10.</div>
+        </div>
+        <div class="portal-sec">
+          <h4>Next Steps</h4>
+          <ul style="font-size:13px;color:#374151;list-style:none">
+            <li style="padding:4px 0">1. Client reviews mobile mockups by Dec 10</li>
+            <li style="padding:4px 0">2. Dev kickoff call &mdash; Dec 12</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Screen 3 -->
+    <div class="mockup-card sc-panel-agencyos" id="aos-2" style="display:none">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#128101; Team Dashboard</span></div>
+      <div style="padding:16px;overflow-x:auto">
+        <table class="notion-table">
+          <thead><tr><th>Team Member</th><th>Role</th><th>Active Projects</th><th>Hours This Week</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Alex Rivera</strong></td><td>Lead Designer</td><td>3</td><td>38 hrs</td><td><span class="badge bg">On Track</span></td></tr>
+            <tr><td><strong>Sam Chen</strong></td><td>Developer</td><td>2</td><td>42 hrs</td><td><span class="badge by">Near Capacity</span></td></tr>
+            <tr><td><strong>Jordan Lee</strong></td><td>Project Manager</td><td>5</td><td>35 hrs</td><td><span class="badge bg">On Track</span></td></tr>
+            <tr><td><strong>Morgan K.</strong></td><td>Copywriter</td><td>4</td><td>30 hrs</td><td><span class="badge bg">On Track</span></td></tr>
+            <tr><td><strong>Riley P.</strong></td><td>SEO Specialist</td><td>3</td><td>28 hrs</td><td><span class="badge bgr">Light Load</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="screen-nav">
+      <button class="nav-btn" id="prev-agencyos" onclick="changeScreen('agencyos',-1)" disabled>&#8592;</button>
+      <div class="dots" id="dots-agencyos">
+        <button class="dot-btn active" onclick="goScreen('agencyos',0)"></button>
+        <button class="dot-btn" onclick="goScreen('agencyos',1)"></button>
+        <button class="dot-btn" onclick="goScreen('agencyos',2)"></button>
+      </div>
+      <button class="nav-btn" id="next-agencyos" onclick="changeScreen('agencyos',1)">&#8594;</button>
+    </div>
+    <div class="cta-wrap">
+      <a href="https://buy.stripe.com/aFafZh0glenL9Yb71I6kg0D?prefilled_promo_code=FLASH40" class="cta-btn" target="_blank" rel="noopener">Get AgencyOS Pro <span class="cta-price">$29.40 with FLASH40</span></a>
+      <div class="cta-note">Instant Notion template delivery &mdash; customize everything in minutes</div>
+    </div>
+  </div>
+  <!-- YOUTUBE EMPIRE -->
+  <div class="product-panel" id="panel-youtube">
+    <div class="screen-label">YouTube Empire &mdash; <span class="sc-youtube">Screen 1 of 3</span></div>
+    <div class="screen-title" id="title-youtube">Video Pipeline</div>
+    <!-- Screen 1 -->
+    <div class="mockup-card sc-panel-youtube" id="yt-0">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#127910; Video Pipeline &mdash; YouTube Empire</span></div>
+      <div class="kanban-wrap">
+        <div class="kanban-board">
+          <div class="kanban-col">
+            <div class="kch">&#128161; Idea</div>
+            <div class="kcard"><div class="kt">My $0 YouTube setup</div><div class="km"><span class="badge br">YouTube</span> Tutorial</div></div>
+            <div class="kcard"><div class="kt">Day in my life as a creator</div><div class="km"><span class="badge bp">Vlog</span></div></div>
+            <div class="kcard"><div class="kt">Best free tools for creators</div><div class="km"><span class="badge bb">List video</span></div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch">&#128221; Script</div>
+            <div class="kcard"><div class="kt">How I made $10K freelancing</div><div class="km">Script 80% &bull; Due Dec 8</div></div>
+            <div class="kcard"><div class="kt">Notion for YouTube creators</div><div class="km">Hook written</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch">&#127909; Filming</div>
+            <div class="kcard"><div class="kt">5 Notion templates you need</div><div class="km">Dec 9 &bull; Studio booked</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch">&#9986;&#65039; Editing</div>
+            <div class="kcard"><div class="kt">Review: best productivity apps</div><div class="km">Rough cut done</div></div>
+            <div class="kcard"><div class="kt">Channel trailer update</div><div class="km">Thumbnail needed</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kch">&#9989; Published</div>
+            <div class="kcard"><div class="kt">How I built a 10K sub channel</div><div class="km">42K views &bull; Dec 1</div></div>
+            <div class="kcard"><div class="kt">My Notion workspace tour</div><div class="km">18K views &bull; Nov 20</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Screen 2 -->
+    <div class="mockup-card sc-panel-youtube" id="yt-1" style="display:none">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#128200; Channel Analytics Tracker</span></div>
+      <div class="analytics-wrap">
+        <div class="analytics-cap">6-month growth trend &mdash; all data is illustrative</div>
+        <table class="notion-table">
+          <thead><tr><th>Month</th><th>Videos</th><th>Total Views</th><th>Subs Added</th><th>Revenue</th><th>Best Performer</th></tr></thead>
+          <tbody>
+            <tr><td>Jul 2025</td><td>4</td><td>8,200</td><td>+310</td><td>$124</td><td style="font-size:12px">"Morning routine"</td></tr>
+            <tr><td>Aug 2025</td><td>5</td><td>14,600</td><td>+520</td><td>$248</td><td style="font-size:12px">"Free tools for creators"</td></tr>
+            <tr><td>Sep 2025</td><td>4</td><td>22,100</td><td>+890</td><td>$410</td><td style="font-size:12px">"Notion workspace tour"</td></tr>
+            <tr><td>Oct 2025</td><td>6</td><td>38,400</td><td>+1,640</td><td>$820</td><td style="font-size:12px">"How I built 10K subs"</td></tr>
+            <tr><td>Nov 2025</td><td>5</td><td>61,200</td><td>+2,800</td><td>$1,540</td><td style="font-size:12px">"My Notion setup"</td></tr>
+            <tr style="background:#f0fdf4"><td><strong>Dec 2025</strong></td><td>4</td><td><strong>84,000</strong></td><td><strong>+4,100</strong></td><td><strong>$2,280</strong></td><td style="font-size:12px"><strong>"Best productivity apps"</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Screen 3 -->
+    <div class="mockup-card sc-panel-youtube" id="yt-2" style="display:none">
+      <span class="preview-note">Preview Only</span>
+      <div class="notion-chrome"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span class="page-title">&#128221; Script Template</span></div>
+      <div class="script-wrap">
+        <div class="script-title">VIDEO TITLE: How I Made $10K as a Freelancer</div>
+        <div class="ssec">
+          <div class="ssec-hdr"><span class="badge br">Hook</span><span class="lbl">Open strong &mdash; grab attention</span><span class="tim">~30 sec</span></div>
+          <div class="ssec-body">"Most people think freelancing takes years to get right. I went from $0 to $10K in 90 days &mdash; and I'm going to show you exactly how..."</div>
+        </div>
+        <div class="ssec">
+          <div class="ssec-hdr"><span class="badge bo">Problem</span><span class="lbl">Establish the pain point</span><span class="tim">~1 min</span></div>
+          <div class="ssec-body">Most freelancers get stuck on pricing, finding clients, and staying organized. Address each pain point before revealing the system.</div>
+        </div>
+        <div class="ssec">
+          <div class="ssec-hdr"><span class="badge bp">Solution</span><span class="lbl">Walk through your method</span><span class="tim">~3 min</span></div>
+          <div class="ssec-body">3 core steps: (1) Niche positioning, (2) Outreach system, (3) Notion-powered client management. Demo the template here.</div>
+        </div>
+        <div class="ssec">
+          <div class="ssec-hdr"><span class="badge bg">Proof</span><span class="lbl">Results &amp; social proof</span><span class="tim">~2 min</span></div>
+          <div class="ssec-body">Show income screenshots, client messages, or testimonials. Be specific with numbers.</div>
+        </div>
+        <div class="ssec">
+          <div class="ssec-hdr"><span class="badge bb">CTA</span><span class="lbl">Call to action</span><span class="tim">~30 sec</span></div>
+          <div class="ssec-body">Subscribe, grab the free template in description, join the newsletter. One clear CTA max.</div>
+        </div>
+        <div class="ssec">
+          <div class="ssec-hdr"><span class="badge bgr">B-Roll Notes</span><span class="lbl">Supplemental footage</span><span class="tim"></span></div>
+          <div class="ssec-body">Desk setup, screen recordings of Notion dashboard, invoice being generated, phone with client messages blurred.</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-nav">
+      <button class="nav-btn" id="prev-youtube" onclick="changeScreen('youtube',-1)" disabled>&#8592;</button>
+      <div class="dots" id="dots-youtube">
+        <button class="dot-btn active" onclick="goScreen('youtube',0)"></button>
+        <button class="dot-btn" onclick="goScreen('youtube',1)"></button>
+        <button class="dot-btn" onclick="goScreen('youtube',2)"></button>
+      </div>
+      <button class="nav-btn" id="next-youtube" onclick="changeScreen('youtube',1)">&#8594;</button>
+    </div>
+    <div class="cta-wrap">
+      <a href="https://buy.stripe.com/14A9AT2ot7ZneerbhY6kg11?prefilled_promo_code=FLASH40" class="cta-btn" target="_blank" rel="noopener">Get YouTube Empire <span class="cta-price">$17.40 with FLASH40</span></a>
+      <div class="cta-note">Instant Notion template delivery &mdash; customize everything in minutes</div>
+    </div>
+  </div>
+</section>
+<section class="faq-section">
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Can I customize these templates?<span class="arrow">&#9660;</span></button>
+    <div class="faq-a">Yes &mdash; completely. Every template is a standard Notion page you duplicate into your own workspace. You can rename properties, add columns, change colors, remove sections you don't need, and make it 100% yours. Most users have their setup personalized within the first hour.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Do I need Notion Pro to use these?<span class="arrow">&#9660;</span></button>
+    <div class="faq-a">No. All templates work with Notion's free plan. A few advanced features benefit from Notion Plus, but the core system works perfectly on the free tier. You can start immediately at zero cost.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">Is this a template or a course?<span class="arrow">&#9660;</span></button>
+    <div class="faq-a">It's a done-for-you Notion template &mdash; not a course. You get a fully-built system you duplicate with one click and start using the same day. There's a quick-start guide included, but no video curriculum or lengthy onboarding. Built for people who want to skip the setup, not sit through hours of training.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">What if I don't like it?<span class="arrow">&#9660;</span></button>
+    <div class="faq-a">Reach out within 14 days and we'll sort it out. These templates are designed to deliver immediate value &mdash; but if for any reason it's not a fit, we'd rather give you a refund than leave you unhappy. No hoops, no lengthy back-and-forth.</div>
+  </div>
+</section>
+<footer class="footer">
+  <p>&copy; 2026 FreelanceOS Storefront &bull; <a href="index.html">Home</a> &bull; <a href="pricing.html">Pricing</a></p>
+</footer>
+<script>
+const screenTitles = {
+  freelanceos: ['Client Dashboard','Invoice Generator','Weekly Focus Planner'],
+  creatorhq: ['Content Calendar','Idea Vault','Brand Kit'],
+  agencyos: ['Projects Pipeline','Client Portal','Team Dashboard'],
+  youtube: ['Video Pipeline','Channel Analytics Tracker','Script Template']
+};
+const curScreen = {freelanceos:0, creatorhq:0, agencyos:0, youtube:0};
+const prefixMap = {freelanceos:'fos', creatorhq:'chq', agencyos:'aos', youtube:'yt'};
+const total = 3;
+function goScreen(product, idx) {
+  const pfx = prefixMap[product];
+  for(let i=0;i<total;i++){
+    const el = document.getElementById(pfx+'-'+i);
+    if(el) el.style.display = i===idx ? 'block' : 'none';
+  }
+  document.querySelectorAll('#dots-'+product+' .dot-btn').forEach(function(d,i){d.classList.toggle('active',i===idx);});
+  document.getElementById('prev-'+product).disabled = idx===0;
+  document.getElementById('next-'+product).disabled = idx===total-1;
+  document.getElementById('title-'+product).textContent = screenTitles[product][idx];
+  document.querySelector('.sc-'+product).textContent = 'Screen '+(idx+1)+' of '+total;
+  curScreen[product] = idx;
+}
+function changeScreen(product, dir) {
+  const next = curScreen[product] + dir;
+  if(next>=0 && next<total) goScreen(product, next);
+}
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+    document.querySelectorAll('.product-panel').forEach(function(p){p.classList.remove('active');});
+    this.classList.add('active');
+    document.getElementById('panel-'+this.dataset.tab).classList.add('active');
+  });
+});
+function toggleFaq(btn) {
+  var answer = btn.nextElementSibling;
+  var isOpen = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(function(b){b.classList.remove('open');});
+  document.querySelectorAll('.faq-a').forEach(function(a){a.classList.remove('open');});
+  if(!isOpen){btn.classList.add('open');answer.classList.add('open');}
+}
+</script>
+<!-- LIVE CHAT: Replace TAWK_PROPERTY_ID with your actual ID from tawk.to -> Settings -> Widget -->
+<!-- <script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/TAWK_PROPERTY_ID/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script> -->
+</body>
+</html>
