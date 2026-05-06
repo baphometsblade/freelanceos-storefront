@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Is This Client Worth It? — Free Client Profit Calculator | FreelanceOS</title>
+  <meta name="description" content="Score your clients from A+ to F. See their true value, scope creep cost, referral potential, and whether you should keep, negotiate, or fire them.">
+  <meta property="og:title" content="Is This Client Worth It? — Free Client Profit Calculator">
+  <meta property="og:description" content="Grade your client from A+ to F. True hourly rate, referral value, scope creep cost, and a health score — all in real time.">
+  <meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/client-profit-calculator.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Is This Client Worth It? — Score Your Client A+ to F">
+  <meta name="twitter:description" content="Calculate your true hourly rate, scope creep cost, referral value, and client health score. Free tool by FreelanceOS.">
+  <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/client-profit-calculator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Client Profit Calculator",
+    "description": "Score your freelance client from A+ to F. Calculate true hourly rate, annual value with referrals, scope creep cost, and a client health score.",
+    "url": "https://baphometsblade.github.io/freelanceos-storefront/client-profit-calculator.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Client grade A+ through F",
+      "True effective hourly rate",
+      "True annual value with referrals",
+      "Scope creep cost calculation",
+      "Client health score gauge",
+      "Verdict and recommendation",
+      "Twitter share button",
+      "Email capture"
+    ],
+    "creator": {
+      "@type": "Organization",
+      "name": "FreelanceOS",
+      "url": "https://baphometsblade.github.io/freelanceos-storefront/"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --bg2: #141414;
+      --bg3: #1a1a1a;
+      --card: #141414;
+      --border: #222222;
+      --purple: #7c3aed;
+      --purple-light: #9d65f5;
+      --purple-dark: #5b21b6;
+      --purple-glow: rgba(124, 58, 237, 0.15);
+      --text: #f0eeff;
+      --text-muted: #8b84a8;
+      --text-dim: #5a5473;
+      --green: #10b981;
+      --yellow: #f59e0b;
+      --orange: #f97316;
+      --red: #ef4444;
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15,15,15,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo span { color: var(--purple-light); }
+
+    .nav-cta {
+      background: var(--purple);
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--purple-light); }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 60px 24px 40px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--purple-glow);
+      border: 1px solid rgba(124,58,237,0.3);
+      color: var(--purple-light);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #7c3aed, #9d65f5, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* LAYOUT */
+    .calculator-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .panel-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .input-group { margin-bottom: 22px; }
+
+    .input-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .input-value {
+      font-weight: 700;
+      color: var(--purple-light);
+      font-size: 0.95rem;
+    }
+
+    /* Number input */
+    input[type="number"] {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -moz-appearance: textfield;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    input[type="number"]:focus { border-color: var(--purple); }
+
+    /* Slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: var(--bg3);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--purple);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.15s;
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: var(--purple);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Toggle buttons */
+    .toggle-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-btn {
+      padding: 7px 14px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .toggle-btn:hover {
+      border-color: rgba(124,58,237,0.4);
+      color: var(--text);
+    }
+
+    .toggle-btn.active {
+      background: var(--purple-glow);
+      border-color: var(--purple);
+      color: var(--purple-light);
+    }
+
+    /* RESULTS */
+    .results-panel {
+      position: sticky;
+      top: 80px;
+    }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* BIG GRADE */
+    .grade-display {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: border-color 0.4s;
+    }
+
+    .grade-letter {
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1;
+      min-width: 72px;
+      text-align: center;
+      transition: color 0.4s, transform 0.3s;
+    }
+
+    .grade-info { flex: 1; }
+
+    .grade-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .grade-verdict {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* Health gauge */
+    .health-gauge-wrap {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .gauge-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .gauge-svg { display: block; margin: 0 auto; }
+
+    .gauge-score-text {
+      font-size: 1.8rem;
+      font-weight: 900;
+      fill: var(--text);
+      text-anchor: middle;
+    }
+
+    .gauge-label-text {
+      font-size: 0.6rem;
+      fill: var(--text-dim);
+      text-anchor: middle;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Metrics grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .metric-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      transition: color 0.3s;
+    }
+
+    .metric-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Share + email */
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px;
+      background: rgba(29,161,242,0.1);
+      border: 1px solid rgba(29,161,242,0.3);
+      color: #1da1f2;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 16px;
+    }
+
+    .share-btn:hover { background: rgba(29,161,242,0.2); }
+
+    .upsell-strip {
+      background: linear-gradient(135deg, rgba(91,33,182,0.2), rgba(124,58,237,0.1));
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+
+    .upsell-strip p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .upsell-strip p strong { color: var(--text); }
+
+    .btn {
+      display: inline-block;
+      padding: 11px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .btn-primary { background: var(--purple); color: #fff; width: 100%; }
+    .btn-primary:hover {
+      background: var(--purple-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--purple-light);
+      border: 1px solid rgba(124,58,237,0.4);
+      width: 100%;
+    }
+
+    .btn-outline:hover { background: var(--purple-glow); border-color: var(--purple-light); }
+
+    .email-capture {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    .email-capture-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+
+    .email-capture-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .email-form { display: flex; gap: 8px; }
+
+    .email-input {
+      flex: 1;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .email-input:focus { border-color: var(--purple); }
+    .email-input::placeholder { color: var(--text-dim); }
+
+    .email-submit {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .email-submit:hover { background: var(--purple-light); }
+
+    .email-success {
+      display: none;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.3);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.85rem;
+      color: var(--green);
+      text-align: center;
+    }
+
+    /* Below fold */
+    .below-fold {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .final-cta {
+      background: linear-gradient(135deg, #0f0a1e, #1a0f35);
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .final-cta p {
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto 28px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-lg { padding: 14px 28px; font-size: 1rem; border-radius: 10px; }
+
+    .price-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; }
+    .price-note s { color: var(--text-dim); }
+    .price-note strong { color: var(--purple-light); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+    }
+
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--purple-light); }
+
+    @media (max-width: 860px) {
+      .calculator-grid { grid-template-columns: 1fr; }
+      .results-panel { position: static; }
+      nav { padding: 14px 16px; }
+      .final-cta { padding: 32px 20px; }
+      .email-form { flex-direction: column; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 16px 32px; }
+      .panel { padding: 20px; }
+      .grade-letter { font-size: 3rem; }
+      .toggle-btn { font-size: 0.77rem; padding: 6px 10px; }
+      .metrics-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="https://baphometsblade.github.io/freelanceos-storefront/" class="nav-logo">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="#7c3aed"/><path d="M6 11h10M11 6l5 5-5 5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Freelance<span>OS</span>
+  </a>
+  <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="nav-cta">Get FreelanceOS Pro &rarr;</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="#7c3aed"/><path d="M3.5 6l1.5 1.5L8.5 4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg>
+    Free Tool &mdash; Score Your Client in 30 Seconds
+  </div>
+  <h1>Is This Client<br><em>Worth It?</em></h1>
+  <p class="hero-sub">Enter your client details and get a grade from A+ to F, an effective hourly rate, true annual value, and a plain-English verdict.</p>
+</section>
+
+<div class="calculator-wrapper">
+  <div class="calculator-grid">
+
+    <!-- INPUTS -->
+    <div class="panel">
+      <div class="panel-title">Client Details</div>
+
+      <!-- Monthly Revenue -->
+      <div class="input-group">
+        <div class="input-label"><span>Monthly Revenue from Client ($)</span></div>
+        <input type="number" id="monthlyRevenue" value="2000" min="0" step="100" oninput="updateCalc()">
+      </div>
+
+      <!-- Hours per month -->
+      <div class="input-group">
+        <div class="input-label">
+          <span>Hours per Month</span>
+          <span class="input-value" id="hoursDisplay">20 hrs</span>
+        </div>
+        <input type="range" id="hoursMonth" min="1" max="160" step="1" value="20" oninput="updateCalc()">
+      </div>
+
+      <!-- Payment Terms -->
+      <div class="input-group">
+        <div class="input-label"><span>Payment Terms</span></div>
+        <div class="toggle-group" id="paymentGroup">
+          <button class="toggle-btn active" data-val="net0"  onclick="setToggle('payment','net0',this)">Net 0</button>
+          <button class="toggle-btn"        data-val="net15" onclick="setToggle('payment','net15',this)">Net 15</button>
+          <button class="toggle-btn"        data-val="net30" onclick="setToggle('payment','net30',this)">Net 30</button>
+          <button class="toggle-btn"        data-val="net60" onclick="setToggle('payment','net60',this)">Net 60</button>
+          <button class="toggle-btn"        data-val="net90" onclick="setToggle('payment','net90',this)">Net 90</button>
+        </div>
+      </div>
+
+      <!-- Revision Requests -->
+      <div class="input-group">
+        <div class="input-label"><span>Revision Requests</span></div>
+        <div class="toggle-group" id="revisionGroup">
+          <button class="toggle-btn active" data-val="none"      onclick="setToggle('revision','none',this)">None</button>
+          <button class="toggle-btn"        data-val="occasional" onclick="setToggle('revision','occasional',this)">Occasional</button>
+          <button class="toggle-btn"        data-val="frequent"  onclick="setToggle('revision','frequent',this)">Frequent</button>
+          <button class="toggle-btn"        data-val="nightmare" onclick="setToggle('revision','nightmare',this)">Nightmare</button>
+        </div>
+      </div>
+
+      <!-- Referral Likelihood -->
+      <div class="input-group">
+        <div class="input-label"><span>Referral Likelihood</span></div>
+        <div class="toggle-group" id="referralGroup">
+          <button class="toggle-btn active" data-val="low"    onclick="setToggle('referral','low',this)">Low</button>
+          <button class="toggle-btn"        data-val="medium" onclick="setToggle('referral','medium',this)">Medium</button>
+          <button class="toggle-btn"        data-val="high"   onclick="setToggle('referral','high',this)">High</button>
+        </div>
+      </div>
+
+      <!-- Scope Creep Risk -->
+      <div class="input-group">
+        <div class="input-label"><span>Scope Creep Risk</span></div>
+        <div class="toggle-group" id="scopeGroup">
+          <button class="toggle-btn active" data-val="low"    onclick="setToggle('scope','low',this)">Low</button>
+          <button class="toggle-btn"        data-val="medium" onclick="setToggle('scope','medium',this)">Medium</button>
+          <button class="toggle-btn"        data-val="high"   onclick="setToggle('scope','high',this)">High</button>
+        </div>
+      </div>
+
+      <!-- Stress Level -->
+      <div class="input-group">
+        <div class="input-label"><span>Stress Level</span></div>
+        <div class="toggle-group" id="stressGroup">
+          <button class="toggle-btn active" data-val="low"     onclick="setToggle('stress','low',this)">&#128522; Low</button>
+          <button class="toggle-btn"        data-val="medium"  onclick="setToggle('stress','medium',this)">&#128528; Medium</button>
+          <button class="toggle-btn"        data-val="high"    onclick="setToggle('stress','high',this)">&#128548; High</button>
+          <button class="toggle-btn"        data-val="veryhigh" onclick="setToggle('stress','veryhigh',this)">&#129327; Very High</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="panel results-panel">
+      <div class="results-header">
+        <div class="panel-title" style="margin-bottom:0">Client Score</div>
+        <div class="live-badge">
+          <div class="live-dot"></div>
+          Live
+        </div>
+      </div>
+
+      <!-- Grade -->
+      <div class="grade-display" id="gradeDisplay">
+        <div class="grade-letter" id="gradeLetter">A+</div>
+        <div class="grade-info">
+          <div class="grade-label">Client Grade</div>
+          <div class="grade-verdict" id="gradeVerdict">Loading...</div>
+        </div>
+      </div>
+
+      <!-- Health gauge -->
+      <div class="health-gauge-wrap">
+        <div class="gauge-title">Client Health Score</div>
+        <svg class="gauge-svg" width="200" height="120" viewBox="0 0 200 120">
+          <!-- Background arc -->
+          <path d="M 20 110 A 80 80 0 0 1 180 110"
+                fill="none" stroke="#222" stroke-width="16" stroke-linecap="round"/>
+          <!-- Colored arc -->
+          <path id="gaugeArc"
+                d="M 20 110 A 80 80 0 0 1 180 110"
+                fill="none" stroke="#10b981" stroke-width="16" stroke-linecap="round"
+                stroke-dasharray="251" stroke-dashoffset="63"
+                style="transition: stroke-dashoffset 0.6s cubic-bezier(0.34,1.56,0.64,1), stroke 0.4s;"/>
+          <!-- Score text -->
+          <text id="gaugeScoreText" x="100" y="95" class="gauge-score-text">80</text>
+          <text x="100" y="115" class="gauge-label-text">/ 100</text>
+        </svg>
+      </div>
+
+      <!-- Metrics -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Effective Hourly Rate</div>
+          <div class="metric-value" id="effHourly">—</div>
+          <div class="metric-sub" id="effHourlySub">base hourly</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">True Annual Value</div>
+          <div class="metric-value" id="trueAnnual">—</div>
+          <div class="metric-sub" id="trueAnnualSub">incl. referrals</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Scope Creep Cost</div>
+          <div class="metric-value" id="scopeCost">—</div>
+          <div class="metric-sub">unpaid hours/mo</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Adjusted Hourly</div>
+          <div class="metric-value" id="adjHourly">—</div>
+          <div class="metric-sub">after scope creep</div>
+        </div>
+      </div>
+
+      <!-- Share -->
+      <button class="share-btn" onclick="shareOnTwitter()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        My client scored a <span id="shareGrade">A+</span>! Is YOUR client worth it?
+      </button>
+
+      <!-- Upsell -->
+      <div class="upsell-strip">
+        <p><strong>Good clients are worth protecting. Bad clients cost you money.</strong> FreelanceOS Pro helps you track every client's profitability, manage scope, and spot red flags before they become expensive problems.</p>
+        <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="btn btn-primary">Get FreelanceOS Pro &rarr;</a>
+      </div>
+
+      <!-- Email capture -->
+      <div class="email-capture">
+        <div class="email-capture-title">Want this breakdown as PDF?</div>
+        <div class="email-capture-sub">Enter your email and we'll send your client profitability report</div>
+        <div class="email-form">
+          <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
+          <button class="email-submit" onclick="submitEmail()">Send It</button>
+        </div>
+        <div class="email-success" id="emailSuccess">
+          &#10003; Sent! Check your inbox for your client profit report.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Below fold -->
+<div class="below-fold">
+  <div class="final-cta">
+    <h2>Want a full freelance business system?</h2>
+    <p>FreelanceOS Pro gives you client dashboards, profitability tracking, scope management, and invoice automation &mdash; all in Notion.</p>
+    <div class="cta-group">
+      <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="btn btn-primary btn-lg">Try FreelanceOS Pro &rarr;</a>
+      <a href="https://buy.stripe.com/7sY28r5AFenL4DR2Ls6kg0x?prefilled_promo_code=FLASH40" class="btn btn-outline btn-lg">Bundle Deal &rarr;</a>
+    </div>
+    <div class="price-note">FreelanceOS Pro: <s>$49</s> &rarr; <strong>$29 with FLASH40</strong></div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 FreelanceOS &nbsp;&middot;&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/">Home</a> &nbsp;&middot;&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/free-templates.html">Free Tools</a> &nbsp;&middot;&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/freelance-project-estimator.html">Project Estimator</a> &nbsp;&middot;&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/freelance-rate-calculator.html">Rate Calculator</a>
+  </p>
+</footer>
+
+<script>
+  // ── State ──
+  const state = {
+    payment:  'net0',
+    revision: 'none',
+    referral: 'low',
+    scope:    'low',
+    stress:   'low'
+  };
+
+  // ── Multipliers / adjustments ──
+  const PAYMENT_CARRYING = { net0: 0, net15: 0.005, net30: 0.01, net60: 0.025, net90: 0.05 };
+  const SCOPE_HOURS_ADD  = { low: 0, medium: 0.15, high: 0.30 };
+  const REFERRAL_REVENUE = { low: 0, medium: 0.20, high: 0.40 };
+
+  // Grade scoring (starts at 80, adjustments)
+  const PAYMENT_SCORE  = { net0: +10, net15: +5, net30: -5, net60: -15, net90: -25 };
+  const REVISION_SCORE = { none: +5, occasional: 0, frequent: -10, nightmare: -20 };
+  const REFERRAL_SCORE = { low: 0, medium: +5, high: +10 };
+  const SCOPE_SCORE    = { low: 0, medium: -10, high: -20 };
+  const STRESS_SCORE   = { low: 0, medium: -5, high: -15, veryhigh: -25 };
+
+  const GRADE_SCALE = [
+    { min: 90, grade: 'A+', color: '#10b981', verdict: '&#128640; Keep and clone this client!' },
+    { min: 80, grade: 'A',  color: '#34d399', verdict: '&#128640; Excellent client — protect this relationship.' },
+    { min: 70, grade: 'B+', color: '#6ee7b7', verdict: '&#128077; Solid client — good long-term fit.' },
+    { min: 60, grade: 'B',  color: '#a3e635', verdict: '&#128077; Good client — minor things to tighten up.' },
+    { min: 50, grade: 'C+', color: '#facc15', verdict: '&#9888;&#65039; Average client — negotiate better terms.' },
+    { min: 40, grade: 'C',  color: '#f59e0b', verdict: '&#9888;&#65039; Below average — consider raising rates.' },
+    { min: 30, grade: 'D',  color: '#f97316', verdict: '&#128680; Problem client — set firm boundaries or exit.' },
+    { min: 0,  grade: 'F',  color: '#ef4444', verdict: '&#128680; Fire this client immediately.' }
+  ];
+
+  function fmt(n) {
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function setToggle(group, val, btn) {
+    state[group] = val;
+    const groupId = group + 'Group';
+    document.querySelectorAll('#' + groupId + ' .toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    updateCalc();
+  }
+
+  // Arc length for a 180-degree arc with r=80: pi*r = 251.3
+  const ARC_LEN = 251.3;
+
+  function updateGaugeArc(score) {
+    const pct = Math.max(0, Math.min(score, 100)) / 100;
+    // dashoffset: 0 = full arc, ARC_LEN = empty
+    const offset = ARC_LEN - (pct * ARC_LEN);
+    const arc = document.getElementById('gaugeArc');
+    arc.style.strokeDashoffset = offset;
+
+    // Color gradient: green at 80+, yellow 50-80, red <50
+    let color;
+    if (score >= 80) color = '#10b981';
+    else if (score >= 60) color = '#f59e0b';
+    else if (score >= 40) color = '#f97316';
+    else color = '#ef4444';
+    arc.style.stroke = color;
+
+    document.getElementById('gaugeScoreText').textContent = Math.round(score);
+  }
+
+  function updateCalc() {
+    const monthlyRevenue = parseFloat(document.getElementById('monthlyRevenue').value) || 0;
+    const hoursMonth     = parseFloat(document.getElementById('hoursMonth').value);
+
+    document.getElementById('hoursDisplay').textContent = hoursMonth + ' hrs';
+
+    // Carrying cost (payment terms reduce effective revenue)
+    const carryingCost  = monthlyRevenue * PAYMENT_CARRYING[state.payment];
+    const effectiveMonthly = monthlyRevenue - carryingCost;
+
+    // Scope creep: additional unpaid hours
+    const extraHours    = hoursMonth * SCOPE_HOURS_ADD[state.scope];
+    const totalHours    = hoursMonth + extraHours;
+
+    // Effective hourly (base)
+    const baseHourly    = hoursMonth > 0 ? effectiveMonthly / hoursMonth : 0;
+
+    // Adjusted hourly (after scope creep)
+    const adjHourlyRate = totalHours > 0 ? effectiveMonthly / totalHours : 0;
+
+    // True annual value (includes referral multiplier)
+    const referralMultiplier = 1 + REFERRAL_REVENUE[state.referral];
+    const trueAnnual  = effectiveMonthly * 12 * referralMultiplier;
+
+    // Scope creep cost (hours)
+    const scopeCostHours = extraHours.toFixed(1);
+
+    // ── Grade ──
+    let score = 80;
+    score += PAYMENT_SCORE[state.payment];
+    score += REVISION_SCORE[state.revision];
+    score += REFERRAL_SCORE[state.referral];
+    score += SCOPE_SCORE[state.scope];
+    score += STRESS_SCORE[state.stress];
+    score = Math.max(0, Math.min(100, score));
+
+    const gradeInfo = GRADE_SCALE.find(g => score >= g.min) || GRADE_SCALE[GRADE_SCALE.length - 1];
+
+    // Update grade
+    const gradeLetter  = document.getElementById('gradeLetter');
+    const gradeVerdict = document.getElementById('gradeVerdict');
+    const gradeDisplay = document.getElementById('gradeDisplay');
+
+    gradeLetter.textContent  = gradeInfo.grade;
+    gradeLetter.style.color  = gradeInfo.color;
+    gradeVerdict.innerHTML   = gradeInfo.verdict;
+    gradeDisplay.style.borderColor = gradeInfo.color + '44';
+
+    // Update gauge
+    updateGaugeArc(score);
+
+    // Update metrics
+    document.getElementById('effHourly').textContent    = fmt(baseHourly) + '/hr';
+    document.getElementById('effHourlySub').textContent = 'base effective rate';
+    document.getElementById('trueAnnual').textContent   = fmt(trueAnnual);
+    document.getElementById('trueAnnualSub').textContent = state.referral === 'low' ? 'no referral bonus' : '+' + Math.round(REFERRAL_REVENUE[state.referral] * 100) + '% referral value';
+    document.getElementById('scopeCost').textContent    = scopeCostHours + ' hrs';
+    document.getElementById('adjHourly').textContent    = fmt(adjHourlyRate) + '/hr';
+
+    // Share
+    document.getElementById('shareGrade').textContent = gradeInfo.grade;
+  }
+
+  function submitEmail() {
+    const email = document.getElementById('emailInput').value.trim();
+    if (!email || !email.includes('@')) {
+      const el = document.getElementById('emailInput');
+      el.focus();
+      el.style.borderColor = '#ef4444';
+      setTimeout(() => { el.style.borderColor = ''; }, 1500);
+      return;
+    }
+
+    fetch('https://freelanceos-api.vercel.app/api/capture-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        page: 'client-profit-calculator',
+        source: 'tool-cta',
+        data: {
+          monthlyRevenue: parseFloat(document.getElementById('monthlyRevenue').value) || 0,
+          payment: state.payment,
+          scope: state.scope,
+          stress: state.stress
+        }
+      })
+    }).catch(() => {});
+
+    document.querySelector('.email-form').style.display = 'none';
+    document.getElementById('emailSuccess').style.display = 'block';
+  }
+
+  function shareOnTwitter() {
+    const grade = document.getElementById('shareGrade').textContent;
+    const url   = 'https://baphometsblade.github.io/freelanceos-storefront/client-profit-calculator.html';
+    const text  = encodeURIComponent(
+      `My client scored a ${grade}!\n\nIs YOUR client worth it? Find out with this free calculator:\n${url}`
+    );
+    window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
+  }
+
+  // Init
+  updateCalc();
+</script>
+
+</body>
+</html>

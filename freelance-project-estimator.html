@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freelance Project Estimator — How Much Should This Project Cost? | FreelanceOS</title>
+  <meta name="description" content="Stop guessing your project price. Enter project type, complexity, timeline, and client type — get your budget, recommended, and premium project rate instantly.">
+  <meta property="og:title" content="How Much Should This Project Cost? — Free Freelance Project Estimator">
+  <meta property="og:description" content="Calculate the right price for any freelance project in 30 seconds. Budget, recommended, and premium rates with a full breakdown.">
+  <meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/freelance-project-estimator.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Freelance Project Estimator — What Should You Charge?">
+  <meta name="twitter:description" content="Get instant project pricing for any freelance job. Budget, recommended, and premium rates with full breakdown.">
+  <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/freelance-project-estimator.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Freelance Project Estimator",
+    "description": "Calculate the right price for any freelance project. Get budget, recommended, and premium rates based on project type, complexity, timeline, client type, and experience level.",
+    "url": "https://baphometsblade.github.io/freelanceos-storefront/freelance-project-estimator.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Real-time project rate calculation",
+      "7 input variables",
+      "Three-tier pricing (Budget / Recommended / Premium)",
+      "Full rate breakdown table",
+      "Effective hourly rate at each tier",
+      "Twitter share button",
+      "Email capture for PDF breakdown"
+    ],
+    "creator": {
+      "@type": "Organization",
+      "name": "FreelanceOS",
+      "url": "https://baphometsblade.github.io/freelanceos-storefront/"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --bg2: #141414;
+      --bg3: #1a1a1a;
+      --card: #141414;
+      --border: #222222;
+      --purple: #7c3aed;
+      --purple-light: #9d65f5;
+      --purple-dark: #5b21b6;
+      --purple-glow: rgba(124, 58, 237, 0.15);
+      --text: #f0eeff;
+      --text-muted: #8b84a8;
+      --text-dim: #5a5473;
+      --green: #10b981;
+      --yellow: #f59e0b;
+      --orange: #f97316;
+      --red: #ef4444;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.5);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15,15,15,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo span { color: var(--purple-light); }
+
+    .nav-cta {
+      background: var(--purple);
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--purple-light); }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 60px 24px 40px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--purple-glow);
+      border: 1px solid rgba(124,58,237,0.3);
+      color: var(--purple-light);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #7c3aed, #9d65f5, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* LAYOUT */
+    .calculator-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .panel-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .input-group { margin-bottom: 22px; }
+
+    .input-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .input-value {
+      font-weight: 700;
+      color: var(--purple-light);
+      font-size: 0.95rem;
+    }
+
+    /* Selects */
+    select {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b84a8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      transition: border-color 0.2s;
+    }
+
+    select:focus { border-color: var(--purple); }
+    select option { background: #1a1a1a; }
+
+    /* Toggle buttons */
+    .toggle-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-btn {
+      padding: 7px 14px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .toggle-btn:hover {
+      border-color: rgba(124,58,237,0.4);
+      color: var(--text);
+    }
+
+    .toggle-btn.active {
+      background: var(--purple-glow);
+      border-color: var(--purple);
+      color: var(--purple-light);
+    }
+
+    /* Slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: var(--bg3);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--purple);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 5px rgba(124,58,237,0.3);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: var(--purple);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* Checkbox */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--purple);
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    /* RESULTS */
+    .results-panel {
+      position: sticky;
+      top: 80px;
+    }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* Price cards */
+    .price-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .price-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      transition: border-color 0.2s;
+    }
+
+    .price-card.featured {
+      background: var(--purple-glow);
+      border-color: rgba(124,58,237,0.4);
+    }
+
+    .price-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    .price-tier {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+    }
+
+    .price-card.featured .price-tier { color: var(--purple-light); }
+
+    .price-tag-badge {
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+
+    .tag-budget { background: rgba(16,185,129,0.15); color: var(--green); }
+    .tag-rec    { background: rgba(124,58,237,0.2); color: var(--purple-light); }
+    .tag-prem   { background: rgba(249,115,22,0.15); color: var(--orange); }
+
+    .price-value {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      transition: all 0.3s;
+    }
+
+    .price-card.featured .price-value { color: var(--purple-light); }
+
+    .price-hourly {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Breakdown table */
+    .breakdown-table {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+
+    .breakdown-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0;
+      font-size: 0.84rem;
+    }
+
+    .breakdown-row:not(:last-child) {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .breakdown-label { color: var(--text-muted); }
+
+    .breakdown-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .breakdown-row.total {
+      margin-top: 4px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border) !important;
+      font-weight: 700;
+    }
+
+    .breakdown-row.total .breakdown-label { color: var(--text); }
+    .breakdown-row.total .breakdown-value { color: var(--purple-light); font-size: 0.95rem; }
+
+    /* Upsell */
+    .upsell-strip {
+      background: linear-gradient(135deg, rgba(91,33,182,0.2), rgba(124,58,237,0.1));
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+
+    .upsell-strip p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .upsell-strip p strong { color: var(--text); }
+
+    .btn {
+      display: inline-block;
+      padding: 11px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .btn-primary { background: var(--purple); color: #fff; width: 100%; }
+    .btn-primary:hover {
+      background: var(--purple-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--purple-light);
+      border: 1px solid rgba(124,58,237,0.4);
+      width: 100%;
+    }
+
+    .btn-outline:hover {
+      background: var(--purple-glow);
+      border-color: var(--purple-light);
+    }
+
+    /* Share button */
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px;
+      background: rgba(29,161,242,0.1);
+      border: 1px solid rgba(29,161,242,0.3);
+      color: #1da1f2;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 16px;
+    }
+
+    .share-btn:hover { background: rgba(29,161,242,0.2); }
+
+    /* Email capture */
+    .email-capture {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    .email-capture-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .email-capture-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .email-form { display: flex; gap: 8px; }
+
+    .email-input {
+      flex: 1;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .email-input:focus { border-color: var(--purple); }
+    .email-input::placeholder { color: var(--text-dim); }
+
+    .email-submit {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .email-submit:hover { background: var(--purple-light); }
+
+    .email-success {
+      display: none;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.3);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.85rem;
+      color: var(--green);
+      text-align: center;
+    }
+
+    /* Below fold */
+    .below-fold {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .final-cta {
+      background: linear-gradient(135deg, #0f0a1e, #1a0f35);
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .final-cta p {
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto 28px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-lg { padding: 14px 28px; font-size: 1rem; border-radius: 10px; }
+
+    .price-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+    }
+
+    .price-note s { color: var(--text-dim); }
+    .price-note strong { color: var(--purple-light); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+    }
+
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--purple-light); }
+
+    /* Number counter animation */
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .animated { animation: countUp 0.35s ease forwards; }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .calculator-grid { grid-template-columns: 1fr; }
+      .results-panel { position: static; }
+      nav { padding: 14px 16px; }
+      .final-cta { padding: 32px 20px; }
+      .email-form { flex-direction: column; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 16px 32px; }
+      .panel { padding: 20px; }
+      .price-value { font-size: 1.6rem; }
+      .toggle-btn { font-size: 0.77rem; padding: 6px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="https://baphometsblade.github.io/freelanceos-storefront/" class="nav-logo">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="#7c3aed"/><path d="M6 11h10M11 6l5 5-5 5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Freelance<span>OS</span>
+  </a>
+  <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="nav-cta">Get FreelanceOS Pro &rarr;</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" fill="#7c3aed"/><path d="M3.5 6l1.5 1.5L8.5 4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg>
+    Free Tool &mdash; No Sign-Up Required
+  </div>
+  <h1>How Much Should This<br><em>Project Cost?</em></h1>
+  <p class="hero-sub">Enter your project details and get an instant budget, recommended, and premium price &mdash; with a full rate breakdown and your effective hourly rate.</p>
+</section>
+
+<div class="calculator-wrapper">
+  <div class="calculator-grid">
+
+    <!-- INPUTS -->
+    <div class="panel">
+      <div class="panel-title">Project Details</div>
+
+      <!-- Project Type -->
+      <div class="input-group">
+        <div class="input-label"><span>Project Type</span></div>
+        <select id="projectType" onchange="updateCalc()">
+          <option value="website">Website Design</option>
+          <option value="logo">Logo / Branding</option>
+          <option value="copy">Copywriting / Content</option>
+          <option value="social">Social Media Management</option>
+          <option value="seo">SEO / Marketing</option>
+          <option value="dev">Development</option>
+          <option value="photography">Photography</option>
+          <option value="video">Video Production</option>
+          <option value="consulting">Consulting</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <!-- Complexity -->
+      <div class="input-group">
+        <div class="input-label"><span>Project Complexity</span></div>
+        <div class="toggle-group" id="complexityGroup">
+          <button class="toggle-btn" data-val="simple" onclick="setToggle('complexity','simple',this)">Simple</button>
+          <button class="toggle-btn active" data-val="medium" onclick="setToggle('complexity','medium',this)">Medium</button>
+          <button class="toggle-btn" data-val="complex" onclick="setToggle('complexity','complex',this)">Complex</button>
+          <button class="toggle-btn" data-val="enterprise" onclick="setToggle('complexity','enterprise',this)">Enterprise</button>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="input-group">
+        <div class="input-label"><span>Timeline</span></div>
+        <div class="toggle-group" id="timelineGroup">
+          <button class="toggle-btn" data-val="rush" onclick="setToggle('timeline','rush',this)">Rush 1wk</button>
+          <button class="toggle-btn active" data-val="standard" onclick="setToggle('timeline','standard',this)">Standard 2-4wk</button>
+          <button class="toggle-btn" data-val="relaxed" onclick="setToggle('timeline','relaxed',this)">Relaxed 1-2mo</button>
+          <button class="toggle-btn" data-val="longterm" onclick="setToggle('timeline','longterm',this)">Long-term</button>
+        </div>
+      </div>
+
+      <!-- Revisions -->
+      <div class="input-group">
+        <div class="input-label">
+          <span>Number of Revisions</span>
+          <span class="input-value" id="revisionsDisplay">3</span>
+        </div>
+        <input type="range" id="revisions" min="0" max="10" step="1" value="3" oninput="updateCalc()">
+      </div>
+
+      <!-- Client Type -->
+      <div class="input-group">
+        <div class="input-label"><span>Client Type</span></div>
+        <div class="toggle-group" id="clientGroup">
+          <button class="toggle-btn" data-val="startup" onclick="setToggle('client','startup',this)">Startup</button>
+          <button class="toggle-btn active" data-val="smb" onclick="setToggle('client','smb',this)">SMB</button>
+          <button class="toggle-btn" data-val="agency" onclick="setToggle('client','agency',this)">Agency</button>
+          <button class="toggle-btn" data-val="enterprise" onclick="setToggle('client','enterprise',this)">Enterprise</button>
+        </div>
+      </div>
+
+      <!-- Experience Level -->
+      <div class="input-group">
+        <div class="input-label"><span>Your Experience Level</span></div>
+        <div class="toggle-group" id="expGroup">
+          <button class="toggle-btn" data-val="beginner" onclick="setToggle('exp','beginner',this)">Beginner</button>
+          <button class="toggle-btn active" data-val="intermediate" onclick="setToggle('exp','intermediate',this)">Intermediate</button>
+          <button class="toggle-btn" data-val="expert" onclick="setToggle('exp','expert',this)">Expert</button>
+          <button class="toggle-btn" data-val="veteran" onclick="setToggle('exp','veteran',this)">Veteran</button>
+        </div>
+      </div>
+
+      <!-- Expenses -->
+      <div class="input-group">
+        <div class="checkbox-group">
+          <input type="checkbox" id="includeExpenses" onchange="updateCalc()">
+          <label for="includeExpenses">Include expenses? <span style="color:var(--text-dim);font-size:0.82rem">(adds 15% for tools, travel, etc.)</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="panel results-panel">
+      <div class="results-header">
+        <div class="panel-title" style="margin-bottom:0">Your Project Price</div>
+        <div class="live-badge">
+          <div class="live-dot"></div>
+          Live
+        </div>
+      </div>
+
+      <div class="price-cards">
+        <div class="price-card">
+          <div class="price-card-header">
+            <div class="price-tier">&#9888; Budget Rate</div>
+            <span class="price-tag-badge tag-budget">Minimum floor</span>
+          </div>
+          <div class="price-value" id="budgetPrice">—</div>
+          <div class="price-hourly" id="budgetHourly">— effective hourly rate</div>
+        </div>
+
+        <div class="price-card featured">
+          <div class="price-card-header">
+            <div class="price-tier">&#10003; Recommended Rate</div>
+            <span class="price-tag-badge tag-rec">Market rate</span>
+          </div>
+          <div class="price-value" id="recPrice">—</div>
+          <div class="price-hourly" id="recHourly">— effective hourly rate</div>
+        </div>
+
+        <div class="price-card">
+          <div class="price-card-header">
+            <div class="price-tier">&#128142; Premium Rate</div>
+            <span class="price-tag-badge tag-prem">Top of market</span>
+          </div>
+          <div class="price-value" id="premPrice">—</div>
+          <div class="price-hourly" id="premHourly">— effective hourly rate</div>
+        </div>
+      </div>
+
+      <!-- Breakdown table -->
+      <div class="breakdown-table">
+        <div class="breakdown-title">Rate Breakdown</div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Base rate (type + complexity)</span>
+          <span class="breakdown-value" id="brkBase">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Timeline modifier</span>
+          <span class="breakdown-value" id="brkTimeline">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Client tier adjustment</span>
+          <span class="breakdown-value" id="brkClient">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Experience multiplier</span>
+          <span class="breakdown-value" id="brkExp">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Revision add-on</span>
+          <span class="breakdown-value" id="brkRevisions">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Expense buffer</span>
+          <span class="breakdown-value" id="brkExpenses">—</span>
+        </div>
+        <div class="breakdown-row total">
+          <span class="breakdown-label">Recommended total</span>
+          <span class="breakdown-value" id="brkTotal">—</span>
+        </div>
+      </div>
+
+      <!-- Share -->
+      <button class="share-btn" onclick="shareOnTwitter()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        Share: Budget $<span id="shareB">—</span> | Rec $<span id="shareR">—</span> | Premium $<span id="shareP">—</span>
+      </button>
+
+      <!-- Upsell -->
+      <div class="upsell-strip">
+        <p><strong>Won the project? Now track it like a pro.</strong> FreelanceOS Pro includes project trackers, client dashboards, invoice templates, and a built-in scope creep guard — so you get paid what you quoted.</p>
+        <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="btn btn-primary">Get FreelanceOS Pro &rarr;</a>
+      </div>
+
+      <!-- Email capture -->
+      <div class="email-capture">
+        <div class="email-capture-title">Want a full breakdown as PDF?</div>
+        <div class="email-capture-sub">Enter your email and we'll send your project rate card</div>
+        <div class="email-form">
+          <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
+          <button class="email-submit" onclick="submitEmail()">Send It</button>
+        </div>
+        <div class="email-success" id="emailSuccess">
+          &#10003; Sent! Check your inbox for your project rate breakdown.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Below fold CTA -->
+<div class="below-fold">
+  <div class="final-cta">
+    <h2>Want a full freelance business system?</h2>
+    <p>FreelanceOS Pro gives you Notion dashboards for client management, project tracking, invoicing, and rate management — everything you need to run your freelance business.</p>
+    <div class="cta-group">
+      <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="btn btn-primary btn-lg">Try FreelanceOS Pro &rarr;</a>
+      <a href="https://buy.stripe.com/7sY28r5AFenL4DR2Ls6kg0x?prefilled_promo_code=FLASH40" class="btn btn-outline btn-lg">Bundle Deal &rarr;</a>
+    </div>
+    <div class="price-note">FreelanceOS Pro: <s>$49</s> &rarr; <strong>$29 with FLASH40</strong></div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 FreelanceOS &nbsp;&middot;&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/">Home</a> &nbsp;&middot;&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/free-templates.html">Free Tools</a> &nbsp;&middot;&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/client-profit-calculator.html">Client Profit Calculator</a> &nbsp;&middot;&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/freelance-rate-calculator.html">Rate Calculator</a>
+  </p>
+</footer>
+
+<script>
+  // ── State ──
+  const state = {
+    complexity: 'medium',
+    timeline: 'standard',
+    client: 'smb',
+    exp: 'intermediate'
+  };
+
+  // ── Base rates by project type + complexity ──
+  const BASE_RATES = {
+    website:     { simple: 800,  medium: 2500,  complex: 7500,  enterprise: 20000 },
+    logo:        { simple: 400,  medium: 1200,  complex: 3500,  enterprise: 8000  },
+    copy:        { simple: 200,  medium: 600,   complex: 1800,  enterprise: 5000  },
+    social:      { simple: 300,  medium: 900,   complex: 2500,  enterprise: 6000  },
+    seo:         { simple: 500,  medium: 1500,  complex: 4000,  enterprise: 10000 },
+    dev:         { simple: 1200, medium: 4000,  complex: 12000, enterprise: 35000 },
+    photography: { simple: 400,  medium: 1000,  complex: 3000,  enterprise: 7000  },
+    video:       { simple: 600,  medium: 2000,  complex: 6000,  enterprise: 15000 },
+    consulting:  { simple: 500,  medium: 1500,  complex: 5000,  enterprise: 15000 },
+    other:       { simple: 300,  medium: 1000,  complex: 3000,  enterprise: 8000  }
+  };
+
+  // ── Estimated hours by complexity (for effective hourly rate) ──
+  const EST_HOURS = {
+    simple: 8, medium: 25, complex: 75, enterprise: 200
+  };
+
+  const TIMELINE_MULT = { rush: 1.5, standard: 1.0, relaxed: 0.9, longterm: 0.85 };
+  const CLIENT_MULT   = { startup: 0.85, smb: 1.0, agency: 1.15, enterprise: 1.4 };
+  const EXP_MULT      = { beginner: 0.6, intermediate: 1.0, expert: 1.3, veteran: 1.6 };
+
+  const TIMELINE_LABELS = { rush: '+50% Rush', standard: 'Standard', relaxed: '-10% Relaxed', longterm: '-15% Long-term' };
+  const CLIENT_LABELS   = { startup: '-15% Startup', smb: 'Standard SMB', agency: '+15% Agency', enterprise: '+40% Enterprise' };
+  const EXP_LABELS      = { beginner: '0.6x Beginner', intermediate: '1.0x Intermediate', expert: '1.3x Expert', veteran: '1.6x Veteran' };
+
+  let prevBudget = 0, prevRec = 0, prevPrem = 0;
+
+  function fmt(n) {
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function animateCounter(el, from, to, duration) {
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const val = Math.round(from + (to - from) * ease);
+      el.textContent = '$' + val.toLocaleString();
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function setToggle(group, val, btn) {
+    state[group] = val;
+    const groupId = group + 'Group';
+    document.querySelectorAll('#' + groupId + ' .toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    updateCalc();
+  }
+
+  function updateCalc() {
+    const type = document.getElementById('projectType').value;
+    const revisions = parseInt(document.getElementById('revisions').value);
+    const includeExp = document.getElementById('includeExpenses').checked;
+
+    document.getElementById('revisionsDisplay').textContent = revisions;
+
+    const baseRate = BASE_RATES[type][state.complexity];
+    const timelineMult = TIMELINE_MULT[state.timeline];
+    const clientMult   = CLIENT_MULT[state.client];
+    const expMult      = EXP_MULT[state.exp];
+
+    // Revision add-on: each revision = 5% of base
+    const revisionAddon = revisions * 0.05 * baseRate;
+
+    // Core: base * timeline * client * exp + revisions
+    const coreRec = (baseRate * timelineMult * clientMult * expMult) + revisionAddon;
+
+    // Expense buffer
+    const expensesAddon = includeExp ? coreRec * 0.15 : 0;
+
+    const recPrice    = coreRec + expensesAddon;
+    const budgetPrice = recPrice * 0.65;
+    const premPrice   = recPrice * 1.45;
+
+    // Effective hourly
+    const hours = EST_HOURS[state.complexity];
+    const budgetHr = budgetPrice / hours;
+    const recHr    = recPrice    / hours;
+    const premHr   = premPrice   / hours;
+
+    // Animate
+    if (Math.round(recPrice) !== Math.round(prevRec)) {
+      animateCounter(document.getElementById('budgetPrice'), prevBudget, budgetPrice, 500);
+      animateCounter(document.getElementById('recPrice'),    prevRec,    recPrice,    500);
+      animateCounter(document.getElementById('premPrice'),   prevPrem,   premPrice,   500);
+    }
+
+    prevBudget = budgetPrice;
+    prevRec    = recPrice;
+    prevPrem   = premPrice;
+
+    document.getElementById('budgetHourly').textContent = fmt(budgetHr) + '/hr effective hourly rate';
+    document.getElementById('recHourly').textContent    = fmt(recHr)    + '/hr effective hourly rate';
+    document.getElementById('premHourly').textContent   = fmt(premHr)   + '/hr effective hourly rate';
+
+    // Breakdown
+    document.getElementById('brkBase').textContent       = fmt(baseRate);
+    document.getElementById('brkTimeline').textContent   = TIMELINE_LABELS[state.timeline] + ' (' + (timelineMult >= 1 ? '+' : '') + Math.round((timelineMult - 1) * 100) + '%)';
+    document.getElementById('brkClient').textContent     = CLIENT_LABELS[state.client];
+    document.getElementById('brkExp').textContent        = EXP_LABELS[state.exp];
+    document.getElementById('brkRevisions').textContent  = revisions > 0 ? fmt(revisionAddon) + ' (' + revisions + ' revisions)' : '$0';
+    document.getElementById('brkExpenses').textContent   = includeExp ? fmt(expensesAddon) + ' (+15%)' : '$0';
+    document.getElementById('brkTotal').textContent      = fmt(recPrice);
+
+    // Share values
+    document.getElementById('shareB').textContent = Math.round(budgetPrice).toLocaleString();
+    document.getElementById('shareR').textContent = Math.round(recPrice).toLocaleString();
+    document.getElementById('shareP').textContent = Math.round(premPrice).toLocaleString();
+  }
+
+  function submitEmail() {
+    const email = document.getElementById('emailInput').value.trim();
+    if (!email || !email.includes('@')) {
+      const el = document.getElementById('emailInput');
+      el.focus();
+      el.style.borderColor = '#ef4444';
+      setTimeout(() => { el.style.borderColor = ''; }, 1500);
+      return;
+    }
+
+    fetch('https://freelanceos-api.vercel.app/api/capture-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        page: 'project-estimator',
+        source: 'tool-cta',
+        data: {
+          budgetPrice: Math.round(prevBudget),
+          recPrice:    Math.round(prevRec),
+          premPrice:   Math.round(prevPrem),
+          projectType: document.getElementById('projectType').value,
+          complexity:  state.complexity
+        }
+      })
+    }).catch(() => {});
+
+    document.querySelector('.email-form').style.display = 'none';
+    document.getElementById('emailSuccess').style.display = 'block';
+  }
+
+  function shareOnTwitter() {
+    const b = Math.round(prevBudget).toLocaleString();
+    const r = Math.round(prevRec).toLocaleString();
+    const p = Math.round(prevPrem).toLocaleString();
+    const url = 'https://baphometsblade.github.io/freelanceos-storefront/freelance-project-estimator.html';
+    const text = encodeURIComponent(
+      `I just calculated my freelance project rate!\n\nBudget: $${b} | Recommended: $${r} | Premium: $${p}\n\nFree tool:\n${url}`
+    );
+    window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
+  }
+
+  // Init
+  updateCalc();
+</script>
+
+</body>
+</html>
