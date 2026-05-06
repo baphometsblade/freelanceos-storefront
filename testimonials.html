@@ -881,5 +881,49 @@
   }
 </script>
 
+<!-- Live Chat Widget -->
+<div id="ph-chat-btn" style="position:fixed;bottom:24px;right:24px;z-index:9999;cursor:pointer;" onclick="document.getElementById('ph-chat-modal').style.display='flex'">
+  <div style="background:#06b6d4;color:#0f172a;border-radius:50px;padding:12px 20px;font-weight:700;font-size:0.9rem;box-shadow:0 4px 20px rgba(6,182,212,0.4);display:flex;align-items:center;gap:8px;">
+    <span style="font-size:1.1rem;">??</span> Quick question?
+  </div>
+</div>
+<div id="ph-chat-modal" style="display:none;position:fixed;bottom:90px;right:24px;z-index:9999;width:320px;background:#1e293b;border:1px solid #334155;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.5);overflow:hidden;">
+  <div style="background:#0e7490;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+    <div>
+      <div style="color:#fff;font-weight:700;font-size:0.95rem;">Ask us anything</div>
+      <div style="color:#a5f3fc;font-size:0.78rem;">Typically replies within 2 hours</div>
+    </div>
+    <span onclick="document.getElementById('ph-chat-modal').style.display='none'" style="color:#fff;cursor:pointer;font-size:1.3rem;line-height:1;">?</span>
+  </div>
+  <div id="ph-chat-form" style="padding:16px;">
+    <textarea id="ph-chat-msg" placeholder="e.g. Is FreelanceOS right for me if I am just starting out?" style="width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;padding:10px;font-size:0.875rem;resize:none;height:80px;margin-bottom:10px;font-family:inherit;" rows="3"></textarea>
+    <input id="ph-chat-email" type="email" placeholder="Your email (we will reply here)" style="width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;padding:10px;font-size:0.875rem;margin-bottom:10px;font-family:inherit;">
+    <button onclick="phChatSend()" style="width:100%;background:#06b6d4;color:#0f172a;border:none;border-radius:8px;padding:10px;font-weight:700;cursor:pointer;font-size:0.9rem;">Send Message to</button>
+  </div>
+  <div id="ph-chat-thanks" style="display:none;padding:24px 16px;text-align:center;">
+    <div style="font-size:2rem;margin-bottom:8px;">ok</div>
+    <div style="color:#e2e8f0;font-weight:600;margin-bottom:6px;">Got it! We will reply soon.</div>
+    <div style="color:#94a3b8;font-size:0.85rem;">Check your email we reply to every message within 2 hours during business hours.</div>
+  </div>
+</div>
+<script>
+function phChatSend() {
+  const msg = document.getElementById("ph-chat-msg").value.trim();
+  const email = document.getElementById("ph-chat-email").value.trim();
+  if (!msg || !email) { alert("Please enter your message and email."); return; }
+  fetch("https://freelanceos-api.vercel.app/api/capture-email", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({email: email, source: "chat-widget", page: location.pathname, message: msg})
+  }).catch(function() {});
+  document.getElementById("ph-chat-form").style.display = "none";
+  document.getElementById("ph-chat-thanks").style.display = "block";
+  setTimeout(function() { document.getElementById("ph-chat-modal").style.display = "none"; }, 4000);
+}
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") document.getElementById("ph-chat-modal").style.display = "none";
+});
+</script>
+<!-- End Live Chat Widget -->
 </body>
 </html>
