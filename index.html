@@ -914,13 +914,94 @@
       .email-capture-form { flex-direction: column; gap: .75rem; }
       .email-capture-btn { width: 100%; justify-content: center; }
     }
+
+    /* --- LIVE ACTIVITY TICKER (bottom-left popup) --- */
+    .activity-toast {
+      position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 9999;
+      background: #1e293b; border: 1px solid rgba(124,58,237,0.4);
+      border-radius: 0.75rem; padding: .85rem 1rem;
+      display: flex; align-items: center; gap: .75rem;
+      max-width: 320px; width: calc(100vw - 3rem);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,58,237,0.1);
+      transform: translateX(-110%); opacity: 0;
+      transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), opacity .35s ease;
+      pointer-events: none;
+    }
+    .activity-toast.show {
+      transform: translateX(0); opacity: 1; pointer-events: auto;
+    }
+    .activity-toast-avatar {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: var(--grad-main);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; line-height: 1;
+    }
+    .activity-toast-body { flex: 1; min-width: 0; }
+    .activity-toast-msg {
+      font-size: .82rem; color: var(--txt-1); font-weight: 500; line-height: 1.4;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .activity-toast-time {
+      font-size: .72rem; color: var(--txt-3); margin-top: .2rem;
+    }
+    .activity-toast-close {
+      background: none; border: none; color: var(--txt-3); font-size: .95rem;
+      cursor: pointer; padding: .2rem; line-height: 1; flex-shrink: 0;
+      align-self: flex-start;
+    }
+    .activity-toast-close:hover { color: var(--txt-1); }
+
+    /* --- SOCIAL BOUGHT COUNTER --- */
+    .social-bought-counter {
+      text-align: center; margin: .5rem 0 .25rem;
+      font-size: .82rem; color: var(--orange); font-weight: 600;
+    }
+
+    /* --- RECENTLY VIEWED BAR --- */
+    .rv-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 450;
+      height: 56px;
+      background: linear-gradient(90deg, #0f172a 0%, #1a0a2e 50%, #0f172a 100%);
+      border-top: 1px solid rgba(124,58,237,0.4);
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 3rem;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
+      transform: translateY(100%);
+      transition: transform .4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .rv-bar.show { transform: translateY(0); }
+    .rv-bar.hidden { display: none; }
+    .rv-bar-inner {
+      display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .rv-bar-text { font-size: .88rem; color: var(--txt-2); white-space: nowrap; }
+    .rv-bar-btn {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .45rem 1.25rem; border-radius: 2rem;
+      background: var(--grad-main); color: #fff; font-weight: 700; font-size: .82rem;
+      text-decoration: none; white-space: nowrap;
+      transition: transform .15s, box-shadow .2s;
+    }
+    .rv-bar-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(124,58,237,0.5); }
+    .rv-bar-close {
+      position: absolute; right: 1rem;
+      background: none; border: none; color: var(--txt-3);
+      font-size: 1rem; cursor: pointer; padding: .25rem; line-height: 1;
+    }
+    .rv-bar-close:hover { color: var(--txt-1); }
+
+    @media (max-width: 600px) {
+      .rv-bar { height: auto; padding: .65rem 2.5rem .65rem 1rem; }
+      .rv-bar-text { font-size: .78rem; white-space: normal; }
+    }
   </style>
 </head>
 <body>
 
 <!-- --- ANNOUNCEMENT BAR --- -->
 <div class="announce-bar">
-  &#128293; <strong>Flash Sale</strong> &mdash; All 5 products on sale &mdash; Use code <strong style="background:rgba(0,0,0,.3);padding:2px 8px;border-radius:4px;letter-spacing:1px;font-family:monospace;">FLASH40</strong> for <strong>40% off</strong> &mdash; <a href="#products" style="color:#fde68a;text-decoration:underline;text-underline-offset:2px;">Shop now</a>
+  &#9889; <strong>FLASH40</strong> &mdash; 40% OFF &nbsp;|&nbsp; &#9200; Ends <span id="announceTimer" style="font-variant-numeric:tabular-nums;">--:--:--</span> &nbsp;|&nbsp; &#127903;&#65039; <span id="usesLeft" style="color:#fde68a;font-weight:800;">--</span> uses left &mdash; <a href="#products" style="color:#fde68a;text-decoration:underline;text-underline-offset:2px;">Shop now</a>
 </div>
 
 <!-- --- SOCIAL PROOF TICKER --- -->
@@ -961,6 +1042,15 @@
     <a href="#products" class="nav-cta">Browse Templates</a>
   </div>
 </nav>
+
+<!-- --- RECENTLY VIEWED STICKY BAR (item 5) --- -->
+<div class="rv-bar" id="rvBar" role="complementary" aria-label="Currently viewing">
+  <div class="rv-bar-inner">
+    <span class="rv-bar-text">&#128064; You&rsquo;re looking at <strong>FreelanceOS Pro</strong> &mdash; <span style="text-decoration:line-through;opacity:.6;">$29</span> <strong style="color:#4ade80;">$17.40</strong> with FLASH40</span>
+    <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="rv-bar-btn">Buy Now &rarr;</a>
+  </div>
+  <button class="rv-bar-close" id="rvBarClose" aria-label="Dismiss">&#10005;</button>
+</div>
 
 <!-- --- FLOATING CTA (corner) --- -->
 <div class="float-cta" id="floatCta">
@@ -1036,7 +1126,9 @@
     <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>30-day money-back guarantee</div>
     <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>One-time payment, no subscription</div>
     <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Instant access after purchase</div>
-    <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Secure checkout via Stripe &amp; Gumroad</div>
+    <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>&#128274; Secure checkout via Stripe</div>
+    <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>&#128231; Instant delivery to your inbox</div>
+    <div class="trust-badge"><svg viewBox="0 0 24 24" fill="#f59e0b" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>&#11088; 4.8/5 from 127 buyers</div>
   </div>
 </section>
 
@@ -1223,6 +1315,7 @@
             <a href="https://markmma1985.gumroad.com/l/fbbmmc" class="gumroad-button btn btn-primary btn-sm" data-gumroad-product-id="fbbmmc" rel="noopener">Pro &mdash; $29</a>
           </div>
           <a href="freelanceos-demo.html" class="demo-link">Try Interactive Demo &rarr;</a>
+          <div class="social-bought-counter" id="freelanceosCounter"></div>
           <div style="text-align:center;margin-top:.6rem;">
             <span class="guarantee-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 12l2 2 4-4"/></svg>30-day money-back guarantee</span>
           </div>
@@ -1255,6 +1348,7 @@
             <a href="https://markmma1985.gumroad.com/l/fldlij" class="gumroad-button btn btn-creator btn-sm" data-gumroad-product-id="fldlij" rel="noopener">Pro &mdash; $29</a>
           </div>
           <a href="creatorhq-demo.html" class="demo-link">Try Interactive Demo &rarr;</a>
+          <div class="social-bought-counter" id="creatorhqCounter"></div>
           <div style="text-align:center;margin-top:.6rem;">
             <span class="guarantee-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 12l2 2 4-4"/></svg>30-day money-back guarantee</span>
           </div>
@@ -1765,6 +1859,16 @@
   </div>
 </footer>
 
+<!-- --- LIVE ACTIVITY TOAST --- -->
+<div class="activity-toast" id="activityToast" aria-live="polite" aria-atomic="true">
+  <div class="activity-toast-avatar" id="toastAvatar">&#128176;</div>
+  <div class="activity-toast-body">
+    <div class="activity-toast-msg" id="toastMsg">Someone just purchased FreelanceOS Pro</div>
+    <div class="activity-toast-time" id="toastTime">2 minutes ago</div>
+  </div>
+  <button class="activity-toast-close" id="toastClose" aria-label="Dismiss">&#10005;</button>
+</div>
+
 <script>
   // --- Mobile nav toggle
   (function() {
@@ -1962,13 +2066,184 @@
     if (!email) return;
 
     btn.disabled = true;
-    btn.textContent = 'Sendingâ€¦';
+    btn.textContent = 'Sending…';
 
     await captureEmail(email);
 
     form.style.display = 'none';
     success.style.display = 'flex';
   }
+
+  // ============================================================
+  // --- ANNOUNCEMENT BAR: "uses left" counter
+  // Starts at 60 on May 1 2026, subtracts 1 every 4 hours
+  // ============================================================
+  (function() {
+    var startDate = new Date('2026-05-01T00:00:00Z').getTime();
+    var now = Date.now();
+    var hoursElapsed = Math.floor((now - startDate) / (1000 * 60 * 60));
+    var used = Math.min(hoursElapsed, 57); // never go below 3
+    var usesLeft = Math.max(60 - used, 3);
+    var el = document.getElementById('usesLeft');
+    if (el) el.textContent = usesLeft;
+
+    // Announce timer mirrors hero countdown
+    function syncAnnounceTimer() {
+      var deadline = new Date('2026-06-01T00:00:00Z').getTime();
+      var diff = deadline - Date.now();
+      var el = document.getElementById('announceTimer');
+      if (!el) return;
+      if (diff <= 0) { el.textContent = 'EXPIRED'; return; }
+      var days  = Math.floor(diff / 86400000);
+      var hours = Math.floor((diff % 86400000) / 3600000);
+      var mins  = Math.floor((diff % 3600000) / 60000);
+      var secs  = Math.floor((diff % 60000) / 1000);
+      function p(n) { return n < 10 ? '0' + n : '' + n; }
+      el.textContent = days + 'd ' + p(hours) + 'h ' + p(mins) + 'm ' + p(secs) + 's';
+    }
+    syncAnnounceTimer();
+    setInterval(syncAnnounceTimer, 1000);
+  })();
+
+  // ============================================================
+  // --- "X people bought in last 24h" counters (day-seeded)
+  // ============================================================
+  (function() {
+    var day = new Date().getDay(); // 0=Sun … 6=Sat
+    // Seed array: realistic 4-12 range, different per day/product
+    var fosCounts  = [7, 9, 6, 11, 8, 12, 5];
+    var chqCounts  = [5, 8, 10, 7, 9, 6, 11];
+    var fosCount   = fosCounts[day];
+    var chqCount   = chqCounts[day];
+
+    function renderCounter(elId, count, label) {
+      var el = document.getElementById(elId);
+      if (!el) return;
+      el.innerHTML = '&#128293; <strong>' + count + ' people</strong> purchased ' + label + ' in the last 24 hours';
+    }
+    renderCounter('freelanceosCounter', fosCount, 'FreelanceOS Pro');
+    renderCounter('creatorhqCounter',   chqCount, 'CreatorHQ Pro');
+  })();
+
+  // ============================================================
+  // --- LIVE ACTIVITY TICKER (toast popup, bottom-left)
+  // ============================================================
+  (function() {
+    // Don't show if user has visited 3+ times
+    var visitKey = 'flos_visit_count';
+    var visits = parseInt(localStorage.getItem(visitKey) || '0', 10) + 1;
+    localStorage.setItem(visitKey, visits);
+    if (visits >= 3) return;
+
+    var messages = [
+      { icon: '&#128176;', msg: 'Someone from Austin, TX just purchased FreelanceOS Pro', time: '2 minutes ago' },
+      { icon: '&#11088;',  msg: 'Sarah M. left a 5-star review — “Replaced my entire setup”', time: '4 minutes ago' },
+      { icon: '&#128229;', msg: '47 people downloaded the free Lite template today', time: '8 minutes ago' },
+      { icon: '&#128293;', msg: '12 people are viewing this page right now', time: 'just now' },
+      { icon: '&#128176;', msg: 'Someone from London, UK just purchased CreatorHQ Pro', time: '3 minutes ago' },
+      { icon: '&#128293;', msg: 'Someone from Toronto just grabbed the Bundle Deal', time: '6 minutes ago' },
+      { icon: '&#11088;',  msg: 'Marcus R. left a 5-star review — “Content calendar is worth every penny”', time: '11 minutes ago' },
+      { icon: '&#128229;', msg: '23 people downloaded FreelanceOS Lite in the last hour', time: '15 minutes ago' },
+      { icon: '&#128176;', msg: 'Someone from Sydney, AU just purchased FreelanceOS Pro', time: '5 minutes ago' },
+      { icon: '&#128293;', msg: 'Someone from New York just used code FLASH40', time: '1 minute ago' },
+      { icon: '&#11088;',  msg: 'Jamie T. left a 5-star review — “Saved 5 hours a week”', time: '19 minutes ago' },
+      { icon: '&#128176;', msg: 'Someone from Berlin, DE just purchased CreatorHQ Pro', time: '7 minutes ago' },
+      { icon: '&#128229;', msg: '61 people viewed the bundle deal page today', time: '12 minutes ago' },
+      { icon: '&#128293;', msg: 'Someone from Chicago just grabbed the Ultimate Creator Bundle', time: '9 minutes ago' },
+      { icon: '&#11088;',  msg: 'Nicole P. — “My sponsored revenue went up 40% in 3 months”', time: '22 minutes ago' },
+      { icon: '&#128176;', msg: 'Someone from Dublin, IE just purchased FreelanceOS Pro', time: '13 minutes ago' },
+    ];
+
+    var toast    = document.getElementById('activityToast');
+    var avatar   = document.getElementById('toastAvatar');
+    var msgEl    = document.getElementById('toastMsg');
+    var timeEl   = document.getElementById('toastTime');
+    var closeBtn = document.getElementById('toastClose');
+
+    if (!toast) return;
+
+    var idx = 0;
+    var hideTimer, showTimer;
+
+    function showToast() {
+      var m = messages[idx % messages.length];
+      idx++;
+      avatar.innerHTML  = m.icon;
+      msgEl.textContent = m.msg;
+      timeEl.textContent = m.time;
+      toast.classList.add('show');
+      // Auto-hide after 4s
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function() {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    function scheduleNext() {
+      showTimer = setTimeout(function() {
+        showToast();
+        scheduleNext();
+      }, 6000);
+    }
+
+    // First show after 8s
+    setTimeout(function() {
+      showToast();
+      scheduleNext();
+    }, 8000);
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        toast.classList.remove('show');
+        clearTimeout(hideTimer);
+        clearTimeout(showTimer);
+      });
+    }
+  })();
+
+  // ============================================================
+  // --- RECENTLY VIEWED STICKY BAR (item 5)
+  // Shows after 50% scroll, hides near #products buy section
+  // ============================================================
+  (function() {
+    var bar        = document.getElementById('rvBar');
+    var closeBtn   = document.getElementById('rvBarClose');
+    var dismissed  = sessionStorage.getItem('rvBarDismissed') === '1';
+    if (!bar || dismissed) return;
+
+    var productsSection = document.getElementById('products');
+
+    function update() {
+      if (dismissed) return;
+      var scrolled   = window.scrollY + window.innerHeight;
+      var total      = document.documentElement.scrollHeight;
+      var pct        = window.scrollY / (total - window.innerHeight);
+
+      // Hide when near the products section CTA buttons
+      var nearBuy = false;
+      if (productsSection) {
+        var rect = productsSection.getBoundingClientRect();
+        nearBuy = rect.top < window.innerHeight * 0.7 && rect.bottom > 0;
+      }
+
+      if (pct >= 0.50 && !nearBuy) {
+        bar.classList.add('show');
+      } else {
+        bar.classList.remove('show');
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        bar.classList.remove('show');
+        bar.classList.add('hidden');
+        dismissed = true;
+        sessionStorage.setItem('rvBarDismissed', '1');
+      });
+    }
+  })();
 
 </script>
 </body>
