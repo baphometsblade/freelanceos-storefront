@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Freelance Income Goal Calculator — What Do You Need to Earn?</title>
+<meta name="description" content="Free freelance income goal calculator. Enter your target annual income and get your required daily, weekly, and monthly revenue — plus minimum hourly rate and client targets.">
+<meta property="og:title" content="Freelance Income Goal Calculator — Work Backwards From Your Dream Income">
+<meta property="og:description" content="Enter your income goal and instantly see what you need to charge, how many clients you need, and how many hours to bill. Free, no signup.">
+<meta property="og:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/freelance-income-calculator.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Income Goal Calculator",
+  "description": "Free freelance income goal calculator. Enter your target annual income and get your required daily, weekly, and monthly revenue — plus minimum hourly rate and client targets.",
+  "url": "https://baphometsblade.github.io/freelanceos-storefront/freelance-income-calculator.html",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FreelanceOS",
+    "url": "https://baphometsblade.github.io/freelanceos-storefront/"
+  }
+}
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;min-height:100vh}
+nav{background:#111;border-bottom:1px solid #222;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+nav a{color:#e5e7eb;text-decoration:none;font-weight:600}
+.nav-links a{color:#9ca3af;font-size:14px;margin-left:20px;text-decoration:none}.nav-links a:hover{color:#fff}
+.hero{text-align:center;padding:56px 24px 32px;background:linear-gradient(160deg,#0f0f0f,#1a0a2e)}
+.eyebrow{color:#7c3aed;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:clamp(26px,4vw,44px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px}
+.hero p{color:#9ca3af;font-size:16px;max-width:520px;margin:0 auto 24px}
+.free-badge{display:inline-block;background:#064e3b;color:#10b981;font-size:13px;font-weight:700;padding:5px 14px;border-radius:20px;border:1px solid #10b981}
+/* Layout */
+.calc-wrap{max-width:820px;margin:0 auto;padding:40px 20px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}}
+/* Input card */
+.card{background:#111827;border:1px solid #1f2937;border-radius:16px;padding:28px}
+.card h2{color:#fff;font-size:18px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.field{margin-bottom:18px}
+.field label{display:block;color:#d1d5db;font-size:13px;font-weight:600;margin-bottom:6px}
+.field input[type=number],.field select{width:100%;background:#0f172a;border:1px solid #374151;border-radius:8px;padding:11px 14px;color:#fff;font-size:15px;outline:none}
+.field input[type=number]:focus,.field select:focus{border-color:#7c3aed}
+.field .hint{color:#6b7280;font-size:12px;margin-top:4px}
+/* Slider */
+.field input[type=range]{width:100%;accent-color:#7c3aed;margin-top:6px}
+.slider-val{color:#7c3aed;font-weight:700;font-size:14px;float:right}
+/* Result card */
+.results-card{background:linear-gradient(135deg,#1a0a2e,#0f172a);border:1px solid #6d28d9;border-radius:16px;padding:28px}
+.results-card h2{color:#c4b5fd;font-size:18px;font-weight:800;margin-bottom:20px}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #1f2937}
+.result-row:last-child{border-bottom:none}
+.result-label{color:#9ca3af;font-size:14px}
+.result-value{color:#fff;font-size:20px;font-weight:800}
+.result-value.highlight{color:#a78bfa;font-size:24px}
+.result-value.green{color:#10b981}
+/* Client breakdown */
+.client-table{width:100%;margin-top:24px;border-collapse:collapse}
+.client-table th{color:#6b7280;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:8px 12px;text-align:left;border-bottom:1px solid #1f2937}
+.client-table td{padding:10px 12px;border-bottom:1px solid #111;color:#d1d5db;font-size:14px}
+.client-table td:last-child{color:#10b981;font-weight:700}
+/* Calculation breakdown */
+.breakdown{background:#0f172a;border:1px solid #1f2937;border-radius:12px;padding:20px;margin-top:20px}
+.breakdown h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:12px}
+.breakdown-row{display:flex;justify-content:space-between;font-size:13px;color:#6b7280;padding:4px 0}
+.breakdown-row span:last-child{color:#d1d5db}
+.breakdown-row.total{border-top:1px solid #1f2937;margin-top:8px;padding-top:8px;font-weight:700}
+.breakdown-row.total span{color:#a78bfa !important}
+/* Share + CTA */
+.share-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.share-btn{padding:10px 18px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer}
+.share-twitter{background:#1da1f2;color:#fff}
+.share-copy{background:#374151;color:#e5e7eb}
+.cta-box{background:linear-gradient(135deg,#4c1d95,#1e1b4b);border:1px solid #6d28d9;border-radius:16px;padding:36px 28px;text-align:center;margin:32px 0}
+.cta-box h3{color:#fff;font-size:20px;font-weight:800;margin-bottom:10px}
+.cta-box p{color:#c4b5fd;margin-bottom:20px;font-size:15px}
+.cta-btn{display:inline-block;background:#7c3aed;color:#fff;font-weight:700;font-size:16px;padding:13px 28px;border-radius:10px;text-decoration:none}.cta-btn:hover{background:#6d28d9}
+/* Tools strip */
+.tools-strip{background:#111;border:1px solid #1f2937;border-radius:12px;padding:20px 24px;margin:32px 0}
+.tools-strip h4{color:#9ca3af;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px}
+.tools-strip .tool-links{display:flex;gap:16px;flex-wrap:wrap}
+.tools-strip a{color:#c4b5fd;font-size:14px;text-decoration:none}.tools-strip a:hover{color:#fff}
+footer{background:#111;border-top:1px solid #222;padding:24px;text-align:center;color:#6b7280;font-size:13px;margin-top:48px}
+footer a{color:#9ca3af;text-decoration:none;margin:0 8px}
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;font-size:14px;font-weight:600;padding:12px 20px;border-radius:10px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="toolkit.html">Free Tools</a>
+    <a href="freelance-rate-calculator.html">Rate Calc</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="checkout/freelanceos-pro.html" style="color:#a78bfa;font-weight:700">Get Pro</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Free Tool &mdash; No Signup Required</div>
+  <h1>Freelance Income Goal Calculator</h1>
+  <p>Enter your take-home income target and we'll work backwards to tell you exactly what you need to charge, earn, and bill every single day.</p>
+  <span class="free-badge">100% Free &mdash; Instant Results</span>
+</div>
+
+<div class="calc-wrap">
+  <div class="two-col">
+
+    <!-- LEFT: Inputs -->
+    <div class="card">
+      <h2>💰 Your Income Goals</h2>
+
+      <div class="field">
+        <label for="takeHome">Annual Take-Home Income Goal ($)</label>
+        <input type="number" id="takeHome" value="60000" min="10000" max="500000" step="1000">
+        <div class="hint">After-tax amount you want to pocket</div>
+      </div>
+
+      <div class="field">
+        <label for="taxRate">Tax Rate: <span class="slider-val" id="taxRateVal">28%</span></label>
+        <input type="range" id="taxRate" min="10" max="50" value="28" step="1">
+        <div class="hint">Self-employment + income tax combined estimate</div>
+      </div>
+
+      <div class="field">
+        <label for="workingWeeks">Working Weeks per Year</label>
+        <input type="number" id="workingWeeks" value="46" min="20" max="52" step="1">
+        <div class="hint">52 &minus; vacation &minus; sick days (default: 46)</div>
+      </div>
+
+      <div class="field">
+        <label for="billableHours">Billable Hours per Day: <span class="slider-val" id="billableHoursVal">5.5 hrs</span></label>
+        <input type="range" id="billableHours" min="2" max="8" value="5.5" step="0.5">
+        <div class="hint">Not all work hours are billable — admin, marketing, etc.</div>
+      </div>
+
+      <div class="field">
+        <label for="expenses">Monthly Business Expenses ($)</label>
+        <input type="number" id="expenses" value="500" min="0" max="50000" step="50">
+        <div class="hint">Software, hardware, insurance, subscriptions, etc.</div>
+      </div>
+
+      <div class="field">
+        <label for="daysPerWeek">Days per Week Working</label>
+        <select id="daysPerWeek">
+          <option value="5" selected>5 days (Mon&ndash;Fri)</option>
+          <option value="4.5">4.5 days</option>
+          <option value="4">4 days</option>
+          <option value="3.5">3.5 days</option>
+          <option value="3">3 days</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- RIGHT: Results -->
+    <div class="results-card">
+      <h2>📊 What You Need to Earn</h2>
+
+      <div class="result-row">
+        <span class="result-label">Annual Revenue Needed</span>
+        <span class="result-value" id="resGross">—</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Monthly Revenue Target</span>
+        <span class="result-value highlight" id="resMonthly">—</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Weekly Revenue Target</span>
+        <span class="result-value" id="resWeekly">—</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Daily Revenue Target</span>
+        <span class="result-value" id="resDaily">—</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Minimum Hourly Rate</span>
+        <span class="result-value green" id="resHourly">—</span>
+      </div>
+
+      <!-- Client breakdown table -->
+      <h4 style="color:#c4b5fd;font-size:14px;font-weight:700;margin-top:24px;margin-bottom:10px">How many clients do you need?</h4>
+      <table class="client-table">
+        <thead>
+          <tr>
+            <th>Retainer Size</th>
+            <th>Clients Needed</th>
+            <th>Annual Total</th>
+          </tr>
+        </thead>
+        <tbody id="clientTableBody">
+          <tr><td colspan="3" style="color:#6b7280;text-align:center">Enter your goal above</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Calculation breakdown -->
+      <div class="breakdown">
+        <h4>How we calculated this</h4>
+        <div class="breakdown-row"><span>Take-home goal</span><span id="bdTakeHome">—</span></div>
+        <div class="breakdown-row"><span>Tax gross-up</span><span id="bdTaxGross">—</span></div>
+        <div class="breakdown-row"><span>Annual business expenses</span><span id="bdExpenses">—</span></div>
+        <div class="breakdown-row total"><span>Total revenue needed</span><span id="bdTotal">—</span></div>
+        <div class="breakdown-row" style="margin-top:12px"><span>Billable hours available</span><span id="bdHours">—</span></div>
+        <div class="breakdown-row"><span>Working days available</span><span id="bdDays">—</span></div>
+      </div>
+
+      <!-- Share buttons -->
+      <div class="share-row">
+        <button class="share-btn share-twitter" onclick="shareTwitter()">Share on Twitter</button>
+        <button class="share-btn share-copy" onclick="copySummary()">Copy Summary</button>
+      </div>
+    </div>
+
+  </div><!-- end .two-col -->
+
+  <!-- Tools strip -->
+  <div class="tools-strip">
+    <h4>Other free tools:</h4>
+    <div class="tool-links">
+      <a href="freelance-rate-calculator.html">💸 Freelance Rate Calculator</a>
+      <a href="client-profit-calculator.html">📊 Client Profit Calculator</a>
+      <a href="freelance-project-estimator.html">📋 Project Estimator</a>
+      <a href="freelance-score.html">🏥 Business Health Score</a>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>Track Every Dollar Against Your Goal</h3>
+    <p>FreelanceOS Pro gives you an invoice tracker, revenue dashboard, and client CRM to make sure you're always on track to hit your income target.</p>
+    <a href="checkout/freelanceos-pro.html" class="cta-btn">Get FreelanceOS Pro &mdash; $29 &rarr;</a>
+  </div>
+
+</div><!-- end .calc-wrap -->
+
+<footer>
+  <p>
+    <a href="/">FreelanceOS</a>
+    <a href="toolkit.html">Free Tools</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="faq.html">FAQ</a>
+    <a href="affiliate.html">Affiliate</a>
+  </p>
+  <p style="margin-top:10px">&copy; 2026 FreelanceOS. Free to use, no signup required.</p>
+</footer>
+
+<div class="toast" id="toast">Copied to clipboard!</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────
+let lastResults = {};
+
+// ── Formatters ────────────────────────────────────────────────────
+function fmt(n, decimals = 0) {
+  return '$' + n.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// ── Core calculation ──────────────────────────────────────────────
+function calculate() {
+  const takeHome       = parseFloat(document.getElementById('takeHome').value)        || 60000;
+  const taxRate        = parseFloat(document.getElementById('taxRate').value) / 100;
+  const workingWeeks   = parseFloat(document.getElementById('workingWeeks').value)    || 46;
+  const billableHoursDay = parseFloat(document.getElementById('billableHours').value);
+  const monthlyExpenses  = parseFloat(document.getElementById('expenses').value)      || 500;
+  const daysPerWeek    = parseFloat(document.getElementById('daysPerWeek').value)     || 5;
+
+  // Gross annual needed (before tax + expenses)
+  const annualExpenses = monthlyExpenses * 12;
+  const grossNeeded    = (takeHome / (1 - taxRate)) + annualExpenses;
+  const taxGrossUp     = grossNeeded - annualExpenses - takeHome;
+
+  // Time available
+  const workingDaysPerYear    = workingWeeks * daysPerWeek;
+  const billableHoursPerYear  = workingDaysPerYear * billableHoursDay;
+  const workingMonths         = 12 - (52 - workingWeeks) / 4.33;
+
+  // Required rates
+  const requiredHourlyRate    = grossNeeded / billableHoursPerYear;
+  const requiredDailyRevenue  = grossNeeded / workingDaysPerYear;
+  const requiredWeeklyRevenue = grossNeeded / workingWeeks;
+  const requiredMonthlyRevenue = grossNeeded / workingMonths;
+
+  // Client scenarios
+  const retainerSizes = [500, 1000, 2000, 3000, 5000, 10000];
+  const clientScenarios = retainerSizes.map(monthly => ({
+    monthly,
+    name: monthly >= 1000 ? `$${monthly/1000}K/mo retainer` : `$${monthly}/mo retainer`,
+    clients: Math.ceil(grossNeeded / (monthly * 12)),
+    annual: monthly * 12
+  }));
+
+  lastResults = {
+    grossNeeded, annualExpenses, taxGrossUp, takeHome, taxRate,
+    requiredHourlyRate, requiredDailyRevenue, requiredWeeklyRevenue, requiredMonthlyRevenue,
+    billableHoursPerYear, workingDaysPerYear, clientScenarios, workingWeeks, daysPerWeek
+  };
+
+  renderResults(lastResults);
+}
+
+function renderResults(r) {
+  document.getElementById('resGross').textContent    = fmt(r.grossNeeded);
+  document.getElementById('resMonthly').textContent  = fmt(r.requiredMonthlyRevenue);
+  document.getElementById('resWeekly').textContent   = fmt(r.requiredWeeklyRevenue);
+  document.getElementById('resDaily').textContent    = fmt(r.requiredDailyRevenue);
+  document.getElementById('resHourly').textContent   = fmt(r.requiredHourlyRate, 2) + '/hr';
+
+  // Breakdown
+  document.getElementById('bdTakeHome').textContent  = fmt(r.takeHome);
+  document.getElementById('bdTaxGross').textContent  = '+ ' + fmt(r.taxGrossUp) + ' (at ' + Math.round(r.taxRate * 100) + '% rate)';
+  document.getElementById('bdExpenses').textContent  = '+ ' + fmt(r.annualExpenses) + '/yr';
+  document.getElementById('bdTotal').textContent     = fmt(r.grossNeeded);
+  document.getElementById('bdHours').textContent     = Math.round(r.billableHoursPerYear).toLocaleString() + ' hrs/year';
+  document.getElementById('bdDays').textContent      = Math.round(r.workingDaysPerYear) + ' days/year';
+
+  // Client table
+  const tbody = document.getElementById('clientTableBody');
+  tbody.innerHTML = r.clientScenarios.map(s => `
+    <tr>
+      <td>${s.name}</td>
+      <td>${s.clients} client${s.clients !== 1 ? 's' : ''}</td>
+      <td>${fmt(s.clients * s.annual)}</td>
+    </tr>
+  `).join('');
+}
+
+// ── Share / Copy ──────────────────────────────────────────────────
+function shareTwitter() {
+  const r = lastResults;
+  if (!r.grossNeeded) return;
+  const takeHome = parseFloat(document.getElementById('takeHome').value) || 60000;
+  const text = encodeURIComponent(
+    `My freelance income goal is ${fmt(takeHome)}/year. To hit it, I need to earn ${fmt(r.requiredMonthlyRevenue)}/month or charge at least ${fmt(r.requiredHourlyRate, 0)}/hr.\n\nCalculated with this free tool: https://baphometsblade.github.io/freelanceos-storefront/freelance-income-calculator.html`
+  );
+  window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
+}
+
+function copySummary() {
+  const r = lastResults;
+  if (!r.grossNeeded) return;
+  const takeHome = parseFloat(document.getElementById('takeHome').value) || 60000;
+  const summary = [
+    '=== Freelance Income Goal Calculator Results ===',
+    '',
+    `Take-home goal: ${fmt(takeHome)}/year`,
+    `Annual revenue needed: ${fmt(r.grossNeeded)}`,
+    `Monthly revenue target: ${fmt(r.requiredMonthlyRevenue)}`,
+    `Weekly revenue target: ${fmt(r.requiredWeeklyRevenue)}`,
+    `Daily revenue target: ${fmt(r.requiredDailyRevenue)}`,
+    `Minimum hourly rate: ${fmt(r.requiredHourlyRate, 2)}/hr`,
+    '',
+    `Working days/year: ${Math.round(r.workingDaysPerYear)}`,
+    `Billable hours/year: ${Math.round(r.billableHoursPerYear).toLocaleString()}`,
+    '',
+    '--- Client Scenarios ---',
+    ...r.clientScenarios.map(s => `${s.name}: ${s.clients} client${s.clients !== 1 ? 's' : ''} = ${fmt(s.clients * s.annual)}/yr`),
+    '',
+    'Calculated at: https://baphometsblade.github.io/freelanceos-storefront/freelance-income-calculator.html'
+  ].join('\n');
+
+  navigator.clipboard.writeText(summary).then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  });
+}
+
+// ── Wire up all inputs ────────────────────────────────────────────
+document.querySelectorAll('input, select').forEach(el => {
+  el.addEventListener('input', () => {
+    if (el.id === 'taxRate') {
+      document.getElementById('taxRateVal').textContent = el.value + '%';
+    }
+    if (el.id === 'billableHours') {
+      document.getElementById('billableHoursVal').textContent = el.value + ' hrs';
+    }
+    calculate();
+  });
+});
+
+// ── Initial calculation ───────────────────────────────────────────
+calculate();
+</script>
+</body>
+</html>
