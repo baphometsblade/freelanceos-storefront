@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notion Template Gallery — Browse All FreelanceOS Templates</title>
+<meta name="description" content="Browse 15+ premium Notion templates for freelancers, creators, and agencies. Filter by category, preview each template, and download instantly.">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/gallery.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"FreelanceOS Notion Template Gallery","description":"15+ premium Notion templates for freelancers","url":"https://baphometsblade.github.io/freelanceos-storefront/gallery.html"}</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f0f;
+    color: #e5e7eb;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: #0f0f0f;
+    border-bottom: 1px solid #1f1f1f;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: #7c3aed; }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a {
+    color: #9ca3af;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-links .nav-cta {
+    background: #7c3aed;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  .nav-links .nav-cta:hover { background: #6d28d9; color: #fff; }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 64px 24px 48px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7c3aed;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+  .stats-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .stat-pill {
+    background: #1a1a2e;
+    border: 1px solid #2d2d4a;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    color: #c4b5fd;
+    font-weight: 500;
+  }
+
+  /* FILTER TABS */
+  .filter-section {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 24px 40px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: 1px solid #2d2d2d;
+    background: #1a1a1a;
+    color: #9ca3af;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: #7c3aed; color: #c4b5fd; }
+  .filter-btn.active {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: #fff;
+  }
+
+  /* CARD GRID */
+  .gallery-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 64px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 900px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 580px) { .card-grid { grid-template-columns: 1fr; } }
+
+  /* TEMPLATE CARD */
+  .template-card {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .template-card:hover {
+    border-color: #7c3aed;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.12);
+  }
+
+  .card-top { display: flex; align-items: center; justify-content: space-between; }
+  .category-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .badge-freelance { background: rgba(124, 58, 237, 0.15); color: #c4b5fd; border: 1px solid rgba(124, 58, 237, 0.3); }
+  .badge-creator { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+  .badge-agency { background: rgba(34, 197, 94, 0.15); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); }
+  .badge-free { background: rgba(156, 163, 175, 0.15); color: #d1d5db; border: 1px solid rgba(156, 163, 175, 0.3); }
+
+  .price-badge {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #fff;
+  }
+  .price-badge.free { color: #86efac; }
+
+  .card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    line-height: 1.5;
+  }
+  .card-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+  }
+  .card-features li {
+    font-size: 0.8rem;
+    color: #6b7280;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.4;
+  }
+  .card-features li::before { content: "\2192"; color: #7c3aed; flex-shrink: 0; font-weight: 700; }
+
+  .card-footer { border-top: 1px solid #1f1f1f; padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .pack-label { font-size: 0.75rem; color: #6b7280; }
+  .pack-label strong { color: #9ca3af; }
+
+  .card-cta {
+    display: block;
+    background: #7c3aed;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: background 0.2s;
+  }
+  .card-cta:hover { background: #6d28d9; }
+  .card-cta.free-cta { background: #1a3a25; border: 1px solid #166534; color: #86efac; }
+  .card-cta.free-cta:hover { background: #166534; }
+
+  /* BUNDLE BANNER */
+  .bundle-banner {
+    max-width: 1100px;
+    margin: 0 auto 64px;
+    padding: 0 24px;
+  }
+  .bundle-card {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0f0f2e 50%, #0a1a1a 100%);
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .bundle-text h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .bundle-text p { font-size: 0.95rem; color: #9ca3af; }
+  .bundle-text p strong { color: #c4b5fd; }
+  .bundle-cta {
+    display: inline-block;
+    background: #7c3aed;
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .bundle-cta:hover { background: #6d28d9; }
+
+  /* FAQ */
+  .faq-section {
+    max-width: 760px;
+    margin: 0 auto 64px;
+    padding: 0 24px;
+  }
+  .faq-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .faq-item {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+  .faq-q {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .faq-a {
+    font-size: 0.88rem;
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid #1f1f1f;
+    padding: 24px;
+    text-align: center;
+  }
+  footer p { font-size: 0.82rem; color: #6b7280; }
+  footer a { color: #7c3aed; text-decoration: none; }
+  footer a:hover { color: #c4b5fd; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.9rem; }
+    .bundle-card { flex-direction: column; text-align: center; }
+    nav { padding: 0 16px; }
+    .nav-links { gap: 12px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Freelance<span>OS</span></a>
+  <div class="nav-links">
+    <a href="/free-download.html">Free Templates</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/start-here.html" class="nav-cta">&#10024; Start Here</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">TEMPLATE GALLERY</div>
+  <h1>Browse All 15+ Notion Templates</h1>
+  <p class="hero-subtitle">Filter by category and find the perfect system for your freelance workflow</p>
+  <div class="stats-row">
+    <span class="stat-pill">15+ Templates</span>
+    <span class="stat-pill">4 Packs</span>
+    <span class="stat-pill">Instant Download</span>
+    <span class="stat-pill">Works with Free Notion</span>
+  </div>
+</section>
+
+<!-- FILTER TABS -->
+<div class="filter-section">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="freelance">Freelance</button>
+  <button class="filter-btn" data-filter="creator">Creator</button>
+  <button class="filter-btn" data-filter="agency">Agency</button>
+  <button class="filter-btn" data-filter="free">Free</button>
+</div>
+
+<!-- CARD GRID -->
+<div class="gallery-container">
+  <div class="card-grid">
+
+    <!-- FREELANCE CARDS -->
+    <div class="template-card" data-category="freelance">
+      <div class="card-top">
+        <span class="category-badge badge-freelance">Freelance</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Client CRM Tracker</div>
+      <div class="card-desc">Never lose track of a client relationship</div>
+      <ul class="card-features">
+        <li>Contact history &amp; relationship timeline</li>
+        <li>Project status at a glance</li>
+        <li>Follow-up reminders built in</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>FreelanceOS Pro</strong></div>
+        <a href="/checkout/freelanceos-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="freelance">
+      <div class="card-top">
+        <span class="category-badge badge-freelance">Freelance</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Invoice &amp; Payment Tracker</div>
+      <div class="card-desc">Get paid on time, every time</div>
+      <ul class="card-features">
+        <li>Invoice status tracking</li>
+        <li>Payment dates &amp; records</li>
+        <li>Overdue alerts dashboard</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>FreelanceOS Pro</strong></div>
+        <a href="/checkout/freelanceos-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="freelance">
+      <div class="card-top">
+        <span class="category-badge badge-freelance">Freelance</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Project Manager Board</div>
+      <div class="card-desc">Run every project like a pro</div>
+      <ul class="card-features">
+        <li>Kanban stages for any workflow</li>
+        <li>Deadlines &amp; milestone tracking</li>
+        <li>Deliverables checklist per project</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>FreelanceOS Pro</strong></div>
+        <a href="/checkout/freelanceos-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="freelance">
+      <div class="card-top">
+        <span class="category-badge badge-freelance">Freelance</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Time Log</div>
+      <div class="card-desc">Know exactly where your hours go</div>
+      <ul class="card-features">
+        <li>Billable hours by client</li>
+        <li>Client breakdown reports</li>
+        <li>Built-in rate calculator</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>FreelanceOS Pro</strong></div>
+        <a href="/checkout/freelanceos-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="freelance">
+      <div class="card-top">
+        <span class="category-badge badge-freelance">Freelance</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Lead Pipeline</div>
+      <div class="card-desc">Convert more prospects into paying clients</div>
+      <ul class="card-features">
+        <li>Stage-by-stage tracking</li>
+        <li>Probability scoring system</li>
+        <li>Deal value forecasting</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>FreelanceOS Pro</strong></div>
+        <a href="/checkout/freelanceos-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="freelance">
+      <div class="card-top">
+        <span class="category-badge badge-freelance">Freelance</span>
+        <span class="price-badge">$9</span>
+      </div>
+      <div class="card-title">Weekly Review Template</div>
+      <div class="card-desc">End every week knowing exactly where you stand</div>
+      <ul class="card-features">
+        <li>Wins &amp; losses debrief</li>
+        <li>Next week planning view</li>
+        <li>KPI snapshot dashboard</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>FreelanceOS Quick Start</strong></div>
+        <a href="https://buy.stripe.com/7sYdR9fbf4Nbb2fbhY6kg1V" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <!-- CREATOR CARDS -->
+    <div class="template-card" data-category="creator">
+      <div class="card-top">
+        <span class="category-badge badge-creator">Creator</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Content Calendar</div>
+      <div class="card-desc">Plan 30 days of content in one view</div>
+      <ul class="card-features">
+        <li>Platform columns per channel</li>
+        <li>Status tracking end-to-end</li>
+        <li>Repurpose queue built in</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>CreatorHQ</strong></div>
+        <a href="/checkout/creatorhq-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="creator">
+      <div class="card-top">
+        <span class="category-badge badge-creator">Creator</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">YouTube Video Pipeline</div>
+      <div class="card-desc">From idea to published, tracked in Notion</div>
+      <ul class="card-features">
+        <li>Pre-production stage system</li>
+        <li>Thumbnail status tracking</li>
+        <li>Analytics &amp; performance notes</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>CreatorHQ</strong></div>
+        <a href="/checkout/creatorhq-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="creator">
+      <div class="card-top">
+        <span class="category-badge badge-creator">Creator</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Brand Deal Tracker</div>
+      <div class="card-desc">Manage every sponsorship from pitch to payment</div>
+      <ul class="card-features">
+        <li>Brand contacts database</li>
+        <li>Deliverables &amp; deadlines</li>
+        <li>Payment status tracking</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>CreatorHQ</strong></div>
+        <a href="/checkout/creatorhq-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="creator">
+      <div class="card-top">
+        <span class="category-badge badge-creator">Creator</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Audience Analytics Dashboard</div>
+      <div class="card-desc">Track growth across all platforms</div>
+      <ul class="card-features">
+        <li>Subscriber milestone tracker</li>
+        <li>Engagement trends view</li>
+        <li>Channel comparison dashboard</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>CreatorHQ</strong></div>
+        <a href="/checkout/creatorhq-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <!-- AGENCY CARDS -->
+    <div class="template-card" data-category="agency">
+      <div class="card-top">
+        <span class="category-badge badge-agency">Agency</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Client Portal Template</div>
+      <div class="card-desc">Give every client their own professional workspace</div>
+      <ul class="card-features">
+        <li>Project updates &amp; status hub</li>
+        <li>File sharing &amp; asset library</li>
+        <li>Feedback loop system</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>AgencyOS</strong></div>
+        <a href="/checkout/agencyos-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="agency">
+      <div class="card-top">
+        <span class="category-badge badge-agency">Agency</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Team Task Manager</div>
+      <div class="card-desc">Keep your whole team moving in sync</div>
+      <ul class="card-features">
+        <li>Assignee tracking per task</li>
+        <li>Priority flags &amp; urgency tiers</li>
+        <li>Sprint planning boards</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>AgencyOS</strong></div>
+        <a href="/checkout/agencyos-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="agency">
+      <div class="card-top">
+        <span class="category-badge badge-agency">Agency</span>
+        <span class="price-badge">$29</span>
+      </div>
+      <div class="card-title">Revenue Dashboard</div>
+      <div class="card-desc">See your agency's financial health at a glance</div>
+      <ul class="card-features">
+        <li>MRR tracking &amp; forecasting</li>
+        <li>Client lifetime value view</li>
+        <li>Pipeline revenue overview</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Part of <strong>AgencyOS</strong></div>
+        <a href="/checkout/agencyos-pro.html" class="card-cta">Get Template &rarr;</a>
+      </div>
+    </div>
+
+    <!-- FREE CARDS -->
+    <div class="template-card" data-category="free">
+      <div class="card-top">
+        <span class="category-badge badge-free">Free</span>
+        <span class="price-badge free">FREE</span>
+      </div>
+      <div class="card-title">Client Tracker (Free)</div>
+      <div class="card-desc">Start managing your clients for free</div>
+      <ul class="card-features">
+        <li>Basic contact info database</li>
+        <li>Project status overview</li>
+        <li>Notes &amp; follow-up field</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">No payment required &mdash; <strong>instant download</strong></div>
+        <a href="/free-download.html" class="card-cta free-cta">Get Free Template &rarr;</a>
+      </div>
+    </div>
+
+    <div class="template-card" data-category="free">
+      <div class="card-top">
+        <span class="category-badge badge-free">Free</span>
+        <span class="price-badge free">FREE</span>
+      </div>
+      <div class="card-title">Freelance Project Estimator</div>
+      <div class="card-desc">Calculate exactly what to charge</div>
+      <ul class="card-features">
+        <li>Scope &amp; time estimation tool</li>
+        <li>Rate &amp; margin calculator</li>
+        <li>Instant quote breakdown</li>
+      </ul>
+      <div class="card-footer">
+        <div class="pack-label">Interactive tool &mdash; <strong>use free in browser</strong></div>
+        <a href="/freelance-project-estimator.html" class="card-cta free-cta">Use Free Tool &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BUNDLE BANNER -->
+<div class="bundle-banner">
+  <div class="bundle-card">
+    <div class="bundle-text">
+      <h2>Get All 4 Packs &mdash; Best Value</h2>
+      <p>Individual packs: <strong>$29 each</strong> &nbsp;&middot;&nbsp; All 4 for the price of 2 = <strong style="color:#86efac; font-size:1.1rem;">$58</strong></p>
+      <p style="margin-top:6px; font-size:0.85rem;">FreelanceOS Pro + CreatorHQ + AgencyOS + YouTube Empire &mdash; everything you need.</p>
+    </div>
+    <a href="/pricing.html" class="bundle-cta">See Bundle Pricing &rarr;</a>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-title">Common Questions</div>
+
+  <div class="faq-item">
+    <div class="faq-q">Do I need a paid Notion account?</div>
+    <div class="faq-a">No. All FreelanceOS templates work with a free Notion account. You can duplicate any template straight into your free workspace and start using it immediately.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How do I get my templates after purchase?</div>
+    <div class="faq-a">You get an instant digital download link the moment your payment is confirmed. No waiting, no shipping &mdash; just click the link and duplicate the template into your Notion workspace.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I use these templates for client work?</div>
+    <div class="faq-a">Yes, absolutely. All templates come with unlimited personal and commercial use. Use them to manage your own freelance business, or set them up for your clients &mdash; no restrictions.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 FreelanceOS &nbsp;&middot;&nbsp; <a href="/faq.html">FAQ</a> &nbsp;&middot;&nbsp; <a href="/pricing.html">Pricing</a> &nbsp;&middot;&nbsp; <a href="/affiliate.html">Affiliate Program</a></p>
+</footer>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.filter;
+      document.querySelectorAll('.template-card').forEach(card => {
+        card.style.display = (cat === 'all' || card.dataset.category === cat) ? 'flex' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
