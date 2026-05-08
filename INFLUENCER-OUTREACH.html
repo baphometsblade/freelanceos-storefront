@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Influencer Outreach Kit — FreelanceOS</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f0f0f;
+    color: #e5e7eb;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 24px;
+    min-height: 100vh;
+  }
+
+  a { color: #7c3aed; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #9ca3af;
+    font-size: 13px;
+  }
+  .back-link:hover { color: #e5e7eb; }
+
+  .page-header {
+    margin-bottom: 28px;
+  }
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f9fafb;
+    margin-bottom: 6px;
+  }
+  .page-header p {
+    color: #9ca3af;
+    font-size: 15px;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .progress-label {
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #f9fafb;
+  }
+  .progress-bar-outer {
+    flex: 1;
+    min-width: 200px;
+    background: #1f2937;
+    border-radius: 9999px;
+    height: 10px;
+  }
+  .progress-bar-inner {
+    background: #7c3aed;
+    height: 10px;
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+  }
+  .progress-pct {
+    font-size: 13px;
+    color: #9ca3af;
+    white-space: nowrap;
+  }
+
+  /* Cards */
+  .card {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f9fafb;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Affiliate stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .stat-item {
+    background: #0f0f0f;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    margin-bottom: 4px;
+  }
+  .stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #a78bfa;
+  }
+  .stat-sub {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 2px;
+  }
+
+  .affiliate-link-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .affiliate-url {
+    font-family: monospace;
+    font-size: 13px;
+    color: #a78bfa;
+    background: #0f0f0f;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 7px 12px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 420px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .btn {
+    background: #7c3aed;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: #6d28d9; }
+  .btn.copied { background: #059669; }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+  /* Creator table */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 780px;
+  }
+  thead th {
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    padding: 10px 12px;
+    border-bottom: 1px solid #1f2937;
+    background: #0f0f0f;
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(odd)  { background: #111827; }
+  tbody tr:nth-child(even) { background: #0f0f0f; }
+  tbody tr:hover { background: #1a2233; }
+  tbody td {
+    padding: 10px 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #1a2233;
+  }
+  .creator-name { font-weight: 600; color: #f9fafb; font-size: 13px; }
+  .creator-platform { color: #9ca3af; font-size: 12px; }
+  .creator-handle { font-family: monospace; font-size: 12px; color: #a78bfa; }
+  .audience-badge {
+    display: inline-block;
+    background: #1f2937;
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 12px;
+    color: #d1d5db;
+    white-space: nowrap;
+  }
+  .status-select {
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 5px;
+    color: #e5e7eb;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+    width: 130px;
+  }
+  .status-not-contacted { color: #9ca3af; }
+  .status-messaged      { color: #fbbf24; }
+  .status-replied       { color: #60a5fa; }
+  .status-partner       { color: #34d399; }
+
+  .notes-input {
+    background: #0f0f0f;
+    border: 1px solid #374151;
+    border-radius: 5px;
+    color: #d1d5db;
+    padding: 4px 8px;
+    font-size: 12px;
+    width: 160px;
+    outline: none;
+  }
+  .notes-input:focus { border-color: #7c3aed; }
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #7c3aed;
+    cursor: pointer;
+  }
+
+  /* DM Templates */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s;
+  }
+  .tab-btn:hover { color: #e5e7eb; }
+  .tab-btn.active {
+    color: #a78bfa;
+    border-bottom-color: #7c3aed;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .template-box {
+    background: #0f0f0f;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: monospace;
+    font-size: 13px;
+    color: #d1d5db;
+    white-space: pre-wrap;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  /* Tracker stats */
+  .tracker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+  }
+  .tracker-stat {
+    background: #0f0f0f;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .tracker-stat .num {
+    font-size: 32px;
+    font-weight: 700;
+    color: #a78bfa;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .tracker-stat .lbl {
+    font-size: 12px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .tracker-stat.green .num { color: #34d399; }
+  .tracker-stat.yellow .num { color: #fbbf24; }
+  .tracker-stat.blue .num { color: #60a5fa; }
+
+  /* Calculator */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 640px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-field label {
+    display: block;
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .range-wrap { display: flex; align-items: center; gap: 10px; }
+  input[type="range"] {
+    flex: 1;
+    accent-color: #7c3aed;
+    cursor: pointer;
+  }
+  .range-val {
+    font-size: 14px;
+    font-weight: 700;
+    color: #a78bfa;
+    min-width: 80px;
+    text-align: right;
+  }
+  .calc-results {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  .calc-result-item {
+    background: #0f0f0f;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .calc-result-item .r-val {
+    font-size: 20px;
+    font-weight: 700;
+    color: #a78bfa;
+    margin-bottom: 4px;
+  }
+  .calc-result-item .r-lbl {
+    font-size: 11px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .calc-result-item.highlight .r-val { color: #34d399; font-size: 24px; }
+</style>
+</head>
+<body>
+
+<a href="./LAUNCH-STATUS.html" class="back-link">← Back to Launch Status</a>
+
+<div class="page-header">
+  <h1>🚀 Influencer Outreach Kit</h1>
+  <p>Contact 30 Notion creators for 30% affiliate commission</p>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-wrap">
+  <span class="progress-label" id="progressLabel">0 / 30 contacted</span>
+  <div class="progress-bar-outer">
+    <div class="progress-bar-inner" id="progressBar" style="width:0%"></div>
+  </div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<!-- 1. Affiliate Stats -->
+<div class="card">
+  <div class="card-title">💰 Affiliate Program Stats</div>
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-label">Commission Rate</div>
+      <div class="stat-value">30%</div>
+      <div class="stat-sub">Per sale, lifetime</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">FreelanceOS Pro earns</div>
+      <div class="stat-value">$8.70</div>
+      <div class="stat-sub">Per sale ($29 price)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">CreatorHQ Pro earns</div>
+      <div class="stat-value">$8.70</div>
+      <div class="stat-sub">Per sale ($29 price)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Affiliate Signup Page</div>
+      <div class="stat-value" style="font-size:14px;margin-top:2px;">affiliate.html</div>
+      <div class="stat-sub">Share with partners</div>
+    </div>
+  </div>
+  <div class="affiliate-link-row">
+    <span class="affiliate-url">https://freelanceos-storefront.github.io/affiliate.html</span>
+    <button class="btn btn-sm" onclick="copyAffiliateLink(this)">Copy Link</button>
+  </div>
+</div>
+
+<!-- 2. Creator List -->
+<div class="card">
+  <div class="card-title">👥 Creator List (30 targets)</div>
+  <div class="table-wrap">
+    <table id="creatorTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Creator</th>
+          <th>Platform</th>
+          <th>Audience</th>
+          <th>Handle / Link</th>
+          <th>Status</th>
+          <th>Notes</th>
+          <th>Contacted</th>
+        </tr>
+      </thead>
+      <tbody id="creatorTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 3. DM Templates -->
+<div class="card">
+  <div class="card-title">✉️ Outreach Templates</div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('twitter', this)">Twitter DM</button>
+    <button class="tab-btn" onclick="switchTab('email', this)">Email</button>
+    <button class="tab-btn" onclick="switchTab('instagram', this)">Instagram DM</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-twitter">
+    <div class="template-box" id="tmpl-twitter">Hey [NAME]! 👋
+
+Big fan of your Notion content. I built FreelanceOS — a complete Notion system for freelancers (client tracker, invoicing, project mgmt, time tracking).
+
+Would love to offer you 30% commission on every sale. You'd be helping your audience systemize their freelance business.
+
+Free copy for you to try: https://freelanceos-storefront.github.io
+Affiliate details: https://freelanceos-storefront.github.io/affiliate.html
+
+Worth a convo?</div>
+    <button class="btn btn-sm" onclick="copyTemplate('tmpl-twitter', this)">Copy Template</button>
+  </div>
+
+  <div class="tab-panel" id="tab-email">
+    <div class="template-box" id="tmpl-email">Subject: Affiliate partnership — 30% commission on Notion freelance templates
+
+Hi [NAME],
+
+I'm Mark, creator of FreelanceOS — a comprehensive Notion template system designed specifically for freelancers.
+
+I've been following your work on [PLATFORM] and think your audience would genuinely benefit from having a structured system to manage their freelance business.
+
+I'd love to offer you:
+• 30% commission on every sale (FreelanceOS Pro is $29 — you earn $8.70/sale)
+• Free copy of all templates to review
+• Custom discount code for your audience
+
+FreelanceOS includes: client CRM, project tracker, invoice system, time tracker, content calendar, and more.
+
+Check it out: https://freelanceos-storefront.github.io
+Affiliate program: https://freelanceos-storefront.github.io/affiliate.html
+
+Happy to send over a free copy — just reply to this email.
+
+Best,
+Mark
+markmma1985@gmail.com</div>
+    <button class="btn btn-sm" onclick="copyTemplate('tmpl-email', this)">Copy Template</button>
+  </div>
+
+  <div class="tab-panel" id="tab-instagram">
+    <div class="template-box" id="tmpl-instagram">Hey [NAME]! Love your content 🙌
+
+I built FreelanceOS — a Notion system for freelancers to manage clients, projects, invoices and time tracking all in one place.
+
+Wondering if you'd be interested in a 30% affiliate partnership? I'll send you a free copy to check out first.
+
+Full details here: freelanceos-storefront.github.io/affiliate.html</div>
+    <button class="btn btn-sm" onclick="copyTemplate('tmpl-instagram', this)">Copy Template</button>
+  </div>
+</div>
+
+<!-- 4. Outreach Tracker Stats -->
+<div class="card">
+  <div class="card-title">📊 Outreach Tracker</div>
+  <div class="tracker-grid">
+    <div class="tracker-stat">
+      <div class="num" id="statContacted">0</div>
+      <div class="lbl">Contacted</div>
+    </div>
+    <div class="tracker-stat yellow">
+      <div class="num" id="statMessaged">0</div>
+      <div class="lbl">Messaged</div>
+    </div>
+    <div class="tracker-stat blue">
+      <div class="num" id="statReplied">0</div>
+      <div class="lbl">Replied</div>
+    </div>
+    <div class="tracker-stat green">
+      <div class="num" id="statPartners">0</div>
+      <div class="lbl">Partners</div>
+    </div>
+    <div class="tracker-stat green">
+      <div class="num" id="statRevEst">$0</div>
+      <div class="lbl">Est. Monthly Rev (5% conv.)</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:#4b5563;margin-top:12px;">Est. monthly revenue assumes partners × 10 sales/month × $8.70 × 5% conversion</p>
+</div>
+
+<!-- 5. Commission Calculator -->
+<div class="card">
+  <div class="card-title">🧮 Commission Calculator</div>
+  <div class="calc-grid">
+    <div class="calc-field">
+      <label>Followers / Audience Size</label>
+      <div class="range-wrap">
+        <input type="range" id="calcFollowers" min="1000" max="5000000" step="1000" value="100000" oninput="updateCalc()">
+        <span class="range-val" id="calcFollowersVal">100K</span>
+      </div>
+    </div>
+    <div class="calc-field">
+      <label>Estimated Engagement Rate</label>
+      <div class="range-wrap">
+        <input type="range" id="calcEngagement" min="0.5" max="5" step="0.1" value="2" oninput="updateCalc()">
+        <span class="range-val" id="calcEngagementVal">2.0%</span>
+      </div>
+    </div>
+  </div>
+  <div class="calc-results">
+    <div class="calc-result-item">
+      <div class="r-val" id="calcReach">2,000</div>
+      <div class="r-lbl">Engaged Audience</div>
+    </div>
+    <div class="calc-result-item">
+      <div class="r-val" id="calcClicks">40</div>
+      <div class="r-lbl">Est. Clicks (2% of engaged)</div>
+    </div>
+    <div class="calc-result-item">
+      <div class="r-val" id="calcSales">2</div>
+      <div class="r-lbl">Est. Sales (5% of clicks)</div>
+    </div>
+    <div class="calc-result-item highlight">
+      <div class="r-val" id="calcCommission">$17.40</div>
+      <div class="r-lbl">Est. Monthly Commission</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────── Creator Data ───────────────
+const creators = [
+  { name: "Thomas Frank",               platform: "YouTube",        audience: "3.2M",  handle: "@TomFrankly" },
+  { name: "Mike Vardy",                 platform: "Podcast/Blog",   audience: "85K",   handle: "@mikevardy" },
+  { name: "August Bradley",             platform: "YouTube",        audience: "280K",  handle: "@augustbradley" },
+  { name: "Red Gregory",                platform: "YouTube",        audience: "120K",  handle: "@redgregory" },
+  { name: "Marie Poulin",               platform: "YouTube",        audience: "95K",   handle: "@mariepoulin" },
+  { name: "Easlo",                      platform: "Twitter",        audience: "180K",  handle: "@heyeaslo" },
+  { name: "William Nutt",               platform: "YouTube",        audience: "65K",   handle: "@williamnutt" },
+  { name: "Ev Chapman",                 platform: "Twitter",        audience: "45K",   handle: "@evchapman" },
+  { name: "Tiago Forte",                platform: "Blog/YouTube",   audience: "320K",  handle: "@fortelabs" },
+  { name: "Ali Abdaal",                 platform: "YouTube",        audience: "5M",    handle: "@aliabdaal" },
+  { name: "Keep Productive (Francesco D'Alessio)", platform: "YouTube", audience: "370K", handle: "@keepproductive" },
+  { name: "Notion Mastery (Marie Poulin)", platform: "Course",     audience: "25K students", handle: "@mariepoulin" },
+  { name: "Notion VIP (Scott Friesen)", platform: "YouTube",        audience: "45K",   handle: "@scottfriesen" },
+  { name: "Shu Omi",                    platform: "YouTube",        audience: "160K",  handle: "@shuomi3" },
+  { name: "Jeff Su",                    platform: "YouTube",        audience: "650K",  handle: "@jeffsu" },
+  { name: "Justin Welsh",               platform: "Twitter",        audience: "440K",  handle: "@thejustinwelsh" },
+  { name: "Nick Milo",                  platform: "YouTube",        audience: "155K",  handle: "@nickmilo" },
+  { name: "David Sparks (MacSparky)",   platform: "Blog/Podcast",   audience: "200K",  handle: "@macsparky" },
+  { name: "Kat Boogaard (Notion Things)", platform: "Blog",         audience: "80K",   handle: "" },
+  { name: "Jamie Butler (Airtable vs Notion)", platform: "Blog",    audience: "35K",   handle: "" },
+  { name: "Cecelia Feld (Work Brighter)", platform: "Blog/Instagram", audience: "28K", handle: "@workbrighter" },
+  { name: "Freelance to Freedom",       platform: "Blog",           audience: "42K",   handle: "" },
+  { name: "Freelancers Union",          platform: "Blog/Social",    audience: "250K",  handle: "@freelancersunion" },
+  { name: "Chris Do (The Futur)",       platform: "YouTube",        audience: "2.1M",  handle: "@thefutur" },
+  { name: "Zulie Rane",                 platform: "Medium/YouTube", audience: "85K",   handle: "@zulierane" },
+  { name: "Hayley Milliman",            platform: "Zapier Blog",    audience: "65K",   handle: "" },
+  { name: "Notion HQ",                  platform: "Twitter",        audience: "890K",  handle: "@notionhq" },
+  { name: "Doist Blog",                 platform: "Productivity Blog", audience: "500K", handle: "" },
+  { name: "Charlie Gilkey (Productive Flourishing)", platform: "Blog", audience: "120K", handle: "" },
+  { name: "Jay Clouse (Creator Science)", platform: "Newsletter",   audience: "45K",   handle: "@jayclouse" },
+];
+
+const statusOptions = [
+  { value: "Not Contacted", label: "Not Contacted", cls: "status-not-contacted" },
+  { value: "Messaged",      label: "Messaged",       cls: "status-messaged" },
+  { value: "Replied",       label: "Replied",        cls: "status-replied" },
+  { value: "Partner",       label: "Partner",        cls: "status-partner" },
+];
+
+// ─────────────── Build Table ───────────────
+function buildTable() {
+  const tbody = document.getElementById('creatorTableBody');
+  tbody.innerHTML = '';
+  creators.forEach((c, i) => {
+    const contacted = localStorage.getItem(`influencer_${i}_contacted`) === 'true';
+    const status    = localStorage.getItem(`influencer_${i}_status`) || 'Not Contacted';
+    const notes     = localStorage.getItem(`influencer_${i}_notes`) || '';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:#4b5563;font-size:12px;">${i+1}</td>
+      <td>
+        <div class="creator-name">${escHtml(c.name)}</div>
+      </td>
+      <td><span class="creator-platform">${escHtml(c.platform)}</span></td>
+      <td><span class="audience-badge">${escHtml(c.audience)}</span></td>
+      <td><span class="creator-handle">${escHtml(c.handle)}</span></td>
+      <td>
+        <select class="status-select" data-idx="${i}" onchange="saveStatus(${i}, this)">
+          ${statusOptions.map(s => `<option value="${s.value}"${s.value===status?' selected':''}>${s.label}</option>`).join('')}
+        </select>
+      </td>
+      <td>
+        <input type="text" class="notes-input" value="${escHtml(notes)}" placeholder="Notes…"
+          oninput="saveNotes(${i}, this)" />
+      </td>
+      <td style="text-align:center;">
+        <input type="checkbox" data-idx="${i}" ${contacted?'checked':''} onchange="saveContacted(${i}, this)" />
+      </td>
+    `;
+    tbody.appendChild(tr);
+
+    // color the status select
+    colorStatus(tr.querySelector('.status-select'), status);
+  });
+  refreshStats();
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function colorStatus(sel, val) {
+  sel.className = 'status-select';
+  const opt = statusOptions.find(o => o.value === val);
+  if (opt) sel.classList.add(opt.cls);
+}
+
+// ─────────────── Storage ───────────────
+function saveContacted(i, el) {
+  localStorage.setItem(`influencer_${i}_contacted`, el.checked);
+  refreshStats();
+}
+function saveStatus(i, el) {
+  localStorage.setItem(`influencer_${i}_status`, el.value);
+  colorStatus(el, el.value);
+  refreshStats();
+}
+function saveNotes(i, el) {
+  localStorage.setItem(`influencer_${i}_notes`, el.value);
+}
+
+// ─────────────── Stats ───────────────
+function refreshStats() {
+  let contacted = 0, messaged = 0, replied = 0, partners = 0;
+  for (let i = 0; i < 30; i++) {
+    if (localStorage.getItem(`influencer_${i}_contacted`) === 'true') contacted++;
+    const st = localStorage.getItem(`influencer_${i}_status`) || 'Not Contacted';
+    if (st === 'Messaged') messaged++;
+    if (st === 'Replied')  replied++;
+    if (st === 'Partner')  partners++;
+  }
+
+  // Progress bar
+  const pct = Math.round((contacted / 30) * 100);
+  document.getElementById('progressLabel').textContent = `${contacted} / 30 contacted`;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+
+  // Tracker stats
+  document.getElementById('statContacted').textContent = contacted;
+  document.getElementById('statMessaged').textContent  = messaged;
+  document.getElementById('statReplied').textContent   = replied;
+  document.getElementById('statPartners').textContent  = partners;
+
+  // Est. monthly revenue: partners × 10 sales/month × $8.70 × 5% conversion rate
+  const estRev = (partners * 10 * 8.70 * 0.05).toFixed(2);
+  document.getElementById('statRevEst').textContent = '$' + estRev;
+}
+
+// ─────────────── Templates ───────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+function copyTemplate(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function copyAffiliateLink(btn) {
+  const url = 'https://freelanceos-storefront.github.io/affiliate.html';
+  navigator.clipboard.writeText(url).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ─────────────── Calculator ───────────────
+function fmtNum(n) {
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000)    return (n/1000).toFixed(0) + 'K';
+  return n.toString();
+}
+function commas(n) {
+  return n.toLocaleString();
+}
+
+function updateCalc() {
+  const followers   = parseInt(document.getElementById('calcFollowers').value);
+  const engagement  = parseFloat(document.getElementById('calcEngagement').value);
+
+  document.getElementById('calcFollowersVal').textContent  = fmtNum(followers);
+  document.getElementById('calcEngagementVal').textContent = engagement.toFixed(1) + '%';
+
+  const engaged  = Math.round(followers * (engagement / 100));
+  const clicks   = Math.round(engaged * 0.02);
+  const sales    = Math.round(clicks * 0.05);
+  const commission = (sales * 8.70).toFixed(2);
+
+  document.getElementById('calcReach').textContent      = commas(engaged);
+  document.getElementById('calcClicks').textContent     = commas(clicks);
+  document.getElementById('calcSales').textContent      = commas(sales);
+  document.getElementById('calcCommission').textContent = '$' + commission;
+}
+
+// ─────────────── Init ───────────────
+buildTable();
+updateCalc();
+</script>
+
+</body>
+</html>
