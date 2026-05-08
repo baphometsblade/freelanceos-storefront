@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You! Your Template Is On Its Way</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E2%9C%85</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design tokens ── */
+    :root {
+      --purple: #7c3aed;
+      --blue: #3b82f6;
+      --green: #10b981;
+      --pink: #ec4899;
+      --orange: #f59e0b;
+      --bg: #020617;
+      --bg-card: #0f172a;
+      --bg-card-2: #1e293b;
+      --border: #334155;
+      --txt-1: #f8fafc;
+      --txt-2: #cbd5e1;
+      --txt-3: #94a3b8;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--txt-1);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Checkmark animation ── */
+    @keyframes circlePop {
+      0%   { transform: scale(0); opacity: 0; }
+      60%  { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes checkDraw {
+      0%   { stroke-dashoffset: 60; opacity: 0; }
+      40%  { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .check-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .check-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(16,185,129,0.15);
+      border: 2.5px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: circlePop 0.55s cubic-bezier(.22,.68,0,1.2) forwards;
+    }
+    .check-circle svg {
+      width: 40px;
+      height: 40px;
+      overflow: visible;
+    }
+    .check-circle svg path {
+      stroke: var(--green);
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+      animation: checkDraw 0.45s ease-out 0.4s forwards;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 64px 20px 52px;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+    .hero h1 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      color: var(--txt-1);
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--txt-3);
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Urgency strip ── */
+    .urgency-strip {
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      padding: 12px 20px;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .countdown {
+      background: rgba(0,0,0,0.25);
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.9rem;
+    }
+
+    /* ── Layout container ── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .section { padding: 56px 0; }
+
+    /* ── Comparison grid ── */
+    .compare-heading {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .compare-heading h2 {
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .compare-heading p { color: var(--txt-3); font-size: 0.95rem; }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 620px) {
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+
+    .compare-card {
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid var(--border);
+    }
+    .compare-card.lite {
+      background: var(--bg-card);
+      opacity: 0.7;
+    }
+    .compare-card.pro {
+      background: var(--bg-card);
+      border: 1.5px solid transparent;
+      background-clip: padding-box;
+      position: relative;
+    }
+    .compare-card.pro::before {
+      content: '';
+      position: absolute;
+      inset: -1.5px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, var(--purple), var(--blue), var(--pink));
+      z-index: -1;
+    }
+    .compare-card.pro {
+      box-shadow: 0 0 40px rgba(124,58,237,0.25);
+    }
+
+    .compare-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .compare-card.lite h3 { color: var(--txt-3); }
+    .compare-card.pro h3 { color: var(--txt-1); }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    .compare-card.lite .feature-list li { color: var(--txt-3); }
+    .compare-card.pro  .feature-list li { color: var(--txt-2); }
+
+    .feat-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      margin-top: 1px;
+    }
+    .lite .feat-icon { background: rgba(148,163,184,0.15); color: var(--txt-3); }
+    .pro  .feat-icon { background: rgba(124,58,237,0.2); color: #a78bfa; }
+
+    .pro-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-left: auto;
+    }
+
+    /* ── Main CTA section ── */
+    .cta-section {
+      text-align: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 32px;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .cta-price-note {
+      color: var(--txt-3);
+      font-size: 0.88rem;
+      margin-bottom: 32px;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--purple), #6d28d9);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.18s, box-shadow 0.18s;
+      box-shadow: 0 4px 24px rgba(124,58,237,0.4);
+      width: 100%;
+      max-width: 420px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(124,58,237,0.55);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--txt-2);
+      font-size: 0.93rem;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.18s, color 0.18s, transform 0.18s;
+      width: 100%;
+      max-width: 420px;
+    }
+    .btn-secondary:hover {
+      border-color: var(--blue);
+      color: var(--txt-1);
+      transform: translateY(-1px);
+    }
+    .btn-bundle {
+      color: var(--orange);
+      font-size: 0.97rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .btn-bundle:hover { color: #fbbf24; text-decoration: underline; }
+    .guarantee-note {
+      color: var(--txt-3);
+      font-size: 0.82rem;
+      margin-top: 16px;
+    }
+    .guarantee-note span { color: var(--green); font-weight: 600; }
+
+    /* ── Testimonials ── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 720px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 721px) and (max-width: 900px) {
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid .testimonial-card:last-child { grid-column: span 2; }
+    }
+
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .stars { color: var(--orange); font-size: 1rem; letter-spacing: 1px; }
+    .testimonial-card blockquote {
+      font-style: italic;
+      font-size: 0.93rem;
+      color: var(--txt-2);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .testimonial-card cite {
+      font-style: normal;
+      font-size: 0.8rem;
+      color: var(--txt-3);
+      font-weight: 500;
+    }
+
+    /* ── Timeline steps ── */
+    .steps-row {
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .step-item {
+      flex: 1;
+      min-width: 180px;
+      max-width: 280px;
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+    }
+    .step-num-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .step-connector {
+      flex: 0 0 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      align-self: center;
+      margin-bottom: 32px;
+      opacity: 0.35;
+    }
+    @media (max-width: 600px) {
+      .step-connector { display: none; }
+      .step-item { min-width: 100%; max-width: 100%; padding: 16px 0; text-align: left; display: flex; align-items: flex-start; gap: 16px; }
+      .step-num-circle { margin: 0; flex-shrink: 0; }
+      .step-text-block { padding-top: 4px; }
+    }
+    .step-item h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--txt-1);
+    }
+    .step-item p {
+      font-size: 0.85rem;
+      color: var(--txt-3);
+      line-height: 1.55;
+    }
+
+    /* ── Share section ── */
+    .share-section {
+      text-align: center;
+      padding: 48px 20px;
+      border-top: 1px solid var(--border);
+    }
+    .share-section p {
+      color: var(--txt-3);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 20px;
+      border-radius: 9px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--txt-2);
+      transition: border-color 0.18s, color 0.18s, transform 0.15s;
+    }
+    .share-btn:hover { transform: translateY(-2px); color: var(--txt-1); border-color: var(--txt-3); }
+    .share-btn.twitter:hover { border-color: #1d9bf0; color: #1d9bf0; }
+    .share-btn.linkedin:hover { border-color: #0a66c2; color: #0a66c2; }
+    .share-btn.copy:hover { border-color: var(--green); color: var(--green); }
+    .copy-feedback { font-size: 0.78rem; color: var(--green); margin-top: 8px; min-height: 18px; }
+
+    /* ── Section headings ── */
+    .section-heading {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .section-heading h2, .section-heading h3 {
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .section-heading p { color: var(--txt-3); font-size: 0.93rem; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 20px;
+      text-align: center;
+      color: var(--txt-3);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--txt-3); text-decoration: underline; }
+    footer a:hover { color: var(--txt-2); }
+    .footer-links { display: inline-flex; gap: 16px; margin-top: 6px; flex-wrap: wrap; justify-content: center; }
+
+    /* ── Divider ── */
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      border-radius: 2px;
+      margin: 0 auto 40px;
+    }
+
+    /* ── Misc utils ── */
+    .text-gradient {
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-green { color: var(--green); }
+
+  </style>
+</head>
+<body>
+
+  <!-- ══ URGENCY STRIP ══ -->
+  <div class="urgency-strip">
+    <span>⚡ Upgrade offer — Pro at 20% off with code <strong>LAUNCH20</strong> · Expires in:</span>
+    <span class="countdown" id="countdown">loading...</span>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <div class="hero">
+    <div class="check-wrap">
+      <div class="check-circle">
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 21 L17 30 L33 13"/>
+        </svg>
+      </div>
+    </div>
+    <h1 id="hero-heading">You're in. Check your email for your template link.</h1>
+    <p id="hero-sub">While you're here — here's what you're missing in the free tier...</p>
+  </div>
+
+  <!-- ══ COMPARISON ══ -->
+  <div class="container">
+    <div class="section">
+      <div class="compare-heading">
+        <h2>Free vs. <span class="text-gradient" id="pro-name">Pro</span></h2>
+        <p id="compare-sub">See exactly what unlocks when you upgrade.</p>
+      </div>
+      <div class="compare-grid">
+        <!-- Lite column -->
+        <div class="compare-card lite">
+          <h3>✅ <span id="lite-col-title">What you got (Lite)</span></h3>
+          <ul class="feature-list" id="lite-features">
+            <li><span class="feat-icon">✓</span> Core project tracker</li>
+            <li><span class="feat-icon">✓</span> Basic client list (5 entries)</li>
+            <li><span class="feat-icon">✓</span> Invoice overview</li>
+            <li><span class="feat-icon">✓</span> Weekly planner</li>
+            <li><span class="feat-icon">✓</span> Notion template starter</li>
+          </ul>
+        </div>
+        <!-- Pro column -->
+        <div class="compare-card pro">
+          <h3>
+            🚀 <span id="pro-col-title">What Pro adds</span>
+            <span class="pro-badge">$29 → $23</span>
+          </h3>
+          <ul class="feature-list" id="pro-features">
+            <li><span class="feat-icon">★</span> Full CRM with unlimited clients + deal stages</li>
+            <li><span class="feat-icon">★</span> Revenue dashboard + P&amp;L view</li>
+            <li><span class="feat-icon">★</span> Automated project templates (1 click)</li>
+            <li><span class="feat-icon">★</span> Invoice tracking + overdue alerts</li>
+            <li><span class="feat-icon">★</span> Quarterly business review system</li>
+            <li><span class="feat-icon">★</span> Tax prep tracker</li>
+            <li><span class="feat-icon">★</span> Lifetime updates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ MAIN CTA ══ -->
+    <div class="section" style="padding-top:0">
+      <div class="cta-section">
+        <h2 id="cta-heading">Upgrade to Pro — just $23.20 today with LAUNCH20</h2>
+        <p class="cta-price-note">Regular price $29 &nbsp;·&nbsp; One-time payment &nbsp;·&nbsp; No subscription</p>
+        <div class="btn-group">
+          <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v" target="_blank" rel="noopener" class="btn-primary" id="primary-cta">
+            Upgrade FreelanceOS to Pro →
+          </a>
+          <a href="https://buy.stripe.com/bJe14nbZ3gvTdan0Dk6kg0w" target="_blank" rel="noopener" class="btn-secondary" id="secondary-cta">
+            Upgrade CreatorHQ instead →
+          </a>
+          <a href="https://buy.stripe.com/7sY28r5AFenL4DR2Ls6kg0x" target="_blank" rel="noopener" class="btn-bundle">
+            🎁 Or get BOTH Pro templates for $47 →
+          </a>
+        </div>
+        <p class="guarantee-note"><span>30-day money-back guarantee.</span> No questions asked.</p>
+      </div>
+    </div>
+
+    <!-- ══ TESTIMONIALS ══ -->
+    <div class="section">
+      <div class="section-heading">
+        <h3>What people say after upgrading</h3>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"I downloaded the free version on a Monday. By Wednesday I'd already upgraded. The revenue dashboard alone is worth $29."</blockquote>
+          <cite>— Freelance designer, UK</cite>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"I've tried 6 different Notion templates. This is the first one I've actually stuck with. The Pro version is embarrassingly good for the price."</blockquote>
+          <cite>— Independent consultant</cite>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Upgraded same day. The quarterly review system is something I'd been trying to build myself for a year."</blockquote>
+          <cite>— Marketing freelancer</cite>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SETUP STEPS ══ -->
+    <div class="section" style="padding-bottom: 40px;">
+      <div class="section-heading">
+        <h3>You're 3 steps from being set up</h3>
+        <p id="steps-sub">Your template is on its way — here's what to do next.</p>
+      </div>
+      <div class="steps-row">
+        <div class="step-item">
+          <div class="step-text-block">
+            <div class="step-num-circle">1</div>
+            <h4>Check your email</h4>
+            <p>Click the Notion template link we just sent you.</p>
+          </div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item">
+          <div class="step-text-block">
+            <div class="step-num-circle">2</div>
+            <h4>Hit "Duplicate"</h4>
+            <p>Use the button in the top-right corner of Notion.</p>
+          </div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-item">
+          <div class="step-text-block">
+            <div class="step-num-circle">3</div>
+            <h4>Start adding data</h4>
+            <p id="step3-text">Add your clients and projects — you're live.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SHARE ══ -->
+  <div class="share-section">
+    <p>If this helped, sharing it helps us keep it free:</p>
+    <div class="share-buttons">
+      <a
+        href="https://twitter.com/intent/tweet?text=Just+grabbed+a+free+Notion+template+for+freelancers+from+%40FreelanceOS+%E2%80%94+actually+impressive+for+a+free+tool.+Check+it+out%3A+https%3A%2F%2Fbaphometsblade.github.io%2Ffreelanceos-storefront%2Ffree-templates.html"
+        target="_blank"
+        rel="noopener"
+        class="share-btn twitter"
+      >
+        🐦 Share on Twitter
+      </a>
+      <a
+        href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fbaphometsblade.github.io%2Ffreelanceos-storefront%2Ffree-templates.html"
+        target="_blank"
+        rel="noopener"
+        class="share-btn linkedin"
+      >
+        💼 Share on LinkedIn
+      </a>
+      <button class="share-btn copy" id="copy-btn" onclick="copyLink()">
+        🔗 Copy link
+      </button>
+    </div>
+    <div class="copy-feedback" id="copy-feedback"></div>
+  </div>
+
+
+  <!-- UPSELL: Complete Your Freelance Brand -->
+  <section style="max-width:700px;margin:48px auto;padding:0 20px;">
+    <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border:1px solid #7c3aed;border-radius:16px;padding:40px;text-align:center;">
+      <div style="display:inline-block;background:#7c3aed;color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;padding:4px 14px;border-radius:20px;margin-bottom:16px;text-transform:uppercase;">Complete Your Freelance Brand</div>
+      <h2 style="color:#fff;font-size:28px;font-weight:800;margin:0 0 12px;">You've Got the Systems. Now Get the Look.</h2>
+      <p style="color:#9ca3af;font-size:16px;margin:0 0 24px;line-height:1.6;">Your clients judge you by your brand before they ever see your work. Professional logo + brand kit = instant credibility boost.</p>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:28px;text-align:left;">
+        <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:16px;">
+          <div style="font-size:24px;margin-bottom:8px;">🎨</div>
+          <div style="color:#e5e7eb;font-size:13px;font-weight:600;">Custom Logo</div>
+          <div style="color:#9ca3af;font-size:12px;margin-top:4px;">Unique, professional design</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:16px;">
+          <div style="font-size:24px;margin-bottom:8px;">📦</div>
+          <div style="color:#e5e7eb;font-size:13px;font-weight:600;">Brand Kit</div>
+          <div style="color:#9ca3af;font-size:12px;margin-top:4px;">Colors, fonts, guidelines</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:16px;">
+          <div style="font-size:24px;margin-bottom:8px;">⚡</div>
+          <div style="color:#e5e7eb;font-size:13px;font-weight:600;">Fast Delivery</div>
+          <div style="color:#9ca3af;font-size:12px;margin-top:4px;">48-hour turnaround</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:8px;">
+        <span style="color:#9ca3af;font-size:14px;text-decoration:line-through;margin-right:8px;">Regular $99</span>
+        <span style="color:#7c3aed;font-size:32px;font-weight:900;">$49</span>
+        <span style="color:#9ca3af;font-size:14px;margin-left:4px;">— FreelanceOS customer discount</span>
+      </div>
+      
+      <a href="https://buy.stripe.com/14AcN5aUZbbz1rFeua6kg1U" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:18px;font-weight:700;padding:16px 40px;border-radius:10px;text-decoration:none;margin-bottom:12px;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        Get My Logo — $49 →
+      </a>
+      <br>
+      <a href="https://buy.stripe.com/14AcN5aUZbbz1rFeua6kg1U" style="color:#6b7280;font-size:12px;text-decoration:none;">Skip for now</a>
+      
+      <p style="color:#4b5563;font-size:11px;margin:16px 0 0;">⭐ Freelancers who add professional branding earn 32% more per project on average.</p>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div>© 2026 FreelanceOS &nbsp;·&nbsp; Questions? Reply to your confirmation email</div>
+    <div class="footer-links">
+      <a href="index.html">Storefront</a>
+      <a href="free-templates.html">Free Templates</a>
+    </div>
+  </footer>
+
+  <script>
+    /* ─────────────────────────────────────────────
+       1. Detect product param and swap copy
+    ───────────────────────────────────────────── */
+    const params = new URLSearchParams(window.location.search);
+    const product = (params.get('product') || 'freelanceos').toLowerCase();
+    const isCreatorHQ = product === 'creatorhq';
+
+    if (isCreatorHQ) {
+      // Hero
+      document.getElementById('hero-heading').textContent = "You're in. Check your email for your CreatorHQ template link.";
+      document.getElementById('hero-sub').textContent = "While you're here — here's what you're missing in the free tier...";
+
+      // Comparison headings
+      document.getElementById('pro-name').textContent = 'Pro';
+      document.getElementById('compare-sub').textContent = 'See exactly what unlocks when you upgrade CreatorHQ.';
+      document.getElementById('lite-col-title').textContent = 'What you got (CreatorHQ Lite)';
+      document.getElementById('pro-col-title').textContent = 'What CreatorHQ Pro adds';
+
+      // Lite features
+      document.getElementById('lite-features').innerHTML = `
+        <li><span class="feat-icon">✓</span> Content calendar (monthly view)</li>
+        <li><span class="feat-icon">✓</span> Ideas vault</li>
+        <li><span class="feat-icon">✓</span> Basic analytics tracker</li>
+        <li><span class="feat-icon">✓</span> Platform checklist</li>
+        <li><span class="feat-icon">✓</span> Notion template starter</li>
+      `;
+
+      // Pro features
+      document.getElementById('pro-features').innerHTML = `
+        <li><span class="feat-icon">★</span> Brand deals tracker + pitch pipeline</li>
+        <li><span class="feat-icon">★</span> Monetization dashboard + revenue view</li>
+        <li><span class="feat-icon">★</span> Content repurposing system (1 click)</li>
+        <li><span class="feat-icon">★</span> Growth log + milestone tracker</li>
+        <li><span class="feat-icon">★</span> Collaboration + sponsorship manager</li>
+        <li><span class="feat-icon">★</span> Quarterly content review system</li>
+        <li><span class="feat-icon">★</span> Lifetime updates</li>
+      `;
+
+      // CTA
+      document.getElementById('cta-heading').textContent = 'Upgrade CreatorHQ to Pro — just $23.20 today with LAUNCH20';
+      document.getElementById('primary-cta').textContent = 'Upgrade CreatorHQ to Pro →';
+      document.getElementById('primary-cta').href = 'https://buy.stripe.com/bJe14nbZ3gvTdan0Dk6kg0w';
+      document.getElementById('secondary-cta').textContent = 'Upgrade FreelanceOS instead →';
+      document.getElementById('secondary-cta').href = 'https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v';
+
+      // Steps
+      document.getElementById('steps-sub').textContent = 'Your CreatorHQ template is on its way — here\'s what to do next.';
+      document.getElementById('step3-text').textContent = 'Add your content schedule and brand deals — you\'re live.';
+    }
+
+    /* ─────────────────────────────────────────────
+       2. Countdown timer (24h, stored in localStorage)
+    ───────────────────────────────────────────── */
+    (function() {
+      const KEY = 'freelanceos_offer_expiry';
+      const DURATION = 24 * 60 * 60 * 1000; // 24 hours in ms
+
+      let expiry = parseInt(localStorage.getItem(KEY), 10);
+      if (!expiry || isNaN(expiry)) {
+        expiry = Date.now() + DURATION;
+        localStorage.setItem(KEY, expiry);
+      }
+
+      const el = document.getElementById('countdown');
+
+      function tick() {
+        const remaining = expiry - Date.now();
+        if (remaining <= 0) {
+          el.textContent = 'EXPIRED';
+          return;
+        }
+        const h = Math.floor(remaining / 3600000);
+        const m = Math.floor((remaining % 3600000) / 60000);
+        const s = Math.floor((remaining % 60000) / 1000);
+        el.textContent =
+          String(h).padStart(2, '0') + ':' +
+          String(m).padStart(2, '0') + ':' +
+          String(s).padStart(2, '0');
+        setTimeout(tick, 1000);
+      }
+      tick();
+    })();
+
+    /* ─────────────────────────────────────────────
+       3. Copy link
+    ───────────────────────────────────────────── */
+    function copyLink() {
+      const url = 'https://baphometsblade.github.io/freelanceos-storefront/free-templates.html';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(showCopied).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+      function fallbackCopy() {
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showCopied();
+      }
+      function showCopied() {
+        const fb = document.getElementById('copy-feedback');
+        fb.textContent = '✓ Link copied to clipboard!';
+        setTimeout(() => { fb.textContent = ''; }, 3000);
+      }
+    }
+  </script>
+</body>
+</html>
