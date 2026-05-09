@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notion Budget Template for Freelancers — Track Income, Expenses & Tax | FreelanceOS</title>
+  <meta name="description" content="The best Notion budget template for freelancers. Track monthly income, categorize expenses, auto-calculate tax reserves, and see your real profit margin — without a spreadsheet." />
+  <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/notion-budget-template-freelancer.html" />
+  <meta property="og:title" content="Notion Budget Template for Freelancers — Track Income, Expenses & Tax Without a Spreadsheet" />
+  <meta property="og:description" content="Know exactly where your money goes. Income tracking, expense categories, tax reserves, and profit margins — all in Notion." />
+  <meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/notion-budget-template-freelancer.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-budget.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Notion Budget Template for Freelancers" />
+  <meta name="twitter:description" content="Track income, expenses, and taxes as a freelancer — in Notion. Part of FreelanceOS Pro." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f172a; --card: #1e293b; --border: rgba(255,255,255,0.08);
+      --cyan: #06b6d4; --purple: #7c3aed; --green: #10b981;
+      --text: #f1f5f9; --muted: #94a3b8; --danger: #ef4444; --warning: #f59e0b;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; }
+    .flash-bar { background: linear-gradient(90deg, #7f1d1d, #b45309); text-align: center; padding: 10px 16px; font-size: 14px; font-weight: 600; letter-spacing: 0.01em; position: sticky; top: 0; z-index: 100; }
+    .flash-bar span { color: #fbbf24; }
+    .flash-bar .code { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; font-family: monospace; color: #fcd34d; }
+    nav { background: rgba(15,23,42,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 40px; z-index: 99; }
+    .nav-logo { font-weight: 800; font-size: 18px; color: var(--green); text-decoration: none; }
+    .nav-cta { background: var(--green); color: #0f172a; padding: 8px 20px; border-radius: 8px; font-weight: 700; font-size: 14px; text-decoration: none; transition: opacity 0.2s; }
+    .nav-cta:hover { opacity: 0.85; }
+    .hero { max-width: 860px; margin: 0 auto; padding: 72px 24px 56px; text-align: center; }
+    .hero-badge { display: inline-block; background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.25); padding: 6px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; margin-bottom: 24px; }
+    .hero h1 { font-size: clamp(28px, 5vw, 52px); font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; }
+    .hero h1 em { font-style: normal; color: var(--green); }
+    .hero p { font-size: clamp(16px, 2vw, 20px); color: var(--muted); max-width: 640px; margin: 0 auto 36px; }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: linear-gradient(135deg, var(--green), #059669); color: #0f172a; padding: 14px 32px; border-radius: 10px; font-weight: 800; font-size: 16px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 24px rgba(16,185,129,0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(16,185,129,0.45); }
+    .btn-secondary { background: transparent; color: var(--text); padding: 14px 32px; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; border: 1px solid var(--border); transition: border-color 0.2s, background 0.2s; }
+    .btn-secondary:hover { border-color: var(--green); background: rgba(16,185,129,0.05); }
+    .hero-proof { margin-top: 20px; font-size: 13px; color: var(--muted); }
+    .hero-proof strong { color: var(--text); }
+    section { padding: 64px 24px; }
+    .container { max-width: 1040px; margin: 0 auto; }
+    .section-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    .section-title { font-size: clamp(22px, 3.5vw, 36px); font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 580px; }
+
+    /* Visualization */
+    .viz-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 40px; }
+    .viz-header { background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; gap: 8px; }
+    .viz-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .viz-title { font-size: 13px; font-weight: 600; color: var(--muted); margin-left: 8px; }
+    .viz-body { padding: 24px; }
+
+    /* Budget layout */
+    .budget-top { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .metric-card {
+      border-radius: 12px;
+      padding: 20px 22px;
+      border: 1px solid var(--border);
+    }
+    .metric-card .mc-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .metric-card .mc-value { font-size: 28px; font-weight: 900; font-family: 'Courier New', monospace; line-height: 1; }
+    .metric-card .mc-sub { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+    .budget-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 680px) { .budget-cols { grid-template-columns: 1fr; } }
+
+    .budget-section-title { font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+
+    .expense-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .expense-color { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .expense-name { flex: 1; font-size: 14px; }
+    .expense-bar-wrap { width: 100px; background: rgba(255,255,255,0.05); border-radius: 100px; height: 6px; overflow: hidden; }
+    .expense-bar { height: 100%; border-radius: 100px; }
+    .expense-amount { font-size: 14px; font-weight: 700; font-family: 'Courier New', monospace; width: 56px; text-align: right; color: var(--warning); }
+
+    .income-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .income-name { flex: 1; font-size: 14px; }
+    .income-amount { font-size: 14px; font-weight: 700; font-family: 'Courier New', monospace; color: var(--green); }
+
+    .tax-section { margin-top: 20px; background: rgba(124,58,237,0.06); border: 1px solid rgba(124,58,237,0.15); border-radius: 10px; padding: 16px 20px; }
+    .tax-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; margin-bottom: 6px; }
+    .tax-row:last-child { margin-bottom: 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; margin-top: 10px; font-weight: 700; font-size: 15px; }
+    .tax-row .lbl { color: var(--muted); }
+    .tax-row .val { font-family: 'Courier New', monospace; }
+
+    /* Bar chart */
+    .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 120px; margin-top: 24px; }
+    .bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .bar-pair { display: flex; gap: 3px; align-items: flex-end; height: 100px; }
+    .bar { width: 18px; border-radius: 4px 4px 0 0; min-height: 4px; transition: opacity 0.2s; }
+    .bar:hover { opacity: 0.8; }
+    .bar-group .bar-label { font-size: 10px; color: var(--muted); }
+
+    .chart-legend { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+    .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; transition: border-color 0.2s; }
+    .feature-card:hover { border-color: rgba(16,185,129,0.3); }
+    .feature-icon { font-size: 28px; margin-bottom: 14px; }
+    .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
+    .pain-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 28px; }
+    .pain-card .pain-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--danger); margin-bottom: 10px; }
+    .pain-card .solution-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-top: 16px; margin-bottom: 10px; }
+    .pain-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .pain-card p { font-size: 14px; color: var(--muted); }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 40px; }
+    .step-num { width: 44px; height: 44px; background: linear-gradient(135deg, var(--green), var(--cyan)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; margin-bottom: 16px; color: #0f172a; }
+    .step h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 14px; color: var(--muted); }
+
+    .compare-wrap { overflow-x: auto; margin-top: 40px; }
+    .compare-table { width: 100%; border-collapse: collapse; min-width: 560px; }
+    .compare-table th { padding: 14px 20px; text-align: center; font-weight: 700; font-size: 14px; border-bottom: 2px solid var(--border); }
+    .compare-table th:first-child { text-align: left; }
+    .compare-table th.highlight { color: var(--green); border-bottom-color: var(--green); }
+    .compare-table td { padding: 14px 20px; border-bottom: 1px solid var(--border); font-size: 14px; text-align: center; }
+    .compare-table td:first-child { text-align: left; color: var(--muted); }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .check { color: var(--green); } .cross { color: var(--danger); } .partial { color: var(--warning); font-size: 14px; }
+
+    .faq { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+    .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .faq-item h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .faq-item p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    .cta-block { background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(6,182,212,0.07)); border: 1px solid rgba(16,185,129,0.2); border-radius: 20px; padding: 56px 32px; text-align: center; margin-top: 40px; }
+    .cta-block h2 { font-size: clamp(22px, 3vw, 36px); font-weight: 900; margin-bottom: 12px; }
+    .cta-block p { font-size: 17px; color: var(--muted); margin-bottom: 32px; }
+    .price-display { margin-bottom: 24px; }
+    .price-original { font-size: 20px; color: var(--muted); text-decoration: line-through; }
+    .price-sale { font-size: 48px; font-weight: 900; color: var(--green); font-family: 'Courier New', monospace; }
+    .price-badge { display: inline-block; background: var(--warning); color: #0f172a; padding: 4px 12px; border-radius: 100px; font-size: 13px; font-weight: 700; margin-left: 12px; }
+    .urgency { font-size: 13px; color: var(--warning); margin-top: 16px; }
+
+    .sticky-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid var(--border); padding: 12px 20px; z-index: 200; align-items: center; justify-content: space-between; gap: 12px; }
+    .sticky-bar-text { font-size: 14px; font-weight: 600; }
+    .sticky-bar-text span { color: var(--green); }
+    @media (max-width: 768px) { .sticky-bar { display: flex; } body { padding-bottom: 70px; } }
+    footer { text-align: center; padding: 40px 24px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); }
+    footer a { color: var(--cyan); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <div class="flash-bar">
+    ⚡ FLASH SALE: Use code <span class="code">FLASH40</span> for <span>40% off</span> — $29 → <span>$17.40</span> &nbsp;·&nbsp; Limited time only
+  </div>
+
+  <nav>
+    <a class="nav-logo" href="/">FreelanceOS</a>
+    <a class="nav-cta" href="/checkout/freelanceos-pro.html">Get Pro — $17.40</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-badge">💰 Notion Budget Template · Freelancer Edition</div>
+    <h1>Notion Budget Template for Freelancers —<br/><em>Track Income, Expenses &amp; Tax Without a Spreadsheet</em></h1>
+    <p>Know exactly what you earned, what you spent, and what you owe in taxes — every month, without building formulas in Excel or paying for Quickbooks.</p>
+    <div class="hero-btns">
+      <a href="/checkout/freelanceos-pro.html" class="btn-primary">Get FreelanceOS Pro — $17.40 ⚡</a>
+      <a href="https://baphometsblade.github.io/freelanceos-storefront/" class="btn-secondary">See free templates →</a>
+    </div>
+    <p class="hero-proof">Included in <strong>FreelanceOS Pro</strong> · Works on free Notion plan · No accounting degree needed</p>
+  </header>
+
+  <!-- Visualization -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="section-label">Live Preview</div>
+      <div class="section-title">May 2026 — Financial Snapshot</div>
+      <p class="section-sub">Your real numbers, clearly organized. Income, expenses by category, tax reserve, and net profit — all in one view.</p>
+
+      <div class="viz-wrap">
+        <div class="viz-header">
+          <div class="viz-dot" style="background:#ef4444"></div>
+          <div class="viz-dot" style="background:#f59e0b"></div>
+          <div class="viz-dot" style="background:#10b981"></div>
+          <span class="viz-title">FreelanceOS — Budget Dashboard · May 2026</span>
+        </div>
+        <div class="viz-body">
+          <!-- Top metrics -->
+          <div class="budget-top">
+            <div class="metric-card" style="background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.04));">
+              <div class="mc-label">Gross Income</div>
+              <div class="mc-value" style="color:var(--green)">$8,400</div>
+              <div class="mc-sub">↑ 12% vs April</div>
+            </div>
+            <div class="metric-card" style="background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02));">
+              <div class="mc-label">Total Expenses</div>
+              <div class="mc-value" style="color:#f87171">$662</div>
+              <div class="mc-sub">7.9% of income</div>
+            </div>
+            <div class="metric-card" style="background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(6,182,212,0.03));">
+              <div class="mc-label">Net Profit</div>
+              <div class="mc-value" style="color:var(--cyan)">$7,738</div>
+              <div class="mc-sub">92.1% margin</div>
+            </div>
+            <div class="metric-card" style="background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(124,58,237,0.03));">
+              <div class="mc-label">Tax Reserve (30%)</div>
+              <div class="mc-value" style="color:#a78bfa">$2,321</div>
+              <div class="mc-sub">Set aside for Q2 filing</div>
+            </div>
+          </div>
+
+          <!-- Two column layout -->
+          <div class="budget-cols">
+            <!-- Expenses -->
+            <div>
+              <div class="budget-section-title">Expenses by Category</div>
+              <div class="expense-row">
+                <div class="expense-color" style="background:#7c3aed"></div>
+                <span class="expense-name">Software & Tools</span>
+                <div class="expense-bar-wrap"><div class="expense-bar" style="width:100%;background:#7c3aed"></div></div>
+                <span class="expense-amount">$312</span>
+              </div>
+              <div class="expense-row">
+                <div class="expense-color" style="background:#06b6d4"></div>
+                <span class="expense-name">Professional Dev</span>
+                <div class="expense-bar-wrap"><div class="expense-bar" style="width:70%;background:#06b6d4"></div></div>
+                <span class="expense-amount">$220</span>
+              </div>
+              <div class="expense-row">
+                <div class="expense-color" style="background:#f59e0b"></div>
+                <span class="expense-name">Marketing & Ads</span>
+                <div class="expense-bar-wrap"><div class="expense-bar" style="width:27%;background:#f59e0b"></div></div>
+                <span class="expense-amount">$85</span>
+              </div>
+              <div class="expense-row">
+                <div class="expense-color" style="background:#10b981"></div>
+                <span class="expense-name">Equipment</span>
+                <div class="expense-bar-wrap"><div class="expense-bar" style="width:0%;background:#10b981"></div></div>
+                <span class="expense-amount" style="color:var(--muted)">$0</span>
+              </div>
+              <div class="expense-row">
+                <div class="expense-color" style="background:#64748b"></div>
+                <span class="expense-name">Other / Misc</span>
+                <div class="expense-bar-wrap"><div class="expense-bar" style="width:14%;background:#64748b"></div></div>
+                <span class="expense-amount">$45</span>
+              </div>
+              <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px;display:flex;justify-content:space-between;font-size:14px;">
+                <strong>Total</strong>
+                <strong class="expense-amount" style="font-size:16px;color:#f87171">$662</strong>
+              </div>
+            </div>
+
+            <!-- Income -->
+            <div>
+              <div class="budget-section-title">Income Sources</div>
+              <div class="income-row">
+                <span class="income-name">Acme Corp — Retainer</span>
+                <span class="income-amount">$3,500</span>
+              </div>
+              <div class="income-row">
+                <span class="income-name">NovaTech — Project</span>
+                <span class="income-amount">$2,200</span>
+              </div>
+              <div class="income-row">
+                <span class="income-name">Bright Media — Consulting</span>
+                <span class="income-amount">$1,800</span>
+              </div>
+              <div class="income-row">
+                <span class="income-name">Digital product sales</span>
+                <span class="income-amount">$900</span>
+              </div>
+              <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px;display:flex;justify-content:space-between;font-size:14px;">
+                <strong>Total</strong>
+                <strong style="font-family:'Courier New',monospace;color:var(--green);font-size:16px;">$8,400</strong>
+              </div>
+
+              <!-- Tax reserve -->
+              <div class="tax-section" style="margin-top:20px;">
+                <div class="tax-row">
+                  <span class="lbl">Gross income</span>
+                  <span class="val">$8,400</span>
+                </div>
+                <div class="tax-row">
+                  <span class="lbl">Deductible expenses</span>
+                  <span class="val" style="color:#f87171">− $662</span>
+                </div>
+                <div class="tax-row">
+                  <span class="lbl">Taxable income</span>
+                  <span class="val">$7,738</span>
+                </div>
+                <div class="tax-row">
+                  <span class="lbl" style="color:#a78bfa;font-weight:700;">Tax Reserve (30%) →</span>
+                  <span class="val" style="color:#a78bfa;font-weight:700;">$2,321</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simple bar chart -->
+          <div style="margin-top:32px;">
+            <div class="budget-section-title">Monthly Income vs. Expenses — 2026</div>
+            <div class="bar-chart">
+              <div class="bar-group">
+                <div class="bar-pair">
+                  <div class="bar" style="background:var(--green);height:52px;" title="Income $5,200"></div>
+                  <div class="bar" style="background:#ef4444;height:6px;" title="Expenses $520"></div>
+                </div>
+                <div class="bar-label">Jan</div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-pair">
+                  <div class="bar" style="background:var(--green);height:61px;" title="Income $6,100"></div>
+                  <div class="bar" style="background:#ef4444;height:7px;" title="Expenses $590"></div>
+                </div>
+                <div class="bar-label">Feb</div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-pair">
+                  <div class="bar" style="background:var(--green);height:58px;" title="Income $5,800"></div>
+                  <div class="bar" style="background:#ef4444;height:5px;" title="Expenses $480"></div>
+                </div>
+                <div class="bar-label">Mar</div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-pair">
+                  <div class="bar" style="background:var(--green);height:75px;" title="Income $7,500"></div>
+                  <div class="bar" style="background:#ef4444;height:7px;" title="Expenses $710"></div>
+                </div>
+                <div class="bar-label">Apr</div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-pair">
+                  <div class="bar" style="background:var(--green);height:84px;" title="Income $8,400" style="outline:2px solid rgba(16,185,129,0.5);"></div>
+                  <div class="bar" style="background:#ef4444;height:7px;" title="Expenses $662"></div>
+                </div>
+                <div class="bar-label" style="color:var(--green);font-weight:700;">May</div>
+              </div>
+              <div class="bar-group" style="opacity:0.3;">
+                <div class="bar-pair">
+                  <div class="bar" style="background:var(--green);height:20px;border:1px dashed rgba(16,185,129,0.4);background:transparent;"></div>
+                </div>
+                <div class="bar-label">Jun</div>
+              </div>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Income</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Expenses</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section>
+    <div class="container">
+      <div class="section-label">What's Inside</div>
+      <div class="section-title">Finally, financial clarity for freelancers</div>
+      <p class="section-sub">Not a generic budget template — built around the specific financial realities of freelance life.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">💵</div>
+          <h3>Monthly Income Log</h3>
+          <p>Log every payment by client, project, and income type. Instantly see which clients are your most valuable revenue sources.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🗂️</div>
+          <h3>Expense Categories</h3>
+          <p>Pre-built categories: Software, Equipment, Marketing, Professional Development, Travel, Office. Fully customizable with auto-totals.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏛️</div>
+          <h3>Auto Tax Reserve Calculator</h3>
+          <p>Set your tax rate (15%, 25%, 30%) and the template auto-calculates how much to set aside from each month's net profit.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Annual P&L Overview</h3>
+          <p>12-month profit & loss dashboard shows income trends, expense patterns, and net profit by month — so you can spot your best quarters.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h3>Linked to Invoices & Clients</h3>
+          <p>Income entries link to your invoice database and client records. No double data entry — log the invoice once, the budget updates automatically.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📤</div>
+          <h3>Tax Export Prep</h3>
+          <p>End-of-year view shows all deductible expenses organized by category — making it dramatically faster to hand off to your accountant.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pain → Solution -->
+  <section style="background: rgba(255,255,255,0.01);">
+    <div class="container">
+      <div class="section-label">The Problem & The Fix</div>
+      <div class="section-title">Freelance finances are uniquely messy</div>
+
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="pain-label">Pain Point</div>
+          <h3>"Tax season hits and I have no idea what I owe — it's always a panic."</h3>
+          <p>Freelancers often hit Q4 with no tax savings, leading to stress, payment plans, and penalties. Most people only realize the problem when it's too late.</p>
+          <hr class="divider" />
+          <div class="solution-label">The Fix</div>
+          <p>The automatic tax reserve calculator shows your estimated liability every month. Set aside 30% and watch the number grow alongside your income — no April surprises.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-label">Pain Point</div>
+          <h3>"I make good money but I'm never sure why my bank account doesn't reflect it."</h3>
+          <p>Without visibility into expenses, software subscriptions and small purchases accumulate invisibly and erode your margins without you noticing.</p>
+          <hr class="divider" />
+          <div class="solution-label">The Fix</div>
+          <p>The expense dashboard categorizes every outgoing dollar. You'll immediately see that $312/month in software or the $85 ad spend that's delivering nothing — and you can cut accordingly.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-label">Pain Point</div>
+          <h3>"I'm scared to raise my rates because I don't know if I'm actually profitable."</h3>
+          <p>Without a clear profit margin view, rate decisions are guesswork. You might be undercharging by 40% and not know it.</p>
+          <hr class="divider" />
+          <div class="solution-label">The Fix</div>
+          <p>The monthly P&L shows your real profit margin by client and project type. Once you see that Client A generates 95% margin and Client B generates 60%, the rate conversation becomes obvious.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section>
+    <div class="container">
+      <div class="section-label">Quick Setup</div>
+      <div class="section-title">Your finances organized in under 10 minutes</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Duplicate & Set Your Tax Rate</h3>
+          <p>Duplicate FreelanceOS to your Notion workspace, then edit one field: your estimated tax rate. The calculator is pre-built — just enter your number.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Enter This Month's Numbers</h3>
+          <p>Log your income sources and expenses for the current month. Takes about 5 minutes if you have your bank statement handy.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Set a Monthly Review Date</h3>
+          <p>Block 20 minutes on the last day of each month to update your budget log. After 3 months, you'll have enough data to make smart financial decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section style="background: rgba(255,255,255,0.01);">
+    <div class="container">
+      <div class="section-label">Comparison</div>
+      <div class="section-title">Notion vs. the alternatives for freelance budgeting</div>
+
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="highlight" style="background:rgba(16,185,129,0.05)">FreelanceOS Notion</th>
+              <th>Excel / Google Sheets</th>
+              <th>QuickBooks / FreshBooks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tax reserve auto-calculation</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="partial">Manual formula</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Linked to invoices & clients</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Lives in your work OS</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="partial">Separate file</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>Annual P&L dashboard</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="partial">Build yourself</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Monthly cost</td>
+              <td style="color:var(--green)">$0 (one-time $17.40)</td>
+              <td style="color:var(--green)">$0</td>
+              <td style="color:var(--danger)">$15–$45/mo</td>
+            </tr>
+            <tr>
+              <td>Setup time</td>
+              <td style="color:var(--green)">10 minutes</td>
+              <td style="color:var(--warning)">Hours of formulas</td>
+              <td style="color:var(--warning)">Days of onboarding</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <div class="section-label">FAQ</div>
+      <div class="section-title">Common questions</div>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3>Is this a substitute for accounting software?</h3>
+          <p>For most freelancers who are sole proprietors or single-member LLCs earning under $150k/year, this Notion template captures everything you need for tax prep and monthly financial clarity. It won't replace QuickBooks for complex businesses with employees or inventory — but it's ideal for independent consultants, designers, writers, and developers.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I track multiple income currencies?</h3>
+          <p>Yes. You can add a currency field to each income entry and filter/group by currency. The dashboard totals work in any currency — just use your preferred one consistently as the base.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does the budget template work for new freelancers with irregular income?</h3>
+          <p>Especially well. The monthly snapshot view is designed for variable income — it shows you your actual numbers without assuming a fixed salary. The zero-month view (when income is low) is just as informative as the good months, helping you plan your emergency runway.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is this template included in the free version of FreelanceOS?</h3>
+          <p>The Budget Template is a Pro feature. The free version of FreelanceOS includes a stripped-down income log, but the full budget dashboard with expense categories, tax calculator, annual P&L, and client-linked income is exclusive to FreelanceOS Pro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container">
+      <div class="cta-block">
+        <h2>Know Your Numbers. Grow Your Business.</h2>
+        <p>Get FreelanceOS Pro — the complete Notion system for freelancers, including the Budget Template, invoicing, CRM, and 9 more templates.</p>
+        <div class="price-display">
+          <span class="price-original">$29</span>
+          <span class="price-sale">$17.40</span>
+          <span class="price-badge">FLASH40</span>
+        </div>
+        <a href="/checkout/freelanceos-pro.html" class="btn-primary" style="font-size:18px; padding:16px 40px;">Get FreelanceOS Pro Now ⚡</a>
+        <p class="urgency">⏰ Flash sale pricing — code FLASH40 may expire without notice</p>
+        <p style="font-size:13px; color:var(--muted); margin-top:12px;">Instant delivery · One-time payment · No subscription</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 FreelanceOS. Built for independent professionals.</p>
+    <p style="margin-top:8px;"><a href="https://baphometsblade.github.io/freelanceos-storefront/">Home</a> · <a href="/checkout/freelanceos-pro.html">Buy Pro</a></p>
+  </footer>
+
+  <div class="sticky-bar">
+    <div class="sticky-bar-text">FreelanceOS Pro — <span>$17.40</span> with FLASH40</div>
+    <a href="/checkout/freelanceos-pro.html" class="btn-primary" style="padding:10px 24px;font-size:14px;">Get It Now ⚡</a>
+  </div>
+
+</body>
+</html>

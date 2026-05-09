@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notion Meeting Notes Template — Never Lose an Action Item Again | FreelanceOS</title>
+  <meta name="description" content="The best Notion meeting notes template for freelancers. Capture meetings, extract action items, link to clients and projects, and track follow-ups — all in one system." />
+  <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/notion-meeting-notes-template.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Notion Meeting Notes Template — Never Lose an Action Item Again" />
+  <meta property="og:description" content="Capture every meeting, extract every action item, and never drop the ball with a client again. Part of FreelanceOS Pro." />
+  <meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/notion-meeting-notes-template.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-meeting-notes.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Notion Meeting Notes Template — Never Lose an Action Item Again" />
+  <meta name="twitter:description" content="The freelancer's meeting system built in Notion. Action items, follow-ups, client links — all captured automatically." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: rgba(255,255,255,0.08);
+      --cyan: #06b6d4;
+      --purple: #7c3aed;
+      --green: #10b981;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; }
+
+    /* Flash bar */
+    .flash-bar {
+      background: linear-gradient(90deg, #7f1d1d, #b45309);
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .flash-bar span { color: #fbbf24; }
+    .flash-bar .code { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; font-family: monospace; color: #fcd34d; }
+
+    /* Nav */
+    nav {
+      background: rgba(15,23,42,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 40px;
+      z-index: 99;
+    }
+    .nav-logo { font-weight: 800; font-size: 18px; color: var(--cyan); text-decoration: none; }
+    .nav-cta {
+      background: var(--cyan);
+      color: #0f172a;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* Hero */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 72px 24px 56px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(6,182,212,0.15);
+      color: var(--cyan);
+      border: 1px solid rgba(6,182,212,0.3);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: normal; color: var(--cyan); }
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), #0891b2);
+      color: #0f172a;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 16px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(6,182,212,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(6,182,212,0.4); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--cyan); background: rgba(6,182,212,0.05); }
+    .hero-proof { margin-top: 20px; font-size: 13px; color: var(--muted); }
+    .hero-proof strong { color: var(--text); }
+
+    /* Section */
+    section { padding: 64px 24px; }
+    .container { max-width: 1040px; margin: 0 auto; }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 36px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 580px; }
+
+    /* Viz */
+    .viz-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+    .viz-header {
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .viz-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .viz-title { font-size: 13px; font-weight: 600; color: var(--muted); margin-left: 8px; }
+    .viz-body { padding: 24px; overflow-x: auto; }
+
+    /* Table */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 680px; }
+    .data-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: top;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .badge-green { background: rgba(16,185,129,0.15); color: #34d399; }
+    .badge-yellow { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .badge-red { background: rgba(239,68,68,0.15); color: #f87171; }
+    .badge-blue { background: rgba(6,182,212,0.15); color: #22d3ee; }
+    .badge-purple { background: rgba(124,58,237,0.15); color: #a78bfa; }
+    .mono { font-family: 'Courier New', monospace; }
+    .tag { display: inline-block; background: rgba(124,58,237,0.15); color: #a78bfa; border-radius: 4px; padding: 1px 6px; font-size: 11px; margin: 2px 2px 2px 0; }
+
+    .action-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .action-list li { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+    .action-list li::before { content: '→'; color: var(--cyan); font-size: 11px; flex-shrink: 0; }
+
+    /* Summary cards */
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 24px; }
+    .summary-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .summary-card .num { font-size: 32px; font-weight: 900; font-family: 'Courier New', monospace; color: var(--cyan); }
+    .summary-card .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* Features */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(6,182,212,0.3); }
+    .feature-icon { font-size: 28px; margin-bottom: 14px; }
+    .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* Pain/Solution */
+    .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
+    .pain-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+    }
+    .pain-card .pain-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--danger); margin-bottom: 10px; }
+    .pain-card .solution-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-top: 16px; margin-bottom: 10px; }
+    .pain-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .pain-card p { font-size: 14px; color: var(--muted); }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+    /* Steps */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 40px; }
+    .step { position: relative; }
+    .step-num {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 18px;
+      margin-bottom: 16px;
+    }
+    .step h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 14px; color: var(--muted); }
+
+    /* Comparison table */
+    .compare-wrap { overflow-x: auto; margin-top: 40px; }
+    .compare-table { width: 100%; border-collapse: collapse; min-width: 560px; }
+    .compare-table th {
+      padding: 14px 20px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 14px;
+      border-bottom: 2px solid var(--border);
+    }
+    .compare-table th:first-child { text-align: left; }
+    .compare-table th.highlight { color: var(--cyan); border-bottom-color: var(--cyan); }
+    .compare-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      text-align: center;
+    }
+    .compare-table td:first-child { text-align: left; color: var(--muted); }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .check { color: var(--green); font-size: 18px; }
+    .cross { color: var(--danger); font-size: 18px; }
+    .partial { color: var(--warning); font-size: 14px; }
+
+    /* FAQ */
+    .faq { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+    .faq-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .faq-item h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .faq-item p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* CTA block */
+    .cta-block {
+      background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(124,58,237,0.1));
+      border: 1px solid rgba(6,182,212,0.2);
+      border-radius: 20px;
+      padding: 56px 32px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .cta-block h2 { font-size: clamp(22px, 3vw, 36px); font-weight: 900; margin-bottom: 12px; }
+    .cta-block p { font-size: 17px; color: var(--muted); margin-bottom: 32px; }
+    .price-display { margin-bottom: 24px; }
+    .price-original { font-size: 20px; color: var(--muted); text-decoration: line-through; }
+    .price-sale { font-size: 48px; font-weight: 900; color: var(--cyan); font-family: 'Courier New', monospace; }
+    .price-badge { display: inline-block; background: var(--warning); color: #0f172a; padding: 4px 12px; border-radius: 100px; font-size: 13px; font-weight: 700; margin-left: 12px; }
+    .urgency { font-size: 13px; color: var(--warning); margin-top: 16px; }
+
+    /* Sticky bar */
+    .sticky-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1e293b;
+      border-top: 1px solid var(--border);
+      padding: 12px 20px;
+      z-index: 200;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .sticky-bar-text { font-size: 14px; font-weight: 600; }
+    .sticky-bar-text span { color: var(--cyan); }
+    .sticky-bar .btn-primary { padding: 10px 24px; font-size: 14px; white-space: nowrap; }
+    @media (max-width: 768px) {
+      .sticky-bar { display: flex; }
+      body { padding-bottom: 70px; }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Flash Sale Bar -->
+  <div class="flash-bar">
+    ⚡ FLASH SALE: Use code <span class="code">FLASH40</span> for <span>40% off</span> — $29 → <span>$17.40</span> &nbsp;·&nbsp; Limited time only
+  </div>
+
+  <!-- Nav -->
+  <nav>
+    <a class="nav-logo" href="/">FreelanceOS</a>
+    <a class="nav-cta" href="/checkout/freelanceos-pro.html">Get Pro — $17.40</a>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-badge">📋 Notion Meeting Notes Template</div>
+    <h1>Notion Meeting Notes Template —<br/><em>Never Lose an Action Item Again</em></h1>
+    <p>Stop scrambling through email threads and scattered docs. Capture every meeting, assign every action, and follow up like a pro — all inside Notion.</p>
+    <div class="hero-btns">
+      <a href="/checkout/freelanceos-pro.html" class="btn-primary">Get FreelanceOS Pro — $17.40 ⚡</a>
+      <a href="https://baphometsblade.github.io/freelanceos-storefront/" class="btn-secondary">See free templates →</a>
+    </div>
+    <p class="hero-proof">Included in <strong>FreelanceOS Pro</strong> · Instant Notion duplication · Works on free Notion plan</p>
+  </header>
+
+  <!-- Visualization -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="section-label">Live Preview</div>
+      <div class="section-title">Your meeting log, fully organized</div>
+      <p class="section-sub">Every meeting linked to clients and projects. Every action item tracked to completion.</p>
+
+      <div class="viz-wrap">
+        <div class="viz-header">
+          <div class="viz-dot" style="background:#ef4444"></div>
+          <div class="viz-dot" style="background:#f59e0b"></div>
+          <div class="viz-dot" style="background:#10b981"></div>
+          <span class="viz-title">FreelanceOS — Meeting Log Database</span>
+        </div>
+        <div class="viz-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Meeting Title</th>
+                <th>Client</th>
+                <th>Action Items</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono" style="color:var(--muted)">May 08</td>
+                <td>
+                  <div style="font-weight:600">Q2 Website Kickoff</div>
+                  <div style="font-size:11px;color:var(--muted);margin-top:2px">60 min · Zoom</div>
+                </td>
+                <td><span class="tag">Acme Corp</span></td>
+                <td>
+                  <ul class="action-list">
+                    <li>Send wireframes draft — <strong>Mark</strong> · May 10</li>
+                    <li>Approve brand brief — <strong>Sarah</strong> · May 12</li>
+                    <li>Share hosting access — <strong>IT</strong> · May 09</li>
+                  </ul>
+                </td>
+                <td><span class="badge badge-yellow">In Progress</span></td>
+              </tr>
+              <tr>
+                <td class="mono" style="color:var(--muted)">May 06</td>
+                <td>
+                  <div style="font-weight:600">Monthly Check-in</div>
+                  <div style="font-size:11px;color:var(--muted);margin-top:2px">30 min · Phone</div>
+                </td>
+                <td><span class="tag">Bright Media</span></td>
+                <td>
+                  <ul class="action-list">
+                    <li>Invoice Q1 retainer — <strong>Mark</strong> · May 07 ✓</li>
+                    <li>Send May roadmap — <strong>Mark</strong> · May 08 ✓</li>
+                  </ul>
+                </td>
+                <td><span class="badge badge-green">Completed</span></td>
+              </tr>
+              <tr>
+                <td class="mono" style="color:var(--muted)">May 02</td>
+                <td>
+                  <div style="font-weight:600">Scope Review — App Redesign</div>
+                  <div style="font-size:11px;color:var(--muted);margin-top:2px">45 min · Google Meet</div>
+                </td>
+                <td><span class="tag">NovaTech</span></td>
+                <td>
+                  <ul class="action-list">
+                    <li>Revised proposal — <strong>Mark</strong> · May 05 ✓</li>
+                    <li>Legal review contract — <strong>NovaTech</strong> · May 09</li>
+                  </ul>
+                </td>
+                <td><span class="badge badge-red">Overdue</span></td>
+              </tr>
+              <tr>
+                <td class="mono" style="color:var(--muted)">Apr 28</td>
+                <td>
+                  <div style="font-weight:600">SEO Strategy Session</div>
+                  <div style="font-size:11px;color:var(--muted);margin-top:2px">90 min · In-person</div>
+                </td>
+                <td><span class="tag">Grow Labs</span></td>
+                <td>
+                  <ul class="action-list">
+                    <li>Keyword research doc — <strong>Mark</strong> · May 01 ✓</li>
+                    <li>Competitor audit — <strong>Mark</strong> · May 03 ✓</li>
+                    <li>Schedule next session — <strong>Both</strong> · May 10 ✓</li>
+                  </ul>
+                </td>
+                <td><span class="badge badge-green">Completed</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Summary row -->
+          <div class="summary-grid" style="margin-top:24px">
+            <div class="summary-card">
+              <div class="num">12</div>
+              <div class="label">Meetings this month</div>
+            </div>
+            <div class="summary-card">
+              <div class="num" style="color:var(--warning)">3</div>
+              <div class="label">Action items overdue</div>
+            </div>
+            <div class="summary-card">
+              <div class="num" style="color:var(--green)">18</div>
+              <div class="label">Items completed</div>
+            </div>
+            <div class="summary-card">
+              <div class="num" style="color:var(--purple)">4</div>
+              <div class="label">Active clients</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section>
+    <div class="container">
+      <div class="section-label">What's Inside</div>
+      <div class="section-title">Everything your meeting workflow needs</div>
+      <p class="section-sub">Built specifically for freelancers who run multiple client projects simultaneously.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📅</div>
+          <h3>Linked Meeting Log</h3>
+          <p>Every meeting automatically linked to your client and project databases. No more re-entering context — it's all connected.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">✅</div>
+          <h3>Action Item Extraction</h3>
+          <p>Dedicated action items table with owner, due date, and status. One view shows everything that needs your attention across all clients.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔔</div>
+          <h3>Follow-up Reminders</h3>
+          <p>Date properties trigger reminders before action items go overdue. Never let a client task slip through the cracks again.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📎</div>
+          <h3>File & Recording Attachments</h3>
+          <p>Attach Zoom recording links, Loom videos, Google Docs, and files directly to each meeting record.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏷️</div>
+          <h3>Meeting Type Tags</h3>
+          <p>Categorize by meeting type: Kickoff, Check-in, Review, Discovery, Strategy. Filter and report by type in seconds.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Client Summary Views</h3>
+          <p>Per-client meeting history view showing all sessions, outcomes, and pending items. Perfect for client QBRs and invoicing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pain → Solution -->
+  <section style="background: rgba(255,255,255,0.01);">
+    <div class="container">
+      <div class="section-label">The Problem & The Fix</div>
+      <div class="section-title">Sound familiar?</div>
+
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="pain-label">Pain Point</div>
+          <h3>"I said I'd send that... but I can't remember what meeting it was from."</h3>
+          <p>You leave every client call with mental notes that evaporate by the time you open your laptop.</p>
+          <hr class="divider" />
+          <div class="solution-label">The Fix</div>
+          <p>The action items table captures commitments the moment you log the meeting, with owner and deadline pre-filled. Your "open tasks" view is one click away.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-label">Pain Point</div>
+          <h3>"I have notes in 4 different places — Google Docs, email, Slack, Notion..."</h3>
+          <p>No single source of truth means wasted time hunting for context before every follow-up email.</p>
+          <hr class="divider" />
+          <div class="solution-label">The Fix</div>
+          <p>All meeting notes live in one Notion database, linked to clients and projects. One search finds everything — every note, every decision, every file.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-label">Pain Point</div>
+          <h3>"I can't remember what we decided in the April kickoff."</h3>
+          <p>When a client disputes scope or says "we agreed to X," you have no record to refer back to.</p>
+          <hr class="divider" />
+          <div class="solution-label">The Fix</div>
+          <p>Every meeting has a structured notes section with Decisions, Context, and Next Steps fields. Your paper trail is always two clicks away.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Setup Steps -->
+  <section>
+    <div class="container">
+      <div class="section-label">Quick Setup</div>
+      <div class="section-title">Running in under 5 minutes</div>
+      <p class="section-sub">No configuration nightmare. Just duplicate and go.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Duplicate to Your Notion</h3>
+          <p>Click the Notion link in your FreelanceOS Pro welcome email. Hit "Duplicate" — the entire template copies to your workspace instantly.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Connect Your Clients & Projects</h3>
+          <p>Add your client and project names to the linked databases (takes 2 minutes). All meeting records will auto-link going forward.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Log Your Next Meeting</h3>
+          <p>After your next call, open the Meeting Log, create a new entry, drop your notes, and add action items. You're fully operational.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section style="background: rgba(255,255,255,0.01);">
+    <div class="container">
+      <div class="section-label">Comparison</div>
+      <div class="section-title">Why Notion beats the alternatives</div>
+
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="highlight" style="background:rgba(6,182,212,0.05)">FreelanceOS Notion</th>
+              <th>Google Docs / Sheets</th>
+              <th>Dedicated Meeting App</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Linked to clients & projects</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗</span></td>
+              <td><span class="partial">Varies</span></td>
+            </tr>
+            <tr>
+              <td>Action item tracking + due dates</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="partial">Manual</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Works inside your existing workspace</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="partial">Separate tool</span></td>
+              <td><span class="cross">✗</span></td>
+            </tr>
+            <tr>
+              <td>Search across all meetings instantly</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="partial">Slow</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Free to use (no subscription)</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✗ $12–$30/mo</span></td>
+            </tr>
+            <tr>
+              <td>Setup time</td>
+              <td style="color:var(--green)">5 minutes</td>
+              <td style="color:var(--warning)">Hours of formatting</td>
+              <td style="color:var(--warning)">Learning curve</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <div class="section-label">FAQ</div>
+      <div class="section-title">Common questions</div>
+
+      <div class="faq">
+        <div class="faq-item">
+          <h3>Do I need a paid Notion plan to use this?</h3>
+          <p>No. FreelanceOS works on Notion's free plan. All the databases, linked relations, and views are fully functional without upgrading to Notion Plus.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I use this for multiple clients at once?</h3>
+          <p>Absolutely — it's built for exactly that. The meeting log links to a client database, so you can filter by client, view all meetings with a specific company, and see their pending action items in a dedicated view.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is the meeting notes template sold separately?</h3>
+          <p>The Meeting Notes template is included in FreelanceOS Pro, which bundles 12+ templates including invoicing, project management, client CRM, habit tracking, and more. At $17.40 with code FLASH40, it's significantly better value than buying templates individually.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What if I already have meeting notes in Google Docs?</h3>
+          <p>You can import key decisions and action items into the Notion template in about 30 minutes. Many users choose to start fresh — logging new meetings in Notion while keeping old docs as an archive. The template is designed for fast new-entry logging, not migration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Block -->
+  <section>
+    <div class="container">
+      <div class="cta-block">
+        <h2>Stop Losing Action Items After Every Call</h2>
+        <p>Get the complete FreelanceOS Pro system — 12+ templates including Meeting Notes, Invoicing, Client CRM, and more.</p>
+        <div class="price-display">
+          <span class="price-original">$29</span>
+          <span class="price-sale">$17.40</span>
+          <span class="price-badge">FLASH40</span>
+        </div>
+        <a href="/checkout/freelanceos-pro.html" class="btn-primary" style="font-size:18px; padding:16px 40px;">Get FreelanceOS Pro Now ⚡</a>
+        <p class="urgency">⏰ Flash sale pricing — code FLASH40 may expire without notice</p>
+        <p style="font-size:13px; color:var(--muted); margin-top:12px;">Instant delivery · Notion duplication link · One-time payment · No subscription</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 FreelanceOS. Built for independent professionals.</p>
+    <p style="margin-top:8px;"><a href="https://baphometsblade.github.io/freelanceos-storefront/">Home</a> · <a href="/checkout/freelanceos-pro.html">Buy Pro</a></p>
+  </footer>
+
+  <!-- Sticky Mobile CTA Bar -->
+  <div class="sticky-bar">
+    <div class="sticky-bar-text">FreelanceOS Pro — <span>$17.40</span> with FLASH40</div>
+    <a href="/checkout/freelanceos-pro.html" class="btn-primary">Get It Now ⚡</a>
+  </div>
+
+</body>
+</html>
