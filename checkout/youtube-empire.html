@@ -331,21 +331,9 @@
 </div>
 
 <script>
-  function toggleFaq(btn) {
-    btn.closest('.faq-item').classList.toggle('open');
-  }
-  const saleEnd = new Date('2026-05-10T23:59:59Z').getTime();
-  function updateCountdown() {
-    const diff = Math.max(0, saleEnd - Date.now());
-    const h = Math.floor(diff / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
-    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
-    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
-  }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  function toggleFaq(btn){btn.closest('.faq-item').classList.toggle('open');}
+  // Rolling 24h countdown — never shows 00:00:00
+  (function(){const K='yte_sale_end',D=864e5;let e=parseInt(sessionStorage.getItem(K)||'0',10);if(!e||e<Date.now()){e=Date.now()+D;sessionStorage.setItem(K,e);}function t(){const d=Math.max(0,e-Date.now());const el=document.getElementById;el('cd-h').textContent=String(Math.floor(d/36e5)).padStart(2,'0');el('cd-m').textContent=String(Math.floor((d%36e5)/6e4)).padStart(2,'0');el('cd-s').textContent=String(Math.floor((d%6e4)/1e3)).padStart(2,'0');if(!d){sessionStorage.removeItem(K);setTimeout(t,500);}}t();setInterval(t,1000);})();
 </script>
 </body>
 </html>

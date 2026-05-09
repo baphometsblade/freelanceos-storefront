@@ -1,0 +1,446 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Freelance Invoice Generator — Create Professional Invoices in Seconds</title><meta name="description" content="Generate professional freelance invoices instantly. Our free invoice generator lets you create, customise, and download invoices in seconds — no account required.">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/freelance-invoice-generator.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Free Freelance Invoice Generator — Create Professional Invoices in Seconds","author":{"@type":"Organization","name":"FreelanceOS"},"datePublished":"2026-05-10"}</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7}
+nav{background:#111;border-bottom:1px solid #222;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+nav a{color:#e5e7eb;text-decoration:none;font-weight:600}.nav-links a{color:#9ca3af;font-size:14px;margin-left:20px;text-decoration:none}.nav-links a:hover{color:#fff}
+.hero{background:linear-gradient(135deg,#111827,#1e1b4b);padding:60px 24px 40px;text-align:center}
+.eyebrow{color:#7c3aed;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.hero h1{color:#fff;font-size:clamp(26px,4vw,42px);font-weight:900;max-width:820px;margin:0 auto 16px;line-height:1.2}
+.hero p{color:#9ca3af;font-size:16px;max-width:600px;margin:0 auto 28px}
+.main{max-width:860px;margin:0 auto;padding:48px 24px}
+h2{color:#fff;font-size:22px;font-weight:800;margin:36px 0 12px}
+h3{color:#e5e7eb;font-size:17px;font-weight:700;margin:22px 0 8px}
+p{color:#d1d5db;margin-bottom:16px}
+ul,ol{color:#d1d5db;margin:0 0 16px 22px}li{margin-bottom:7px}
+
+/* TOOL FORM */
+.tool-wrapper{background:#111827;border:1px solid #1f2937;border-radius:16px;padding:32px;margin:0 0 32px}
+.form-section{margin-bottom:28px}
+.form-section-title{color:#7c3aed;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #1f2937}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+label{color:#9ca3af;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+input[type=text],input[type=email],input[type=date],input[type=number],textarea,select{
+  background:#0f0f0f;border:1px solid #374151;border-radius:8px;color:#e5e7eb;font-size:14px;padding:10px 14px;width:100%;outline:none;font-family:inherit
+}
+input:focus,textarea:focus{border-color:#7c3aed}
+textarea{resize:vertical;min-height:72px}
+
+/* LINE ITEMS TABLE */
+.line-items-table{width:100%;border-collapse:collapse;margin-bottom:12px}
+.line-items-table th{color:#6b7280;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;text-align:left;border-bottom:1px solid #1f2937}
+.line-items-table td{padding:6px 6px}
+.line-items-table input{padding:8px 10px;font-size:13px}
+.line-items-table .amt{color:#a78bfa;font-weight:600;font-size:13px;padding:8px 10px;background:#0a0a1a;border-radius:6px;min-width:80px;display:block}
+.remove-btn{background:#1f2937;border:none;color:#6b7280;cursor:pointer;border-radius:6px;padding:6px 10px;font-size:12px;transition:all .2s}
+.remove-btn:hover{background:#3b1e06;color:#f59e0b}
+.add-item-btn{background:#1f2937;border:1px solid #374151;color:#c4b5fd;cursor:pointer;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;margin-top:8px;transition:all .2s}
+.add-item-btn:hover{background:#2e1065;border-color:#7c3aed}
+
+/* TOTALS */
+.totals-block{background:#0f0f0f;border-radius:12px;padding:20px 24px;margin:16px 0}
+.totals-row{display:flex;justify-content:space-between;padding:6px 0;color:#9ca3af;font-size:14px}
+.totals-row.total{color:#fff;font-size:18px;font-weight:800;border-top:1px solid #1f2937;margin-top:8px;padding-top:14px}
+.totals-row span:last-child{color:#a78bfa}
+.totals-row.total span:last-child{color:#7c3aed;font-size:22px}
+
+.generate-btn{width:100%;background:#7c3aed;color:#fff;font-weight:700;font-size:16px;padding:16px;border:none;border-radius:10px;cursor:pointer;margin-top:20px;transition:background .2s}
+.generate-btn:hover{background:#6d28d9}
+
+/* INVOICE PREVIEW */
+#invoice-preview{display:none;background:#fff;color:#111;border-radius:12px;padding:48px;margin:32px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;box-shadow:0 4px 40px rgba(0,0,0,.4)}
+.inv-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px}
+.inv-from h2{font-size:28px;font-weight:900;color:#7c3aed;margin-bottom:4px}
+.inv-from p{color:#555;font-size:13px;line-height:1.6}
+.inv-meta{text-align:right}
+.inv-meta .inv-label{font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.5px}
+.inv-meta .inv-val{font-size:14px;color:#111;font-weight:600;margin-bottom:8px}
+.inv-parties{display:flex;justify-content:space-between;margin-bottom:40px;padding:24px;background:#f9f9f9;border-radius:10px}
+.inv-party h4{font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.inv-party p{color:#111;font-size:13px;line-height:1.6}
+.inv-items{width:100%;border-collapse:collapse;margin-bottom:24px}
+.inv-items th{background:#f3f4f6;color:#555;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;text-align:left;border-bottom:2px solid #e5e7eb}
+.inv-items td{padding:12px 14px;border-bottom:1px solid #f3f4f6;color:#111;font-size:13px}
+.inv-items td:last-child,.inv-items th:last-child{text-align:right}
+.inv-totals{display:flex;justify-content:flex-end}
+.inv-totals-block{min-width:260px}
+.inv-totals-row{display:flex;justify-content:space-between;padding:6px 0;color:#555;font-size:13px}
+.inv-totals-row.inv-grand{font-size:16px;font-weight:800;color:#111;border-top:2px solid #111;margin-top:8px;padding-top:12px}
+.inv-notes{margin-top:32px;padding-top:24px;border-top:1px solid #e5e7eb}
+.inv-notes h4{font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.inv-notes p{color:#555;font-size:13px;line-height:1.6;white-space:pre-wrap}
+.download-btn{display:inline-block;background:#7c3aed;color:#fff;font-weight:700;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-size:14px;margin-top:24px}
+.download-btn:hover{background:#6d28d9}
+.no-print{margin-top:16px}
+
+/* TIPS + CTA */
+.tips-box{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:24px;margin:32px 0}
+.tips-box h3{color:#fff;font-size:16px;font-weight:700;margin-bottom:14px}
+.tip-item{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.tip-num{background:#7c3aed;color:#fff;font-size:11px;font-weight:800;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.tip-text{color:#d1d5db;font-size:14px}
+
+.highlight-box{background:#111827;border-left:4px solid #7c3aed;border-radius:0 10px 10px 0;padding:20px 24px;margin:28px 0}
+.highlight-box p{margin:0;color:#d1d5db}
+.related{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:24px;margin:40px 0}
+.related h4{color:#7c3aed;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.related a{display:block;color:#c4b5fd;font-size:14px;text-decoration:none;padding:3px 0}.related a:hover{color:#fff}
+.cta-box{background:linear-gradient(135deg,#4c1d95,#1e1b4b);border:1px solid #6d28d9;border-radius:16px;padding:40px 32px;text-align:center;margin:40px 0}
+.cta-box h3{color:#fff;font-size:22px;font-weight:800;margin-bottom:10px}.cta-box p{color:#c4b5fd;margin-bottom:20px}
+.btn{display:inline-block;background:#7c3aed;color:#fff;font-weight:700;padding:14px 32px;border-radius:10px;text-decoration:none}.btn:hover{background:#6d28d9}
+footer{background:#111;border-top:1px solid #222;padding:32px 24px;text-align:center;color:#6b7280;font-size:13px}footer a{color:#9ca3af;text-decoration:none;margin:0 8px}
+
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}.inv-header,.inv-parties{flex-direction:column;gap:20px}.inv-meta{text-align:left}}
+
+@media print{
+  body>*:not(#invoice-preview){display:none!important}
+  #invoice-preview{display:block!important;background:white;color:black;box-shadow:none;border-radius:0;margin:0;padding:32px}
+  .no-print{display:none!important}
+}
+</style></head>
+<body><nav><a href="/">FreelanceOS</a><div class="nav-links"><a href="/free-templates.html">Free Templates</a><a href="/pricing.html">Pricing</a><a href="/start-here.html">✨ Start Here</a></div></nav>
+
+<div class="hero">
+  <div class="eyebrow">FREE TOOL</div>
+  <h1>Create a Professional Freelance Invoice in Seconds</h1>
+  <p>No account. No login. No software. Just fill in the fields and download your invoice as a PDF.</p>
+</div>
+
+<div class="main">
+
+  <div class="tool-wrapper">
+
+    <!-- YOUR DETAILS -->
+    <div class="form-section">
+      <div class="form-section-title">Your Details</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Your Name / Business Name</label>
+          <input type="text" id="from-name" placeholder="Jane Smith Design">
+        </div>
+        <div class="form-group">
+          <label>Your Email</label>
+          <input type="email" id="from-email" placeholder="jane@example.com">
+        </div>
+        <div class="form-group full">
+          <label>Your Address</label>
+          <textarea id="from-address" rows="2" placeholder="123 Main St, City, Country"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIENT DETAILS -->
+    <div class="form-section">
+      <div class="form-section-title">Client Details</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Client Name / Company</label>
+          <input type="text" id="to-name" placeholder="Acme Corp">
+        </div>
+        <div class="form-group">
+          <label>Client Email</label>
+          <input type="email" id="to-email" placeholder="billing@acmecorp.com">
+        </div>
+        <div class="form-group full">
+          <label>Client Address</label>
+          <textarea id="to-address" rows="2" placeholder="456 Business Ave, City, Country"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVOICE DETAILS -->
+    <div class="form-section">
+      <div class="form-section-title">Invoice Details</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Invoice Number</label>
+          <input type="text" id="inv-number" value="INV-001">
+        </div>
+        <div class="form-group">
+          <label>Invoice Date</label>
+          <input type="date" id="inv-date">
+        </div>
+        <div class="form-group">
+          <label>Due Date</label>
+          <input type="date" id="inv-due">
+        </div>
+      </div>
+    </div>
+
+    <!-- LINE ITEMS -->
+    <div class="form-section">
+      <div class="form-section-title">Line Items</div>
+      <table class="line-items-table">
+        <thead>
+          <tr>
+            <th style="width:45%">Description</th>
+            <th style="width:12%">Qty</th>
+            <th style="width:16%">Rate ($)</th>
+            <th style="width:16%">Amount</th>
+            <th style="width:11%"></th>
+          </tr>
+        </thead>
+        <tbody id="line-items-body">
+          <!-- rows injected by JS -->
+        </tbody>
+      </table>
+      <button class="add-item-btn" onclick="addLineItem()">+ Add Item</button>
+    </div>
+
+    <!-- TOTALS -->
+    <div class="form-section">
+      <div class="form-section-title">Totals</div>
+      <div class="totals-block">
+        <div class="totals-row"><span>Subtotal</span><span id="subtotal-display">$0.00</span></div>
+        <div class="totals-row" style="align-items:center;gap:12px">
+          <span>Tax %</span>
+          <input type="number" id="tax-rate" value="0" min="0" max="100" step="0.5" style="width:80px;padding:6px 10px;font-size:13px" oninput="recalc()">
+          <span id="tax-display" style="margin-left:auto">$0.00</span>
+        </div>
+        <div class="totals-row total"><span>Total</span><span id="total-display">$0.00</span></div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="form-section">
+      <div class="form-section-title">Notes / Payment Terms</div>
+      <textarea id="inv-notes" rows="3" placeholder="Payment due within 30 days. Bank transfer preferred. BSB: 123-456 | Account: 12345678"></textarea>
+    </div>
+
+    <button class="generate-btn" onclick="generateInvoice()">Generate Invoice →</button>
+
+  </div><!-- end tool-wrapper -->
+
+  <!-- INVOICE PREVIEW -->
+  <div id="invoice-preview">
+    <div class="inv-header">
+      <div class="inv-from">
+        <h2 id="prev-from-name"></h2>
+        <p id="prev-from-email"></p>
+        <p id="prev-from-address" style="white-space:pre-wrap"></p>
+      </div>
+      <div class="inv-meta">
+        <div style="font-size:32px;font-weight:900;color:#7c3aed;letter-spacing:-1px;margin-bottom:16px">INVOICE</div>
+        <div class="inv-label">Invoice Number</div>
+        <div class="inv-val" id="prev-number"></div>
+        <div class="inv-label">Invoice Date</div>
+        <div class="inv-val" id="prev-date"></div>
+        <div class="inv-label">Due Date</div>
+        <div class="inv-val" id="prev-due"></div>
+      </div>
+    </div>
+
+    <div class="inv-parties">
+      <div class="inv-party">
+        <h4>From</h4>
+        <p id="prev-from-block"></p>
+      </div>
+      <div class="inv-party">
+        <h4>Bill To</h4>
+        <p id="prev-to-block"></p>
+      </div>
+    </div>
+
+    <table class="inv-items">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Qty</th>
+          <th>Rate</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody id="prev-items"></tbody>
+    </table>
+
+    <div class="inv-totals">
+      <div class="inv-totals-block">
+        <div class="inv-totals-row"><span>Subtotal</span><span id="prev-subtotal"></span></div>
+        <div class="inv-totals-row" id="prev-tax-row"><span id="prev-tax-label">Tax</span><span id="prev-tax"></span></div>
+        <div class="inv-totals-row inv-grand"><span>Total Due</span><span id="prev-total"></span></div>
+      </div>
+    </div>
+
+    <div class="inv-notes" id="prev-notes-section">
+      <h4>Notes &amp; Payment Terms</h4>
+      <p id="prev-notes"></p>
+    </div>
+
+    <div class="no-print" style="text-align:center">
+      <button class="download-btn" onclick="window.print()">Download as PDF</button>
+      <p style="color:#888;font-size:12px;margin-top:8px">Use your browser's "Save as PDF" option in the print dialog</p>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips-box">
+    <h3>3 Tips for Getting Paid Faster</h3>
+    <div class="tip-item">
+      <div class="tip-num">1</div>
+      <div class="tip-text"><strong>Require 50% upfront.</strong> For any project over $500, ask for half before you start. This filters out time-wasters and protects you if the client disappears mid-project. Most serious clients expect it.</div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">2</div>
+      <div class="tip-text"><strong>Use a specific date, not "Net 30".</strong> "Due by June 15" creates urgency. "Net 30" gets ignored. Write the actual date on the invoice. Clients pay specific dates; they forget vague terms.</div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">3</div>
+      <div class="tip-text"><strong>Follow up on day 1 overdue — not day 7.</strong> A same-day follow-up ("Just checking the invoice arrived safely") signals that you track payments. Clients who know you're watching pay faster than those who think you won't notice.</div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h3>Track Every Invoice Automatically in Notion</h3>
+    <p>Creating invoices is the easy part. Tracking them — who's paid, who's late, your total revenue this month — is where most freelancers fall down. FreelanceOS Pro includes a fully linked invoice tracker in Notion.</p>
+    <a href="/checkout/freelanceos-pro.html" class="btn">Track invoices in Notion — FreelanceOS Pro $29 →</a>
+  </div>
+
+  <div class="related">
+    <h4>Related Pages</h4>
+    <a href="/notion-invoice-template.html">→ Notion Invoice Template — Track Every Invoice in One Place</a>
+    <a href="/freelance-invoice-tips.html">→ Freelance Invoice Tips — Get Paid on Time, Every Time</a>
+    <a href="/client-profit-calculator.html">→ Client Profit Calculator — Free Tool</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 FreelanceOS. Free tools for freelancers.</p>
+  <p style="margin-top:10px"><a href="/">Home</a><a href="/pricing.html">Pricing</a><a href="/free-download.html">Free Template</a><a href="/gallery.html">Gallery</a></p>
+</footer>
+
+<script>
+  // Set default dates
+  (function(){
+    const today = new Date();
+    const fmt = d => d.toISOString().split('T')[0];
+    document.getElementById('inv-date').value = fmt(today);
+    const due = new Date(today); due.setDate(due.getDate()+30);
+    document.getElementById('inv-due').value = fmt(due);
+  })();
+
+  let rowCount = 0;
+
+  function addLineItem(desc='',qty=1,rate=''){
+    rowCount++;
+    const id = 'row-'+rowCount;
+    const tbody = document.getElementById('line-items-body');
+    const tr = document.createElement('tr');
+    tr.id = id;
+    tr.innerHTML = `
+      <td><input type="text" placeholder="Description of service" value="${desc}" oninput="recalc()"></td>
+      <td><input type="number" value="${qty}" min="0" step="0.5" oninput="recalc()" style="width:60px"></td>
+      <td><input type="number" value="${rate}" min="0" step="0.01" placeholder="0.00" oninput="recalc()" style="width:90px"></td>
+      <td><span class="amt" id="amt-${id}">$0.00</span></td>
+      <td><button class="remove-btn" onclick="removeRow('${id}')">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+    recalc();
+  }
+
+  function removeRow(id){
+    const el = document.getElementById(id);
+    if(el) el.remove();
+    recalc();
+  }
+
+  function recalc(){
+    let subtotal = 0;
+    document.querySelectorAll('#line-items-body tr').forEach(tr=>{
+      const inputs = tr.querySelectorAll('input[type=number]');
+      if(inputs.length<2) return;
+      const qty = parseFloat(inputs[0].value)||0;
+      const rate = parseFloat(inputs[1].value)||0;
+      const amt = qty*rate;
+      const amtEl = tr.querySelector('[id^=amt-]');
+      if(amtEl) amtEl.textContent = '$'+amt.toFixed(2);
+      subtotal += amt;
+    });
+    const taxRate = parseFloat(document.getElementById('tax-rate').value)||0;
+    const taxAmt = subtotal*(taxRate/100);
+    const total = subtotal+taxAmt;
+    document.getElementById('subtotal-display').textContent = '$'+subtotal.toFixed(2);
+    document.getElementById('tax-display').textContent = '$'+taxAmt.toFixed(2);
+    document.getElementById('total-display').textContent = '$'+total.toFixed(2);
+  }
+
+  function generateInvoice(){
+    // Collect values
+    const fromName = document.getElementById('from-name').value||'Your Name';
+    const fromEmail = document.getElementById('from-email').value||'';
+    const fromAddr = document.getElementById('from-address').value||'';
+    const toName = document.getElementById('to-name').value||'Client Name';
+    const toEmail = document.getElementById('to-email').value||'';
+    const toAddr = document.getElementById('to-address').value||'';
+    const invNum = document.getElementById('inv-number').value||'INV-001';
+    const invDate = document.getElementById('inv-date').value||'';
+    const invDue = document.getElementById('inv-due').value||'';
+    const notes = document.getElementById('inv-notes').value||'';
+    const taxRate = parseFloat(document.getElementById('tax-rate').value)||0;
+
+    // Populate preview
+    document.getElementById('prev-from-name').textContent = fromName;
+    document.getElementById('prev-from-email').textContent = fromEmail;
+    document.getElementById('prev-from-address').textContent = fromAddr;
+    document.getElementById('prev-number').textContent = invNum;
+    document.getElementById('prev-date').textContent = fmtDate(invDate);
+    document.getElementById('prev-due').textContent = fmtDate(invDue);
+
+    document.getElementById('prev-from-block').innerHTML = [fromName,fromEmail,fromAddr].filter(Boolean).join('<br>');
+    document.getElementById('prev-to-block').innerHTML = [toName,toEmail,toAddr].filter(Boolean).join('<br>');
+
+    // Line items
+    let subtotal = 0;
+    let itemsHTML = '';
+    document.querySelectorAll('#line-items-body tr').forEach(tr=>{
+      const descInput = tr.querySelector('input[type=text]');
+      const numInputs = tr.querySelectorAll('input[type=number]');
+      if(!descInput||numInputs.length<2) return;
+      const desc = descInput.value||'Service';
+      const qty = parseFloat(numInputs[0].value)||0;
+      const rate = parseFloat(numInputs[1].value)||0;
+      const amt = qty*rate;
+      subtotal += amt;
+      itemsHTML += `<tr><td>${desc}</td><td>${qty}</td><td>$${rate.toFixed(2)}</td><td>$${amt.toFixed(2)}</td></tr>`;
+    });
+    document.getElementById('prev-items').innerHTML = itemsHTML||'<tr><td colspan="4" style="color:#999;text-align:center;padding:20px">No items added</td></tr>';
+
+    const taxAmt = subtotal*(taxRate/100);
+    const total = subtotal+taxAmt;
+    document.getElementById('prev-subtotal').textContent = '$'+subtotal.toFixed(2);
+    document.getElementById('prev-tax-label').textContent = 'Tax ('+taxRate+'%)';
+    document.getElementById('prev-tax').textContent = '$'+taxAmt.toFixed(2);
+    document.getElementById('prev-tax-row').style.display = taxRate>0?'flex':'none';
+    document.getElementById('prev-total').textContent = '$'+total.toFixed(2);
+
+    if(notes){
+      document.getElementById('prev-notes').textContent = notes;
+      document.getElementById('prev-notes-section').style.display = 'block';
+    } else {
+      document.getElementById('prev-notes-section').style.display = 'none';
+    }
+
+    // Show preview
+    const preview = document.getElementById('invoice-preview');
+    preview.style.display = 'block';
+    preview.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function fmtDate(iso){
+    if(!iso) return '';
+    const [y,m,d] = iso.split('-');
+    const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${parseInt(d)} ${months[parseInt(m)-1]} ${y}`;
+  }
+
+  // Start with one empty row
+  addLineItem('Website design',1,'');
+</script>
+
+</body></html>

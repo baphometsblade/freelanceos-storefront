@@ -265,6 +265,130 @@
     }
     .bottom-cta a:hover { transform: translateY(-2px); }
 
+    /* SCARCITY BADGE */
+    .scarcity-row {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      font-size: .75rem; color: #f87171; font-weight: 700;
+      margin-bottom: .75rem;
+      animation: flicker 3s ease-in-out infinite;
+    }
+    .scarcity-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 6px #ef4444;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    @keyframes flicker { 0%,100%{opacity:1} 92%{opacity:.85} 95%{opacity:1} }
+
+    .viewer-bar {
+      display: flex; align-items: center; justify-content: center; gap: .4rem;
+      font-size: .72rem; color: var(--txt3);
+      margin-bottom: 1rem;
+      padding: .4rem .75rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: .5rem;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .viewer-pulse {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #10b981; flex-shrink: 0;
+      box-shadow: 0 0 5px #10b981;
+      animation: blink 1.8s ease-in-out infinite;
+    }
+
+    /* SOCIAL PROOF TOASTS */
+    #sp-container {
+      position: fixed; bottom: 1.5rem; left: 1.5rem;
+      z-index: 9000; pointer-events: none;
+      display: flex; flex-direction: column-reverse; gap: .5rem;
+    }
+    .sp-toast {
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-left: 3px solid #7c3aed;
+      border-radius: .6rem;
+      padding: .65rem 1rem;
+      display: flex; align-items: center; gap: .75rem;
+      min-width: 260px; max-width: 320px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      transform: translateX(-110%);
+      transition: transform .4s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events: none;
+    }
+    .sp-toast.visible { transform: translateX(0); }
+    .sp-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; font-weight: 800; color: #fff; flex-shrink: 0;
+    }
+    .sp-text { line-height: 1.35; }
+    .sp-name { font-size: .78rem; font-weight: 700; color: var(--txt1); }
+    .sp-action { font-size: .7rem; color: var(--txt3); margin-top: .1rem; }
+    .sp-time { font-size: .65rem; color: var(--txt3); margin-left: auto; flex-shrink: 0; }
+
+    /* EXIT INTENT MODAL */
+    .exit-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 99998;
+      display: none; align-items: center; justify-content: center;
+      padding: 1rem;
+      backdrop-filter: blur(4px);
+    }
+    .exit-overlay.show { display: flex; }
+    .exit-modal {
+      background: #0f172a;
+      border: 1px solid rgba(124,58,237,0.35);
+      border-radius: 1.25rem;
+      padding: 2.5rem 2rem 2rem;
+      max-width: 460px; width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 80px rgba(124,58,237,0.25);
+      position: relative;
+      animation: modalPop .35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modalPop { from{transform:scale(.85);opacity:0} to{transform:scale(1);opacity:1} }
+    .exit-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none; color: var(--txt3);
+      font-size: 1.25rem; cursor: pointer; line-height: 1;
+      padding: .25rem;
+    }
+    .exit-close:hover { color: var(--txt1); }
+    .exit-emoji { font-size: 3rem; margin-bottom: .75rem; }
+    .exit-headline {
+      font-size: 1.35rem; font-weight: 900;
+      margin-bottom: .5rem; line-height: 1.25;
+    }
+    .exit-headline span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .exit-sub {
+      font-size: .875rem; color: var(--txt2);
+      margin-bottom: 1.5rem; line-height: 1.55;
+    }
+    .exit-cta {
+      display: block; width: 100%;
+      padding: 1rem 1.5rem;
+      background: var(--grad);
+      color: #fff; font-weight: 800; font-size: 1rem;
+      text-decoration: none; border-radius: 2rem;
+      margin-bottom: .75rem;
+      box-shadow: 0 4px 20px rgba(124,58,237,0.5);
+      transition: transform .15s;
+    }
+    .exit-cta:hover { transform: translateY(-2px); }
+    .exit-dismiss {
+      background: none; border: none;
+      font-size: .78rem; color: var(--txt3);
+      cursor: pointer; text-decoration: underline;
+    }
+    .exit-guarantee {
+      margin-top: 1rem;
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      font-size: .75rem; color: var(--txt3);
+    }
+
     /* MOBILE */
     @media (max-width: 700px) {
       .cols { grid-template-columns: 1fr; }
@@ -273,6 +397,9 @@
       .feature-grid { grid-template-columns: 1fr; }
       .cols > .left-col { order: 2; }
       .cols > .right-col { order: 1; }
+      #sp-container { left: .75rem; bottom: .75rem; }
+      .sp-toast { min-width: 220px; max-width: calc(100vw - 1.5rem); }
+      .exit-modal { padding: 2rem 1.25rem 1.5rem; }
     }
   </style>
   <meta property="og:type" content="website">
@@ -286,6 +413,24 @@
   <meta name="twitter:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.jpg">
 </head>
 <body>
+
+<!-- EXIT INTENT MODAL -->
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-modal" role="dialog" aria-modal="true">
+    <button class="exit-close" onclick="closeExit()" aria-label="Close">✕</button>
+    <div class="exit-emoji">⚠️</div>
+    <div class="exit-headline">Wait — your discount is <span>about to expire</span></div>
+    <p class="exit-sub">FLASH40 takes $11.60 off the regular price. Once this session ends, the code may not work. Over 340 freelancers have already picked this up.</p>
+    <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="exit-cta" target="_blank" rel="noopener" onclick="closeExit()">
+      Claim My Discount — $17.40 →
+    </a>
+    <button class="exit-dismiss" onclick="closeExit()">No thanks, I'll pay full price later</button>
+    <div class="exit-guarantee">🛡️ 30-day money-back guarantee · No questions asked</div>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF TOASTS -->
+<div id="sp-container"></div>
 
 <!-- TOP BAR -->
 <div class="top-bar">
@@ -424,6 +569,16 @@
         </div>
         <div class="coupon-badge">✓ FLASH40 applied — saves you $11.60</div>
 
+        <!-- Viewer + Scarcity -->
+        <div class="viewer-bar">
+          <span class="viewer-pulse"></span>
+          <span id="viewerCount">24 people</span> viewing this right now
+        </div>
+        <div class="scarcity-row">
+          <span class="scarcity-dot"></span>
+          <span id="spotsLeft">Only 12 spots left</span> at this price
+        </div>
+
         <div class="includes-label">What's included:</div>
         <ul class="includes-list">
           <li>Client CRM — full relationship database</li>
@@ -456,26 +611,140 @@
 </div>
 
 <script>
-  // FAQ accordion
+  // ── FAQ accordion ──────────────────────────────────────────────────────
   function toggleFaq(btn) {
-    const item = btn.closest('.faq-item');
-    item.classList.toggle('open');
+    btn.closest('.faq-item').classList.toggle('open');
   }
 
-  // Countdown — target midnight May 10 2026 UTC
-  const saleEnd = new Date('2026-05-10T23:59:59Z').getTime();
-  function updateCountdown() {
-    const now = Date.now();
-    const diff = Math.max(0, saleEnd - now);
-    const h = Math.floor(diff / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
-    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
-    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  // ── Rolling 24-hour countdown (persists in sessionStorage) ──────────────
+  (function() {
+    const KEY = 'fos_sale_end';
+    const DURATION = 24 * 60 * 60 * 1000; // 24 hours
+    let endTime = parseInt(sessionStorage.getItem(KEY) || '0', 10);
+    if (!endTime || endTime < Date.now()) {
+      endTime = Date.now() + DURATION;
+      sessionStorage.setItem(KEY, endTime);
+    }
+    function tick() {
+      const diff = Math.max(0, endTime - Date.now());
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      const el = document.getElementById;
+      el('cd-h').textContent = String(h).padStart(2,'0');
+      el('cd-m').textContent = String(m).padStart(2,'0');
+      el('cd-s').textContent = String(s).padStart(2,'0');
+      if (diff === 0) {
+        // Reset timer instead of showing 00:00:00
+        sessionStorage.removeItem(KEY);
+        setTimeout(tick, 500);
+      }
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  // ── Viewer count simulation ────────────────────────────────────────────
+  (function() {
+    const base = 18 + Math.floor(Math.random() * 14); // 18–32
+    document.getElementById('viewerCount').textContent = base + ' people';
+    setInterval(function() {
+      const delta = Math.random() < 0.5 ? -1 : 1;
+      const el = document.getElementById('viewerCount');
+      const cur = parseInt(el.textContent) + delta;
+      const v = Math.max(12, Math.min(47, cur));
+      el.textContent = v + ' people';
+    }, 11000);
+  })();
+
+  // ── Spots left simulation ──────────────────────────────────────────────
+  (function() {
+    const KEY = 'fos_spots';
+    let spots = parseInt(localStorage.getItem(KEY) || '0', 10);
+    if (!spots || spots > 15) spots = 9 + Math.floor(Math.random() * 7); // 9–15
+    localStorage.setItem(KEY, spots);
+    document.getElementById('spotsLeft').textContent = 'Only ' + spots + ' spots left';
+    setTimeout(function() {
+      if (spots > 2) {
+        spots--;
+        localStorage.setItem(KEY, spots);
+        document.getElementById('spotsLeft').textContent = 'Only ' + spots + ' spots left';
+      }
+    }, 45000 + Math.random() * 60000); // decrease between 45s–105s
+  })();
+
+  // ── Social proof toasts ────────────────────────────────────────────────
+  const SP_EVENTS = [
+    { name: 'Sarah K.', loc: 'Portland, OR', action: 'just purchased FreelanceOS Pro', ago: '2m ago' },
+    { name: 'Marcus T.', loc: 'Austin, TX', action: 'is setting up their workspace', ago: '5m ago' },
+    { name: 'Priya M.', loc: 'London, UK', action: 'just purchased FreelanceOS Pro', ago: '8m ago' },
+    { name: 'James R.', loc: 'Toronto, CA', action: 'just purchased the bundle', ago: '11m ago' },
+    { name: 'Anika S.', loc: 'Berlin, DE', action: 'just purchased FreelanceOS Pro', ago: '14m ago' },
+    { name: 'Derek L.', loc: 'Sydney, AU', action: 'is viewing the checkout', ago: '1m ago' },
+    { name: 'Camille B.', loc: 'Paris, FR', action: 'just purchased FreelanceOS Pro', ago: '19m ago' },
+    { name: 'Noah W.', loc: 'Chicago, IL', action: 'just purchased the bundle', ago: '22m ago' },
+    { name: 'Elena V.', loc: 'Madrid, ES', action: 'just purchased FreelanceOS Pro', ago: '27m ago' },
+    { name: 'Finn O.', loc: 'Dublin, IE', action: 'is setting up their workspace', ago: '3m ago' },
+  ];
+  let spIndex = Math.floor(Math.random() * SP_EVENTS.length);
+  function showToast() {
+    const evt = SP_EVENTS[spIndex % SP_EVENTS.length];
+    spIndex++;
+    const initials = evt.name.split(' ').map(w => w[0]).join('');
+    const el = document.createElement('div');
+    el.className = 'sp-toast';
+    el.innerHTML = `
+      <div class="sp-avatar">${initials}</div>
+      <div class="sp-text">
+        <div class="sp-name">${evt.name} · ${evt.loc}</div>
+        <div class="sp-action">${evt.action}</div>
+      </div>
+      <span class="sp-time">${evt.ago}</span>`;
+    const container = document.getElementById('sp-container');
+    container.appendChild(el);
+    requestAnimationFrame(() => { el.classList.add('visible'); });
+    setTimeout(() => {
+      el.classList.remove('visible');
+      setTimeout(() => el.remove(), 450);
+    }, 4500);
   }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  setTimeout(showToast, 4000);
+  setInterval(showToast, 22000 + Math.random() * 18000);
+
+  // ── Exit intent modal ──────────────────────────────────────────────────
+  let exitShown = sessionStorage.getItem('fos_exit_shown');
+  let exitArmed = false;
+  setTimeout(() => { exitArmed = true; }, 8000); // arm after 8s on page
+
+  document.addEventListener('mouseleave', function(e) {
+    if (exitArmed && !exitShown && e.clientY <= 5) {
+      document.getElementById('exitOverlay').classList.add('show');
+      sessionStorage.setItem('fos_exit_shown', '1');
+      exitShown = true;
+    }
+  });
+
+  // Mobile: trigger exit modal on back button / visibility change
+  document.addEventListener('visibilitychange', function() {
+    if (exitArmed && !exitShown && document.hidden) {
+      sessionStorage.setItem('fos_exit_shown', '1');
+      exitShown = true;
+    }
+  });
+
+  function closeExit() {
+    document.getElementById('exitOverlay').classList.remove('show');
+  }
+
+  // Close on overlay click
+  document.getElementById('exitOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeExit();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeExit();
+  });
 </script>
 </body>
 </html>

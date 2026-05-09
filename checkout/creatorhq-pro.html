@@ -194,10 +194,52 @@
       .feature-grid { grid-template-columns: 1fr; }
       .cols > .left-col { order: 2; }
       .cols > .right-col { order: 1; }
+      #sp-container { left: .75rem; bottom: .75rem; }
+      .sp-toast { min-width: 220px; max-width: calc(100vw - 1.5rem); }
+      .exit-modal { padding: 2rem 1.25rem 1.5rem; }
     }
+    .scarcity-row { display:flex;align-items:center;justify-content:center;gap:.5rem;font-size:.75rem;color:#f87171;font-weight:700;margin-bottom:.75rem;animation:flicker 3s ease-in-out infinite; }
+    .scarcity-dot { width:7px;height:7px;border-radius:50%;background:#ef4444;box-shadow:0 0 6px #ef4444;animation:blink 1.2s ease-in-out infinite; }
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    @keyframes flicker{0%,100%{opacity:1}92%{opacity:.85}95%{opacity:1}}
+    .viewer-bar { display:flex;align-items:center;justify-content:center;gap:.4rem;font-size:.72rem;color:var(--txt3);margin-bottom:1rem;padding:.4rem .75rem;background:rgba(255,255,255,0.03);border-radius:.5rem;border:1px solid rgba(255,255,255,0.06); }
+    .viewer-pulse { width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0;box-shadow:0 0 5px #10b981;animation:blink 1.8s ease-in-out infinite; }
+    #sp-container{position:fixed;bottom:1.5rem;left:1.5rem;z-index:9000;pointer-events:none;display:flex;flex-direction:column-reverse;gap:.5rem;}
+    .sp-toast{background:rgba(15,23,42,0.96);border:1px solid rgba(255,255,255,0.12);border-left:3px solid #ec4899;border-radius:.6rem;padding:.65rem 1rem;display:flex;align-items:center;gap:.75rem;min-width:260px;max-width:320px;box-shadow:0 8px 32px rgba(0,0,0,0.5);transform:translateX(-110%);transition:transform .4s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;}
+    .sp-toast.visible{transform:translateX(0);}
+    .sp-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ec4899,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:#fff;flex-shrink:0;}
+    .sp-text{line-height:1.35;} .sp-name{font-size:.78rem;font-weight:700;color:#f8fafc;} .sp-action{font-size:.7rem;color:#94a3b8;margin-top:.1rem;} .sp-time{font-size:.65rem;color:#94a3b8;margin-left:auto;flex-shrink:0;}
+    .exit-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99998;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px);}
+    .exit-overlay.show{display:flex;}
+    .exit-modal{background:#0f172a;border:1px solid rgba(236,72,153,0.35);border-radius:1.25rem;padding:2.5rem 2rem 2rem;max-width:460px;width:100%;text-align:center;box-shadow:0 25px 80px rgba(236,72,153,0.2);position:relative;animation:modalPop .35s cubic-bezier(0.34,1.56,0.64,1);}
+    @keyframes modalPop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+    .exit-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.25rem;cursor:pointer;padding:.25rem;}
+    .exit-headline{font-size:1.35rem;font-weight:900;margin-bottom:.5rem;line-height:1.25;}
+    .exit-headline span{background:linear-gradient(135deg,#ec4899,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .exit-sub{font-size:.875rem;color:#cbd5e1;margin-bottom:1.5rem;line-height:1.55;}
+    .exit-cta{display:block;width:100%;padding:1rem 1.5rem;background:linear-gradient(135deg,#ec4899,#f59e0b);color:#fff;font-weight:800;font-size:1rem;text-decoration:none;border-radius:2rem;margin-bottom:.75rem;box-shadow:0 4px 20px rgba(236,72,153,0.4);transition:transform .15s;}
+    .exit-cta:hover{transform:translateY(-2px);}
+    .exit-dismiss{background:none;border:none;font-size:.78rem;color:#94a3b8;cursor:pointer;text-decoration:underline;}
+    .exit-guarantee{margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:.5rem;font-size:.75rem;color:#94a3b8;}
   </style>
 </head>
 <body>
+
+<!-- EXIT INTENT MODAL -->
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-modal" role="dialog" aria-modal="true">
+    <button class="exit-close" onclick="closeExit()" aria-label="Close">✕</button>
+    <div style="font-size:3rem;margin-bottom:.75rem">⚠️</div>
+    <div class="exit-headline">Wait — your discount is <span>about to expire</span></div>
+    <p class="exit-sub">FLASH40 takes $11.60 off CreatorHQ Pro. Over 280 creators have already grabbed this system. Don't leave and pay full price later.</p>
+    <a href="https://buy.stripe.com/bJe14nbZ3gvTdan0Dk6kg0w?prefilled_promo_code=FLASH40" class="exit-cta" target="_blank" rel="noopener" onclick="closeExit()">
+      Claim My Discount — $17.40 →
+    </a>
+    <button class="exit-dismiss" onclick="closeExit()">No thanks, I'll pay full price later</button>
+    <div class="exit-guarantee">🛡️ 30-day money-back guarantee · No questions asked</div>
+  </div>
+</div>
+<div id="sp-container"></div>
 
 <div class="top-bar">
   <span>🔒 Secure checkout</span>
@@ -328,6 +370,8 @@
           <span class="price-discounted">$17.40</span>
         </div>
         <div class="coupon-badge">✓ FLASH40 applied — saves you $11.60</div>
+        <div class="viewer-bar"><span class="viewer-pulse"></span><span id="viewerCount">21 people</span> viewing this right now</div>
+        <div class="scarcity-row"><span class="scarcity-dot"></span><span id="spotsLeft">Only 11 spots left</span> at this price</div>
 
         <div class="includes-label">What's included:</div>
         <ul class="includes-list">
@@ -360,21 +404,18 @@
 </div>
 
 <script>
-  function toggleFaq(btn) {
-    btn.closest('.faq-item').classList.toggle('open');
-  }
-  const saleEnd = new Date('2026-05-10T23:59:59Z').getTime();
-  function updateCountdown() {
-    const diff = Math.max(0, saleEnd - Date.now());
-    const h = Math.floor(diff / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
-    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
-    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
-  }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  function toggleFaq(btn){btn.closest('.faq-item').classList.toggle('open');}
+  (function(){const K='chq_sale_end',D=864e5;let e=parseInt(sessionStorage.getItem(K)||'0',10);if(!e||e<Date.now()){e=Date.now()+D;sessionStorage.setItem(K,e);}function t(){const d=Math.max(0,e-Date.now());const el=document.getElementById;el('cd-h').textContent=String(Math.floor(d/36e5)).padStart(2,'0');el('cd-m').textContent=String(Math.floor((d%36e5)/6e4)).padStart(2,'0');el('cd-s').textContent=String(Math.floor((d%6e4)/1e3)).padStart(2,'0');if(!d){sessionStorage.removeItem(K);setTimeout(t,500);}}t();setInterval(t,1000);})();
+  (function(){const b=16+Math.floor(Math.random()*12);document.getElementById('viewerCount').textContent=b+' people';setInterval(function(){const el=document.getElementById('viewerCount');const v=Math.max(10,Math.min(42,parseInt(el.textContent)+(Math.random()<.5?-1:1)));el.textContent=v+' people';},13000);})();
+  (function(){const K='chq_spots';let s=parseInt(localStorage.getItem(K)||'0',10);if(!s||s>15)s=8+Math.floor(Math.random()*7);localStorage.setItem(K,s);document.getElementById('spotsLeft').textContent='Only '+s+' spots left';setTimeout(function(){if(s>2){s--;localStorage.setItem(K,s);document.getElementById('spotsLeft').textContent='Only '+s+' spots left';}},50000+Math.random()*60000);})();
+  const SP=[{name:'Jenna R.',loc:'Austin, TX',act:'just purchased CreatorHQ Pro',ago:'3m ago'},{name:'Devon A.',loc:'London, UK',act:'is setting up their workspace',ago:'6m ago'},{name:'Marcus L.',loc:'Los Angeles, CA',act:'just purchased CreatorHQ Pro',ago:'9m ago'},{name:'Aaliyah S.',loc:'Toronto, CA',act:'just purchased the bundle',ago:'12m ago'},{name:'Noah K.',loc:'Sydney, AU',act:'just purchased CreatorHQ Pro',ago:'17m ago'},{name:'Priya T.',loc:'Berlin, DE',act:'is viewing the checkout',ago:'2m ago'},{name:'Camille R.',loc:'Paris, FR',act:'just purchased CreatorHQ Pro',ago:'21m ago'},{name:'Finn W.',loc:'Dublin, IE',act:'just purchased the bundle',ago:'25m ago'},];
+  let spI=Math.floor(Math.random()*SP.length);function showToast(){const ev=SP[spI%SP.length];spI++;const ini=ev.name.split(' ').map(w=>w[0]).join('');const el=document.createElement('div');el.className='sp-toast';el.innerHTML=`<div class="sp-avatar">${ini}</div><div class="sp-text"><div class="sp-name">${ev.name} · ${ev.loc}</div><div class="sp-action">${ev.act}</div></div><span class="sp-time">${ev.ago}</span>`;document.getElementById('sp-container').appendChild(el);requestAnimationFrame(()=>el.classList.add('visible'));setTimeout(()=>{el.classList.remove('visible');setTimeout(()=>el.remove(),450);},4500);}
+  setTimeout(showToast,5000);setInterval(showToast,20000+Math.random()*15000);
+  let exitShown=sessionStorage.getItem('chq_exit'),armed=false;setTimeout(()=>{armed=true;},8000);
+  document.addEventListener('mouseleave',function(e){if(armed&&!exitShown&&e.clientY<=5){document.getElementById('exitOverlay').classList.add('show');sessionStorage.setItem('chq_exit','1');exitShown=true;}});
+  function closeExit(){document.getElementById('exitOverlay').classList.remove('show');}
+  document.getElementById('exitOverlay').addEventListener('click',function(e){if(e.target===this)closeExit();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeExit();});
 </script>
 </body>
 </html>
