@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion Freelance CRM — Track Every Client, Project &amp; Invoice in One Place</title>
+  <meta name="description" content="The best Notion CRM for freelancers. Track clients, projects, invoices, and communications in one connected Notion workspace. Free lite version available.">
+  <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/notion-freelance-crm.html">
+  <meta property="og:title" content="Notion Freelance CRM — Track Every Client, Project &amp; Invoice in One Place">
+  <meta property="og:description" content="The best Notion CRM for freelancers. Track clients, projects, invoices, and communications in one connected Notion workspace.">
+  <meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/notion-freelance-crm.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "FreelanceOS Pro — Notion Freelance CRM",
+    "description": "The best Notion CRM for freelancers. Track clients, projects, invoices, and communications in one connected Notion workspace.",
+    "brand": { "@type": "Brand", "name": "FreelanceOS" },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "FreelanceOS Pro",
+        "price": "29",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v"
+      },
+      {
+        "@type": "Offer",
+        "name": "FreelanceOS Lite",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://baphometsblade.github.io/freelanceos-storefront/free-download.html"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f0f;
+      --bg2: #1a1a2e;
+      --bg3: #16213e;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #7c3aed;
+      --accent-hover: #6d28d9;
+      --border: #2d2d4e;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; color: #a78bfa; }
+
+    /* Flash bar */
+    .flash-bar {
+      background: linear-gradient(90deg, #92400e, var(--amber));
+      color: #0f0f0f;
+      text-align: center;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .flash-bar a { color: #0f0f0f; font-weight: 800; text-decoration: underline; }
+
+    /* Nav */
+    nav {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-logo { font-weight: 800; font-size: 1.1rem; color: var(--text); letter-spacing: -0.02em; }
+    .nav-logo span { color: #a78bfa; }
+    .nav-links { display: flex; gap: 20px; font-size: 0.9rem; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* Layout */
+    .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    .wide { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+    /* Hero */
+    .hero {
+      padding: 72px 20px 60px;
+      text-align: center;
+      background: radial-gradient(ellipse at top, #1e0a3c 0%, var(--bg) 70%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(124,58,237,0.15);
+      color: #c4b5fd;
+      border: 1px solid rgba(124,58,237,0.4);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+    .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--accent-hover); text-decoration: none; color: #fff; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: var(--accent); text-decoration: none; color: var(--text); }
+
+    /* Sections */
+    section { padding: 60px 20px; }
+    section:nth-child(even) { background: var(--bg2); }
+    .section-label {
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #a78bfa;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+    p { color: var(--muted); margin-bottom: 14px; }
+    p strong { color: var(--text); }
+
+    /* Problem grid */
+    .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 36px 0 24px; }
+    .problem-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .problem-icon { font-size: 2rem; margin-bottom: 12px; }
+    .problem-card p { margin: 0; font-size: 0.95rem; }
+
+    /* DB Mockup */
+    .db-mockup {
+      background: #111128;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 32px 0;
+      overflow-x: auto;
+    }
+    .db-mockup table { width: 100%; border-collapse: collapse; min-width: 640px; }
+    .db-mockup thead tr { background: #1e1e3a; }
+    .db-mockup th {
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .db-mockup td {
+      padding: 11px 14px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(45,45,78,0.5);
+      color: var(--text);
+    }
+    .db-mockup tr:last-child td { border-bottom: none; }
+    .db-mockup tr:hover td { background: rgba(124,58,237,0.05); }
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .status-active { background: rgba(16,185,129,0.15); color: #34d399; }
+    .status-proposal { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .status-past { background: rgba(156,163,175,0.15); color: #9ca3af; }
+    .status-onboard { background: rgba(251,191,36,0.15); color: #fde68a; }
+    .db-note { color: var(--muted); font-size: 0.9rem; text-align: center; padding: 10px 0 4px; }
+
+    /* Feature cards */
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 32px; }
+    .feature-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .feature-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .feature-card h3 { color: var(--text); margin-bottom: 8px; }
+    .feature-card p { margin: 0; font-size: 0.9rem; }
+
+    /* Who it's for */
+    .persona-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 32px; }
+    .persona-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .persona-card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .persona-card p { font-size: 0.88rem; margin: 0; }
+
+    /* Comparison */
+    .compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; }
+    @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .compare-card.featured { border-color: var(--accent); background: rgba(124,58,237,0.08); }
+    .compare-card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+    .compare-price { font-size: 1.3rem; font-weight: 800; color: var(--text); margin: 8px 0; }
+    .compare-card.featured .compare-price { color: #c4b5fd; }
+    .compare-card ul { list-style: none; text-align: left; margin-top: 12px; }
+    .compare-card ul li { font-size: 0.88rem; padding: 4px 0; color: var(--muted); }
+    .compare-card ul li::before { content: '✗ '; color: var(--red); }
+    .compare-card.featured ul li::before { content: '✓ '; color: var(--green); }
+
+    /* FAQ */
+    .faq-list { margin-top: 32px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-q { font-weight: 700; color: var(--text); margin-bottom: 8px; font-size: 1rem; }
+    .faq-a { color: var(--muted); font-size: 0.93rem; margin: 0; }
+
+    /* CTA section */
+    .cta-section {
+      background: radial-gradient(ellipse at bottom, #1e0a3c 0%, var(--bg) 70%);
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .cta-section h2 { margin-bottom: 12px; }
+    .cta-section p { max-width: 500px; margin: 0 auto 32px; }
+    .cta-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* Footer */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 32px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<div class="flash-bar">
+  Limited-time: Use code <strong>FLASH40</strong> for 40% off FreelanceOS Pro — <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40">Claim Discount →</a>
+</div>
+
+<nav>
+  <div class="nav-logo">Freelance<span>OS</span></div>
+  <div class="nav-links">
+    <a href="/freelanceos-storefront/">Home</a>
+    <a href="/freelanceos-storefront/storefront.html">Products</a>
+    <a href="/freelanceos-storefront/free-download.html">Free Download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Notion Freelance CRM</div>
+    <h1>The Notion Freelance CRM That Replaces Your Spreadsheets</h1>
+    <p class="hero-subtitle">Track every client, project, invoice, and communication in one connected Notion workspace.</p>
+    <div class="hero-ctas">
+      <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="btn-primary">Get FreelanceOS Pro — $29 →</a>
+      <a href="/freelanceos-storefront/free-download.html" class="btn-secondary">Try FreelanceOS Lite Free →</a>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section>
+  <div class="wide">
+    <p class="section-label">The Problem</p>
+    <h2>Most freelancers manage clients across 4 different places:</h2>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">📧</div>
+        <p>Clients in your email inbox</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📊</div>
+        <p>Projects in a spreadsheet</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🧾</div>
+        <p>Invoices in another spreadsheet</p>
+      </div>
+    </div>
+    <p style="font-size:1.05rem; font-weight:600; color: var(--text); text-align:center; border: 1px solid var(--border); border-radius: 12px; padding: 20px; background: var(--bg2);">
+      When something falls through the cracks, you lose money and reputation.
+    </p>
+  </div>
+</section>
+
+<!-- THE SOLUTION -->
+<section style="background: var(--bg2);">
+  <div class="wide">
+    <p class="section-label">The Solution</p>
+    <h2>FreelanceOS CRM — Everything Connected</h2>
+    <p>One Notion workspace where your clients, projects, invoices, and communications all link together automatically.</p>
+
+    <div class="db-mockup">
+      <table>
+        <thead>
+          <tr>
+            <th>Client Name</th>
+            <th>Status</th>
+            <th>Revenue</th>
+            <th>Open Projects</th>
+            <th>Last Contact</th>
+            <th>Next Follow-up</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Acme Corp</strong></td>
+            <td><span class="status-badge status-active">Active ✅</span></td>
+            <td>$4,200/mo</td>
+            <td>3 projects</td>
+            <td>May 8</td>
+            <td>May 15</td>
+          </tr>
+          <tr>
+            <td><strong>BlueSky Media</strong></td>
+            <td><span class="status-badge status-proposal">Proposal Sent 📋</span></td>
+            <td>—</td>
+            <td>1 proposal</td>
+            <td>May 7</td>
+            <td>May 12</td>
+          </tr>
+          <tr>
+            <td><strong>TechStart Inc</strong></td>
+            <td><span class="status-badge status-past">Past Client ⭐</span></td>
+            <td>$8,500 total</td>
+            <td>—</td>
+            <td>Mar 20</td>
+            <td>Jun 1</td>
+          </tr>
+          <tr>
+            <td><strong>GreenLeaf Co</strong></td>
+            <td><span class="status-badge status-onboard">Onboarding 🟡</span></td>
+            <td>$2,800</td>
+            <td>1 project</td>
+            <td>May 10</td>
+            <td>May 11</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="db-note">14 custom properties. 5 filtered views. All linked to your projects and invoices.</p>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section>
+  <div class="wide">
+    <p class="section-label">What's Included</p>
+    <h2>FreelanceOS Pro CRM — Complete System</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Client CRM</h3>
+        <p>14 properties including revenue tracking, status pipeline, and communication log. See your entire client relationship at a glance.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Project Tracker</h3>
+        <p>Each project linked to a client, with status, budget, deadline, and deliverables. Never lose track of where things stand.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧾</div>
+        <h3>Invoice Log</h3>
+        <p>Linked to client and project. Filter by paid, unpaid, and overdue. Know exactly what you're owed at any moment.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⏱️</div>
+        <h3>Time Log</h3>
+        <p>Track hours per project and auto-calculate billable amount. Stop leaving money on the table with untracked time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section style="background: var(--bg2);">
+  <div class="wide">
+    <p class="section-label">Who It's For</p>
+    <h2>Built for Every Kind of Freelancer</h2>
+    <div class="persona-grid">
+      <div class="persona-card">
+        <h3>✍️ Writers</h3>
+        <p>Track article assignments, editorial contacts, invoices, and deadlines — all connected to the right client.</p>
+      </div>
+      <div class="persona-card">
+        <h3>🎨 Designers</h3>
+        <p>Manage project briefs, revision rounds, client feedback, and payment status in one clean workspace.</p>
+      </div>
+      <div class="persona-card">
+        <h3>💻 Developers</h3>
+        <p>Keep project scope, milestones, contracts, and invoices linked so nothing slips through the cracks.</p>
+      </div>
+      <div class="persona-card">
+        <h3>📈 Consultants</h3>
+        <p>Track retainers, deliverable schedules, client check-ins, and revenue per engagement in one view.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING COMPARISON -->
+<section>
+  <div class="wide">
+    <p class="section-label">Pricing Comparison</p>
+    <h2>Why Pay Monthly When You Can Own It?</h2>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h3>Spreadsheets</h3>
+        <div class="compare-price">Free</div>
+        <ul>
+          <li>No linking between data</li>
+          <li>No filtering or views</li>
+          <li>Breaks with scale</li>
+          <li>Manual everything</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <h3>HubSpot / Salesforce</h3>
+        <div class="compare-price">$30–$100/mo</div>
+        <ul>
+          <li>Built for sales teams</li>
+          <li>Overkill for freelancers</li>
+          <li>Steep learning curve</li>
+          <li>Ongoing subscription</li>
+        </ul>
+      </div>
+      <div class="compare-card featured">
+        <h3><strong>FreelanceOS Pro</strong></h3>
+        <div class="compare-price"><strong>$29 ONE-TIME</strong></div>
+        <ul style="list-style:none;">
+          <li style="color:var(--text);">Purpose-built for freelancers</li>
+          <li style="color:var(--text);">Notion-native, fully customizable</li>
+          <li style="color:var(--text);">All databases linked</li>
+          <li style="color:var(--text);">Pay once, own forever</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background: var(--bg2);">
+  <div class="container">
+    <p class="section-label">FAQ</p>
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <p class="faq-q">Does it work with the free Notion plan?</p>
+        <p class="faq-a">Yes. FreelanceOS works fully on Notion's free plan. You don't need a paid Notion subscription to use any part of this template.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How long does setup take?</p>
+        <p class="faq-a">Under 30 minutes. Duplicate the template into your Notion workspace, follow the quick-start guide, and start adding your clients right away.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What if I already have clients in a spreadsheet?</p>
+        <p class="faq-a">An import guide is included. You can copy-paste your existing data or use Notion's CSV import to migrate your client list in minutes.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can I add custom fields?</p>
+        <p class="faq-a">Yes. Since this lives in your own Notion workspace, you can add, remove, or rename any property, view, or database to fit your workflow exactly.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What's included in Lite vs. Pro?</p>
+        <p class="faq-a">Lite includes a basic CRM with essential client and project fields. Pro unlocks the full linked system: Invoice Log, Time Log, 14-property CRM, 5 filtered views, and more — everything connected.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Stop Losing Clients Between the Cracks</h2>
+    <p>Get the Notion CRM purpose-built for freelancers — $29 once, yours forever.</p>
+    <div class="cta-group">
+      <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="btn-primary">Get FreelanceOS Pro — $29 →</a>
+      <a href="/freelanceos-storefront/free-download.html" class="btn-secondary">Try FreelanceOS Lite Free →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 FreelanceOS &nbsp;·&nbsp; <a href="/freelanceos-storefront/">Home</a> &nbsp;·&nbsp; <a href="/freelanceos-storefront/storefront.html">All Products</a> &nbsp;·&nbsp; <a href="/freelanceos-storefront/free-download.html">Free Download</a></p>
+</footer>
+
+</body>
+</html>
