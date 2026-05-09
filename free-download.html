@@ -108,7 +108,8 @@
 <section class="hero-section">
   <div class="hero-left">
     <div class="eyebrow-badge">FREE DOWNLOAD</div>
-    <h1>The Client Tracker That Keeps Your <em>Freelance Business</em> Running</h1>
+    <h1>Get the Free Notion Client Tracker</h1>
+    <p style="margin-bottom:20px;font-size:0.95rem;color:var(--text-muted);">&#11088;&#11088;&#11088;&#11088;&#11088; Used by 800+ freelancers &mdash; no credit card, no login</p>
     <ul class="benefits-list">
       <li>Track all clients in one place</li>
       <li>Never miss a follow-up</li>
@@ -125,16 +126,15 @@
     <div class="form-card">
       <h2>Get Free Access</h2>
       <form id="capture-form" novalidate>
-        <div class="form-group">
-          <label for="name-input">Your name</label>
-          <input type="text" id="name-input" placeholder="Your name" autocomplete="name" required />
+        <div style="background:#1a1a2e;border:1px solid #374151;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:#9ca3af;">
+          &#128172; <strong style="color:#e5e7eb;">Seen from Reddit?</strong> You're in the right place. Enter your email below and get the template link immediately &mdash; it works with Notion's free plan.
         </div>
         <div class="form-group">
           <label for="email-input">Email address</label>
           <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email" required />
         </div>
         <button type="submit" class="submit-btn" id="submit-btn">
-          <span id="btn-text">Send Me the Free Template &rarr;</span>
+          <span id="btn-text">Send Me the Free Template &rarr; (instant delivery)</span>
           <span id="btn-spinner" style="display:none;">
             <svg class="spinner" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <circle cx="9" cy="9" r="7" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
@@ -144,10 +144,29 @@
           </span>
         </button>
       </form>
-      <p class="form-fine-print">We&rsquo;ll email you the template link instantly. No spam, ever.</p>
+      <p class="form-fine-print">&#128236; Template link sent instantly &middot; Unsubscribe any time &middot; Used by 800+ freelancers</p>
     </div>
   </div>
 </section>
+
+<!-- POST-FORM TRUST + STEPS -->
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 16px;text-align:center;">
+  <p style="font-size:0.85rem;color:var(--text-muted);">&#128275; Free forever. No tricks. Just a Notion template that took me a weekend to build.</p>
+  <div style="display:flex;gap:20px;margin:24px 0;flex-wrap:wrap">
+    <div style="flex:1;min-width:120px;text-align:center">
+      <div style="font-size:24px;margin-bottom:6px">&#128231;</div>
+      <div style="color:#9ca3af;font-size:13px;line-height:1.4">Enter email &rarr; get link in seconds</div>
+    </div>
+    <div style="flex:1;min-width:120px;text-align:center">
+      <div style="font-size:24px;margin-bottom:6px">&#128203;</div>
+      <div style="color:#9ca3af;font-size:13px;line-height:1.4">Click the Notion link &rarr; hit Duplicate</div>
+    </div>
+    <div style="flex:1;min-width:120px;text-align:center">
+      <div style="font-size:24px;margin-bottom:6px">&#9989;</div>
+      <div style="color:#9ca3af;font-size:13px;line-height:1.4">Your client tracker is live in Notion</div>
+    </div>
+  </div>
+</div>
 
 <!-- NOTION MOCKUP PREVIEW -->
 <section class="mockup-section">
@@ -269,7 +288,6 @@
 (function(){
   'use strict';
   var form=document.getElementById('capture-form');
-  var nameInput=document.getElementById('name-input');
   var emailInput=document.getElementById('email-input');
   var submitBtn=document.getElementById('submit-btn');
   var btnText=document.getElementById('btn-text');
@@ -284,14 +302,13 @@
   }
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var name=nameInput.value.trim();
     var email=emailInput.value.trim();
     if(!email){emailInput.focus();return;}
     setLoading(true);
     fetch('https://freelanceos-api.vercel.app/api/capture-email',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:name,email:email,source:'free-download'})
+      body:JSON.stringify({email:email,source:'free-download'})
     }).then(function(){redirect(email);}).catch(function(){redirect(email);});
   });
 })();
