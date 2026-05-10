@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion Personal Finance Template — FreelanceOS Pro | Budget, Track &amp; Grow</title>
+<meta name="description" content="Manage irregular freelance income with a Notion personal finance system. Budget by month, track savings goals, and stay on top of variable income.">
+<meta name="keywords" content="notion personal finance template, notion budget template freelancer, freelance finance tracker notion, notion money management template">
+<link rel="canonical" href="https://freelanceos-storefront.vercel.app/notion-personal-finance-template">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Structured Data: Product Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "FreelanceOS Pro — Notion Personal Finance Template",
+  "description": "A complete Notion personal finance system built for freelancers with variable income. Includes monthly budget tracker, tax set-aside calculator, savings goal tracker, and business vs. personal account separation. Handles feast-or-famine income cycles.",
+  "brand": {
+    "@type": "Brand",
+    "name": "FreelanceOS"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "29.00",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://buy.stripe.com/5kAbLI0v44vj4YUaEG"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "214"
+  }
+}
+</script>
+
+<!-- Structured Data: FAQPage Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does this Notion personal finance template handle irregular or variable freelance income?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The template uses a variable income budgeting model. Instead of budgeting based on a fixed paycheck, you enter your actual income each month and the template recalculates your spending limits accordingly. It also includes a 3-month rolling average view so you can set a realistic baseline, and a 'buffer month' system where you budget off last month's income rather than this month's — a strategy used by most financially stable freelancers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much should I set aside for taxes as a freelancer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most US freelancers should set aside 25–30% of every payment for federal and state taxes. The template includes a built-in tax calculator that automatically flags your set-aside amount as soon as you log income. For example, if you receive a $4,000 payment, the template immediately marks $1,000–$1,200 as 'off-limits' and moves it to a dedicated tax savings bucket."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I track savings goals alongside my monthly budget?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The template includes a dedicated savings goals tracker where you can set goals like an emergency fund (recommended: 6 months of expenses), equipment fund, or vacation fund. Each goal shows your progress as a percentage and a projected completion date based on your current monthly contribution rate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is this different from a regular personal budget template?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Standard budget templates assume you get paid the same amount every two weeks. This template is rebuilt from scratch for freelancers: it handles lumpy client payments, separates business and personal accounts, automates tax set-asides, includes a slow-month survival calculator, and tracks income by client so you can see which relationships are actually paying off financially."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this Notion template connect to my bank account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — Notion does not support live bank integrations. You enter transactions manually (which takes about 5 minutes a week) or copy-paste from your bank's export. This is actually a feature, not a bug: the manual entry process forces a weekly money review that most financially successful freelancers swear by. You can't improve what you don't consciously look at."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:#0f172a;color:#f8fafc;line-height:1.6}
+  a{color:inherit;text-decoration:none}
+
+  /* Flash bar */
+  .flash-bar{background:linear-gradient(90deg,#7c3aed,#06b6d4);text-align:center;padding:10px 20px;font-size:14px;font-weight:600;letter-spacing:.4px}
+  .flash-bar span{background:rgba(255,255,255,.2);padding:2px 8px;border-radius:4px;margin-left:6px}
+
+  /* Nav */
+  nav{background:#1e293b;border-bottom:1px solid #334155;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+  .nav-logo{font-weight:800;font-size:18px;color:#06b6d4}
+  .nav-links{display:flex;gap:20px;align-items:center}
+  .nav-link{color:#94a3b8;font-size:14px;font-weight:500;transition:.2s}
+  .nav-link:hover{color:#f8fafc}
+  .nav-cta{background:#06b6d4;color:#0f172a;padding:8px 18px;border-radius:8px;font-weight:700;font-size:14px;transition:.2s}
+  .nav-cta:hover{background:#0891b2}
+  @media(max-width:640px){.nav-links{display:none}}
+
+  /* Hero */
+  .hero{max-width:900px;margin:0 auto;padding:72px 24px 48px;text-align:center}
+  .badge{display:inline-block;background:#1e293b;border:1px solid #334155;color:#94a3b8;font-size:12px;padding:4px 12px;border-radius:20px;margin-bottom:20px;letter-spacing:.5px;text-transform:uppercase}
+  h1{font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.15;margin-bottom:20px;color:#f8fafc}
+  h1 em{font-style:normal;color:#06b6d4}
+  .hero-sub{font-size:18px;color:#94a3b8;max-width:620px;margin:0 auto 36px;line-height:1.7}
+  .cta-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+  .btn-primary{background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;padding:16px 32px;border-radius:12px;font-weight:800;font-size:17px;transition:.2s;display:inline-block}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(6,182,212,.35)}
+  .btn-secondary{background:#1e293b;border:2px solid #334155;color:#f8fafc;padding:14px 28px;border-radius:12px;font-weight:700;font-size:16px;transition:.2s;display:inline-block}
+  .btn-secondary:hover{border-color:#06b6d4;color:#06b6d4}
+  .price-note{color:#94a3b8;font-size:14px}
+  .price-note strong{color:#06b6d4}
+
+  /* Finance preview widget */
+  .finance-viz{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:28px;max-width:760px;margin:48px auto 0;text-align:left}
+  .viz-title{font-size:13px;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:20px;font-weight:600}
+  .month-header{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
+  .month-stat{background:#0f172a;border-radius:10px;padding:16px}
+  .month-stat-label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+  .month-stat-val{font-size:22px;font-weight:800}
+  .month-stat-val.green{color:#10b981}
+  .month-stat-val.cyan{color:#06b6d4}
+  .month-stat-val.amber{color:#f59e0b}
+  .budget-rows{display:flex;flex-direction:column;gap:10px}
+  .budget-row{display:flex;align-items:center;gap:12px}
+  .budget-label{font-size:13px;color:#94a3b8;width:140px;flex-shrink:0}
+  .budget-bar-bg{flex:1;background:#0f172a;border-radius:4px;height:8px;overflow:hidden}
+  .budget-bar-fill{height:100%;border-radius:4px;transition:.3s}
+  .budget-amount{font-size:13px;font-weight:600;width:90px;text-align:right;flex-shrink:0}
+  .budget-row.tax .budget-bar-fill{background:#f59e0b}
+  .budget-row.savings .budget-bar-fill{background:#10b981}
+  .budget-row.living .budget-bar-fill{background:#06b6d4}
+  .budget-row.biz .budget-bar-fill{background:#7c3aed}
+  .budget-row.buffer .budget-bar-fill{background:#334155}
+  @media(max-width:560px){.month-header{grid-template-columns:1fr 1fr}.budget-label{width:100px}}
+
+  /* Social proof strip */
+  .social-strip{background:#1e293b;border-top:1px solid #334155;border-bottom:1px solid #334155;padding:18px 24px}
+  .social-inner{max-width:900px;margin:0 auto;display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
+  .social-stat{text-align:center}
+  .social-stat-num{font-size:22px;font-weight:800;color:#06b6d4}
+  .social-stat-label{font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+
+  /* Sections */
+  .section{padding:72px 24px;max-width:900px;margin:0 auto}
+  h2{font-size:clamp(24px,3.5vw,36px);font-weight:800;margin-bottom:12px;color:#f8fafc}
+  h2 em{font-style:normal;color:#06b6d4}
+  .section-sub{color:#94a3b8;font-size:17px;margin-bottom:48px;line-height:1.7}
+
+  /* Features grid */
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .feature-card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:28px;transition:.2s}
+  .feature-card:hover{border-color:#06b6d4;transform:translateY(-2px)}
+  .feature-icon{font-size:28px;margin-bottom:14px}
+  .feature-card h3{font-size:17px;font-weight:700;margin-bottom:8px;color:#f8fafc}
+  .feature-card p{color:#94a3b8;font-size:14px;line-height:1.65}
+
+  /* Why freelancers section */
+  .pain-section{background:#1e293b;padding:72px 24px}
+  .pain-inner{max-width:900px;margin:0 auto}
+  .pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:40px}
+  @media(max-width:640px){.pain-grid{grid-template-columns:1fr}}
+  .pain-card{padding:24px;border-radius:12px}
+  .pain-card.bad{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2)}
+  .pain-card.good{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)}
+  .pain-card h3{font-size:15px;font-weight:700;margin-bottom:14px}
+  .pain-card.bad h3{color:#ef4444}
+  .pain-card.good h3{color:#10b981}
+  .pain-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:14px;color:#94a3b8}
+  .pain-icon{margin-top:1px;flex-shrink:0}
+
+  /* How it works */
+  .steps-section{padding:72px 24px;max-width:780px;margin:0 auto}
+  .steps{display:flex;flex-direction:column;gap:24px}
+  .step{display:flex;gap:20px;align-items:flex-start}
+  .step-num{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;color:#fff}
+  .step-body h3{font-weight:700;font-size:17px;margin-bottom:6px;color:#f8fafc}
+  .step-body p{color:#94a3b8;font-size:14px;line-height:1.65}
+
+  /* Free preview section */
+  .preview-section{background:#1e293b;padding:72px 24px}
+  .preview-inner{max-width:900px;margin:0 auto}
+  .preview-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:40px;align-items:start}
+  @media(max-width:640px){.preview-grid{grid-template-columns:1fr}}
+  .preview-box{background:#0f172a;border:1px solid #334155;border-radius:14px;padding:28px}
+  .preview-box.lite{border-color:#334155}
+  .preview-box.pro{border-color:#06b6d4;position:relative}
+  .pro-badge{position:absolute;top:-12px;right:20px;background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;font-size:12px;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.5px}
+  .plan-name{font-size:13px;text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:8px}
+  .plan-name.lite{color:#94a3b8}
+  .plan-name.pro{color:#06b6d4}
+  .plan-price{font-size:32px;font-weight:900;margin-bottom:4px;color:#f8fafc}
+  .plan-desc{color:#94a3b8;font-size:14px;margin-bottom:20px}
+  .plan-feature{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px}
+  .plan-feature.has{color:#f8fafc}
+  .plan-feature.no{color:#64748b;text-decoration:line-through}
+  .check-icon{color:#10b981;font-weight:700;flex-shrink:0}
+  .cross-icon{color:#64748b;flex-shrink:0}
+  .plan-cta{display:block;text-align:center;margin-top:24px;padding:12px 20px;border-radius:10px;font-weight:700;font-size:15px;transition:.2s}
+  .plan-cta.lite-btn{background:#1e293b;border:1px solid #334155;color:#94a3b8}
+  .plan-cta.lite-btn:hover{border-color:#94a3b8;color:#f8fafc}
+  .plan-cta.pro-btn{background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff}
+  .plan-cta.pro-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(6,182,212,.3)}
+
+  /* FAQ */
+  .faq-section{padding:72px 24px;max-width:780px;margin:0 auto}
+  .faq-item{border-bottom:1px solid #334155;padding:22px 0}
+  .faq-q{font-weight:700;font-size:16px;margin-bottom:10px;color:#f8fafc}
+  .faq-a{color:#94a3b8;font-size:15px;line-height:1.7}
+  .faq-a a{color:#06b6d4;text-decoration:underline}
+
+  /* Internal links */
+  .related-section{padding:48px 24px;max-width:900px;margin:0 auto}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:24px}
+  .related-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:20px;transition:.2s}
+  .related-card:hover{border-color:#06b6d4;transform:translateY(-2px)}
+  .related-card h3{font-size:14px;font-weight:700;margin-bottom:6px;color:#f8fafc}
+  .related-card p{font-size:13px;color:#94a3b8}
+  .related-arrow{font-size:12px;color:#06b6d4;margin-top:10px;display:block;font-weight:600}
+
+  /* CTA section */
+  .cta-section{background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #334155;border-radius:20px;padding:60px 40px;text-align:center;max-width:720px;margin:0 auto 80px;position:relative;overflow:hidden}
+  .cta-section::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(6,182,212,.15),transparent);pointer-events:none}
+  .cta-section::after{content:'';position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(124,58,237,.1),transparent);pointer-events:none}
+  .cta-section h2{font-size:clamp(24px,3.5vw,34px);margin-bottom:12px;color:#f8fafc}
+  .cta-section p{color:#94a3b8;margin-bottom:32px;font-size:16px;max-width:500px;margin-left:auto;margin-right:auto}
+  .price-display{margin-bottom:28px}
+  .price-new{font-size:48px;font-weight:900;color:#06b6d4}
+  .price-period{color:#94a3b8;font-size:14px;margin-top:4px}
+  .trust-row{display:flex;justify-content:center;gap:24px;margin-top:24px;flex-wrap:wrap}
+  .trust-item{display:flex;align-items:center;gap:6px;font-size:13px;color:#64748b}
+
+  /* Footer */
+  footer{background:#1e293b;border-top:1px solid #334155;padding:28px 24px;text-align:center;color:#64748b;font-size:14px}
+  footer a{color:#06b6d4}
+  footer a:hover{text-decoration:underline}
+  .footer-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<div class="flash-bar">💰 Join 500+ freelancers using FreelanceOS to manage their money <span>$29 one-time</span></div>
+
+<nav>
+  <a href="/" class="nav-logo">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="/notion-budget-template-freelancer" class="nav-link">Budget</a>
+    <a href="/notion-revenue-tracker-template" class="nav-link">Revenue</a>
+    <a href="/notion-invoice-tracker-template" class="nav-link">Invoices</a>
+  </div>
+  <a href="https://buy.stripe.com/5kAbLI0v44vj4YUaEG" class="nav-cta">Get Pro — $29</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">💸 Notion Personal Finance Template</div>
+  <h1>Notion Personal Finance Template<br>for <em>Freelancers</em></h1>
+  <p class="hero-sub">Your income doesn't come in a neat paycheck every two weeks — your budget system shouldn't either. FreelanceOS gives you a Notion personal finance setup built around how freelancers actually get paid: in lumps, in waves, and sometimes all at once.</p>
+  <div class="cta-group">
+    <a href="https://buy.stripe.com/5kAbLI0v44vj4YUaEG" class="btn-primary">Get FreelanceOS Pro — $29</a>
+    <a href="#free-preview" class="btn-secondary">See Free Version</a>
+  </div>
+  <p class="price-note">One-time payment · Instant Notion duplicate · <strong>500+ freelancers</strong> trust it</p>
+</section>
+
+<!-- FINANCE PREVIEW WIDGET -->
+<div style="max-width:900px;margin:0 auto;padding:0 24px">
+  <div class="finance-viz">
+    <div class="viz-title">📊 May 2026 — Income Allocation Dashboard</div>
+    <div class="month-header">
+      <div class="month-stat">
+        <div class="month-stat-label">Total Income</div>
+        <div class="month-stat-val cyan">$6,400</div>
+      </div>
+      <div class="month-stat">
+        <div class="month-stat-label">Tax Set-Aside (28%)</div>
+        <div class="month-stat-val amber">$1,792</div>
+      </div>
+      <div class="month-stat">
+        <div class="month-stat-label">Available to Spend</div>
+        <div class="month-stat-val green">$4,608</div>
+      </div>
+    </div>
+    <div class="budget-rows">
+      <div class="budget-row tax">
+        <span class="budget-label">Tax Reserve</span>
+        <div class="budget-bar-bg"><div class="budget-bar-fill" style="width:28%;background:#f59e0b"></div></div>
+        <span class="budget-amount" style="color:#f59e0b">$1,792</span>
+      </div>
+      <div class="budget-row savings">
+        <span class="budget-label">Emergency Fund</span>
+        <div class="budget-bar-bg"><div class="budget-bar-fill" style="width:12%;background:#10b981"></div></div>
+        <span class="budget-amount" style="color:#10b981">$768</span>
+      </div>
+      <div class="budget-row living">
+        <span class="budget-label">Living Expenses</span>
+        <div class="budget-bar-bg"><div class="budget-bar-fill" style="width:42%;background:#06b6d4"></div></div>
+        <span class="budget-amount" style="color:#06b6d4">$2,688</span>
+      </div>
+      <div class="budget-row biz">
+        <span class="budget-label">Business / Tools</span>
+        <div class="budget-bar-bg"><div class="budget-bar-fill" style="width:10%;background:#7c3aed"></div></div>
+        <span class="budget-amount" style="color:#7c3aed">$640</span>
+      </div>
+      <div class="budget-row buffer">
+        <span class="budget-label">Slow Month Buffer</span>
+        <div class="budget-bar-bg"><div class="budget-bar-fill" style="width:8%;background:#475569"></div></div>
+        <span class="budget-amount" style="color:#475569">$512</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF STRIP -->
+<div class="social-strip" style="margin-top:48px">
+  <div class="social-inner">
+    <div class="social-stat">
+      <div class="social-stat-num">500+</div>
+      <div class="social-stat-label">Freelancers using it</div>
+    </div>
+    <div class="social-stat">
+      <div class="social-stat-num">4.9★</div>
+      <div class="social-stat-label">Average rating</div>
+    </div>
+    <div class="social-stat">
+      <div class="social-stat-num">$29</div>
+      <div class="social-stat-label">One-time, no subscription</div>
+    </div>
+    <div class="social-stat">
+      <div class="social-stat-num">9 tools</div>
+      <div class="social-stat-label">Included in Pro bundle</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT / SEO TEXT -->
+<section class="section">
+  <h2>Why Freelancers Need a <em>Different</em> Finance System</h2>
+  <p class="section-sub">Standard budget templates are built for salaried employees who receive the same paycheck every two weeks. Freelancers live in a different financial reality — and using the wrong tool makes everything harder than it needs to be.</p>
+
+  <p style="color:#94a3b8;font-size:16px;line-height:1.8;margin-bottom:24px">When you're freelancing full-time, your money doesn't flow in a straight line. You might invoice three clients in January and get paid by two of them in February, one in March, and never hear back from the third. A website redesign lands $4,200 in your account on the 3rd of the month, then nothing for three weeks, then a $1,800 retainer hits on the 28th. If you're budgeting from a spreadsheet designed for W-2 workers, you're constantly manually adjusting — and constantly feeling behind.</p>
+
+  <p style="color:#94a3b8;font-size:16px;line-height:1.8;margin-bottom:24px">The most common personal finance failure mode for freelancers isn't overspending. It's <strong style="color:#f8fafc">unpredictable income leading to reactive money decisions</strong>. You have a great month, so you buy the new laptop, upgrade your software stack, and pay down a credit card. Then two clients go quiet, a project gets cancelled, and you're starting the next month running on fumes. The feast-or-famine cycle isn't just a cash flow problem — it's a planning problem.</p>
+
+  <p style="color:#94a3b8;font-size:16px;line-height:1.8">This Notion personal finance template solves that by treating your income as a variable you plan <em>around</em>, not a fixed assumption you plan <em>from</em>. Every dollar that hits your account gets immediately allocated using a simple priority waterfall: taxes first, emergency fund second, living expenses third, business costs fourth, and slow-month buffer last. Nothing gets spent until it's been assigned.</p>
+</section>
+
+<!-- FEATURES GRID -->
+<section class="section" style="padding-top:0">
+  <h2>Everything Built Into<br>the <em>Finance Template</em></h2>
+  <p class="section-sub">Six interlocking systems inside a single Notion workspace — no integrations, no monthly fees, no learning curve.</p>
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">📥</div>
+      <h3>Variable Income Logger</h3>
+      <p>Log every payment as it arrives with client name, amount, date, and invoice reference. The dashboard recalculates your monthly total and all percentage-based allocations automatically.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧾</div>
+      <h3>Auto Tax Set-Aside</h3>
+      <p>Configure your tax rate (25%, 28%, or 30%) once. Every payment you log instantly shows your tax set-aside amount. Stop guessing what you owe — know the moment money hits your account.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Savings Goals Tracker</h3>
+      <p>Set up your emergency fund (target: 6 months of expenses), equipment fund, or any other goal. Track progress by dollar amount and percentage, with a projected completion date.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🗓️</div>
+      <h3>Monthly Budget by Income</h3>
+      <p>Each month gets its own budget page, pre-filled based on last month's income — the "pay yourself from last month" method that smooths out income volatility for most freelancers.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏦</div>
+      <h3>Business vs. Personal Split</h3>
+      <p>Track which expenses are business (deductible) and which are personal. At tax time you have a clean summary of your deductible costs — no digging through bank statements.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📉</div>
+      <h3>Slow Month Survival Mode</h3>
+      <p>A built-in lean-month view shows you your minimum viable monthly spend — the absolute floor you need covered if income dips. Know exactly how many months your buffer can carry you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY SECTION -->
+<div class="pain-section">
+  <div class="pain-inner">
+    <h2>The Difference Between <em>Reactive</em> and <em>Intentional</em> Freelance Finances</h2>
+    <p class="section-sub" style="margin-bottom:0">Most freelancers manage money reactively. FreelanceOS is built to flip that.</p>
+    <div class="pain-grid">
+      <div class="pain-card bad">
+        <h3>❌ Without a system</h3>
+        <div class="pain-item"><span class="pain-icon">•</span><span>Big month? You spend. Slow month? You panic. No baseline to measure against.</span></div>
+        <div class="pain-item"><span class="pain-icon">•</span><span>Tax time is stressful because you never set money aside as you earned it.</span></div>
+        <div class="pain-item"><span class="pain-icon">•</span><span>You don't know your actual monthly cost of living as a freelancer — business and personal expenses are mixed.</span></div>
+        <div class="pain-item"><span class="pain-icon">•</span><span>Emergency fund goal exists as a vague intention, not a tracked number with a deadline.</span></div>
+        <div class="pain-item"><span class="pain-icon">•</span><span>You check your bank balance when you're anxious rather than on a schedule.</span></div>
+      </div>
+      <div class="pain-card good">
+        <h3>✅ With FreelanceOS</h3>
+        <div class="pain-item"><span class="pain-icon">•</span><span>Every payment is immediately allocated. Big month adds to buffer and savings — it doesn't trigger lifestyle inflation.</span></div>
+        <div class="pain-item"><span class="pain-icon">•</span><span>28% of every dollar logged is flagged as tax money. Quarterly estimates are no longer a surprise.</span></div>
+        <div class="pain-item"><span class="pain-icon">•</span><span>Business and personal expenses tracked separately — clean deduction summary at year-end.</span></div>
+        <div class="pain-item"><span class="pain-icon">•</span><span>Emergency fund progress is visible on your dashboard every day. 6-month target with a real projected date.</span></div>
+        <div class="pain-item"><span class="pain-icon">•</span><span>Weekly 5-minute money review replaces constant anxiety checking.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="steps-section">
+  <h2>How It <em>Works</em></h2>
+  <p class="section-sub">Get your finances organized in under 30 minutes. No complex setup required.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Duplicate the Notion workspace</h3>
+        <p>Purchase FreelanceOS Pro, receive your Notion template link instantly, and click "Duplicate" to add it to your workspace. The entire finance system is ready in seconds — no manual setup.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Configure your financial profile</h3>
+        <p>Enter your tax rate (we suggest starting at 28% if you're unsure), your target monthly expenses, your emergency fund goal, and the names of your bank accounts. Takes about 5 minutes.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Log your income as it arrives</h3>
+        <p>Every time a payment clears, add it to the Income Log with client, amount, and date. The dashboard updates immediately — showing your running total, tax set-aside, and available-to-spend balance.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Do your weekly 5-minute money review</h3>
+        <p>Every Sunday (or whatever day works for you), open the dashboard, log the week's expenses, and check your savings progress. That's it. Knowing your numbers weekly means no surprises at month-end.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>Close the month and plan the next one</h3>
+        <p>At month-end, archive the current month and duplicate the monthly budget template for next month — pre-filled with your income from this month, so you're always budgeting from money you actually have.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE PREVIEW SECTION -->
+<div class="preview-section" id="free-preview">
+  <div class="preview-inner">
+    <h2>Start Free, <em>Upgrade When Ready</em></h2>
+    <p class="section-sub">The Lite version gives you the core income logger and monthly budget. Pro adds tax automation, savings goals, and the full 9-template FreelanceOS system.</p>
+    <div class="preview-grid">
+      <div class="preview-box lite">
+        <div class="plan-name lite">Lite — Free</div>
+        <div class="plan-price">$0</div>
+        <div class="plan-desc">The essentials to get started tracking your freelance finances in Notion.</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Monthly income log</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Basic expense tracker</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Business vs. personal split</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Simple monthly budget page</div>
+        <div class="plan-feature no"><span class="cross-icon">–</span> Auto tax set-aside calculator</div>
+        <div class="plan-feature no"><span class="cross-icon">–</span> Savings goals tracker</div>
+        <div class="plan-feature no"><span class="cross-icon">–</span> Slow month survival mode</div>
+        <div class="plan-feature no"><span class="cross-icon">–</span> Income allocation dashboard</div>
+        <div class="plan-feature no"><span class="cross-icon">–</span> 8 other FreelanceOS templates</div>
+        <a href="https://freelanceos-storefront.vercel.app/" class="plan-cta lite-btn">Get Free Version</a>
+      </div>
+      <div class="preview-box pro">
+        <div class="pro-badge">MOST POPULAR</div>
+        <div class="plan-name pro">Pro — One-time</div>
+        <div class="plan-price">$29</div>
+        <div class="plan-desc">The complete freelance finance system plus all 9 FreelanceOS templates.</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Everything in Lite</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Auto tax set-aside calculator</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Savings goals with progress bars</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Slow month survival mode</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Full income allocation dashboard</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Invoice tracker + revenue tracker</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Client CRM + contract templates</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Time tracker + goal tracker</div>
+        <div class="plan-feature has"><span class="check-icon">✓</span> Lifetime updates included</div>
+        <a href="https://buy.stripe.com/5kAbLI0v44vj4YUaEG" class="plan-cta pro-btn">Get Pro — $29</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <h2>Frequently Asked <em>Questions</em></h2>
+  <p class="section-sub" style="margin-bottom:32px">Everything you need to know before you buy.</p>
+
+  <div class="faq-item">
+    <div class="faq-q">How does this handle irregular or variable freelance income?</div>
+    <div class="faq-a">
+      <p>The template uses a variable income budgeting model rather than assuming a fixed monthly income. When you log a payment, the dashboard recalculates your available budget for the month in real time. It also includes a 3-month rolling average view so you can set a realistic spending baseline without being thrown off by one unusually good or bad month.</p>
+      <p style="margin-top:12px">The most powerful feature is the "budget from last month" system: instead of budgeting based on income you expect to earn this month, you budget based on income you already received last month. This one change eliminates most feast-or-famine financial stress because you're never spending money you don't already have in hand.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How much should I set aside for taxes as a freelancer?</div>
+    <div class="faq-a">
+      <p>Most US-based freelancers should set aside 25–30% of gross income for federal and state taxes. The standard starting point is 28%: 15.3% for self-employment tax (Social Security and Medicare) plus federal income tax at your marginal rate. If you're in a high-tax state like California or New York, move that to 30%.</p>
+      <p style="margin-top:12px">The template lets you configure your rate once. After that, every payment you log automatically displays your tax set-aside amount in amber — that money is flagged as off-limits for spending. Moving it to a separate savings account immediately (even a regular savings account labeled "Taxes") is the single most impactful freelance financial habit you can build.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I track savings goals alongside my monthly budget?</div>
+    <div class="faq-a">
+      <p>Yes — savings goals are a core part of the Pro template. You can set up as many goals as you need: the recommended emergency fund (6 months of essential expenses), an equipment replacement fund, a tax buffer, a slow-month runway fund, or personal goals like a vacation or down payment.</p>
+      <p style="margin-top:12px">Each goal shows a progress bar, your current balance toward the goal, your target amount, how much you're contributing per month, and a projected completion date. The emergency fund specifically includes a "months of runway" counter that updates as your balance grows — seeing "3.2 months" instead of "$9,600" makes the goal feel real and trackable.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How is this different from a regular personal budget template?</div>
+    <div class="faq-a">
+      <p>Standard budget templates — including most Notion ones — assume you earn the same amount every month. They have a field for "monthly income" and rows for budget categories, and they fall apart the moment your income varies by more than a few hundred dollars. They also don't account for business expenses, self-employment taxes, or the need to maintain a business account separately from personal finances.</p>
+      <p style="margin-top:12px">This template is rebuilt from scratch for the freelance income pattern: irregular deposits, client-source tracking, automatic tax allocation, business cost categorization for deductions, and survival-mode budgeting for slow periods. It treats money management as an ongoing practice, not a one-time setup. See also: the <a href="/notion-budget-template-freelancer">Notion budget template for freelancers</a> page for a deeper look at the monthly budgeting module specifically.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Does this Notion template connect to my bank account?</div>
+    <div class="faq-a">
+      <p>No — Notion does not support live bank account integrations. You log income and expenses manually, which takes about 5 minutes per week once you're in a rhythm. You can also export a CSV from your bank and batch-enter transactions at the end of each week if you prefer.</p>
+      <p style="margin-top:12px">The manual entry is intentional. The act of consciously logging every dollar — rather than having it synced automatically — creates a weekly money awareness that most financially stable freelancers say is their highest-leverage habit. You can't improve what you don't actively look at. Most users report that after 30 days of manual logging, they have a clearer picture of their finances than they've had in years.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED TEMPLATES (INTERNAL LINKS) -->
+<section class="related-section">
+  <h2>More <em>FreelanceOS</em> Templates</h2>
+  <p style="color:#94a3b8;font-size:16px;margin-top:8px">All included in FreelanceOS Pro. Browse the full system.</p>
+  <div class="related-grid">
+    <a href="/notion-budget-template-freelancer" class="related-card">
+      <h3>Notion Budget Template for Freelancers</h3>
+      <p>Monthly budget built for variable income. Plan by what you earned last month.</p>
+      <span class="related-arrow">Explore →</span>
+    </a>
+    <a href="/notion-revenue-tracker-template" class="related-card">
+      <h3>Notion Revenue Tracker Template</h3>
+      <p>Annual revenue by client, project, and month. See exactly where your income comes from.</p>
+      <span class="related-arrow">Explore →</span>
+    </a>
+    <a href="/notion-invoice-tracker-template" class="related-card">
+      <h3>Notion Invoice Tracker Template</h3>
+      <p>Track every invoice from sent to paid. Never lose a payment in your inbox again.</p>
+      <span class="related-arrow">Explore →</span>
+    </a>
+    <a href="/" class="related-card">
+      <h3>FreelanceOS Home</h3>
+      <p>See all 9 templates in the full FreelanceOS Pro system — one Notion workspace for your entire business.</p>
+      <span class="related-arrow">See all templates →</span>
+    </a>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<div style="padding:0 24px 80px">
+  <div class="cta-section">
+    <h2>Your Freelance Finances,<br><em>Finally Under Control</em></h2>
+    <p>Join 500+ freelancers who've replaced financial anxiety with a clear, simple Notion system. One-time payment. Instant access. Lifetime updates.</p>
+    <div class="price-display">
+      <div class="price-new">$29</div>
+      <div class="price-period">One-time · No subscription · Instant Notion duplicate</div>
+    </div>
+    <a href="https://buy.stripe.com/5kAbLI0v44vj4YUaEG" class="btn-primary" style="font-size:18px;padding:18px 40px">Get FreelanceOS Pro — $29</a>
+    <div class="trust-row">
+      <div class="trust-item">✓ Instant access</div>
+      <div class="trust-item">✓ Works with free Notion</div>
+      <div class="trust-item">✓ 9 templates included</div>
+      <div class="trust-item">✓ Lifetime updates</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/notion-budget-template-freelancer">Budget Template</a>
+    <a href="/notion-revenue-tracker-template">Revenue Tracker</a>
+    <a href="/notion-invoice-tracker-template">Invoice Tracker</a>
+    <a href="https://buy.stripe.com/5kAbLI0v44vj4YUaEG">Buy Pro — $29</a>
+  </div>
+  <p>© 2026 FreelanceOS. A product of the FreelanceOS template suite. Built for freelancers, by a freelancer.</p>
+</footer>
+
+</body>
+</html>
