@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Purchase Confirmed — Your Template is Ready 🎉</title>
+  <title>Purchase Confirmed — Your Template is Ready</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -26,14 +26,20 @@
     }
     #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
 
+    .logo {
+      font-size: .85rem; font-weight: 800; letter-spacing: -.01em;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 1.5rem;
+    }
+
     .card {
       background: var(--card); border: 1px solid var(--border); border-radius: 1.5rem;
       padding: 2.5rem 2rem; max-width: 560px; width: 100%;
-      text-align: center; position: relative; margin-top: 1.5rem;
+      text-align: center; position: relative; margin-top: .5rem;
     }
     .card::before {
       content: ''; position: absolute; inset: -1px; border-radius: 1.5rem;
-      background: var(--grad); z-index: -1; opacity: .2; border-radius: inherit;
+      background: var(--grad); z-index: -1; opacity: .2;
     }
     .success-ring {
       width: 80px; height: 80px; border-radius: 50%;
@@ -82,6 +88,20 @@
     .step-body strong { display: block; font-size: .85rem; font-weight: 700; margin-bottom: .2rem; }
     .step-body span { font-size: .78rem; color: var(--txt3); line-height: 1.45; }
 
+    /* Bundle: two-product cards */
+    .bundle-products {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .75rem;
+      margin-bottom: 1.75rem;
+    }
+    .bundle-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 1rem; padding: 1rem; text-align: left;
+    }
+    .bundle-card .bc-icon { font-size: 1.4rem; margin-bottom: .4rem; }
+    .bundle-card .bc-name { font-size: .8rem; font-weight: 800; margin-bottom: .2rem; }
+    .bundle-card .bc-desc { font-size: .72rem; color: var(--txt3); line-height: 1.4; }
+    @media (max-width: 400px) { .bundle-products { grid-template-columns: 1fr; } }
+
     .share-section {
       background: rgba(124,58,237,0.07); border: 1px solid rgba(124,58,237,0.15);
       border-radius: 1rem; padding: 1.25rem; margin-bottom: 1.5rem;
@@ -113,16 +133,18 @@
 <body>
 <canvas id="confetti-canvas"></canvas>
 
+<div class="logo" id="logo-txt">FreelanceOS</div>
+
 <div class="card">
   <div class="success-ring">🎉</div>
   <h1>Purchase <span>Confirmed!</span><br>You're all set.</h1>
-  <p class="subtitle">Your template access link is being sent to your inbox right now. It arrives within 5 minutes — check your email and follow the steps below.</p>
+  <p class="subtitle" id="main-subtitle">Your template access link is being sent to your inbox right now. It arrives within 5 minutes — check your email and follow the steps below.</p>
 
   <div class="email-status">
     <div class="email-icon">📬</div>
     <div class="email-text">
-      <strong>Template access link sent to your email</strong>
-      <span>Open the email, click the Notion link, duplicate to your workspace, and you'll be up and running in under 30 minutes.</span>
+      <strong id="email-status-heading">Template access link sent to your email</strong>
+      <span id="email-status-body">Open the email, click the Notion link, duplicate to your workspace, and you'll be up and running in under 30 minutes.</span>
     </div>
   </div>
 
@@ -131,50 +153,144 @@
     Delivery in progress &nbsp;·&nbsp; <span id="timer-countdown">4:59</span> avg. arrival time
   </div>
 
+  <!-- Bundle product showcase (hidden by default) -->
+  <div class="bundle-products" id="bundle-products" style="display:none">
+    <div class="bundle-card">
+      <div class="bc-icon">💼</div>
+      <div class="bc-name">FreelanceOS Pro</div>
+      <div class="bc-desc">Client CRM · Invoices · Project tracker · Revenue dashboard</div>
+    </div>
+    <div class="bundle-card">
+      <div class="bc-icon">🎬</div>
+      <div class="bc-name">CreatorHQ Pro</div>
+      <div class="bc-desc">Content calendar · Brand kit · Sponsorship tracker · Analytics hub</div>
+    </div>
+  </div>
+
   <div class="steps-title">What to do next</div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <strong>Check your inbox (and spam folder)</strong>
-        <span>Look for an email with subject "Your FreelanceOS template is ready." Check spam if you don't see it in 10 minutes.</span>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <strong>Click the Notion link &amp; duplicate</strong>
-        <span>The link opens the template in Notion. Hit "Duplicate" in the top-right to copy everything to your workspace. Free Notion account works fine.</span>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <strong>Add your first client and go</strong>
-        <span>Open the Client CRM, hit "New," add a client, link a project. Most users are fully running within 30 minutes of setup.</span>
-      </div>
-    </div>
+  <div class="steps" id="steps-container">
+    <!-- Injected by JS -->
   </div>
 
   <div class="share-section">
-    <p class="share-text">Know a freelancer drowning in scattered spreadsheets? Share FreelanceOS — they'll thank you.</p>
-    <div class="share-btns">
-      <a href="https://twitter.com/intent/tweet?text=Just%20set%20up%20FreelanceOS%20Pro%20%E2%80%94%20a%20Notion%20business%20OS%20for%20freelancers.%20Client%20CRM%2C%20invoices%2C%20project%20tracker%2C%20revenue%20dashboard.%20%F0%9F%94%A5%20https%3A%2F%2Ffreelanceos-storefront.vercel.app" class="share-btn" target="_blank" rel="noopener">𝕏 Share on X</a>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ffreelanceos-storefront.vercel.app" class="share-btn" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://www.reddit.com/submit?url=https%3A%2F%2Ffreelanceos-storefront.vercel.app&title=FreelanceOS+Pro+%E2%80%94+Notion+workspace+for+freelancers" class="share-btn" target="_blank" rel="noopener">Reddit</a>
+    <p class="share-text" id="share-text">Know a freelancer drowning in scattered spreadsheets? Share FreelanceOS — they'll thank you.</p>
+    <div class="share-btns" id="share-btns">
+      <!-- Injected by JS -->
     </div>
   </div>
 
-  <p class="support-text">
-    No email after 15 minutes? Contact <a href="mailto:markmma1985@gmail.com?subject=FreelanceOS%20Template%20Access%20Missing">markmma1985@gmail.com</a> with your receipt and we'll send your link immediately.
+  <p class="support-text" id="support-text">
+    No email after 15 minutes? Contact <a href="mailto:markmma1985@gmail.com?subject=Template%20Access%20Missing">markmma1985@gmail.com</a> with your receipt and we'll send your link immediately.
     <br><br>30-day money-back guarantee — email any time, no questions asked.
   </p>
 </div>
 
-<a href="index.html" class="back-link">← Back to FreelanceOS</a>
+<a href="/" class="back-link" id="back-link">← Back to storefront</a>
 
 <script>
-// Countdown 5:00 → 0
+// ─── Product config ───────────────────────────────────────────────────────────
+const PRODUCTS = {
+  freelanceos: {
+    logo: 'FreelanceOS',
+    title: 'Purchase <span>Confirmed!</span><br>You\'re all set.',
+    subtitle: 'Your FreelanceOS Pro access link is being sent to your inbox right now. It arrives within 5 minutes — check your email and follow the steps below.',
+    emailHeading: 'FreelanceOS Pro access link sent',
+    emailBody: 'Open the email, click the Notion link, duplicate to your workspace, and your full business OS will be ready in under 30 minutes.',
+    steps: [
+      { title: 'Check your inbox (and spam folder)', body: 'Look for "Your FreelanceOS Pro template is ready." Check spam if you don\'t see it within 10 minutes.' },
+      { title: 'Click the Notion link & duplicate', body: 'The link opens the template in Notion. Hit "Duplicate" in the top-right to copy everything to your workspace. Free Notion account works fine.' },
+      { title: 'Add your first client and go', body: 'Open the Client CRM, hit "New," add a client name, link a project. Most users are fully running within 30 minutes of setup.' },
+    ],
+    shareText: 'Know a freelancer drowning in scattered spreadsheets? Share FreelanceOS — they\'ll thank you.',
+    shareTweet: 'Just%20set%20up%20FreelanceOS%20Pro%20%E2%80%94%20a%20Notion%20business%20OS%20for%20freelancers.%20Client%20CRM%2C%20invoices%2C%20project%20tracker%2C%20revenue%20dashboard.%20%F0%9F%94%A5%20https%3A%2F%2Ffreelanceos-storefront.vercel.app',
+    shareTitle: 'FreelanceOS+Pro+%E2%80%94+Notion+workspace+for+freelancers',
+    backHref: '/',
+    backLabel: '← Back to FreelanceOS',
+  },
+  creatorhq: {
+    logo: 'CreatorHQ',
+    title: 'Purchase <span>Confirmed!</span><br>You\'re all set.',
+    subtitle: 'Your CreatorHQ Pro access link is being sent to your inbox right now. It arrives within 5 minutes — check your email and follow the steps below.',
+    emailHeading: 'CreatorHQ Pro access link sent',
+    emailBody: 'Open the email, click the Notion link, duplicate to your workspace, and your full content OS will be ready in under 30 minutes.',
+    steps: [
+      { title: 'Check your inbox (and spam folder)', body: 'Look for "Your CreatorHQ Pro template is ready." Check spam if you don\'t see it within 10 minutes.' },
+      { title: 'Click the Notion link & duplicate', body: 'The link opens the template in Notion. Hit "Duplicate" in the top-right to copy everything to your workspace. Free Notion account works fine.' },
+      { title: 'Set up your content calendar', body: 'Open the Content Calendar, add your platform(s) and posting schedule. Connect your brand kit and start logging ideas. Most creators are fully set up within 30 minutes.' },
+    ],
+    shareText: 'Know a content creator who\'s struggling to stay consistent? Share CreatorHQ — it\'s the Notion OS built for creators.',
+    shareTweet: 'Just%20set%20up%20CreatorHQ%20Pro%20%E2%80%94%20a%20Notion%20content%20OS%20for%20creators.%20Content%20calendar%2C%20brand%20kit%2C%20sponsorship%20tracker%2C%20analytics%20hub.%20%F0%9F%9A%80%20https%3A%2F%2Ffreelanceos-storefront.vercel.app',
+    shareTitle: 'CreatorHQ+Pro+%E2%80%94+Notion+workspace+for+content+creators',
+    backHref: '/',
+    backLabel: '← Back to storefront',
+  },
+  bundle: {
+    logo: 'FreelanceOS + CreatorHQ',
+    title: 'Bundle <span>Confirmed!</span><br>Both templates unlocked.',
+    subtitle: 'Your FreelanceOS Pro + CreatorHQ Pro access links are being sent to your inbox right now. Two separate emails — one per template — arriving within 5 minutes.',
+    emailHeading: 'Two access links sent to your inbox',
+    emailBody: 'You\'ll receive two separate emails — one for FreelanceOS Pro and one for CreatorHQ Pro. Open each, duplicate the Notion templates, and both workspaces will be ready in under an hour.',
+    bundleProducts: true,
+    steps: [
+      { title: 'Check your inbox for two emails', body: '"Your FreelanceOS Pro template is ready" and "Your CreatorHQ Pro template is ready." Check spam if either is missing after 10 minutes.' },
+      { title: 'Duplicate both Notion templates', body: 'Open each email, click the Notion link, hit "Duplicate." Set up FreelanceOS first (your business layer), then CreatorHQ (your content layer).' },
+      { title: 'Connect them for full workflow power', body: 'Link your content projects in FreelanceOS to your content calendar in CreatorHQ. The two templates are designed to work side-by-side.' },
+    ],
+    shareText: 'Running a freelance content business? This bundle covers both sides — FreelanceOS for the business, CreatorHQ for the content.',
+    shareTweet: 'Just%20picked%20up%20the%20FreelanceOS%20+%20CreatorHQ%20bundle%20%E2%80%94%20Notion%20OS%20for%20freelance%20creators.%20Business%20+%20content%2C%20one%20workspace.%20https%3A%2F%2Ffreelanceos-storefront.vercel.app',
+    shareTitle: 'FreelanceOS+%2B+CreatorHQ+Bundle+%E2%80%94+Notion+workspace+for+freelance+creators',
+    backHref: '/',
+    backLabel: '← Back to storefront',
+  },
+};
+
+// ─── Detect product from URL param ───────────────────────────────────────────
+const params = new URLSearchParams(window.location.search);
+const productKey = (params.get('product') || 'freelanceos').toLowerCase();
+const cfg = PRODUCTS[productKey] || PRODUCTS.freelanceos;
+
+// ─── Apply product config ─────────────────────────────────────────────────────
+document.getElementById('logo-txt').textContent = cfg.logo;
+document.querySelector('h1').innerHTML = cfg.title;
+document.getElementById('main-subtitle').textContent = cfg.subtitle;
+document.getElementById('email-status-heading').textContent = cfg.emailHeading;
+document.getElementById('email-status-body').textContent = cfg.emailBody;
+document.getElementById('share-text').textContent = cfg.shareText;
+document.getElementById('back-link').href = cfg.backHref;
+document.getElementById('back-link').textContent = cfg.backLabel;
+
+// Bundle: show product showcase
+if (cfg.bundleProducts) {
+  document.getElementById('bundle-products').style.display = 'grid';
+}
+
+// Steps
+const stepsContainer = document.getElementById('steps-container');
+cfg.steps.forEach((step, i) => {
+  stepsContainer.innerHTML += `
+    <div class="step">
+      <div class="step-num">${i + 1}</div>
+      <div class="step-body">
+        <strong>${step.title}</strong>
+        <span>${step.body}</span>
+      </div>
+    </div>`;
+});
+
+// Share buttons
+const base = 'https://freelanceos-storefront.vercel.app';
+document.getElementById('share-btns').innerHTML = `
+  <a href="https://twitter.com/intent/tweet?text=${cfg.shareTweet}" class="share-btn" target="_blank" rel="noopener">𝕏 Share on X</a>
+  <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(base)}" class="share-btn" target="_blank" rel="noopener">LinkedIn</a>
+  <a href="https://www.reddit.com/submit?url=${encodeURIComponent(base)}&title=${cfg.shareTitle}" class="share-btn" target="_blank" rel="noopener">Reddit</a>`;
+
+// Support email subject
+const emailSubject = encodeURIComponent(cfg.logo + ' Template Access Missing');
+document.getElementById('support-text').innerHTML = `
+  No email after 15 minutes? Contact <a href="mailto:markmma1985@gmail.com?subject=${emailSubject}">markmma1985@gmail.com</a> with your receipt and we'll send your link immediately.
+  <br><br>30-day money-back guarantee — email any time, no questions asked.`;
+
+// ─── Countdown ───────────────────────────────────────────────────────────────
 (function(){
   let s = 299;
   const el = document.getElementById('timer-countdown');
@@ -185,7 +301,7 @@
   },1000);
 })();
 
-// Confetti
+// ─── Confetti ────────────────────────────────────────────────────────────────
 (function(){
   const cv=document.getElementById('confetti-canvas');
   const cx=cv.getContext('2d');
