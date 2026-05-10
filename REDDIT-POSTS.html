@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reddit Launch Pad — FreelanceOS</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f0f;
+    --bg2: #1a1a1a;
+    --bg3: #222222;
+    --border: #2e2e2e;
+    --accent: #7c3aed;
+    --accent-light: #9d5ef7;
+    --accent-glow: rgba(124,58,237,0.15);
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --amber: #f59e0b;
+    --amber-bg: rgba(245,158,11,0.08);
+    --amber-border: rgba(245,158,11,0.25);
+    --green: #22c55e;
+    --green-bg: rgba(34,197,94,0.1);
+    --red: #ef4444;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a0d2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  .site-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .site-header h1 .emoji { font-style: normal; }
+  .site-header .subtitle {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 20px;
+  }
+  .progress-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .progress-header .count {
+    font-weight: 700;
+    color: var(--accent-light);
+    font-size: 1rem;
+  }
+  .progress-bar-wrap {
+    width: 120px;
+    height: 6px;
+    background: var(--bg2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  /* ── MAIN CONTAINER ── */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ── STRATEGY BOX ── */
+  .strategy-box {
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: 14px;
+    padding: 28px 30px;
+    margin: 36px 0 32px;
+  }
+  .strategy-box h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .strategy-box ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+  .strategy-box li {
+    display: flex;
+    gap: 12px;
+    font-size: 0.93rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .strategy-box li .icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .strategy-box strong { color: var(--amber); }
+
+  /* ── POST CARD ── */
+  .posts-grid {
+    display: grid;
+    gap: 24px;
+  }
+
+  .post-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .post-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent), 0 8px 32px rgba(124,58,237,0.12);
+  }
+  .post-card.published {
+    border-color: var(--green);
+    opacity: 0.75;
+  }
+  .post-card.published:hover {
+    box-shadow: 0 0 0 1px var(--green);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .post-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .subreddit-badge {
+    background: var(--accent-glow);
+    border: 1px solid rgba(124,58,237,0.3);
+    color: var(--accent-light);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .viral-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .viral-badge.fire {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.25);
+    color: #f87171;
+  }
+  .viral-badge.high {
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.25);
+    color: var(--amber);
+  }
+  .viral-badge.medium {
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.25);
+    color: var(--green);
+  }
+  .viral-score {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .stars { letter-spacing: 1px; }
+  .star-filled { color: var(--amber); }
+  .star-empty { color: var(--border); }
+
+  .card-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .check-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--muted);
+    user-select: none;
+    white-space: nowrap;
+  }
+  .check-label input[type="checkbox"] {
+    appearance: none;
+    width: 17px;
+    height: 17px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .check-label input[type="checkbox"]:checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .check-label input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px; top: 1px;
+    width: 5px; height: 9px;
+    border: 2px solid #fff;
+    border-top: none; border-left: none;
+    transform: rotate(45deg);
+  }
+
+  /* ── COPY FIELDS ── */
+  .card-body {
+    padding: 20px;
+    display: grid;
+    gap: 16px;
+  }
+
+  .field-block { display: grid; gap: 7px; }
+  .field-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .copy-row {
+    position: relative;
+  }
+  .copy-text {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 48px 12px 14px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.55;
+    min-height: 44px;
+    resize: none;
+    width: 100%;
+    cursor: text;
+    transition: border-color 0.15s;
+  }
+  .copy-text:focus { outline: none; border-color: var(--accent); }
+
+  textarea.copy-text {
+    min-height: 220px;
+    padding-right: 14px;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+    z-index: 1;
+  }
+  .copy-btn:hover { background: var(--accent-light); }
+  .copy-btn:active { transform: scale(0.96); }
+  .copy-btn.copied {
+    background: var(--green);
+    animation: flash 0.15s ease;
+  }
+  @keyframes flash { 0%{transform:scale(1)} 50%{transform:scale(0.93)} 100%{transform:scale(1)} }
+
+  textarea.copy-text + .copy-btn {
+    position: static;
+    margin-top: 8px;
+    width: 100%;
+    padding: 9px;
+    font-size: 0.83rem;
+    border-radius: 8px;
+  }
+
+  /* ── OPEN REDDIT BUTTON ── */
+  .card-footer {
+    padding: 0 20px 20px;
+  }
+  .reddit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ff4500;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 11px 22px;
+    border-radius: 10px;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .reddit-btn:hover { background: #e63e00; transform: translateY(-1px); }
+  .reddit-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 36px 0 16px;
+    padding-left: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="site-header">
+  <h1><span class="emoji">🚀</span> Reddit Launch Pad</h1>
+  <p class="subtitle">8 posts engineered to get upvotes — copy, post, earn</p>
+  <div class="progress-header">
+    <span><span class="count" id="pub-count">0</span> of 8 posts published</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STRATEGY BOX -->
+  <div class="strategy-box">
+    <h2>⚡ Posting Strategy — Read Before You Post</h2>
+    <ul>
+      <li><span class="icon">🕐</span><span><strong>Best time to post:</strong> Tuesday–Thursday, 9am–12pm EST. Avoid weekends — Reddit engagement craters on Sat/Sun.</span></li>
+      <li><span class="icon">📅</span><span><strong>Space posts 2–3 days apart.</strong> Never post to multiple subreddits on the same day — Reddit's spam filter will shadow-ban you.</span></li>
+      <li><span class="icon">💬</span><span><strong>Reply to EVERY comment in the first 2 hours.</strong> The algorithm heavily rewards early engagement velocity. Set a timer.</span></li>
+      <li><span class="icon">📌</span><span><strong>Add a comment on your own post after 30 min</strong> with extra tips or context — this bumps the post and signals activity.</span></li>
+      <li><span class="icon">🚫</span><span><strong>Don't mention price in the post.</strong> Let people discover the paid option naturally when they visit the site. Price in post = instant downvotes.</span></li>
+    </ul>
+  </div>
+
+  <div class="section-title">8 Ready-to-Post Threads</div>
+
+  <!-- POSTS GRID -->
+  <div class="posts-grid" id="posts-grid">
+
+    <!-- POST 1 -->
+    <div class="post-card" id="card-0">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="post-number">1</div>
+          <span class="subreddit-badge">r/freelance</span>
+          <span class="viral-badge fire">🔥 VIRAL</span>
+          <div class="viral-score"><span class="stars"><span class="star-filled">★★★★★</span><span class="star-filled">★★★★</span><span class="star-empty">★</span></span><span style="margin-left:4px">9/10</span></div>
+        </div>
+        <div class="card-header-right">
+          <label class="check-label">
+            <input type="checkbox" data-post="0" onchange="togglePublished(this)"> Published
+          </label>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field-block">
+          <div class="field-label">Post Title</div>
+          <div class="copy-row">
+            <input type="text" class="copy-text" readonly id="title-0" value="I built a free invoice generator specifically for freelancers — generates a professional invoice with line items, tax, and PDF in 30 seconds (no account, no email)">
+            <button class="copy-btn" onclick="copyField('title-0', this)">Copy</button>
+          </div>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Post Body</div>
+          <div class="copy-row">
+            <textarea class="copy-text" readonly id="body-0">After paying $17/month for FreshBooks and only using the invoice feature, I decided to just build one that does exactly what freelancers need — nothing more.
+
+It generates a professional invoice in 30 seconds with:
+• Your name/business + client info
+• Itemized line items (description, qty, rate, subtotal)
+• Tax toggle
+• Payment terms (Net 15/30/60)
+• Notes field
+• Clean PDF print layout
+
+No account required. No email. No credit card. Just free.
+
+Try it here: https://baphometsblade.github.io/freelanceos-storefront/freelance-invoice-builder.html
+
+What feature would you add to it? I'm looking for things I've missed.</textarea>
+            <button class="copy-btn" onclick="copyField('body-0', this)">Copy Body</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="reddit-btn" href="https://www.reddit.com/r/freelance/submit?selftext=true&title=I%20built%20a%20free%20invoice%20generator%20specifically%20for%20freelancers%20%E2%80%94%20generates%20a%20professional%20invoice%20with%20line%20items%2C%20tax%2C%20and%20PDF%20in%2030%20seconds%20(no%20account%2C%20no%20email)" target="_blank" rel="noopener">
+          <svg viewBox="0 0 20 20"><path d="M10 0C4.478 0 0 4.478 0 10s4.478 10 10 10 10-4.478 10-10S15.522 0 10 0zm6.894 10c0 .773-.627 1.4-1.4 1.4a1.4 1.4 0 01-.868-.305 7.03 7.03 0 01-3.706 1.168l.627 2.945 2.027-.432a1.05 1.05 0 011.05-1.05 1.05 1.05 0 011.05 1.05 1.05 1.05 0 01-1.05 1.05 1.05 1.05 0 01-.994-.705l-2.264.482a.175.175 0 01-.208-.133l-.7-3.282a7.05 7.05 0 01-3.726-1.172 1.4 1.4 0 01-.862.3 1.4 1.4 0 01-1.4-1.4c0-.565.34-1.054.825-1.27a2.78 2.78 0 01-.025-.366C5.27 7.07 7.394 5.6 10 5.6s4.73 1.47 4.73 3.278c0 .12-.01.24-.026.358.49.214.834.703.834 1.272 0-.003 0-.003-.644-.003zm-7.35.7a.7.7 0 00.7.7.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7zm3.9.7a.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7.7.7 0 00.7.7zm-.29 1.75c.14-.14.14-.366 0-.506a.357.357 0 00-.504 0A1.62 1.62 0 0110 13c-.44 0-.856-.172-1.165-.48a.357.357 0 00-.504 0 .357.357 0 000 .506C8.74 13.435 9.348 13.7 10 13.7s1.26-.265 1.644-.65z"/></svg>
+          Open Reddit →
+        </a>
+      </div>
+    </div>
+
+    <!-- POST 2 -->
+    <div class="post-card" id="card-1">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="post-number">2</div>
+          <span class="subreddit-badge">r/freelance</span>
+          <span class="viral-badge high">⬆ High</span>
+          <div class="viral-score"><span class="stars"><span class="star-filled">★★★★★</span><span class="star-filled">★★★</span><span class="star-empty">★★</span></span><span style="margin-left:4px">8/10</span></div>
+        </div>
+        <div class="card-header-right">
+          <label class="check-label">
+            <input type="checkbox" data-post="1" onchange="togglePublished(this)"> Published
+          </label>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field-block">
+          <div class="field-label">Post Title</div>
+          <div class="copy-row">
+            <input type="text" class="copy-text" readonly id="title-1" value="Made a free contract generator for freelancers — fills in the scope, payment terms, kill fee, revision limits, and IP clauses automatically (3-minute wizard)">
+            <button class="copy-btn" onclick="copyField('title-1', this)">Copy</button>
+          </div>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Post Body</div>
+          <div class="copy-row">
+            <textarea class="copy-text" readonly id="body-1">I got stiffed on a $3,200 project because I had no written contract. Never again.
+
+Built a free contract wizard that walks you through 3 steps:
+Step 1 → Project details (scope, timeline, deliverables)
+Step 2 → Payment terms (amount, schedule, late fees)
+Step 3 → Legal clauses (kill fee %, revision limits, IP ownership, confidentiality)
+
+Then generates a complete contract you can copy or print.
+
+No account. No email. Completely free: https://baphometsblade.github.io/freelanceos-storefront/freelance-contract-wizard.html
+
+What clause do you wish you'd had in a contract that you didn't? Mine: a kill fee. Learned that the hard way.</textarea>
+            <button class="copy-btn" onclick="copyField('body-1', this)">Copy Body</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="reddit-btn" href="https://www.reddit.com/r/freelance/submit?selftext=true&title=Made%20a%20free%20contract%20generator%20for%20freelancers%20%E2%80%94%20fills%20in%20scope%2C%20payment%20terms%2C%20kill%20fee%2C%20revision%20limits%2C%20and%20IP%20clauses%20automatically%20(3-minute%20wizard)" target="_blank" rel="noopener">
+          <svg viewBox="0 0 20 20"><path d="M10 0C4.478 0 0 4.478 0 10s4.478 10 10 10 10-4.478 10-10S15.522 0 10 0zm6.894 10c0 .773-.627 1.4-1.4 1.4a1.4 1.4 0 01-.868-.305 7.03 7.03 0 01-3.706 1.168l.627 2.945 2.027-.432a1.05 1.05 0 011.05-1.05 1.05 1.05 0 011.05 1.05 1.05 1.05 0 01-1.05 1.05 1.05 1.05 0 01-.994-.705l-2.264.482a.175.175 0 01-.208-.133l-.7-3.282a7.05 7.05 0 01-3.726-1.172 1.4 1.4 0 01-.862.3 1.4 1.4 0 01-1.4-1.4c0-.565.34-1.054.825-1.27a2.78 2.78 0 01-.025-.366C5.27 7.07 7.394 5.6 10 5.6s4.73 1.47 4.73 3.278c0 .12-.01.24-.026.358.49.214.834.703.834 1.272 0-.003 0-.003-.644-.003zm-7.35.7a.7.7 0 00.7.7.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7zm3.9.7a.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7.7.7 0 00.7.7zm-.29 1.75c.14-.14.14-.366 0-.506a.357.357 0 00-.504 0A1.62 1.62 0 0110 13c-.44 0-.856-.172-1.165-.48a.357.357 0 00-.504 0 .357.357 0 000 .506C8.74 13.435 9.348 13.7 10 13.7s1.26-.265 1.644-.65z"/></svg>
+          Open Reddit →
+        </a>
+      </div>
+    </div>
+
+    <!-- POST 3 -->
+    <div class="post-card" id="card-2">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="post-number">3</div>
+          <span class="subreddit-badge">r/freelance</span>
+          <span class="viral-badge high">⬆ High</span>
+          <div class="viral-score"><span class="stars"><span class="star-filled">★★★★★</span><span class="star-filled">★★★</span><span class="star-empty">★★</span></span><span style="margin-left:4px">8/10</span></div>
+        </div>
+        <div class="card-header-right">
+          <label class="check-label">
+            <input type="checkbox" data-post="2" onchange="togglePublished(this)"> Published
+          </label>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field-block">
+          <div class="field-label">Post Title</div>
+          <div class="copy-row">
+            <input type="text" class="copy-text" readonly id="title-2" value="Free proposal generator — type in your project details and it outputs a formatted professional proposal you can copy or print (takes 60 seconds)">
+            <button class="copy-btn" onclick="copyField('title-2', this)">Copy</button>
+          </div>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Post Body</div>
+          <div class="copy-row">
+            <textarea class="copy-text" readonly id="body-2">My proposal win rate doubled when I stopped sending walls of text and started sending structured proposals.
+
+Built a free tool that generates a proper 8-section proposal from your inputs:
+1. Executive Summary
+2. Understanding of the Problem
+3. Your Proposed Solution
+4. Deliverables
+5. Timeline
+6. Investment (your price)
+7. About You
+8. Next Steps
+
+Generates a formatted, printable proposal from your inputs. Takes 60 seconds.
+
+Free, no signup: https://baphometsblade.github.io/freelanceos-storefront/freelance-proposal-generator.html
+
+What's your current proposal win rate? I was at about 40% before I started sending structured proposals, now it's closer to 65%.</textarea>
+            <button class="copy-btn" onclick="copyField('body-2', this)">Copy Body</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="reddit-btn" href="https://www.reddit.com/r/freelance/submit?selftext=true&title=Free%20proposal%20generator%20%E2%80%94%20type%20in%20your%20project%20details%20and%20it%20outputs%20a%20formatted%20professional%20proposal%20you%20can%20copy%20or%20print%20(takes%2060%20seconds)" target="_blank" rel="noopener">
+          <svg viewBox="0 0 20 20"><path d="M10 0C4.478 0 0 4.478 0 10s4.478 10 10 10 10-4.478 10-10S15.522 0 10 0zm6.894 10c0 .773-.627 1.4-1.4 1.4a1.4 1.4 0 01-.868-.305 7.03 7.03 0 01-3.706 1.168l.627 2.945 2.027-.432a1.05 1.05 0 011.05-1.05 1.05 1.05 0 011.05 1.05 1.05 1.05 0 01-1.05 1.05 1.05 1.05 0 01-.994-.705l-2.264.482a.175.175 0 01-.208-.133l-.7-3.282a7.05 7.05 0 01-3.726-1.172 1.4 1.4 0 01-.862.3 1.4 1.4 0 01-1.4-1.4c0-.565.34-1.054.825-1.27a2.78 2.78 0 01-.025-.366C5.27 7.07 7.394 5.6 10 5.6s4.73 1.47 4.73 3.278c0 .12-.01.24-.026.358.49.214.834.703.834 1.272 0-.003 0-.003-.644-.003zm-7.35.7a.7.7 0 00.7.7.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7zm3.9.7a.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7.7.7 0 00.7.7zm-.29 1.75c.14-.14.14-.366 0-.506a.357.357 0 00-.504 0A1.62 1.62 0 0110 13c-.44 0-.856-.172-1.165-.48a.357.357 0 00-.504 0 .357.357 0 000 .506C8.74 13.435 9.348 13.7 10 13.7s1.26-.265 1.644-.65z"/></svg>
+          Open Reddit →
+        </a>
+      </div>
+    </div>
+
+    <!-- POST 4 -->
+    <div class="post-card" id="card-3">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="post-number">4</div>
+          <span class="subreddit-badge">r/Notion</span>
+          <span class="viral-badge fire">🔥 VIRAL</span>
+          <div class="viral-score"><span class="stars"><span class="star-filled">★★★★★</span><span class="star-filled">★★★★</span><span class="star-empty">★</span></span><span style="margin-left:4px">9/10</span></div>
+        </div>
+        <div class="card-header-right">
+          <label class="check-label">
+            <input type="checkbox" data-post="3" onchange="togglePublished(this)"> Published
+          </label>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field-block">
+          <div class="field-label">Post Title</div>
+          <div class="copy-row">
+            <input type="text" class="copy-text" readonly id="title-3" value="Free Notion client tracker — 3 linked databases (Clients, Projects, Invoices) that show you your entire freelance business at a glance (duplicate to use)">
+            <button class="copy-btn" onclick="copyField('title-3', this)">Copy</button>
+          </div>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Post Body</div>
+          <div class="copy-row">
+            <textarea class="copy-text" readonly id="body-3">Sharing the client tracker I built for managing my freelance business in Notion.
+
+It's 3 linked databases:
+• Client CRM — tracks status, revenue, contact info, linked projects
+• Project Tracker — linked to clients, shows status/timeline/budget per project
+• Invoice Log — linked to both clients and projects, tracks paid/unpaid/overdue
+
+There's also a dashboard page with filtered views so you can see:
+— All active clients
+— Projects due this month
+— Unpaid invoices
+— Revenue this quarter
+
+It's completely free. Download here (includes setup guide): https://baphometsblade.github.io/freelanceos-storefront/free-download.html
+
+What does your Notion freelance setup look like? Always curious to see other people's systems.</textarea>
+            <button class="copy-btn" onclick="copyField('body-3', this)">Copy Body</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="reddit-btn" href="https://www.reddit.com/r/Notion/submit?selftext=true&title=Free%20Notion%20client%20tracker%20%E2%80%94%203%20linked%20databases%20(Clients%2C%20Projects%2C%20Invoices)%20that%20show%20you%20your%20entire%20freelance%20business%20at%20a%20glance%20(duplicate%20to%20use)" target="_blank" rel="noopener">
+          <svg viewBox="0 0 20 20"><path d="M10 0C4.478 0 0 4.478 0 10s4.478 10 10 10 10-4.478 10-10S15.522 0 10 0zm6.894 10c0 .773-.627 1.4-1.4 1.4a1.4 1.4 0 01-.868-.305 7.03 7.03 0 01-3.706 1.168l.627 2.945 2.027-.432a1.05 1.05 0 011.05-1.05 1.05 1.05 0 011.05 1.05 1.05 1.05 0 01-1.05 1.05 1.05 1.05 0 01-.994-.705l-2.264.482a.175.175 0 01-.208-.133l-.7-3.282a7.05 7.05 0 01-3.726-1.172 1.4 1.4 0 01-.862.3 1.4 1.4 0 01-1.4-1.4c0-.565.34-1.054.825-1.27a2.78 2.78 0 01-.025-.366C5.27 7.07 7.394 5.6 10 5.6s4.73 1.47 4.73 3.278c0 .12-.01.24-.026.358.49.214.834.703.834 1.272 0-.003 0-.003-.644-.003zm-7.35.7a.7.7 0 00.7.7.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7zm3.9.7a.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7.7.7 0 00.7.7zm-.29 1.75c.14-.14.14-.366 0-.506a.357.357 0 00-.504 0A1.62 1.62 0 0110 13c-.44 0-.856-.172-1.165-.48a.357.357 0 00-.504 0 .357.357 0 000 .506C8.74 13.435 9.348 13.7 10 13.7s1.26-.265 1.644-.65z"/></svg>
+          Open Reddit →
+        </a>
+      </div>
+    </div>
+
+    <!-- POST 5 -->
+    <div class="post-card" id="card-4">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="post-number">5</div>
+          <span class="subreddit-badge">r/Notion</span>
+          <span class="viral-badge high">⬆ High</span>
+          <div class="viral-score"><span class="stars"><span class="star-filled">★★★★★</span><span class="star-filled">★★★</span><span class="star-empty">★★</span></span><span style="margin-left:4px">8/10</span></div>
+        </div>
+        <div class="card-header-right">
+          <label class="check-label">
+            <input type="checkbox" data-post="4" onchange="togglePublished(this)"> Published
+          </label>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field-block">
+          <div class="field-label">Post Title</div>
+          <div class="copy-row">
+            <input type="text" class="copy-text" readonly id="title-4" value="I catalogued 15 Notion database examples with exact property lists — client CRM, content calendar, habit tracker, GPA calculator, budget tracker and more">
+            <button class="copy-btn" onclick="copyField('title-4', this)">Copy</button>
+          </div>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Post Body</div>
+          <div class="copy-row">
+            <textarea class="copy-text" readonly id="body-4">Was tired of searching for Notion database examples and only finding vague screenshots.
+
+Put together a post with 15 databases and their actual property lists (name, type, options) so you can build them yourself:
+
+1. Client CRM (Name, Status, Email, Revenue, Projects relation...)
+2. Project Tracker (Client relation, Status, Priority, Budget...)
+3. Content Calendar (Type, Publish Date, Channel, SEO Keyword...)
+4. Invoice Log (Client relation, Amount, Status, Due Date...)
+5. Habit Tracker (7 checkbox properties for days, Streak formula...)
+
+[...and 10 more]
+
+Full list with all property details here: https://baphometsblade.github.io/freelanceos-storefront/blog/notion-database-examples.html
+
+Which of these do you use? I'm building a client CRM and invoice tracker in Notion currently.</textarea>
+            <button class="copy-btn" onclick="copyField('body-4', this)">Copy Body</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="reddit-btn" href="https://www.reddit.com/r/Notion/submit?selftext=true&title=I%20catalogued%2015%20Notion%20database%20examples%20with%20exact%20property%20lists%20%E2%80%94%20client%20CRM%2C%20content%20calendar%2C%20habit%20tracker%2C%20GPA%20calculator%2C%20budget%20tracker%20and%20more" target="_blank" rel="noopener">
+          <svg viewBox="0 0 20 20"><path d="M10 0C4.478 0 0 4.478 0 10s4.478 10 10 10 10-4.478 10-10S15.522 0 10 0zm6.894 10c0 .773-.627 1.4-1.4 1.4a1.4 1.4 0 01-.868-.305 7.03 7.03 0 01-3.706 1.168l.627 2.945 2.027-.432a1.05 1.05 0 011.05-1.05 1.05 1.05 0 011.05 1.05 1.05 1.05 0 01-1.05 1.05 1.05 1.05 0 01-.994-.705l-2.264.482a.175.175 0 01-.208-.133l-.7-3.282a7.05 7.05 0 01-3.726-1.172 1.4 1.4 0 01-.862.3 1.4 1.4 0 01-1.4-1.4c0-.565.34-1.054.825-1.27a2.78 2.78 0 01-.025-.366C5.27 7.07 7.394 5.6 10 5.6s4.73 1.47 4.73 3.278c0 .12-.01.24-.026.358.49.214.834.703.834 1.272 0-.003 0-.003-.644-.003zm-7.35.7a.7.7 0 00.7.7.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7zm3.9.7a.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7.7.7 0 00.7.7zm-.29 1.75c.14-.14.14-.366 0-.506a.357.357 0 00-.504 0A1.62 1.62 0 0110 13c-.44 0-.856-.172-1.165-.48a.357.357 0 00-.504 0 .357.357 0 000 .506C8.74 13.435 9.348 13.7 10 13.7s1.26-.265 1.644-.65z"/></svg>
+          Open Reddit →
+        </a>
+      </div>
+    </div>
+
+    <!-- POST 6 -->
+    <div class="post-card" id="card-5">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="post-number">6</div>
+          <span class="subreddit-badge">r/EntrepreneurRideAlong</span>
+          <span class="viral-badge medium">Medium</span>
+          <div class="viral-score"><span class="stars"><span class="star-filled">★★★★★</span><span class="star-filled">★★</span><span class="star-empty">★★★</span></span><span style="margin-left:4px">7/10</span></div>
+        </div>
+        <div class="card-header-right">
+          <label class="check-label">
+            <input type="checkbox" data-post="5" onchange="togglePublished(this)"> Published
+          </label>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field-block">
+          <div class="field-label">Post Title</div>
+          <div class="copy-row">
+            <input type="text" class="copy-text" readonly id="title-5" value="30 days building a Notion template business while working full-time — here's exactly what I built and what's happened so far (honest update, $0 revenue)">
+            <button class="copy-btn" onclick="copyField('title-5', this)">Copy</button>
+          </div>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Post Body</div>
+          <div class="copy-row">
+            <textarea class="copy-text" readonly id="body-5">Started building a Notion template business 30 days ago. Committed to being fully transparent.
+
+What I built:
+• 4 Notion template products (FreelanceOS Lite/Pro, CreatorHQ, AgencyOS, YouTube Empire)
+• 185+ page storefront on GitHub Pages (free hosting)
+• 12 free interactive tools (invoice builder, proposal gen, contract wizard, rate calculator, etc.)
+• 60+ SEO blog posts targeting freelance/Notion keywords
+• All set up with Stripe for payments
+
+Revenue so far: $0 (5 abandoned checkouts, no completed sales)
+
+What I learned:
+• Building the product is the easy part — distribution is the hard part
+• 'If you build it they will come' doesn't work for SEO (takes 3-6 months to rank)
+• Free tools get shared; templates don't get shared unless they solve an obvious problem
+• Reddit is probably the fastest path to my first sale
+
+Current plan: Post the free tools to r/freelance and r/Notion this week and see what happens.
+
+The storefront: https://baphometsblade.github.io/freelanceos-storefront/
+Free tools page: https://baphometsblade.github.io/freelanceos-storefront/resource-library.html
+
+Has anyone here built a template/digital product business? What drove your first sale?</textarea>
+            <button class="copy-btn" onclick="copyField('body-5', this)">Copy Body</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="reddit-btn" href="https://www.reddit.com/r/EntrepreneurRideAlong/submit?selftext=true&title=30%20days%20building%20a%20Notion%20template%20business%20while%20working%20full-time%20%E2%80%94%20honest%20update%2C%20%240%20revenue" target="_blank" rel="noopener">
+          <svg viewBox="0 0 20 20"><path d="M10 0C4.478 0 0 4.478 0 10s4.478 10 10 10 10-4.478 10-10S15.522 0 10 0zm6.894 10c0 .773-.627 1.4-1.4 1.4a1.4 1.4 0 01-.868-.305 7.03 7.03 0 01-3.706 1.168l.627 2.945 2.027-.432a1.05 1.05 0 011.05-1.05 1.05 1.05 0 011.05 1.05 1.05 1.05 0 01-1.05 1.05 1.05 1.05 0 01-.994-.705l-2.264.482a.175.175 0 01-.208-.133l-.7-3.282a7.05 7.05 0 01-3.726-1.172 1.4 1.4 0 01-.862.3 1.4 1.4 0 01-1.4-1.4c0-.565.34-1.054.825-1.27a2.78 2.78 0 01-.025-.366C5.27 7.07 7.394 5.6 10 5.6s4.73 1.47 4.73 3.278c0 .12-.01.24-.026.358.49.214.834.703.834 1.272 0-.003 0-.003-.644-.003zm-7.35.7a.7.7 0 00.7.7.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7zm3.9.7a.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7.7.7 0 00.7.7zm-.29 1.75c.14-.14.14-.366 0-.506a.357.357 0 00-.504 0A1.62 1.62 0 0110 13c-.44 0-.856-.172-1.165-.48a.357.357 0 00-.504 0 .357.357 0 000 .506C8.74 13.435 9.348 13.7 10 13.7s1.26-.265 1.644-.65z"/></svg>
+          Open Reddit →
+        </a>
+      </div>
+    </div>
+
+    <!-- POST 7 -->
+    <div class="post-card" id="card-6">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="post-number">7</div>
+          <span class="subreddit-badge">r/solopreneur</span>
+          <span class="viral-badge medium">Medium</span>
+          <div class="viral-score"><span class="stars"><span class="star-filled">★★★★★</span><span class="star-filled">★★</span><span class="star-empty">★★★</span></span><span style="margin-left:4px">7/10</span></div>
+        </div>
+        <div class="card-header-right">
+          <label class="check-label">
+            <input type="checkbox" data-post="6" onchange="togglePublished(this)"> Published
+          </label>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field-block">
+          <div class="field-label">Post Title</div>
+          <div class="copy-row">
+            <input type="text" class="copy-text" readonly id="title-6" value="I replaced 5 freelance software tools with one $29 Notion template — here's the math">
+            <button class="copy-btn" onclick="copyField('title-6', this)">Copy</button>
+          </div>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Post Body</div>
+          <div class="copy-row">
+            <textarea class="copy-text" readonly id="body-6">Was paying too much per month for freelance business tools. Here's what I replaced:
+
+FreshBooks (invoicing): $17/month → replaced with Notion invoice log
+HubSpot Starter (CRM): $30/month → replaced with Notion client CRM
+Asana (projects): $11/month → replaced with Notion project tracker
+Harvest (time tracking): $12/month → replaced with Notion time log
+PandaDoc (contracts): $35/month → replaced with Notion contract vault
+
+Total savings: $105/month → $1,260/year
+
+Replaced everything with FreelanceOS Pro — a Notion template for $29 one-time.
+
+Full disclosure: I'm the person who built it, so obviously biased. But the math is the math.
+
+For those who use Notion for their freelance business — what databases do you have set up?</textarea>
+            <button class="copy-btn" onclick="copyField('body-6', this)">Copy Body</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="reddit-btn" href="https://www.reddit.com/r/solopreneur/submit?selftext=true&title=I%20replaced%205%20freelance%20software%20tools%20with%20one%20%2429%20Notion%20template%20%E2%80%94%20here's%20the%20math" target="_blank" rel="noopener">
+          <svg viewBox="0 0 20 20"><path d="M10 0C4.478 0 0 4.478 0 10s4.478 10 10 10 10-4.478 10-10S15.522 0 10 0zm6.894 10c0 .773-.627 1.4-1.4 1.4a1.4 1.4 0 01-.868-.305 7.03 7.03 0 01-3.706 1.168l.627 2.945 2.027-.432a1.05 1.05 0 011.05-1.05 1.05 1.05 0 011.05 1.05 1.05 1.05 0 01-1.05 1.05 1.05 1.05 0 01-.994-.705l-2.264.482a.175.175 0 01-.208-.133l-.7-3.282a7.05 7.05 0 01-3.726-1.172 1.4 1.4 0 01-.862.3 1.4 1.4 0 01-1.4-1.4c0-.565.34-1.054.825-1.27a2.78 2.78 0 01-.025-.366C5.27 7.07 7.394 5.6 10 5.6s4.73 1.47 4.73 3.278c0 .12-.01.24-.026.358.49.214.834.703.834 1.272 0-.003 0-.003-.644-.003zm-7.35.7a.7.7 0 00.7.7.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7zm3.9.7a.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7.7.7 0 00.7.7zm-.29 1.75c.14-.14.14-.366 0-.506a.357.357 0 00-.504 0A1.62 1.62 0 0110 13c-.44 0-.856-.172-1.165-.48a.357.357 0 00-.504 0 .357.357 0 000 .506C8.74 13.435 9.348 13.7 10 13.7s1.26-.265 1.644-.65z"/></svg>
+          Open Reddit →
+        </a>
+      </div>
+    </div>
+
+    <!-- POST 8 -->
+    <div class="post-card" id="card-7">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="post-number">8</div>
+          <span class="subreddit-badge">r/juststart</span>
+          <span class="viral-badge high">⬆ High</span>
+          <div class="viral-score"><span class="stars"><span class="star-filled">★★★★★</span><span class="star-filled">★★★</span><span class="star-empty">★★</span></span><span style="margin-left:4px">8/10</span></div>
+        </div>
+        <div class="card-header-right">
+          <label class="check-label">
+            <input type="checkbox" data-post="7" onchange="togglePublished(this)"> Published
+          </label>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="field-block">
+          <div class="field-label">Post Title</div>
+          <div class="copy-row">
+            <input type="text" class="copy-text" readonly id="title-7" value="Built 12 free tools for freelancers while building a template business — sharing all of them (no catch, all completely free)">
+            <button class="copy-btn" onclick="copyField('title-7', this)">Copy</button>
+          </div>
+        </div>
+        <div class="field-block">
+          <div class="field-label">Post Body</div>
+          <div class="copy-row">
+            <textarea class="copy-text" readonly id="body-7">While building my freelance template business, I ended up creating 12 free interactive tools as marketing. Figured I'd share them in case any are useful:
+
+🧮 Rate Calculator — calculates your ideal hourly rate based on income goals
+🧾 Invoice Builder — generates professional invoices with PDF export
+📝 Proposal Generator — structured 8-section proposals in 60 seconds
+📋 Contract Wizard — covers scope, payment, kill fee, IP, revisions
+✅ Client Onboarding Checklist — 30-step interactive checklist
+🎯 Freelance Score Card — rates your business out of 100 across 10 dimensions
+💰 Income Goal Calculator — works backwards from your income target to daily rate
+📊 Project Estimator — estimates project costs and time
+👤 Client Profit Calculator — which clients are actually worth keeping
+❤️ Health Score — 20-question business health assessment
+🚀 Starter Pack — complete launch kit for new freelancers
+
+All free, no signup required: https://baphometsblade.github.io/freelanceos-storefront/resource-library.html
+
+The tool I'm most proud of: the freelance score card. Most people score 30-50/100 on first try.
+
+Which of these would be most useful to you right now?</textarea>
+            <button class="copy-btn" onclick="copyField('body-7', this)">Copy Body</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="reddit-btn" href="https://www.reddit.com/r/juststart/submit?selftext=true&title=Built%2012%20free%20tools%20for%20freelancers%20while%20building%20a%20template%20business%20%E2%80%94%20sharing%20all%20of%20them%20(no%20catch%2C%20all%20completely%20free)" target="_blank" rel="noopener">
+          <svg viewBox="0 0 20 20"><path d="M10 0C4.478 0 0 4.478 0 10s4.478 10 10 10 10-4.478 10-10S15.522 0 10 0zm6.894 10c0 .773-.627 1.4-1.4 1.4a1.4 1.4 0 01-.868-.305 7.03 7.03 0 01-3.706 1.168l.627 2.945 2.027-.432a1.05 1.05 0 011.05-1.05 1.05 1.05 0 011.05 1.05 1.05 1.05 0 01-1.05 1.05 1.05 1.05 0 01-.994-.705l-2.264.482a.175.175 0 01-.208-.133l-.7-3.282a7.05 7.05 0 01-3.726-1.172 1.4 1.4 0 01-.862.3 1.4 1.4 0 01-1.4-1.4c0-.565.34-1.054.825-1.27a2.78 2.78 0 01-.025-.366C5.27 7.07 7.394 5.6 10 5.6s4.73 1.47 4.73 3.278c0 .12-.01.24-.026.358.49.214.834.703.834 1.272 0-.003 0-.003-.644-.003zm-7.35.7a.7.7 0 00.7.7.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7zm3.9.7a.7.7 0 00.7-.7.7.7 0 00-.7-.7.7.7 0 00-.7.7.7.7 0 00.7.7zm-.29 1.75c.14-.14.14-.366 0-.506a.357.357 0 00-.504 0A1.62 1.62 0 0110 13c-.44 0-.856-.172-1.165-.48a.357.357 0 00-.504 0 .357.357 0 000 .506C8.74 13.435 9.348 13.7 10 13.7s1.26-.265 1.644-.65z"/></svg>
+          Open Reddit →
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /posts-grid -->
+</div><!-- /container -->
+
+<script>
+// ── COPY FUNCTION ──
+function copyField(id, btn) {
+  const el = document.getElementById(id);
+  const text = el.value || el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    // Fallback
+    el.select && el.select();
+    document.execCommand('copy');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = id.startsWith('body') ? 'Copy Body' : 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ── PROGRESS TRACKER (localStorage) ──
+const STORAGE_KEY = 'freelanceos_reddit_published';
+
+function loadPublished() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch { return []; }
+}
+
+function savePublished(arr) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+}
+
+function updateProgress() {
+  const published = loadPublished();
+  const count = published.length;
+  document.getElementById('pub-count').textContent = count;
+  document.getElementById('progress-bar').style.width = (count / 8 * 100) + '%';
+}
+
+function togglePublished(checkbox) {
+  const postIdx = parseInt(checkbox.dataset.post);
+  let published = loadPublished();
+  const card = document.getElementById('card-' + postIdx);
+  if (checkbox.checked) {
+    if (!published.includes(postIdx)) published.push(postIdx);
+    card.classList.add('published');
+  } else {
+    published = published.filter(i => i !== postIdx);
+    card.classList.remove('published');
+  }
+  savePublished(published);
+  updateProgress();
+}
+
+// ── INIT: restore state from localStorage ──
+document.addEventListener('DOMContentLoaded', function() {
+  const published = loadPublished();
+  published.forEach(idx => {
+    const cb = document.querySelector(`input[data-post="${idx}"]`);
+    if (cb) {
+      cb.checked = true;
+      document.getElementById('card-' + idx).classList.add('published');
+    }
+  });
+  updateProgress();
+});
+</script>
+</body>
+</html>
