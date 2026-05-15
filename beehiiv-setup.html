@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Set Up Beehiiv Email Capture — FreelanceOS</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0f0f0f;
+      color: #e5e7eb;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #7c3aed;
+      margin-bottom: 2.5rem;
+      display: block;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #9ca3af;
+      margin-bottom: 2.5rem;
+      font-size: 1.05rem;
+    }
+
+    .step {
+      background: #1a1a1a;
+      border: 1px solid #2d2d2d;
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-badge {
+      display: inline-block;
+      background: #7c3aed;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .step h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      color: #9ca3af;
+      margin-bottom: 0.4rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #e5e7eb;
+      font-size: 0.95rem;
+      padding: 0.7rem 0.9rem;
+      margin-bottom: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #7c3aed;
+    }
+
+    input[type="text"]::placeholder {
+      color: #4b5563;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s, background 0.2s;
+    }
+
+    .btn:hover { opacity: 0.9; }
+
+    .btn-primary {
+      background: #7c3aed;
+      color: #fff;
+    }
+
+    .btn-amber {
+      background: #f97316;
+      color: #fff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #7c3aed;
+      color: #7c3aed;
+    }
+
+    .btn-copy {
+      background: #1f2937;
+      color: #e5e7eb;
+      border: 1px solid #374151;
+      margin-left: 0.5rem;
+    }
+
+    .code-block-wrap {
+      display: none;
+      margin-top: 1.25rem;
+    }
+
+    .code-block-wrap.visible { display: block; }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .code-label {
+      font-size: 0.8rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    pre {
+      background: #111;
+      border: 1px solid #2d2d2d;
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      font-size: 0.82rem;
+      color: #a5f3fc;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.6;
+    }
+
+    .instructions {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #9ca3af;
+      line-height: 1.6;
+    }
+
+    .instructions strong { color: #e5e7eb; }
+
+    .paste-targets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .paste-target {
+      background: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 6px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.8rem;
+      font-family: 'Courier New', monospace;
+      color: #d1d5db;
+    }
+
+    .test-result {
+      display: none;
+      margin-top: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .test-result.success {
+      background: #052e16;
+      border: 1px solid #16a34a;
+      color: #4ade80;
+      display: block;
+    }
+
+    .test-result.error {
+      background: #2d0a0a;
+      border: 1px solid #dc2626;
+      color: #f87171;
+      display: block;
+    }
+
+    .step3-note {
+      color: #9ca3af;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-top: 0.5rem;
+    }
+
+    .step3-note code {
+      background: #1f2937;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85em;
+      color: #d1d5db;
+    }
+
+    .copy-feedback {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: #4ade80;
+      margin-left: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .copy-feedback.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="logo" href="/">FreelanceOS</a>
+
+    <h1>Activate Email Automation in 3 Steps</h1>
+    <p class="subtitle">Connect your Beehiiv account to start capturing leads from every form on your storefront.</p>
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <span class="step-badge">Step 1</span>
+      <h2>Enter Your Beehiiv Credentials</h2>
+
+      <label for="pub-id">Beehiiv Publication ID <span style="color:#6b7280">(starts with pub_)</span></label>
+      <input type="text" id="pub-id" placeholder="pub_xxxxxxxxxxxxxxxxxxxx">
+
+      <label for="api-key">Beehiiv API Key <span style="color:#6b7280">(Settings → API in beehiiv.com)</span></label>
+      <input type="text" id="api-key" placeholder="your API key here">
+
+      <button class="btn btn-primary" onclick="generateCode()">Generate Code</button>
+
+      <div class="code-block-wrap" id="code-output">
+        <div class="code-header">
+          <span class="code-label">Copy and paste into your &lt;head&gt;</span>
+          <div>
+            <button class="btn btn-copy" onclick="copyCode()">Copy Code</button>
+            <span class="copy-feedback" id="copy-feedback">Copied!</span>
+          </div>
+        </div>
+        <pre id="generated-code"></pre>
+
+        <div class="instructions">
+          <strong>Paste this snippet into the <code>&lt;head&gt;</code> section of:</strong>
+          <div class="paste-targets">
+            <span class="paste-target">index.html</span>
+            <span class="paste-target">free-download.html</span>
+            <span class="paste-target">freelance-rate-calculator.html</span>
+            <span class="paste-target">any page with email capture forms</span>
+          </div>
+          <p style="margin-top:0.75rem;">Place the snippet <strong>before</strong> any <code>&lt;/head&gt;</code> tag. The second script tag loads the capture library, and the first configures it with your keys.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <span class="step-badge">Step 2</span>
+      <h2>Test the Connection</h2>
+      <p style="color:#9ca3af;font-size:0.9rem;margin-bottom:1rem;">Verify your Publication ID and API Key are valid before deploying.</p>
+      <button class="btn btn-outline" onclick="testConnection()">Test Connection</button>
+      <div class="test-result" id="test-result"></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <span class="step-badge">Step 3</span>
+      <h2>Set Up Your Welcome Sequence</h2>
+      <p class="step3-note">
+        Open <code>EMAIL-WELCOME-SEQUENCE.html</code> in your workspace folder to configure the welcome email series sent to new subscribers. The sequence is pre-written — you just need to customize the sender name, branding, and links.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function generateCode() {
+      var pubId = document.getElementById('pub-id').value.trim();
+      var apiKey = document.getElementById('api-key').value.trim();
+
+      if (!pubId || !apiKey) {
+        alert('Please enter both your Publication ID and API Key.');
+        return;
+      }
+
+      var code = "<script>window.BEEHIIV_PUB_ID='" + pubId + "';window.BEEHIIV_API_KEY='" + apiKey + "';<\/script>\n<script src=\"/email-capture.js\"><\/script>";
+
+      document.getElementById('generated-code').textContent = code;
+      document.getElementById('code-output').classList.add('visible');
+      document.getElementById('code-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function copyCode() {
+      var code = document.getElementById('generated-code').textContent;
+      if (!code) { alert('Generate the code first.'); return; }
+
+      navigator.clipboard.writeText(code).then(function () {
+        var fb = document.getElementById('copy-feedback');
+        fb.classList.add('show');
+        setTimeout(function () { fb.classList.remove('show'); }, 2000);
+      }).catch(function () {
+        // Fallback for older browsers
+        var ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        var fb = document.getElementById('copy-feedback');
+        fb.classList.add('show');
+        setTimeout(function () { fb.classList.remove('show'); }, 2000);
+      });
+    }
+
+    function testConnection() {
+      var pubId = document.getElementById('pub-id').value.trim();
+      var apiKey = document.getElementById('api-key').value.trim();
+      var resultEl = document.getElementById('test-result');
+
+      if (!pubId || !apiKey) {
+        resultEl.className = 'test-result error';
+        resultEl.textContent = '❌ Please enter your Publication ID and API Key above first.';
+        return;
+      }
+
+      resultEl.className = 'test-result';
+      resultEl.textContent = 'Testing connection…';
+      resultEl.style.display = 'block';
+
+      fetch('https://api.beehiiv.com/v2/publications/' + pubId, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + apiKey,
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(function (res) {
+        if (res.ok) {
+          return res.json().then(function (data) {
+            resultEl.className = 'test-result success';
+            resultEl.textContent = '✅ Connected! Publication: "' + (data.data && data.data.name ? data.data.name : pubId) + '"';
+          });
+        } else if (res.status === 401) {
+          resultEl.className = 'test-result error';
+          resultEl.textContent = '❌ Invalid API Key. Check your key in beehiiv.com → Settings → API.';
+        } else if (res.status === 404) {
+          resultEl.className = 'test-result error';
+          resultEl.textContent = '❌ Publication not found. Double-check your Publication ID (e.g. pub_xxxx).';
+        } else {
+          resultEl.className = 'test-result error';
+          resultEl.textContent = '❌ Unexpected error (' + res.status + '). Try again.';
+        }
+      })
+      .catch(function () {
+        resultEl.className = 'test-result error';
+        resultEl.textContent = '❌ Network error — check your internet connection and try again.';
+      });
+    }
+  </script>
+</body>
+</html>

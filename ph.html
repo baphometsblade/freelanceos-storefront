@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>FreelanceOS — Run Your Entire Freelance Business in Notion | Product Hunt</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f0f;
+      --accent: #7c3aed;
+      --accent-light: #8b5cf6;
+      --amber: #f97316;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --card-bg: #1a1a1a;
+      --card-border: #2d2d2d;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ──────────────── TOP AMBER BAR ──────────────── */
+    .ph-bar {
+      background: var(--amber);
+      color: #fff;
+      text-align: center;
+      padding: 0.7rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: block;
+      width: 100%;
+      transition: opacity 0.2s;
+    }
+    .ph-bar:hover { opacity: 0.9; }
+
+    /* ──────────────── NAV ──────────────── */
+    nav {
+      background: #111;
+      border-bottom: 1px solid #1f1f1f;
+      padding: 0 2rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent-light);
+      letter-spacing: -0.02em;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.55rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      text-align: center;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-amber { background: var(--amber); color: #fff; }
+    .btn-purple { background: var(--accent); color: #fff; }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--amber);
+      color: var(--amber);
+    }
+    .btn-lg { padding: 0.8rem 1.8rem; font-size: 1rem; }
+
+    /* ──────────────── HERO ──────────────── */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.4);
+      color: var(--accent-light);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .proof-strip {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .proof-item::before { content: '•'; margin-right: 0.4rem; color: var(--accent); }
+
+    /* ──────────────── SECTIONS ──────────────── */
+    section { max-width: 960px; margin: 0 auto; padding: 4rem 1.5rem; }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-light);
+      margin-bottom: 0.6rem;
+    }
+
+    section h2 {
+      text-align: center;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 2.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    /* ──────────────── FOUNDER STORY ──────────────── */
+    .founder-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .founder-box p {
+      color: var(--text);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+
+    .founder-box p:last-child { margin-bottom: 0; color: var(--muted); font-style: italic; }
+
+    /* ──────────────── 6-CARD GRID ──────────────── */
+    .six-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .feature-card .icon { font-size: 1.75rem; margin-bottom: 0.75rem; display: block; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+    .feature-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+
+    /* ──────────────── TOOLS GRID ──────────────── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .tool-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .tool-card:hover {
+      border-color: var(--accent);
+      background: rgba(124,58,237,0.08);
+    }
+
+    .tool-card .t-emoji { font-size: 1.1rem; flex-shrink: 0; }
+    .tool-card span { font-weight: 500; }
+
+    /* ──────────────── TABLE ──────────────── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    thead tr {
+      background: var(--accent);
+    }
+
+    thead th {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    tbody tr {
+      border-top: 1px solid var(--card-border);
+      background: var(--card-bg);
+    }
+
+    tbody tr:nth-child(even) { background: #141414; }
+
+    tbody td {
+      padding: 0.85rem 1.25rem;
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    tbody td:first-child { color: #fff; font-weight: 500; }
+
+    .check { color: #4ade80; font-weight: 700; }
+    .cross { color: #6b7280; }
+    .price-free { color: #4ade80; font-weight: 700; }
+    .price-paid { color: var(--amber); font-weight: 700; }
+
+    /* ──────────────── TESTIMONIALS ──────────────── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .testimonial-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .stars { color: #fbbf24; font-size: 0.9rem; margin-bottom: 0.75rem; }
+
+    .testimonial-card blockquote {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card cite {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* ──────────────── PRICING ──────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: 14px;
+      right: -22px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 0.25rem 2rem;
+      transform: rotate(45deg);
+      letter-spacing: 0.08em;
+    }
+
+    .pricing-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing-price {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-price sup {
+      font-size: 1.4rem;
+      vertical-align: super;
+    }
+
+    .pricing-note {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .promo-note {
+      color: var(--amber);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-card .btn { width: 100%; margin-top: 1.5rem; }
+
+    /* ──────────────── FAQ ──────────────── */
+    .faq-list { max-width: 680px; margin: 0 auto; }
+
+    details {
+      border-bottom: 1px solid var(--card-border);
+      padding: 1rem 0;
+    }
+
+    details:first-child { border-top: 1px solid var(--card-border); }
+
+    summary {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.25rem 0;
+      user-select: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: '+';
+      color: var(--accent-light);
+      font-size: 1.3rem;
+      font-weight: 300;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    details[open] summary::after {
+      content: '−';
+    }
+
+    .faq-answer {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      padding-top: 0.75rem;
+    }
+
+    /* ──────────────── BOTTOM CTA ──────────────── */
+    .bottom-cta {
+      text-align: center;
+      padding: 5rem 1.5rem;
+      background: linear-gradient(180deg, transparent 0%, rgba(124,58,237,0.05) 100%);
+    }
+
+    .bottom-cta h2 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .bottom-cta p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .bottom-cta-buttons {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ──────────────── FOOTER ──────────────── */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      text-align: center;
+      padding: 1.5rem;
+      color: #4b5563;
+      font-size: 0.82rem;
+    }
+
+    footer a { color: #6b7280; }
+    footer a:hover { color: var(--text); }
+
+    /* ──────────────── DIVIDER ──────────────── */
+    .divider { border: none; border-top: 1px solid #1f1f1f; margin: 0; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .hero { padding: 3rem 1rem 2.5rem; }
+      section { padding: 3rem 1rem; }
+      .founder-box { padding: 1.5rem; }
+      thead th, tbody td { padding: 0.7rem 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP AMBER BAR -->
+  <a class="ph-bar" href="https://www.producthunt.com" target="_blank" rel="noopener noreferrer">
+    🎉 Hey Product Hunt! FreelanceOS is live today — click to upvote and help more freelancers →
+  </a>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">FreelanceOS</span>
+    <a class="btn btn-amber" href="https://www.producthunt.com" target="_blank" rel="noopener noreferrer">⬆ Upvote on PH</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">👋 Hey, Product Hunt!</div>
+    <h1>Run Your Entire Freelance Business in Notion</h1>
+    <p class="hero-sub">Client CRM · Projects · Invoices · Contracts · Dashboard — all linked. Lite is free forever.</p>
+    <div class="hero-buttons">
+      <a class="btn btn-purple btn-lg" href="/free-download.html">🚀 Get FreelanceOS Lite — Free</a>
+      <a class="btn btn-outline btn-lg" href="https://www.producthunt.com" target="_blank" rel="noopener noreferrer">⬆ Upvote on Product Hunt</a>
+    </div>
+    <div class="proof-strip">
+      <span class="proof-item">700+ freelancers</span>
+      <span class="proof-item">12 free tools</span>
+      <span class="proof-item">70+ guides</span>
+      <span class="proof-item">4.9/5 rated</span>
+      <span class="proof-item">No subscription ever</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FOUNDER STORY -->
+  <section>
+    <p class="section-label">Why I Built This</p>
+    <h2>The Problem I Was Living</h2>
+    <div class="founder-box">
+      <p>I was tracking 12 clients across Gmail, Notion, and a spreadsheet and constantly dropping the ball. Clients falling through the cracks. Invoices forgotten. No idea which projects were profitable.</p>
+      <p>I built FreelanceOS to fix that — one Notion workspace where everything connects: clients → projects → invoices → follow-ups. Took 3 months to get right. You can set it up in 30 minutes.</p>
+      <p>Lite is completely free. Pro is $29 once — no subscription, ever.</p>
+      <p>— Mark, FreelanceOS</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- WHAT YOU GET FREE -->
+  <section>
+    <p class="section-label">Included today</p>
+    <h2>What You Get Free Today</h2>
+    <div class="six-grid">
+      <div class="feature-card">
+        <span class="icon">👥</span>
+        <h3>Client CRM</h3>
+        <p>Track every client: status, revenue, last contact, follow-up date.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📋</span>
+        <h3>Project Tracker</h3>
+        <p>All projects by deadline and client. Nothing slips.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🧾</span>
+        <h3>Invoice Log</h3>
+        <p>Paid, unpaid, overdue — always know where you stand.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🛠️</span>
+        <h3>12 Free Tools</h3>
+        <p>Rate calculator, invoice builder, proposal generator, contract wizard, and more.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📚</span>
+        <h3>70+ Guides</h3>
+        <p>Blog posts and tutorials on freelancing and Notion.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📖</span>
+        <h3>Setup Guide</h3>
+        <p>Step-by-step — up and running in 30 minutes.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FREE TOOLS GRID -->
+  <section>
+    <p class="section-label">All Free</p>
+    <h2>12 Free Tools Included</h2>
+    <div class="tools-grid">
+      <a class="tool-card" href="/freelance-rate-calculator.html">
+        <span class="t-emoji">🧮</span><span>Rate Calculator</span>
+      </a>
+      <a class="tool-card" href="/freelance-invoice-builder.html">
+        <span class="t-emoji">🧾</span><span>Invoice Builder</span>
+      </a>
+      <a class="tool-card" href="/freelance-proposal-generator.html">
+        <span class="t-emoji">📝</span><span>Proposal Generator</span>
+      </a>
+      <a class="tool-card" href="/freelance-contract-wizard.html">
+        <span class="t-emoji">📋</span><span>Contract Wizard</span>
+      </a>
+      <a class="tool-card" href="/client-onboarding-checklist.html">
+        <span class="t-emoji">✅</span><span>Onboarding Checklist</span>
+      </a>
+      <a class="tool-card" href="/freelance-score-card.html">
+        <span class="t-emoji">🎯</span><span>Business Score Card</span>
+      </a>
+      <a class="tool-card" href="/freelance-income-calculator.html">
+        <span class="t-emoji">💰</span><span>Income Calculator</span>
+      </a>
+      <a class="tool-card" href="/freelance-project-estimator.html">
+        <span class="t-emoji">📊</span><span>Project Estimator</span>
+      </a>
+      <a class="tool-card" href="/client-profit-calculator.html">
+        <span class="t-emoji">👤</span><span>Client Profit Calc</span>
+      </a>
+      <a class="tool-card" href="/freelance-health-score.html">
+        <span class="t-emoji">❤️</span><span>Health Score</span>
+      </a>
+      <a class="tool-card" href="/freelance-niche-finder.html">
+        <span class="t-emoji">🔍</span><span>Niche Finder</span>
+      </a>
+      <a class="tool-card" href="/freelance-dashboard-builder.html">
+        <span class="t-emoji">📈</span><span>Dashboard Builder</span>
+      </a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- LITE vs PRO TABLE -->
+  <section>
+    <p class="section-label">Compare plans</p>
+    <h2>Lite vs Pro</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Lite (Free)</th>
+            <th>Pro ($29)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Client CRM</td>
+            <td><span class="check">✅</span> Basic</td>
+            <td><span class="check">✅</span> Advanced (14 properties)</td>
+          </tr>
+          <tr>
+            <td>Project Tracker</td>
+            <td><span class="check">✅</span> Basic</td>
+            <td><span class="check">✅</span> Milestones + time tracking</td>
+          </tr>
+          <tr>
+            <td>Invoice Log</td>
+            <td><span class="check">✅</span> Basic</td>
+            <td><span class="check">✅</span> Full overdue tracking</td>
+          </tr>
+          <tr>
+            <td>Time Log</td>
+            <td><span class="cross">❌</span></td>
+            <td><span class="check">✅</span></td>
+          </tr>
+          <tr>
+            <td>Contract Vault</td>
+            <td><span class="cross">❌</span></td>
+            <td><span class="check">✅</span></td>
+          </tr>
+          <tr>
+            <td>Business Dashboard</td>
+            <td><span class="cross">❌</span></td>
+            <td><span class="check">✅</span> Live revenue view</td>
+          </tr>
+          <tr>
+            <td>Retainer Tracker</td>
+            <td><span class="cross">❌</span></td>
+            <td><span class="check">✅</span></td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td><span class="price-free">$0 forever</span></td>
+            <td><span class="price-paid">$29 once</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <p class="section-label">What people say</p>
+    <h2>Real Results from Real Freelancers</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"FreelanceOS replaced my FreshBooks and Asana subscriptions in one afternoon. The invoice log alone saved me $15/month."</blockquote>
+        <cite>— Alex T., Freelance Designer</cite>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I found 3 overdue invoices I'd forgotten about within the first week. Recovered $1,800."</blockquote>
+        <cite>— Jamie L., Marketing Consultant</cite>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Finally a system I actually maintain. The client follow-up filter is genius."</blockquote>
+        <cite>— Sam K., Copywriter</cite>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PRICING -->
+  <section>
+    <p class="section-label">Simple pricing</p>
+    <h2>Get Started Today</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Lite</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-note">Free forever · No credit card</div>
+        <a class="btn btn-outline" href="/free-download.html">🚀 Get FreelanceOS Lite</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-name">Pro</div>
+        <div class="pricing-price"><sup>$</sup>29</div>
+        <div class="pricing-note">One-time · No subscription · Ever</div>
+        <div class="promo-note">Use code FLASH40 → pay just $17.40</div>
+        <a class="btn btn-amber" href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener noreferrer">⚡ Get Pro — $17.40 Today</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FAQ -->
+  <section>
+    <p class="section-label">Questions</p>
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <details>
+        <summary>Is Lite really free?</summary>
+        <div class="faq-answer">Yes, 100%. No credit card. Free forever. You get the full Client CRM, Project Tracker, Invoice Log, 12 tools, and 70+ guides at no cost.</div>
+      </details>
+      <details>
+        <summary>Do I need a paid Notion plan?</summary>
+        <div class="faq-answer">No. FreelanceOS works on the free Notion plan. You don't need to upgrade Notion to use any part of it.</div>
+      </details>
+      <details>
+        <summary>What's the difference between Lite and Pro?</summary>
+        <div class="faq-answer">Lite gives you the core CRM, project tracker, and invoice log. Pro adds the Time Log, Contract Vault, Retainer Tracker, and a live Business Dashboard showing your revenue at a glance — plus more database properties throughout.</div>
+      </details>
+      <details>
+        <summary>Is there ever a subscription?</summary>
+        <div class="faq-answer">Never. Pro is a one-time purchase. You pay once and own it forever — no monthly charges, no renewal fees.</div>
+      </details>
+      <details>
+        <summary>How long does setup take?</summary>
+        <div class="faq-answer">About 30 minutes, using the included step-by-step setup guide. Most people are fully up and running same day.</div>
+      </details>
+      <details>
+        <summary>What's your refund policy?</summary>
+        <div class="faq-answer">Email me within 30 days of purchase. Refunded, no questions asked. markmma1985@gmail.com</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <h2>Start free today. Upgrade when you're ready.</h2>
+    <p>🔒 Stripe checkout · 700+ freelancers using FreelanceOS</p>
+    <div class="bottom-cta-buttons">
+      <a class="btn btn-purple btn-lg" href="/free-download.html">🚀 Get FreelanceOS Lite — Free</a>
+      <a class="btn btn-amber btn-lg" href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener noreferrer">⚡ Get Pro — $17.40 Today</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 FreelanceOS · <a href="/index.html">Home</a> · <a href="/blog.html">Blog</a> · <a href="mailto:markmma1985@gmail.com">Contact</a></p>
+  </footer>
+
+</body>
+</html>
