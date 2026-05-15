@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion MRR Tracker: Track Monthly Recurring Revenue in Notion (2026 Guide)</title>
+  <meta name="description" content="How to build a Notion MRR tracker — the exact database structure, formulas, and dashboard views for tracking monthly recurring revenue as a solopreneur or indie hacker.">
+  <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/notion-mrr-tracker.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Notion MRR Tracker: Track Monthly Recurring Revenue in Notion (2026 Guide)">
+  <meta property="og:description" content="Build a complete MRR tracker in Notion — database structure, formulas for net new MRR, churn rate, and growth %, plus a pre-built template that does it all for you.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0f; --surface: #13131a; --border: #1e1e2e;
+      --accent: #7c3aed; --accent-light: #a78bfa; --text: #e2e8f0;
+      --text-muted: #94a3b8; --green: #10b981;
+      --grad: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { position: fixed; top: 0; width: 100%; z-index: 200; padding: 1rem 2rem; background: rgba(10,10,15,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 1.1rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem 1.25rem; border-radius: 2rem; background: var(--grad); color: #fff; font-weight: 600; font-size: .85rem; text-decoration: none; transition: opacity .2s; }
+    .nav-cta:hover { opacity: .88; text-decoration: none; }
+    .mobile-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+    .hero { padding: 9rem 0 5rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%); top: -200px; left: 50%; transform: translateX(-50%); pointer-events: none; }
+    .tag { display: inline-flex; align-items: center; gap: .5rem; padding: .35rem .9rem; border-radius: 2rem; border: 1px solid rgba(124,58,237,0.4); background: rgba(124,58,237,0.1); font-size: .8rem; font-weight: 600; color: var(--accent-light); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1.25rem; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.15; margin-bottom: 1.25rem; }
+    .hero h1 span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: clamp(.95rem, 1.8vw, 1.15rem); color: var(--text-muted); max-width: 700px; margin: 0 auto 2.5rem; line-height: 1.75; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 2rem; border-radius: 2rem; font-weight: 700; font-size: 1rem; text-decoration: none; cursor: pointer; border: none; transition: transform .15s, box-shadow .2s; }
+    .btn:hover { transform: translateY(-2px); text-decoration: none; }
+    .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
+    .btn-primary:hover { box-shadow: 0 6px 30px rgba(124,58,237,0.5); }
+    .btn-ghost { background: transparent; color: var(--text); border: 2px solid var(--border); }
+    section { padding: 5rem 0; }
+    .section-label { display: inline-block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent-light); margin-bottom: .75rem; }
+    .section-title { font-size: clamp(1.6rem, 3.5vw, 2.3rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+    .prose { max-width: 780px; margin: 0 auto; }
+    .prose h2 { font-size: 1.65rem; font-weight: 800; margin: 2.5rem 0 1rem; color: var(--text); }
+    .prose h3 { font-size: 1.2rem; font-weight: 700; margin: 2rem 0 .75rem; color: var(--text); }
+    .prose p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.8; }
+    .prose ul { color: var(--text-muted); margin-bottom: 1.25rem; padding-left: 1.5rem; }
+    .prose ul li { margin-bottom: .5rem; font-size: 1.05rem; line-height: 1.7; }
+    .prose strong { color: var(--text); font-weight: 600; }
+    .code-block { background: var(--surface); border: 1px solid var(--border); border-radius: .75rem; padding: 1.5rem; margin: 1.5rem 0; font-family: 'Courier New', monospace; font-size: .9rem; color: var(--accent-light); line-height: 1.6; overflow-x: auto; }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin: 2rem 0; }
+    .metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: .75rem; padding: 1.5rem; text-align: center; }
+    .metric-value { font-size: 1.8rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: .25rem; }
+    .metric-label { font-size: .85rem; color: var(--text-muted); font-weight: 500; }
+    .cta-box { background: var(--surface); border: 1px solid rgba(124,58,237,0.35); border-radius: 1rem; padding: 3rem; text-align: center; margin: 4rem 0; position: relative; overflow: hidden; }
+    .cta-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.12) 0%, transparent 70%); pointer-events: none; }
+    .cta-box h2 { font-size: 1.9rem; font-weight: 800; margin-bottom: .75rem; }
+    .cta-box p { color: var(--text-muted); font-size: 1.05rem; max-width: 550px; margin: 0 auto 2rem; }
+    .price-tag { font-size: 2.5rem; font-weight: 900; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: .5rem; }
+    .price-note { font-size: .85rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
+    .related-card { background: var(--surface); border: 1px solid var(--border); border-radius: .75rem; padding: 1.5rem; transition: border-color .2s; }
+    .related-card:hover { border-color: rgba(124,58,237,0.4); }
+    .related-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; color: var(--text); }
+    .related-card p { font-size: .85rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 .75rem; }
+    .related-card a { font-size: .85rem; font-weight: 600; color: var(--accent-light); }
+    footer { padding: 3rem 0; border-top: 1px solid var(--border); margin-top: 5rem; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-logo { font-weight: 800; font-size: 1rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); font-size: .875rem; text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: .8rem; color: var(--text-muted); width: 100%; text-align: center; padding-top: 1rem; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); padding: 1.5rem; gap: 1rem; border-bottom: 1px solid var(--border); }
+      .nav-cta { display: none; }
+      .hero { padding-top: 7rem; }
+      .cta-box { padding: 2rem 1.25rem; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">⚡ Notion Templates</a>
+      <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#products">Products</a></li>
+        <li><a href="index.html#compare">Pricing</a></li>
+        <li><a href="free-toolkit.html">Free Tools</a></li>
+        <li><a href="best-notion-templates.html">Blog</a></li>
+        <li><a href="solofounderos.html">SoloFounderOS</a></li>
+      </ul>
+      <a href="solofounderos.html" class="nav-cta">Get SoloFounderOS →</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="container">
+      <div class="tag">Notion MRR Tracker Guide</div>
+      <h1>How to Build a <span>Notion MRR Tracker</span> (and the Template That Does It For You)</h1>
+      <p class="hero-sub">Monthly recurring revenue is the single most important number for subscription businesses. Here's the exact Notion database structure, formulas, and dashboard views to track it properly — plus a pre-built template so you don't have to build it from scratch.</p>
+      <div class="hero-btns">
+        <a href="https://buy.stripe.com/aFafZh0glenL9Yb71I6kg0D" class="btn btn-primary" target="_blank" rel="noopener">Get SoloFounderOS — $39 →</a>
+        <a href="#build-it" class="btn btn-ghost">See the Structure</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="prose">
+      <h2>Why Track MRR in Notion at All?</h2>
+      <p>If you have a Stripe account, you already have revenue data. If you use Baremetrics, ChartMogul, or ProfitWell, you have beautiful dashboards. Why build an MRR tracker in Notion?</p>
+      <p>There are three compelling reasons. First, <strong>context.</strong> Stripe shows you revenue in isolation. A Notion MRR tracker lives inside your broader business workspace — alongside your product roadmap, your customer notes, and your goals. Seeing revenue in context of what you've been building and who you've been talking to is significantly more useful than a number in a separate app.</p>
+      <p>Second, <strong>multiple revenue streams.</strong> Most solopreneurs and indie hackers have more than one revenue source — perhaps a SaaS product, a consulting engagement, and a digital product. Stripe tracks each separately. A Notion MRR tracker can aggregate across all revenue types and sources into a single monthly picture.</p>
+      <p>Third, <strong>the habit of looking.</strong> When your revenue dashboard is in the same place as your weekly planning, you look at it every week. When it's in a separate analytics tool, you only look when you're worried. The friction of switching tools is higher than you think, and frequent review of revenue data is what turns numbers into decisions.</p>
+
+      <h2 id="build-it">The Notion MRR Tracker: Database Structure</h2>
+      <p>The cleanest MRR tracker in Notion uses two databases: a monthly snapshot database and (optionally) a customer/subscription database. Here's how to build it:</p>
+
+      <h3>Database 1: Monthly Revenue Snapshots</h3>
+      <p>One row per month. This is your core historical record. Here are the properties that matter:</p>
+      <ul>
+        <li><strong>Month (title):</strong> "2026-05" format for easy sorting. Always YYYY-MM so alphabetical sort equals chronological sort.</li>
+        <li><strong>Starting MRR (number):</strong> MRR at the first day of the month. Equal to the previous month's Ending MRR.</li>
+        <li><strong>New MRR (number):</strong> Revenue from new customers or new subscriptions this month.</li>
+        <li><strong>Expansion MRR (number):</strong> Revenue from upgrades or upsells to existing customers.</li>
+        <li><strong>Churned MRR (number):</strong> Revenue lost from cancellations. Enter as a positive number.</li>
+        <li><strong>Contraction MRR (number):</strong> Revenue lost from downgrades. Enter as a positive number.</li>
+        <li><strong>Ending MRR (formula):</strong> Starting MRR + New MRR + Expansion MRR − Churned MRR − Contraction MRR</li>
+        <li><strong>Net New MRR (formula):</strong> New MRR + Expansion MRR − Churned MRR − Contraction MRR</li>
+      </ul>
+
+      <div class="code-block">
+// Ending MRR formula in Notion:
+prop("Starting MRR") + prop("New MRR") + prop("Expansion MRR") - prop("Churned MRR") - prop("Contraction MRR")
+
+// Net New MRR formula:
+prop("New MRR") + prop("Expansion MRR") - prop("Churned MRR") - prop("Contraction MRR")
+
+// MoM Growth % (requires previous month's MRR in a separate field):
+(prop("Ending MRR") - prop("Starting MRR")) / prop("Starting MRR") * 100
+      </div>
+
+      <h3>Key Views to Create</h3>
+      <p><strong>Table view (default):</strong> All months sorted chronologically. Shows your full revenue history. This is your source of truth.</p>
+      <p><strong>Gallery view:</strong> Each month as a card with the ending MRR as the card heading. Good for a quick visual sense of trajectory.</p>
+      <p><strong>Filtered view — Current Year:</strong> Filter to only show rows where the Month contains the current year (e.g., "2026"). This is your annual view without historical noise.</p>
+
+      <h3>Database 2: Customer / Subscription Database (Optional)</h3>
+      <p>For businesses with subscription customers you can actually name (rather than anonymous SaaS users), a customer database linked to the monthly snapshot adds significant value. Each customer row has their MRR contribution, subscription start date, plan tier, and status (active / churned / paused).</p>
+      <p>A rollup property on the monthly snapshot database can then sum the MRR from all active customers in a given month, cross-checking your manual entry with the bottom-up calculation. This is especially useful for catching calculation errors and understanding customer-level churn patterns.</p>
+
+      <h2>Beyond Basic MRR: Metrics That Matter</h2>
+      <p>Once you have the basic MRR tracker working, add these metrics to deepen your understanding of your business health:</p>
+
+      <h3>Churn Rate</h3>
+      <p>Monthly churn rate = Churned MRR ÷ Starting MRR × 100. Add this as a formula property. A healthy B2B SaaS has under 2% monthly churn; consumer SaaS under 5%. If your churn rate is higher, no growth strategy fixes it — you have a retention problem.</p>
+
+      <h3>Customer Acquisition Cost (CAC)</h3>
+      <p>Add a "Marketing Spend" property to your monthly snapshot. Your CAC for the month = Marketing Spend ÷ New Customers. Compare this to your ARPU (average revenue per user) to understand your payback period.</p>
+
+      <h3>Annual Run Rate (ARR)</h3>
+      <p>Simple formula: Ending MRR × 12. Not the same as actual annual revenue (which includes churn effects), but a useful benchmark for fundraising conversations and financial planning.</p>
+
+      <h3>Lifetime Value Estimate (LTV)</h3>
+      <p>Average MRR per customer ÷ Monthly Churn Rate. If your average customer pays $30/month and you have 3% monthly churn, estimated LTV = $30 ÷ 0.03 = $1,000. Compare LTV to CAC — you want LTV:CAC above 3:1 for a healthy unit economics.</p>
+
+      <h2>A Sample Monthly Dashboard</h2>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-value">$4,320</div>
+        <div class="metric-label">Current MRR</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">+$640</div>
+        <div class="metric-label">Net New MRR (May)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">17.4%</div>
+        <div class="metric-label">MoM Growth</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">1.8%</div>
+        <div class="metric-label">Churn Rate</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p style="font-size:.9rem; color: var(--text-muted); margin-top: 1rem;">Example dashboard layout — your actual numbers populate automatically from the formulas.</p>
+
+      <h2>SoloFounderOS: The Pre-Built MRR Tracker</h2>
+      <p>Building this from scratch takes several hours and requires getting the formula logic right. SoloFounderOS includes a pre-built revenue dashboard with all the properties, formulas, and views described above — plus the integration with your broader business workspace (client database, project database, and weekly planning ritual).</p>
+      <p>The MRR tracker in SoloFounderOS supports multiple revenue streams — you can track SaaS MRR, digital product revenue, and consulting income separately but view them in aggregate. The monthly review template prompts you to record each revenue category, review your churn, and note the key driver of growth or decline for the month.</p>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>What if I don't have recurring revenue yet?</h3>
+      <p>The same structure works for non-recurring revenue — just relabel "MRR" as "Monthly Revenue" and "New MRR" as "New Sales." The analytics principles (growth rate, revenue by source, expense tracking) apply equally to any revenue model.</p>
+      <h3>Can Notion formulas do everything I need?</h3>
+      <p>For the metrics described here, yes. Notion formulas can handle the MRR calculations, growth percentages, and churn calculations without any external tool. Where Notion falls short is automated data import (you'll enter numbers manually) and complex visualization. For most solo businesses, manual entry is fine — it forces you to actually look at the numbers.</p>
+      <h3>Should I also use Baremetrics or ProfitWell?</h3>
+      <p>If you have 50+ paying customers and your business depends on granular subscription analytics, yes — dedicated tools do this better. Before that threshold, Notion's flexibility as a combined business OS outweighs the marginal improvement in revenue reporting.</p>
+    </div>
+
+    <div class="cta-box">
+      <h2>Revenue Tracking That Lives Where You Work</h2>
+      <p>Stop checking Stripe to understand your business. SoloFounderOS puts your MRR dashboard inside your operating workspace — connected to your clients, projects, and goals.</p>
+      <div class="price-tag">$39</div>
+      <div class="price-note">One-time payment. Lifetime access. Includes full revenue dashboard.</div>
+      <a href="https://buy.stripe.com/aFafZh0glenL9Yb71I6kg0D" class="btn btn-primary" target="_blank" rel="noopener" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Get SoloFounderOS →</a>
+    </div>
+
+    <section>
+      <div style="margin-bottom: 2rem;">
+        <span class="section-label">Related Guides</span>
+        <div class="section-title">More Notion Business Guides</div>
+      </div>
+      <div class="related-grid">
+        <div class="related-card">
+          <h4>Notion Template for Solopreneurs</h4>
+          <p>The complete solopreneur operating system with revenue, projects, and weekly planning connected.</p>
+          <a href="notion-template-solopreneur.html">Read the guide →</a>
+        </div>
+        <div class="related-card">
+          <h4>Notion for Indie Hackers</h4>
+          <p>Build your product portfolio tracker and launch log alongside your MRR dashboard.</p>
+          <a href="notion-for-indie-hackers.html">Read the guide →</a>
+        </div>
+        <div class="related-card">
+          <h4>Notion Startup Template</h4>
+          <p>The full startup OS with investor updates, OKRs, and team management for growing companies.</p>
+          <a href="notion-startup-template.html">Read the guide →</a>
+        </div>
+        <div class="related-card">
+          <h4>Notion Side Project Tracker</h4>
+          <p>Track multiple projects alongside your revenue — know which ones are actually worth your time.</p>
+          <a href="notion-side-project-tracker.html">Read the guide →</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a href="index.html" class="footer-logo">⚡ Notion Templates</a>
+        <div class="footer-links">
+          <a href="freelanceos.html">FreelanceOS</a>
+          <a href="creatorhq.html">CreatorHQ</a>
+          <a href="agencyos.html">AgencyOS</a>
+          <a href="youtube-empire.html">YouTube Empire</a>
+          <a href="free-toolkit.html">Free Tools</a>
+          <a href="best-notion-templates.html">Blog</a>
+          <a href="mailto:markmma1985@gmail.com">Contact</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 FreelanceOS. All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>
