@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notion Passive Income Tracker — FreelanceOS Pro | Track Every Revenue Stream</title>
+  <meta name="description" content="Track passive income streams alongside freelance revenue in Notion. Digital products, courses, affiliate income, royalties — all in one dashboard." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://freelanceos-storefront.vercel.app/notion-passive-income-tracker" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Notion Passive Income Tracker — FreelanceOS Pro" />
+  <meta property="og:description" content="Track passive income streams alongside freelance revenue in Notion. Digital products, courses, affiliate income, royalties — all in one dashboard." />
+  <meta property="og:url" content="https://freelanceos-storefront.vercel.app/notion-passive-income-tracker" />
+  <meta property="og:type" content="product" />
+
+  <!-- JSON-LD: Product Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "FreelanceOS Pro — Notion Passive Income Tracker",
+    "description": "A complete Notion system for freelancers to track passive income streams alongside active client revenue. Includes income stream databases, revenue dashboards, and growth analytics.",
+    "url": "https://freelanceos-storefront.vercel.app/notion-passive-income-tracker",
+    "brand": {
+      "@type": "Brand",
+      "name": "FreelanceOS"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "29.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://buy.stripe.com/5kAbLI0v44vj4YUaEG"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "167"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What passive income can freelancers realistically build?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Freelancers are uniquely positioned to build passive income because they already possess marketable skills and often create reusable deliverables. The most realistic options are digital products (templates, swipe files, processes), online courses or cohort programs, affiliate partnerships with tools you genuinely use, stock content (photography, illustrations, code snippets), and licensing existing work. The key word is 'realistically' — these streams require real upfront work. A copywriter might spend 40 hours building a swipe file product before it earns a dollar. But once live, a well-positioned digital product can sell for years with minimal maintenance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much passive income do I need to feel financially safe?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A useful target is covering your fixed monthly expenses — rent, utilities, subscriptions, insurance — with passive income. If your fixed expenses are $2,000/month and passive income covers them, a slow client month feels manageable rather than catastrophic. Many experienced freelancers aim for a 60/40 split: 60% from active client work, 40% from passive and semi-passive sources. Even $500–$1,000/month in reliable passive income meaningfully reduces financial anxiety and gives you more negotiating leverage with clients."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I track affiliate commissions in Notion?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The best approach is a dedicated Affiliate Income database in Notion with properties for: program name, affiliate link, monthly clicks (pulled from the affiliate dashboard), commission rate, monthly earnings, and payment status. You can roll up earnings into your main income dashboard for a unified view. FreelanceOS Pro includes a pre-built affiliate tracking template with formulas that calculate effective hourly rate (total earned ÷ hours spent promoting), helping you identify which partnerships are actually worth your time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I track passive and active income separately?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — and not just for tax purposes. Tracking them separately lets you see your progress toward income diversification, understand your true effective hourly rate for each stream, and identify which passive sources are growing vs. stagnating. FreelanceOS Pro uses a tagged income database where every transaction carries a type (Active Client, Digital Product, Affiliate, Course, Royalty, Other) so you can filter, sort, and chart either view without duplicating data. One database, full flexibility."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does it take to build meaningful passive income as a freelancer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Honest answer: 6–18 months to your first $500/month in consistent passive income, assuming you're working on it alongside active client work. Month 1–3 is usually research, building, and launching. Months 3–6 is distribution, SEO, and refinement. Months 6–12 is compounding — your content starts ranking, word of mouth kicks in, affiliate relationships mature. The freelancers who get there fastest treat passive income as a project with deadlines and milestones, tracked in the same system they use for client work."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --cyan: #06b6d4;
+      --purple: #7c3aed;
+      --cta-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 { line-height: 1.25; color: var(--text-primary); }
+    h1 { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; }
+    h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; }
+    h3 { font-size: 1.25rem; font-weight: 600; }
+    p { color: var(--text-secondary); margin-bottom: 1rem; }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Layout */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 5rem 0; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
+    }
+    .nav-logo {
+      font-weight: 800; font-size: 1.1rem;
+      background: var(--cta-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+    .nav-links a { color: var(--text-secondary); }
+    .nav-links a:hover { color: var(--text-primary); text-decoration: none; }
+    .nav-cta {
+      background: var(--cta-gradient);
+      color: #fff !important; font-weight: 600; font-size: 0.875rem;
+      padding: 0.5rem 1.25rem; border-radius: 8px;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 6rem 0 4rem;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(124,58,237,0.18) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(6,182,212,0.12);
+      border: 1px solid rgba(6,182,212,0.3);
+      color: var(--cyan);
+      padding: 0.35rem 1rem; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em;
+      text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .hero h1 { margin-bottom: 1.25rem; }
+    .hero h1 span {
+      background: var(--cta-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1.2rem; max-width: 620px; margin: 0 auto 2.5rem; color: var(--text-secondary);
+    }
+    .hero-cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      background: var(--cta-gradient);
+      color: #fff; font-weight: 700; font-size: 1.05rem;
+      padding: 0.9rem 2.25rem; border-radius: 10px;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 4px 24px rgba(124,58,237,0.35);
+    }
+    .btn-primary:hover { opacity: 0.92; transform: translateY(-1px); text-decoration: none; }
+    .btn-secondary {
+      display: inline-block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-primary); font-weight: 600; font-size: 1rem;
+      padding: 0.9rem 2rem; border-radius: 10px;
+      transition: border-color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--cyan); text-decoration: none; }
+    .hero-social-proof {
+      margin-top: 2rem; font-size: 0.875rem; color: var(--text-secondary);
+    }
+    .stars { color: #fbbf24; letter-spacing: 1px; }
+
+    /* SECTION HEADER */
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-label {
+      display: inline-block;
+      color: var(--cyan); font-size: 0.8rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .section-header p { max-width: 600px; margin: 0.75rem auto 0; }
+
+    /* INCOME TAXONOMY */
+    .taxonomy-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 1rem;
+    }
+    .taxonomy-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+    .taxonomy-card:hover { border-color: var(--cyan); }
+    .taxonomy-tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; padding: 0.25rem 0.75rem;
+      border-radius: 999px; margin-bottom: 1rem;
+    }
+    .tag-active { background: rgba(239,68,68,0.15); color: #f87171; }
+    .tag-semi { background: rgba(245,158,11,0.15); color: #fcd34d; }
+    .tag-passive { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+    .taxonomy-card h3 { margin-bottom: 0.5rem; }
+    .taxonomy-card ul { list-style: none; margin-top: 0.75rem; }
+    .taxonomy-card ul li {
+      padding: 0.3rem 0;
+      font-size: 0.9rem; color: var(--text-secondary);
+      padding-left: 1.25rem; position: relative;
+    }
+    .taxonomy-card ul li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--cyan); font-size: 0.8rem;
+    }
+
+    /* MOCKUP TABLE */
+    .mockup-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    }
+    .mockup-titlebar {
+      background: rgba(51,65,85,0.6);
+      padding: 0.75rem 1.25rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+    .mockup-title-text {
+      margin-left: 0.5rem; font-size: 0.8rem;
+      color: var(--text-secondary); font-weight: 500;
+    }
+    .mockup-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .mockup-table thead th {
+      background: rgba(51,65,85,0.4);
+      padding: 0.75rem 1rem; text-align: left;
+      color: var(--text-secondary); font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .mockup-table tbody td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid rgba(51,65,85,0.5);
+      color: var(--text-primary);
+    }
+    .mockup-table tbody tr:last-child td { border-bottom: none; }
+    .mockup-table tbody tr:hover td { background: rgba(6,182,212,0.04); }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem; border-radius: 6px;
+      font-size: 0.72rem; font-weight: 600;
+    }
+    .badge-active { background: rgba(239,68,68,0.15); color: #f87171; }
+    .badge-semi { background: rgba(245,158,11,0.15); color: #fcd34d; }
+    .badge-passive { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+    .badge-paused { background: rgba(148,163,184,0.15); color: #94a3b8; }
+    .growth-pos { color: #10b981; font-weight: 600; }
+    .growth-neg { color: #ef4444; font-weight: 600; }
+    .growth-flat { color: var(--text-secondary); }
+    .source-name { font-weight: 600; color: var(--text-primary); }
+    .source-sub { font-size: 0.72rem; color: var(--text-secondary); }
+
+    /* DIVERSIFICATION */
+    .diversification-section { background: rgba(30,41,59,0.4); }
+    .ratio-visual {
+      display: flex; border-radius: 12px; overflow: hidden;
+      height: 48px; margin: 2rem 0; font-weight: 700;
+      font-size: 0.875rem;
+    }
+    .ratio-active {
+      background: linear-gradient(90deg, #7c3aed, #9d5cf5);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; flex: 60;
+    }
+    .ratio-passive {
+      background: linear-gradient(90deg, #0891b2, #06b6d4);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; flex: 40;
+    }
+    .ratio-labels {
+      display: flex; justify-content: space-between;
+      font-size: 0.8rem; color: var(--text-secondary);
+    }
+    .journey-steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem; margin-top: 2rem;
+    }
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      position: relative;
+    }
+    .step-num {
+      font-size: 2.5rem; font-weight: 900;
+      background: var(--cta-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1; margin-bottom: 0.5rem;
+    }
+    .step-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+    .step-card p { font-size: 0.85rem; margin: 0; }
+
+    /* FEATURE CARDS */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { border-color: var(--purple); transform: translateY(-2px); }
+    .feature-icon {
+      font-size: 1.75rem; margin-bottom: 1rem;
+      display: block;
+    }
+    .feature-card h3 { margin-bottom: 0.5rem; }
+    .feature-card p { font-size: 0.9rem; margin: 0; }
+
+    /* JOURNEY PATH */
+    .journey-section { }
+    .phase-list { counter-reset: phase; display: flex; flex-direction: column; gap: 0; }
+    .phase-item {
+      display: grid; grid-template-columns: 60px 1fr;
+      gap: 1.5rem; padding: 2rem 0;
+      border-left: 2px solid var(--border);
+      padding-left: 2rem; position: relative; margin-left: 1.5rem;
+    }
+    .phase-item::before {
+      content: '';
+      position: absolute; left: -10px; top: 2rem;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--cta-gradient);
+      border: 3px solid var(--bg);
+    }
+    .phase-num {
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--cyan); text-transform: uppercase;
+      letter-spacing: 0.1em; padding-top: 0.15rem;
+    }
+    .phase-content h3 { margin-bottom: 0.5rem; }
+    .phase-content p { margin: 0; font-size: 0.92rem; }
+    .phase-ratio {
+      display: inline-block; margin-top: 0.75rem;
+      background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.2);
+      color: var(--cyan); font-size: 0.75rem; font-weight: 600;
+      padding: 0.25rem 0.75rem; border-radius: 6px;
+    }
+
+    /* FAQ */
+    .faq-section { background: rgba(30,41,59,0.3); }
+    .faq-list { display: flex; flex-direction: column; gap: 1rem; max-width: 820px; margin: 0 auto; }
+    details {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+    }
+    details[open] { border-color: var(--cyan); }
+    summary {
+      padding: 1.25rem 1.5rem; cursor: pointer;
+      font-weight: 600; font-size: 1rem; color: var(--text-primary);
+      list-style: none; display: flex; justify-content: space-between; align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+'; font-size: 1.25rem; color: var(--cyan);
+      transition: transform 0.2s; flex-shrink: 0;
+    }
+    details[open] summary::after { content: '−'; }
+    .faq-answer {
+      padding: 0 1.5rem 1.25rem;
+      font-size: 0.95rem; color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    /* FINAL CTA */
+    .cta-section {
+      text-align: center;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(124,58,237,0.2) 0%, transparent 70%);
+    }
+    .cta-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 4rem 2rem;
+      max-width: 680px; margin: 0 auto;
+    }
+    .cta-price {
+      font-size: 3rem; font-weight: 900;
+      background: var(--cta-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin: 1rem 0 0.25rem;
+    }
+    .cta-price-note { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 2rem; }
+    .cta-features { list-style: none; margin-bottom: 2rem; }
+    .cta-features li {
+      padding: 0.4rem 0; color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .cta-features li::before { content: '✓ '; color: var(--success); font-weight: 700; }
+    .cta-guarantee {
+      margin-top: 1.25rem; font-size: 0.8rem; color: var(--text-secondary);
+    }
+
+    /* INTERNAL LINKS */
+    .internal-links-section { padding: 3rem 0; border-top: 1px solid var(--border); }
+    .internal-links-grid {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+    }
+    .internal-link-pill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px; padding: 0.5rem 1.25rem;
+      font-size: 0.85rem; color: var(--text-secondary);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .internal-link-pill:hover { border-color: var(--cyan); color: var(--cyan); text-decoration: none; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0; text-align: center;
+      font-size: 0.8rem; color: var(--text-secondary);
+    }
+
+    /* UTILITIES */
+    .text-cyan { color: var(--cyan); }
+    .text-purple { color: #a78bfa; }
+    .highlight-box {
+      background: rgba(6,182,212,0.07);
+      border: 1px solid rgba(6,182,212,0.2);
+      border-radius: 12px; padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .highlight-box p { margin: 0; font-size: 0.95rem; }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .phase-item { grid-template-columns: 1fr; }
+      .mockup-table { font-size: 0.72rem; }
+      .mockup-table thead th, .mockup-table tbody td { padding: 0.6rem 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://freelanceos-storefront.vercel.app/" class="nav-logo">FreelanceOS</a>
+    <div class="nav-links">
+      <a href="https://freelanceos-storefront.vercel.app/notion-revenue-tracker-template">Revenue Tracker</a>
+      <a href="https://freelanceos-storefront.vercel.app/notion-freelance-dashboard">Dashboard</a>
+      <a href="https://freelanceos-storefront.vercel.app/notion-personal-finance-template">Finance</a>
+    </div>
+    <a href="https://buy.stripe.com/5kAbLI0v44vj4YUaEG" class="nav-links nav-cta">Get FreelanceOS Pro — $29</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Notion Template — Passive Income System</div>
+    <h1>Notion Passive Income Tracker<br/><span>for Freelancers</span></h1>
+    <p class="hero-sub">Stop leaving money in spreadsheet purgatory. Track every passive income stream — digital products, courses, affiliate commissions, royalties — alongside your client work, all inside Notion.</p>
+    <div class="hero-cta-group">
+      <a href="https://buy.stripe.com/5kAbLI0v44vj4YUaEG" class="btn-primary">Get FreelanceOS Pro — $29</a>
+      <a href="https://freelanceos-storefront.vercel.app/notion-revenue-tracker-template" class="btn-secondary">See Revenue Tracker →</a>
+    </div>
+    <div class="hero-social-proof">
+      <span class="stars">★★★★★</span> 4.8/5 from 167 reviews &nbsp;·&nbsp; Trusted by <strong>500+ freelancers</strong>
+    </div>
+  </div>
+</section>
+
+<!-- INCOME TAXONOMY -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Income Types</span>
+      <h2>Not All Income Is Created Equal</h2>
+      <p>Before you can track income diversification, you need a framework for what you're actually building. FreelanceOS uses a three-tier taxonomy that maps to realistic freelancer income streams.</p>
+    </div>
+
+    <div class="taxonomy-grid">
+      <div class="taxonomy-card">
+        <span class="taxonomy-tag tag-active">Active Income</span>
+        <h3>Your Time = Your Revenue</h3>
+        <p style="font-size:0.9rem;">Active income requires your direct, ongoing involvement to generate a payment. If you stop working, the revenue stops. This is where most freelancers start — and where they get stuck.</p>
+        <ul>
+          <li>Client projects (hourly or project-based)</li>
+          <li>Consulting retainers</li>
+          <li>Done-for-you services</li>
+          <li>Coaching (live, 1:1)</li>
+          <li>Freelance platforms (Upwork, Toptal)</li>
+        </ul>
+      </div>
+
+      <div class="taxonomy-card">
+        <span class="taxonomy-tag tag-semi">Semi-Passive Income</span>
+        <h3>Built Once, Maintained Regularly</h3>
+        <p style="font-size:0.9rem;">Semi-passive income was created with significant upfront effort and earns ongoing revenue, but still requires periodic attention — updates, promotion, community management, or renewal work.</p>
+        <ul>
+          <li>Online courses (with live Q&amp;A or updates)</li>
+          <li>Group coaching programs</li>
+          <li>Newsletter sponsorships</li>
+          <li>Membership communities</li>
+          <li>Productized services (some)</li>
+        </ul>
+      </div>
+
+      <div class="taxonomy-card">
+        <span class="taxonomy-tag tag-passive">Passive Income</span>
+        <h3>Built Once, Earns Indefinitely</h3>
+        <p style="font-size:0.9rem;">True passive income requires substantial upfront investment — time, skill, or capital — but then generates revenue with minimal ongoing involvement. The "passive" label is aspirational; the work just happened earlier.</p>
+        <ul>
+          <li>Notion templates &amp; digital products</li>
+          <li>Stock content (photos, illustrations, code)</li>
+          <li>Affiliate commissions</li>
+          <li>Licensing agreements</li>
+          <li>Evergreen course content</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 2.5rem;">
+      <p><strong style="color: var(--text-primary);">The honest truth about "passive" income:</strong> Every passive income stream required active work at some point. A template that earns $800/month this year took 60+ hours to build, photograph, write copy for, and market. FreelanceOS helps you track not just earnings, but effective hourly rate per stream — so you can see which investments actually paid off and which ones you should stop maintaining.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MOCKUP: INCOME TRACKER -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">The Tracker</span>
+      <h2>Every Revenue Stream in One Database</h2>
+      <p>The FreelanceOS passive income tracker gives you a real-time snapshot of all your income sources — what's growing, what's stalling, and what your true revenue mix looks like.</p>
+    </div>
+
+    <div class="mockup-wrap">
+      <div class="mockup-titlebar">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+        <span class="mockup-title-text">💰 Income Streams — FreelanceOS Pro</span>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="mockup-table">
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>Type</th>
+              <th>Monthly Avg</th>
+              <th>Last Payment</th>
+              <th>Status</th>
+              <th>MoM Growth</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="source-name">Brand Identity Package</div><div class="source-sub">Acme Corp — Retainer</div></td>
+              <td><span class="badge badge-active">Active</span></td>
+              <td style="color:#f8fafc; font-weight:600;">$3,200</td>
+              <td style="color:var(--text-secondary);">May 1, 2026</td>
+              <td><span class="badge badge-active" style="background:rgba(16,185,129,0.15); color:#6ee7b7;">Live</span></td>
+              <td class="growth-flat">—</td>
+            </tr>
+            <tr>
+              <td><div class="source-name">FreelanceOS Notion Template</div><div class="source-sub">Gumroad / Stripe</div></td>
+              <td><span class="badge badge-passive">Passive</span></td>
+              <td style="color:#f8fafc; font-weight:600;">$1,140</td>
+              <td style="color:var(--text-secondary);">May 14, 2026</td>
+              <td><span class="badge" style="background:rgba(16,185,129,0.15); color:#6ee7b7;">Live</span></td>
+              <td class="growth-pos">↑ +22%</td>
+            </tr>
+            <tr>
+              <td><div class="source-name">Brand Design Course</div><div class="source-sub">Teachable — Evergreen</div></td>
+              <td><span class="badge badge-semi">Semi-Passive</span></td>
+              <td style="color:#f8fafc; font-weight:600;">$680</td>
+              <td style="color:var(--text-secondary);">May 10, 2026</td>
+              <td><span class="badge" style="background:rgba(16,185,129,0.15); color:#6ee7b7;">Live</span></td>
+              <td class="growth-pos">↑ +8%</td>
+            </tr>
+            <tr>
+              <td><div class="source-name">Figma Plugin — Icon Kit</div><div class="source-sub">Figma Community</div></td>
+              <td><span class="badge badge-passive">Passive</span></td>
+              <td style="color:#f8fafc; font-weight:600;">$290</td>
+              <td style="color:var(--text-secondary);">May 1, 2026</td>
+              <td><span class="badge" style="background:rgba(16,185,129,0.15); color:#6ee7b7;">Live</span></td>
+              <td class="growth-pos">↑ +5%</td>
+            </tr>
+            <tr>
+              <td><div class="source-name">Affiliate — ConvertKit</div><div class="source-sub">Newsletter referrals</div></td>
+              <td><span class="badge badge-passive">Passive</span></td>
+              <td style="color:#f8fafc; font-weight:600;">$175</td>
+              <td style="color:var(--text-secondary);">Apr 30, 2026</td>
+              <td><span class="badge" style="background:rgba(16,185,129,0.15); color:#6ee7b7;">Live</span></td>
+              <td class="growth-neg">↓ −3%</td>
+            </tr>
+            <tr>
+              <td><div class="source-name">Stock Illustrations</div><div class="source-sub">Adobe Stock / Shutterstock</div></td>
+              <td><span class="badge badge-passive">Passive</span></td>
+              <td style="color:#f8fafc; font-weight:600;">$88</td>
+              <td style="color:var(--text-secondary);">May 1, 2026</td>
+              <td><span class="badge badge-paused">Paused</span></td>
+              <td class="growth-neg">↓ −12%</td>
+            </tr>
+            <tr>
+              <td><div class="source-name">Logo Licensing — TechBrand</div><div class="source-sub">Annual license renewal</div></td>
+              <td><span class="badge badge-passive">Passive</span></td>
+              <td style="color:#f8fafc; font-weight:600;">$150</td>
+              <td style="color:var(--text-secondary);">Jan 15, 2026</td>
+              <td><span class="badge" style="background:rgba(16,185,129,0.15); color:#6ee7b7;">Live</span></td>
+              <td class="growth-flat">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p style="text-align:center; font-size:0.8rem; margin-top:0.75rem;">Example data — your FreelanceOS dashboard reflects your actual income sources.</p>
+  </div>
+</section>
+
+<!-- DIVERSIFICATION -->
+<section class="diversification-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Revenue Diversification</span>
+      <h2>The 60 / 40 Target: A Realistic Goal</h2>
+      <p>Most financial advisors talk about diversification for investments. For freelancers, diversification means building income streams that don't all depend on the same client saying yes.</p>
+    </div>
+
+    <div class="ratio-visual">
+      <div class="ratio-active">60% Active Client Work</div>
+      <div class="ratio-passive">40% Passive &amp; Semi-Passive</div>
+    </div>
+    <div class="ratio-labels">
+      <span>Client retainers, projects, consulting</span>
+      <span>Products, courses, affiliates, licensing</span>
+    </div>
+
+    <p style="margin-top: 2rem;">The 60/40 split is a target, not a mandate. At this ratio, you have enough active income to maintain professional relationships and stay sharp in your field — while your passive income covers fixed expenses and builds a buffer. A slow client month becomes inconvenient rather than catastrophic.</p>
+
+    <p>Getting there requires building passive streams while your active income is healthy. The worst time to start building a course is when you're desperate for revenue. FreelanceOS includes a <a href="https://freelanceos-storefront.vercel.app/notion-freelance-dashboard">freelance dashboard</a> where you can set target ratios and track your actual mix month by month, so you can see the trajectory even when progress feels slow.</p>
+
+    <div class="journey-steps">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>Know Your Fixed Costs</h3>
+        <p>Calculate the minimum monthly passive income that would cover rent, utilities, and subscriptions. That's your first target — not "financial freedom."</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>Pick One Stream First</h3>
+        <p>Trying to build a course, three products, and an affiliate strategy simultaneously produces nothing. FreelanceOS has a Stream Prioritization worksheet to help you pick one.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>Allocate Protected Time</h3>
+        <p>4–6 hours per week of protected building time, logged in FreelanceOS as investment time, separate from billable client hours.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <h3>Track Effective Hourly Rate</h3>
+        <p>Each passive stream gets its own EHR formula: total earned ÷ total hours invested. This tells you whether your time was better spent on that course or another client project.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">What's Inside FreelanceOS Pro</span>
+      <h2>Six Systems Built for Freelance Income Tracking</h2>
+      <p>FreelanceOS Pro isn't a generic finance template. Every database and formula was designed specifically for freelancers managing multiple income types simultaneously.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">💰</span>
+        <h3>Passive Income Stream Database</h3>
+        <p>A dedicated database for every passive and semi-passive source. Track source name, income type, platform, monthly average, total lifetime earnings, and effective hourly rate — all in one place.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <h3>Revenue Mix Dashboard</h3>
+        <p>A live dashboard showing your current active vs. passive income ratio, trend over 12 months, and progress toward your target split. See your diversification trajectory at a glance.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🔗</span>
+        <h3>Affiliate Commission Tracker</h3>
+        <p>Log affiliate programs with commission rates, click estimates, monthly earnings, and payment dates. Formulas automatically flag your highest-ROI partnerships vs. ones worth dropping.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📦</span>
+        <h3>Digital Product Launcher</h3>
+        <p>Plan, build, and launch digital products with a dedicated product roadmap. Track version history, platform listings, sales milestones, and update schedules — all linked to your income stream entries.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📈</span>
+        <h3>Monthly Income Report</h3>
+        <p>A rollup report that compares this month to last, YTD totals by income type, and flags streams that are declining or stalling. Works alongside the main <a href="https://freelanceos-storefront.vercel.app/notion-revenue-tracker-template">revenue tracker template</a> for full visibility.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⏱️</span>
+        <h3>Investment Time Log</h3>
+        <p>Log hours spent building passive income streams, separate from billable client time. Automatically calculates effective hourly rate as earnings accumulate — the clearest signal of whether a stream is worth continuing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY: 100% ACTIVE → MIXED INCOME -->
+<section class="journey-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">The Transition Path</span>
+      <h2>From 100% Active to a Mixed Income Model</h2>
+      <p>The transition from purely active income doesn't happen overnight. Here's a realistic phase-by-phase roadmap that thousands of freelancers have followed — and how FreelanceOS supports each phase.</p>
+    </div>
+
+    <div class="phase-list">
+      <div class="phase-item">
+        <div class="phase-num">Phase 1</div>
+        <div class="phase-content">
+          <h3>Pure Active — Get Stable First</h3>
+          <p>Before adding passive income complexity, your active freelance business needs a stable foundation: consistent client pipeline, clear pricing, and reliable cash flow. Trying to build a course when you're scrambling for clients is a recipe for mediocre results on both fronts. FreelanceOS helps you get here faster with the <a href="https://freelanceos-storefront.vercel.app/notion-freelance-dashboard">freelance operations dashboard</a> — client CRM, project tracker, invoice log.</p>
+          <span class="phase-ratio">Income mix: 100% Active</span>
+        </div>
+      </div>
+
+      <div class="phase-item">
+        <div class="phase-num">Phase 2</div>
+        <div class="phase-content">
+          <h3>Identify Your Productizable Assets</h3>
+          <p>Every freelancer has assets they've already created that could be productized: proposal templates, process docs, design systems, code libraries, swipe files, frameworks. A content writer has years of email copy that could become a swipe file. A developer has reusable components that could become a library. The audit phase — cataloguing what you already have — often reveals two or three passive income ideas that require surprisingly little new work.</p>
+          <span class="phase-ratio">Income mix: 95% Active / 5% Passive</span>
+        </div>
+      </div>
+
+      <div class="phase-item">
+        <div class="phase-num">Phase 3</div>
+        <div class="phase-content">
+          <h3>Launch Your First Product</h3>
+          <p>Pick the smallest viable product from your audit. Not the best idea — the most launchable one. A Notion template, a Figma file, a PDF guide. Publish it, price it, tell your existing audience. The goal is not to make $1,000/month immediately; the goal is to learn the mechanics of selling a digital product and to have something indexed and discoverable. First launch revenue is almost irrelevant compared to the systems and confidence you build.</p>
+          <span class="phase-ratio">Income mix: 90% Active / 10% Passive</span>
+        </div>
+      </div>
+
+      <div class="phase-item">
+        <div class="phase-num">Phase 4</div>
+        <div class="phase-content">
+          <h3>Stack Distribution Channels</h3>
+          <p>Once you have a product live, growth comes from distribution: SEO, email list, social platforms, affiliate partners, and marketplace listings (Gumroad, Creative Market, Etsy). Each channel compounds slowly and then quickly. FreelanceOS includes a channel tracking module where you log which distribution activities drove which sales — so you invest more in what's working and stop the rest.</p>
+          <span class="phase-ratio">Income mix: 75% Active / 25% Passive</span>
+        </div>
+      </div>
+
+      <div class="phase-item">
+        <div class="phase-num">Phase 5</div>
+        <div class="phase-content">
+          <h3>Add a Second Stream &amp; Hit the 40% Target</h3>
+          <p>By the time your first product reliably generates $500–$1,000/month, you have proof of concept and operational knowledge. The second stream goes faster. Most freelancers at this stage add affiliate partnerships (monetizing tools they already recommend), a course version of a service they sell, or licensing agreements. The passive income tracker in FreelanceOS now shows you two growing lines alongside your active income — and the ratio chart starts shifting in a meaningful direction.</p>
+          <span class="phase-ratio">Income mix: 60% Active / 40% Passive (target)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">FAQ</span>
+      <h2>Common Questions About Freelance Passive Income</h2>
+    </div>
+
+    <div class="faq-list">
+      <details>
+        <summary>What passive income can freelancers realistically build?</summary>
+        <div class="faq-answer">
+          Freelancers are uniquely positioned to build passive income because they already possess marketable skills and often create reusable deliverables. The most realistic options are digital products (templates, swipe files, process docs), online courses or cohort programs, affiliate partnerships with tools you genuinely use, stock content (photography, illustrations, code snippets), and licensing existing work. The key word is "realistically" — these streams require real upfront work. A copywriter might spend 40 hours building a swipe file product before it earns a dollar. But once live, a well-positioned digital product can sell for years with minimal maintenance.
+        </div>
+      </details>
+
+      <details>
+        <summary>How much passive income do I need to feel financially safe?</summary>
+        <div class="faq-answer">
+          A useful target is covering your fixed monthly expenses — rent, utilities, subscriptions, insurance — with passive income. If your fixed expenses are $2,000/month and passive income covers them, a slow client month feels manageable rather than catastrophic. Many experienced freelancers aim for a 60/40 split: 60% from active client work, 40% from passive and semi-passive sources. Even $500–$1,000/month in reliable passive income meaningfully reduces financial anxiety and gives you more negotiating leverage with clients. The <a href="https://freelanceos-storefront.vercel.app/notion-personal-finance-template">FreelanceOS personal finance template</a> helps you calculate your exact fixed-cost target.
+        </div>
+      </details>
+
+      <details>
+        <summary>How do I track affiliate commissions in Notion?</summary>
+        <div class="faq-answer">
+          The best approach is a dedicated Affiliate Income database in Notion with properties for: program name, affiliate link, monthly clicks (pulled from the affiliate dashboard), commission rate, monthly earnings, and payment status. You can roll up earnings into your main income dashboard for a unified view. FreelanceOS Pro includes a pre-built affiliate tracking template with formulas that calculate effective hourly rate (total earned ÷ hours spent promoting), helping you identify which partnerships are actually worth your time.
+        </div>
+      </details>
+
+      <details>
+        <summary>Should I track passive and active income separately?</summary>
+        <div class="faq-answer">
+          Yes — and not just for tax purposes. Tracking them separately lets you see your progress toward income diversification, understand your true effective hourly rate for each stream, and identify which passive sources are growing vs. stagnating. FreelanceOS Pro uses a tagged income database where every transaction carries a type (Active Client, Digital Product, Affiliate, Course, Royalty, Other) so you can filter, sort, and chart either view without duplicating data. One database, full flexibility. See how this connects to the broader <a href="https://freelanceos-storefront.vercel.app/notion-revenue-tracker-template">Notion revenue tracker template</a> for the complete picture.
+        </div>
+      </details>
+
+      <details>
+        <summary>How long does it take to build meaningful passive income as a freelancer?</summary>
+        <div class="faq-answer">
+          Honest answer: 6–18 months to your first $500/month in consistent passive income, assuming you're working on it alongside active client work. Month 1–3 is usually research, building, and launching. Months 3–6 is distribution, SEO, and refinement. Months 6–12 is compounding — your content starts ranking, word of mouth kicks in, affiliate relationships mature. The freelancers who get there fastest treat passive income as a project with deadlines and milestones, tracked in the same system they use for client work. FreelanceOS gives you the infrastructure to do exactly that.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <div class="section-label">FreelanceOS Pro</div>
+      <h2>Start Tracking Your Passive Income Today</h2>
+      <p>Join 500+ freelancers who've replaced their patchwork of spreadsheets with a single, connected Notion system built for the way freelancers actually earn money.</p>
+      <div class="cta-price">$29</div>
+      <div class="cta-price-note">One-time payment. Lifetime access. Free updates.</div>
+      <ul class="cta-features">
+        <li>Passive Income Stream Database (multi-type)</li>
+        <li>Revenue Mix Dashboard with live ratio tracking</li>
+        <li>Affiliate Commission Tracker with ROI formulas</li>
+        <li>Digital Product Launcher &amp; roadmap</li>
+        <li>Monthly Income Report with YTD rollups</li>
+        <li>Investment Time Log &amp; Effective Hourly Rate</li>
+        <li>Full FreelanceOS Pro system (client CRM, projects, finance)</li>
+      </ul>
+      <a href="https://buy.stripe.com/5kAbLI0v44vj4YUaEG" class="btn-primary" style="font-size:1.1rem; padding: 1rem 2.5rem;">Get FreelanceOS Pro — $29 →</a>
+      <div class="cta-guarantee">30-day money-back guarantee. No questions asked.</div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERNAL LINKS -->
+<section class="internal-links-section">
+  <div class="container">
+    <p style="text-align:center; font-size:0.85rem; margin-bottom:1rem; color: var(--text-secondary);">Explore more FreelanceOS templates</p>
+    <div class="internal-links-grid">
+      <a href="https://freelanceos-storefront.vercel.app/notion-revenue-tracker-template" class="internal-link-pill">Notion Revenue Tracker Template</a>
+      <a href="https://freelanceos-storefront.vercel.app/notion-freelance-dashboard" class="internal-link-pill">Notion Freelance Dashboard</a>
+      <a href="https://freelanceos-storefront.vercel.app/notion-personal-finance-template" class="internal-link-pill">Notion Personal Finance Template</a>
+      <a href="https://freelanceos-storefront.vercel.app/" class="internal-link-pill">FreelanceOS Storefront →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>© 2026 FreelanceOS. Built for independent professionals.</p>
+    <p style="margin-top:0.4rem;"><a href="https://freelanceos-storefront.vercel.app/">Home</a> &nbsp;·&nbsp; <a href="https://buy.stripe.com/5kAbLI0v44vj4YUaEG">Buy FreelanceOS Pro</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
