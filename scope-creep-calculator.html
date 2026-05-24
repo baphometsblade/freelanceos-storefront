@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scope Creep Calculator 2026 — How Much Is Scope Creep Costing You?</title>
+<meta name="description" content="Calculate the true cost of scope creep on your freelance projects. See your effective rate, unpaid hours, and money left on the table.">
+<meta property="og:title" content="Scope Creep Calculator 2026 — How Much Is Scope Creep Costing You?">
+<meta property="og:description" content="Calculate the true cost of scope creep on your freelance projects. See your effective rate, unpaid hours, and money left on the table.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/scope-creep-calculator.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scope Creep Calculator 2026 — How Much Is Scope Creep Costing You?">
+<meta name="twitter:description" content="Calculate the true cost of scope creep on your freelance projects. See your effective rate, unpaid hours, and money left on the table.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Scope Creep Calculator",
+  "description": "Calculate the true cost of scope creep on your freelance projects. See your effective rate, unpaid hours, and money left on the table.",
+  "url": "https://baphometsblade.github.io/freelanceos-storefront/scope-creep-calculator.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#020617;--card:#0f172a;--card-hover:#1e293b;--border:#1e293b;--text:#e2e8f0;--text-muted:#94a3b8;--text-dim:#64748b;--accent:#a855f7;--accent2:#ec4899;--gradient:linear-gradient(135deg,#a855f7,#ec4899);--gradient-subtle:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.15));--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--radius:12px;--radius-lg:16px}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden}
+.container{max-width:780px;margin:0 auto;padding:0 20px}
+
+/* Header */
+.header{text-align:center;padding:48px 20px 32px}
+.header-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gradient-subtle);border:1px solid rgba(168,85,247,.3);border-radius:999px;padding:6px 16px;font-size:13px;color:var(--accent);margin-bottom:20px}
+.header-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.header h1{font-size:clamp(26px,5vw,40px);font-weight:800;line-height:1.15;margin-bottom:12px;background:linear-gradient(135deg,#fff 0%,#a855f7 50%,#ec4899 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header p{color:var(--text-muted);font-size:17px;max-width:560px;margin:0 auto}
+
+/* Inputs Section */
+.section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;margin-bottom:20px;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.section.visible{opacity:1;transform:translateY(0)}
+.section-title{font-size:18px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.section-title .icon{font-size:20px}
+.section-desc{color:var(--text-muted);font-size:13px;margin-bottom:20px}
+
+/* Slider Groups */
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:580px){.input-grid{grid-template-columns:1fr}}
+.slider-group{margin-bottom:0}
+.slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:14px;font-weight:500}
+.slider-value{font-weight:700;color:var(--accent);font-size:15px;min-width:60px;text-align:right}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:99px;background:var(--border);outline:none;cursor:pointer;transition:background .2s}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gradient);border:3px solid var(--card);cursor:pointer;box-shadow:0 2px 8px rgba(168,85,247,.4);transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--gradient);border:3px solid var(--card);cursor:pointer}
+.slider-hint{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-top:4px}
+
+/* Severity Meter */
+.meter-wrap{display:flex;flex-direction:column;align-items:center;padding:20px 0}
+.meter-container{position:relative;width:280px;height:160px;margin-bottom:16px}
+.meter-svg{width:100%;height:100%}
+.meter-label{font-size:clamp(28px,6vw,42px);font-weight:800;text-align:center;transition:color .4s}
+.meter-status{font-size:16px;font-weight:700;text-align:center;margin-top:4px;transition:color .4s}
+.meter-subtext{font-size:13px;color:var(--text-muted);text-align:center;margin-top:4px}
+
+/* Dashboard Cards */
+.dashboard-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:580px){.dashboard-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.dashboard-grid{grid-template-columns:1fr}}
+.dash-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;transition:border-color .3s,transform .3s}
+.dash-card:hover{border-color:rgba(168,85,247,.3);transform:translateY(-2px)}
+.dash-card .dash-icon{font-size:20px;margin-bottom:6px}
+.dash-card .dash-value{font-size:22px;font-weight:800;color:#fff;margin-bottom:2px;transition:color .4s}
+.dash-card .dash-label{font-size:11px;color:var(--text-muted);line-height:1.3}
+.dash-card.danger .dash-value{color:var(--danger)}
+.dash-card.warning .dash-value{color:var(--warning)}
+.dash-card.accent .dash-value{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Timeline Bar */
+.timeline-wrap{margin-top:8px}
+.timeline-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:8px}
+.timeline-bar{position:relative;height:36px;background:var(--bg);border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.timeline-original{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,rgba(168,85,247,.35),rgba(168,85,247,.5));border-radius:8px 0 0 8px;transition:width .8s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent);z-index:2;min-width:60px}
+.timeline-actual{position:absolute;top:0;left:0;height:100%;background:repeating-linear-gradient(135deg,rgba(239,68,68,.2),rgba(239,68,68,.2) 8px,rgba(239,68,68,.1) 8px,rgba(239,68,68,.1) 16px);border-radius:8px;transition:width .8s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-size:12px;font-weight:700;color:var(--danger);z-index:1}
+.timeline-legend{display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--text-dim)}
+.timeline-legend span{display:flex;align-items:center;gap:4px}
+.legend-dot{width:10px;height:10px;border-radius:3px}
+.legend-dot.original{background:rgba(168,85,247,.5)}
+.legend-dot.creep{background:repeating-linear-gradient(135deg,rgba(239,68,68,.3),rgba(239,68,68,.3) 4px,rgba(239,68,68,.15) 4px,rgba(239,68,68,.15) 8px)}
+
+/* Fun Section */
+.fun-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:580px){.fun-grid{grid-template-columns:1fr}}
+.fun-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;transition:transform .3s}
+.fun-card:hover{transform:translateY(-2px)}
+.fun-card .fun-icon{font-size:28px;margin-bottom:8px}
+.fun-card .fun-value{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
+.fun-card .fun-label{font-size:12px;color:var(--text-muted);line-height:1.3}
+
+/* Tip Cards */
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:580px){.tips-grid{grid-template-columns:1fr}}
+.tip-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color .3s,transform .3s}
+.tip-card:hover{border-color:rgba(168,85,247,.3);transform:translateY(-2px)}
+.tip-card .tip-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gradient-subtle);border:1px solid rgba(168,85,247,.3);font-size:12px;font-weight:700;color:var(--accent);margin-bottom:10px}
+.tip-card h4{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-card p{font-size:12px;color:var(--text-muted);line-height:1.5}
+.tip-card a{color:var(--accent);text-decoration:none;font-weight:600;font-size:12px}
+.tip-card a:hover{text-decoration:underline}
+
+/* CTA Section */
+.cta-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-bottom:20px;text-align:center}
+.cta-section h3{font-size:20px;font-weight:700;margin-bottom:8px}
+.cta-section .sub{color:var(--text-muted);font-size:14px;margin-bottom:24px}
+.product-card{background:var(--bg);border:2px solid rgba(168,85,247,.3);border-radius:var(--radius-lg);padding:28px;text-align:left;margin-bottom:20px;position:relative;overflow:hidden}
+.product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient)}
+.product-card h4{font-size:20px;font-weight:700;margin-bottom:4px}
+.product-card .tagline{color:var(--text-muted);font-size:13px;margin-bottom:16px}
+.price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+.price-old{font-size:20px;text-decoration:line-through;color:var(--text-dim)}
+.price-new{font-size:36px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.promo-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--success);font-weight:600;margin-bottom:16px}
+.features-list{list-style:none;margin-bottom:20px}
+.features-list li{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:14px;color:var(--text-muted)}
+.features-list li::before{content:'';width:18px;height:18px;border-radius:50%;background:rgba(168,85,247,.15);flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a855f7' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+.btn-cta{display:block;width:100%;padding:16px;font-size:16px;font-weight:700;text-align:center;text-decoration:none;color:#fff;background:var(--gradient);border-radius:var(--radius);transition:all .2s;box-shadow:0 4px 20px rgba(168,85,247,.35)}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(168,85,247,.45)}
+.auto-badge{text-align:center;font-size:12px;color:var(--text-dim);margin-top:10px}
+
+/* Cross Links */
+.cross-links{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.cross-link{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:transparent;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;transition:all .2s}
+.cross-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+
+/* Share Section */
+.share-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;margin-bottom:20px;text-align:center}
+.share-section h3{font-size:16px;font-weight:700;margin-bottom:14px}
+.share-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:600;text-decoration:none;color:#fff;transition:all .2s;cursor:pointer;border:none}
+.share-btn:hover{transform:translateY(-1px)}
+.share-btn.twitter{background:#1d9bf0}
+.share-btn.linkedin{background:#0a66c2}
+.share-btn.copy{background:var(--card-hover);border:1px solid var(--border);color:var(--text)}
+
+/* Footer */
+.footer{text-align:center;padding:32px 20px 48px;font-size:13px;color:var(--text-dim)}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.footer-links a{color:var(--text-muted);text-decoration:none;font-size:13px;transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+.footer a{color:var(--accent);text-decoration:none}
+
+/* Counter animation helper */
+.counter-animate{display:inline-block}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="header-badge"><span class="dot"></span> Free tool — no signup required</div>
+<h1>How Much Is Scope Creep Actually Costing You?</h1>
+<p>Enter your project details and watch the real cost of "just one more thing" pile up. Most freelancers are shocked.</p>
+</div>
+
+<div class="container">
+
+<!-- Project Setup Inputs -->
+<div class="section" id="inputSection">
+<div class="section-title"><span class="icon">&#9881;&#65039;</span> Project Setup</div>
+<div class="section-desc">Enter your project details. All calculations update in real time.</div>
+<div class="input-grid">
+<div class="slider-group">
+<div class="slider-label"><span>Original Project Budget</span><span class="slider-value" id="budgetVal">$5,000</span></div>
+<input type="range" id="budget" min="500" max="50000" step="100" value="5000" oninput="update()">
+<div class="slider-hint"><span>$500</span><span>$50,000</span></div>
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>Agreed Hours</span><span class="slider-value" id="agreedHoursVal">50 hrs</span></div>
+<input type="range" id="agreedHours" min="5" max="500" step="1" value="50" oninput="update()">
+<div class="slider-hint"><span>5 hrs</span><span>500 hrs</span></div>
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>Your Hourly Rate</span><span class="slider-value" id="rateVal">$100/hr</span></div>
+<input type="range" id="rate" min="25" max="500" step="5" value="100" oninput="update()">
+<div class="slider-hint"><span>$25</span><span>$500</span></div>
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>Actual Hours Spent</span><span class="slider-value" id="actualHoursVal">65 hrs</span></div>
+<input type="range" id="actualHours" min="5" max="1000" step="1" value="65" oninput="update()">
+<div class="slider-hint"><span>5 hrs</span><span>1,000 hrs</span></div>
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>"Just One More Thing" Requests</span><span class="slider-value" id="requestsVal">8</span></div>
+<input type="range" id="requests" min="0" max="50" step="1" value="8" oninput="update()">
+<div class="slider-hint"><span>0</span><span>50</span></div>
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>Avg Time Per Scope Change</span><span class="slider-value" id="changeTimeVal">2 hrs</span></div>
+<input type="range" id="changeTime" min="0.5" max="8" step="0.5" value="2" oninput="update()">
+<div class="slider-hint"><span>0.5 hrs</span><span>8 hrs</span></div>
+</div>
+</div>
+</div>
+
+<!-- Severity Meter -->
+<div class="section" id="meterSection">
+<div class="section-title"><span class="icon">&#128680;</span> Scope Creep Severity</div>
+<div class="section-desc">How bad is the damage? This meter shows how far over your original scope you've gone.</div>
+<div class="meter-wrap">
+<div class="meter-container">
+<svg class="meter-svg" viewBox="0 0 280 160">
+<defs>
+<linearGradient id="meterGreen" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#4ade80"/></linearGradient>
+<linearGradient id="meterYellow" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#eab308"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient>
+<linearGradient id="meterOrange" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#ef4444"/></linearGradient>
+<linearGradient id="meterRed" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#dc2626"/></linearGradient>
+</defs>
+<!-- Background track -->
+<path d="M 30 140 A 110 110 0 0 1 250 140" fill="none" stroke="#1e293b" stroke-width="18" stroke-linecap="round"/>
+<!-- Green zone 0-15% -->
+<path d="M 30 140 A 110 110 0 0 1 85 42" fill="none" stroke="url(#meterGreen)" stroke-width="18" stroke-linecap="round" opacity="0.3"/>
+<!-- Yellow zone 15-30% -->
+<path d="M 85 42 A 110 110 0 0 1 140 30" fill="none" stroke="url(#meterYellow)" stroke-width="18" stroke-linecap="round" opacity="0.3"/>
+<!-- Orange zone 30-50% -->
+<path d="M 140 30 A 110 110 0 0 1 195 42" fill="none" stroke="url(#meterOrange)" stroke-width="18" stroke-linecap="round" opacity="0.3"/>
+<!-- Red zone 50%+ -->
+<path d="M 195 42 A 110 110 0 0 1 250 140" fill="none" stroke="url(#meterRed)" stroke-width="18" stroke-linecap="round" opacity="0.3"/>
+<!-- Needle -->
+<line id="meterNeedle" x1="140" y1="140" x2="140" y2="45" stroke="var(--text)" stroke-width="3" stroke-linecap="round" style="transition:transform .8s cubic-bezier(.4,0,.2,1);transform-origin:140px 140px"/>
+<circle cx="140" cy="140" r="8" fill="var(--card)" stroke="var(--text-dim)" stroke-width="2"/>
+</svg>
+</div>
+<div class="meter-label" id="meterPct">30%</div>
+<div class="meter-status" id="meterStatus">Danger Zone</div>
+<div class="meter-subtext" id="meterSubtext">You're 30% over your original scope</div>
+</div>
+</div>
+
+<!-- Financial Impact Dashboard -->
+<div class="section" id="dashboardSection">
+<div class="section-title"><span class="icon">&#128176;</span> Financial Impact</div>
+<div class="section-desc">The numbers don't lie. Here's what scope creep is really costing you.</div>
+<div class="dashboard-grid">
+<div class="dash-card">
+<div class="dash-icon">&#128181;</div>
+<div class="dash-value" id="dashBudget">$5,000</div>
+<div class="dash-label">Original Budget</div>
+</div>
+<div class="dash-card accent">
+<div class="dash-icon">&#128200;</div>
+<div class="dash-value" id="dashShouldvePaid">$6,500</div>
+<div class="dash-label">What You Should've Been Paid</div>
+</div>
+<div class="dash-card danger">
+<div class="dash-icon">&#128293;</div>
+<div class="dash-value" id="dashLeftOnTable">$1,500</div>
+<div class="dash-label">Money Left on the Table</div>
+</div>
+<div class="dash-card" id="effRateCard">
+<div class="dash-icon">&#9201;&#65039;</div>
+<div class="dash-value" id="dashEffRate">$76.92/hr</div>
+<div class="dash-label">Effective Hourly Rate</div>
+</div>
+<div class="dash-card warning">
+<div class="dash-icon">&#9888;&#65039;</div>
+<div class="dash-value" id="dashFreeHours">15 hrs</div>
+<div class="dash-label">Hours of Free Work</div>
+</div>
+<div class="dash-card danger">
+<div class="dash-icon">&#128197;</div>
+<div class="dash-value" id="dashFreeDays">1.9 days</div>
+<div class="dash-label">Days of Unpaid Work</div>
+</div>
+</div>
+</div>
+
+<!-- Scope Creep Timeline -->
+<div class="section" id="timelineSection">
+<div class="section-title"><span class="icon">&#128202;</span> Scope Timeline</div>
+<div class="section-desc">Original scope vs. what you actually delivered.</div>
+<div class="timeline-wrap">
+<div class="timeline-labels">
+<span>0 hours</span>
+<span id="timelineMax">65 hours</span>
+</div>
+<div class="timeline-bar">
+<div class="timeline-actual" id="timelineActual" style="width:100%">
+<span id="timelineActualLabel">65 hrs</span>
+</div>
+<div class="timeline-original" id="timelineOriginal" style="width:76.9%">
+<span id="timelineOriginalLabel">50 hrs</span>
+</div>
+</div>
+<div class="timeline-legend">
+<span><span class="legend-dot original"></span> Agreed Scope</span>
+<span><span class="legend-dot creep"></span> Scope Creep</span>
+</div>
+</div>
+</div>
+
+<!-- What You Could've Done Instead -->
+<div class="section" id="funSection">
+<div class="section-title"><span class="icon">&#128161;</span> What You Could've Done Instead</div>
+<div class="section-desc">With those free hours you gave away, you could have...</div>
+<div class="fun-grid">
+<div class="fun-card">
+<div class="fun-icon">&#128176;</div>
+<div class="fun-value" id="funEarned">$1,500</div>
+<div class="fun-label">Earned from a paying client</div>
+</div>
+<div class="fun-card">
+<div class="fun-icon">&#128736;&#65039;</div>
+<div class="fun-value" id="funProjects">1.5</div>
+<div class="fun-label">Other projects completed</div>
+</div>
+<div class="fun-card">
+<div class="fun-icon">&#127796;</div>
+<div class="fun-value" id="funDaysOff">1.9</div>
+<div class="fun-label">Days off you deserved</div>
+</div>
+</div>
+</div>
+
+<!-- Protection Tips -->
+<div class="section" id="tipsSection">
+<div class="section-title"><span class="icon">&#128737;&#65039;</span> Protect Yourself</div>
+<div class="section-desc">Three proven strategies to stop scope creep before it starts.</div>
+<div class="tips-grid">
+<div class="tip-card">
+<div class="tip-num">1</div>
+<h4>Use a Change Order Process</h4>
+<p>Every new request gets a written change order with cost and timeline impact. Clients respect boundaries when there's a process.</p>
+</div>
+<div class="tip-card">
+<div class="tip-num">2</div>
+<h4>Build Buffer Into Estimates</h4>
+<p>Add 20-30% buffer to every project quote. Smart freelancers build in room for the inevitable "quick additions."</p>
+</div>
+<div class="tip-card">
+<div class="tip-num">3</div>
+<h4>Track Everything in One System</h4>
+<p>Use a single workspace to log hours, scope changes, and client requests. Makes it impossible for creep to go unnoticed.</p>
+<a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Try FreelanceOS Pro &rarr;</a>
+</div>
+</div>
+</div>
+
+<!-- CTA Section -->
+<div class="section" id="ctaSection">
+<div class="cta-section" style="background:transparent;border:none;padding:0;margin:0">
+<h3>Never let scope creep eat your profits again</h3>
+<p class="sub">Track every hour, every change request, and every dollar in one Notion workspace.</p>
+<div class="product-card">
+<h4>FreelanceOS Pro</h4>
+<div class="tagline">The all-in-one Notion system for serious freelancers</div>
+<div class="price-row">
+<span class="price-old">$29</span>
+<span class="price-new">$17.40</span>
+</div>
+<div class="promo-badge">&#127881; FLASH40 — 40% off auto-applied</div>
+<ul class="features-list">
+<li>Built-in scope & change order tracker</li>
+<li>Time tracking with hourly rate alerts</li>
+<li>Client CRM with pipeline view</li>
+<li>Invoice system with payment status</li>
+<li>Financial dashboard & reporting</li>
+</ul>
+<a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="btn-cta" target="_blank" rel="noopener">Get FreelanceOS Pro — $17.40 (40% off)</a>
+<div class="auto-badge">FLASH40 auto-applied at checkout</div>
+</div>
+<div class="cross-links">
+<a href="calculator.html" class="cross-link">Calculate your ideal hourly rate &rarr;</a>
+<a href="income-projector.html" class="cross-link">Project your annual income &rarr;</a>
+</div>
+</div>
+</div>
+
+<!-- Share Section -->
+<div class="section" id="shareSection">
+<div class="share-section" style="background:transparent;border:none;padding:0;margin:0">
+<h3>Share this with a fellow freelancer</h3>
+<div class="share-btns">
+<a class="share-btn twitter" id="shareTwitter" href="#" target="_blank" rel="noopener">&#120143; Twitter</a>
+<a class="share-btn linkedin" id="shareLinkedIn" href="#" target="_blank" rel="noopener">in LinkedIn</a>
+<button class="share-btn copy" onclick="copyLink()">&#128203; Copy Link</button>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+<div class="footer-links">
+<a href="calculator.html">Rate Calculator</a>
+<a href="client-red-flags.html">Client Red Flags</a>
+<a href="freelance-starter-kit.html">Free Toolkit</a>
+<a href="index.html">Store</a>
+</div>
+Built with care for freelancers everywhere. &mdash; <a href="index.html">FreelanceOS</a>
+</div>
+
+<script>
+function fmt(n){return '$'+Math.round(n).toLocaleString()}
+function fmtDec(n,d){return n.toFixed(d)}
+
+function update(){
+  // Read inputs
+  const budget=+document.getElementById('budget').value;
+  const agreedHours=+document.getElementById('agreedHours').value;
+  const rate=+document.getElementById('rate').value;
+  const actualHours=+document.getElementById('actualHours').value;
+  const requests=+document.getElementById('requests').value;
+  const changeTime=+document.getElementById('changeTime').value;
+
+  // Update slider labels
+  document.getElementById('budgetVal').textContent=fmt(budget);
+  document.getElementById('agreedHoursVal').textContent=agreedHours+' hrs';
+  document.getElementById('rateVal').textContent=fmt(rate)+'/hr';
+  document.getElementById('actualHoursVal').textContent=actualHours+' hrs';
+  document.getElementById('requestsVal').textContent=requests;
+  document.getElementById('changeTimeVal').textContent=fmtDec(changeTime,1)+' hrs';
+
+  // Calculate
+  const shouldvePaid=actualHours*rate;
+  const leftOnTable=Math.max(0,shouldvePaid-budget);
+  const effectiveRate=actualHours>0?budget/actualHours:0;
+  const freeHours=Math.max(0,actualHours-agreedHours);
+  const freeDays=freeHours/8;
+  const scopeCreepCost=freeHours*rate;
+  const overPct=agreedHours>0?((actualHours-agreedHours)/agreedHours)*100:0;
+
+  // Severity Meter
+  const clampedPct=Math.max(0,Math.min(100,overPct));
+  // Needle angle: 0% = -90deg (left), 100% = +90deg (right)
+  // Map 0-100% over to -90 to +90
+  const needleAngle=-90+(Math.min(clampedPct,100)/100)*180;
+  const needle=document.getElementById('meterNeedle');
+  needle.style.transform='rotate('+needleAngle+'deg)';
+
+  const meterPct=document.getElementById('meterPct');
+  const meterStatus=document.getElementById('meterStatus');
+  const meterSubtext=document.getElementById('meterSubtext');
+
+  meterPct.textContent=Math.round(Math.max(0,overPct))+'%';
+
+  let statusText,statusColor;
+  if(overPct<=0){statusText='On Track';statusColor='var(--success)'}
+  else if(overPct<=15){statusText='Under Control';statusColor='var(--success)'}
+  else if(overPct<=30){statusText='Creeping...';statusColor='var(--warning)'}
+  else if(overPct<=50){statusText='Danger Zone';statusColor='#f97316'}
+  else{statusText='Full Blown Scope Creep';statusColor='var(--danger)'}
+
+  meterPct.style.color=statusColor;
+  meterStatus.textContent=statusText;
+  meterStatus.style.color=statusColor;
+  if(overPct<=0){
+    meterSubtext.textContent='Your project is within the original scope';
+  } else {
+    meterSubtext.textContent="You're "+Math.round(overPct)+'% over your original scope';
+  }
+
+  // Dashboard
+  document.getElementById('dashBudget').textContent=fmt(budget);
+  document.getElementById('dashShouldvePaid').textContent=fmt(shouldvePaid);
+  document.getElementById('dashLeftOnTable').textContent=fmt(leftOnTable);
+  document.getElementById('dashEffRate').textContent=fmt(effectiveRate)+'/hr';
+  document.getElementById('dashFreeHours').textContent=Math.round(freeHours)+' hrs';
+  document.getElementById('dashFreeDays').textContent=fmtDec(freeDays,1)+' days';
+
+  // Effective rate card color
+  const effCard=document.getElementById('effRateCard');
+  const effVal=document.getElementById('dashEffRate');
+  effCard.className='dash-card';
+  if(effectiveRate<rate){
+    effCard.classList.add('danger');
+  }
+
+  // Timeline
+  const maxHours=Math.max(actualHours,agreedHours);
+  const origPct=maxHours>0?(agreedHours/maxHours)*100:0;
+  document.getElementById('timelineOriginal').style.width=origPct+'%';
+  document.getElementById('timelineOriginalLabel').textContent=agreedHours+' hrs';
+  document.getElementById('timelineActual').style.width='100%';
+  document.getElementById('timelineActualLabel').textContent=actualHours+' hrs';
+  document.getElementById('timelineMax').textContent=maxHours+' hours';
+
+  // If actual <= agreed, hide the creep visual
+  if(actualHours<=agreedHours){
+    document.getElementById('timelineActual').style.background='transparent';
+  } else {
+    document.getElementById('timelineActual').style.background='repeating-linear-gradient(135deg,rgba(239,68,68,.2),rgba(239,68,68,.2) 8px,rgba(239,68,68,.1) 8px,rgba(239,68,68,.1) 16px)';
+  }
+
+  // Fun Section
+  document.getElementById('funEarned').textContent=fmt(freeHours*rate);
+  const avgProjectHours=agreedHours>0?agreedHours:40;
+  document.getElementById('funProjects').textContent=fmtDec(freeHours/avgProjectHours,1);
+  document.getElementById('funDaysOff').textContent=fmtDec(freeDays,1);
+
+  // Share text
+  const shareText=encodeURIComponent("I just calculated my scope creep cost: "+fmt(leftOnTable)+" left on the table and my effective rate dropped to "+fmt(effectiveRate)+"/hr. Find out yours:");
+  const shareUrl=encodeURIComponent('https://baphometsblade.github.io/freelanceos-storefront/scope-creep-calculator.html');
+  document.getElementById('shareTwitter').href='https://twitter.com/intent/tweet?text='+shareText+'&url='+shareUrl;
+  document.getElementById('shareLinkedIn').href='https://www.linkedin.com/sharing/share-offsite/?url='+shareUrl;
+}
+
+function copyLink(){
+  const url='https://baphometsblade.github.io/freelanceos-storefront/scope-creep-calculator.html';
+  navigator.clipboard.writeText(url).then(function(){
+    var btn=document.querySelector('.share-btn.copy');
+    btn.textContent='Copied!';
+    setTimeout(function(){btn.innerHTML='&#128203; Copy Link'},2000);
+  });
+}
+
+// Scroll-based reveal animation
+function revealSections(){
+  var sections=document.querySelectorAll('.section');
+  var windowHeight=window.innerHeight;
+  sections.forEach(function(section){
+    var rect=section.getBoundingClientRect();
+    if(rect.top<windowHeight-60){
+      section.classList.add('visible');
+    }
+  });
+}
+
+window.addEventListener('scroll',revealSections);
+window.addEventListener('load',function(){
+  // Trigger initial calculation
+  update();
+  // Reveal sections visible on load
+  setTimeout(revealSections,100);
+});
+window.addEventListener('resize',revealSections);
+</script>
+</body>
+</html>
