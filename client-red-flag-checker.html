@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Red Flag Checker — Free Tool | FreelanceOS</title>
+    <meta name="description" content="Free Client Red Flag Checker for freelancers. Score potential clients on communication, respect, payment risk, and more before signing. Protect your freelance business.">
+    <meta name="keywords" content="freelance red flags, client vetting, freelance tools, bad clients, freelance protection, client screening">
+    <meta name="author" content="FreelanceOS">
+    <meta property="og:title" content="Client Red Flag Checker — Free Tool | FreelanceOS">
+    <meta property="og:description" content="Score potential clients before you sign. Spot red flags in communication, payment, scope, and professionalism. Free forever.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freelanceos.pro/freelanceos-storefront/client-red-flag-checker.html">
+    <meta property="og:image" content="https://freelanceos.pro/og-image.png">
+    <meta property="og:site_name" content="FreelanceOS">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Client Red Flag Checker — Free Tool | FreelanceOS">
+    <meta name="twitter:description" content="Score potential clients before you sign. Spot red flags in communication, payment, scope, and professionalism.">
+    <meta name="twitter:image" content="https://freelanceos.pro/og-image.png">
+    <link rel="canonical" href="https://freelanceos.pro/freelanceos-storefront/client-red-flag-checker.html">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Client Red Flag Checker",
+        "description": "Free tool for freelancers to evaluate potential clients and identify red flags before signing contracts.",
+        "url": "https://freelanceos.pro/freelanceos-storefront/client-red-flag-checker.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "FreelanceOS"
+        }
+    }
+    </script>
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #a855f7;
+            --accent2: #ec4899;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: rgba(168,85,247,0.1);
+            --glass-bg: rgba(15,23,42,0.8);
+            --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --green: #22c55e;
+            --yellow: #eab308;
+            --orange: #f97316;
+            --red: #ef4444;
+            --radius-card: 16px;
+            --radius-btn: 12px;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(168,85,247,0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(236,72,153,0.08), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 0 30px;
+        }
+        .header-icon {
+            font-size: 56px;
+            margin-bottom: 12px;
+            animation: flagPulse 2s ease-in-out infinite;
+        }
+        @keyframes flagPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1) rotate(-5deg); }
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        /* Progress Bar */
+        .progress-wrapper {
+            margin: 24px 0 32px;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+        .progress-step.active { color: var(--accent); font-weight: 600; }
+        .progress-step.done { color: var(--green); }
+        .step-dot {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 700;
+            background: var(--card);
+            border: 2px solid var(--border);
+            transition: all 0.3s;
+        }
+        .progress-step.active .step-dot {
+            background: var(--gradient);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        .progress-step.done .step-dot {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+        .step-connector {
+            width: 40px; height: 2px;
+            background: var(--border);
+            align-self: center;
+            border-radius: 1px;
+            transition: background 0.3s;
+        }
+        .step-connector.active { background: var(--gradient); }
+        .progress-bar {
+            height: 4px;
+            background: rgba(168,85,247,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 2px;
+            transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+            width: 0%;
+        }
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 28px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.4s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .step-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+        /* Question */
+        .question-block {
+            margin-bottom: 22px;
+            animation: fadeInUp 0.35s ease-out;
+        }
+        .question-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .question-label .q-emoji { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 8px;
+        }
+        .option-btn {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-btn);
+            padding: 10px 14px;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-family: inherit;
+        }
+        .option-btn:hover {
+            border-color: rgba(168,85,247,0.4);
+            background: rgba(168,85,247,0.08);
+            transform: translateY(-1px);
+        }
+        .option-btn.selected {
+            background: rgba(168,85,247,0.15);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(168,85,247,0.15);
+        }
+        .option-btn.selected-green {
+            background: rgba(34,197,94,0.12);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .option-btn.selected-yellow {
+            background: rgba(234,179,8,0.12);
+            border-color: var(--yellow);
+            color: var(--yellow);
+        }
+        .option-btn.selected-orange {
+            background: rgba(249,115,22,0.12);
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+        .option-btn.selected-red {
+            background: rgba(239,68,68,0.12);
+            border-color: var(--red);
+            color: var(--red);
+        }
+        /* Navigation */
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .btn {
+            padding: 12px 28px;
+            border-radius: var(--radius-btn);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: all 0.25s;
+        }
+        .btn-primary {
+            background: var(--gradient);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(168,85,247,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(168,85,247,0.4);
+        }
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            border-color: rgba(168,85,247,0.3);
+            color: var(--text);
+        }
+        /* Results */
+        .results-section { display: none; }
+        .results-section.visible { display: block; }
+        .score-reveal {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .flag-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .flag-icon {
+            font-size: 100px;
+            display: block;
+            animation: flagWave 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px var(--flag-glow, rgba(34,197,94,0.4)));
+        }
+        @keyframes flagWave {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            25% { transform: rotate(3deg) scale(1.05); }
+            50% { transform: rotate(-3deg) scale(1.02); }
+            75% { transform: rotate(5deg) scale(1.04); }
+        }
+        .flag-pulse-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 140px; height: 140px;
+            margin: -70px 0 0 -70px;
+            border-radius: 50%;
+            border: 3px solid var(--flag-color, var(--green));
+            animation: pulseRing 2s ease-out infinite;
+            opacity: 0;
+        }
+        @keyframes pulseRing {
+            0% { transform: scale(0.6); opacity: 0.6; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .score-number {
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: -3px;
+            margin: 10px 0 4px;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .score-number.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .score-label {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            opacity: 0;
+            transition: opacity 0.5s 0.4s;
+        }
+        .score-label.revealed { opacity: 1; }
+        .score-sublabel {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: opacity 0.5s 0.6s;
+        }
+        .score-sublabel.revealed { opacity: 1; }
+        /* Category Scores */
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .category-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            padding: 16px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+        .category-card:nth-child(1) { animation-delay: 0.6s; }
+        .category-card:nth-child(2) { animation-delay: 0.7s; }
+        .category-card:nth-child(3) { animation-delay: 0.8s; }
+        .category-card:nth-child(4) { animation-delay: 0.9s; }
+        .category-card:nth-child(5) { animation-delay: 1.0s; }
+        .cat-icon { font-size: 1.4rem; margin-bottom: 4px; }
+        .cat-name { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+        .cat-score { font-size: 1.4rem; font-weight: 800; }
+        .cat-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .cat-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 1s cubic-bezier(0.4,0,0.2,1) 1s;
+            width: 0%;
+        }
+        /* Red Flags List */
+        .flags-section {
+            margin-top: 24px;
+            opacity: 0;
+            animation: fadeInUp 0.4s ease-out 1.1s forwards;
+        }
+        .flags-header {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .flag-count-badge {
+            background: var(--gradient);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+        .flag-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            background: var(--card);
+            border-radius: var(--radius-btn);
+            margin-bottom: 8px;
+            border-left: 3px solid;
+            font-size: 0.88rem;
+        }
+        .flag-item.severity-high { border-left-color: var(--red); }
+        .flag-item.severity-medium { border-left-color: var(--orange); }
+        .flag-item.severity-low { border-left-color: var(--yellow); }
+        .flag-item .flag-sev {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+        .flag-sev.high { background: rgba(239,68,68,0.15); color: var(--red); }
+        .flag-sev.medium { background: rgba(249,115,22,0.15); color: var(--orange); }
+        .flag-sev.low { background: rgba(234,179,8,0.15); color: var(--yellow); }
+        /* Advice section */
+        .advice-section {
+            margin-top: 24px;
+            opacity: 0;
+            animation: fadeInUp 0.4s ease-out 1.3s forwards;
+        }
+        .advice-card {
+            background: rgba(168,85,247,0.06);
+            border: 1px solid rgba(168,85,247,0.15);
+            border-radius: var(--radius-card);
+            padding: 22px;
+        }
+        .advice-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .advice-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .advice-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.88rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+        .advice-list li::before {
+            content: '>';
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        /* Stats box */
+        .stats-box {
+            margin-top: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 20px;
+            opacity: 0;
+            animation: fadeInUp 0.4s ease-out 1.5s forwards;
+        }
+        .stats-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+        .stat-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+        .stat-row span { color: var(--text); font-weight: 600; }
+        /* Share & Restart */
+        .action-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInUp 0.4s ease-out 1.7s forwards;
+        }
+        .btn-share {
+            background: var(--gradient);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: var(--radius-btn);
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s;
+        }
+        .btn-share:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(168,85,247,0.35); }
+        .btn-restart {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: var(--radius-btn);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s;
+        }
+        .btn-restart:hover { border-color: rgba(168,85,247,0.3); }
+        /* CTA */
+        .cta-banner {
+            background: var(--gradient);
+            border-radius: var(--radius-card);
+            padding: 28px;
+            text-align: center;
+            margin-top: 32px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.4s ease-out 1.9s forwards;
+        }
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+            animation: ctaShimmer 4s linear infinite;
+        }
+        @keyframes ctaShimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .cta-banner * { position: relative; z-index: 1; }
+        .cta-banner h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
+        .cta-banner p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 16px; }
+        .cta-btn {
+            display: inline-block;
+            background: #fff;
+            color: var(--accent);
+            padding: 12px 28px;
+            border-radius: var(--radius-btn);
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+        .cta-code {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+        }
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            padding: 30px 0 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 20px;
+            margin-bottom: 16px;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--accent); }
+        .footer-disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--card);
+            border: 1px solid var(--green);
+            border-radius: var(--radius-btn);
+            padding: 12px 24px;
+            font-size: 0.88rem;
+            color: var(--green);
+            font-weight: 600;
+            z-index: 999;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container { padding: 16px; }
+            .header h1 { font-size: 1.5rem; }
+            .header-icon { font-size: 44px; }
+            .glass-card { padding: 20px; }
+            .options-grid { grid-template-columns: 1fr 1fr; }
+            .category-grid { grid-template-columns: 1fr 1fr; }
+            .score-number { font-size: 3.5rem; }
+            .flag-icon { font-size: 72px; }
+            .progress-steps { gap: 4px; }
+            .step-connector { width: 24px; }
+            .progress-step { font-size: 0.72rem; }
+            .action-row { flex-direction: column; align-items: stretch; }
+        }
+        /* Print */
+        @media print {
+            body { background: #fff; color: #111; }
+            body::before { display: none; }
+            .glass-card { background: #f9f9f9; border: 1px solid #ddd; backdrop-filter: none; }
+            .btn, .btn-share, .btn-restart, .cta-banner, .action-row, .nav-row { display: none !important; }
+            .progress-wrapper { display: none; }
+            .header h1 { -webkit-text-fill-color: #6d28d9; }
+            .flag-icon { animation: none; }
+            .score-number { opacity: 1 !important; transform: none !important; }
+            .score-label, .score-sublabel { opacity: 1 !important; }
+            .category-card, .flags-section, .advice-section, .stats-box { opacity: 1 !important; animation: none !important; }
+            .cat-bar-fill { transition: none; }
+        }
+        /* Hiding steps */
+        .wizard-step { display: none; }
+        .wizard-step.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">🚩</div>
+            <h1>Client Red Flag Checker</h1>
+            <p>Score potential clients before you sign. Spot problems before they cost you time and money.</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-wrapper" id="progressWrapper">
+            <div class="progress-steps">
+                <div class="progress-step active" id="ps1">
+                    <div class="step-dot">1</div>
+                    <span>First Contact</span>
+                </div>
+                <div class="step-connector" id="sc1"></div>
+                <div class="progress-step" id="ps2">
+                    <div class="step-dot">2</div>
+                    <span>Negotiation</span>
+                </div>
+                <div class="step-connector" id="sc2"></div>
+                <div class="progress-step" id="ps3">
+                    <div class="step-dot">3</div>
+                    <span>Gut Check</span>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Step 1: First Contact Signals -->
+        <div class="wizard-step active" id="step1">
+            <div class="glass-card">
+                <div class="step-title">Step 1: First Contact Signals</div>
+                <div class="step-subtitle">How did this client first reach out to you?</div>
+
+                <div class="question-block" id="q1">
+                    <div class="question-label">
+                        <span class="q-emoji">📬</span>
+                        <span>How did they find you?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q1" data-v="referral" data-score="0">Referral</button>
+                        <button class="option-btn" data-q="q1" data-v="portfolio" data-score="0">My portfolio</button>
+                        <button class="option-btn" data-q="q1" data-v="cold" data-score="2">Cold DM/email</button>
+                        <button class="option-btn" data-q="q1" data-v="marketplace" data-score="1">Job board</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q2">
+                    <div class="question-label">
+                        <span class="q-emoji">💰</span>
+                        <span>Did they mention budget upfront?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q2" data-v="yes" data-score="0">Yes, clear budget</button>
+                        <button class="option-btn" data-q="q2" data-v="range" data-score="1">Gave a range</button>
+                        <button class="option-btn" data-q="q2" data-v="dodged" data-score="3">Dodged the question</button>
+                        <button class="option-btn" data-q="q2" data-v="no" data-score="2">Not yet discussed</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q3">
+                    <div class="question-label">
+                        <span class="q-emoji">⏰</span>
+                        <span>How quickly do they want to start?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q3" data-v="reasonable" data-score="0">Reasonable timeline</button>
+                        <button class="option-btn" data-q="q3" data-v="soon" data-score="1">Pretty soon</button>
+                        <button class="option-btn" data-q="q3" data-v="asap" data-score="3">ASAP / yesterday</button>
+                        <button class="option-btn" data-q="q3" data-v="unsure" data-score="1">Not sure</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q4">
+                    <div class="question-label">
+                        <span class="q-emoji">📋</span>
+                        <span>Do they have a clear brief or project scope?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q4" data-v="yes" data-score="0">Yes, detailed</button>
+                        <button class="option-btn" data-q="q4" data-v="some" data-score="1">Somewhat clear</button>
+                        <button class="option-btn" data-q="q4" data-v="vague" data-score="3">Very vague</button>
+                        <button class="option-btn" data-q="q4" data-v="none" data-score="4">"You decide"</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q5">
+                    <div class="question-label">
+                        <span class="q-emoji">🤝</span>
+                        <span>Have they worked with freelancers before?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q5" data-v="yes" data-score="0">Yes, good experience</button>
+                        <button class="option-btn" data-q="q5" data-v="bad" data-score="2">Yes, bad experience</button>
+                        <button class="option-btn" data-q="q5" data-v="no" data-score="1">No, first time</button>
+                        <button class="option-btn" data-q="q5" data-v="unsure" data-score="1">Not sure</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q6">
+                    <div class="question-label">
+                        <span class="q-emoji">💬</span>
+                        <span>How do they communicate?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q6" data-v="professional" data-score="0">Professional & clear</button>
+                        <button class="option-btn" data-q="q6" data-v="casual" data-score="0">Casual but respectful</button>
+                        <button class="option-btn" data-q="q6" data-v="pushy" data-score="3">Pushy / demanding</button>
+                        <button class="option-btn" data-q="q6" data-v="scattered" data-score="2">Scattered / unclear</button>
+                    </div>
+                </div>
+
+                <div class="nav-row">
+                    <div></div>
+                    <button class="btn btn-primary" id="next1" disabled onclick="goToStep(2)">Next: Negotiation &rarr;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Negotiation Red Flags -->
+        <div class="wizard-step" id="step2">
+            <div class="glass-card">
+                <div class="step-title">Step 2: Negotiation Red Flags</div>
+                <div class="step-subtitle">Warning signs during the deal-making phase.</div>
+
+                <div class="question-block" id="q7">
+                    <div class="question-label">
+                        <span class="q-emoji">🎨</span>
+                        <span>Did they ask for free spec work or a "test project"?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q7" data-v="no" data-score="0">No</button>
+                        <button class="option-btn" data-q="q7" data-v="small" data-score="2">Small test task</button>
+                        <button class="option-btn" data-q="q7" data-v="yes" data-score="4">Yes, free work</button>
+                        <button class="option-btn" data-q="q7" data-v="unsure" data-score="1">Not sure yet</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q8">
+                    <div class="question-label">
+                        <span class="q-emoji">📢</span>
+                        <span>"It'll be great exposure / for your portfolio"?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q8" data-v="no" data-score="0">No, never said that</button>
+                        <button class="option-btn" data-q="q8" data-v="hinted" data-score="2">Hinted at it</button>
+                        <button class="option-btn" data-q="q8" data-v="yes" data-score="4">Yes, said exactly that</button>
+                        <button class="option-btn" data-q="q8" data-v="unsure" data-score="1">Not sure</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q9">
+                    <div class="question-label">
+                        <span class="q-emoji">🔄</span>
+                        <span>Do they want unlimited revisions?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q9" data-v="no" data-score="0">No, reasonable rounds</button>
+                        <button class="option-btn" data-q="q9" data-v="many" data-score="2">Wants many rounds</button>
+                        <button class="option-btn" data-q="q9" data-v="yes" data-score="4">Expects unlimited</button>
+                        <button class="option-btn" data-q="q9" data-v="unsure" data-score="1">Not discussed</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q10">
+                    <div class="question-label">
+                        <span class="q-emoji">📉</span>
+                        <span>Are they pushing for below-market rates?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q10" data-v="no" data-score="0">No, fair rates</button>
+                        <button class="option-btn" data-q="q10" data-v="slight" data-score="2">Slightly below</button>
+                        <button class="option-btn" data-q="q10" data-v="yes" data-score="4">Way below market</button>
+                        <button class="option-btn" data-q="q10" data-v="unsure" data-score="1">Not sure</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q11">
+                    <div class="question-label">
+                        <span class="q-emoji">🌫️</span>
+                        <span>Is the scope vague or constantly shifting?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q11" data-v="no" data-score="0">No, well-defined</button>
+                        <button class="option-btn" data-q="q11" data-v="some" data-score="2">Somewhat vague</button>
+                        <button class="option-btn" data-q="q11" data-v="yes" data-score="4">"We'll figure it out"</button>
+                        <button class="option-btn" data-q="q11" data-v="unsure" data-score="1">Not sure</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q12">
+                    <div class="question-label">
+                        <span class="q-emoji">🎰</span>
+                        <span>Want to pay "when the project makes money"?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q12" data-v="no" data-score="0">No, pay upfront/milestone</button>
+                        <button class="option-btn" data-q="q12" data-v="partial" data-score="2">Partial rev-share</button>
+                        <button class="option-btn" data-q="q12" data-v="yes" data-score="5">Yes, rev-share only</button>
+                        <button class="option-btn" data-q="q12" data-v="unsure" data-score="1">Not discussed</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q13">
+                    <div class="question-label">
+                        <span class="q-emoji">⚖️</span>
+                        <span>Comparing you to cheaper freelancers?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q13" data-v="no" data-score="0">No</button>
+                        <button class="option-btn" data-q="q13" data-v="hinted" data-score="2">Hinted at it</button>
+                        <button class="option-btn" data-q="q13" data-v="yes" data-score="4">"Someone on Fiverr can..."</button>
+                        <button class="option-btn" data-q="q13" data-v="unsure" data-score="1">Not sure</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q14">
+                    <div class="question-label">
+                        <span class="q-emoji">🔬</span>
+                        <span>Already micromanaging before the project starts?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q14" data-v="no" data-score="0">No, trusts my process</button>
+                        <button class="option-btn" data-q="q14" data-v="some" data-score="2">Somewhat controlling</button>
+                        <button class="option-btn" data-q="q14" data-v="yes" data-score="4">Total micromanager</button>
+                        <button class="option-btn" data-q="q14" data-v="unsure" data-score="1">Not sure yet</button>
+                    </div>
+                </div>
+
+                <div class="nav-row">
+                    <button class="btn btn-secondary" onclick="goToStep(1)">&larr; Back</button>
+                    <button class="btn btn-primary" id="next2" disabled onclick="goToStep(3)">Next: Gut Check &rarr;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Gut Check -->
+        <div class="wizard-step" id="step3">
+            <div class="glass-card">
+                <div class="step-title">Step 3: Gut Check</div>
+                <div class="step-subtitle">Trust your instincts. How does this client make you feel?</div>
+
+                <div class="question-block" id="q15">
+                    <div class="question-label">
+                        <span class="q-emoji">🗓️</span>
+                        <span>Do they respect your timeline and availability?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q15" data-v="yes" data-score="0">Yes, fully</button>
+                        <button class="option-btn" data-q="q15" data-v="sometimes" data-score="2">Sometimes</button>
+                        <button class="option-btn" data-q="q15" data-v="no" data-score="4">No, expects 24/7</button>
+                        <button class="option-btn" data-q="q15" data-v="unsure" data-score="1">Not sure yet</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q16">
+                    <div class="question-label">
+                        <span class="q-emoji">🗣️</span>
+                        <span>Have they badmouthed previous freelancers?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q16" data-v="no" data-score="0">No</button>
+                        <button class="option-btn" data-q="q16" data-v="once" data-score="2">Mentioned issues once</button>
+                        <button class="option-btn" data-q="q16" data-v="yes" data-score="5">Yes, "everyone sucks"</button>
+                        <button class="option-btn" data-q="q16" data-v="unsure" data-score="1">Not sure</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q17">
+                    <div class="question-label">
+                        <span class="q-emoji">🧭</span>
+                        <span>Do they understand and respect your process?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q17" data-v="yes" data-score="0">Yes, gets it</button>
+                        <button class="option-btn" data-q="q17" data-v="learning" data-score="1">Learning, open</button>
+                        <button class="option-btn" data-q="q17" data-v="no" data-score="3">"Just do it my way"</button>
+                        <button class="option-btn" data-q="q17" data-v="unsure" data-score="1">Not sure</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q18">
+                    <div class="question-label">
+                        <span class="q-emoji">📱</span>
+                        <span>Are they responsive to your messages?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q18" data-v="yes" data-score="0">Yes, timely replies</button>
+                        <button class="option-btn" data-q="q18" data-v="sometimes" data-score="2">Hit or miss</button>
+                        <button class="option-btn" data-q="q18" data-v="no" data-score="3">Ghost, then flood</button>
+                        <button class="option-btn" data-q="q18" data-v="unsure" data-score="1">Too early to tell</button>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q19">
+                    <div class="question-label">
+                        <span class="q-emoji">💎</span>
+                        <span>Do they value your expertise or treat you like a tool?</span>
+                    </div>
+                    <div class="options-grid">
+                        <button class="option-btn" data-q="q19" data-v="yes" data-score="0">Value my expertise</button>
+                        <button class="option-btn" data-q="q19" data-v="sometimes" data-score="2">Sometimes</button>
+                        <button class="option-btn" data-q="q19" data-v="no" data-score="4">"Just do what I say"</button>
+                        <button class="option-btn" data-q="q19" data-v="unsure" data-score="1">Not sure</button>
+                    </div>
+                </div>
+
+                <div class="nav-row">
+                    <button class="btn btn-secondary" onclick="goToStep(2)">&larr; Back</button>
+                    <button class="btn btn-primary" id="submitBtn" disabled onclick="showResults()">Get My Score 🚩</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-section" id="resultsSection">
+            <div class="glass-card">
+                <div class="score-reveal">
+                    <div class="flag-container">
+                        <div class="flag-pulse-ring"></div>
+                        <span class="flag-icon" id="flagIcon">🟢</span>
+                    </div>
+                    <div class="score-number" id="scoreNumber">0</div>
+                    <div class="score-label" id="scoreLabel">Client Safety Score</div>
+                    <div class="score-sublabel" id="scoreSublabel">out of 100</div>
+                </div>
+
+                <div class="category-grid" id="categoryGrid"></div>
+
+                <div class="flags-section" id="flagsSection">
+                    <div class="flags-header">
+                        <span>Red Flags Detected</span>
+                        <span class="flag-count-badge" id="flagCountBadge">0</span>
+                    </div>
+                    <div id="flagsList"></div>
+                </div>
+
+                <div class="advice-section" id="adviceSection">
+                    <div class="advice-card">
+                        <div class="advice-title">🛡️ Before signing this client, make sure to...</div>
+                        <ul class="advice-list" id="adviceList"></ul>
+                    </div>
+                </div>
+
+                <div class="stats-box" id="statsBox">
+                    <div class="stats-title">Clients like this typically...</div>
+                    <div id="statsList"></div>
+                </div>
+
+                <div class="action-row">
+                    <button class="btn-share" onclick="shareResults()">
+                        <span>📋</span> Share My Score
+                    </button>
+                    <button class="btn-restart" onclick="restart()">
+                        <span>🔄</span> Run Another Client
+                    </button>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-banner">
+                <h3>Protect yourself before every project</h3>
+                <p>FreelanceOS Pro includes client vetting templates, contract protections, scope-of-work builders, and 40+ tools to run your freelance business.</p>
+                <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="cta-btn" target="_blank" rel="noopener">Get 40% Off &rarr; $17.40</a>
+                <div class="cta-code">Use code <strong>FLASH40</strong> at checkout</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-links">
+                <a href="/freelanceos-storefront/contract-clauses.html">Contract Clause Generator</a>
+                <a href="/freelanceos-storefront/scope-creep-calculator.html">Scope Creep Calculator</a>
+                <a href="/freelanceos-storefront/burnout-risk-assessment.html">Burnout Risk Assessment</a>
+                <a href="/freelanceos-storefront/freelance-proposal-generator.html">Proposal Generator</a>
+            </div>
+            <div class="footer-disclaimer">
+                This tool is for educational purposes only. It does not constitute legal, financial, or professional advice. Always use your own judgment when evaluating clients.
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        /* ========== STATE ========== */
+        var answers = {};
+        var totalQuestions = 19;
+        var stepQuestions = { 1: [1,2,3,4,5,6], 2: [7,8,9,10,11,12,13,14], 3: [15,16,17,18,19] };
+        var currentStep = 1;
+        var finalScore = 0;
+
+        /* ========== QUESTION CONFIG ========== */
+        var questionMeta = {
+            q1:  { cat: 'professional', flag: null },
+            q2:  { cat: 'payment', flag: 'Avoids discussing budget', severity: 'medium', threshold: 3 },
+            q3:  { cat: 'respect', flag: 'Unrealistic urgency', severity: 'medium', threshold: 3 },
+            q4:  { cat: 'scope', flag: 'No clear brief or scope', severity: 'high', threshold: 3 },
+            q5:  { cat: 'professional', flag: 'Bad experience with all past freelancers', severity: 'medium', threshold: 2 },
+            q6:  { cat: 'communication', flag: 'Pushy or scattered communication', severity: 'medium', threshold: 2 },
+            q7:  { cat: 'payment', flag: 'Expects free spec work', severity: 'high', threshold: 4 },
+            q8:  { cat: 'payment', flag: '"Great exposure" instead of payment', severity: 'high', threshold: 4 },
+            q9:  { cat: 'scope', flag: 'Expects unlimited revisions', severity: 'high', threshold: 4 },
+            q10: { cat: 'payment', flag: 'Pushing for below-market rates', severity: 'high', threshold: 4 },
+            q11: { cat: 'scope', flag: 'Vague or shifting scope', severity: 'high', threshold: 4 },
+            q12: { cat: 'payment', flag: 'Wants revenue-share instead of payment', severity: 'high', threshold: 5 },
+            q13: { cat: 'respect', flag: 'Comparing you to cheaper freelancers', severity: 'medium', threshold: 4 },
+            q14: { cat: 'respect', flag: 'Micromanaging before project starts', severity: 'medium', threshold: 4 },
+            q15: { cat: 'respect', flag: 'Disrespects your timeline', severity: 'high', threshold: 4 },
+            q16: { cat: 'professional', flag: 'Badmouths previous freelancers', severity: 'high', threshold: 5 },
+            q17: { cat: 'communication', flag: 'Does not respect your process', severity: 'medium', threshold: 3 },
+            q18: { cat: 'communication', flag: 'Inconsistent communication', severity: 'medium', threshold: 3 },
+            q19: { cat: 'respect', flag: 'Treats you like a tool, not an expert', severity: 'high', threshold: 4 }
+        };
+
+        /* ========== OPTION CLICK HANDLER ========== */
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.option-btn');
+            if (!btn) return;
+            var qId = btn.getAttribute('data-q');
+            var val = btn.getAttribute('data-v');
+            var score = parseInt(btn.getAttribute('data-score'), 10);
+
+            // Deselect siblings
+            var siblings = btn.parentNode.querySelectorAll('.option-btn');
+            for (var i = 0; i < siblings.length; i++) {
+                siblings[i].className = 'option-btn';
+            }
+
+            // Color code selection
+            var cls = 'selected';
+            if (score === 0) cls = 'selected selected-green';
+            else if (score <= 1) cls = 'selected selected-yellow';
+            else if (score <= 3) cls = 'selected selected-orange';
+            else cls = 'selected selected-red';
+            btn.className = 'option-btn ' + cls;
+
+            answers[qId] = { value: val, score: score };
+            updateNavButtons();
+            updateProgress();
+        });
+
+        /* ========== NAV LOGIC ========== */
+        function updateNavButtons() {
+            var qs1 = stepQuestions[1], qs2 = stepQuestions[2], qs3 = stepQuestions[3];
+            var done1 = qs1.every(function(n) { return answers['q' + n]; });
+            var done2 = qs2.every(function(n) { return answers['q' + n]; });
+            var done3 = qs3.every(function(n) { return answers['q' + n]; });
+            document.getElementById('next1').disabled = !done1;
+            document.getElementById('next2').disabled = !done2;
+            document.getElementById('submitBtn').disabled = !done3;
+        }
+
+        function updateProgress() {
+            var answered = Object.keys(answers).length;
+            var pct = Math.round((answered / totalQuestions) * 100);
+            document.getElementById('progressFill').style.width = pct + '%';
+        }
+
+        function goToStep(step) {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + step).classList.add('active');
+
+            // Update progress step indicators
+            for (var s = 1; s <= 3; s++) {
+                var el = document.getElementById('ps' + s);
+                el.classList.remove('active', 'done');
+                if (s < step) el.classList.add('done');
+                else if (s === step) el.classList.add('active');
+            }
+            for (var c = 1; c <= 2; c++) {
+                var conn = document.getElementById('sc' + c);
+                conn.classList.toggle('active', c < step);
+            }
+
+            currentStep = step;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ========== SCORING ENGINE ========== */
+        function calculateResults() {
+            var maxPossible = 0;
+            var totalPenalty = 0;
+            var categoryScores = {
+                communication: { penalty: 0, max: 0 },
+                respect: { penalty: 0, max: 0 },
+                payment: { penalty: 0, max: 0 },
+                scope: { penalty: 0, max: 0 },
+                professional: { penalty: 0, max: 0 }
+            };
+            var detectedFlags = [];
+
+            var maxScores = {
+                q1: 2, q2: 3, q3: 3, q4: 4, q5: 2, q6: 3,
+                q7: 4, q8: 4, q9: 4, q10: 4, q11: 4, q12: 5,
+                q13: 4, q14: 4, q15: 4, q16: 5, q17: 3, q18: 3, q19: 4
+            };
+
+            for (var qKey in answers) {
+                var a = answers[qKey];
+                var meta = questionMeta[qKey];
+                var mxS = maxScores[qKey] || 4;
+                totalPenalty += a.score;
+                maxPossible += mxS;
+
+                if (meta && meta.cat && categoryScores[meta.cat]) {
+                    categoryScores[meta.cat].penalty += a.score;
+                    categoryScores[meta.cat].max += mxS;
+                }
+                if (meta && meta.flag && a.score >= meta.threshold) {
+                    detectedFlags.push({
+                        text: meta.flag,
+                        severity: meta.severity,
+                        score: a.score
+                    });
+                }
+            }
+
+            // Invert: low penalty = high safety score
+            var safetyScore = Math.max(0, Math.round((1 - totalPenalty / maxPossible) * 100));
+            var catResults = {};
+            for (var cat in categoryScores) {
+                var c = categoryScores[cat];
+                catResults[cat] = c.max > 0 ? Math.max(0, Math.round((1 - c.penalty / c.max) * 100)) : 100;
+            }
+
+            // Sort flags by severity
+            var sevOrder = { high: 0, medium: 1, low: 2 };
+            detectedFlags.sort(function(a, b) {
+                return (sevOrder[a.severity] || 2) - (sevOrder[b.severity] || 2);
+            });
+
+            return {
+                score: safetyScore,
+                categories: catResults,
+                flags: detectedFlags,
+                totalPenalty: totalPenalty,
+                maxPossible: maxPossible
+            };
+        }
+
+        function getVerdict(score) {
+            if (score >= 80) return { icon: '🟢', color: 'var(--green)', label: 'Safe to Proceed', glow: 'rgba(34,197,94,0.4)', sub: 'This client looks solid. Standard protections recommended.' };
+            if (score >= 60) return { icon: '🟡', color: 'var(--yellow)', label: 'Proceed with Caution', glow: 'rgba(234,179,8,0.4)', sub: 'Some yellow flags. Add extra protections to your contract.' };
+            if (score >= 40) return { icon: '🟠', color: 'var(--orange)', label: 'High Risk Client', glow: 'rgba(249,115,22,0.4)', sub: 'Multiple warning signs. Charge a premium or walk away.' };
+            return { icon: '🔴', color: 'var(--red)', label: 'Run Away', glow: 'rgba(239,68,68,0.5)', sub: 'This client will cost you more than they pay. Hard pass.' };
+        }
+
+        function getAdvice(score, flags, cats) {
+            var advice = [];
+            if (cats.payment < 60) {
+                advice.push('Require 50% upfront payment before starting any work.');
+                advice.push('Add a kill fee clause (25-50%) if the project is cancelled mid-way.');
+            }
+            if (cats.scope < 60) {
+                advice.push('Write a detailed scope-of-work with explicit deliverables and revision limits.');
+                advice.push('Include a change request fee for anything outside the original scope.');
+            }
+            if (cats.respect < 60) {
+                advice.push('Set firm communication boundaries: business hours only, 24-hour response SLA.');
+            }
+            if (cats.communication < 60) {
+                advice.push('Document everything in writing. No verbal agreements.');
+            }
+            if (cats.professional < 60) {
+                advice.push('Ask for references from their previous freelancers before signing.');
+            }
+            if (score < 40) {
+                advice.push('Charge a "difficult client" premium of 25-50% above your standard rate.');
+                advice.push('Consider declining this project. Your time is worth more than this headache.');
+            }
+            if (advice.length === 0) {
+                advice.push('Use a standard contract with clear deliverables and timeline.');
+                advice.push('Set up milestone-based payments to maintain cash flow.');
+                advice.push('Schedule a kick-off call to align expectations before starting.');
+            }
+            return advice.slice(0, 5);
+        }
+
+        function getStats(score) {
+            if (score >= 80) return [
+                { icon: '✅', text: '<span>Pay on time</span> in 90%+ of cases' },
+                { icon: '📈', text: '<span>Lead to repeat work</span> 60% of the time' },
+                { icon: '⭐', text: '<span>Leave positive reviews</span> and referrals' },
+                { icon: '⏱️', text: '<span>Respect deadlines</span> and communication boundaries' }
+            ];
+            if (score >= 60) return [
+                { icon: '⚠️', text: '<span>Require 1-2 extra revision rounds</span> beyond agreed scope' },
+                { icon: '📅', text: '<span>Miss feedback deadlines</span> 30% of the time' },
+                { icon: '💬', text: '<span>Need reminders</span> about project boundaries' },
+                { icon: '💰', text: '<span>Pay within terms</span> but sometimes need a nudge' }
+            ];
+            if (score >= 40) return [
+                { icon: '🚨', text: '<span>Request scope changes</span> on 70%+ of projects' },
+                { icon: '💸', text: '<span>Delay payments</span> an average of 2-4 weeks' },
+                { icon: '😤', text: '<span>Leave negative reviews</span> 40% of the time regardless of work quality' },
+                { icon: '🔄', text: '<span>Demand extra revisions</span> beyond agreed terms' }
+            ];
+            return [
+                { icon: '🏃', text: '<span>Ghost on final payment</span> in 50%+ of cases' },
+                { icon: '💀', text: '<span>Cause freelancer burnout</span> within weeks' },
+                { icon: '⚖️', text: '<span>Threaten legal action</span> when called out on behavior' },
+                { icon: '🗑️', text: '<span>Leave the project unfinished</span> and blame the freelancer' }
+            ];
+        }
+
+        /* ========== RENDER RESULTS ========== */
+        function showResults() {
+            var results = calculateResults();
+            finalScore = results.score;
+            var verdict = getVerdict(results.score);
+
+            // Hide wizard, show results
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('progressWrapper').style.display = 'none';
+            document.getElementById('resultsSection').classList.add('visible');
+
+            // Flag icon
+            var flagEl = document.getElementById('flagIcon');
+            flagEl.textContent = verdict.icon;
+            flagEl.style.setProperty('filter', 'drop-shadow(0 0 30px ' + verdict.glow + ')');
+            document.querySelector('.flag-pulse-ring').style.borderColor = verdict.color;
+            document.documentElement.style.setProperty('--flag-color', verdict.color);
+            document.documentElement.style.setProperty('--flag-glow', verdict.glow);
+
+            // Score number animation
+            var scoreEl = document.getElementById('scoreNumber');
+            scoreEl.style.color = verdict.color;
+            animateNumber(scoreEl, 0, results.score, 1200, function() {
+                scoreEl.classList.add('revealed');
+            });
+            setTimeout(function() { scoreEl.classList.add('revealed'); }, 100);
+            setTimeout(function() {
+                document.getElementById('scoreLabel').textContent = verdict.label;
+                document.getElementById('scoreLabel').style.color = verdict.color;
+                document.getElementById('scoreLabel').classList.add('revealed');
+            }, 300);
+            setTimeout(function() {
+                document.getElementById('scoreSublabel').textContent = verdict.sub;
+                document.getElementById('scoreSublabel').classList.add('revealed');
+            }, 500);
+
+            // Category grid
+            var catNames = {
+                communication: { name: 'Communication', icon: '💬' },
+                respect: { name: 'Respect', icon: '🤝' },
+                payment: { name: 'Payment Risk', icon: '💰' },
+                scope: { name: 'Scope Risk', icon: '📋' },
+                professional: { name: 'Professionalism', icon: '🎓' }
+            };
+            var catGrid = document.getElementById('categoryGrid');
+            catGrid.innerHTML = '';
+            for (var catKey in catNames) {
+                var cv = results.categories[catKey];
+                var cc = getScoreColor(cv);
+                var card = document.createElement('div');
+                card.className = 'category-card';
+                card.innerHTML =
+                    '<div class="cat-icon">' + catNames[catKey].icon + '</div>' +
+                    '<div class="cat-name">' + catNames[catKey].name + '</div>' +
+                    '<div class="cat-score" style="color:' + cc + '">' + cv + '/100</div>' +
+                    '<div class="cat-bar"><div class="cat-bar-fill" style="background:' + cc + '" data-width="' + cv + '%"></div></div>';
+                catGrid.appendChild(card);
+            }
+            // Animate bars after render
+            setTimeout(function() {
+                var fills = catGrid.querySelectorAll('.cat-bar-fill');
+                for (var i = 0; i < fills.length; i++) {
+                    fills[i].style.width = fills[i].getAttribute('data-width');
+                }
+            }, 100);
+
+            // Red flags list
+            var flagsList = document.getElementById('flagsList');
+            flagsList.innerHTML = '';
+            document.getElementById('flagCountBadge').textContent = results.flags.length;
+            if (results.flags.length === 0) {
+                flagsList.innerHTML = '<div style="color:var(--green);font-size:0.9rem;padding:12px;">No major red flags detected. Nice find!</div>';
+            } else {
+                results.flags.forEach(function(f) {
+                    var div = document.createElement('div');
+                    div.className = 'flag-item severity-' + f.severity;
+                    div.innerHTML =
+                        '<span class="flag-sev ' + f.severity + '">' + f.severity + '</span>' +
+                        '<span>' + f.text + '</span>';
+                    flagsList.appendChild(div);
+                });
+            }
+
+            // Advice
+            var adviceItems = getAdvice(results.score, results.flags, results.categories);
+            var adviceList = document.getElementById('adviceList');
+            adviceList.innerHTML = '';
+            adviceItems.forEach(function(a) {
+                var li = document.createElement('li');
+                li.textContent = a;
+                adviceList.appendChild(li);
+            });
+
+            // Stats
+            var stats = getStats(results.score);
+            var statsList = document.getElementById('statsList');
+            statsList.innerHTML = '';
+            stats.forEach(function(s) {
+                var div = document.createElement('div');
+                div.className = 'stat-row';
+                div.innerHTML = s.icon + ' ' + s.text;
+                statsList.appendChild(div);
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function getScoreColor(score) {
+            if (score >= 80) return 'var(--green)';
+            if (score >= 60) return 'var(--yellow)';
+            if (score >= 40) return 'var(--orange)';
+            return 'var(--red)';
+        }
+
+        function animateNumber(el, from, to, duration, cb) {
+            var start = performance.now();
+            function frame(now) {
+                var elapsed = now - start;
+                var progress = Math.min(elapsed / duration, 1);
+                var ease = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.round(from + (to - from) * ease);
+                if (progress < 1) {
+                    requestAnimationFrame(frame);
+                } else {
+                    el.textContent = to;
+                    if (cb) cb();
+                }
+            }
+            requestAnimationFrame(frame);
+        }
+
+        /* ========== SHARE ========== */
+        window.shareResults = function() {
+            var verdict = getVerdict(finalScore);
+            var text = 'I just ran a client through the Red Flag Checker and they scored ' + finalScore + '/100 ' + verdict.icon + '\n\nCheck your clients before signing:\nhttps://freelanceos.pro/freelanceos-storefront/client-red-flag-checker.html';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    showToast('Copied to clipboard!');
+                }).catch(function() {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        };
+
+        function fallbackCopy(text) {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); showToast('Copied to clipboard!'); }
+            catch(e) { showToast('Could not copy'); }
+            document.body.removeChild(ta);
+        }
+
+        function showToast(msg) {
+            var toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(function() { toast.classList.remove('show'); }, 2500);
+        }
+
+        /* ========== RESTART ========== */
+        window.restart = function() {
+            answers = {};
+            currentStep = 1;
+            finalScore = 0;
+
+            // Reset all option buttons
+            var btns = document.querySelectorAll('.option-btn');
+            for (var i = 0; i < btns.length; i++) { btns[i].className = 'option-btn'; }
+
+            // Reset nav buttons
+            document.getElementById('next1').disabled = true;
+            document.getElementById('next2').disabled = true;
+            document.getElementById('submitBtn').disabled = true;
+
+            // Hide results, show wizard
+            document.getElementById('resultsSection').classList.remove('visible');
+            document.getElementById('progressWrapper').style.display = '';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Reset progress steps
+            for (var s = 1; s <= 3; s++) {
+                var el = document.getElementById('ps' + s);
+                el.classList.remove('active', 'done');
+                if (s === 1) el.classList.add('active');
+            }
+            document.getElementById('sc1').classList.remove('active');
+            document.getElementById('sc2').classList.remove('active');
+
+            // Show step 1
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.remove('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        /* ========== EXPOSE NAVIGATION ========== */
+        window.goToStep = goToStep;
+        window.showResults = showResults;
+
+    })();
+    </script>
+</body>
+</html>
