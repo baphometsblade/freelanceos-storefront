@@ -1,62 +1,982 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreelanceOS Pinterest Pin Design Kit — 20 Ready-to-Save Pins</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-header{background:#1a1a1a;border-bottom:3px solid #7c3aed;padding:2rem;text-align:center}
-header h1{font-size:2.2rem;font-weight:800;color:#fff;margin-bottom:.5rem}
-header p{color:#9ca3af;font-size:1.1rem;margin-bottom:1rem}
-.dl-all{background:#7c3aed;color:#fff;border:none;padding:.8rem 2rem;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:background .2s}
-.dl-all:hover{background:#6d28d9}
-.tabs{display:flex;gap:.5rem;padding:1.5rem 2rem;flex-wrap:wrap;background:#111}
-.tab{background:#1a1a1a;color:#9ca3af;border:1px solid #333;padding:.5rem 1.2rem;border-radius:20px;cursor:pointer;font-size:.9rem;transition:all .2s}
-.tab.active,.tab:hover{background:#7c3aed;color:#fff;border-color:#7c3aed}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;padding:2rem;max-width:1600px;margin:0 auto}
-@media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.grid{grid-template-columns:1fr}}
-.pin-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;transition:all .2s}
-.pin-card:hover{border-color:#7c3aed;box-shadow:0 0 20px rgba(124,58,237,.3)}
-.pin-card.hidden{display:none}
-.pin-svg{width:100%;aspect-ratio:2/3;display:block}
-.pin-svg svg{width:100%;height:100%}
-.pin-info{padding:1rem}
-.pin-info h3{font-size:.85rem;font-weight:600;color:#e5e7eb;margin-bottom:.8rem;line-height:1.3}
-.save-btn{background:#7c3aed;color:#fff;border:none;padding:.5rem 1rem;border-radius:6px;font-size:.8rem;font-weight:600;cursor:pointer;width:100%;transition:background .2s;margin-bottom:.5rem}
-.save-btn:hover{background:#6d28d9}
-.caption-toggle{background:transparent;color:#9ca3af;border:1px solid #333;padding:.4rem 1rem;border-radius:6px;font-size:.75rem;cursor:pointer;width:100%;transition:all .2s}
-.caption-toggle:hover{border-color:#7c3aed;color:#7c3aed}
-.caption-panel{display:none;background:#111;border-radius:6px;padding:.8rem;margin-top:.5rem;font-size:.75rem;color:#9ca3af;line-height:1.6}
-.caption-panel.open{display:block}
-.caption-panel strong{color:#e5e7eb;display:block;margin-bottom:.3rem}
-.caption-panel .hashtags{color:#7c3aed;margin-top:.4rem;word-break:break-all}
-.caption-panel .board{color:#f59e0b;margin-top:.3rem}
-.caption-panel .copy-btn{background:#1a1a1a;color:#e5e7eb;border:1px solid #333;padding:.3rem .8rem;border-radius:4px;font-size:.7rem;cursor:pointer;margin-top:.5rem}
-.how-to{background:#1a1a1a;border-top:1px solid #2a2a2a;padding:3rem 2rem;max-width:900px;margin:0 auto}
-.how-to h2{font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:1.5rem;text-align:center}
-.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
-@media(max-width:600px){.steps{grid-template-columns:1fr}}
-.step{background:#111;border:1px solid #2a2a2a;border-radius:8px;padding:1rem}
-.step-num{font-size:1.5rem;font-weight:900;color:#7c3aed;margin-bottom:.3rem}
-.step p{font-size:.85rem;color:#9ca3af;line-height:1.5}
-footer{text-align:center;padding:2rem;color:#4b5563;font-size:.85rem}
-footer a{color:#7c3aed;text-decoration:none}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pinterest Kit — 20 Pin Designs | FreelanceOS</title>
+  <meta name="description" content="20 ready-to-save Pinterest pin designs for FreelanceOS Pro, CreatorHQ, AgencyOS, and YouTube Empire Notion templates.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --purple: #7c3aed; --blue: #3b82f6; --green: #10b981; --red: #ef4444;
+      --bg: #0f0f0f; --card: #1a1a2e; --border: #2a2a3e;
+      --txt1: #f8fafc; --txt2: #cbd5e1; --txt3: #94a3b8;
+      --radius: 0.75rem;
+    }
+    body { background: var(--bg); color: var(--txt1); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+    /* NAV */
+    nav { background: #0a0a0f; border-bottom: 1px solid #1e1e2e; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-weight: 800; font-size: 1.1rem; color: var(--txt1); text-decoration: none; }
+    .nav-logo span { color: var(--purple); }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { color: var(--txt2); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--txt1); }
+
+    /* HEADER */
+    .page-header { text-align: center; padding: 4rem 2rem 2rem; background: linear-gradient(180deg, #0a0a1a 0%, #0f0f0f 100%); }
+    .page-header h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin-bottom: 0.75rem; }
+    .page-header p { color: var(--txt2); font-size: 1.1rem; margin-bottom: 2rem; }
+
+    /* FILTERS */
+    .filters { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .filter-btn { padding: 0.5rem 1.25rem; border-radius: 2rem; border: 1px solid var(--border); background: transparent; color: var(--txt2); cursor: pointer; font-size: 0.85rem; font-family: inherit; transition: all 0.2s; }
+    .filter-btn:hover, .filter-btn.active { border-color: var(--purple); color: var(--txt1); background: rgba(124,58,237,0.15); }
+    .filter-btn[data-filter="freelanceos"].active { border-color: var(--purple); background: rgba(124,58,237,0.15); }
+    .filter-btn[data-filter="creatorhq"].active { border-color: var(--blue); background: rgba(59,130,246,0.15); color: #93c5fd; }
+    .filter-btn[data-filter="agencyos"].active { border-color: var(--green); background: rgba(16,185,129,0.15); color: #6ee7b7; }
+    .filter-btn[data-filter="youtube"].active { border-color: var(--red); background: rgba(239,68,68,0.15); color: #fca5a5; }
+
+    .save-all-btn { display: block; margin: 0 auto 3rem; padding: 0.75rem 2rem; background: #2a2a3e; border: 1px solid var(--border); border-radius: 0.5rem; color: var(--txt3); font-family: inherit; font-size: 0.9rem; cursor: not-allowed; }
+    .save-all-btn span { font-size: 0.75rem; color: #666; margin-left: 0.5rem; }
+
+    /* GRID */
+    .pins-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; padding: 0 2rem 4rem; max-width: 1400px; margin: 0 auto; }
+    @media (max-width: 1100px) { .pins-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 800px) { .pins-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .pins-grid { grid-template-columns: 1fr; } }
+
+    /* PIN CARD */
+    .pin-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+    .pin-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
+    .pin-card.hidden { display: none; }
+
+    .pin-preview { display: block; width: 100%; cursor: pointer; }
+    .pin-preview svg { display: block; width: 100%; height: auto; }
+
+    .pin-meta { padding: 0.75rem; }
+    .pin-badges { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; }
+    .badge { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+    .badge-freelanceos { background: rgba(124,58,237,0.25); color: #c4b5fd; border: 1px solid rgba(124,58,237,0.4); }
+    .badge-creatorhq { background: rgba(59,130,246,0.25); color: #93c5fd; border: 1px solid rgba(59,130,246,0.4); }
+    .badge-agencyos { background: rgba(16,185,129,0.25); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.4); }
+    .badge-youtube { background: rgba(239,68,68,0.25); color: #fca5a5; border: 1px solid rgba(239,68,68,0.4); }
+    .pin-type-label { font-size: 0.7rem; color: var(--txt3); }
+    .save-btn { width: 100%; margin-top: 0.5rem; padding: 0.5rem; background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.4); border-radius: 0.4rem; color: #c4b5fd; font-family: inherit; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+    .save-btn:hover { background: rgba(124,58,237,0.4); color: #fff; }
+    .save-btn.blue { background: rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.4); color: #93c5fd; }
+    .save-btn.blue:hover { background: rgba(59,130,246,0.4); color: #fff; }
+    .save-btn.green { background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.4); color: #6ee7b7; }
+    .save-btn.green:hover { background: rgba(16,185,129,0.4); color: #fff; }
+    .save-btn.red { background: rgba(239,68,68,0.2); border-color: rgba(239,68,68,0.4); color: #fca5a5; }
+    .save-btn.red:hover { background: rgba(239,68,68,0.4); color: #fff; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--txt3); font-size: 0.85rem; line-height: 1.8; }
+    footer a { color: var(--purple); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-<header>
+
+<nav>
+  <a href="https://baphometsblade.github.io/freelanceos-storefront/" class="nav-logo">Freelance<span>OS</span></a>
+  <div class="nav-links">
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/">Store</a>
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/free-notion-templates.html">Free Tools</a>
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/blog/">Blog</a>
+  </div>
+</nav>
+
+<div class="page-header">
   <h1>📌 FreelanceOS Pinterest Kit</h1>
-  <p>20 ready-to-save Pinterest pin designs — click any pin to download as PNG</p>
-  <button class="dl-all" onclick="downloadAll()">⬇ Download All 20 Pins</button>
-</header>
-<div class="tabs">
-  <button class="tab active" onclick="filterPins('all',this)">All Pins (20)</button>
-  <button class="tab" onclick="filterPins('freelanceos',this)">FreelanceOS Pro</button>
-  <button class="tab" onclick="filterPins('creatorhq',this)">CreatorHQ</button>
-  <button class="tab" onclick="filterPins('agencyos',this)">AgencyOS</button>
-  <button class="tab" onclick="filterPins('youtube',this)">YouTube Empire</button>
+  <p>20 pin designs — click any pin to save as PNG</p>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="freelanceos">FreelanceOS Pro</button>
+    <button class="filter-btn" data-filter="creatorhq">CreatorHQ</button>
+    <button class="filter-btn" data-filter="agencyos">AgencyOS</button>
+    <button class="filter-btn" data-filter="youtube">YouTube Empire</button>
+  </div>
+  <button class="save-all-btn">💾 Save All as ZIP <span>(coming soon)</span></button>
 </div>
-<div class="grid" id="pinGrid">
+
+<div class="pins-grid" id="pinsGrid">
+
+  <!-- ===== FREELANCEOS PRO ===== -->
+
+  <!-- Pin 1: FreelanceOS Hook -->
+  <div class="pin-card" data-product="freelanceos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'freelanceos-hook')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2d0a52"/><stop offset="100%" stop-color="#1a0533"/></linearGradient>
+          <linearGradient id="acc1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#a855f7"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#fg1)"/>
+        <!-- Decorative circles -->
+        <circle cx="900" cy="150" r="200" fill="#7c3aed" opacity="0.12"/>
+        <circle cx="100" cy="1350" r="180" fill="#a855f7" opacity="0.1"/>
+        <circle cx="850" cy="1200" r="120" fill="#6d28d9" opacity="0.15"/>
+        <!-- Top accent line -->
+        <rect x="0" y="0" width="1000" height="6" fill="url(#acc1)"/>
+        <!-- Grid dots -->
+        <g opacity="0.08" fill="#a855f7">
+          <circle cx="80" cy="300" r="4"/><circle cx="160" cy="300" r="4"/><circle cx="240" cy="300" r="4"/>
+          <circle cx="80" cy="380" r="4"/><circle cx="160" cy="380" r="4"/><circle cx="240" cy="380" r="4"/>
+          <circle cx="80" cy="460" r="4"/><circle cx="160" cy="460" r="4"/><circle cx="240" cy="460" r="4"/>
+        </g>
+        <!-- Logo area -->
+        <rect x="60" y="60" width="220" height="44" rx="22" fill="rgba(124,58,237,0.3)" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="170" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">⚡ FreelanceOS</text>
+        <!-- Main headline -->
+        <text x="500" y="420" font-family="Inter,sans-serif" font-size="90" font-weight="900" fill="white" text-anchor="middle">Stop</text>
+        <text x="500" y="520" font-family="Inter,sans-serif" font-size="90" font-weight="900" fill="white" text-anchor="middle">losing</text>
+        <text x="500" y="620" font-family="Inter,sans-serif" font-size="90" font-weight="900" fill="#a855f7" text-anchor="middle">clients</text>
+        <text x="500" y="700" font-family="Inter,sans-serif" font-size="60" font-weight="700" fill="white" text-anchor="middle">to disorganization</text>
+        <text x="500" y="770" font-family="Inter,sans-serif" font-size="70" font-weight="900" fill="white" text-anchor="middle">😤</text>
+        <!-- Divider -->
+        <rect x="400" y="820" width="200" height="4" rx="2" fill="url(#acc1)"/>
+        <!-- Subtext -->
+        <text x="500" y="900" font-family="Inter,sans-serif" font-size="38" fill="#e2d9f3" text-anchor="middle">The Notion system that keeps</text>
+        <text x="500" y="950" font-family="Inter,sans-serif" font-size="38" fill="#e2d9f3" text-anchor="middle">your freelance business</text>
+        <text x="500" y="1000" font-family="Inter,sans-serif" font-size="38" font-weight="600" fill="white" text-anchor="middle">running itself</text>
+        <!-- CTA pill -->
+        <rect x="250" y="1080" width="500" height="90" rx="45" fill="url(#acc1)"/>
+        <text x="500" y="1135" font-family="Inter,sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle">Get FreelanceOS Pro →</text>
+        <!-- URL -->
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#9f7aea" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#acc1)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-freelanceos">FreelanceOS Pro</span><span class="pin-type-label">Type A: Hook</span></div>
+      <button class="save-btn" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'freelanceos-hook')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 2: FreelanceOS Features -->
+  <div class="pin-card" data-product="freelanceos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'freelanceos-features')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#200640"/><stop offset="100%" stop-color="#1a0533"/></linearGradient>
+          <linearGradient id="acc2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#a855f7"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#fg2)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#acc2)"/>
+        <circle cx="850" cy="200" r="250" fill="#7c3aed" opacity="0.08"/>
+        <rect x="60" y="60" width="220" height="44" rx="22" fill="rgba(124,58,237,0.3)" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="170" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">⚡ FreelanceOS</text>
+        <!-- Title -->
+        <text x="500" y="220" font-family="Inter,sans-serif" font-size="64" font-weight="900" fill="white" text-anchor="middle">FreelanceOS Pro</text>
+        <text x="500" y="290" font-family="Inter,sans-serif" font-size="46" font-weight="700" fill="#a855f7" text-anchor="middle">includes:</text>
+        <rect x="400" y="320" width="200" height="4" rx="2" fill="url(#acc2)"/>
+        <!-- Feature items -->
+        <rect x="80" y="370" width="840" height="100" rx="12" fill="rgba(124,58,237,0.15)" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
+        <text x="130" y="430" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Client CRM &amp; pipeline</text>
+        <rect x="80" y="490" width="840" height="100" rx="12" fill="rgba(124,58,237,0.1)"/>
+        <text x="130" y="550" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Invoice tracker</text>
+        <rect x="80" y="610" width="840" height="100" rx="12" fill="rgba(124,58,237,0.15)" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
+        <text x="130" y="670" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Project dashboard</text>
+        <rect x="80" y="730" width="840" height="100" rx="12" fill="rgba(124,58,237,0.1)"/>
+        <text x="130" y="790" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Rate calculator</text>
+        <rect x="80" y="850" width="840" height="100" rx="12" fill="rgba(124,58,237,0.15)" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
+        <text x="130" y="910" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Onboarding templates</text>
+        <rect x="80" y="970" width="840" height="100" rx="12" fill="rgba(124,58,237,0.1)"/>
+        <text x="130" y="1030" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Financial reports</text>
+        <!-- Footer promo -->
+        <rect x="80" y="1120" width="840" height="120" rx="16" fill="rgba(124,58,237,0.35)" stroke="#7c3aed" stroke-width="2"/>
+        <text x="500" y="1168" font-family="Inter,sans-serif" font-size="34" font-weight="700" fill="white" text-anchor="middle">Just $49 — use code</text>
+        <text x="500" y="1218" font-family="Inter,sans-serif" font-size="42" font-weight="900" fill="#f0abfc" text-anchor="middle">FLASH40 for 40% off</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#9f7aea" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#acc2)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-freelanceos">FreelanceOS Pro</span><span class="pin-type-label">Type B: Features</span></div>
+      <button class="save-btn" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'freelanceos-features')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 3: FreelanceOS Transformation -->
+  <div class="pin-card" data-product="freelanceos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'freelanceos-transformation')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a0533"/><stop offset="100%" stop-color="#0d021a"/></linearGradient>
+          <linearGradient id="acc3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#a855f7"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#fg3)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#acc3)"/>
+        <rect x="60" y="60" width="220" height="44" rx="22" fill="rgba(124,58,237,0.3)" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="170" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">⚡ FreelanceOS</text>
+        <text x="500" y="200" font-family="Inter,sans-serif" font-size="60" font-weight="900" fill="white" text-anchor="middle">The Freelancer</text>
+        <text x="500" y="265" font-family="Inter,sans-serif" font-size="60" font-weight="900" fill="#a855f7" text-anchor="middle">Transformation</text>
+        <!-- BEFORE box -->
+        <rect x="60" y="320" width="880" height="440" rx="20" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.4)" stroke-width="2"/>
+        <rect x="60" y="320" width="880" height="70" rx="20" fill="rgba(239,68,68,0.3)"/>
+        <text x="500" y="368" font-family="Inter,sans-serif" font-size="42" font-weight="900" fill="#fca5a5" text-anchor="middle">😩 BEFORE</text>
+        <text x="500" y="460" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Scattered notes everywhere</text>
+        <text x="500" y="520" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Missed invoices &amp; late payments</text>
+        <text x="500" y="580" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">No idea what you charge</text>
+        <text x="500" y="640" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Client chaos, zero systems</text>
+        <text x="500" y="700" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Constantly overwhelmed</text>
+        <!-- Arrow -->
+        <text x="500" y="820" font-family="Inter,sans-serif" font-size="80" text-anchor="middle">⬇️</text>
+        <rect x="400" y="840" width="200" height="4" rx="2" fill="url(#acc3)"/>
+        <!-- AFTER box -->
+        <rect x="60" y="870" width="880" height="440" rx="20" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.4)" stroke-width="2"/>
+        <rect x="60" y="870" width="880" height="70" rx="20" fill="rgba(16,185,129,0.3)"/>
+        <text x="500" y="918" font-family="Inter,sans-serif" font-size="42" font-weight="900" fill="#6ee7b7" text-anchor="middle">✨ AFTER</text>
+        <text x="500" y="1010" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Everything organized in Notion</text>
+        <text x="500" y="1070" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Invoices tracked automatically</text>
+        <text x="500" y="1130" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Confident, profitable rates</text>
+        <text x="500" y="1190" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Professional client experience</text>
+        <text x="500" y="1250" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Business running itself</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#9f7aea" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#acc3)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-freelanceos">FreelanceOS Pro</span><span class="pin-type-label">Type C: Transformation</span></div>
+      <button class="save-btn" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'freelanceos-transformation')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 4: FreelanceOS Social Proof -->
+  <div class="pin-card" data-product="freelanceos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'freelanceos-social-proof')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a0533"/><stop offset="100%" stop-color="#2d0a52"/></linearGradient>
+          <linearGradient id="acc4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#a855f7"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#fg4)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#acc4)"/>
+        <circle cx="500" cy="750" r="480" fill="rgba(124,58,237,0.05)"/>
+        <rect x="60" y="60" width="220" height="44" rx="22" fill="rgba(124,58,237,0.3)" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="170" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">⚡ FreelanceOS</text>
+        <!-- Big quote marks -->
+        <text x="120" y="320" font-family="Georgia,serif" font-size="200" fill="#7c3aed" opacity="0.4">"</text>
+        <!-- Quote text -->
+        <text x="500" y="420" font-family="Inter,sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">I doubled my rate</text>
+        <text x="500" y="490" font-family="Inter,sans-serif" font-size="52" font-weight="700" fill="#c4b5fd" text-anchor="middle">and landed 3 new</text>
+        <text x="500" y="560" font-family="Inter,sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">clients in my first</text>
+        <text x="500" y="630" font-family="Inter,sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">month using</text>
+        <text x="500" y="700" font-family="Inter,sans-serif" font-size="52" font-weight="700" fill="#a855f7" text-anchor="middle">FreelanceOS</text>
+        <!-- End quote -->
+        <text x="870" y="740" font-family="Georgia,serif" font-size="200" fill="#7c3aed" opacity="0.4">"</text>
+        <!-- Divider -->
+        <rect x="350" y="780" width="300" height="3" rx="1.5" fill="url(#acc4)"/>
+        <!-- Stars -->
+        <text x="500" y="860" font-family="Inter,sans-serif" font-size="60" text-anchor="middle">⭐⭐⭐⭐⭐</text>
+        <!-- Attribution -->
+        <text x="500" y="950" font-family="Inter,sans-serif" font-size="36" fill="#e2d9f3" text-anchor="middle">— Verified buyer</text>
+        <!-- Product badge -->
+        <rect x="280" y="1020" width="440" height="80" rx="40" fill="rgba(124,58,237,0.3)" stroke="#7c3aed" stroke-width="2"/>
+        <text x="500" y="1070" font-family="Inter,sans-serif" font-size="34" font-weight="700" fill="white" text-anchor="middle">FreelanceOS Pro — $49</text>
+        <!-- Trust signals -->
+        <text x="500" y="1180" font-family="Inter,sans-serif" font-size="30" fill="#9f7aea" text-anchor="middle">⚡ 1-time payment · lifetime access</text>
+        <text x="500" y="1230" font-family="Inter,sans-serif" font-size="30" fill="#9f7aea" text-anchor="middle">30-day money-back guarantee</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#9f7aea" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#acc4)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-freelanceos">FreelanceOS Pro</span><span class="pin-type-label">Type D: Social Proof</span></div>
+      <button class="save-btn" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'freelanceos-social-proof')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 5: FreelanceOS Free Tool -->
+  <div class="pin-card" data-product="freelanceos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'freelanceos-free-tool')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fg5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a0533"/><stop offset="100%" stop-color="#0d021a"/></linearGradient>
+          <linearGradient id="acc5" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#f0abfc"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#fg5)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#acc5)"/>
+        <!-- Geometric decoration -->
+        <polygon points="500,100 620,280 380,280" fill="rgba(124,58,237,0.15)" stroke="rgba(124,58,237,0.3)" stroke-width="2"/>
+        <polygon points="500,200 680,500 320,500" fill="rgba(124,58,237,0.08)"/>
+        <rect x="60" y="60" width="220" height="44" rx="22" fill="rgba(124,58,237,0.3)" stroke="#7c3aed" stroke-width="1.5"/>
+        <text x="170" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">⚡ FreelanceOS</text>
+        <!-- FREE badge -->
+        <rect x="300" y="360" width="400" height="100" rx="50" fill="url(#acc5)"/>
+        <text x="500" y="425" font-family="Inter,sans-serif" font-size="56" font-weight="900" fill="white" text-anchor="middle">FREE</text>
+        <!-- Main title -->
+        <text x="500" y="560" font-family="Inter,sans-serif" font-size="64" font-weight="900" fill="white" text-anchor="middle">Freelance Rate</text>
+        <text x="500" y="640" font-family="Inter,sans-serif" font-size="64" font-weight="900" fill="#a855f7" text-anchor="middle">Calculator</text>
+        <rect x="350" y="680" width="300" height="4" rx="2" fill="url(#acc5)"/>
+        <!-- Description -->
+        <text x="500" y="770" font-family="Inter,sans-serif" font-size="42" fill="#e2d9f3" text-anchor="middle">Find out if you're</text>
+        <text x="500" y="830" font-family="Inter,sans-serif" font-size="42" fill="#e2d9f3" text-anchor="middle">charging enough</text>
+        <!-- Time -->
+        <rect x="300" y="890" width="400" height="70" rx="12" fill="rgba(124,58,237,0.2)" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
+        <text x="500" y="935" font-family="Inter,sans-serif" font-size="34" fill="#c4b5fd" text-anchor="middle">⏱ Takes 60 seconds</text>
+        <!-- Big CTA -->
+        <text x="500" y="1080" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="white" text-anchor="middle">Try it</text>
+        <text x="500" y="1170" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="#a855f7" text-anchor="middle">free →</text>
+        <!-- No email required -->
+        <text x="500" y="1270" font-family="Inter,sans-serif" font-size="32" fill="#9f7aea" text-anchor="middle">No email required · instant access</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#9f7aea" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#acc5)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-freelanceos">FreelanceOS Pro</span><span class="pin-type-label">Type E: Free Tool</span></div>
+      <button class="save-btn" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'freelanceos-free-tool')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- ===== CREATORHQ ===== -->
+
+  <!-- Pin 6: CreatorHQ Hook -->
+  <div class="pin-card" data-product="creatorhq">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'creatorhq-hook')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a1628"/><stop offset="100%" stop-color="#071020"/></linearGradient>
+          <linearGradient id="ca1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#cg1)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ca1)"/>
+        <circle cx="800" cy="200" r="300" fill="#3b82f6" opacity="0.08"/>
+        <circle cx="200" cy="1200" r="250" fill="#1d4ed8" opacity="0.1"/>
+        <!-- Decorative stars/dots -->
+        <circle cx="100" cy="400" r="3" fill="#60a5fa" opacity="0.4"/>
+        <circle cx="150" cy="350" r="2" fill="#60a5fa" opacity="0.3"/>
+        <circle cx="900" cy="600" r="3" fill="#60a5fa" opacity="0.4"/>
+        <circle cx="850" cy="650" r="2" fill="#60a5fa" opacity="0.3"/>
+        <rect x="60" y="60" width="200" height="44" rx="22" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="160" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">✨ CreatorHQ</text>
+        <text x="500" y="380" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="white" text-anchor="middle">Your content</text>
+        <text x="500" y="470" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="white" text-anchor="middle">ideas deserve</text>
+        <text x="500" y="560" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="#60a5fa" text-anchor="middle">a better</text>
+        <text x="500" y="650" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="white" text-anchor="middle">system 💡</text>
+        <rect x="350" y="700" width="300" height="4" rx="2" fill="url(#ca1)"/>
+        <text x="500" y="790" font-family="Inter,sans-serif" font-size="38" fill="#bfdbfe" text-anchor="middle">Stop losing brilliant ideas</text>
+        <text x="500" y="845" font-family="Inter,sans-serif" font-size="38" fill="#bfdbfe" text-anchor="middle">to sticky notes and</text>
+        <text x="500" y="900" font-family="Inter,sans-serif" font-size="38" fill="#bfdbfe" text-anchor="middle">scattered docs</text>
+        <rect x="200" y="990" width="600" height="100" rx="50" fill="url(#ca1)"/>
+        <text x="500" y="1051" font-family="Inter,sans-serif" font-size="38" font-weight="700" fill="white" text-anchor="middle">Get CreatorHQ →</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#60a5fa" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ca1)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-creatorhq">CreatorHQ</span><span class="pin-type-label">Type A: Hook</span></div>
+      <button class="save-btn blue" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'creatorhq-hook')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 7: CreatorHQ Features -->
+  <div class="pin-card" data-product="creatorhq">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'creatorhq-features')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a1628"/><stop offset="100%" stop-color="#071020"/></linearGradient>
+          <linearGradient id="ca2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#cg2)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ca2)"/>
+        <circle cx="900" cy="100" r="200" fill="#3b82f6" opacity="0.08"/>
+        <rect x="60" y="60" width="200" height="44" rx="22" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="160" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">✨ CreatorHQ</text>
+        <text x="500" y="220" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="white" text-anchor="middle">CreatorHQ</text>
+        <text x="500" y="290" font-family="Inter,sans-serif" font-size="46" font-weight="700" fill="#60a5fa" text-anchor="middle">includes:</text>
+        <rect x="400" y="320" width="200" height="4" rx="2" fill="url(#ca2)"/>
+        <rect x="80" y="370" width="840" height="100" rx="12" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+        <text x="130" y="430" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Content calendar</text>
+        <rect x="80" y="490" width="840" height="100" rx="12" fill="rgba(59,130,246,0.1)"/>
+        <text x="130" y="550" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Idea vault</text>
+        <rect x="80" y="610" width="840" height="100" rx="12" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+        <text x="130" y="670" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Brand kit</text>
+        <rect x="80" y="730" width="840" height="100" rx="12" fill="rgba(59,130,246,0.1)"/>
+        <text x="130" y="790" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Collab tracker</text>
+        <rect x="80" y="850" width="840" height="100" rx="12" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+        <text x="130" y="910" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Analytics log</text>
+        <rect x="80" y="970" width="840" height="100" rx="12" fill="rgba(59,130,246,0.1)"/>
+        <text x="130" y="1030" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Monetization tracker</text>
+        <rect x="80" y="1120" width="840" height="120" rx="16" fill="rgba(59,130,246,0.25)" stroke="#3b82f6" stroke-width="2"/>
+        <text x="500" y="1168" font-family="Inter,sans-serif" font-size="34" font-weight="700" fill="white" text-anchor="middle">Just $39 one-time</text>
+        <text x="500" y="1218" font-family="Inter,sans-serif" font-size="38" font-weight="800" fill="#93c5fd" text-anchor="middle">Lifetime access · 30-day refund</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#60a5fa" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ca2)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-creatorhq">CreatorHQ</span><span class="pin-type-label">Type B: Features</span></div>
+      <button class="save-btn blue" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'creatorhq-features')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 8: CreatorHQ Transformation -->
+  <div class="pin-card" data-product="creatorhq">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'creatorhq-transformation')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a1628"/><stop offset="100%" stop-color="#040d1a"/></linearGradient>
+          <linearGradient id="ca3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#cg3)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ca3)"/>
+        <rect x="60" y="60" width="200" height="44" rx="22" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="160" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">✨ CreatorHQ</text>
+        <text x="500" y="200" font-family="Inter,sans-serif" font-size="58" font-weight="900" fill="white" text-anchor="middle">The Creator</text>
+        <text x="500" y="265" font-family="Inter,sans-serif" font-size="58" font-weight="900" fill="#60a5fa" text-anchor="middle">Transformation</text>
+        <rect x="60" y="320" width="880" height="420" rx="20" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.4)" stroke-width="2"/>
+        <rect x="60" y="320" width="880" height="70" rx="20" fill="rgba(239,68,68,0.3)"/>
+        <text x="500" y="368" font-family="Inter,sans-serif" font-size="42" font-weight="900" fill="#fca5a5" text-anchor="middle">😩 BEFORE</text>
+        <text x="500" y="460" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Missing deadlines constantly</text>
+        <text x="500" y="520" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Great ideas lost forever</text>
+        <text x="500" y="580" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Posting feels like chaos</text>
+        <text x="500" y="640" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">No growth strategy</text>
+        <text x="500" y="800" font-family="Inter,sans-serif" font-size="80" text-anchor="middle">⬇️</text>
+        <rect x="60" y="860" width="880" height="420" rx="20" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.4)" stroke-width="2"/>
+        <rect x="60" y="860" width="880" height="70" rx="20" fill="rgba(16,185,129,0.3)"/>
+        <text x="500" y="908" font-family="Inter,sans-serif" font-size="42" font-weight="900" fill="#6ee7b7" text-anchor="middle">✨ AFTER</text>
+        <text x="500" y="1000" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Consistent posting schedule</text>
+        <text x="500" y="1060" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Idea vault full of content</text>
+        <text x="500" y="1120" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Growing audience &amp; revenue</text>
+        <text x="500" y="1180" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Content engine on autopilot</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#60a5fa" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ca3)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-creatorhq">CreatorHQ</span><span class="pin-type-label">Type C: Transformation</span></div>
+      <button class="save-btn blue" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'creatorhq-transformation')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 9: CreatorHQ Social Proof -->
+  <div class="pin-card" data-product="creatorhq">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'creatorhq-social-proof')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a1628"/><stop offset="100%" stop-color="#0e1f3d"/></linearGradient>
+          <linearGradient id="ca4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#cg4)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ca4)"/>
+        <circle cx="500" cy="750" r="480" fill="rgba(59,130,246,0.04)"/>
+        <rect x="60" y="60" width="200" height="44" rx="22" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="160" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">✨ CreatorHQ</text>
+        <text x="120" y="320" font-family="Georgia,serif" font-size="200" fill="#3b82f6" opacity="0.35">"</text>
+        <text x="500" y="400" font-family="Inter,sans-serif" font-size="50" font-weight="700" fill="white" text-anchor="middle">Finally a system</text>
+        <text x="500" y="465" font-family="Inter,sans-serif" font-size="50" font-weight="700" fill="#93c5fd" text-anchor="middle">that keeps up</text>
+        <text x="500" y="530" font-family="Inter,sans-serif" font-size="50" font-weight="700" fill="white" text-anchor="middle">with my content</text>
+        <text x="500" y="595" font-family="Inter,sans-serif" font-size="50" font-weight="700" fill="#60a5fa" text-anchor="middle">brain!</text>
+        <text x="870" y="640" font-family="Georgia,serif" font-size="200" fill="#3b82f6" opacity="0.35">"</text>
+        <rect x="350" y="700" width="300" height="3" rx="1.5" fill="url(#ca4)"/>
+        <text x="500" y="800" font-family="Inter,sans-serif" font-size="60" text-anchor="middle">⭐⭐⭐⭐⭐</text>
+        <text x="500" y="890" font-family="Inter,sans-serif" font-size="36" fill="#bfdbfe" text-anchor="middle">— Content creator</text>
+        <rect x="240" y="960" width="520" height="80" rx="40" fill="rgba(59,130,246,0.25)" stroke="#3b82f6" stroke-width="2"/>
+        <text x="500" y="1010" font-family="Inter,sans-serif" font-size="34" font-weight="700" fill="white" text-anchor="middle">CreatorHQ — $39</text>
+        <text x="500" y="1130" font-family="Inter,sans-serif" font-size="30" fill="#60a5fa" text-anchor="middle">Content calendar · Idea vault</text>
+        <text x="500" y="1180" font-family="Inter,sans-serif" font-size="30" fill="#60a5fa" text-anchor="middle">Brand kit · Monetization tracker</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#60a5fa" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ca4)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-creatorhq">CreatorHQ</span><span class="pin-type-label">Type D: Social Proof</span></div>
+      <button class="save-btn blue" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'creatorhq-social-proof')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 10: CreatorHQ Free Tool -->
+  <div class="pin-card" data-product="creatorhq">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'creatorhq-free-tool')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cg5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a1628"/><stop offset="100%" stop-color="#040d1a"/></linearGradient>
+          <linearGradient id="ca5" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#93c5fd"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#cg5)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ca5)"/>
+        <rect x="200" y="120" width="600" height="6" rx="3" fill="rgba(59,130,246,0.3)"/>
+        <rect x="300" y="160" width="400" height="6" rx="3" fill="rgba(59,130,246,0.2)"/>
+        <rect x="60" y="60" width="200" height="44" rx="22" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="160" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">✨ CreatorHQ</text>
+        <rect x="280" y="300" width="440" height="110" rx="55" fill="url(#ca5)"/>
+        <text x="500" y="367" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="white" text-anchor="middle">FREE</text>
+        <text x="500" y="510" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="white" text-anchor="middle">Content Creator</text>
+        <text x="500" y="590" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="#60a5fa" text-anchor="middle">Toolkit</text>
+        <rect x="300" y="630" width="400" height="4" rx="2" fill="url(#ca5)"/>
+        <text x="500" y="720" font-family="Inter,sans-serif" font-size="40" fill="#bfdbfe" text-anchor="middle">Content calendar template</text>
+        <text x="500" y="780" font-family="Inter,sans-serif" font-size="40" fill="#bfdbfe" text-anchor="middle">Idea capture system</text>
+        <text x="500" y="840" font-family="Inter,sans-serif" font-size="40" fill="#bfdbfe" text-anchor="middle">Posting schedule planner</text>
+        <rect x="200" y="910" width="600" height="90" rx="12" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+        <text x="500" y="965" font-family="Inter,sans-serif" font-size="36" fill="#93c5fd" text-anchor="middle">Zero cost · No login required</text>
+        <text x="500" y="1100" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="white" text-anchor="middle">Grab it</text>
+        <text x="500" y="1190" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="#3b82f6" text-anchor="middle">free →</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#60a5fa" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ca5)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-creatorhq">CreatorHQ</span><span class="pin-type-label">Type E: Free Tool</span></div>
+      <button class="save-btn blue" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'creatorhq-free-tool')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- ===== AGENCYOS ===== -->
+
+  <!-- Pin 11: AgencyOS Hook -->
+  <div class="pin-card" data-product="agencyos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'agencyos-hook')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ag1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d1f0d"/><stop offset="100%" stop-color="#071407"/></linearGradient>
+          <linearGradient id="aa1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#ag1)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#aa1)"/>
+        <circle cx="800" cy="300" r="300" fill="#10b981" opacity="0.07"/>
+        <circle cx="150" cy="1100" r="220" fill="#059669" opacity="0.08"/>
+        <!-- Grid lines decoration -->
+        <line x1="0" y1="1300" x2="1000" y2="1300" stroke="#10b981" stroke-width="1" opacity="0.1"/>
+        <line x1="0" y1="1350" x2="1000" y2="1350" stroke="#10b981" stroke-width="1" opacity="0.07"/>
+        <rect x="60" y="60" width="190" height="44" rx="22" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5"/>
+        <text x="155" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🏢 AgencyOS</text>
+        <text x="500" y="360" font-family="Inter,sans-serif" font-size="78" font-weight="900" fill="white" text-anchor="middle">Running an</text>
+        <text x="500" y="450" font-family="Inter,sans-serif" font-size="78" font-weight="900" fill="white" text-anchor="middle">agency from</text>
+        <text x="500" y="540" font-family="Inter,sans-serif" font-size="78" font-weight="900" fill="#34d399" text-anchor="middle">spreadsheets?</text>
+        <text x="500" y="630" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="white" text-anchor="middle">📊</text>
+        <rect x="350" y="680" width="300" height="4" rx="2" fill="url(#aa1)"/>
+        <text x="500" y="770" font-family="Inter,sans-serif" font-size="46" font-weight="700" fill="#6ee7b7" text-anchor="middle">There's a better way.</text>
+        <text x="500" y="860" font-family="Inter,sans-serif" font-size="38" fill="#a7f3d0" text-anchor="middle">Manage clients, teams,</text>
+        <text x="500" y="915" font-family="Inter,sans-serif" font-size="38" fill="#a7f3d0" text-anchor="middle">proposals &amp; retainers</text>
+        <text x="500" y="970" font-family="Inter,sans-serif" font-size="38" fill="#a7f3d0" text-anchor="middle">all in one Notion workspace</text>
+        <rect x="200" y="1060" width="600" height="100" rx="50" fill="url(#aa1)"/>
+        <text x="500" y="1121" font-family="Inter,sans-serif" font-size="38" font-weight="700" fill="white" text-anchor="middle">Get AgencyOS →</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#34d399" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#aa1)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-agencyos">AgencyOS</span><span class="pin-type-label">Type A: Hook</span></div>
+      <button class="save-btn green" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'agencyos-hook')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 12: AgencyOS Features -->
+  <div class="pin-card" data-product="agencyos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'agencyos-features')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ag2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d1f0d"/><stop offset="100%" stop-color="#071407"/></linearGradient>
+          <linearGradient id="aa2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#ag2)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#aa2)"/>
+        <circle cx="900" cy="100" r="200" fill="#10b981" opacity="0.08"/>
+        <rect x="60" y="60" width="190" height="44" rx="22" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5"/>
+        <text x="155" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🏢 AgencyOS</text>
+        <text x="500" y="220" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="white" text-anchor="middle">AgencyOS</text>
+        <text x="500" y="290" font-family="Inter,sans-serif" font-size="46" font-weight="700" fill="#34d399" text-anchor="middle">includes:</text>
+        <rect x="400" y="320" width="200" height="4" rx="2" fill="url(#aa2)"/>
+        <rect x="80" y="370" width="840" height="100" rx="12" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+        <text x="130" y="430" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Client portal</text>
+        <rect x="80" y="490" width="840" height="100" rx="12" fill="rgba(16,185,129,0.1)"/>
+        <text x="130" y="550" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Team tasks</text>
+        <rect x="80" y="610" width="840" height="100" rx="12" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+        <text x="130" y="670" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Proposal templates</text>
+        <rect x="80" y="730" width="840" height="100" rx="12" fill="rgba(16,185,129,0.1)"/>
+        <text x="130" y="790" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Retainer tracker</text>
+        <rect x="80" y="850" width="840" height="100" rx="12" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+        <text x="130" y="910" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  SOW builder</text>
+        <rect x="80" y="970" width="840" height="100" rx="12" fill="rgba(16,185,129,0.1)"/>
+        <text x="130" y="1030" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Agency CRM</text>
+        <rect x="80" y="1120" width="840" height="120" rx="16" fill="rgba(16,185,129,0.25)" stroke="#10b981" stroke-width="2"/>
+        <text x="500" y="1168" font-family="Inter,sans-serif" font-size="34" font-weight="700" fill="white" text-anchor="middle">Just $49 one-time</text>
+        <text x="500" y="1218" font-family="Inter,sans-serif" font-size="38" font-weight="800" fill="#6ee7b7" text-anchor="middle">Scale your agency today</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#34d399" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#aa2)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-agencyos">AgencyOS</span><span class="pin-type-label">Type B: Features</span></div>
+      <button class="save-btn green" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'agencyos-features')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 13: AgencyOS Transformation -->
+  <div class="pin-card" data-product="agencyos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'agencyos-transformation')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ag3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d1f0d"/><stop offset="100%" stop-color="#040f04"/></linearGradient>
+          <linearGradient id="aa3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#ag3)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#aa3)"/>
+        <rect x="60" y="60" width="190" height="44" rx="22" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5"/>
+        <text x="155" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🏢 AgencyOS</text>
+        <text x="500" y="200" font-family="Inter,sans-serif" font-size="58" font-weight="900" fill="white" text-anchor="middle">The Agency</text>
+        <text x="500" y="265" font-family="Inter,sans-serif" font-size="58" font-weight="900" fill="#34d399" text-anchor="middle">Transformation</text>
+        <rect x="60" y="320" width="880" height="420" rx="20" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.4)" stroke-width="2"/>
+        <rect x="60" y="320" width="880" height="70" rx="20" fill="rgba(239,68,68,0.3)"/>
+        <text x="500" y="368" font-family="Inter,sans-serif" font-size="42" font-weight="900" fill="#fca5a5" text-anchor="middle">😩 BEFORE</text>
+        <text x="500" y="460" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Client chaos everywhere</text>
+        <text x="500" y="520" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Missed deadlines &amp; scope creep</text>
+        <text x="500" y="580" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Proposals take hours</text>
+        <text x="500" y="640" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">No visibility on team tasks</text>
+        <text x="500" y="800" font-family="Inter,sans-serif" font-size="80" text-anchor="middle">⬇️</text>
+        <rect x="60" y="860" width="880" height="420" rx="20" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.4)" stroke-width="2"/>
+        <rect x="60" y="860" width="880" height="70" rx="20" fill="rgba(16,185,129,0.3)"/>
+        <text x="500" y="908" font-family="Inter,sans-serif" font-size="42" font-weight="900" fill="#6ee7b7" text-anchor="middle">✨ AFTER</text>
+        <text x="500" y="1000" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Streamlined agency ops</text>
+        <text x="500" y="1060" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Happy, impressed clients</text>
+        <text x="500" y="1120" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Proposals sent in minutes</text>
+        <text x="500" y="1180" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Full team visibility &amp; flow</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#34d399" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#aa3)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-agencyos">AgencyOS</span><span class="pin-type-label">Type C: Transformation</span></div>
+      <button class="save-btn green" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'agencyos-transformation')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 14: AgencyOS Social Proof -->
+  <div class="pin-card" data-product="agencyos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'agencyos-social-proof')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ag4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d1f0d"/><stop offset="100%" stop-color="#0a1a0a"/></linearGradient>
+          <linearGradient id="aa4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#ag4)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#aa4)"/>
+        <circle cx="500" cy="750" r="480" fill="rgba(16,185,129,0.04)"/>
+        <rect x="60" y="60" width="190" height="44" rx="22" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5"/>
+        <text x="155" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🏢 AgencyOS</text>
+        <text x="120" y="320" font-family="Georgia,serif" font-size="200" fill="#10b981" opacity="0.3">"</text>
+        <text x="500" y="420" font-family="Inter,sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">We onboard clients</text>
+        <text x="500" y="488" font-family="Inter,sans-serif" font-size="52" font-weight="700" fill="#6ee7b7" text-anchor="middle">in half the time</text>
+        <text x="500" y="556" font-family="Inter,sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">now</text>
+        <text x="870" y="600" font-family="Georgia,serif" font-size="200" fill="#10b981" opacity="0.3">"</text>
+        <rect x="350" y="640" width="300" height="3" rx="1.5" fill="url(#aa4)"/>
+        <text x="500" y="740" font-family="Inter,sans-serif" font-size="60" text-anchor="middle">⭐⭐⭐⭐⭐</text>
+        <text x="500" y="830" font-family="Inter,sans-serif" font-size="36" fill="#a7f3d0" text-anchor="middle">— Agency owner</text>
+        <rect x="240" y="900" width="520" height="80" rx="40" fill="rgba(16,185,129,0.25)" stroke="#10b981" stroke-width="2"/>
+        <text x="500" y="950" font-family="Inter,sans-serif" font-size="34" font-weight="700" fill="white" text-anchor="middle">AgencyOS — $49</text>
+        <text x="500" y="1070" font-family="Inter,sans-serif" font-size="30" fill="#34d399" text-anchor="middle">Client portal · Team tasks</text>
+        <text x="500" y="1120" font-family="Inter,sans-serif" font-size="30" fill="#34d399" text-anchor="middle">Proposals · CRM · SOW builder</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#34d399" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#aa4)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-agencyos">AgencyOS</span><span class="pin-type-label">Type D: Social Proof</span></div>
+      <button class="save-btn green" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'agencyos-social-proof')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 15: AgencyOS Free Tool -->
+  <div class="pin-card" data-product="agencyos">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'agencyos-free-tool')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ag5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d1f0d"/><stop offset="100%" stop-color="#040f04"/></linearGradient>
+          <linearGradient id="aa5" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#6ee7b7"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#ag5)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#aa5)"/>
+        <!-- Document icon decoration -->
+        <rect x="380" y="120" width="240" height="300" rx="16" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.3)" stroke-width="2"/>
+        <line x1="420" y1="200" x2="580" y2="200" stroke="#34d399" stroke-width="3" opacity="0.5"/>
+        <line x1="420" y1="240" x2="580" y2="240" stroke="#34d399" stroke-width="3" opacity="0.4"/>
+        <line x1="420" y1="280" x2="540" y2="280" stroke="#34d399" stroke-width="3" opacity="0.3"/>
+        <line x1="420" y1="320" x2="560" y2="320" stroke="#34d399" stroke-width="3" opacity="0.3"/>
+        <rect x="60" y="60" width="190" height="44" rx="22" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5"/>
+        <text x="155" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🏢 AgencyOS</text>
+        <rect x="280" y="480" width="440" height="110" rx="55" fill="url(#aa5)"/>
+        <text x="500" y="548" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="white" text-anchor="middle">FREE</text>
+        <text x="500" y="670" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="white" text-anchor="middle">Scope of Work</text>
+        <text x="500" y="750" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="#34d399" text-anchor="middle">Template</text>
+        <rect x="300" y="790" width="400" height="4" rx="2" fill="url(#aa5)"/>
+        <text x="500" y="880" font-family="Inter,sans-serif" font-size="40" fill="#a7f3d0" text-anchor="middle">Professional SOW template</text>
+        <text x="500" y="940" font-family="Inter,sans-serif" font-size="40" fill="#a7f3d0" text-anchor="middle">ready to customize</text>
+        <rect x="200" y="1010" width="600" height="80" rx="12" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+        <text x="500" y="1060" font-family="Inter,sans-serif" font-size="34" fill="#6ee7b7" text-anchor="middle">Saves hours per client</text>
+        <text x="500" y="1180" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="white" text-anchor="middle">Download</text>
+        <text x="500" y="1270" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="#10b981" text-anchor="middle">free →</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#34d399" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#aa5)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-agencyos">AgencyOS</span><span class="pin-type-label">Type E: Free Tool</span></div>
+      <button class="save-btn green" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'agencyos-free-tool')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- ===== YOUTUBE EMPIRE ===== -->
+
+  <!-- Pin 16: YouTube Empire Hook -->
+  <div class="pin-card" data-product="youtube">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'youtube-hook')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="yg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1f0a0a"/><stop offset="100%" stop-color="#120404"/></linearGradient>
+          <linearGradient id="ya1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#f87171"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#yg1)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ya1)"/>
+        <circle cx="800" cy="250" r="280" fill="#ef4444" opacity="0.08"/>
+        <circle cx="150" cy="1150" r="200" fill="#dc2626" opacity="0.08"/>
+        <!-- Play button decoration -->
+        <circle cx="500" cy="280" r="120" fill="rgba(239,68,68,0.12)" stroke="rgba(239,68,68,0.3)" stroke-width="2"/>
+        <polygon points="470,240 470,320 550,280" fill="#ef4444" opacity="0.5"/>
+        <rect x="60" y="60" width="230" height="44" rx="22" fill="rgba(239,68,68,0.3)" stroke="#ef4444" stroke-width="1.5"/>
+        <text x="175" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🎬 YouTube Empire</text>
+        <text x="500" y="500" font-family="Inter,sans-serif" font-size="76" font-weight="900" fill="white" text-anchor="middle">Ready to turn</text>
+        <text x="500" y="588" font-family="Inter,sans-serif" font-size="76" font-weight="900" fill="white" text-anchor="middle">your channel</text>
+        <text x="500" y="676" font-family="Inter,sans-serif" font-size="76" font-weight="900" fill="#f87171" text-anchor="middle">into a business?</text>
+        <text x="500" y="760" font-family="Inter,sans-serif" font-size="76" font-weight="900" fill="white" text-anchor="middle">🎬</text>
+        <rect x="350" y="810" width="300" height="4" rx="2" fill="url(#ya1)"/>
+        <text x="500" y="900" font-family="Inter,sans-serif" font-size="38" fill="#fca5a5" text-anchor="middle">The Notion system for</text>
+        <text x="500" y="955" font-family="Inter,sans-serif" font-size="38" fill="#fca5a5" text-anchor="middle">serious YouTubers</text>
+        <text x="500" y="1010" font-family="Inter,sans-serif" font-size="38" fill="#fca5a5" text-anchor="middle">who want real revenue</text>
+        <rect x="200" y="1090" width="600" height="100" rx="50" fill="url(#ya1)"/>
+        <text x="500" y="1151" font-family="Inter,sans-serif" font-size="38" font-weight="700" fill="white" text-anchor="middle">Get YouTube Empire →</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#f87171" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ya1)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-youtube">YouTube Empire</span><span class="pin-type-label">Type A: Hook</span></div>
+      <button class="save-btn red" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'youtube-hook')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 17: YouTube Empire Features -->
+  <div class="pin-card" data-product="youtube">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'youtube-features')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="yg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1f0a0a"/><stop offset="100%" stop-color="#120404"/></linearGradient>
+          <linearGradient id="ya2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#f87171"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#yg2)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ya2)"/>
+        <circle cx="900" cy="100" r="200" fill="#ef4444" opacity="0.08"/>
+        <rect x="60" y="60" width="230" height="44" rx="22" fill="rgba(239,68,68,0.3)" stroke="#ef4444" stroke-width="1.5"/>
+        <text x="175" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🎬 YouTube Empire</text>
+        <text x="500" y="220" font-family="Inter,sans-serif" font-size="58" font-weight="900" fill="white" text-anchor="middle">YouTube Empire</text>
+        <text x="500" y="290" font-family="Inter,sans-serif" font-size="46" font-weight="700" fill="#f87171" text-anchor="middle">includes:</text>
+        <rect x="400" y="320" width="200" height="4" rx="2" fill="url(#ya2)"/>
+        <rect x="80" y="370" width="840" height="100" rx="12" fill="rgba(239,68,68,0.15)" stroke="rgba(239,68,68,0.3)" stroke-width="1"/>
+        <text x="130" y="430" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Video planner</text>
+        <rect x="80" y="490" width="840" height="100" rx="12" fill="rgba(239,68,68,0.1)"/>
+        <text x="130" y="550" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Script templates</text>
+        <rect x="80" y="610" width="840" height="100" rx="12" fill="rgba(239,68,68,0.15)" stroke="rgba(239,68,68,0.3)" stroke-width="1"/>
+        <text x="130" y="670" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Sponsor tracker</text>
+        <rect x="80" y="730" width="840" height="100" rx="12" fill="rgba(239,68,68,0.1)"/>
+        <text x="130" y="790" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Analytics dashboard</text>
+        <rect x="80" y="850" width="840" height="100" rx="12" fill="rgba(239,68,68,0.15)" stroke="rgba(239,68,68,0.3)" stroke-width="1"/>
+        <text x="130" y="910" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Content calendar</text>
+        <rect x="80" y="970" width="840" height="100" rx="12" fill="rgba(239,68,68,0.1)"/>
+        <text x="130" y="1030" font-family="Inter,sans-serif" font-size="40" font-weight="600" fill="white">✓  Brand deals CRM</text>
+        <rect x="80" y="1120" width="840" height="120" rx="16" fill="rgba(239,68,68,0.25)" stroke="#ef4444" stroke-width="2"/>
+        <text x="500" y="1168" font-family="Inter,sans-serif" font-size="34" font-weight="700" fill="white" text-anchor="middle">Just $29 one-time</text>
+        <text x="500" y="1218" font-family="Inter,sans-serif" font-size="38" font-weight="800" fill="#fca5a5" text-anchor="middle">Grow your channel faster</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#f87171" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ya2)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-youtube">YouTube Empire</span><span class="pin-type-label">Type B: Features</span></div>
+      <button class="save-btn red" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'youtube-features')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 18: YouTube Empire Transformation -->
+  <div class="pin-card" data-product="youtube">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'youtube-transformation')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="yg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1f0a0a"/><stop offset="100%" stop-color="#0f0404"/></linearGradient>
+          <linearGradient id="ya3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#f87171"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#yg3)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ya3)"/>
+        <rect x="60" y="60" width="230" height="44" rx="22" fill="rgba(239,68,68,0.3)" stroke="#ef4444" stroke-width="1.5"/>
+        <text x="175" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🎬 YouTube Empire</text>
+        <text x="500" y="200" font-family="Inter,sans-serif" font-size="58" font-weight="900" fill="white" text-anchor="middle">The YouTuber</text>
+        <text x="500" y="265" font-family="Inter,sans-serif" font-size="58" font-weight="900" fill="#f87171" text-anchor="middle">Transformation</text>
+        <rect x="60" y="320" width="880" height="420" rx="20" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.4)" stroke-width="2"/>
+        <rect x="60" y="320" width="880" height="70" rx="20" fill="rgba(239,68,68,0.3)"/>
+        <text x="500" y="368" font-family="Inter,sans-serif" font-size="42" font-weight="900" fill="#fca5a5" text-anchor="middle">😩 BEFORE</text>
+        <text x="500" y="460" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Random uploads, no strategy</text>
+        <text x="500" y="520" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Ideas lost in DMs and notes</text>
+        <text x="500" y="580" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Sponsors fall through cracks</text>
+        <text x="500" y="640" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">Stagnant subscriber count</text>
+        <text x="500" y="800" font-family="Inter,sans-serif" font-size="80" text-anchor="middle">⬇️</text>
+        <rect x="60" y="860" width="880" height="420" rx="20" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.4)" stroke-width="2"/>
+        <rect x="60" y="860" width="880" height="70" rx="20" fill="rgba(16,185,129,0.3)"/>
+        <text x="500" y="908" font-family="Inter,sans-serif" font-size="42" font-weight="900" fill="#6ee7b7" text-anchor="middle">✨ AFTER</text>
+        <text x="500" y="1000" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Consistent content machine</text>
+        <text x="500" y="1060" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Growing revenue from channel</text>
+        <text x="500" y="1120" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Sponsors managed with ease</text>
+        <text x="500" y="1180" font-family="Inter,sans-serif" font-size="36" fill="#6ee7b7" text-anchor="middle">Subscriber growth on track</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#f87171" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ya3)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-youtube">YouTube Empire</span><span class="pin-type-label">Type C: Transformation</span></div>
+      <button class="save-btn red" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'youtube-transformation')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 19: YouTube Empire Social Proof -->
+  <div class="pin-card" data-product="youtube">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'youtube-social-proof')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="yg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1f0a0a"/><stop offset="100%" stop-color="#180808"/></linearGradient>
+          <linearGradient id="ya4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#f87171"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#yg4)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ya4)"/>
+        <circle cx="500" cy="750" r="480" fill="rgba(239,68,68,0.04)"/>
+        <rect x="60" y="60" width="230" height="44" rx="22" fill="rgba(239,68,68,0.3)" stroke="#ef4444" stroke-width="1.5"/>
+        <text x="175" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🎬 YouTube Empire</text>
+        <text x="120" y="320" font-family="Georgia,serif" font-size="200" fill="#ef4444" opacity="0.3">"</text>
+        <text x="500" y="420" font-family="Inter,sans-serif" font-size="50" font-weight="700" fill="white" text-anchor="middle">My channel hit</text>
+        <text x="500" y="490" font-family="Inter,sans-serif" font-size="50" font-weight="700" fill="#fca5a5" text-anchor="middle">10k subscribers</text>
+        <text x="500" y="558" font-family="Inter,sans-serif" font-size="50" font-weight="700" fill="white" text-anchor="middle">after I got</text>
+        <text x="500" y="626" font-family="Inter,sans-serif" font-size="50" font-weight="700" fill="white" text-anchor="middle">organized with</text>
+        <text x="500" y="694" font-family="Inter,sans-serif" font-size="50" font-weight="700" fill="#f87171" text-anchor="middle">this system</text>
+        <text x="870" y="740" font-family="Georgia,serif" font-size="200" fill="#ef4444" opacity="0.3">"</text>
+        <rect x="350" y="760" width="300" height="3" rx="1.5" fill="url(#ya4)"/>
+        <text x="500" y="850" font-family="Inter,sans-serif" font-size="60" text-anchor="middle">⭐⭐⭐⭐⭐</text>
+        <text x="500" y="940" font-family="Inter,sans-serif" font-size="36" fill="#fca5a5" text-anchor="middle">— YouTuber</text>
+        <rect x="240" y="1010" width="520" height="80" rx="40" fill="rgba(239,68,68,0.25)" stroke="#ef4444" stroke-width="2"/>
+        <text x="500" y="1060" font-family="Inter,sans-serif" font-size="34" font-weight="700" fill="white" text-anchor="middle">YouTube Empire — $29</text>
+        <text x="500" y="1170" font-family="Inter,sans-serif" font-size="30" fill="#f87171" text-anchor="middle">Video planner · Script templates</text>
+        <text x="500" y="1220" font-family="Inter,sans-serif" font-size="30" fill="#f87171" text-anchor="middle">Sponsor tracker · Brand deals CRM</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#f87171" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ya4)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-youtube">YouTube Empire</span><span class="pin-type-label">Type D: Social Proof</span></div>
+      <button class="save-btn red" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'youtube-social-proof')">💾 Save PNG</button>
+    </div>
+  </div>
+
+  <!-- Pin 20: YouTube Empire Free Tool -->
+  <div class="pin-card" data-product="youtube">
+    <div class="pin-preview" onclick="savePin(this.querySelector('svg'), 'youtube-free-tool')">
+      <svg viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="yg5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1f0a0a"/><stop offset="100%" stop-color="#0f0404"/></linearGradient>
+          <linearGradient id="ya5" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#fca5a5"/></linearGradient>
+        </defs>
+        <rect width="1000" height="1500" fill="url(#yg5)"/>
+        <rect x="0" y="0" width="1000" height="6" fill="url(#ya5)"/>
+        <!-- Calendar decoration -->
+        <rect x="350" y="110" width="300" height="280" rx="16" fill="rgba(239,68,68,0.12)" stroke="rgba(239,68,68,0.3)" stroke-width="2"/>
+        <rect x="350" y="110" width="300" height="60" rx="16" fill="rgba(239,68,68,0.3)"/>
+        <text x="500" y="150" font-family="Inter,sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">CONTENT PLAN</text>
+        <text x="390" y="220" font-family="Inter,sans-serif" font-size="22" fill="#fca5a5">MON TUE WED</text>
+        <text x="390" y="260" font-family="Inter,sans-serif" font-size="22" fill="#fca5a5"> 1    2    3</text>
+        <text x="390" y="300" font-family="Inter,sans-serif" font-size="22" fill="#fca5a5"> 8    9   10</text>
+        <text x="390" y="340" font-family="Inter,sans-serif" font-size="22" fill="#fca5a5">15   16   17</text>
+        <rect x="60" y="60" width="230" height="44" rx="22" fill="rgba(239,68,68,0.3)" stroke="#ef4444" stroke-width="1.5"/>
+        <text x="175" y="89" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white" text-anchor="middle">🎬 YouTube Empire</text>
+        <rect x="280" y="460" width="440" height="110" rx="55" fill="url(#ya5)"/>
+        <text x="500" y="528" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="white" text-anchor="middle">FREE</text>
+        <text x="500" y="660" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="white" text-anchor="middle">YouTube Channel</text>
+        <text x="500" y="740" font-family="Inter,sans-serif" font-size="62" font-weight="900" fill="#f87171" text-anchor="middle">Planner</text>
+        <rect x="300" y="780" width="400" height="4" rx="2" fill="url(#ya5)"/>
+        <text x="500" y="870" font-family="Inter,sans-serif" font-size="40" fill="#fca5a5" text-anchor="middle">Plan 30 days of content</text>
+        <text x="500" y="930" font-family="Inter,sans-serif" font-size="40" fill="#fca5a5" text-anchor="middle">in under an hour</text>
+        <rect x="200" y="1000" width="600" height="80" rx="12" fill="rgba(239,68,68,0.15)" stroke="rgba(239,68,68,0.3)" stroke-width="1"/>
+        <text x="500" y="1050" font-family="Inter,sans-serif" font-size="34" fill="#fca5a5" text-anchor="middle">No credit card · instant download</text>
+        <text x="500" y="1180" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="white" text-anchor="middle">Get it</text>
+        <text x="500" y="1270" font-family="Inter,sans-serif" font-size="80" font-weight="900" fill="#ef4444" text-anchor="middle">free →</text>
+        <text x="500" y="1420" font-family="Inter,sans-serif" font-size="28" fill="#f87171" text-anchor="middle" opacity="0.8">baphometsblade.github.io/freelanceos-storefront</text>
+        <rect x="0" y="1494" width="1000" height="6" fill="url(#ya5)"/>
+      </svg>
+    </div>
+    <div class="pin-meta">
+      <div class="pin-badges"><span class="badge badge-youtube">YouTube Empire</span><span class="pin-type-label">Type E: Free Tool</span></div>
+      <button class="save-btn red" onclick="savePin(this.closest('.pin-card').querySelector('svg'), 'youtube-free-tool')">💾 Save PNG</button>
+    </div>
+  </div>
+
+</div><!-- end pins-grid -->
+
+<footer>
+  <p>Save each pin, then schedule 2–3 per day on Pinterest.</p>
+  <p>Link all pins to: <a href="https://baphometsblade.github.io/freelanceos-storefront/">https://baphometsblade.github.io/freelanceos-storefront/</a></p>
+  <p style="margin-top:1rem; color:#444;">© 2026 FreelanceOS · <a href="https://baphometsblade.github.io/freelanceos-storefront/">Back to store</a></p>
+</footer>
+
+<script>
+  // Save pin as PNG
+  function savePin(svgElement, filename) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1000;
+    canvas.height = 1500;
+    const ctx = canvas.getContext('2d');
+    const data = new XMLSerializer().serializeToString(svgElement);
+    const blob = new Blob([data], {type: 'image/svg+xml'});
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, 1000, 1500);
+      URL.revokeObjectURL(url);
+      const link = document.createElement('a');
+      link.download = filename + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      // Fallback: download as SVG
+      const svgBlob = new Blob([data], {type: 'image/svg+xml'});
+      const svgUrl = URL.createObjectURL(svgBlob);
+      const link = document.createElement('a');
+      link.download = filename + '.svg';
+      link.href = svgUrl;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(svgUrl), 1000);
+    };
+    img.src = url;
+  }
+
+  // Filter functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const pinCards = document.querySelectorAll('.pin-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      pinCards.forEach(card => {
+        if (filter === 'all' || card.dataset.product === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
