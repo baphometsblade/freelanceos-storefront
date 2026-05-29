@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Should I Fire This Client? — Free Decision Tool | FreelanceOS</title>
+    <meta name="description" content="The brutally honest client assessment tool every freelancer needs. Score your client across 20 factors, get a verdict, and if needed — a professional breakup email. Free forever.">
+    <meta name="keywords" content="fire client, freelance client assessment, bad client quiz, freelancer tools, client red flags, freelance business">
+    <meta name="author" content="FreelanceOS">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Should I Fire This Client? — Free Decision Tool">
+    <meta property="og:description" content="Score your client across 20 brutally honest questions. Get a verdict, financial analysis, and if needed — a professional breakup email. Free forever.">
+    <meta property="og:url" content="https://freelanceos.pro/freelanceos-storefront/fire-this-client.html">
+    <meta property="og:site_name" content="FreelanceOS">
+    <meta property="og:image" content="https://freelanceos.pro/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Should I Fire This Client? — Free Decision Tool">
+    <meta name="twitter:description" content="Score your client across 20 brutally honest questions. Get a verdict, financial analysis, and a breakup email if needed.">
+    <meta name="twitter:image" content="https://freelanceos.pro/og-image.png">
+
+    <!-- Schema.org WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Should I Fire This Client? Decision Tool",
+        "description": "Score your client across 20 factors covering payment, communication, boundaries, respect, and your wellbeing. Get a data-driven verdict with financial analysis.",
+        "url": "https://freelanceos.pro/freelanceos-storefront/fire-this-client.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "FreelanceOS"
+        }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #a855f7;
+            --accent2: #ec4899;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --success: #22c55e;
+            --warning: #eab308;
+            --orange: #f97316;
+            --danger: #ef4444;
+            --danger-dark: #991b1b;
+            --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --glass-bg: rgba(15, 23, 42, 0.8);
+            --glass-border: rgba(168, 85, 247, 0.1);
+            --glass-border-hover: rgba(168, 85, 247, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background ambient effects */
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .bg-glow-1 { top: -200px; left: -200px; background: var(--accent); }
+        .bg-glow-2 { bottom: -200px; right: -200px; background: var(--accent2); }
+        .bg-glow-3 { top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--accent); opacity: 0.04; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+        .header .fire-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            display: block;
+            animation: fireFloat 2s ease-in-out infinite;
+        }
+        @keyframes fireFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.05); }
+        }
+        .header h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            margin: 0 auto 32px;
+            max-width: 600px;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            transition: color 0.3s;
+        }
+        .progress-step.active { color: var(--accent); }
+        .progress-step.completed { color: var(--success); }
+        .progress-step .step-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border: 2px solid var(--text-dim);
+            transition: all 0.3s;
+        }
+        .progress-step.active .step-dot {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.2);
+            color: var(--accent);
+        }
+        .progress-step.completed .step-dot {
+            border-color: var(--success);
+            background: var(--success);
+            color: var(--bg);
+        }
+        .progress-bar-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(148, 163, 184, 0.15);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Glass card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        .glass-card:hover {
+            border-color: var(--glass-border-hover);
+        }
+
+        /* Step sections */
+        .step-section {
+            display: none;
+        }
+        .step-section.active {
+            display: block;
+            animation: fadeSlideIn 0.4s ease;
+        }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .form-group .form-hint {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+        input[type="text"]:focus,
+        select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+        }
+        select option {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        /* Custom range slider */
+        .slider-container {
+            position: relative;
+        }
+        .slider-value {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(148, 163, 184, 0.15);
+            outline: none;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gradient);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+            transition: box-shadow 0.2s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gradient);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+
+        /* Category header */
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        .category-icon {
+            font-size: 1.6rem;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+        .category-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .category-header .cat-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .category-counter {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-left: auto;
+            background: rgba(148, 163, 184, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        /* Question card */
+        .question-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.08);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: border-color 0.3s;
+        }
+        .question-card:hover {
+            border-color: rgba(168, 85, 247, 0.15);
+        }
+        .question-card .q-number {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .question-card .q-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .question-card .q-joke {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+
+        /* Answer options */
+        .answer-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .answer-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px 14px;
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.4);
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: all 0.25s;
+            user-select: none;
+        }
+        .answer-option:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            background: rgba(168, 85, 247, 0.05);
+            color: var(--text);
+        }
+        .answer-option.selected {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.15);
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: var(--gradient);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 30px rgba(168, 85, 247, 0.45);
+            transform: translateY(-2px);
+        }
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn-secondary {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--text-muted);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+        }
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--text);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 10px 16px;
+        }
+        .btn-ghost:hover { color: var(--text); }
+
+        .btn-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        /* Section title */
+        .section-title {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .section-title h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ======== VERDICT / RESULTS ======== */
+        .verdict-container { text-align: center; }
+
+        /* Circular gauge */
+        .gauge-wrapper {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 24px;
+        }
+        .gauge-svg {
+            width: 220px;
+            height: 220px;
+            transform: rotate(-90deg);
+        }
+        .gauge-bg {
+            fill: none;
+            stroke: rgba(148, 163, 184, 0.1);
+            stroke-width: 14;
+        }
+        .gauge-fill {
+            fill: none;
+            stroke-width: 14;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 2s ease, stroke 0.5s;
+        }
+        .gauge-score {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .gauge-score .score-number {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .gauge-score .score-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        .verdict-badge {
+            display: inline-block;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .verdict-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto 36px;
+            line-height: 1.6;
+        }
+
+        /* Category bars */
+        .category-bars {
+            margin-bottom: 36px;
+        }
+        .cat-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+        .cat-bar-icon { font-size: 1.2rem; width: 28px; text-align: center; }
+        .cat-bar-label {
+            width: 140px;
+            text-align: left;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+        .cat-bar-track {
+            flex: 1;
+            height: 10px;
+            background: rgba(148, 163, 184, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .cat-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 1.5s ease;
+        }
+        .cat-bar-val {
+            width: 44px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Financial analysis */
+        .fin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+        .fin-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.08);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+        }
+        .fin-card .fin-icon { font-size: 1.5rem; margin-bottom: 8px; }
+        .fin-card .fin-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .fin-card .fin-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+        .fin-card.full-width {
+            grid-column: 1 / -1;
+        }
+        .fin-rec {
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 28px;
+        }
+
+        /* Exit script / Fix-it plan */
+        .script-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+        .script-box h3 {
+            font-size: 1.15rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .script-box .email-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            white-space: pre-wrap;
+            font-family: inherit;
+        }
+        .script-box .talking-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .talking-point .tp-num {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(168, 85, 247, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(148, 163, 184, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Share badge */
+        .share-section {
+            text-align: center;
+            margin: 36px 0;
+        }
+        .share-badge {
+            display: inline-block;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 20px 32px;
+            margin-bottom: 16px;
+        }
+        .share-badge .badge-text {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .share-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* CTA */
+        .cta-card {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            margin: 36px 0;
+        }
+        .cta-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .cta-card p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .cta-card .price-was {
+            text-decoration: line-through;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+        .cta-card .price-now {
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .cta-card .price-code {
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px 60px;
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+            margin-top: 40px;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+            background: rgba(168, 85, 247, 0.08);
+        }
+        .footer .disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        .footer .brand {
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        /* Emoji rain animation */
+        .emoji-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        .emoji-drop {
+            position: absolute;
+            font-size: 2rem;
+            animation: emojiDrop linear forwards;
+            top: -50px;
+        }
+        @keyframes emojiDrop {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Suspense overlay */
+        .suspense-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .suspense-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .suspense-text {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-top: 20px;
+            animation: suspensePulse 1.2s ease-in-out infinite;
+        }
+        @keyframes suspensePulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .suspense-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(148, 163, 184, 0.15);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 24px;
+        }
+        .suspense-bar-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Sparkle for high scores */
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: sparkleAnim 1s ease forwards;
+            pointer-events: none;
+        }
+        @keyframes sparkleAnim {
+            0% { transform: scale(0); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.8; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .header h1 { font-size: 1.8rem; }
+            .glass-card { padding: 20px; }
+            .answer-options { flex-direction: column; }
+            .answer-option { min-width: 100%; }
+            .fin-grid { grid-template-columns: 1fr; }
+            .cat-bar-label { width: 100px; font-size: 0.75rem; }
+            .btn-row { flex-direction: column; }
+            .btn-row .btn { width: 100%; }
+            .progress-step span:not(.step-dot) { display: none; }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--card);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--text);
+            z-index: 2000;
+            transition: transform 0.4s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Verdict title animation */
+        .verdict-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        .verdict-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <span class="fire-icon">&#128293;</span>
+            <h1>Should I Fire This Client?</h1>
+            <p class="subtitle">The brutally honest, data-driven assessment tool for freelancers who are <em>this close</em> to sending that email. 20 questions. 1 verdict. Zero sugarcoating.</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="progress-step active" id="ps1">
+                    <span class="step-dot">1</span>
+                    <span>Profile</span>
+                </div>
+                <div class="progress-step" id="ps2">
+                    <span class="step-dot">2</span>
+                    <span>Assessment</span>
+                </div>
+                <div class="progress-step" id="ps3">
+                    <span class="step-dot">3</span>
+                    <span>Verdict</span>
+                </div>
+            </div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- ===== STEP 1: CLIENT PROFILE ===== -->
+        <div class="step-section active" id="step1">
+            <div class="glass-card">
+                <div class="section-title">
+                    <h2>First, tell us about this client</h2>
+                    <p>Don't worry, we won't tell them. Probably.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="clientName">Client Name (optional)</label>
+                    <div class="form-hint">For your eyes only. We'll use it in the report.</div>
+                    <input type="text" id="clientName" placeholder="e.g., That one nightmare agency...">
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">How long have you worked together?</label>
+                    <div class="form-hint">Longer doesn't always mean better. Ask your exes.</div>
+                    <select id="duration">
+                        <option value="" disabled selected>Select duration...</option>
+                        <option value="1">Less than 1 month</option>
+                        <option value="2">1 - 3 months</option>
+                        <option value="3">3 - 6 months</option>
+                        <option value="4">6 - 12 months</option>
+                        <option value="5">1 - 2 years</option>
+                        <option value="6">2+ years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Monthly Revenue from This Client</label>
+                    <div class="form-hint">How much of that sweet, sweet cash do they bring in?</div>
+                    <div class="slider-container">
+                        <div class="slider-value" id="revenueDisplay">$2,000</div>
+                        <input type="range" id="revenueSlider" min="0" max="20000" step="100" value="2000">
+                        <div class="slider-labels">
+                            <span>$0</span>
+                            <span>$10,000</span>
+                            <span>$20,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>% of Your Total Income They Represent</label>
+                    <div class="form-hint">The higher this is, the scarier this quiz gets. Good luck.</div>
+                    <div class="slider-container">
+                        <div class="slider-value" id="incomeDisplay">25%</div>
+                        <input type="range" id="incomeSlider" min="0" max="100" step="1" value="25">
+                        <div class="slider-labels">
+                            <span>0%</span>
+                            <span>50%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="goToStep(2)">Start the Assessment &rarr;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== STEP 2: ASSESSMENT ===== -->
+        <div class="step-section" id="step2">
+            <!-- Category pages will be rendered here -->
+            <div id="assessmentContent"></div>
+        </div>
+
+        <!-- ===== STEP 3: VERDICT ===== -->
+        <div class="step-section" id="step3">
+            <div id="verdictContent"></div>
+        </div>
+    </div>
+
+    <!-- Suspense overlay -->
+    <div class="suspense-overlay" id="suspenseOverlay">
+        <span style="font-size:3.5rem;" id="suspenseEmoji">&#129300;</span>
+        <div class="suspense-text" id="suspenseText">Analyzing your responses...</div>
+        <div class="suspense-bar"><div class="suspense-bar-fill" id="suspenseBar"></div></div>
+    </div>
+
+    <!-- Emoji rain container -->
+    <div class="emoji-rain" id="emojiRain"></div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Footer (always visible) -->
+    <div class="container">
+        <div class="footer">
+            <div class="brand">FreelanceOS</div>
+            <div class="footer-links">
+                <a href="/freelanceos-storefront/client-red-flag-checker.html">Client Red Flag Checker</a>
+                <a href="/freelanceos-storefront/contract-clauses.html">Contract Clause Generator</a>
+                <a href="/freelanceos-storefront/rate-negotiation-simulator.html">Rate Negotiation Simulator</a>
+                <a href="/freelanceos-storefront/burnout-risk-assessment.html">Burnout Risk Assessment</a>
+            </div>
+            <p class="disclaimer">This tool is for educational purposes only. Not professional advice. Always consult with a business advisor or legal professional for important decisions. Built with &#128156; by FreelanceOS.</p>
+        </div>
+    </div>
+
+<script>
+/* ============================================================
+   DATA: Questions, categories, scoring
+   ============================================================ */
+const CATEGORIES = [
+    {
+        id: 'payment',
+        name: 'Payment & Money',
+        icon: '&#128176;',
+        subtitle: 'Show me the money... or don\'t. That\'s kind of the problem.',
+        questions: [
+            {
+                text: 'Do they pay on time?',
+                joke: 'Net 30 shouldn\'t mean "maybe by Christmas."',
+                options: ['Always', 'Usually', 'Sometimes', 'Rarely', 'Never'],
+                scores: [100, 75, 50, 25, 0]
+            },
+            {
+                text: 'Do they negotiate your rate down?',
+                joke: '"But my cousin said he could do it for $50..."',
+                options: ['Never', 'Occasionally', 'Frequently', 'Every time'],
+                scores: [100, 66, 33, 0]
+            },
+            {
+                text: 'Do they respect your payment terms?',
+                joke: 'Your invoice said NET 15, not NET "whenever I feel like it."',
+                options: ['Yes', 'Mostly', 'No'],
+                scores: [100, 50, 0]
+            },
+            {
+                text: 'Have they ever ghosted an invoice?',
+                joke: 'Seen at 3:47 PM. Last online: 3 months ago.',
+                options: ['Never', 'Once', 'Multiple times'],
+                scores: [100, 40, 0]
+            }
+        ]
+    },
+    {
+        id: 'communication',
+        name: 'Communication',
+        icon: '&#128172;',
+        subtitle: 'Because "per my last email" shouldn\'t be your most-used phrase.',
+        questions: [
+            {
+                text: 'Response time to your messages?',
+                joke: 'You\'ve memorized the "typing..." animation by now.',
+                options: ['Same day', '1-2 days', '3-5 days', 'Week+', 'Ghost'],
+                scores: [100, 80, 50, 20, 0]
+            },
+            {
+                text: 'Do they give clear project briefs?',
+                joke: '"Just make it look good" is not a brief, Karen.',
+                options: ['Always', 'Usually', 'Vague', 'What brief?'],
+                scores: [100, 70, 35, 0]
+            },
+            {
+                text: 'Weekend/evening messages expecting instant replies?',
+                joke: 'Your phone just buzzed. It\'s Sunday at 11 PM. You already know who it is.',
+                options: ['Never', 'Rarely', 'Sometimes', 'Constantly'],
+                scores: [100, 70, 35, 0]
+            },
+            {
+                text: 'Tone of communication?',
+                joke: 'There\'s "direct" and then there\'s "are you okay?"',
+                options: ['Respectful', 'Mostly fine', 'Passive-aggressive', 'Rude/hostile'],
+                scores: [100, 70, 30, 0]
+            }
+        ]
+    },
+    {
+        id: 'scope',
+        name: 'Scope & Boundaries',
+        icon: '&#128679;',
+        subtitle: 'Scope creep: the silent killer of freelancer happiness.',
+        questions: [
+            {
+                text: 'Do they request work outside the agreed scope?',
+                joke: '"Oh, and while you\'re at it, can you also redesign our logo?"',
+                options: ['Never', 'Occasionally', 'Frequently', 'It\'s a free-for-all'],
+                scores: [100, 66, 33, 0]
+            },
+            {
+                text: '"Can you just quickly..." requests?',
+                joke: 'Narrator: It was, in fact, not quick.',
+                options: ['Never', 'Monthly', 'Weekly', 'Daily'],
+                scores: [100, 70, 35, 0]
+            },
+            {
+                text: 'Do they respect your working hours?',
+                joke: 'Freelancer does not mean "free all the time-lancer."',
+                options: ['Yes', 'Mostly', 'No', 'What are "hours"?'],
+                scores: [100, 66, 33, 0]
+            },
+            {
+                text: 'Revision expectations?',
+                joke: 'Revision 47: "Can we go back to version 2 but with the font from version 31?"',
+                options: ['Reasonable', 'Slightly excessive', 'Unlimited', '"Make it pop"'],
+                scores: [100, 60, 25, 0]
+            }
+        ]
+    },
+    {
+        id: 'respect',
+        name: 'Professional Respect',
+        icon: '&#129309;',
+        subtitle: 'Respect is a two-way street. Are they even on the road?',
+        questions: [
+            {
+                text: 'Do they value your expertise?',
+                joke: 'You didn\'t spend 10 years learning this to be told to "Google it."',
+                options: ['Absolutely', 'Mostly', 'It\'s complicated', 'I\'m just a vendor to them'],
+                scores: [100, 70, 35, 0]
+            },
+            {
+                text: 'Credit for your work?',
+                joke: '"Great job, team!" — said the person who did nothing.',
+                options: ['Always credited', 'Sometimes', 'Rarely', 'They claim it as theirs'],
+                scores: [100, 65, 30, 0]
+            },
+            {
+                text: 'Do they micromanage?',
+                joke: '"Can you move that pixel 0.5px to the left? I\'ll wait."',
+                options: ['No, they trust me', 'Slightly', 'Heavily', 'They want to watch me work'],
+                scores: [100, 65, 30, 0]
+            },
+            {
+                text: 'Do they make you feel replaceable?',
+                joke: 'Ah yes, the classic Fiverr threat. A freelancer\'s love language.',
+                options: ['Never', 'Sometimes', 'Often', '"I can get this on Fiverr for $5"'],
+                scores: [100, 60, 25, 0]
+            }
+        ]
+    },
+    {
+        id: 'wellbeing',
+        name: 'Your Wellbeing',
+        icon: '&#128150;',
+        subtitle: 'The most important category. Because no client is worth your health.',
+        questions: [
+            {
+                text: 'Stress level when you see their name pop up?',
+                joke: '*phone buzzes* *heart rate spikes* *considers career change*',
+                options: ['Calm', 'Slight anxiety', 'Dread', 'Full panic mode'],
+                scores: [100, 65, 30, 0]
+            },
+            {
+                text: 'Has this client affected your sleep or health?',
+                joke: '3 AM staring at the ceiling thinking about their revision notes.',
+                options: ['Never', 'Occasionally', 'Regularly', 'Significantly'],
+                scores: [100, 60, 25, 0]
+            },
+            {
+                text: 'Would you take this client again knowing what you know now?',
+                joke: 'Hindsight is 20/20. This quiz is trying to give you foresight.',
+                options: ['Absolutely', 'Probably', 'Probably not', 'Run'],
+                scores: [100, 65, 30, 0]
+            },
+            {
+                text: 'Does working with them bring you joy or growth?',
+                joke: 'Marie Kondo your client list. Does this one spark joy?',
+                options: ['Yes', 'Sometimes', 'Rarely', 'It\'s draining my soul'],
+                scores: [100, 65, 25, 0]
+            }
+        ]
+    }
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentStep = 1;
+let currentCategory = 0;
+let answers = {};  // key: "cat_q" => score
+let clientName = '';
+let monthlyRevenue = 2000;
+let incomePercent = 25;
+let durationLabel = '';
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function goToStep(step) {
+    if (step === 2 && currentStep === 1) {
+        clientName = document.getElementById('clientName').value.trim() || 'This Client';
+        monthlyRevenue = parseInt(document.getElementById('revenueSlider').value);
+        incomePercent = parseInt(document.getElementById('incomeSlider').value);
+        const durSelect = document.getElementById('duration');
+        durationLabel = durSelect.options[durSelect.selectedIndex] ? durSelect.options[durSelect.selectedIndex].text : '';
+        currentCategory = 0;
+        renderCategory(0);
+    }
+
+    document.querySelectorAll('.step-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+
+    // Update progress indicators
+    for (let i = 1; i <= 3; i++) {
+        const ps = document.getElementById('ps' + i);
+        ps.classList.remove('active', 'completed');
+        if (i < step) ps.classList.add('completed');
+        if (i === step) ps.classList.add('active');
+    }
+
+    updateProgressBar();
+    currentStep = step;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgressBar() {
+    const fill = document.getElementById('progressFill');
+    if (currentStep === 1) {
+        fill.style.width = '5%';
+    } else if (currentStep === 2) {
+        const totalQ = 20;
+        const answered = Object.keys(answers).length;
+        const pct = 10 + (answered / totalQ) * 55;
+        fill.style.width = pct + '%';
+    } else {
+        fill.style.width = '100%';
+    }
+}
+
+/* ============================================================
+   RENDER ASSESSMENT CATEGORIES
+   ============================================================ */
+function renderCategory(catIdx) {
+    currentCategory = catIdx;
+    const cat = CATEGORIES[catIdx];
+    const container = document.getElementById('assessmentContent');
+
+    let html = '<div class="glass-card" style="animation: fadeSlideIn 0.4s ease">';
+    html += '<div class="category-header">';
+    html += '<div class="category-icon">' + cat.icon + '</div>';
+    html += '<div><h2>' + cat.name + '</h2><div class="cat-subtitle">' + cat.subtitle + '</div></div>';
+    html += '<div class="category-counter">Category ' + (catIdx + 1) + ' of 5</div>';
+    html += '</div>';
+
+    cat.questions.forEach((q, qi) => {
+        const qKey = catIdx + '_' + qi;
+        const globalNum = catIdx * 4 + qi + 1;
+        html += '<div class="question-card" id="qcard_' + qKey + '">';
+        html += '<div class="q-number">Question ' + globalNum + ' of 20</div>';
+        html += '<div class="q-text">' + q.text + '</div>';
+        html += '<div class="q-joke">' + q.joke + '</div>';
+        html += '<div class="answer-options">';
+        q.options.forEach((opt, oi) => {
+            const selected = answers[qKey] !== undefined && answers[qKey] === q.scores[oi] ? 'selected' : '';
+            html += '<div class="answer-option ' + selected + '" onclick="selectAnswer(\'' + qKey + '\', ' + q.scores[oi] + ', this)" data-score="' + q.scores[oi] + '">' + opt + '</div>';
+        });
+        html += '</div></div>';
+    });
+
+    html += '<div class="btn-row">';
+    if (catIdx > 0) {
+        html += '<button class="btn btn-ghost" onclick="renderCategory(' + (catIdx - 1) + ')">&larr; Back</button>';
+    } else {
+        html += '<button class="btn btn-ghost" onclick="goToStep(1)">&larr; Profile</button>';
+    }
+    if (catIdx < 4) {
+        html += '<button class="btn btn-primary" id="nextCatBtn" onclick="nextCategory()" disabled>Next Category &rarr;</button>';
+    } else {
+        html += '<button class="btn btn-primary" id="nextCatBtn" onclick="showVerdict()" disabled>&#128293; Get My Verdict</button>';
+    }
+    html += '</div></div>';
+
+    container.innerHTML = html;
+    checkCategoryComplete();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function selectAnswer(qKey, score, el) {
+    // Remove selected from siblings
+    const parent = el.parentElement;
+    parent.querySelectorAll('.answer-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    answers[qKey] = score;
+    checkCategoryComplete();
+    updateProgressBar();
+}
+
+function checkCategoryComplete() {
+    const cat = CATEGORIES[currentCategory];
+    let allAnswered = true;
+    cat.questions.forEach((q, qi) => {
+        const qKey = currentCategory + '_' + qi;
+        if (answers[qKey] === undefined) allAnswered = false;
+    });
+    const btn = document.getElementById('nextCatBtn');
+    if (btn) btn.disabled = !allAnswered;
+}
+
+function nextCategory() {
+    if (currentCategory < 4) {
+        renderCategory(currentCategory + 1);
+    }
+}
+
+/* ============================================================
+   SCORING ENGINE
+   ============================================================ */
+function calculateScores() {
+    const catScores = {};
+    let totalScore = 0;
+    let totalQuestions = 0;
+
+    CATEGORIES.forEach((cat, ci) => {
+        let catTotal = 0;
+        let catCount = 0;
+        cat.questions.forEach((q, qi) => {
+            const key = ci + '_' + qi;
+            if (answers[key] !== undefined) {
+                catTotal += answers[key];
+                catCount++;
+            }
+        });
+        const avg = catCount > 0 ? catTotal / catCount : 0;
+        catScores[cat.id] = Math.round(avg);
+        totalScore += catTotal;
+        totalQuestions += catCount;
+    });
+
+    const overall = totalQuestions > 0 ? Math.round(totalScore / totalQuestions) : 0;
+    return { overall, catScores };
+}
+
+function getVerdict(score) {
+    if (score >= 80) return { label: 'KEEPER', color: '#22c55e', bg: 'rgba(34,197,94,0.15)', border: 'rgba(34,197,94,0.3)', desc: 'This client is a gem. Nurture this relationship like a rare houseplant that actually thrives. Send them a thank-you note. Seriously.' };
+    if (score >= 60) return { label: 'FIXABLE', color: '#eab308', bg: 'rgba(234,179,8,0.15)', border: 'rgba(234,179,8,0.3)', desc: 'There are cracks, but the foundation is still there. Time for a boundaries conversation before small issues become dealbreakers.' };
+    if (score >= 40) return { label: 'ON THIN ICE', color: '#f97316', bg: 'rgba(249,115,22,0.15)', border: 'rgba(249,115,22,0.3)', desc: 'This relationship is teetering. You need a serious sit-down conversation, and you need it yesterday. Come prepared with specific issues and proposed solutions.' };
+    if (score >= 20) return { label: 'FIRE THEM', color: '#ef4444', bg: 'rgba(239,68,68,0.15)', border: 'rgba(239,68,68,0.3)', desc: 'The math doesn\'t math. The vibes don\'t vibe. It\'s time to draft that email, set a transition timeline, and free yourself for clients who actually deserve your talent.' };
+    return { label: 'RUN', color: '#991b1b', bg: 'rgba(153,27,27,0.2)', border: 'rgba(153,27,27,0.4)', desc: 'This is not a client. This is a cautionary tale. Exit immediately, protect your boundaries, and maybe send this quiz to your freelancer friends as a public service announcement.' };
+}
+
+/* ============================================================
+   SUSPENSE & VERDICT REVEAL
+   ============================================================ */
+function showVerdict() {
+    const overlay = document.getElementById('suspenseOverlay');
+    const bar = document.getElementById('suspenseBar');
+    const textEl = document.getElementById('suspenseText');
+    const emojiEl = document.getElementById('suspenseEmoji');
+    overlay.classList.add('active');
+
+    const messages = [
+        { text: 'Analyzing your responses...', emoji: '&#129300;', pct: 15 },
+        { text: 'Cross-referencing red flags...', emoji: '&#128681;', pct: 30 },
+        { text: 'Calculating stress-to-income ratio...', emoji: '&#128200;', pct: 50 },
+        { text: 'Consulting the freelancer gods...', emoji: '&#128302;', pct: 70 },
+        { text: 'Preparing your verdict...', emoji: '&#9878;&#65039;', pct: 85 },
+        { text: 'Here it comes...', emoji: '&#128064;', pct: 100 }
+    ];
+
+    let step = 0;
+    function nextSuspenseStep() {
+        if (step >= messages.length) {
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                goToStep(3);
+                renderVerdict();
+            }, 400);
+            return;
+        }
+        textEl.innerHTML = messages[step].text;
+        emojiEl.innerHTML = messages[step].emoji;
+        bar.style.width = messages[step].pct + '%';
+        step++;
+        setTimeout(nextSuspenseStep, 600 + Math.random() * 400);
+    }
+    nextSuspenseStep();
+}
+
+function renderVerdict() {
+    const { overall, catScores } = calculateScores();
+    const verdict = getVerdict(overall);
+    const container = document.getElementById('verdictContent');
+
+    // Build category bar data
+    const catBarData = CATEGORIES.map(cat => ({
+        name: cat.name,
+        icon: cat.icon,
+        score: catScores[cat.id],
+        color: getScoreColor(catScores[cat.id])
+    }));
+
+    // Financial calculations
+    const revenueAtRisk = monthlyRevenue;
+    const annualAtRisk = revenueAtRisk * 12;
+    const standardHours = 160;
+    const clientHours = standardHours * (incomePercent / 100);
+    const stressMultiplier = overall < 40 ? 1.5 : (overall < 60 ? 1.25 : 1.1);
+    const effectiveHours = clientHours * stressMultiplier;
+    const impliedRate = clientHours > 0 ? Math.round(revenueAtRisk / effectiveHours) : 0;
+    const normalRate = clientHours > 0 ? Math.round(revenueAtRisk / clientHours) : 0;
+    const replacementMonths = incomePercent <= 15 ? 1 : (incomePercent <= 30 ? 2 : (incomePercent <= 50 ? 3 : 5));
+    const newClientsNeeded = revenueAtRisk > 0 ? Math.max(1, Math.ceil(revenueAtRisk / (normalRate * 30))) : 0;
+    const mathSays = overall < 55 ? 'fire' : 'keep';
+
+    // Identify worst categories for scripts
+    const sortedCats = [...catBarData].sort((a, b) => a.score - b.score);
+    const worstCats = sortedCats.filter(c => c.score < 60);
+
+    // Build HTML
+    let html = '<div class="glass-card verdict-container">';
+    html += '<div class="verdict-title" id="verdictTitle">The Verdict for ' + escapeHtml(clientName) + '</div>';
+
+    // Gauge
+    html += '<div class="gauge-wrapper" id="gaugeWrapper">';
+    html += '<svg class="gauge-svg" viewBox="0 0 220 220"><circle class="gauge-bg" cx="110" cy="110" r="90"></circle>';
+    html += '<circle class="gauge-fill" id="gaugeFill" cx="110" cy="110" r="90" stroke-dasharray="565.49" stroke-dashoffset="565.49" stroke="' + verdict.color + '"></circle></svg>';
+    html += '<div class="gauge-score"><div class="score-number" id="scoreNumber" style="color:' + verdict.color + '">0</div><div class="score-label">out of 100</div></div>';
+    html += '</div>';
+
+    // Verdict badge
+    html += '<div class="verdict-badge" style="background:' + verdict.bg + '; color:' + verdict.color + '; border: 1px solid ' + verdict.border + '">' + verdict.label + '</div>';
+    html += '<div class="verdict-desc">' + verdict.desc + '</div>';
+
+    // Category breakdown
+    html += '<div class="category-bars" style="text-align:left;">';
+    html += '<h3 style="margin-bottom:18px; font-size:1.1rem;">Category Breakdown</h3>';
+    catBarData.forEach(cb => {
+        html += '<div class="cat-bar-row">';
+        html += '<div class="cat-bar-icon">' + cb.icon + '</div>';
+        html += '<div class="cat-bar-label">' + cb.name + '</div>';
+        html += '<div class="cat-bar-track"><div class="cat-bar-fill" data-width="' + cb.score + '" style="background:' + cb.color + '"></div></div>';
+        html += '<div class="cat-bar-val" style="color:' + cb.color + '">' + cb.score + '</div>';
+        html += '</div>';
+    });
+    html += '</div>';
+    html += '</div>';
+
+    // Financial Impact Analysis
+    html += '<div class="glass-card" style="text-align:left;">';
+    html += '<h3 style="margin-bottom:20px; font-size:1.2rem; text-align:center;">&#128176; Financial Impact Analysis</h3>';
+    html += '<div class="fin-grid">';
+    html += finCard('&#128176;', '$' + formatNumber(revenueAtRisk), 'Monthly Revenue at Risk');
+    html += finCard('&#128200;', '$' + formatNumber(annualAtRisk), 'Annual Revenue at Risk');
+    html += finCard('&#128557;', '$' + impliedRate + '/hr', '"Stress-Adjusted" Hourly Rate');
+    html += finCard('&#128176;', '$' + normalRate + '/hr', 'Your Actual Hourly Rate');
+    html += finCard('&#128197;', '~' + replacementMonths + ' months', 'Estimated Time to Replace');
+    html += finCard('&#129309;', newClientsNeeded + ' new client' + (newClientsNeeded !== 1 ? 's' : ''), 'Needed to Replace Revenue');
+    html += '</div>';
+
+    // Net recommendation
+    const recColor = mathSays === 'fire' ? 'rgba(239,68,68,0.15)' : 'rgba(34,197,94,0.15)';
+    const recBorder = mathSays === 'fire' ? 'rgba(239,68,68,0.3)' : 'rgba(34,197,94,0.3)';
+    const recTextColor = mathSays === 'fire' ? '#ef4444' : '#22c55e';
+    html += '<div class="fin-rec" style="background:' + recColor + '; border:1px solid ' + recBorder + '; color:' + recTextColor + '">';
+    if (mathSays === 'fire') {
+        html += '&#128293; The math says: <strong>Fire them.</strong> You\'d need $' + formatNumber(revenueAtRisk) + '/month in new revenue, which is roughly ' + newClientsNeeded + ' new client' + (newClientsNeeded !== 1 ? 's' : '') + ' at your current rate. That\'s very doable.';
+    } else {
+        html += '&#9989; The math says: <strong>Keep them</strong> (for now). But address the issues below before they become dealbreakers.';
+    }
+    html += '</div>';
+    html += '</div>';
+
+    // Exit Script (if score < 60)
+    if (overall < 60) {
+        html += '<div class="glass-card" style="text-align:left;">';
+        html += '<h3 style="margin-bottom:4px; font-size:1.2rem;">&#9993;&#65039; The Breakup Email</h3>';
+        html += '<p style="color:var(--text-dim); font-size:0.85rem; margin-bottom:20px;">Professional, diplomatic, and leaves the door open for a cordial goodbye. Customize and send.</p>';
+        const emailBody = generateExitEmail(worstCats);
+        html += '<div class="script-box"><div class="email-text" id="exitEmailText">' + emailBody + '</div></div>';
+        html += '<button class="copy-btn" onclick="copyText(\'exitEmailText\')">&#128203; Copy Email to Clipboard</button>';
+        html += '</div>';
+    }
+
+    // Fix-It Plan (if score 60-79)
+    if (overall >= 60 && overall < 80) {
+        html += '<div class="glass-card" style="text-align:left;">';
+        html += '<h3 style="margin-bottom:4px; font-size:1.2rem;">&#128736;&#65039; The Fix-It Plan</h3>';
+        html += '<p style="color:var(--text-dim); font-size:0.85rem; margin-bottom:20px;">Talking points for your boundaries conversation, prioritized by urgency.</p>';
+        html += '<div class="script-box">';
+        const talkingPoints = generateFixItPlan(catScores, catBarData);
+        talkingPoints.forEach((tp, i) => {
+            html += '<div class="talking-point"><div class="tp-num">' + (i + 1) + '</div><div>' + tp + '</div></div>';
+        });
+        html += '</div>';
+        html += '<button class="copy-btn" onclick="copyTalkingPoints()">&#128203; Copy Talking Points</button>';
+        html += '</div>';
+    }
+
+    // Share badge
+    const shareText = 'My client scored ' + overall + '/100 on the "Should I Fire This Client?" test &#128293; Take it yourself:';
+    const shareUrl = 'https://freelanceos.pro/freelanceos-storefront/fire-this-client.html';
+    const twitterUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText + '\n' + shareUrl);
+
+    html += '<div class="share-section">';
+    html += '<div class="share-badge"><div class="badge-text">My client scored <strong style="color:' + verdict.color + '">' + overall + '/100</strong> on the Should I Fire This Client? test &#128293;</div></div>';
+    html += '<div class="share-btns">';
+    html += '<a href="' + twitterUrl + '" target="_blank" class="btn btn-secondary" style="font-size:0.85rem;">&#120143; Share on X / Twitter</a>';
+    html += '<button class="copy-btn" onclick="copyShareBadge(' + overall + ')">&#128203; Copy to Clipboard</button>';
+    html += '</div>';
+    html += '</div>';
+
+    // CTA
+    html += '<div class="cta-card">';
+    html += '<h3>Stop guessing. Start running your freelance business like a pro.</h3>';
+    html += '<p>FreelanceOS Pro includes a client CRM, project tracker, invoice templates, contract builder, and 12 more tools to keep your business running smoothly.</p>';
+    html += '<div class="price-was">$29</div>';
+    html += '<div class="price-now">$17.40</div>';
+    html += '<div class="price-code">Use code <strong>FLASH40</strong> for 40% off</div>';
+    html += '<a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" class="btn btn-primary">Get FreelanceOS Pro &rarr;</a>';
+    html += '</div>';
+
+    // Restart button
+    html += '<div style="text-align:center; margin-top:24px;">';
+    html += '<button class="btn btn-ghost" onclick="restartQuiz()">&#128260; Try Another Client</button>';
+    html += '</div>';
+
+    container.innerHTML = html;
+
+    // Animate verdict reveal
+    setTimeout(() => {
+        document.getElementById('verdictTitle').classList.add('visible');
+    }, 100);
+
+    // Animate score counting up
+    animateScore(overall, verdict.color);
+
+    // Animate category bars
+    setTimeout(() => {
+        document.querySelectorAll('.cat-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+        });
+    }, 500);
+
+    // Emoji rain based on score
+    setTimeout(() => {
+        if (overall < 40) {
+            triggerEmojiRain(['&#128293;', '&#128680;', '&#128683;', '&#9888;&#65039;', '&#128694;'], 30);
+        } else if (overall >= 80) {
+            triggerEmojiRain(['&#10024;', '&#127881;', '&#128155;', '&#11088;', '&#127942;'], 25);
+        }
+    }, 1200);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+function animateScore(target, color) {
+    const el = document.getElementById('scoreNumber');
+    const gaugeFill = document.getElementById('gaugeFill');
+    const circumference = 2 * Math.PI * 90;
+    const offset = circumference - (target / 100) * circumference;
+
+    let current = 0;
+    const duration = 2000;
+    const startTime = performance.now();
+
+    function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeOutExpo(progress);
+        current = Math.round(eased * target);
+        el.textContent = current;
+
+        const currentOffset = circumference - (eased * target / 100) * circumference;
+        gaugeFill.style.strokeDashoffset = currentOffset;
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+    requestAnimationFrame(update);
+}
+
+function easeOutExpo(x) {
+    return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+}
+
+function triggerEmojiRain(emojis, count) {
+    const container = document.getElementById('emojiRain');
+    for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+            const drop = document.createElement('div');
+            drop.className = 'emoji-drop';
+            drop.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            drop.style.left = Math.random() * 100 + '%';
+            drop.style.fontSize = (1.2 + Math.random() * 1.5) + 'rem';
+            drop.style.animationDuration = (2 + Math.random() * 2) + 's';
+            container.appendChild(drop);
+            setTimeout(() => drop.remove(), 4500);
+        }, i * 80);
+    }
+}
+
+/* ============================================================
+   GENERATORS
+   ============================================================ */
+function generateExitEmail(worstCats) {
+    const name = clientName !== 'This Client' ? clientName : '[Client Name]';
+    const issueLines = [];
+    if (worstCats.length > 0) {
+        worstCats.forEach(wc => {
+            if (wc.name === 'Payment & Money') issueLines.push('alignment on payment terms and project budgeting');
+            if (wc.name === 'Communication') issueLines.push('communication cadence and expectations');
+            if (wc.name === 'Scope & Boundaries') issueLines.push('project scope definition and revision processes');
+            if (wc.name === 'Professional Respect') issueLines.push('working dynamics and collaboration style');
+            if (wc.name === 'Your Wellbeing') issueLines.push('sustainable working arrangements');
+        });
+    }
+    const issueStr = issueLines.length > 0 ? issueLines.slice(0, 2).join(' and ') : 'our working arrangement';
+
+    let email = 'Subject: Transition Plan for Our Working Relationship\n\n';
+    email += 'Hi ' + name + ',\n\n';
+    email += 'I hope you\'re doing well. I wanted to reach out regarding our ongoing collaboration.\n\n';
+    email += 'After careful reflection on ' + issueStr + ', I\'ve come to the conclusion that our working relationship may not be the best fit going forward. This isn\'t a reflection of the work itself, but rather of ensuring we both find arrangements that serve our respective needs.\n\n';
+    email += 'I\'d like to propose the following transition plan:\n\n';
+    email += '1. I will complete all currently agreed-upon work by [DATE - suggest 2-4 weeks]\n';
+    email += '2. I\'m happy to help onboard a replacement or document processes\n';
+    email += '3. My final invoice will cover work through [END DATE]\n\n';
+    email += 'I genuinely appreciate the opportunity to have worked together and wish you continued success.\n\n';
+    email += 'Please let me know a good time to discuss the transition details.\n\n';
+    email += 'Best regards,\n[Your Name]';
+    return email;
+}
+
+function generateFixItPlan(catScores, catBarData) {
+    const points = [];
+    const sorted = [...catBarData].sort((a, b) => a.score - b.score);
+
+    sorted.forEach(cat => {
+        if (cat.score < 80) {
+            if (cat.name === 'Payment & Money') {
+                if (cat.score < 50) {
+                    points.push('<strong>Payment terms (urgent):</strong> "I need to address our payment arrangement. Going forward, I require payment within [NET terms] of invoice date. Late payments will incur a [X%] fee. I\'ve attached my updated terms for your review."');
+                } else {
+                    points.push('<strong>Payment consistency:</strong> "I\'d like to set up a more predictable payment schedule. Would automated invoicing on the 1st of each month work for your team?"');
+                }
+            }
+            if (cat.name === 'Communication') {
+                if (cat.score < 50) {
+                    points.push('<strong>Communication boundaries (urgent):</strong> "I want to set clear expectations around communication. My working hours are [X-Y], and I respond to messages within [timeframe] during those hours. For urgent matters, here\'s how to reach me: [method]."');
+                } else {
+                    points.push('<strong>Communication clarity:</strong> "To help me deliver my best work, I\'d love to use a brief template for new projects. It takes 5 minutes and saves us both hours of back-and-forth."');
+                }
+            }
+            if (cat.name === 'Scope & Boundaries') {
+                if (cat.score < 50) {
+                    points.push('<strong>Scope management (urgent):</strong> "I want to address scope clarity. Going forward, any work outside our original agreement will be scoped as a separate project with its own timeline and cost. This protects both of us."');
+                } else {
+                    points.push('<strong>Revision process:</strong> "I\'d like to formalize our revision process. My standard includes [X] rounds of revisions. Additional rounds are billed at [rate]. This keeps projects on track and on budget."');
+                }
+            }
+            if (cat.name === 'Professional Respect') {
+                if (cat.score < 50) {
+                    points.push('<strong>Professional dynamics (urgent):</strong> "I value our collaboration, and I want to ensure it\'s working for both of us. I bring [X years] of expertise to the table, and I do my best work when there\'s mutual trust in the process."');
+                } else {
+                    points.push('<strong>Collaboration style:</strong> "I\'d love to discuss how we can optimize our workflow. I work best with [autonomy/clear briefs/regular check-ins] and I want to make sure we\'re set up for success."');
+                }
+            }
+            if (cat.name === 'Your Wellbeing') {
+                if (cat.score < 50) {
+                    points.push('<strong>Sustainability (urgent):</strong> "For me to continue delivering quality work, I need to address some aspects of our working arrangement that aren\'t sustainable. Specifically, [specific issue]. Here\'s what I propose: [solution]."');
+                } else {
+                    points.push('<strong>Work-life balance:</strong> "I want to ensure our working relationship is sustainable long-term. Can we discuss expectations around response times, working hours, and project timelines?"');
+                }
+            }
+        }
+    });
+
+    if (points.length === 0) {
+        points.push('Your client scores are relatively healthy. Keep an eye on any category below 80 and address concerns early before they become patterns.');
+    }
+
+    return points;
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function getScoreColor(score) {
+    if (score >= 80) return '#22c55e';
+    if (score >= 60) return '#eab308';
+    if (score >= 40) return '#f97316';
+    if (score >= 20) return '#ef4444';
+    return '#991b1b';
+}
+
+function formatNumber(n) {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function escapeHtml(text) {
+    const d = document.createElement('div');
+    d.textContent = text;
+    return d.innerHTML;
+}
+
+function finCard(icon, value, label) {
+    return '<div class="fin-card"><div class="fin-icon">' + icon + '</div><div class="fin-value">' + value + '</div><div class="fin-label">' + label + '</div></div>';
+}
+
+function copyText(elId) {
+    const text = document.getElementById(elId).innerText;
+    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!')).catch(() => showToast('Failed to copy'));
+}
+
+function copyTalkingPoints() {
+    const points = document.querySelectorAll('.talking-point');
+    let text = 'Talking Points for Client Boundaries Conversation:\n\n';
+    points.forEach((p, i) => {
+        text += (i + 1) + '. ' + p.innerText + '\n\n';
+    });
+    navigator.clipboard.writeText(text).then(() => showToast('Talking points copied!')).catch(() => showToast('Failed to copy'));
+}
+
+function copyShareBadge(score) {
+    const text = 'My client scored ' + score + '/100 on the "Should I Fire This Client?" test. Take it yourself: https://freelanceos.pro/freelanceos-storefront/fire-this-client.html';
+    navigator.clipboard.writeText(text).then(() => showToast('Badge copied!')).catch(() => showToast('Failed to copy'));
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function restartQuiz() {
+    answers = {};
+    clientName = '';
+    monthlyRevenue = 2000;
+    incomePercent = 25;
+    currentCategory = 0;
+    document.getElementById('clientName').value = '';
+    document.getElementById('revenueSlider').value = 2000;
+    document.getElementById('incomeSlider').value = 25;
+    document.getElementById('revenueDisplay').textContent = '$2,000';
+    document.getElementById('incomeDisplay').textContent = '25%';
+    document.getElementById('duration').selectedIndex = 0;
+    goToStep(1);
+}
+
+/* ============================================================
+   SLIDER LIVE UPDATE
+   ============================================================ */
+document.getElementById('revenueSlider').addEventListener('input', function() {
+    document.getElementById('revenueDisplay').textContent = '$' + formatNumber(this.value);
+});
+document.getElementById('incomeSlider').addEventListener('input', function() {
+    document.getElementById('incomeDisplay').textContent = this.value + '%';
+});
+</script>
+</body>
+</html>
