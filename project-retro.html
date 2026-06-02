@@ -1,0 +1,2723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Retrospective Generator — Free Post-Project Review Tool | FreelanceOS</title>
+    <meta name="description" content="Generate a professional project retrospective in minutes. Reflect on what went well, what went wrong, and get actionable next steps for your freelance business. Free tool by FreelanceOS.">
+    <meta name="keywords" content="project retrospective, post-mortem, freelance review, project review tool, freelancer tools, retrospective generator">
+    <meta name="author" content="FreelanceOS">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://freelanceos.pro/freelanceos-storefront/project-retro.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Project Retrospective Generator — Free Post-Project Review Tool">
+    <meta property="og:description" content="Turn every finished project into a learning opportunity. Generate a professional retro with actionable next steps in minutes.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freelanceos.pro/freelanceos-storefront/project-retro.html">
+    <meta property="og:image" content="https://freelanceos.pro/og-image.png">
+    <meta property="og:site_name" content="FreelanceOS">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Project Retrospective Generator — Free Post-Project Review Tool">
+    <meta name="twitter:description" content="Turn every finished project into a learning opportunity. Generate a professional retro with actionable next steps in minutes.">
+    <meta name="twitter:image" content="https://freelanceos.pro/og-image.png">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Project Retrospective Generator",
+        "description": "Generate a professional project retrospective with actionable next steps for freelancers and agencies.",
+        "url": "https://freelanceos.pro/freelanceos-storefront/project-retro.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "FreelanceOS",
+            "url": "https://freelanceos.pro"
+        }
+    }
+    </script>
+
+    <style>
+        /* ========== CSS RESET & VARIABLES ========== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #a855f7;
+            --accent2: #ec4899;
+            --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(168, 85, 247, 0.1);
+            --border-hover: rgba(168, 85, 247, 0.3);
+            --glass-bg: rgba(15, 23, 42, 0.8);
+            --glass-blur: blur(20px);
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --radius-card: 16px;
+            --radius-btn: 12px;
+            --radius-sm: 8px;
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 40px rgba(168, 85, 247, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ========== BASE STYLES ========== */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ========== ANIMATED BACKGROUND ========== */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .bg-orb:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-orb:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            background: var(--accent2);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: -7s;
+        }
+
+        .bg-orb:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: #6366f1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.05); }
+            50% { transform: translate(-30px, 50px) scale(0.95); }
+            75% { transform: translate(30px, 30px) scale(1.02); }
+        }
+
+        /* ========== LAYOUT ========== */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* ========== PROGRESS BAR ========== */
+        .progress-wrapper {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 20px 24px;
+            margin-bottom: 32px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .progress-step.active {
+            color: var(--accent);
+        }
+
+        .progress-step.completed {
+            color: var(--success);
+        }
+
+        .step-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(100, 116, 139, 0.2);
+            border: 2px solid var(--text-dim);
+            transition: var(--transition);
+        }
+
+        .progress-step.active .step-dot {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+        }
+
+        .progress-step.completed .step-dot {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: var(--success);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(100, 116, 139, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 4px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        .step-label {
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .step-label {
+                display: inline;
+            }
+        }
+
+        /* ========== CARD / PANEL ========== */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* ========== STEP SECTIONS ========== */
+        .step-section {
+            display: none;
+        }
+
+        .step-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== FORM ELEMENTS ========== */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            letter-spacing: 0.02em;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: var(--text-dim);
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        .form-select option {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* ========== SLIDER ========== */
+        .slider-group {
+            margin-bottom: 22px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .slider-header label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .slider-value {
+            font-size: 1rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(100, 116, 139, 0.3);
+            border-radius: 6px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gradient);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gradient);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+        }
+
+        /* ========== SATISFACTION EMOJI ========== */
+        .satisfaction-display {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .satisfaction-emoji {
+            font-size: 2.5rem;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .satisfaction-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ========== CHECKBOX GRID ========== */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        @media (min-width: 560px) {
+            .checkbox-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--border-hover);
+            background: rgba(15, 23, 42, 0.7);
+        }
+
+        .checkbox-item.checked {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.08);
+        }
+
+        .checkbox-item.checked .check-box {
+            background: var(--gradient);
+            border-color: transparent;
+        }
+
+        .checkbox-item.checked .check-box::after {
+            opacity: 1;
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border-radius: 4px;
+            border: 2px solid var(--text-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .check-box::after {
+            content: "\2713";
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .checkbox-label {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .checkbox-item.checked .checkbox-label {
+            color: var(--text);
+        }
+
+        /* Custom item add */
+        .custom-add-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .custom-add-row .form-input {
+            flex: 1;
+        }
+
+        .custom-add-btn {
+            padding: 10px 18px;
+            background: var(--gradient);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .custom-add-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.3);
+        }
+
+        /* ========== STAR RATING ========== */
+        .star-rating-group {
+            margin-bottom: 20px;
+        }
+
+        .star-rating-header {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .star-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+        }
+
+        .star-row-label {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            min-width: 140px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 4px;
+        }
+
+        .star {
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--text-dim);
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .star.active {
+            color: #f59e0b;
+            text-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+        }
+
+        /* ========== VERDICT BUTTONS ========== */
+        .verdict-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .verdict-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .verdict-btn:hover {
+            border-color: var(--border-hover);
+        }
+
+        .verdict-btn.selected {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--text);
+        }
+
+        .verdict-btn.selected[data-value="yes"] {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .verdict-btn.selected[data-value="maybe"] {
+            border-color: var(--warning);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .verdict-btn.selected[data-value="no"] {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* ========== NAV BUTTONS ========== */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: var(--radius-btn);
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: rgba(100, 116, 139, 0.15);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(100, 116, 139, 0.25);
+            color: var(--text);
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-sm {
+            padding: 10px 18px;
+            font-size: 0.85rem;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(100, 116, 139, 0.1);
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+
+        /* ========== GENERATED REPORT ========== */
+        .report-section {
+            margin-bottom: 28px;
+        }
+
+        .report-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .report-section-title .icon {
+            font-size: 1.2rem;
+        }
+
+        /* Summary stats grid */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 560px) {
+            .summary-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .summary-stat {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-delta {
+            font-size: 0.8rem;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .delta-over { color: var(--danger); }
+        .delta-under { color: var(--success); }
+        .delta-on { color: var(--text-dim); }
+
+        /* Score bar chart */
+        .score-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .score-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .score-bar-label {
+            min-width: 130px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .score-bar-track {
+            flex: 1;
+            height: 10px;
+            background: rgba(100, 116, 139, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .score-bar-num {
+            min-width: 30px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Bullet list */
+        .report-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .report-list li {
+            padding: 10px 16px;
+            background: rgba(15, 23, 42, 0.4);
+            border-left: 3px solid var(--accent);
+            margin-bottom: 8px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+
+        .report-list.danger li {
+            border-left-color: var(--danger);
+        }
+
+        .report-list.success li {
+            border-left-color: var(--success);
+        }
+
+        .report-list.warning li {
+            border-left-color: var(--warning);
+        }
+
+        .report-list.info li {
+            border-left-color: var(--info);
+        }
+
+        /* Action items */
+        .action-item {
+            padding: 14px 18px;
+            background: rgba(59, 130, 246, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .action-icon {
+            font-size: 1.1rem;
+            min-width: 20px;
+            margin-top: 2px;
+        }
+
+        .action-text {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .action-text strong {
+            color: var(--text);
+        }
+
+        /* Blockquote for text responses */
+        .report-quote {
+            padding: 16px 20px;
+            background: rgba(15, 23, 42, 0.4);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        /* Client verdict banner */
+        .verdict-banner {
+            padding: 20px 24px;
+            border-radius: var(--radius-card);
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .verdict-banner.priority {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .verdict-banner.standard {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .verdict-banner.cautious {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .verdict-banner.avoid {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .verdict-label {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .verdict-banner.priority .verdict-label { color: var(--success); }
+        .verdict-banner.standard .verdict-label { color: var(--info); }
+        .verdict-banner.cautious .verdict-label { color: var(--warning); }
+        .verdict-banner.avoid .verdict-label { color: var(--danger); }
+
+        .verdict-reason {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* ========== HEALTH GAUGE ========== */
+        .gauge-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .gauge-svg {
+            width: 200px;
+            height: 120px;
+        }
+
+        .gauge-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .gauge-score-text {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        /* ========== COMPARE STATS ========== */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 560px) {
+            .compare-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .compare-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .compare-your {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .compare-avg {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .compare-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .compare-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .compare-badge.good {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .compare-badge.bad {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        .compare-badge.neutral {
+            background: rgba(100, 116, 139, 0.15);
+            color: var(--text-dim);
+        }
+
+        /* ========== EXPORT TOOLBAR ========== */
+        .export-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            text-align: center;
+            margin: 40px 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .cta-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .cta-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-price {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .cta-original {
+            font-size: 1rem;
+            color: var(--text-dim);
+            text-decoration: line-through;
+        }
+
+        .cta-sale {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(236, 72, 153, 0.15);
+            color: var(--accent2);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-btn);
+            font-weight: 700;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
+        }
+
+        .cta-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.4);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-disclaimer {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            max-width: 500px;
+            margin: 12px auto 0;
+        }
+
+        .footer-brand {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ========== TOAST ========== */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            padding: 12px 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 0.88rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-card);
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ========== PRINT STYLES ========== */
+        @media print {
+            body {
+                background: white !important;
+                color: #1e293b !important;
+            }
+
+            .bg-effects,
+            .progress-wrapper,
+            .nav-buttons,
+            .export-toolbar,
+            .cta-card,
+            .footer,
+            .toast,
+            .header-badge {
+                display: none !important;
+            }
+
+            .header h1 {
+                background: none !important;
+                -webkit-text-fill-color: #1e293b !important;
+                font-size: 1.8rem;
+            }
+
+            .card {
+                background: white !important;
+                border: 1px solid #e2e8f0 !important;
+                backdrop-filter: none !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+            }
+
+            .summary-stat, .star-row, .compare-card, .action-item {
+                background: #f8fafc !important;
+                border-color: #e2e8f0 !important;
+            }
+
+            .stat-value, .slider-value {
+                background: none !important;
+                -webkit-text-fill-color: #7c3aed !important;
+            }
+
+            .report-list li {
+                background: #f8fafc !important;
+            }
+
+            .report-quote {
+                background: #f8fafc !important;
+            }
+
+            .verdict-banner {
+                border-width: 2px !important;
+            }
+
+            .score-bar-track {
+                background: #e2e8f0 !important;
+            }
+
+            .gauge-container svg text {
+                fill: #1e293b !important;
+            }
+
+            * {
+                color: #1e293b !important;
+            }
+
+            .report-section-title .icon,
+            .action-icon,
+            .star.active {
+                color: #7c3aed !important;
+            }
+        }
+
+        /* ========== UTILITY ========== */
+        .hidden { display: none !important; }
+        .mt-sm { margin-top: 8px; }
+        .mt-md { margin-top: 16px; }
+        .mt-lg { margin-top: 24px; }
+        .mb-md { margin-bottom: 16px; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-muted); }
+        .text-sm { font-size: 0.85rem; }
+        .fw-bold { font-weight: 700; }
+        .divider {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 24px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <span>&#9733;</span> Free Tool by FreelanceOS
+            </div>
+            <h1>Project Retrospective Generator</h1>
+            <p>Turn every finished project into concrete lessons. Answer a few questions, get a professional retro with actionable next steps.</p>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-wrapper" id="progressWrapper">
+            <div class="progress-steps">
+                <div class="progress-step active" data-step="1" onclick="goToStep(1)">
+                    <span class="step-dot">1</span>
+                    <span class="step-label">Info</span>
+                </div>
+                <div class="progress-step" data-step="2" onclick="goToStep(2)">
+                    <span class="step-dot">2</span>
+                    <span class="step-label">Wins</span>
+                </div>
+                <div class="progress-step" data-step="3" onclick="goToStep(3)">
+                    <span class="step-dot">3</span>
+                    <span class="step-label">Issues</span>
+                </div>
+                <div class="progress-step" data-step="4" onclick="goToStep(4)">
+                    <span class="step-dot">4</span>
+                    <span class="step-label">Deep Dive</span>
+                </div>
+                <div class="progress-step" data-step="5" onclick="goToStep(5)">
+                    <span class="step-dot">5</span>
+                    <span class="step-label">Report</span>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- ==================== STEP 1: PROJECT INFO ==================== -->
+        <div class="step-section active" id="step1">
+            <div class="card">
+                <div class="card-title">Project Information</div>
+                <div class="card-subtitle">Start with the basics about this project.</div>
+
+                <div class="form-group">
+                    <label for="projectName">Project Name *</label>
+                    <input type="text" class="form-input" id="projectName" placeholder="e.g. Brand Redesign for Acme Corp">
+                </div>
+
+                <div class="form-group">
+                    <label for="clientName">Client Name (optional)</label>
+                    <input type="text" class="form-input" id="clientName" placeholder="e.g. Acme Corp">
+                </div>
+
+                <div class="form-group">
+                    <label for="projectType">Project Type</label>
+                    <select class="form-select" id="projectType">
+                        <option value="Website">Website</option>
+                        <option value="App">App</option>
+                        <option value="Branding">Branding</option>
+                        <option value="Marketing Campaign">Marketing Campaign</option>
+                        <option value="Content">Content</option>
+                        <option value="Video">Video</option>
+                        <option value="Consulting">Consulting</option>
+                        <option value="Design System">Design System</option>
+                        <option value="eCommerce">eCommerce</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <label for="originalBudget">Original Budget</label>
+                        <span class="slider-value" id="originalBudgetVal">$5,000</span>
+                    </div>
+                    <input type="range" id="originalBudget" min="500" max="100000" step="100" value="5000">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <label for="finalCost">Final Cost</label>
+                        <span class="slider-value" id="finalCostVal">$5,000</span>
+                    </div>
+                    <input type="range" id="finalCost" min="500" max="100000" step="100" value="5000">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <label for="originalTimeline">Original Timeline (weeks)</label>
+                        <span class="slider-value" id="originalTimelineVal">4 weeks</span>
+                    </div>
+                    <input type="range" id="originalTimeline" min="1" max="52" step="1" value="4">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <label for="actualTimeline">Actual Timeline (weeks)</label>
+                        <span class="slider-value" id="actualTimelineVal">4 weeks</span>
+                    </div>
+                    <input type="range" id="actualTimeline" min="1" max="52" step="1" value="4">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <label for="satisfaction">Your Satisfaction</label>
+                        <span class="slider-value" id="satisfactionVal">7 / 10</span>
+                    </div>
+                    <input type="range" id="satisfaction" min="1" max="10" step="1" value="7">
+                    <div class="satisfaction-display">
+                        <div class="satisfaction-emoji" id="satisfactionEmoji">&#128578;</div>
+                        <div class="satisfaction-label" id="satisfactionLabel">Pretty good</div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="nextStep()">Next: What Went Well &#8594;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== STEP 2: WHAT WENT WELL ==================== -->
+        <div class="step-section" id="step2">
+            <div class="card">
+                <div class="card-title">What Went Well</div>
+                <div class="card-subtitle">Select everything that went right on this project. Celebrate the wins!</div>
+
+                <div class="checkbox-grid" id="wentWellGrid">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="custom-add-row">
+                    <input type="text" class="form-input" id="customWellInput" placeholder="Add a custom win...">
+                    <button class="custom-add-btn" onclick="addCustomItem('well')">+ Add</button>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="prevStep()">&#8592; Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Next: What Went Wrong &#8594;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== STEP 3: WHAT WENT WRONG ==================== -->
+        <div class="step-section" id="step3">
+            <div class="card">
+                <div class="card-title">What Went Wrong</div>
+                <div class="card-subtitle">Be honest. This is how you grow. Select anything that could have been better.</div>
+
+                <div class="checkbox-grid" id="wentWrongGrid">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="custom-add-row">
+                    <input type="text" class="form-input" id="customWrongInput" placeholder="Add a custom issue...">
+                    <button class="custom-add-btn" onclick="addCustomItem('wrong')">+ Add</button>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="prevStep()">&#8592; Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Next: Deep Dive &#8594;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== STEP 4: DEEP DIVE ==================== -->
+        <div class="step-section" id="step4">
+            <div class="card">
+                <div class="card-title">Deep Dive Reflections</div>
+                <div class="card-subtitle">Dig deeper into the lessons from this project.</div>
+
+                <div class="form-group">
+                    <label for="doOver">What would you do differently if you could start over?</label>
+                    <textarea class="form-textarea" id="doOver" rows="4" placeholder="If I could do it again, I would..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="biggestLesson">What was the single biggest lesson from this project?</label>
+                    <textarea class="form-textarea" id="biggestLesson" rows="3" placeholder="The most important thing I learned was..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Would you work with this client again?</label>
+                    <div class="verdict-buttons" id="clientVerdictBtns">
+                        <button class="verdict-btn" data-value="yes" onclick="selectVerdict(this)">&#128077; Yes</button>
+                        <button class="verdict-btn" data-value="maybe" onclick="selectVerdict(this)">&#129300; Maybe</button>
+                        <button class="verdict-btn" data-value="no" onclick="selectVerdict(this)">&#128078; No</button>
+                    </div>
+                    <textarea class="form-textarea" id="verdictExplanation" rows="2" placeholder="Why? (optional)"></textarea>
+                </div>
+
+                <hr class="divider">
+
+                <div class="card-title" style="font-size:1.05rem;">Rate These Aspects (1-5 Stars)</div>
+                <div class="card-subtitle">How would you rate each dimension of this project?</div>
+
+                <div id="starRatingsContainer">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="prevStep()">&#8592; Back</button>
+                    <button class="btn btn-primary" onclick="generateReport()">Generate Retrospective &#10024;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== STEP 5: GENERATED REPORT ==================== -->
+        <div class="step-section" id="step5">
+
+            <!-- Export Toolbar -->
+            <div class="export-toolbar">
+                <button class="btn btn-sm btn-ghost" onclick="copyAsText()">&#128203; Copy as Text</button>
+                <button class="btn btn-sm btn-ghost" onclick="copyAsMarkdown()">&#128221; Copy as Markdown</button>
+                <button class="btn btn-sm btn-ghost" onclick="downloadPDF()">&#128196; Download PDF</button>
+                <button class="btn btn-sm btn-ghost" onclick="shareSummary()">&#128279; Share Summary</button>
+                <button class="btn btn-sm btn-secondary" onclick="goToStep(1)">&#9998; Edit Responses</button>
+            </div>
+
+            <!-- Report Output -->
+            <div id="reportOutput">
+                <!-- Filled dynamically -->
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-card">
+                <div class="cta-badge">LIMITED OFFER</div>
+                <h3>Level Up Your Freelance Business</h3>
+                <p>FreelanceOS Pro includes a project tracker, client CRM, retrospective templates, proposal builder, and 20+ Notion templates for freelancers.</p>
+                <div class="cta-price">
+                    <span class="cta-original">$29</span>
+                    <span class="cta-sale">$17.40</span>
+                </div>
+                <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="cta-link">Get 40% Off with FLASH40 &#8594;</a>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevStep()">&#8592; Edit Responses</button>
+                <button class="btn btn-primary" onclick="resetAll()">&#8634; Start New Retrospective</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="/freelanceos-storefront/proposal-generator.html">Proposal Generator</a>
+                <a href="/freelanceos-storefront/contract-clauses.html">Contract Clause Library</a>
+                <a href="/freelanceos-storefront/meeting-agenda.html">Meeting Agenda Builder</a>
+                <a href="/freelanceos-storefront/fire-this-client.html">Fire This Client?</a>
+            </div>
+            <div class="footer-brand">FreelanceOS &mdash; Tools for freelancers who mean business.</div>
+            <div class="footer-disclaimer">This tool is for self-reflection purposes. Average stats are estimates based on industry surveys and aggregated freelance data. Not financial or legal advice.</div>
+        </footer>
+    </div>
+
+    <script>
+    /* ================================================================
+       PROJECT RETROSPECTIVE GENERATOR - FreelanceOS
+       Pure vanilla JS, zero dependencies
+       ================================================================ */
+
+    // ========== STATE ==========
+    let currentStep = 1;
+    const totalSteps = 5;
+    let clientVerdict = '';
+
+    const starCategories = [
+        { id: 'communication', label: 'Client Communication', value: 0 },
+        { id: 'scope', label: 'Scope Clarity', value: 0 },
+        { id: 'payment', label: 'Payment Experience', value: 0 },
+        { id: 'creative', label: 'Creative Satisfaction', value: 0 },
+        { id: 'overall', label: 'Overall Experience', value: 0 }
+    ];
+
+    const wentWellOptions = [
+        'Clear project brief from the start',
+        'Good communication with client',
+        'Stayed within budget',
+        'Delivered on time',
+        'Client loved the final result',
+        'Smooth approval process',
+        'Learned a new skill',
+        'Got a referral or testimonial',
+        'Established a long-term relationship',
+        'Creative freedom',
+        'Well-defined scope',
+        'Efficient workflow'
+    ];
+
+    const wentWrongOptions = [
+        'Scope creep (uncontrolled)',
+        'Poor communication',
+        'Budget overrun',
+        'Missed deadline',
+        'Unclear project brief',
+        'Too many revisions',
+        'Client was unresponsive / ghosted',
+        'Underpriced the project',
+        'Feature/requirement changes mid-project',
+        'Burnout or stress',
+        'Technical difficulties',
+        'Disagreements on direction'
+    ];
+
+    let selectedWell = new Set();
+    let selectedWrong = new Set();
+    let customWellItems = [];
+    let customWrongItems = [];
+
+    // ========== ACTION ITEMS MAP ==========
+    const actionItemsMap = {
+        'Scope creep (uncontrolled)': {
+            icon: '&#128203;',
+            text: '<strong>Add a change request process</strong> to your next contract. Define what is in-scope versus out-of-scope and require written approval (with a fee) for any additions.'
+        },
+        'Poor communication': {
+            icon: '&#128222;',
+            text: '<strong>Set up weekly check-in calls</strong> on your next project. Choose a fixed day and time, use a shared agenda doc, and summarize action items in writing after each call.'
+        },
+        'Budget overrun': {
+            icon: '&#128176;',
+            text: '<strong>Build a 15-20% contingency buffer</strong> into your next proposal. Track hours/costs weekly so overruns are caught early, not at the end.'
+        },
+        'Missed deadline': {
+            icon: '&#9203;',
+            text: '<strong>Add a 20% buffer to all future timeline estimates.</strong> Break projects into milestones with intermediate deadlines so slippage is visible weeks before the final date.'
+        },
+        'Unclear project brief': {
+            icon: '&#128270;',
+            text: '<strong>Use a discovery questionnaire</strong> before starting any new project. Document goals, audience, deliverables, and success criteria in a shared brief signed off by both parties.'
+        },
+        'Too many revisions': {
+            icon: '&#9999;',
+            text: '<strong>Include a revision limit in your contract</strong> (e.g., 2 rounds included, additional rounds at $X/hour). Clearly define what counts as a "round."'
+        },
+        'Client was unresponsive / ghosted': {
+            icon: '&#128683;',
+            text: '<strong>Add a responsiveness clause</strong> to your contract. Specify that feedback is due within X business days, and the timeline shifts if delays come from the client side.'
+        },
+        'Underpriced the project': {
+            icon: '&#128184;',
+            text: '<strong>Revisit your pricing model</strong> before your next proposal. Track your actual hours, divide revenue by hours to get your true hourly rate, and adjust upward.'
+        },
+        'Feature/requirement changes mid-project': {
+            icon: '&#128679;',
+            text: '<strong>Implement a formal change order process.</strong> Any requirement change after the brief is signed requires a written request, impact assessment, and revised quote.'
+        },
+        'Burnout or stress': {
+            icon: '&#128170;',
+            text: '<strong>Set project-level boundaries</strong> for your next engagement. Cap work hours, block off recovery time, and avoid scheduling projects back-to-back without a buffer week.'
+        },
+        'Technical difficulties': {
+            icon: '&#128295;',
+            text: '<strong>Add a technical spike or discovery phase</strong> at the beginning of your next project. Use the first 10% of the timeline to prototype risky parts before committing to a plan.'
+        },
+        'Disagreements on direction': {
+            icon: '&#128101;',
+            text: '<strong>Establish a single decision-maker</strong> on the client side at kickoff. Document the approval chain so you are not caught between conflicting opinions.'
+        }
+    };
+
+    // ========== SATISFACTION EMOJI MAP ==========
+    const satisfactionMap = [
+        { emoji: '&#128553;', label: 'Terrible' },        // 1
+        { emoji: '&#128543;', label: 'Really bad' },       // 2
+        { emoji: '&#128542;', label: 'Bad' },              // 3
+        { emoji: '&#128533;', label: 'Disappointing' },    // 4
+        { emoji: '&#128528;', label: 'Meh' },              // 5
+        { emoji: '&#128566;', label: 'Okay-ish' },         // 6
+        { emoji: '&#128578;', label: 'Pretty good' },      // 7
+        { emoji: '&#128516;', label: 'Great' },            // 8
+        { emoji: '&#128525;', label: 'Fantastic' },        // 9
+        { emoji: '&#129321;', label: 'Perfect!' }          // 10
+    ];
+
+    // ========== INIT ==========
+    document.addEventListener('DOMContentLoaded', function() {
+        initCheckboxGrid('wentWellGrid', wentWellOptions, 'well');
+        initCheckboxGrid('wentWrongGrid', wentWrongOptions, 'wrong');
+        initStarRatings();
+        initSliders();
+        updateProgress();
+    });
+
+    // ========== CHECKBOX GRID ==========
+    function initCheckboxGrid(containerId, options, type) {
+        var container = document.getElementById(containerId);
+        container.innerHTML = '';
+        options.forEach(function(opt) {
+            var item = createCheckboxItem(opt, type);
+            container.appendChild(item);
+        });
+    }
+
+    function createCheckboxItem(text, type) {
+        var item = document.createElement('div');
+        item.className = 'checkbox-item';
+        item.setAttribute('data-value', text);
+        item.setAttribute('data-type', type);
+        item.innerHTML = '<div class="check-box"></div><span class="checkbox-label">' + text + '</span>';
+        item.addEventListener('click', function() {
+            toggleCheckbox(item, type);
+        });
+        return item;
+    }
+
+    function toggleCheckbox(item, type) {
+        var value = item.getAttribute('data-value');
+        var set = type === 'well' ? selectedWell : selectedWrong;
+        if (set.has(value)) {
+            set.delete(value);
+            item.classList.remove('checked');
+        } else {
+            set.add(value);
+            item.classList.add('checked');
+        }
+    }
+
+    function addCustomItem(type) {
+        var inputId = type === 'well' ? 'customWellInput' : 'customWrongInput';
+        var gridId = type === 'well' ? 'wentWellGrid' : 'wentWrongGrid';
+        var input = document.getElementById(inputId);
+        var text = input.value.trim();
+        if (!text) return;
+        if (type === 'well') {
+            customWellItems.push(text);
+        } else {
+            customWrongItems.push(text);
+        }
+        var grid = document.getElementById(gridId);
+        var item = createCheckboxItem(text, type);
+        item.classList.add('checked');
+        grid.appendChild(item);
+        if (type === 'well') {
+            selectedWell.add(text);
+        } else {
+            selectedWrong.add(text);
+        }
+        input.value = '';
+        showToast('Added: ' + text);
+    }
+
+    // ========== STAR RATINGS ==========
+    function initStarRatings() {
+        var container = document.getElementById('starRatingsContainer');
+        container.innerHTML = '';
+        starCategories.forEach(function(cat) {
+            var row = document.createElement('div');
+            row.className = 'star-row';
+            var labelDiv = document.createElement('div');
+            labelDiv.className = 'star-row-label';
+            labelDiv.textContent = cat.label;
+            var starsDiv = document.createElement('div');
+            starsDiv.className = 'stars';
+            starsDiv.setAttribute('data-category', cat.id);
+            for (var i = 1; i <= 5; i++) {
+                var star = document.createElement('span');
+                star.className = 'star';
+                star.innerHTML = '&#9733;';
+                star.setAttribute('data-value', i);
+                star.setAttribute('data-category', cat.id);
+                star.addEventListener('click', handleStarClick);
+                star.addEventListener('mouseenter', handleStarHover);
+                starsDiv.appendChild(star);
+            }
+            starsDiv.addEventListener('mouseleave', function() {
+                renderStars(cat.id);
+            });
+            row.appendChild(labelDiv);
+            row.appendChild(starsDiv);
+            container.appendChild(row);
+        });
+    }
+
+    function handleStarClick(e) {
+        var val = parseInt(e.target.getAttribute('data-value'));
+        var catId = e.target.getAttribute('data-category');
+        var cat = starCategories.find(function(c) { return c.id === catId; });
+        if (cat) cat.value = val;
+        renderStars(catId);
+    }
+
+    function handleStarHover(e) {
+        var val = parseInt(e.target.getAttribute('data-value'));
+        var catId = e.target.getAttribute('data-category');
+        var starsDiv = document.querySelector('.stars[data-category="' + catId + '"]');
+        var stars = starsDiv.querySelectorAll('.star');
+        stars.forEach(function(s) {
+            var sv = parseInt(s.getAttribute('data-value'));
+            if (sv <= val) {
+                s.classList.add('active');
+            } else {
+                s.classList.remove('active');
+            }
+        });
+    }
+
+    function renderStars(catId) {
+        var cat = starCategories.find(function(c) { return c.id === catId; });
+        var starsDiv = document.querySelector('.stars[data-category="' + catId + '"]');
+        if (!starsDiv || !cat) return;
+        var stars = starsDiv.querySelectorAll('.star');
+        stars.forEach(function(s) {
+            var sv = parseInt(s.getAttribute('data-value'));
+            if (sv <= cat.value) {
+                s.classList.add('active');
+            } else {
+                s.classList.remove('active');
+            }
+        });
+    }
+
+    // ========== SLIDERS ==========
+    function initSliders() {
+        var originalBudget = document.getElementById('originalBudget');
+        var finalCost = document.getElementById('finalCost');
+        var originalTimeline = document.getElementById('originalTimeline');
+        var actualTimeline = document.getElementById('actualTimeline');
+        var satisfaction = document.getElementById('satisfaction');
+
+        originalBudget.addEventListener('input', function() {
+            document.getElementById('originalBudgetVal').textContent = formatCurrency(parseInt(this.value));
+            if (!finalCostTouched) {
+                finalCost.value = this.value;
+                document.getElementById('finalCostVal').textContent = formatCurrency(parseInt(this.value));
+            }
+        });
+
+        var finalCostTouched = false;
+        finalCost.addEventListener('input', function() {
+            finalCostTouched = true;
+            document.getElementById('finalCostVal').textContent = formatCurrency(parseInt(this.value));
+        });
+
+        originalTimeline.addEventListener('input', function() {
+            document.getElementById('originalTimelineVal').textContent = this.value + (this.value === '1' ? ' week' : ' weeks');
+            if (!actualTimelineTouched) {
+                actualTimeline.value = this.value;
+                document.getElementById('actualTimelineVal').textContent = this.value + (this.value === '1' ? ' week' : ' weeks');
+            }
+        });
+
+        var actualTimelineTouched = false;
+        actualTimeline.addEventListener('input', function() {
+            actualTimelineTouched = true;
+            document.getElementById('actualTimelineVal').textContent = this.value + (this.value === '1' ? ' week' : ' weeks');
+        });
+
+        satisfaction.addEventListener('input', function() {
+            var val = parseInt(this.value);
+            document.getElementById('satisfactionVal').textContent = val + ' / 10';
+            var mapping = satisfactionMap[val - 1];
+            document.getElementById('satisfactionEmoji').innerHTML = mapping.emoji;
+            document.getElementById('satisfactionLabel').textContent = mapping.label;
+        });
+    }
+
+    // ========== VERDICT ==========
+    function selectVerdict(btn) {
+        var btns = document.querySelectorAll('#clientVerdictBtns .verdict-btn');
+        btns.forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        clientVerdict = btn.getAttribute('data-value');
+    }
+
+    // ========== NAVIGATION ==========
+    function nextStep() {
+        if (currentStep === 1) {
+            var name = document.getElementById('projectName').value.trim();
+            if (!name) {
+                showToast('Please enter a project name.');
+                document.getElementById('projectName').focus();
+                return;
+            }
+        }
+        if (currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+        }
+    }
+
+    function prevStep() {
+        if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
+        }
+    }
+
+    function goToStep(step) {
+        if (step === 5 && currentStep < 5) return;
+        currentStep = step;
+        showStep(currentStep);
+    }
+
+    function showStep(step) {
+        var sections = document.querySelectorAll('.step-section');
+        sections.forEach(function(s) { s.classList.remove('active'); });
+        var target = document.getElementById('step' + step);
+        if (target) target.classList.add('active');
+        updateProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateProgress() {
+        var steps = document.querySelectorAll('.progress-step');
+        steps.forEach(function(s) {
+            var sNum = parseInt(s.getAttribute('data-step'));
+            s.classList.remove('active', 'completed');
+            if (sNum === currentStep) {
+                s.classList.add('active');
+            } else if (sNum < currentStep) {
+                s.classList.add('completed');
+                s.querySelector('.step-dot').innerHTML = '&#10003;';
+            } else {
+                s.querySelector('.step-dot').textContent = sNum;
+            }
+        });
+        var pct = ((currentStep - 1) / (totalSteps - 1)) * 100;
+        document.getElementById('progressFill').style.width = pct + '%';
+    }
+
+    // ========== REPORT GENERATION ==========
+    function generateReport() {
+        currentStep = 5;
+        showStep(5);
+
+        var data = gatherData();
+        var reportHTML = buildReportHTML(data);
+        document.getElementById('reportOutput').innerHTML = reportHTML;
+
+        // Animate bars after render
+        setTimeout(function() {
+            animateScoreBars();
+            animateGauge(data.healthScore);
+        }, 100);
+    }
+
+    function gatherData() {
+        var originalBudget = parseInt(document.getElementById('originalBudget').value);
+        var finalCost = parseInt(document.getElementById('finalCost').value);
+        var originalTimeline = parseInt(document.getElementById('originalTimeline').value);
+        var actualTimeline = parseInt(document.getElementById('actualTimeline').value);
+        var satisfaction = parseInt(document.getElementById('satisfaction').value);
+
+        var budgetDelta = finalCost - originalBudget;
+        var budgetPct = originalBudget > 0 ? ((budgetDelta / originalBudget) * 100) : 0;
+        var timelineDelta = actualTimeline - originalTimeline;
+        var timelinePct = originalTimeline > 0 ? ((timelineDelta / originalTimeline) * 100) : 0;
+
+        var wellItems = Array.from(selectedWell);
+        var wrongItems = Array.from(selectedWrong);
+
+        var doOver = document.getElementById('doOver').value.trim();
+        var biggestLesson = document.getElementById('biggestLesson').value.trim();
+        var verdictExplanation = document.getElementById('verdictExplanation').value.trim();
+
+        // Calculate health score
+        var healthScore = calcHealthScore(satisfaction, budgetPct, timelinePct, wellItems.length, wrongItems.length, starCategories);
+
+        // Determine client verdict recommendation
+        var verdictRec = calcClientVerdict(satisfaction, wrongItems, clientVerdict, starCategories);
+
+        return {
+            projectName: document.getElementById('projectName').value.trim(),
+            clientName: document.getElementById('clientName').value.trim(),
+            projectType: document.getElementById('projectType').value,
+            originalBudget: originalBudget,
+            finalCost: finalCost,
+            budgetDelta: budgetDelta,
+            budgetPct: budgetPct,
+            originalTimeline: originalTimeline,
+            actualTimeline: actualTimeline,
+            timelineDelta: timelineDelta,
+            timelinePct: timelinePct,
+            satisfaction: satisfaction,
+            wellItems: wellItems,
+            wrongItems: wrongItems,
+            doOver: doOver,
+            biggestLesson: biggestLesson,
+            clientVerdict: clientVerdict,
+            verdictExplanation: verdictExplanation,
+            healthScore: healthScore,
+            verdictRec: verdictRec,
+            starCategories: starCategories
+        };
+    }
+
+    function calcHealthScore(satisfaction, budgetPct, timelinePct, wellCount, wrongCount, stars) {
+        var score = 50;
+
+        // Satisfaction contributes up to 25 points
+        score += (satisfaction / 10) * 25;
+
+        // Budget: on or under = +10, over = penalty
+        if (budgetPct <= 0) {
+            score += 10;
+        } else {
+            score -= Math.min(budgetPct * 0.3, 15);
+        }
+
+        // Timeline: on or under = +10, over = penalty
+        if (timelinePct <= 0) {
+            score += 10;
+        } else {
+            score -= Math.min(timelinePct * 0.25, 15);
+        }
+
+        // Wins vs issues
+        score += Math.min(wellCount * 1.5, 10);
+        score -= Math.min(wrongCount * 2, 15);
+
+        // Star ratings average
+        var starSum = 0;
+        var starCount = 0;
+        stars.forEach(function(s) {
+            if (s.value > 0) {
+                starSum += s.value;
+                starCount++;
+            }
+        });
+        if (starCount > 0) {
+            var avgStar = starSum / starCount;
+            score += (avgStar / 5) * 10 - 5;
+        }
+
+        return Math.max(0, Math.min(100, Math.round(score)));
+    }
+
+    function calcClientVerdict(satisfaction, wrongItems, userVerdict, stars) {
+        var commStar = stars.find(function(s) { return s.id === 'communication'; });
+        var overallStar = stars.find(function(s) { return s.id === 'overall'; });
+        var commVal = commStar ? commStar.value : 3;
+        var overallVal = overallStar ? overallStar.value : 3;
+
+        var negativeSignals = 0;
+        var criticalIssues = ['Client was unresponsive / ghosted', 'Disagreements on direction', 'Poor communication'];
+        wrongItems.forEach(function(item) {
+            if (criticalIssues.indexOf(item) >= 0) negativeSignals++;
+        });
+
+        if (userVerdict === 'no') {
+            return { level: 'avoid', label: 'Avoid', css: 'avoid', reason: 'You indicated you would not work with this client again.' };
+        }
+
+        if (satisfaction >= 8 && negativeSignals === 0 && (userVerdict === 'yes' || userVerdict === '') && commVal >= 4 && overallVal >= 4) {
+            return { level: 'priority', label: 'Work With Again (Priority)', css: 'priority', reason: 'High satisfaction, strong communication, and no major red flags. Prioritize this client for future work.' };
+        }
+
+        if (satisfaction >= 6 && negativeSignals <= 1 && userVerdict !== 'no') {
+            return { level: 'standard', label: 'Work With Again (Standard)', css: 'standard', reason: 'Solid experience overall. Consider re-engaging with clearer processes in place.' };
+        }
+
+        return { level: 'cautious', label: 'Work With Again (Cautiously)', css: 'cautious', reason: 'There were notable issues. If you work with this client again, set stronger boundaries and clearer expectations upfront.' };
+    }
+
+    // ========== BUILD REPORT HTML ==========
+    function buildReportHTML(d) {
+        var html = '';
+
+        // --- Health Score Gauge ---
+        html += '<div class="card">';
+        html += '<div class="report-section">';
+        html += '<div class="report-section-title"><span class="icon">&#128200;</span> Project Health Score</div>';
+        html += '<div class="gauge-container">';
+        html += buildGaugeSVG(d.healthScore);
+        html += '<div class="gauge-label">Based on budget, timeline, satisfaction, and ratings</div>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+
+        // --- Project Summary ---
+        html += '<div class="card">';
+        html += '<div class="report-section">';
+        html += '<div class="report-section-title"><span class="icon">&#128196;</span> Project Summary</div>';
+
+        html += '<div style="margin-bottom:16px;">';
+        html += '<div style="font-size:1.4rem;font-weight:800;margin-bottom:4px;">' + escHTML(d.projectName) + '</div>';
+        if (d.clientName) html += '<div class="text-muted text-sm">Client: ' + escHTML(d.clientName) + '</div>';
+        html += '<div class="text-muted text-sm">Type: ' + escHTML(d.projectType) + '</div>';
+        html += '</div>';
+
+        // Stats grid
+        var budgetClass = d.budgetPct > 0 ? 'delta-over' : (d.budgetPct < 0 ? 'delta-under' : 'delta-on');
+        var budgetSign = d.budgetPct > 0 ? '+' : '';
+        var timelineClass = d.timelinePct > 0 ? 'delta-over' : (d.timelinePct < 0 ? 'delta-under' : 'delta-on');
+        var timelineSign = d.timelinePct > 0 ? '+' : '';
+
+        html += '<div class="summary-grid">';
+        html += '<div class="summary-stat"><div class="stat-value">' + formatCurrency(d.originalBudget) + '</div><div class="stat-label">Original Budget</div></div>';
+        html += '<div class="summary-stat"><div class="stat-value">' + formatCurrency(d.finalCost) + '</div><div class="stat-label">Final Cost</div>';
+        if (d.budgetPct !== 0) html += '<div class="stat-delta ' + budgetClass + '">' + budgetSign + Math.round(d.budgetPct) + '%</div>';
+        html += '</div>';
+        html += '<div class="summary-stat"><div class="stat-value">' + d.originalTimeline + 'w</div><div class="stat-label">Planned Timeline</div></div>';
+        html += '<div class="summary-stat"><div class="stat-value">' + d.actualTimeline + 'w</div><div class="stat-label">Actual Timeline</div>';
+        if (d.timelinePct !== 0) html += '<div class="stat-delta ' + timelineClass + '">' + timelineSign + Math.round(d.timelinePct) + '%</div>';
+        html += '</div>';
+        html += '</div>';
+
+        html += '<div class="summary-grid" style="grid-template-columns:1fr;">';
+        html += '<div class="summary-stat"><div class="stat-value">' + d.satisfaction + ' / 10 ' + satisfactionMap[d.satisfaction - 1].emoji + '</div><div class="stat-label">Overall Satisfaction</div></div>';
+        html += '</div>';
+
+        html += '</div></div>';
+
+        // --- Performance Scorecard ---
+        html += '<div class="card">';
+        html += '<div class="report-section">';
+        html += '<div class="report-section-title"><span class="icon">&#127942;</span> Performance Scorecard</div>';
+        html += '<div class="score-bars" id="scoreBars">';
+        var barColors = ['#a855f7', '#ec4899', '#6366f1', '#22c55e', '#f59e0b'];
+        d.starCategories.forEach(function(cat, idx) {
+            var val = cat.value || 0;
+            var pct = (val / 5) * 100;
+            html += '<div class="score-bar-row">';
+            html += '<div class="score-bar-label">' + cat.label + '</div>';
+            html += '<div class="score-bar-track"><div class="score-bar-fill" data-pct="' + pct + '" style="width:0%;background:' + barColors[idx % barColors.length] + ';"></div></div>';
+            html += '<div class="score-bar-num">' + val + '/5</div>';
+            html += '</div>';
+        });
+        html += '</div>';
+        html += '</div></div>';
+
+        // --- What Went Well ---
+        if (d.wellItems.length > 0) {
+            html += '<div class="card">';
+            html += '<div class="report-section">';
+            html += '<div class="report-section-title"><span class="icon">&#9989;</span> What Went Well</div>';
+            html += '<ul class="report-list success">';
+            d.wellItems.forEach(function(item) {
+                html += '<li>' + escHTML(item) + '</li>';
+            });
+            html += '</ul>';
+            html += '</div></div>';
+        }
+
+        // --- What Needs Improvement ---
+        if (d.wrongItems.length > 0) {
+            html += '<div class="card">';
+            html += '<div class="report-section">';
+            html += '<div class="report-section-title"><span class="icon">&#9888;&#65039;</span> What Needs Improvement</div>';
+            html += '<ul class="report-list danger">';
+            d.wrongItems.forEach(function(item) {
+                html += '<li>' + escHTML(item) + '</li>';
+            });
+            html += '</ul>';
+            html += '</div></div>';
+        }
+
+        // --- Key Lessons Learned ---
+        if (d.doOver || d.biggestLesson) {
+            html += '<div class="card">';
+            html += '<div class="report-section">';
+            html += '<div class="report-section-title"><span class="icon">&#128161;</span> Key Lessons Learned</div>';
+            if (d.biggestLesson) {
+                html += '<div style="margin-bottom:12px;"><div class="text-sm text-muted fw-bold mb-md">Biggest Lesson</div>';
+                html += '<div class="report-quote">' + escHTML(d.biggestLesson) + '</div></div>';
+            }
+            if (d.doOver) {
+                html += '<div><div class="text-sm text-muted fw-bold mb-md">What I Would Do Differently</div>';
+                html += '<div class="report-quote">' + escHTML(d.doOver) + '</div></div>';
+            }
+            html += '</div></div>';
+        }
+
+        // --- Action Items for Next Project (KEY VALUE PROP) ---
+        html += '<div class="card">';
+        html += '<div class="report-section">';
+        html += '<div class="report-section-title"><span class="icon">&#127919;</span> Action Items for Next Project</div>';
+
+        var actionCount = 0;
+        var genericActions = [];
+
+        d.wrongItems.forEach(function(item) {
+            if (actionItemsMap[item] && actionCount < 6) {
+                var a = actionItemsMap[item];
+                html += '<div class="action-item"><span class="action-icon">' + a.icon + '</span><div class="action-text">' + a.text + '</div></div>';
+                actionCount++;
+            }
+        });
+
+        // Add smart generic actions based on data patterns
+        if (d.satisfaction <= 5 && actionCount < 5) {
+            html += '<div class="action-item"><span class="action-icon">&#128202;</span><div class="action-text"><strong>Create a project kickoff checklist</strong> that includes red-flag assessment, budget validation, and a communication plan. Low satisfaction often stems from unclear expectations at the start.</div></div>';
+            actionCount++;
+        }
+
+        if (d.budgetPct > 15 && actionCount < 5 && !d.wrongItems.includes('Budget overrun')) {
+            html += '<div class="action-item"><span class="action-icon">&#128176;</span><div class="action-text"><strong>Your final cost exceeded the budget by ' + Math.round(d.budgetPct) + '%.</strong> Consider switching to milestone-based billing so budget surprises are caught early instead of at delivery.</div></div>';
+            actionCount++;
+        }
+
+        if (d.timelinePct > 20 && actionCount < 5 && !d.wrongItems.includes('Missed deadline')) {
+            html += '<div class="action-item"><span class="action-icon">&#9203;</span><div class="action-text"><strong>Your actual timeline was ' + Math.round(d.timelinePct) + '% longer than planned.</strong> On your next project, break the work into weekly milestones and flag slippage immediately.</div></div>';
+            actionCount++;
+        }
+
+        var paymentStar = d.starCategories.find(function(s) { return s.id === 'payment'; });
+        if (paymentStar && paymentStar.value > 0 && paymentStar.value <= 2 && actionCount < 5) {
+            html += '<div class="action-item"><span class="action-icon">&#128179;</span><div class="action-text"><strong>Set up a structured payment schedule</strong> on your next project (e.g., 50% upfront, 25% at midpoint, 25% on delivery). Low payment experience scores often indicate missing payment terms.</div></div>';
+            actionCount++;
+        }
+
+        if (actionCount === 0) {
+            html += '<div class="action-item"><span class="action-icon">&#127881;</span><div class="action-text"><strong>Looks like this project went smoothly!</strong> Consider documenting your winning process as a repeatable template so you can replicate this success on future projects.</div></div>';
+            html += '<div class="action-item"><span class="action-icon">&#128172;</span><div class="action-text"><strong>Ask your client for a testimonial</strong> while the positive experience is fresh. Social proof from successful projects is one of the best ways to win new business.</div></div>';
+        }
+
+        html += '</div></div>';
+
+        // --- Client Verdict ---
+        html += '<div class="card">';
+        html += '<div class="report-section">';
+        html += '<div class="report-section-title"><span class="icon">&#128100;</span> Client Verdict</div>';
+        html += '<div class="verdict-banner ' + d.verdictRec.css + '">';
+        html += '<div class="verdict-label">' + d.verdictRec.label + '</div>';
+        html += '<div class="verdict-reason">' + d.verdictRec.reason + '</div>';
+        html += '</div>';
+        if (d.verdictExplanation) {
+            html += '<div class="mt-md"><div class="text-sm text-muted fw-bold mb-md">Your Notes</div>';
+            html += '<div class="report-quote">' + escHTML(d.verdictExplanation) + '</div></div>';
+        }
+        html += '</div></div>';
+
+        // --- How Does Your Project Compare? ---
+        html += '<div class="card">';
+        html += '<div class="report-section">';
+        html += '<div class="report-section-title"><span class="icon">&#128202;</span> How Does Your Project Compare?</div>';
+        html += '<div class="card-subtitle">Your project vs. average freelance benchmarks</div>';
+
+        var yourBudgetOverrun = Math.max(0, Math.round(d.budgetPct));
+        var yourTimelineSlip = Math.max(0, Math.round(d.timelinePct));
+        var avgStarsVal = 0;
+        var starCounted = 0;
+        d.starCategories.forEach(function(s) { if (s.value > 0) { avgStarsVal += s.value; starCounted++; } });
+        var yourAvgRating = starCounted > 0 ? (avgStarsVal / starCounted).toFixed(1) : 'N/A';
+
+        html += '<div class="compare-grid">';
+
+        // Budget overrun
+        html += '<div class="compare-card">';
+        html += '<div class="compare-your">' + yourBudgetOverrun + '%</div>';
+        html += '<div class="compare-avg">Avg: 23%</div>';
+        html += '<div class="compare-label">Budget Overrun</div>';
+        if (yourBudgetOverrun < 23) {
+            html += '<div class="compare-badge good">Better than avg</div>';
+        } else if (yourBudgetOverrun > 23) {
+            html += '<div class="compare-badge bad">Above avg</div>';
+        } else {
+            html += '<div class="compare-badge neutral">On par</div>';
+        }
+        html += '</div>';
+
+        // Timeline slip
+        html += '<div class="compare-card">';
+        html += '<div class="compare-your">' + yourTimelineSlip + '%</div>';
+        html += '<div class="compare-avg">Avg: 31%</div>';
+        html += '<div class="compare-label">Timeline Slip</div>';
+        if (yourTimelineSlip < 31) {
+            html += '<div class="compare-badge good">Better than avg</div>';
+        } else if (yourTimelineSlip > 31) {
+            html += '<div class="compare-badge bad">Above avg</div>';
+        } else {
+            html += '<div class="compare-badge neutral">On par</div>';
+        }
+        html += '</div>';
+
+        // Satisfaction
+        html += '<div class="compare-card">';
+        html += '<div class="compare-your">' + d.satisfaction + '/10</div>';
+        html += '<div class="compare-avg">Avg: 6.8/10</div>';
+        html += '<div class="compare-label">Satisfaction</div>';
+        if (d.satisfaction > 6.8) {
+            html += '<div class="compare-badge good">Above avg</div>';
+        } else if (d.satisfaction < 6.8) {
+            html += '<div class="compare-badge bad">Below avg</div>';
+        } else {
+            html += '<div class="compare-badge neutral">On par</div>';
+        }
+        html += '</div>';
+
+        // Wins count
+        html += '<div class="compare-card">';
+        html += '<div class="compare-your">' + d.wellItems.length + '</div>';
+        html += '<div class="compare-avg">Avg: 5</div>';
+        html += '<div class="compare-label">Wins Logged</div>';
+        if (d.wellItems.length > 5) {
+            html += '<div class="compare-badge good">Above avg</div>';
+        } else if (d.wellItems.length < 5) {
+            html += '<div class="compare-badge bad">Below avg</div>';
+        } else {
+            html += '<div class="compare-badge neutral">On par</div>';
+        }
+        html += '</div>';
+
+        // Issues count
+        html += '<div class="compare-card">';
+        html += '<div class="compare-your">' + d.wrongItems.length + '</div>';
+        html += '<div class="compare-avg">Avg: 3</div>';
+        html += '<div class="compare-label">Issues Logged</div>';
+        if (d.wrongItems.length < 3) {
+            html += '<div class="compare-badge good">Fewer than avg</div>';
+        } else if (d.wrongItems.length > 3) {
+            html += '<div class="compare-badge bad">More than avg</div>';
+        } else {
+            html += '<div class="compare-badge neutral">On par</div>';
+        }
+        html += '</div>';
+
+        // Average rating
+        html += '<div class="compare-card">';
+        html += '<div class="compare-your">' + yourAvgRating + '/5</div>';
+        html += '<div class="compare-avg">Avg: 3.5/5</div>';
+        html += '<div class="compare-label">Avg Rating</div>';
+        if (parseFloat(yourAvgRating) > 3.5) {
+            html += '<div class="compare-badge good">Above avg</div>';
+        } else if (parseFloat(yourAvgRating) < 3.5) {
+            html += '<div class="compare-badge bad">Below avg</div>';
+        } else {
+            html += '<div class="compare-badge neutral">On par</div>';
+        }
+        html += '</div>';
+
+        html += '</div>';
+        html += '</div></div>';
+
+        return html;
+    }
+
+    // ========== GAUGE SVG ==========
+    function buildGaugeSVG(score) {
+        var color = score >= 75 ? '#22c55e' : (score >= 50 ? '#f59e0b' : (score >= 25 ? '#f97316' : '#ef4444'));
+        var gradeLabel = score >= 80 ? 'Excellent' : (score >= 65 ? 'Good' : (score >= 50 ? 'Fair' : (score >= 30 ? 'Needs Work' : 'Critical')));
+
+        return '<svg class="gauge-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">' +
+            '<defs>' +
+            '<linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%">' +
+            '<stop offset="0%" stop-color="#ef4444"/>' +
+            '<stop offset="35%" stop-color="#f59e0b"/>' +
+            '<stop offset="65%" stop-color="#22c55e"/>' +
+            '<stop offset="100%" stop-color="#22c55e"/>' +
+            '</linearGradient>' +
+            '</defs>' +
+            '<path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="rgba(100,116,139,0.2)" stroke-width="12" stroke-linecap="round"/>' +
+            '<path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="251.3" id="gaugeArc"/>' +
+            '<text x="100" y="85" text-anchor="middle" fill="' + color + '" class="gauge-score-text" style="font-size:2.2rem;font-weight:800;" id="gaugeText">0</text>' +
+            '<text x="100" y="108" text-anchor="middle" fill="#94a3b8" style="font-size:0.75rem;">' + gradeLabel + '</text>' +
+            '</svg>';
+    }
+
+    function animateGauge(score) {
+        var arc = document.getElementById('gaugeArc');
+        var text = document.getElementById('gaugeText');
+        if (!arc || !text) return;
+
+        var totalLen = 251.3;
+        var targetOffset = totalLen - (score / 100) * totalLen;
+        var currentScore = { val: 0 };
+
+        var startTime = null;
+        var duration = 1500;
+
+        function animate(ts) {
+            if (!startTime) startTime = ts;
+            var progress = Math.min((ts - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+
+            var currentOffset = totalLen - eased * (totalLen - targetOffset);
+            arc.setAttribute('stroke-dashoffset', currentOffset);
+
+            text.textContent = Math.round(eased * score);
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    function animateScoreBars() {
+        var fills = document.querySelectorAll('.score-bar-fill');
+        fills.forEach(function(fill, idx) {
+            var pct = fill.getAttribute('data-pct');
+            setTimeout(function() {
+                fill.style.width = pct + '%';
+            }, idx * 100 + 200);
+        });
+    }
+
+    // ========== EXPORT FUNCTIONS ==========
+    function copyAsText() {
+        var d = gatherData();
+        var text = buildPlainText(d);
+        copyToClipboard(text);
+        showToast('Copied as plain text!');
+    }
+
+    function copyAsMarkdown() {
+        var d = gatherData();
+        var md = buildMarkdown(d);
+        copyToClipboard(md);
+        showToast('Copied as Markdown!');
+    }
+
+    function downloadPDF() {
+        showToast('Opening print dialog for PDF export...');
+        setTimeout(function() {
+            window.print();
+        }, 300);
+    }
+
+    function shareSummary() {
+        var d = gatherData();
+        var summary = 'Project Retro: ' + d.projectName;
+        if (d.clientName) summary += ' (' + d.clientName + ')';
+        summary += '\nHealth Score: ' + d.healthScore + '/100';
+        summary += '\nSatisfaction: ' + d.satisfaction + '/10';
+        summary += '\nBudget: ' + formatCurrency(d.originalBudget) + ' -> ' + formatCurrency(d.finalCost);
+        summary += '\nTimeline: ' + d.originalTimeline + 'w -> ' + d.actualTimeline + 'w';
+        summary += '\nVerdict: ' + d.verdictRec.label;
+        summary += '\n\nGenerated at freelanceos.pro';
+
+        if (navigator.share) {
+            navigator.share({ title: 'Project Retrospective: ' + d.projectName, text: summary }).catch(function() {});
+        } else {
+            copyToClipboard(summary);
+            showToast('Summary copied to clipboard!');
+        }
+    }
+
+    function buildPlainText(d) {
+        var lines = [];
+        lines.push('PROJECT RETROSPECTIVE');
+        lines.push('=====================');
+        lines.push('');
+        lines.push('Project: ' + d.projectName);
+        if (d.clientName) lines.push('Client: ' + d.clientName);
+        lines.push('Type: ' + d.projectType);
+        lines.push('Health Score: ' + d.healthScore + '/100');
+        lines.push('Satisfaction: ' + d.satisfaction + '/10');
+        lines.push('');
+        lines.push('BUDGET');
+        lines.push('  Original: ' + formatCurrency(d.originalBudget));
+        lines.push('  Final: ' + formatCurrency(d.finalCost) + (d.budgetPct !== 0 ? ' (' + (d.budgetPct > 0 ? '+' : '') + Math.round(d.budgetPct) + '%)' : ''));
+        lines.push('');
+        lines.push('TIMELINE');
+        lines.push('  Planned: ' + d.originalTimeline + ' weeks');
+        lines.push('  Actual: ' + d.actualTimeline + ' weeks' + (d.timelinePct !== 0 ? ' (' + (d.timelinePct > 0 ? '+' : '') + Math.round(d.timelinePct) + '%)' : ''));
+        lines.push('');
+
+        lines.push('PERFORMANCE RATINGS');
+        d.starCategories.forEach(function(cat) {
+            lines.push('  ' + cat.label + ': ' + (cat.value || 0) + '/5');
+        });
+        lines.push('');
+
+        if (d.wellItems.length > 0) {
+            lines.push('WHAT WENT WELL');
+            d.wellItems.forEach(function(item) {
+                lines.push('  + ' + item);
+            });
+            lines.push('');
+        }
+
+        if (d.wrongItems.length > 0) {
+            lines.push('WHAT NEEDS IMPROVEMENT');
+            d.wrongItems.forEach(function(item) {
+                lines.push('  - ' + item);
+            });
+            lines.push('');
+        }
+
+        if (d.biggestLesson) {
+            lines.push('BIGGEST LESSON');
+            lines.push('  ' + d.biggestLesson);
+            lines.push('');
+        }
+
+        if (d.doOver) {
+            lines.push('WHAT I WOULD DO DIFFERENTLY');
+            lines.push('  ' + d.doOver);
+            lines.push('');
+        }
+
+        lines.push('ACTION ITEMS');
+        d.wrongItems.forEach(function(item) {
+            if (actionItemsMap[item]) {
+                lines.push('  * ' + stripHTML(actionItemsMap[item].text));
+            }
+        });
+        lines.push('');
+
+        lines.push('CLIENT VERDICT: ' + d.verdictRec.label);
+        lines.push(d.verdictRec.reason);
+        if (d.verdictExplanation) {
+            lines.push('Notes: ' + d.verdictExplanation);
+        }
+        lines.push('');
+        lines.push('---');
+        lines.push('Generated with FreelanceOS Project Retrospective Generator');
+        lines.push('https://freelanceos.pro/freelanceos-storefront/project-retro.html');
+
+        return lines.join('\n');
+    }
+
+    function buildMarkdown(d) {
+        var lines = [];
+        lines.push('# Project Retrospective: ' + d.projectName);
+        lines.push('');
+        if (d.clientName) lines.push('**Client:** ' + d.clientName + '  ');
+        lines.push('**Type:** ' + d.projectType + '  ');
+        lines.push('**Health Score:** ' + d.healthScore + '/100  ');
+        lines.push('**Satisfaction:** ' + d.satisfaction + '/10');
+        lines.push('');
+
+        lines.push('## Budget & Timeline');
+        lines.push('');
+        lines.push('| Metric | Planned | Actual | Delta |');
+        lines.push('|--------|---------|--------|-------|');
+        lines.push('| Budget | ' + formatCurrency(d.originalBudget) + ' | ' + formatCurrency(d.finalCost) + ' | ' + (d.budgetPct !== 0 ? (d.budgetPct > 0 ? '+' : '') + Math.round(d.budgetPct) + '%' : 'On budget') + ' |');
+        lines.push('| Timeline | ' + d.originalTimeline + ' weeks | ' + d.actualTimeline + ' weeks | ' + (d.timelinePct !== 0 ? (d.timelinePct > 0 ? '+' : '') + Math.round(d.timelinePct) + '%' : 'On time') + ' |');
+        lines.push('');
+
+        lines.push('## Performance Scorecard');
+        lines.push('');
+        d.starCategories.forEach(function(cat) {
+            var stars = '';
+            for (var i = 0; i < 5; i++) {
+                stars += i < cat.value ? '★' : '☆';
+            }
+            lines.push('- **' + cat.label + ':** ' + stars + ' (' + (cat.value || 0) + '/5)');
+        });
+        lines.push('');
+
+        if (d.wellItems.length > 0) {
+            lines.push('## What Went Well');
+            lines.push('');
+            d.wellItems.forEach(function(item) {
+                lines.push('- ✅ ' + item);
+            });
+            lines.push('');
+        }
+
+        if (d.wrongItems.length > 0) {
+            lines.push('## What Needs Improvement');
+            lines.push('');
+            d.wrongItems.forEach(function(item) {
+                lines.push('- ⚠️ ' + item);
+            });
+            lines.push('');
+        }
+
+        if (d.biggestLesson) {
+            lines.push('## Biggest Lesson');
+            lines.push('');
+            lines.push('> ' + d.biggestLesson);
+            lines.push('');
+        }
+
+        if (d.doOver) {
+            lines.push('## What I Would Do Differently');
+            lines.push('');
+            lines.push('> ' + d.doOver);
+            lines.push('');
+        }
+
+        lines.push('## Action Items for Next Project');
+        lines.push('');
+        var actionAdded = false;
+        d.wrongItems.forEach(function(item) {
+            if (actionItemsMap[item]) {
+                lines.push('- [ ] ' + stripHTML(actionItemsMap[item].text));
+                actionAdded = true;
+            }
+        });
+        if (!actionAdded) {
+            lines.push('- [ ] Document your winning process as a reusable template');
+            lines.push('- [ ] Request a testimonial from this client');
+        }
+        lines.push('');
+
+        lines.push('## Client Verdict');
+        lines.push('');
+        lines.push('**' + d.verdictRec.label + '**');
+        lines.push('');
+        lines.push(d.verdictRec.reason);
+        if (d.verdictExplanation) {
+            lines.push('');
+            lines.push('*Notes: ' + d.verdictExplanation + '*');
+        }
+        lines.push('');
+        lines.push('---');
+        lines.push('*Generated with [FreelanceOS Project Retrospective Generator](https://freelanceos.pro/freelanceos-storefront/project-retro.html)*');
+
+        return lines.join('\n');
+    }
+
+    // ========== RESET ==========
+    function resetAll() {
+        document.getElementById('projectName').value = '';
+        document.getElementById('clientName').value = '';
+        document.getElementById('projectType').value = 'Website';
+        document.getElementById('originalBudget').value = 5000;
+        document.getElementById('finalCost').value = 5000;
+        document.getElementById('originalTimeline').value = 4;
+        document.getElementById('actualTimeline').value = 4;
+        document.getElementById('satisfaction').value = 7;
+        document.getElementById('originalBudgetVal').textContent = '$5,000';
+        document.getElementById('finalCostVal').textContent = '$5,000';
+        document.getElementById('originalTimelineVal').textContent = '4 weeks';
+        document.getElementById('actualTimelineVal').textContent = '4 weeks';
+        document.getElementById('satisfactionVal').textContent = '7 / 10';
+        document.getElementById('satisfactionEmoji').innerHTML = satisfactionMap[6].emoji;
+        document.getElementById('satisfactionLabel').textContent = satisfactionMap[6].label;
+
+        selectedWell = new Set();
+        selectedWrong = new Set();
+        customWellItems = [];
+        customWrongItems = [];
+        clientVerdict = '';
+
+        starCategories.forEach(function(cat) { cat.value = 0; });
+
+        document.getElementById('doOver').value = '';
+        document.getElementById('biggestLesson').value = '';
+        document.getElementById('verdictExplanation').value = '';
+
+        var verdictBtns = document.querySelectorAll('#clientVerdictBtns .verdict-btn');
+        verdictBtns.forEach(function(b) { b.classList.remove('selected'); });
+
+        initCheckboxGrid('wentWellGrid', wentWellOptions, 'well');
+        initCheckboxGrid('wentWrongGrid', wentWrongOptions, 'wrong');
+        initStarRatings();
+
+        document.getElementById('reportOutput').innerHTML = '';
+
+        currentStep = 1;
+        showStep(1);
+        showToast('Reset! Starting fresh.');
+    }
+
+    // ========== UTILITY ==========
+    function formatCurrency(val) {
+        if (val >= 1000) {
+            return '$' + val.toLocaleString('en-US');
+        }
+        return '$' + val;
+    }
+
+    function escHTML(str) {
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function stripHTML(html) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || '';
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).catch(function() {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch(e) {}
+        document.body.removeChild(ta);
+    }
+
+    function showToast(message) {
+        var toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(function() {
+            toast.classList.remove('show');
+        }, 2500);
+    }
+
+    // ========== KEYBOARD SUPPORT ==========
+    document.addEventListener('keydown', function(e) {
+        // Enter on custom inputs to add
+        if (e.key === 'Enter') {
+            if (e.target.id === 'customWellInput') {
+                addCustomItem('well');
+                e.preventDefault();
+            } else if (e.target.id === 'customWrongInput') {
+                addCustomItem('wrong');
+                e.preventDefault();
+            }
+        }
+    });
+    </script>
+</body>
+</html>
