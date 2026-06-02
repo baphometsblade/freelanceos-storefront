@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Business Audit — Free Business Health Score | FreelanceOS</title>
+    <meta name="description" content="Get your free Freelance Business Health Score in 8-12 minutes. 50 questions across 5 categories — find revenue gaps, prioritize fixes, and benchmark against top freelancers.">
+    <meta name="keywords" content="freelance business audit, freelance health score, freelance business assessment, freelancer self-assessment, freelance business checklist, freelance score">
+    <meta name="author" content="FreelanceOS">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/freelance-business-audit.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Freelance Business Audit — Get Your Free Business Health Score">
+    <meta property="og:description" content="50 questions · 8-12 minutes · Find out exactly where your freelance business is strong, where it's leaking money, and what to fix first.">
+    <meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/freelance-business-audit.html">
+    <meta property="og:site_name" content="FreelanceOS">
+    <meta property="og:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Freelance Business Audit — Get Your Free Business Health Score">
+    <meta name="twitter:description" content="50 questions across 5 categories. Find your score, identify revenue gaps, get your action plan.">
+    <meta name="twitter:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.png">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Freelance Business Audit",
+        "description": "A comprehensive 50-question interactive business health audit across 5 categories. Get your Business Health Score with personalized action items.",
+        "url": "https://baphometsblade.github.io/freelanceos-storefront/freelance-business-audit.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "creator": { "@type": "Organization", "name": "FreelanceOS" }
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0f0f0f;
+            --surface: #161616;
+            --surface2: #1e1e1e;
+            --border: rgba(255,255,255,0.08);
+            --accent: #7c3aed;
+            --accent-light: #9d5cf6;
+            --accent-dim: rgba(124,58,237,0.15);
+            --accent-glow: rgba(124,58,237,0.4);
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --text-dim: #6b7280;
+            --yes: #10b981;
+            --yes-dim: rgba(16,185,129,0.15);
+            --somewhat: #f59e0b;
+            --somewhat-dim: rgba(245,158,11,0.15);
+            --no: #ef4444;
+            --no-dim: rgba(239,68,68,0.15);
+            --radius: 14px;
+            --radius-sm: 8px;
+            --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ── BACKGROUND ── */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(130px);
+            animation: drift 22s ease-in-out infinite;
+        }
+        .orb-1 { width: 700px; height: 700px; background: #7c3aed; opacity: 0.10; top: -250px; right: -250px; }
+        .orb-2 { width: 500px; height: 500px; background: #3b82f6; opacity: 0.07; bottom: -200px; left: -200px; animation-delay: -11s; }
+        .orb-3 { width: 350px; height: 350px; background: #7c3aed; opacity: 0.05; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -6s; }
+
+        @keyframes drift {
+            0%,100% { transform: translate(0,0) scale(1); }
+            33% { transform: translate(25px,-18px) scale(1.04); }
+            66% { transform: translate(-18px,25px) scale(0.97); }
+        }
+
+        /* ── PROGRESS BAR TOP ── */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            height: 3px;
+            background: var(--surface);
+        }
+        .top-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+            width: 0%;
+        }
+        .top-bar-label {
+            position: fixed;
+            top: 10px;
+            right: 16px;
+            z-index: 101;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* ── LAYOUT ── */
+        .wrap {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 32px 20px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── SCREEN SYSTEM ── */
+        .screen {
+            display: none;
+            animation: fadeIn 0.45s cubic-bezier(0.4,0,0.2,1) forwards;
+        }
+        .screen.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px;
+        }
+        .card + .card { margin-top: 16px; }
+
+        /* ── LANDING ── */
+        .landing-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(124,58,237,0.3);
+            border-radius: 100px;
+            padding: 5px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-light);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .landing-title {
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #e5e7eb 0%, #a78bfa 60%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .landing-sub {
+            font-size: 17px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            line-height: 1.65;
+        }
+
+        .landing-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+        .meta-pill {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .meta-pill span:first-child { font-size: 15px; }
+
+        .value-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 36px;
+        }
+        .value-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .value-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        /* ── BUTTONS ── */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-decoration: none;
+            width: 100%;
+            letter-spacing: -0.01em;
+        }
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px var(--accent-glow);
+        }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            width: 100%;
+        }
+        .btn-secondary:hover {
+            border-color: rgba(124,58,237,0.4);
+            color: var(--text);
+            background: var(--accent-dim);
+        }
+
+        /* ── CATEGORY INTRO ── */
+        .cat-icon-wrap {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 24px;
+        }
+        .cat-title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+        .cat-desc { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.65; }
+        .cat-meta-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+        .cat-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        /* ── CATEGORY PROGRESS DOTS ── */
+        .cat-dots {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+        .cat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .cat-dot.done { background: var(--accent); border-color: var(--accent); }
+        .cat-dot.active { background: var(--accent-light); border-color: var(--accent-light); width: 22px; border-radius: 4px; }
+
+        /* ── QUESTION ── */
+        .q-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .q-cat-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+        }
+        .q-counter {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+
+        .q-text {
+            font-size: clamp(18px, 3.5vw, 24px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.35;
+            margin-bottom: 32px;
+            color: var(--text);
+        }
+
+        .answer-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 22px;
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            background: var(--surface2);
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+            text-align: left;
+            width: 100%;
+        }
+        .answer-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .answer-btn.yes-btn:hover, .answer-btn.yes-btn.selected {
+            border-color: var(--yes);
+            background: var(--yes-dim);
+            color: #fff;
+            transform: translateX(4px);
+        }
+        .answer-btn.yes-btn .answer-icon { background: var(--yes-dim); }
+        .answer-btn.yes-btn:hover .answer-icon,
+        .answer-btn.yes-btn.selected .answer-icon { background: rgba(16,185,129,0.3); }
+
+        .answer-btn.somewhat-btn:hover, .answer-btn.somewhat-btn.selected {
+            border-color: var(--somewhat);
+            background: var(--somewhat-dim);
+            color: #fff;
+            transform: translateX(4px);
+        }
+        .answer-btn.somewhat-btn .answer-icon { background: var(--somewhat-dim); }
+        .answer-btn.somewhat-btn:hover .answer-icon,
+        .answer-btn.somewhat-btn.selected .answer-icon { background: rgba(245,158,11,0.3); }
+
+        .answer-btn.no-btn:hover, .answer-btn.no-btn.selected {
+            border-color: var(--no);
+            background: var(--no-dim);
+            color: #fff;
+            transform: translateX(4px);
+        }
+        .answer-btn.no-btn .answer-icon { background: var(--no-dim); }
+        .answer-btn.no-btn:hover .answer-icon,
+        .answer-btn.no-btn.selected .answer-icon { background: rgba(239,68,68,0.3); }
+
+        /* ── OVERALL PROGRESS BAR ── */
+        .progress-section {
+            margin-bottom: 28px;
+        }
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .progress-label { font-size: 12px; color: var(--text-dim); font-weight: 500; }
+        .progress-pct { font-size: 12px; color: var(--accent-light); font-weight: 700; }
+        .progress-track {
+            height: 4px;
+            background: var(--surface2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            border-radius: 4px;
+            transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        /* ── EMAIL CAPTURE ── */
+        .email-icon {
+            font-size: 52px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .email-title { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+        .email-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.6; }
+
+        .email-input-wrap {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .email-input {
+            width: 100%;
+            padding: 16px 18px;
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            background: var(--surface2);
+            color: var(--text);
+            font-size: 15px;
+            outline: none;
+            transition: border-color var(--transition);
+            font-family: inherit;
+        }
+        .email-input:focus { border-color: var(--accent); }
+        .email-input::placeholder { color: var(--text-dim); }
+
+        .email-skip {
+            text-align: center;
+            margin-top: 14px;
+        }
+        .email-skip a {
+            font-size: 13px;
+            color: var(--text-dim);
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .email-skip a:hover { color: var(--text-muted); }
+
+        .email-bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+        .email-bullet {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .email-bullet-icon { color: var(--yes); flex-shrink: 0; margin-top: 1px; }
+
+        /* ── RESULTS ── */
+        .results-header {
+            text-align: center;
+            padding: 8px 0 32px;
+        }
+
+        /* Score Circle */
+        .score-circle-wrap {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+        }
+        .score-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .score-track { fill: none; stroke: var(--surface2); stroke-width: 10; }
+        .score-arc {
+            fill: none;
+            stroke: url(#arcGrad);
+            stroke-width: 10;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1);
+        }
+        .score-number {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .score-value {
+            font-size: 52px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            background: linear-gradient(135deg, #e5e7eb, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .score-max { font-size: 14px; color: var(--text-dim); margin-top: 2px; }
+
+        .score-tier {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+        .score-tier-sub { font-size: 14px; color: var(--text-muted); max-width: 400px; margin: 0 auto; }
+
+        /* Category Breakdown */
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+
+        .cat-bar-row {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .cat-bar-item {
+            padding: 16px 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: border-color var(--transition);
+        }
+        .cat-bar-item.weakest { border-color: rgba(245,158,11,0.4); }
+        .cat-bar-item.strongest { border-color: rgba(16,185,129,0.3); }
+
+        .cat-bar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .cat-bar-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .cat-bar-score {
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .cat-bar-track {
+            height: 6px;
+            background: var(--surface);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .cat-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+            width: 0%;
+        }
+        .cat-bar-badge {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 100px;
+            margin-left: 8px;
+        }
+        .badge-weakest { background: rgba(245,158,11,0.2); color: var(--somewhat); }
+        .badge-strongest { background: rgba(16,185,129,0.2); color: var(--yes); }
+
+        /* Action Items */
+        .action-list { display: flex; flex-direction: column; gap: 14px; }
+        .action-item {
+            display: flex;
+            gap: 14px;
+            padding: 18px 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            align-items: flex-start;
+        }
+        .action-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent-dim);
+            border: 1px solid rgba(124,58,237,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent-light);
+            flex-shrink: 0;
+        }
+        .action-content { flex: 1; }
+        .action-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+        .action-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+        .action-impact {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--yes);
+            margin-top: 6px;
+            background: var(--yes-dim);
+            padding: 2px 8px;
+            border-radius: 100px;
+        }
+
+        /* Share & CTA */
+        .share-card {
+            background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(167,139,250,0.08));
+            border: 1px solid rgba(124,58,237,0.25);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+        }
+        .share-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+        .share-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 11px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        .share-btn:hover {
+            border-color: rgba(124,58,237,0.4);
+            color: var(--text);
+            background: var(--accent-dim);
+        }
+        .share-copied {
+            font-size: 12px;
+            color: var(--yes);
+            margin-top: 10px;
+            height: 16px;
+        }
+
+        .cta-card {
+            border-radius: var(--radius);
+            padding: 28px;
+            text-align: center;
+        }
+        .cta-title { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+        .cta-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            background: var(--accent);
+            border: none;
+            border-radius: var(--radius);
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .cta-link:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .results-restart {
+            text-align: center;
+            margin-top: 16px;
+        }
+        .results-restart a {
+            font-size: 13px;
+            color: var(--text-dim);
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* ── UTILITY ── */
+        .text-center { text-align: center; }
+        .mt-8 { margin-top: 8px; }
+        .mt-16 { margin-top: 16px; }
+        .mt-24 { margin-top: 24px; }
+        .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+        .fade-leaving {
+            animation: fadeOut 0.25s cubic-bezier(0.4,0,0.2,1) forwards;
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to   { opacity: 0; transform: translateY(-12px); }
+        }
+
+        @media (max-width: 480px) {
+            .wrap { padding: 20px 14px 60px; }
+            .card { padding: 24px 20px; }
+            .answer-btn { padding: 15px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-layer" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
+
+<!-- Progress Bar Top -->
+<div class="top-bar"><div class="top-bar-fill" id="topBarFill"></div></div>
+<div class="top-bar-label" id="topBarLabel"></div>
+
+<div class="wrap">
+
+    <!-- ═══════════════════════════════════ SCREEN: LANDING -->
+    <div class="screen active" id="screen-landing">
+        <div class="card">
+            <div class="landing-badge">🔍 Free Business Health Tool</div>
+            <h1 class="landing-title">Freelance Business Audit</h1>
+            <p class="landing-sub">Find out exactly where your freelance business is strong, where it's leaking money, and what to fix first — in under 15 minutes.</p>
+
+            <div class="landing-meta">
+                <div class="meta-pill"><span>📝</span> <span>50 questions</span></div>
+                <div class="meta-pill"><span>⏱️</span> <span>8-12 minutes</span></div>
+                <div class="meta-pill"><span>🆓</span> <span>100% free</span></div>
+            </div>
+
+            <ul class="value-list">
+                <li class="value-item">
+                    <div class="value-icon">💰</div>
+                    <span>Identify exactly where you're leaking revenue and what to plug first</span>
+                </li>
+                <li class="value-item">
+                    <div class="value-icon">📋</div>
+                    <span>Get a prioritized action plan — specific steps ranked by impact</span>
+                </li>
+                <li class="value-item">
+                    <div class="value-icon">📊</div>
+                    <span>Benchmark across 5 business dimensions: Foundation, Acquisition, Delivery, Finance, Growth</span>
+                </li>
+            </ul>
+
+            <button class="btn-primary" onclick="startAudit()">
+                Start My Free Audit →
+            </button>
+            <p style="font-size:12px;color:var(--text-dim);text-align:center;margin-top:12px;">No account needed. Results shown instantly.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ SCREEN: CATEGORY INTRO -->
+    <div class="screen" id="screen-cat-intro">
+        <div class="card text-center">
+            <div class="cat-dots" id="catDots"></div>
+            <div class="cat-icon-wrap" id="catIconWrap" style="background:rgba(124,58,237,0.12)">
+                <span id="catIconDisplay"></span>
+            </div>
+            <h2 class="cat-title" id="catIntroTitle"></h2>
+            <p class="cat-desc" id="catIntroDesc"></p>
+            <div class="cat-meta-row">
+                <div class="cat-meta-item">📝 <span>10 questions</span></div>
+                <div class="cat-meta-item">⏱️ <span>~2 minutes</span></div>
+                <div class="cat-meta-item" id="catScoreStatus"></div>
+            </div>
+            <button class="btn-primary" id="catBeginBtn" onclick="beginCategory()"></button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ SCREEN: QUESTION -->
+    <div class="screen" id="screen-question">
+        <div class="progress-section">
+            <div class="progress-row">
+                <span class="progress-label" id="qProgressLabel">Overall Progress</span>
+                <span class="progress-pct" id="qProgressPct">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="qProgressFill"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="q-header">
+                <span class="q-cat-label" id="qCatLabel"></span>
+                <span class="q-counter" id="qCounter"></span>
+            </div>
+            <p class="q-text" id="qText"></p>
+            <div class="answer-row">
+                <button class="answer-btn yes-btn" onclick="answerQuestion(10)" id="btn-yes">
+                    <div class="answer-icon">✅</div>
+                    <span>Yes — I do this consistently</span>
+                </button>
+                <button class="answer-btn somewhat-btn" onclick="answerQuestion(5)" id="btn-somewhat">
+                    <div class="answer-icon">🟡</div>
+                    <span>Somewhat — working on it</span>
+                </button>
+                <button class="answer-btn no-btn" onclick="answerQuestion(0)" id="btn-no">
+                    <div class="answer-icon">❌</div>
+                    <span>No — not in place yet</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ SCREEN: EMAIL CAPTURE -->
+    <div class="screen" id="screen-email">
+        <div class="card text-center">
+            <div class="email-icon">🏆</div>
+            <h2 class="email-title">Your results are ready!</h2>
+            <p class="email-sub">Enter your email to see your Business Health Score and personalized action plan. We'll also send you 3 quick wins based on your weakest areas.</p>
+
+            <ul class="email-bullets">
+                <li class="email-bullet"><span class="email-bullet-icon">✓</span> Your full score breakdown across all 5 categories</li>
+                <li class="email-bullet"><span class="email-bullet-icon">✓</span> Top 3 highest-impact action items, specific to your answers</li>
+                <li class="email-bullet"><span class="email-bullet-icon">✓</span> Benchmark: how you compare to top-performing freelancers</li>
+            </ul>
+
+            <div class="email-input-wrap">
+                <input type="email" class="email-input" id="emailInput" placeholder="yourname@email.com" autocomplete="email">
+            </div>
+            <button class="btn-primary" onclick="submitEmail()">See My Score →</button>
+            <div class="email-skip"><a onclick="skipEmail()">Skip for now — show results without saving</a></div>
+            <p style="font-size:11px;color:var(--text-dim);margin-top:16px;">No spam. Unsubscribe any time. Your data is stored locally on your device.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ SCREEN: RESULTS -->
+    <div class="screen" id="screen-results">
+
+        <!-- Score Hero -->
+        <div class="card results-header">
+            <div class="score-circle-wrap">
+                <svg class="score-svg" viewBox="0 0 180 180">
+                    <defs>
+                        <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#7c3aed"/>
+                            <stop offset="100%" stop-color="#a78bfa"/>
+                        </linearGradient>
+                    </defs>
+                    <circle class="score-track" cx="90" cy="90" r="78"/>
+                    <circle class="score-arc" id="scoreArc" cx="90" cy="90" r="78"
+                        stroke-dasharray="490"
+                        stroke-dashoffset="490"/>
+                </svg>
+                <div class="score-number">
+                    <span class="score-value" id="scoreDisplay">0</span>
+                    <span class="score-max">out of 100</span>
+                </div>
+            </div>
+            <h2 class="score-tier" id="scoreTierText"></h2>
+            <p class="score-tier-sub" id="scoreTierSub"></p>
+        </div>
+
+        <!-- Category Breakdown -->
+        <div class="card mt-16">
+            <div class="section-title">Score by Category</div>
+            <div class="cat-bar-row" id="catBarRow"></div>
+        </div>
+
+        <!-- Top Priorities -->
+        <div class="card mt-16">
+            <div class="section-title">Your Top 3 Priorities</div>
+            <div class="action-list" id="actionList"></div>
+        </div>
+
+        <!-- Share -->
+        <div class="share-card mt-16">
+            <div class="share-title">Share your score</div>
+            <div class="share-sub">Dare your network to beat your Business Health Score.</div>
+            <button class="share-btn" onclick="shareScore()">📋 Copy shareable text</button>
+            <div class="share-copied" id="shareCopied"></div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-card card mt-16" id="ctaCard">
+            <div class="cta-title" id="ctaTitle"></div>
+            <div class="cta-sub" id="ctaSub"></div>
+            <a class="cta-link" id="ctaLink" href="https://baphometsblade.github.io/freelanceos-storefront/" target="_blank">View FreelanceOS Pro →</a>
+        </div>
+
+        <div class="results-restart">
+            <a onclick="restartAudit()">↺ Retake the audit</a>
+        </div>
+
+    </div>
+
+</div><!-- /wrap -->
+
+<script>
+// ════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════
+
+const categories = [
+    {
+        name: 'Business Foundation',
+        icon: '🏗️',
+        color: '#7c3aed',
+        desc: 'The core infrastructure of your freelance business — your positioning, pricing, contracts, and financial setup. This is the foundation everything else is built on.',
+        questions: [
+            'Do you have a clearly defined niche or target client type?',
+            'Do you have a professional website or portfolio?',
+            'Do you have a written services menu with clear pricing?',
+            'Do you have a business email address (not Gmail/Hotmail)?',
+            'Do you have a business bank account separate from personal?',
+            'Do you have a standard contract or agreement for all client work?',
+            'Do you know your minimum viable hourly rate?',
+            'Do you have a defined onboarding process for new clients?',
+            'Do you track your business income and expenses monthly?',
+            'Do you have 3+ months of expenses saved as a business emergency fund?'
+        ],
+        actionItems: [
+            { title: 'Define your niche', desc: 'Pick the 1 type of client you serve best. Update your website, LinkedIn, and outreach to reflect it — qualified inquiries will 2-3x.', impact: '+2-3x qualified leads' },
+            { title: 'Build a professional website', desc: 'A portfolio site is your 24/7 salesperson. Even a 3-page site with your work, services, and contact form is enough to win clients.', impact: '+40% conversion rate' },
+            { title: 'Create a written services menu', desc: 'List your services with starting prices. It sets expectations, filters bad-fit clients, and positions you as a professional — not a commodity.', impact: 'Fewer bad-fit clients' },
+            { title: 'Get a business email', desc: 'A yourname@yourdomain.com address signals professionalism. Google Workspace starts at $6/month and pays for itself on the first project.', impact: '+Trust & authority' },
+            { title: 'Open a business bank account', desc: 'Mixing personal and business finances is a tax nightmare. Open a free business checking account this week — 20 minutes of work.', impact: 'Saves hours at tax time' },
+            { title: 'Get a contract template', desc: 'Use a standard client agreement on every project. It protects you from scope creep, late payment, and disputes. Use our free Contract Generator.', impact: 'Eliminate disputes' },
+            { title: 'Calculate your minimum viable rate', desc: 'Add up your monthly expenses, taxes, and desired income. Divide by billable hours. That\'s your floor — never go below it.', impact: 'Stop undercharging' },
+            { title: 'Build a client onboarding process', desc: 'A welcome email, kickoff questionnaire, and first-week checklist reduces confusion and positions you as a premium operator.', impact: '+Client satisfaction' },
+            { title: 'Set up a monthly finance review', desc: 'Spend 30 minutes on the 1st of every month reviewing income, expenses, and outstanding invoices. Most freelancers skip this — don\'t.', impact: 'Spot problems early' },
+            { title: 'Build your emergency fund', desc: 'Freelance income is variable. Target 3 months of expenses in a savings account. Start with 10% of every invoice until you hit the goal.', impact: 'Survive dry spells' }
+        ]
+    },
+    {
+        name: 'Client Acquisition',
+        icon: '🎯',
+        color: '#3b82f6',
+        desc: 'Your pipeline, marketing, and lead generation systems. This covers how new clients find you, how you convert inquiries, and how you build a predictable flow of work.',
+        questions: [
+            'Do you have a consistent system for finding new leads?',
+            'Do you ask every satisfied client for a referral?',
+            'Do you have at least 3 written testimonials on your site?',
+            'Do you have a defined sales process from inquiry to signed contract?',
+            'Do you follow up with prospects who didn\'t convert immediately?',
+            'Do you have a cold outreach strategy (email, LinkedIn, or community)?',
+            'Do you post value-driven content at least 2× per week on any platform?',
+            'Do you have a lead magnet that captures email subscribers?',
+            'Do you have relationships with complementary freelancers who refer work?',
+            'Do you track your inquiry-to-conversion rate?'
+        ],
+        actionItems: [
+            { title: 'Build a weekly lead-gen routine', desc: 'Block 2 hours every week just for outreach. Pick one channel — LinkedIn, cold email, or communities — and work it consistently for 90 days.', impact: '2-4 new leads/week' },
+            { title: 'Ask for referrals systematically', desc: 'After every successful project, send a 2-line email asking if they know anyone who needs similar help. Most clients are happy to refer — they just forget.', impact: '30% of revenue (avg)' },
+            { title: 'Collect 3+ testimonials', desc: 'Email your last 5 clients this week asking for a 2-3 sentence testimonial. Add them to your homepage. Social proof is the fastest trust signal you can add.', impact: '+Conversion rate' },
+            { title: 'Map your sales process', desc: 'Document the steps from inquiry to signed contract. What\'s your discovery call structure? When do you send the proposal? Clarity here reduces lost deals.', impact: 'Close 20% more deals' },
+            { title: 'Create a follow-up sequence', desc: '80% of sales require 5+ follow-ups but most freelancers give up after 1. Set a reminder to follow up on every unconverted inquiry at day 3, 7, and 14.', impact: '+15-20% close rate' },
+            { title: 'Start one cold outreach channel', desc: 'Pick LinkedIn DMs, cold email, or Slack/Discord communities. Write 5 personalized outreach messages per week. Track what gets responses and iterate.', impact: 'New pipeline source' },
+            { title: 'Post 2x/week on one platform', desc: 'Pick LinkedIn or Twitter/X. Share your expertise, behind-the-scenes, or client results. Consistency beats quality — post for 90 days before judging results.', impact: '+Inbound inquiries' },
+            { title: 'Create a lead magnet', desc: 'A free checklist, template, or guide that solves a specific problem your clients have. Capture emails and build an audience you own — independent of any algorithm.', impact: 'Owned audience' },
+            { title: 'Build a referral partner network', desc: 'Identify 3-5 freelancers with complementary skills. Set up a mutual referral arrangement. This is often the highest-ROI marketing a freelancer can do.', impact: 'Passive referrals' },
+            { title: 'Track your conversion rate', desc: 'Note every inquiry you receive and whether it converted. If your rate is below 30%, your pricing, positioning, or process needs work — and you won\'t know without data.', impact: 'Data-driven decisions' }
+        ]
+    },
+    {
+        name: 'Project Delivery',
+        icon: '📦',
+        color: '#10b981',
+        desc: 'How you manage, communicate, and execute on client work. Strong delivery systems create repeat clients, referrals, and a reputation that sells itself.',
+        questions: [
+            'Do you use a dedicated project management system (not just email)?',
+            'Do you set clear project milestones before starting work?',
+            'Do you have a system for tracking revision requests?',
+            'Do you send weekly status updates to active clients?',
+            'Do you have a defined scope creep policy in your contracts?',
+            'Do you use time-tracking on all projects — even fixed-price ones?',
+            'Do you have a project kickoff template or checklist?',
+            'Do you have a project delivery or handover checklist?',
+            'Do you request feedback at the end of every project?',
+            'Are your clients consistently happy with your communication?'
+        ],
+        actionItems: [
+            { title: 'Set up a project management tool', desc: 'Pick Notion, Trello, Asana, or Linear. Even a basic board with To-Do / In Progress / Done columns will transform your delivery quality.', impact: '+Delivery quality' },
+            { title: 'Define milestones before starting', desc: 'Before any project begins, write down 3-5 milestones with dates. Send them to the client. This sets expectations and gives you natural check-in points.', impact: 'Fewer surprises' },
+            { title: 'Create a revision tracking system', desc: 'Log every revision request with date, description, and whether it\'s in-scope. This protects you from scope creep and gives you data for future pricing.', impact: 'Protect your margins' },
+            { title: 'Send weekly status updates', desc: 'A 3-line email every Friday: what you did this week, what\'s next, and any blockers. Clients who feel informed are 4x less likely to micromanage.', impact: '+Client satisfaction' },
+            { title: 'Add a scope change clause', desc: 'Your contract needs language that defines what\'s in-scope and how out-of-scope requests are handled (additional quote). This stops scope creep cold.', impact: 'Stop free work' },
+            { title: 'Start tracking time on all projects', desc: 'Even on fixed-price projects, track your hours. After 10 projects you\'ll know exactly how long things take — and can price accordingly.', impact: 'Accurate future pricing' },
+            { title: 'Build a kickoff checklist', desc: 'Document everything you need to start a project: access credentials, brief, brand assets, deadlines, stakeholders. Send it immediately after signing.', impact: 'Faster project starts' },
+            { title: 'Create a delivery checklist', desc: 'Define what "done" looks like before you start. Final review, file delivery, handover notes, invoice. A checklist ensures nothing falls through the cracks.', impact: 'Professional close-out' },
+            { title: 'Ask for feedback after every project', desc: 'Send a 3-question survey or a quick email asking what went well, what could improve, and if they\'d work with you again. Use the feedback to improve (and get testimonials).', impact: 'Continuous improvement' },
+            { title: 'Improve your communication cadence', desc: 'Poll your last 3 clients: were they happy with how often they heard from you? If not, build a communication template for each project type.', impact: '+Repeat business' }
+        ]
+    },
+    {
+        name: 'Financial Health',
+        icon: '💰',
+        color: '#f59e0b',
+        desc: 'Your invoicing, cash flow, tax planning, and financial systems. Most freelancers leave thousands on the table through late invoicing, no deposits, and poor payment terms.',
+        questions: [
+            'Do you invoice within 24 hours of completing work?',
+            'Do you require a deposit (30-50%) before starting any project?',
+            'Do you have clear payment terms (Net 15 or better) in all contracts?',
+            'Do you track outstanding invoices and follow up on late payments?',
+            'Do you set aside 25-30% of every payment for taxes?',
+            'Do you make quarterly estimated tax payments?',
+            'Do you know your average revenue per client?',
+            'Do you review your finances at least once a month?',
+            'Do you have at least one retainer client providing recurring revenue?',
+            'Do you have a plan to increase your rates by at least 10% this year?'
+        ],
+        actionItems: [
+            { title: 'Invoice within 24 hours', desc: 'The longer you wait, the less likely you are to get paid promptly. Use our free Invoice Generator to create and send invoices the moment work is delivered.', impact: '5-7 days faster payment' },
+            { title: 'Require a project deposit', desc: 'Implement a 50% deposit before starting every project. This filters out time-wasters, covers your costs if the project falls through, and improves cash flow dramatically.', impact: 'Eliminates unpaid work' },
+            { title: 'Shorten your payment terms', desc: 'Net 30 is too long. Switch to Net 15 or net 7. Most clients pay on whatever terms you set — most freelancers just never change the default.', impact: '15 days faster cash' },
+            { title: 'Set up invoice follow-up reminders', desc: 'Create a simple system: reminder at 1 day past due, firm email at 7 days, phone call at 14 days. Most late payments just need a gentle nudge.', impact: 'Recover lost revenue' },
+            { title: 'Open a tax savings account', desc: 'On every payment you receive, immediately transfer 28% to a dedicated savings account. When tax season comes, the money is there. This one habit eliminates tax stress.', impact: 'No tax surprise' },
+            { title: 'Make quarterly tax payments', desc: 'If you\'re in the US, self-employed people owe estimated taxes April, June, September, and January. Missing payments means penalties. Set a calendar reminder today.', impact: 'Avoid IRS penalties' },
+            { title: 'Calculate your average revenue per client', desc: 'Add up all revenue from the past year, divide by number of clients. This tells you if you need more clients or higher-value clients — two very different strategies.', impact: 'Better growth strategy' },
+            { title: 'Do a monthly financial review', desc: 'On the 1st of every month: what came in, what went out, what\'s outstanding, what\'s your runway. 30 minutes once a month prevents every financial surprise.', impact: 'Full financial control' },
+            { title: 'Land one retainer client', desc: 'Recurring revenue is the stability every freelancer needs. Identify clients who need ongoing work. Propose a monthly retainer — even $500/month changes your stress level.', impact: 'Stable monthly base' },
+            { title: 'Plan your rate increase', desc: 'If you haven\'t raised rates in 12 months, you\'ve taken a pay cut. Increase rates 10-20% for new clients starting immediately. Inform existing clients 60 days in advance.', impact: '+10-20% revenue' }
+        ]
+    },
+    {
+        name: 'Growth & Sustainability',
+        icon: '🚀',
+        color: '#ef4444',
+        desc: 'Your long-term strategy, personal sustainability, and systems for scaling. The best freelancers build businesses that work for them — not just with them.',
+        questions: [
+            'Do you have a 12-month revenue goal written down?',
+            'Do you invest in professional development (courses, books, coaching)?',
+            'Do you take at least 15 days of vacation per year?',
+            'Do you have systems that let you take a week off without the business stopping?',
+            'Do you have a second income stream beyond your primary service?',
+            'Do you track which marketing activities actually bring in clients?',
+            'Do you have defined working hours and enforce firm boundaries?',
+            'Do you have a peer network, mastermind, or accountability group?',
+            'Do you review and update your business strategy at least quarterly?',
+            'Do you regularly audit and raise your rates based on market demand?'
+        ],
+        actionItems: [
+            { title: 'Write down your 12-month revenue goal', desc: 'Studies show written goals are 42% more likely to be achieved. Write your target revenue for next year, break it into monthly targets, and post it somewhere visible.', impact: '+42% goal achievement' },
+            { title: 'Invest in professional development', desc: 'Allocate 5% of revenue to learning — courses, books, coaching, or conferences. The skills you add in the next 12 months determine your earning ceiling in 3 years.', impact: 'Long-term ROI' },
+            { title: 'Schedule real vacation time', desc: 'Book your time off now — not "when things slow down" (they won\'t). Clients respect boundaries you enforce. Burnout kills more freelance businesses than bad markets.', impact: 'Prevents burnout' },
+            { title: 'Document your core systems', desc: 'Write down how you handle onboarding, invoicing, project delivery, and client comms. Systems you can delegate — even to a VA — are what let you take a week off.', impact: 'Business continuity' },
+            { title: 'Build a second income stream', desc: 'A productized service, digital product, template, course, or affiliate income. Even $200/month from a passive stream changes your risk profile and negotiating power.', impact: 'Income diversification' },
+            { title: 'Track your marketing ROI', desc: 'For every client, note how they found you. After 6 months, you\'ll know which channels return clients — and can double down on those and drop the rest.', impact: 'Better ROI on time' },
+            { title: 'Define your working hours', desc: 'Decide when your workday starts and ends — and tell clients. "I respond to messages weekdays 9-5" is a professional standard, not a limitation. Enforce it consistently.', impact: 'Sustainable output' },
+            { title: 'Join or build a peer network', desc: 'Find a mastermind, freelancer community, or accountability partner. Isolated freelancers grow slower, struggle longer, and burn out more often. Community is leverage.', impact: 'Faster problem-solving' },
+            { title: 'Do a quarterly business review', desc: 'Every 90 days, review: What worked? What didn\'t? What do I change? This 60-minute habit separates freelancers who drift from those who intentionally grow.', impact: 'Intentional growth' },
+            { title: 'Schedule annual rate reviews', desc: 'Set a calendar reminder every 6 months to review your rates against the market. If your calendar is consistently full, you\'re underpriced. Raise rates by 10-15%.', impact: 'Maximize earning power' }
+        ]
+    }
+];
+
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+
+const state = {
+    currentCategory: 0,
+    currentQuestion: 0,
+    answers: [],
+    email: null,
+    startTime: Date.now()
+};
+
+// ════════════════════════════════════════════
+// SCREEN MANAGEMENT
+// ════════════════════════════════════════════
+
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => {
+        s.classList.remove('active');
+    });
+    const el = document.getElementById('screen-' + id);
+    if (el) {
+        el.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+// ════════════════════════════════════════════
+// PROGRESS
+// ════════════════════════════════════════════
+
+function updateProgress() {
+    const total = 50;
+    const answered = state.answers.length;
+    const pct = Math.round((answered / total) * 100);
+    const fill = document.getElementById('topBarFill');
+    const label = document.getElementById('topBarLabel');
+    const qFill = document.getElementById('qProgressFill');
+    const qPct = document.getElementById('qProgressPct');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = answered > 0 ? pct + '% complete' : '';
+    if (qFill) qFill.style.width = pct + '%';
+    if (qPct) qPct.textContent = pct + '%';
+}
+
+function buildCatDots() {
+    const container = document.getElementById('catDots');
+    if (!container) return;
+    container.innerHTML = '';
+    categories.forEach((cat, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'cat-dot';
+        if (i < state.currentCategory) dot.classList.add('done');
+        else if (i === state.currentCategory) dot.classList.add('active');
+        container.appendChild(dot);
+    });
+}
+
+// ════════════════════════════════════════════
+// FLOW
+// ════════════════════════════════════════════
+
+function startAudit() {
+    state.currentCategory = 0;
+    state.currentQuestion = 0;
+    state.answers = [];
+    state.startTime = Date.now();
+    showCategoryIntro();
+}
+
+function showCategoryIntro() {
+    const cat = categories[state.currentCategory];
+    const isFirst = state.currentCategory === 0;
+
+    document.getElementById('catIntroTitle').textContent = cat.name;
+    document.getElementById('catIntroDesc').textContent = cat.desc;
+    document.getElementById('catIconDisplay').textContent = cat.icon;
+    document.getElementById('catIconWrap').style.background = `${cat.color}18`;
+    document.getElementById('catBeginBtn').textContent =
+        isFirst ? 'Begin Audit →' : `Start Category ${state.currentCategory + 1} of 5 →`;
+
+    const statusEl = document.getElementById('catScoreStatus');
+    if (state.answers.length > 0 && state.currentCategory > 0) {
+        const prevCatScore = calcCategoryScore(state.currentCategory - 1);
+        statusEl.textContent = `✓ Last score: ${prevCatScore}/100`;
+        statusEl.style.color = 'var(--yes)';
+    } else {
+        statusEl.textContent = '📌 Category ' + (state.currentCategory + 1) + ' of 5';
+        statusEl.style.color = 'var(--text-dim)';
+    }
+
+    buildCatDots();
+    updateProgress();
+    showScreen('cat-intro');
+}
+
+function beginCategory() {
+    showQuestion();
+}
+
+function showQuestion() {
+    const cat = categories[state.currentCategory];
+    const qIdx = state.currentQuestion;
+    const globalQ = state.currentCategory * 10 + qIdx + 1;
+
+    document.getElementById('qCatLabel').textContent = cat.icon + ' ' + cat.name;
+    document.getElementById('qCounter').textContent = `Question ${qIdx + 1} of 10 · #${globalQ} overall`;
+    document.getElementById('qText').textContent = cat.questions[qIdx];
+
+    document.getElementById('qProgressLabel').textContent = `${cat.name} — Question ${qIdx + 1} of 10`;
+
+    // Reset button states
+    ['btn-yes', 'btn-somewhat', 'btn-no'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('selected');
+    });
+
+    updateProgress();
+    showScreen('question');
+}
+
+let isTransitioning = false;
+
+function answerQuestion(value) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+
+    // Visual feedback
+    const btnMap = { 10: 'btn-yes', 5: 'btn-somewhat', 0: 'btn-no' };
+    const btn = document.getElementById(btnMap[value]);
+    if (btn) btn.classList.add('selected');
+
+    state.answers.push(value);
+
+    setTimeout(() => {
+        isTransitioning = false;
+        const qIdx = state.currentQuestion + 1;
+
+        if (qIdx < 10) {
+            // Next question in same category
+            state.currentQuestion = qIdx;
+            showQuestion();
+        } else {
+            // Category complete
+            state.currentQuestion = 0;
+            state.currentCategory++;
+
+            if (state.currentCategory < categories.length) {
+                showCategoryIntro();
+            } else {
+                // All done — email capture
+                showScreen('email');
+                updateProgress();
+                const topBarLabel = document.getElementById('topBarLabel');
+                if (topBarLabel) topBarLabel.textContent = '100% complete';
+                const topBarFill = document.getElementById('topBarFill');
+                if (topBarFill) topBarFill.style.width = '100%';
+            }
+        }
+    }, 320);
+}
+
+// ════════════════════════════════════════════
+// EMAIL
+// ════════════════════════════════════════════
+
+function submitEmail() {
+    const input = document.getElementById('emailInput');
+    const email = input ? input.value.trim() : '';
+    if (email && !validateEmail(email)) {
+        input.style.borderColor = 'var(--no)';
+        input.placeholder = 'Please enter a valid email address';
+        return;
+    }
+    saveResults(email || null);
+    showResults();
+}
+
+function skipEmail() {
+    saveResults(null);
+    showResults();
+}
+
+function validateEmail(e) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+}
+
+function saveResults(email) {
+    state.email = email;
+    const scores = calculateScores();
+    const results = {
+        email,
+        answers: state.answers,
+        scores,
+        date: new Date().toISOString(),
+        source: 'freelance-business-audit',
+        timeSpentSeconds: Math.round((Date.now() - state.startTime) / 1000)
+    };
+
+    try {
+        const leads = JSON.parse(localStorage.getItem('freelanceos_leads') || '[]');
+        if (email) leads.push({ email, source: 'business-audit', date: results.date });
+        localStorage.setItem('freelanceos_leads', JSON.stringify(leads));
+        localStorage.setItem('last_audit_results', JSON.stringify(results));
+    } catch(e) { /* storage unavailable */ }
+}
+
+// ════════════════════════════════════════════
+// SCORING
+// ════════════════════════════════════════════
+
+function calculateScores() {
+    const categoryScores = categories.map((cat, i) => {
+        const catAnswers = state.answers.slice(i * 10, (i + 1) * 10);
+        const raw = catAnswers.reduce((a, b) => a + b, 0);
+        return raw; // 0-100 (10 questions × 10 pts max)
+    });
+    const total = Math.round(categoryScores.reduce((a, b) => a + b, 0) / 5);
+    return { total, categoryScores };
+}
+
+function calcCategoryScore(catIdx) {
+    const catAnswers = state.answers.slice(catIdx * 10, (catIdx + 1) * 10);
+    return catAnswers.reduce((a, b) => a + b, 0);
+}
+
+function getScoreTier(score) {
+    if (score >= 91) return {
+        label: '🏆 Elite Freelancer',
+        sub: 'You\'re in the top tier of freelance operators. Your business runs like a machine — keep systemizing and scale.',
+        color: '#f59e0b'
+    };
+    if (score >= 76) return {
+        label: '🚀 Strong Business',
+        sub: 'You\'ve built something real here. A few targeted improvements can push you from strong to elite.',
+        color: '#7c3aed'
+    };
+    if (score >= 61) return {
+        label: '✅ Solid Foundation',
+        sub: 'Good fundamentals in place. Now it\'s about filling in the gaps — each fix compounds your results.',
+        color: '#3b82f6'
+    };
+    if (score >= 41) return {
+        label: '📈 Getting There',
+        sub: 'You\'re building in the right direction. Addressing the gaps below will unlock a new level of stability and revenue.',
+        color: '#10b981'
+    };
+    return {
+        label: '⚠️ Needs Work',
+        sub: 'Every high-earning freelancer started here. The good news: the gaps you\'ve identified are specific and fixable. Start with Priority #1.',
+        color: '#ef4444'
+    };
+}
+
+// ════════════════════════════════════════════
+// RESULTS RENDERING
+// ════════════════════════════════════════════
+
+function showResults() {
+    showScreen('results');
+
+    const { total, categoryScores } = calculateScores();
+    const tier = getScoreTier(total);
+
+    // Animated score counter
+    animateCounter(0, total, 1600, (val) => {
+        document.getElementById('scoreDisplay').textContent = val;
+    });
+
+    // Arc animation
+    setTimeout(() => {
+        const arc = document.getElementById('scoreArc');
+        if (arc) {
+            const circumference = 490;
+            const offset = circumference - (total / 100) * circumference;
+            arc.style.strokeDashoffset = offset;
+            arc.style.stroke = tier.color;
+        }
+    }, 100);
+
+    // Score tier
+    document.getElementById('scoreTierText').textContent = tier.label;
+    document.getElementById('scoreTierText').style.color = tier.color;
+    document.getElementById('scoreTierSub').textContent = tier.sub;
+
+    // Category bars
+    const weakestIdx = categoryScores.indexOf(Math.min(...categoryScores));
+    const strongestIdx = categoryScores.indexOf(Math.max(...categoryScores));
+    const catBarRow = document.getElementById('catBarRow');
+    catBarRow.innerHTML = '';
+
+    categoryScores.forEach((score, i) => {
+        const cat = categories[i];
+        const item = document.createElement('div');
+        item.className = 'cat-bar-item';
+        if (i === weakestIdx) item.classList.add('weakest');
+        else if (i === strongestIdx) item.classList.add('strongest');
+
+        const badge = i === weakestIdx
+            ? '<span class="cat-bar-badge badge-weakest">Needs focus</span>'
+            : i === strongestIdx
+                ? '<span class="cat-bar-badge badge-strongest">Strongest</span>'
+                : '';
+
+        item.innerHTML = `
+            <div class="cat-bar-header">
+                <div class="cat-bar-name">${cat.icon} ${cat.name}${badge}</div>
+                <div class="cat-bar-score" style="color:${cat.color}">${score}/100</div>
+            </div>
+            <div class="cat-bar-track">
+                <div class="cat-bar-fill" style="background:${cat.color};width:0%" data-width="${score}%"></div>
+            </div>`;
+        catBarRow.appendChild(item);
+    });
+
+    // Animate bars
+    setTimeout(() => {
+        document.querySelectorAll('.cat-bar-fill').forEach(el => {
+            el.style.width = el.dataset.width;
+        });
+    }, 200);
+
+    // Action items — find top 3 gaps from weakest category
+    renderActionItems(categoryScores, weakestIdx);
+
+    // CTA
+    renderCTA(total, weakestIdx);
+}
+
+function renderActionItems(categoryScores, weakestIdx) {
+    // Build list of all "No" or "Somewhat" questions, starting with weakest category
+    const priorities = [];
+
+    // First pass: weakest category
+    const catOffset = weakestIdx * 10;
+    for (let i = 0; i < 10 && priorities.length < 6; i++) {
+        const ans = state.answers[catOffset + i];
+        if (ans < 10) {
+            priorities.push({
+                catIdx: weakestIdx,
+                qIdx: i,
+                ans
+            });
+        }
+    }
+
+    // Second pass: other categories (sorted by score ascending)
+    const sortedCats = categoryScores
+        .map((s, i) => ({ s, i }))
+        .filter(x => x.i !== weakestIdx)
+        .sort((a, b) => a.s - b.s);
+
+    for (const { i: catIdx } of sortedCats) {
+        for (let q = 0; q < 10 && priorities.length < 6; q++) {
+            const ans = state.answers[catIdx * 10 + q];
+            if (ans < 10) {
+                priorities.push({ catIdx, qIdx: q, ans });
+            }
+        }
+    }
+
+    const top3 = priorities.slice(0, 3);
+
+    const actionList = document.getElementById('actionList');
+    actionList.innerHTML = '';
+
+    top3.forEach((item, idx) => {
+        const cat = categories[item.catIdx];
+        const action = cat.actionItems[item.qIdx];
+        const urgency = item.ans === 0 ? 'Not in place' : 'Partially done';
+        const urgencyColor = item.ans === 0 ? 'var(--no)' : 'var(--somewhat)';
+
+        const el = document.createElement('div');
+        el.className = 'action-item';
+        el.innerHTML = `
+            <div class="action-number">${idx + 1}</div>
+            <div class="action-content">
+                <div class="action-title">${action.title}</div>
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+                    <span style="font-size:10px;color:${urgencyColor};font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">${urgency}</span>
+                    <span style="font-size:10px;color:var(--text-dim)">·</span>
+                    <span style="font-size:11px;color:var(--text-dim)">${cat.icon} ${cat.name}</span>
+                </div>
+                <div class="action-desc">${action.desc}</div>
+                <div class="action-impact">📈 ${action.impact}</div>
+            </div>`;
+        actionList.appendChild(el);
+    });
+
+    // Fallback if somehow all answered 10
+    if (top3.length === 0) {
+        actionList.innerHTML = '<div class="action-item"><div class="action-content"><div class="action-title">Incredible — you scored perfectly!</div><div class="action-desc">You\'ve got all the fundamentals locked in. Your focus now is optimization and scale. Consider productizing your services or building a passive income stream.</div></div></div>';
+    }
+}
+
+function renderCTA(score, weakestIdx) {
+    const cat = categories[weakestIdx];
+    const ctaTitle = document.getElementById('ctaTitle');
+    const ctaSub = document.getElementById('ctaSub');
+    const ctaLink = document.getElementById('ctaLink');
+    const ctaCard = document.getElementById('ctaCard');
+
+    if (score < 60) {
+        ctaCard.style.background = 'linear-gradient(135deg, rgba(239,68,68,0.1), rgba(124,58,237,0.08))';
+        ctaCard.style.border = '1px solid rgba(239,68,68,0.2)';
+        ctaTitle.textContent = 'Fix your foundation with FreelanceOS Pro';
+        ctaSub.textContent = `Your weakest area is ${cat.name}. FreelanceOS Pro has ready-to-use Notion templates for contracts, onboarding, invoicing, and project delivery — everything you need to build a professional operation, fast.`;
+        ctaLink.textContent = 'Fix My Business Foundation →';
+    } else if (score < 80) {
+        ctaCard.style.background = 'linear-gradient(135deg, rgba(124,58,237,0.1), rgba(59,130,246,0.08))';
+        ctaCard.style.border = '1px solid rgba(124,58,237,0.25)';
+        ctaTitle.textContent = `Level up your ${cat.name} with FreelanceOS Pro`;
+        ctaSub.textContent = `You've got a solid base. FreelanceOS Pro gives you battle-tested systems for every part of your business — so you can spend less time managing operations and more time landing great clients.`;
+        ctaLink.textContent = 'Level Up My Business →';
+    } else {
+        ctaCard.style.background = 'linear-gradient(135deg, rgba(245,158,11,0.1), rgba(124,58,237,0.08))';
+        ctaCard.style.border = '1px solid rgba(245,158,11,0.25)';
+        ctaTitle.textContent = 'You\'re ready to scale — systematize everything';
+        ctaSub.textContent = `Elite operators run on systems. FreelanceOS Pro gives you the full stack: CRM, client onboarding, project management, financial tracking, and growth planning — all in one Notion workspace.`;
+        ctaLink.textContent = 'Get the Full Bundle →';
+        ctaLink.href = 'https://baphometsblade.github.io/freelanceos-storefront/bundle.html';
+    }
+}
+
+// ════════════════════════════════════════════
+// SHARE
+// ════════════════════════════════════════════
+
+function shareScore() {
+    const { total } = calculateScores();
+    const tier = getScoreTier(total);
+    const text = `I just scored ${total}/100 on the Freelance Business Audit 🔍\n\nMy result: ${tier.label}\n\nHow does your business stack up?\nhttps://baphometsblade.github.io/freelanceos-storefront/freelance-business-audit.html`;
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            const el = document.getElementById('shareCopied');
+            if (el) { el.textContent = '✓ Copied to clipboard!'; setTimeout(() => { el.textContent = ''; }, 3000); }
+        });
+    } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        const el = document.getElementById('shareCopied');
+        if (el) { el.textContent = '✓ Copied to clipboard!'; setTimeout(() => { el.textContent = ''; }, 3000); }
+    }
+}
+
+// ════════════════════════════════════════════
+// RESTART
+// ════════════════════════════════════════════
+
+function restartAudit() {
+    state.currentCategory = 0;
+    state.currentQuestion = 0;
+    state.answers = [];
+    state.email = null;
+    state.startTime = Date.now();
+    document.getElementById('topBarFill').style.width = '0%';
+    document.getElementById('topBarLabel').textContent = '';
+    const emailInput = document.getElementById('emailInput');
+    if (emailInput) { emailInput.value = ''; emailInput.style.borderColor = ''; }
+    showScreen('landing');
+}
+
+// ════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════
+
+function animateCounter(from, to, duration, callback) {
+    const start = performance.now();
+    function step(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        const value = Math.round(from + (to - from) * eased);
+        callback(value);
+        if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
+// Email input — clear error state on focus
+document.addEventListener('DOMContentLoaded', () => {
+    const emailInput = document.getElementById('emailInput');
+    if (emailInput) {
+        emailInput.addEventListener('focus', () => {
+            emailInput.style.borderColor = '';
+            emailInput.placeholder = 'yourname@email.com';
+        });
+        emailInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') submitEmail();
+        });
+    }
+});
+</script>
+</body>
+</html>
