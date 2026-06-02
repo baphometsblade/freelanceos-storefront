@@ -3,81 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Page Not Found — FreelanceOS</title>
+<title>404 — Page Not Found | FreelanceOS</title>
 <meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E2%9A%A1</text></svg>">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column}
-nav{background:#111;border-bottom:1px solid #222;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
-nav a{color:#e5e7eb;text-decoration:none;font-weight:700}
-.nav-links a{color:#9ca3af;font-size:14px;margin-left:20px;text-decoration:none}.nav-links a:hover{color:#fff}
-.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 24px;text-align:center}
-.big-404{font-size:140px;font-weight:900;color:#1f2937;line-height:1;margin-bottom:8px;letter-spacing:-4px}
-.icon{font-size:64px;margin-bottom:20px}
-h1{color:#fff;font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:12px}
-p{color:#9ca3af;font-size:16px;max-width:440px;margin:0 auto 32px;line-height:1.6}
-.btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
-.btn-primary{background:#7c3aed;color:#fff;font-weight:700;padding:13px 26px;border-radius:10px;text-decoration:none;font-size:15px}
-.btn-primary:hover{background:#6d28d9}
-.btn-secondary{background:#1f2937;color:#e5e7eb;font-weight:600;padding:13px 26px;border-radius:10px;text-decoration:none;font-size:15px;border:1px solid #374151}
-.btn-secondary:hover{border-color:#7c3aed;color:#c4b5fd}
-.promo{background:linear-gradient(135deg,#1e1b4b,#111827);border:1px solid #6d28d9;border-radius:16px;padding:28px 32px;max-width:520px;margin:0 auto}
-.promo-badge{background:#7c3aed;color:#fff;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px;display:inline-block}
+:root{
+  --bg:#0f0f0f;
+  --bg2:#111;
+  --bg3:#1a1a1a;
+  --border:#1f2937;
+  --border2:#374151;
+  --accent:#7c3aed;
+  --accent2:#6d28d9;
+  --accent3:#a78bfa;
+  --text:#e5e7eb;
+  --text2:#9ca3af;
+  --text3:#6b7280;
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{background:var(--bg2);border-bottom:1px solid #222;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-brand{font-weight:800;font-size:1.05rem;background:linear-gradient(135deg,#7c3aed,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links-row{display:flex;gap:20px;align-items:center}
+.nav-links-row a{color:var(--text2);font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links-row a:hover{color:#fff}
+.nav-links-row a.nav-cta-pill{background:var(--accent);color:#fff;-webkit-text-fill-color:#fff;padding:7px 16px;border-radius:20px;font-weight:600;font-size:.82rem}
+.nav-links-row a.nav-cta-pill:hover{background:var(--accent2)}
+
+/* MAIN AREA */
+.main{flex:1;display:flex;flex-direction:column;align-items:center;padding:56px 24px 80px}
+.container{width:100%;max-width:860px;margin:0 auto}
+
+/* BIG 404 */
+.big-404{font-size:clamp(80px,20vw,160px);font-weight:900;color:#1a1a2e;line-height:1;text-align:center;letter-spacing:-6px;margin-bottom:4px;user-select:none}
+.icon-wrap{text-align:center;font-size:52px;margin-bottom:18px}
+h1{color:#fff;font-size:clamp(22px,4vw,34px);font-weight:800;text-align:center;margin-bottom:10px}
+.sub{color:var(--text2);font-size:16px;max-width:500px;margin:0 auto 36px;text-align:center;line-height:1.65}
+
+/* SEARCH */
+.search-section{margin-bottom:40px}
+.search-label{color:var(--text2);font-size:13px;font-weight:600;text-align:center;margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em}
+.search-wrap{position:relative;max-width:520px;margin:0 auto}
+.search-wrap input{width:100%;background:#1f2937;border:1px solid var(--border2);color:#fff;font-size:15px;padding:14px 48px 14px 48px;border-radius:30px;outline:none;transition:border-color .2s}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-wrap input::placeholder{color:var(--text3)}
+.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:16px;pointer-events:none}
+.search-clear{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:18px;cursor:pointer;display:none;background:none;border:none;line-height:1;padding:2px}
+.search-clear.visible{display:block}
+.search-results{max-width:520px;margin:8px auto 0;background:#161616;border:1px solid var(--border);border-radius:12px;overflow:hidden;display:none}
+.search-results.open{display:block}
+.search-result-item{display:flex;align-items:center;gap:12px;padding:11px 16px;color:var(--text2);font-size:13px;transition:background .15s;cursor:pointer}
+.search-result-item:hover{background:rgba(124,58,237,.12);color:#fff}
+.search-result-item a{display:flex;align-items:center;gap:12px;width:100%;color:inherit}
+.result-icon{font-size:16px;flex-shrink:0}
+.result-text{flex:1}
+.result-name{font-weight:600;color:#fff;font-size:13px}
+.result-url{color:var(--text3);font-size:11px;margin-top:1px}
+.no-results-msg{padding:14px 16px;color:var(--text3);font-size:13px;text-align:center}
+
+/* POPULAR PAGES */
+.section-title{color:var(--text2);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.popular-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:40px}
+@media(max-width:620px){.popular-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:380px){.popular-grid{grid-template-columns:1fr}}
+
+.popular-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px;transition:border-color .2s,transform .2s}
+.popular-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.pc-icon{font-size:24px}
+.pc-name{color:#fff;font-size:13px;font-weight:700;line-height:1.35}
+.pc-desc{color:var(--text3);font-size:11px;line-height:1.4}
+.pc-arrow{color:var(--accent3);font-size:12px;font-weight:700;margin-top:auto}
+
+/* RECENT POSTS */
+.posts-list{display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
+.post-link{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:13px 16px;color:var(--text2);font-size:13px;transition:all .2s}
+.post-link:hover{border-color:var(--accent);color:#fff;background:rgba(124,58,237,.06)}
+.post-link::before{content:'📄';font-size:15px;flex-shrink:0}
+.post-link-arrow{color:var(--accent3);font-size:12px;margin-left:auto;flex-shrink:0}
+
+/* CTA ROW */
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.btn-primary{background:var(--accent);color:#fff;font-weight:700;padding:13px 28px;border-radius:10px;font-size:15px;transition:background .2s;border:none;cursor:pointer}
+.btn-primary:hover{background:var(--accent2)}
+.btn-secondary{background:#1f2937;color:var(--text);font-weight:600;padding:13px 24px;border-radius:10px;font-size:14px;border:1px solid var(--border2);transition:all .2s}
+.btn-secondary:hover{border-color:var(--accent);color:#c4b5fd}
+.btn-ghost{color:var(--text2);font-size:14px;padding:13px 20px;border-radius:10px;font-weight:500;border:1px solid var(--border);transition:all .2s}
+.btn-ghost:hover{border-color:var(--border2);color:#fff}
+
+/* PROMO */
+.promo{background:linear-gradient(135deg,#1e1b4b,#111827);border:1px solid #6d28d9;border-radius:16px;padding:28px 32px;max-width:520px;margin:0 auto;text-align:center}
+.promo-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px;display:inline-block}
 .promo h3{color:#fff;font-size:19px;font-weight:800;margin-bottom:8px}
-.promo p{color:#c4b5fd;font-size:14px;margin-bottom:18px}
-.promo-price{color:#fff;font-size:13px}
-.promo-price strong{color:#a78bfa;font-size:22px}
-.links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px}
-.link-pill{background:#111;border:1px solid #1f2937;color:#9ca3af;padding:7px 16px;border-radius:20px;text-decoration:none;font-size:13px}
-.link-pill:hover{border-color:#7c3aed;color:#c4b5fd}
-footer{background:#111;border-top:1px solid #1f2937;padding:24px;text-align:center;color:#6b7280;font-size:13px}
-footer a{color:#9ca3af;text-decoration:none;margin:0 8px}
+.promo-sub{color:#c4b5fd;font-size:14px;margin-bottom:18px;max-width:none}
+.promo-price{color:#fff;font-size:13px;margin-bottom:0}
+.promo-price strong{color:var(--accent3);font-size:22px}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:13px}
+footer a{color:var(--text2);text-decoration:none;margin:0 8px;transition:color .2s}
+footer a:hover{color:#fff}
+
+@media(max-width:480px){
+  nav{padding:12px 16px}
+  .promo{padding:22px 20px}
+  .btn-primary,.btn-secondary,.btn-ghost{padding:12px 18px;font-size:13px}
+}
 </style>
 </head>
 <body>
+
 <nav>
-  <a href="/">FreelanceOS</a>
-  <div class="nav-links">
+  <a href="/" class="nav-brand">&#9889; FreelanceOS</a>
+  <div class="nav-links-row">
+    <a href="/toolkit.html">Free Tools</a>
     <a href="/blog/">Blog</a>
-    <a href="/pricing.html">Pricing</a>
-    <a href="/start-here.html">✨ Start Here</a>
+    <a href="/resource-center.html">Resources</a>
+    <a href="/bundle.html" class="nav-cta-pill">Bundle &mdash; Save $11</a>
   </div>
 </nav>
 
-<div class="hero">
-  <div class="big-404">404</div>
-  <div class="icon">🗺️</div>
-  <h1>This page went missing</h1>
-  <p>The page you're looking for doesn't exist — but your freelance systems shouldn't go missing too. Here's where to go:</p>
+<div class="main">
+  <div class="container">
 
-  <div class="btn-row">
-    <a href="/" class="btn-primary">← Back to Homepage</a>
-    <a href="/start-here.html" class="btn-secondary">✨ Find My System</a>
-  </div>
+    <div class="big-404">404</div>
+    <div class="icon-wrap">&#128506;&#65039;</div>
+    <h1>404 &mdash; Page Not Found</h1>
+    <p class="sub">The page you're looking for doesn't exist, but here are some great places to start:</p>
 
-  <p style="color:#6b7280;font-size:13px;margin-bottom:16px;">Popular pages:</p>
-  <div class="links" style="margin-bottom:32px">
-    <a href="/free-templates.html" class="link-pill">Free Templates</a>
-    <a href="/blog/" class="link-pill">Blog</a>
-    <a href="/pricing.html" class="link-pill">Pricing</a>
-    <a href="/toolkit.html" class="link-pill">Free Toolkit</a>
-    <a href="/freelance-health-score.html" class="link-pill">Health Score Quiz</a>
-    <a href="/freelance-rate-calculator.html" class="link-pill">Rate Calculator</a>
-    <a href="/gallery.html" class="link-pill">Template Gallery</a>
-    <a href="/testimonials.html" class="link-pill">Reviews</a>
-  </div>
+    <!-- SEARCH -->
+    <div class="search-section">
+      <div class="search-label">Search all pages</div>
+      <div class="search-wrap">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" id="pageSearch" placeholder="Try &ldquo;rate calculator&rdquo; or &ldquo;client management&rdquo;&hellip;" autocomplete="off" autocorrect="off" spellcheck="false">
+        <button class="search-clear" id="searchClear" aria-label="Clear">&#10005;</button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <!-- populated by JS -->
+      </div>
+    </div>
 
-  <div class="promo">
-    <div class="promo-badge">While you're here</div>
-    <h3>Get 40% off FreelanceOS Pro</h3>
-    <p>Use code <strong style="color:#fff">FLASH40</strong> at checkout — pre-built Notion templates for your entire freelance business.</p>
-    <p class="promo-price">Just <strong>$17.40</strong> with FLASH40 (was $29) · Instant download</p>
-    <div style="margin-top:16px"><a href="/checkout/freelanceos-pro.html" style="display:inline-block;background:#7c3aed;color:#fff;font-weight:700;padding:12px 24px;border-radius:10px;text-decoration:none;font-size:14px">Claim 40% Off →</a></div>
+    <!-- POPULAR PAGES -->
+    <div class="section-title">Popular Pages</div>
+    <div class="popular-grid">
+      <a href="/toolkit.html" class="popular-card">
+        <div class="pc-icon">&#9889;</div>
+        <div class="pc-name">Free Tools Hub</div>
+        <div class="pc-desc">18 free tools — calculators, generators, quizzes</div>
+        <div class="pc-arrow">toolkit.html &rarr;</div>
+      </a>
+      <a href="/free-starter-kit.html" class="popular-card">
+        <div class="pc-icon">&#127873;</div>
+        <div class="pc-name">Freelance Starter Kit</div>
+        <div class="pc-desc">Free templates, checklists &amp; launch guide</div>
+        <div class="pc-arrow">free-starter-kit.html &rarr;</div>
+      </a>
+      <a href="/freelance-rate-calculator.html" class="popular-card">
+        <div class="pc-icon">&#128200;</div>
+        <div class="pc-name">Rate Calculator</div>
+        <div class="pc-desc">Find your ideal hourly &amp; project rate instantly</div>
+        <div class="pc-arrow">freelance-rate-calculator.html &rarr;</div>
+      </a>
+      <a href="/blog/" class="popular-card">
+        <div class="pc-icon">&#128214;</div>
+        <div class="pc-name">Blog &amp; Guides</div>
+        <div class="pc-desc">90+ in-depth freelance guides &amp; tutorials</div>
+        <div class="pc-arrow">blog/ &rarr;</div>
+      </a>
+      <a href="/#products" class="popular-card">
+        <div class="pc-icon">&#128295;</div>
+        <div class="pc-name">FreelanceOS Pro</div>
+        <div class="pc-desc">The Notion system to run your entire business</div>
+        <div class="pc-arrow">/#products &rarr;</div>
+      </a>
+      <a href="/resource-center.html" class="popular-card">
+        <div class="pc-icon">&#128218;</div>
+        <div class="pc-name">Resource Center</div>
+        <div class="pc-desc">All tools, guides &amp; templates in one place</div>
+        <div class="pc-arrow">resource-center.html &rarr;</div>
+      </a>
+    </div>
+
+    <!-- RECENT POSTS -->
+    <div class="section-title">Top Articles</div>
+    <div class="posts-list">
+      <a href="/blog/how-to-get-freelance-clients.html" class="post-link">
+        How to Get Freelance Clients (Complete 2026 Guide)
+        <span class="post-link-arrow">&rarr;</span>
+      </a>
+      <a href="/blog/freelance-pricing-guide.html" class="post-link">
+        Freelance Pricing Guide — How to Set Your Rates
+        <span class="post-link-arrow">&rarr;</span>
+      </a>
+      <a href="/blog/freelance-contract-template.html" class="post-link">
+        Free Freelance Contract Template (Lawyer-Approved)
+        <span class="post-link-arrow">&rarr;</span>
+      </a>
+      <a href="/blog/notion-second-brain.html" class="post-link">
+        Build a Notion Second Brain for Your Freelance Business
+        <span class="post-link-arrow">&rarr;</span>
+      </a>
+      <a href="/blog/passive-income-for-freelancers.html" class="post-link">
+        Passive Income for Freelancers — 7 Real Strategies
+        <span class="post-link-arrow">&rarr;</span>
+      </a>
+    </div>
+
+    <div style="text-align:center;margin-bottom:40px">
+      <a href="/blog/" style="color:var(--accent3);font-size:14px;font-weight:600;border:1px solid rgba(124,58,237,.3);padding:10px 22px;border-radius:20px;display:inline-block;transition:all .2s">Or browse all 90+ guides &rarr;</a>
+    </div>
+
+    <!-- CTA ROW -->
+    <div class="cta-row">
+      <a href="/" class="btn-primary">&larr; Go Home</a>
+      <a href="/toolkit.html" class="btn-secondary">&#9889; Free Tools</a>
+      <a href="/resource-center.html" class="btn-ghost">Resource Center</a>
+    </div>
+
+    <!-- PROMO -->
+    <div class="promo">
+      <div class="promo-badge">While you're here</div>
+      <h3>Get 40% off FreelanceOS Pro</h3>
+      <p class="promo-sub">Use code <strong style="color:#fff">FLASH40</strong> at checkout &mdash; pre-built Notion templates for your entire freelance business.</p>
+      <p class="promo-price">Just <strong>$17.40</strong> with FLASH40 (was $29) &middot; Instant download</p>
+      <div style="margin-top:18px"><a href="/checkout/freelanceos-pro.html" style="display:inline-block;background:#7c3aed;color:#fff;font-weight:700;padding:12px 26px;border-radius:10px;font-size:14px;transition:background .2s" onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">Claim 40% Off &rarr;</a></div>
+    </div>
+
   </div>
 </div>
 
 <footer>
-  <p>© 2026 FreelanceOS · <a href="/">Home</a> <a href="/pricing.html">Pricing</a> <a href="/blog/">Blog</a> <a href="/affiliate.html">Affiliates</a></p>
+  <p>© 2026 FreelanceOS &middot; <a href="/">Home</a> <a href="/pricing.html">Pricing</a> <a href="/toolkit.html">Free Tools</a> <a href="/blog/">Blog</a> <a href="/resource-center.html">Resources</a> <a href="/affiliate.html">Affiliates</a></p>
 </footer>
+
+<script>
+// ---- PAGE SEARCH DATABASE ----
+const PAGES = [
+  // Tools
+  { name: 'Rate Calculator', url: '/freelance-rate-calculator.html', icon: '📈', cat: 'Tool' },
+  { name: 'Invoice Generator', url: '/freelance-invoice-generator.html', icon: '📋', cat: 'Tool' },
+  { name: 'Income Tracker', url: '/freelance-income-tracker.html', icon: '💰', cat: 'Tool' },
+  { name: 'Retainer Calculator', url: '/freelance-retainer-template.html', icon: '🔄', cat: 'Tool' },
+  { name: 'Proposal Generator', url: '/freelance-proposal-generator.html', icon: '📝', cat: 'Tool' },
+  { name: 'Contract Wizard', url: '/freelance-contract-wizard.html', icon: '📑', cat: 'Tool' },
+  { name: 'Business Name Generator', url: '/freelance-business-name-generator.html', icon: '💡', cat: 'Tool' },
+  { name: 'Client Onboarding Checklist', url: '/client-onboarding-checklist.html', icon: '✅', cat: 'Tool' },
+  { name: 'Freelance Health Score Quiz', url: '/freelance-health-score.html', icon: '💪', cat: 'Tool' },
+  { name: 'Niche Finder Quiz', url: '/freelance-niche-finder.html', icon: '🎯', cat: 'Tool' },
+  { name: 'Which Template Quiz', url: '/which-product.html', icon: '✨', cat: 'Tool' },
+  { name: 'Freelance Dashboard Builder', url: '/freelance-dashboard-builder.html', icon: '🔥', cat: 'Tool' },
+  { name: 'Project Estimator', url: '/freelance-project-estimator.html', icon: '📐', cat: 'Tool' },
+  { name: 'Client Profit Calculator', url: '/client-profit-calculator.html', icon: '💵', cat: 'Tool' },
+  { name: 'Scope of Work Template', url: '/freelance-scope-of-work-template.html', icon: '📄', cat: 'Tool' },
+  { name: 'Freelance Score Card', url: '/freelance-score-card.html', icon: '📊', cat: 'Tool' },
+  { name: 'Tax Estimator', url: '/tax-estimator.html', icon: '📅', cat: 'Tool' },
+  { name: 'Free Starter Kit', url: '/free-starter-kit.html', icon: '🎁', cat: 'Download' },
+  { name: 'Free Freelance Tools Hub', url: '/toolkit.html', icon: '⚡', cat: 'Tools Hub' },
+  // Products
+  { name: 'FreelanceOS Pro — Notion Template', url: '/checkout/freelanceos-pro.html', icon: '⚡', cat: 'Product' },
+  { name: 'CreatorHQ — Notion Template', url: '/creatorhq.html', icon: '🎬', cat: 'Product' },
+  { name: 'AgencyOS — Notion Template', url: '/agencyos.html', icon: '🏢', cat: 'Product' },
+  { name: 'YouTube Empire — Notion Template', url: '/youtube-empire.html', icon: '📺', cat: 'Product' },
+  { name: 'Bundle Deal — All Templates', url: '/bundle.html', icon: '📦', cat: 'Product' },
+  { name: 'Pricing', url: '/pricing.html', icon: '💳', cat: 'Page' },
+  // Pages
+  { name: 'Resource Center', url: '/resource-center.html', icon: '📚', cat: 'Page' },
+  { name: 'Resource Library', url: '/resource-library.html', icon: '📚', cat: 'Page' },
+  { name: 'Blog & Guides', url: '/blog/', icon: '📰', cat: 'Blog' },
+  { name: 'Freelance Salary Report 2026', url: '/freelance-salary-report-2026.html', icon: '📊', cat: 'Report' },
+  { name: 'How to Start Freelancing', url: '/how-to-start-freelancing.html', icon: '🚀', cat: 'Guide' },
+  { name: 'Free Notion Templates', url: '/free-notion-templates.html', icon: '🗒️', cat: 'Page' },
+  { name: 'Gallery — Template Gallery', url: '/gallery.html', icon: '🖼️', cat: 'Page' },
+  { name: 'Testimonials & Reviews', url: '/testimonials.html', icon: '⭐', cat: 'Page' },
+  { name: 'Affiliate Program', url: '/affiliate.html', icon: '🤝', cat: 'Page' },
+  { name: 'Pinterest Content Kit', url: '/pinterest-kit.html', icon: '📌', cat: 'Download' },
+  { name: 'Start Here', url: '/start-here.html', icon: '✨', cat: 'Page' },
+  // Top blog posts
+  { name: 'Blog: How to Get Freelance Clients', url: '/blog/how-to-get-freelance-clients.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Freelance Pricing Guide', url: '/blog/freelance-pricing-guide.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Freelance Contract Template', url: '/blog/freelance-contract-template.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Freelance Invoice Template', url: '/blog/freelance-invoice-template.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Freelance Proposal Template', url: '/blog/freelance-proposal-template.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Freelance Project Management', url: '/blog/freelance-project-management.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Freelance Client Management', url: '/blog/freelance-client-management.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Notion Second Brain', url: '/blog/notion-second-brain.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Free Notion Templates', url: '/blog/notion-templates-free.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Passive Income for Freelancers', url: '/blog/passive-income-for-freelancers.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Work From Home Tools', url: '/blog/work-from-home-tools.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Best Freelance Tools', url: '/blog/best-freelance-tools.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Freelance Business Plan', url: '/blog/freelance-business-plan.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Notion for Business', url: '/blog/notion-for-business.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Best Notion Templates for Freelancers', url: '/blog/best-notion-templates-for-freelancers.html', icon: '📄', cat: 'Blog' },
+  { name: 'Blog: Freelance Resume & Portfolio', url: '/blog/freelance-resume.html', icon: '📄', cat: 'Blog' },
+];
+
+const searchInput = document.getElementById('pageSearch');
+const searchClear = document.getElementById('searchClear');
+const searchResultsEl = document.getElementById('searchResults');
+
+function renderResults(results) {
+  if (!results.length) {
+    searchResultsEl.innerHTML = '<div class="no-results-msg">No pages found — try a different keyword.</div>';
+    searchResultsEl.classList.add('open');
+    return;
+  }
+  const html = results.slice(0, 8).map(p => `
+    <div class="search-result-item">
+      <a href="${p.url}">
+        <span class="result-icon">${p.icon}</span>
+        <span class="result-text">
+          <div class="result-name">${p.name}</div>
+          <div class="result-url">${p.cat} &middot; ${p.url}</div>
+        </span>
+      </a>
+    </div>
+  `).join('');
+  searchResultsEl.innerHTML = html;
+  searchResultsEl.classList.add('open');
+}
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  searchClear.classList.toggle('visible', q.length > 0);
+  if (!q) {
+    searchResultsEl.classList.remove('open');
+    return;
+  }
+  const results = PAGES.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    p.url.toLowerCase().includes(q) ||
+    p.cat.toLowerCase().includes(q)
+  );
+  renderResults(results);
+});
+
+searchClear.addEventListener('click', function() {
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  searchResultsEl.classList.remove('open');
+  searchInput.focus();
+});
+
+// Close results when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.search-wrap') && !e.target.closest('.search-results')) {
+    searchResultsEl.classList.remove('open');
+  }
+});
+
+// Keyboard: Escape closes
+searchInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    searchResultsEl.classList.remove('open');
+    this.blur();
+  }
+});
+</script>
+
 </body>
 </html>
