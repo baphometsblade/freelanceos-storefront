@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Freelance Income & Expense Tracker 2026 — Real-Time Finance Dashboard | FreelanceOS</title>
+<meta name="description" content="Track your freelance income and expenses in real time. Monthly charts, tax estimates, CSV export, category breakdown — no account needed, data saved in your browser.">
+<meta name="keywords" content="freelance income tracker, freelance expense tracker, freelance finance tracker, freelance profit calculator, freelance tax estimator">
+<meta property="og:title" content="Free Freelance Income & Expense Tracker — Real-Time Dashboard">
+<meta property="og:description" content="Track income, expenses, profit margin, and taxes in real time. Monthly charts, category breakdowns, CSV export. No signup required.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/freelance-income-tracker.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Freelance Income & Expense Tracker 2026">
+<meta name="twitter:description" content="Real-time income and expense tracking for freelancers. No signup, no spreadsheet required.">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/freelance-income-tracker.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Income & Expense Tracker",
+  "description": "Free browser-based income and expense tracker for freelancers with real-time dashboard, tax estimates, and CSV export",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://baphometsblade.github.io/freelanceos-storefront/freelance-income-tracker.html",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f0f;--card:#1a1a1a;--card-hover:#222;--surface:#141414;
+  --text:#e5e7eb;--text-muted:#9ca3af;--text-dim:#6b7280;
+  --accent:#7c3aed;--accent-light:#a78bfa;--accent-hover:#6d28d9;
+  --green:#10b981;--green-bg:rgba(16,185,129,.1);--green-border:rgba(16,185,129,.25);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.1);--red-border:rgba(239,68,68,.25);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,.1);--amber-border:rgba(245,158,11,.25);
+  --blue:#3b82f6;--blue-bg:rgba(59,130,246,.1);--blue-border:rgba(59,130,246,.25);
+  --purple:#7c3aed;--purple-bg:rgba(124,58,237,.1);--purple-border:rgba(124,58,237,.25);
+  --border:rgba(255,255,255,.08);--border-hover:rgba(124,58,237,.4);
+  --radius:12px;--radius-sm:8px;--radius-xs:6px;
+  --grad:linear-gradient(135deg,#7c3aed,#a78bfa);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit}
+input,select,textarea{font-family:inherit}
+
+/* Nav */
+.nav{padding:14px 0;border-bottom:1px solid var(--border);background:rgba(15,15,15,.97);position:sticky;top:0;z-index:200;backdrop-filter:blur(12px)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-weight:800;font-size:.95rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:20px;list-style:none}
+.nav-links a{font-size:.82rem;color:var(--text-muted);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{padding:7px 16px;background:var(--grad);border-radius:var(--radius-xs);font-size:.78rem;font-weight:700;color:#fff;-webkit-text-fill-color:#fff}
+
+/* Layout */
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+.hero{padding:52px 0 32px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;background:var(--purple-bg);border:1px solid var(--purple-border);font-size:.72rem;font-weight:700;color:var(--accent-light);margin-bottom:16px;letter-spacing:.05em}
+.hero h1{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:10px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:.95rem;color:var(--text-muted);max-width:600px;margin-bottom:20px}
+.hero-pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.hero-pill{display:flex;align-items:center;gap:5px;font-size:.76rem;color:var(--text-dim);background:var(--card);border:1px solid var(--border);padding:4px 12px;border-radius:999px}
+
+/* Sample data notice */
+.sample-notice{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:var(--radius-sm);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.83rem}
+.sample-notice strong{color:var(--text)}
+.btn-clear-sample{padding:6px 14px;background:transparent;border:1px solid var(--amber-border);border-radius:var(--radius-xs);color:var(--amber);font-size:.78rem;font-weight:700;transition:all .2s;cursor:pointer;font-family:inherit}
+.btn-clear-sample:hover{background:var(--amber-bg)}
+
+/* App shell */
+.app{padding:28px 0 80px}
+.app-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:grid;gap:24px}
+
+/* Stat Cards */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.metric-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color .2s;position:relative;overflow:hidden}
+.metric-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,.04),transparent);pointer-events:none}
+.metric-card:hover{border-color:var(--border-hover)}
+.metric-icon{font-size:1.3rem;margin-bottom:8px}
+.metric-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:4px}
+.metric-value{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.metric-value.green{color:var(--green)}
+.metric-value.red{color:var(--red)}
+.metric-value.purple{color:var(--accent-light)}
+.metric-value.amber{color:var(--amber)}
+.metric-sub{font-size:.72rem;color:var(--text-dim);margin-top:4px}
+
+/* Add Transaction Form */
+.add-form-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.add-form-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.add-form-header h3{font-size:1rem;font-weight:800}
+.type-toggle{display:flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px;overflow:hidden}
+.type-btn{padding:7px 20px;border:none;background:transparent;color:var(--text-muted);font-size:.82rem;font-weight:700;border-radius:var(--radius-xs);transition:all .2s}
+.type-btn.active-income{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.type-btn.active-expense{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.form-row{display:grid;grid-template-columns:repeat(3,1fr) 160px auto;gap:12px;align-items:end}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-label{font-size:.7rem;font-weight:700;color:var(--text-dim);letter-spacing:.05em;text-transform:uppercase}
+.form-input{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xs);padding:10px 12px;color:var(--text);font-size:.88rem;outline:none;transition:border-color .2s;width:100%}
+.form-input:focus{border-color:var(--accent)}
+.form-input::placeholder{color:var(--text-dim)}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px}
+.btn-add{padding:10px 22px;background:var(--grad);border:none;border-radius:var(--radius-xs);color:#fff;font-weight:700;font-size:.88rem;-webkit-text-fill-color:#fff;white-space:nowrap;transition:all .2s;align-self:end;cursor:pointer;font-family:inherit}
+.btn-add:hover{opacity:.88;transform:translateY(-1px)}
+
+/* Filter + Controls Bar */
+.controls-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-group{display:flex;gap:6px;flex-wrap:wrap}
+.filter-btn{padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.filter-btn:hover,.filter-btn.active{background:var(--purple-bg);border-color:var(--purple-border);color:var(--accent-light)}
+.controls-right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-sm);font-size:.8rem;font-weight:700;border:none;transition:all .2s;white-space:nowrap;cursor:pointer;font-family:inherit}
+.btn-danger{background:transparent;color:var(--red);border:1px solid var(--red-border)}
+.btn-danger:hover{background:var(--red-bg)}
+
+/* Transaction Table */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+thead{background:var(--surface)}
+th{padding:11px 14px;text-align:left;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{color:var(--text-muted)}
+td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr.row-income:hover td{background:rgba(16,185,129,.03)}
+tr.row-expense:hover td{background:rgba(239,68,68,.03)}
+.td-amount{font-weight:700;font-variant-numeric:tabular-nums}
+.td-actions{display:flex;gap:6px}
+.btn-icon{padding:5px;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);border:1px solid var(--border);background:transparent;color:var(--text-muted);font-size:.78rem;transition:all .2s;cursor:pointer;font-family:inherit}
+.btn-icon.del:hover{border-color:var(--red);color:var(--red)}
+.empty-state{text-align:center;padding:48px 20px;color:var(--text-dim)}
+.empty-icon{font-size:2.4rem;margin-bottom:12px}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.badge-income{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.badge-expense{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.badge-status-paid{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.badge-status-invoiced{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.badge-status-overdue{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.badge-deductible{background:var(--blue-bg);color:#93c5fd;border:1px solid var(--blue-border)}
+.badge-cat{background:rgba(255,255,255,.05);color:var(--text-dim);border:1px solid var(--border)}
+
+/* Monthly Chart */
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.chart-card h3{font-size:.95rem;font-weight:800;margin-bottom:4px}
+.chart-subtitle{font-size:.76rem;color:var(--text-dim);margin-bottom:20px}
+.chart-area{display:flex;align-items:flex-end;gap:4px;height:190px;padding-bottom:30px;position:relative}
+.chart-month-col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:0}
+.chart-bar-pair{display:flex;align-items:flex-end;gap:2px;width:100%;justify-content:center;height:150px}
+.chart-bar{border-radius:3px 3px 0 0;transition:height .5s cubic-bezier(.23,1,.32,1);min-height:2px;position:relative;cursor:default;width:clamp(8px,40%,18px)}
+.chart-bar.inc{background:linear-gradient(to top,#10b981,#34d399);opacity:.9}
+.chart-bar.exp{background:linear-gradient(to top,#ef4444,#f87171);opacity:.9}
+.chart-bar:hover::before{content:attr(data-tip);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#2a2a2a;border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-size:.68rem;white-space:nowrap;pointer-events:none;z-index:10;font-weight:600}
+.chart-month-label{font-size:.62rem;color:var(--text-dim);margin-top:6px;text-align:center;white-space:nowrap}
+.chart-legend{display:flex;gap:16px;margin-top:12px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:.74rem;color:var(--text-muted)}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* Category Breakdown */
+.breakdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.breakdown-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.breakdown-card h4{font-size:.88rem;font-weight:800;margin-bottom:16px}
+.cat-item{margin-bottom:12px}
+.cat-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:.78rem}
+.cat-item-name{color:var(--text-muted)}
+.cat-item-amount{font-weight:700;font-variant-numeric:tabular-nums}
+.cat-item-pct{font-size:.7rem;color:var(--text-dim);margin-left:4px}
+.cat-bar-track{height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.cat-bar-fill{height:100%;border-radius:99px;transition:width .5s cubic-bezier(.23,1,.32,1)}
+.fill-inc{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.fill-exp{background:linear-gradient(90deg,#ef4444,#f87171)}
+.no-data-msg{font-size:.8rem;color:var(--text-dim);padding:12px 0}
+
+/* Tax Panel */
+.tax-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.tax-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.tax-header h3{font-size:.95rem;font-weight:800}
+.tax-rate-row{display:flex;align-items:center;gap:10px}
+.tax-rate-label{font-size:.78rem;color:var(--text-dim)}
+.tax-rate-input{width:70px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xs);padding:6px 10px;color:var(--text);font-size:.88rem;font-weight:700;outline:none;text-align:center}
+.tax-rate-input:focus{border-color:var(--accent)}
+.tax-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.tax-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xs);padding:14px;display:flex;flex-direction:column;gap:4px}
+.tax-row-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-dim)}
+.tax-row-val{font-size:1.3rem;font-weight:800;font-variant-numeric:tabular-nums}
+.tax-row-val.green{color:var(--green)}
+.tax-row-val.amber{color:var(--amber)}
+.tax-row-val.blue{color:#93c5fd}
+.tax-aside-banner{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:var(--radius-sm);padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--amber);font-weight:600}
+.tax-aside-banner strong{color:var(--text)}
+
+/* Export Bar */
+.export-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.export-bar-label{font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-dim);margin-right:4px}
+.btn-export{padding:8px 16px;border-radius:var(--radius-xs);font-size:.8rem;font-weight:700;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.btn-export:hover{border-color:var(--accent);color:var(--accent-light);background:var(--purple-bg)}
+
+/* Lead / Email Capture */
+.lead-section{background:linear-gradient(135deg,var(--purple-bg),rgba(124,58,237,.04));border:1px solid var(--purple-border);border-radius:var(--radius);padding:28px 24px;text-align:center}
+.lead-section h3{font-size:1.05rem;font-weight:800;margin-bottom:6px}
+.lead-section p{font-size:.85rem;color:var(--text-muted);max-width:520px;margin:0 auto 18px}
+.lead-form{display:flex;gap:10px;max-width:420px;margin:0 auto;flex-wrap:wrap}
+.lead-input{flex:1;min-width:180px;background:var(--surface);border:1px solid var(--purple-border);border-radius:var(--radius-xs);padding:11px 14px;color:var(--text);font-size:.85rem;outline:none;font-family:inherit}
+.lead-input:focus{border-color:var(--accent)}
+.lead-btn{padding:11px 20px;background:var(--grad);border:none;border-radius:var(--radius-xs);color:#fff;font-weight:700;font-size:.83rem;-webkit-text-fill-color:#fff;white-space:nowrap;cursor:pointer;font-family:inherit;transition:all .2s}
+.lead-btn:hover{opacity:.88}
+.lead-success{font-size:.88rem;color:var(--green);font-weight:700;margin-top:10px;display:none}
+.lead-note{font-size:.72rem;color:var(--text-dim);margin-top:10px}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:#1f1f1f;border:1px solid var(--green-border);border-radius:var(--radius-sm);padding:12px 18px;font-size:.82rem;font-weight:600;color:var(--green);z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s;max-width:280px;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* Footer */
+.footer{padding:40px 0;border-top:1px solid var(--border);text-align:center}
+.footer-brand{font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:1rem;margin-bottom:8px}
+.footer-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:10px}
+.footer-links a{font-size:.78rem;color:var(--text-dim);transition:color .2s}
+.footer-links a:hover{color:var(--accent-light)}
+.footer p{font-size:.74rem;color:var(--text-dim)}
+
+/* Print */
+@media print{
+  .nav,.add-form-card,.controls-row,.export-bar,.lead-section,.footer,.toast,.sample-notice{display:none!important}
+  .app{padding:0}
+  body{background:#fff;color:#111}
+  .metric-card,.chart-card,.breakdown-card,.tax-panel,.table-wrap{border:1px solid #ddd;box-shadow:none;background:#fff;break-inside:avoid}
+  .metric-value.green{color:#059669}
+  .metric-value.red{color:#dc2626}
+  .metric-value.purple{color:#7c3aed}
+  .metric-value.amber{color:#d97706}
+  h1{font-size:1.4rem}
+  .hero{padding:16px 0;border:none}
+}
+
+/* Responsive */
+@media(max-width:960px){
+  .metrics{grid-template-columns:1fr 1fr}
+  .breakdown-grid{grid-template-columns:1fr}
+  .tax-grid{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr 1fr}
+  .form-row .btn-add{grid-column:1/-1}
+  .form-row-2{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .metrics{grid-template-columns:1fr 1fr}
+  .metric-value{font-size:1.3rem}
+  .form-row{grid-template-columns:1fr}
+  .form-row-2{grid-template-columns:1fr}
+  .hero h1{font-size:1.5rem}
+  .nav-links{display:none}
+  .controls-right{width:100%}
+  .tax-grid{grid-template-columns:1fr}
+}
+@media(max-width:420px){
+  .metrics{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/freelanceos-storefront/" class="nav-brand">FreelanceOS</a>
+    <ul class="nav-links">
+      <li><a href="/freelanceos-storefront/toolkit.html">Free Tools</a></li>
+      <li><a href="/freelanceos-storefront/free-notion-templates.html">Notion Templates</a></li>
+      <li><a href="/freelanceos-storefront/blog.html">Blog</a></li>
+    </ul>
+    <a href="/freelanceos-storefront/pricing.html" class="nav-cta">Get FreelanceOS Pro</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">💰 FREE TOOL — NO ACCOUNT NEEDED</div>
+    <h1>Freelance Income &amp; Expense Tracker<br><span class="grad-text">No Spreadsheet Required</span></h1>
+    <p>Track your freelance finances in real time — income, expenses, profit margin, and tax estimates. All data saved in your browser.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">✓ Real-time dashboard</span>
+      <span class="hero-pill">✓ Monthly bar charts</span>
+      <span class="hero-pill">✓ Tax estimate panel</span>
+      <span class="hero-pill">✓ CSV &amp; print export</span>
+      <span class="hero-pill">✓ LocalStorage — no backend</span>
+    </div>
+  </div>
+</section>
+
+<div class="app">
+  <div class="app-inner">
+
+    <!-- Sample Data Notice -->
+    <div class="sample-notice" id="sample-notice" style="display:none">
+      <span>📊 <strong>Sample data loaded</strong> — showing what the tracker looks like with real data.</span>
+      <button class="btn-clear-sample" onclick="clearSampleData()">Clear &amp; start fresh →</button>
+    </div>
+
+    <!-- Summary Dashboard -->
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-icon">💵</div>
+        <div class="metric-label">Total Income</div>
+        <div class="metric-value green" id="m-income">$0.00</div>
+        <div class="metric-sub" id="m-income-sub">0 entries · current period</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">💸</div>
+        <div class="metric-label">Total Expenses</div>
+        <div class="metric-value red" id="m-expenses">$0.00</div>
+        <div class="metric-sub" id="m-expenses-sub">0 entries</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📈</div>
+        <div class="metric-label">Net Profit</div>
+        <div class="metric-value purple" id="m-profit">$0.00</div>
+        <div class="metric-sub">Income minus expenses</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📊</div>
+        <div class="metric-label">Profit Margin</div>
+        <div class="metric-value amber" id="m-margin">0%</div>
+        <div class="metric-sub">Net / gross income</div>
+      </div>
+    </div>
+
+    <!-- Add Transaction Form -->
+    <div class="add-form-card">
+      <div class="add-form-header">
+        <h3>Add Transaction</h3>
+        <div class="type-toggle">
+          <button class="type-btn active-income" id="btn-type-income" onclick="setType('income')">+ Income</button>
+          <button class="type-btn" id="btn-type-expense" onclick="setType('expense')">+ Expense</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-input" id="f-date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input" id="f-category">
+            <option value="Client Work">Client Work</option>
+            <option value="Product Sale">Product Sale</option>
+            <option value="Affiliate">Affiliate</option>
+            <option value="Retainer">Retainer</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <input type="text" class="form-input" id="f-desc" placeholder="e.g. Website redesign Phase 1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Amount ($)</label>
+          <input type="number" class="form-input" id="f-amount" placeholder="0.00" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <button class="btn-add" onclick="addTransaction()">Add Entry</button>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Client / Project (optional)</label>
+          <input type="text" class="form-input" id="f-client" placeholder="e.g. Acme Corp">
+        </div>
+        <div class="form-group" id="f-status-group">
+          <label class="form-label">Status</label>
+          <select class="form-input" id="f-status">
+            <option value="Paid">Paid</option>
+            <option value="Invoiced">Invoiced</option>
+            <option value="Overdue">Overdue</option>
+          </select>
+        </div>
+        <div class="form-group" id="f-deductible-group" style="display:none">
+          <label class="form-label">Tax Deductible?</label>
+          <select class="form-input" id="f-deductible">
+            <option value="yes">Yes — tax deductible</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter + Controls Bar -->
+    <div class="controls-row">
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All</button>
+        <button class="filter-btn" data-filter="income" onclick="setFilter('income',this)">Income Only</button>
+        <button class="filter-btn" data-filter="expense" onclick="setFilter('expense',this)">Expenses Only</button>
+        <button class="filter-btn" data-filter="thismonth" onclick="setFilter('thismonth',this)">This Month</button>
+        <button class="filter-btn" data-filter="lastmonth" onclick="setFilter('lastmonth',this)">Last Month</button>
+        <button class="filter-btn" data-filter="thisyear" onclick="setFilter('thisyear',this)">This Year</button>
+      </div>
+      <div class="controls-right">
+        <button class="btn btn-danger" onclick="clearAllData()">🗑 Clear All</button>
+      </div>
+    </div>
+
+    <!-- Transaction Table -->
+    <div class="table-wrap" id="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortTable('date')" id="th-date">Date ↕</th>
+            <th onclick="sortTable('type')" id="th-type">Type ↕</th>
+            <th onclick="sortTable('category')" id="th-category">Category ↕</th>
+            <th>Description</th>
+            <th onclick="sortTable('amount')" id="th-amount">Amount ↕</th>
+            <th>Client / Project</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tx-tbody"></tbody>
+      </table>
+      <div class="empty-state" id="tx-empty" style="display:none">
+        <div class="empty-icon">📋</div>
+        <p>No transactions yet. Add your first income or expense above.</p>
+      </div>
+    </div>
+
+    <!-- Monthly Chart -->
+    <div class="chart-card">
+      <h3>Monthly Income vs Expenses — Last 6 Months</h3>
+      <div class="chart-subtitle">Pure CSS bar chart — updates dynamically as you add transactions</div>
+      <div class="chart-area" id="chart-area"></div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(90deg,#10b981,#34d399)"></div> Income</div>
+        <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(90deg,#ef4444,#f87171)"></div> Expenses</div>
+      </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="breakdown-grid">
+      <div class="breakdown-card">
+        <h4>💵 Top Income Sources</h4>
+        <div id="income-breakdown"></div>
+      </div>
+      <div class="breakdown-card">
+        <h4>💸 Top Expense Categories</h4>
+        <div id="expense-breakdown"></div>
+      </div>
+    </div>
+
+    <!-- Tax Estimate Panel -->
+    <div class="tax-panel">
+      <div class="tax-header">
+        <h3>🏛 Tax Estimate</h3>
+        <div class="tax-rate-row">
+          <span class="tax-rate-label">Your tax rate:</span>
+          <input type="number" class="tax-rate-input" id="tax-rate" value="25" min="1" max="60" step="1" oninput="renderTax()">
+          <span class="tax-rate-label">%</span>
+        </div>
+      </div>
+      <div class="tax-grid">
+        <div class="tax-row">
+          <div class="tax-row-label">Estimated Tax Owed</div>
+          <div class="tax-row-val amber" id="tax-owed">$0.00</div>
+        </div>
+        <div class="tax-row">
+          <div class="tax-row-label">Take-Home After Tax</div>
+          <div class="tax-row-val green" id="tax-takehome">$0.00</div>
+        </div>
+        <div class="tax-row">
+          <div class="tax-row-label">Quarterly Tax Estimate</div>
+          <div class="tax-row-val blue" id="tax-quarterly">$0.00</div>
+        </div>
+      </div>
+      <div class="tax-aside-banner">
+        <span>⚠️</span>
+        <span><strong>Set aside for taxes:</strong> Transfer <strong id="tax-aside">$0.00</strong> to a dedicated savings account to cover your tax bill.</span>
+      </div>
+    </div>
+
+    <!-- Export Options -->
+    <div class="export-bar">
+      <span class="export-bar-label">Export:</span>
+      <button class="btn-export" onclick="exportCSV()">⬇ Export CSV</button>
+      <button class="btn-export" onclick="copySummary()">📋 Copy Summary</button>
+      <button class="btn-export" onclick="window.print()">🖨 Print Report</button>
+    </div>
+
+    <!-- Email Capture -->
+    <div class="lead-section" id="lead-section">
+      <h3>Want to track this in Notion?</h3>
+      <p>Get FreelanceOS Pro — includes a complete income tracker dashboard with invoicing, client CRM, and automated payment reminders. All connected in one Notion workspace.</p>
+      <div class="lead-form" id="lead-form-wrap">
+        <input type="email" class="lead-input" id="lead-email" placeholder="your@email.com">
+        <button class="lead-btn" onclick="submitLead()">Get FreelanceOS Pro →</button>
+      </div>
+      <div class="lead-success" id="lead-success">✓ Check your inbox — your free access is on the way!</div>
+      <p class="lead-note">No spam. Unsubscribe anytime.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand">FreelanceOS</div>
+    <div class="footer-links">
+      <a href="/freelanceos-storefront/">Home</a>
+      <a href="/freelanceos-storefront/toolkit.html">Free Tools</a>
+      <a href="/freelanceos-storefront/freelance-rate-calculator.html">Rate Calculator</a>
+      <a href="/freelanceos-storefront/freelance-income-calculator.html">Income Calculator</a>
+      <a href="/freelanceos-storefront/free-notion-templates.html">Notion Templates</a>
+      <a href="/freelanceos-storefront/pricing.html">Pricing</a>
+    </div>
+    <p>&copy; 2026 FreelanceOS. Data saved locally in your browser — never sent to a server.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── Constants ────────────────────────────────────────────────────────────────
+const STORE_KEY = 'freelanceos_income_tracker';
+const LEADS_KEY = 'freelanceos_leads';
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let transactions = [];
+let activeFilter = 'all';
+let sortField = 'date';
+let sortDir = 'desc';
+let currentType = 'income';
+let isSampleData = false;
+
+// ─── Sample Data ──────────────────────────────────────────────────────────────
+function makeSampleData() {
+  const now = new Date();
+  function d(monthsAgo, day) {
+    const dt = new Date(now.getFullYear(), now.getMonth() - monthsAgo, day);
+    return dt.toISOString().slice(0,10);
+  }
+  return [
+    { id: uid(), type:'income',  category:'Client Work',  desc:'Brand identity redesign',          amount:3500,   date:d(0,10), client:'TechCorp Inc.',  status:'Paid' },
+    { id: uid(), type:'income',  category:'Retainer',     desc:'Monthly retainer — ongoing',        amount:2000,   date:d(0,1),  client:'Bloom Agency',   status:'Paid' },
+    { id: uid(), type:'income',  category:'Client Work',  desc:'Landing page development',          amount:1800,   date:d(1,18), client:'StartupXYZ',     status:'Paid' },
+    { id: uid(), type:'income',  category:'Product Sale', desc:'FreelanceOS template sale',         amount:497,    date:d(1,5),  client:'Gumroad',        status:'Paid' },
+    { id: uid(), type:'income',  category:'Affiliate',    desc:'ConvertKit affiliate commission',   amount:218,    date:d(2,22), client:'ConvertKit',      status:'Paid' },
+    { id: uid(), type:'income',  category:'Client Work',  desc:'SEO content package x10',           amount:2400,   date:d(2,14), client:'GrowthHQ',       status:'Paid' },
+    { id: uid(), type:'income',  category:'Retainer',     desc:'Monthly retainer — ongoing',        amount:2000,   date:d(2,1),  client:'Bloom Agency',   status:'Paid' },
+    { id: uid(), type:'income',  category:'Client Work',  desc:'Email sequence copywriting',        amount:1200,   date:d(3,7),  client:'NutriBrand',     status:'Paid' },
+    { id: uid(), type:'expense', category:'Software',     desc:'Adobe Creative Cloud subscription', amount:54.99,  date:d(0,1),  client:'',               deductible:true },
+    { id: uid(), type:'expense', category:'Software',     desc:'Notion Pro subscription',           amount:16,     date:d(0,1),  client:'',               deductible:true },
+    { id: uid(), type:'expense', category:'Marketing',    desc:'LinkedIn Ads — lead gen',           amount:120,    date:d(0,12), client:'',               deductible:true },
+    { id: uid(), type:'expense', category:'Education',    desc:'Copywriting course — ConversionXL', amount:299,    date:d(1,8),  client:'',               deductible:true },
+    { id: uid(), type:'expense', category:'Software',     desc:'Framer Pro annual plan',            amount:20,     date:d(1,1),  client:'',               deductible:true },
+    { id: uid(), type:'expense', category:'Equipment',    desc:'USB-C hub for MacBook',             amount:49.99,  date:d(2,3),  client:'',               deductible:true },
+    { id: uid(), type:'expense', category:'Marketing',    desc:'Twitter/X promoted posts',          amount:80,     date:d(2,20), client:'',               deductible:true },
+    { id: uid(), type:'expense', category:'Other',        desc:'Coworking day pass',                amount:35,     date:d(3,15), client:'',               deductible:true },
+  ];
+}
+
+// ─── Persistence ──────────────────────────────────────────────────────────────
+function load() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      transactions = Array.isArray(parsed) ? parsed : (parsed.income ? [...(parsed.income||[]).map(x=>({...x,type:'income'})), ...(parsed.expenses||[]).map(x=>({...x,type:'expense',desc:x.name||x.desc||'',client:x.client||''}))] : []);
+      isSampleData = false;
+    } else {
+      transactions = makeSampleData();
+      isSampleData = true;
+      save();
+      document.getElementById('sample-notice').style.display = 'flex';
+    }
+  } catch(e) {
+    transactions = makeSampleData();
+    isSampleData = true;
+    document.getElementById('sample-notice').style.display = 'flex';
+  }
+}
+
+function save() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(transactions)); } catch(e) {}
+}
+
+// ─── Type Toggle ──────────────────────────────────────────────────────────────
+const INCOME_CATS  = ['Client Work','Product Sale','Affiliate','Retainer','Other'];
+const EXPENSE_CATS = ['Software','Marketing','Equipment','Education','Other'];
+
+function setType(type) {
+  currentType = type;
+  const catSel = document.getElementById('f-category');
+  const opts = type === 'income' ? INCOME_CATS : EXPENSE_CATS;
+  catSel.innerHTML = opts.map(c => `<option value="${c}">${c}</option>`).join('');
+  document.getElementById('btn-type-income').className  = 'type-btn' + (type === 'income'  ? ' active-income'  : '');
+  document.getElementById('btn-type-expense').className = 'type-btn' + (type === 'expense' ? ' active-expense' : '');
+  document.getElementById('f-status-group').style.display    = type === 'income'  ? '' : 'none';
+  document.getElementById('f-deductible-group').style.display = type === 'expense' ? '' : 'none';
+}
+
+// ─── Add Transaction ──────────────────────────────────────────────────────────
+function addTransaction() {
+  const date   = document.getElementById('f-date').value;
+  const cat    = document.getElementById('f-category').value;
+  const desc   = document.getElementById('f-desc').value.trim();
+  const amount = parseFloat(document.getElementById('f-amount').value);
+  const client = document.getElementById('f-client').value.trim();
+  if (!date)            { showToast('Please pick a date.', 'error'); return; }
+  if (!desc)            { showToast('Please add a description.', 'error'); return; }
+  if (!amount || amount <= 0) { showToast('Please enter a valid amount.', 'error'); return; }
+
+  const tx = { id: uid(), type: currentType, category: cat, desc, amount, date, client };
+  if (currentType === 'income')  tx.status     = document.getElementById('f-status').value;
+  else                           tx.deductible = document.getElementById('f-deductible').value === 'yes';
+
+  if (isSampleData) {
+    transactions = [];
+    isSampleData = false;
+    document.getElementById('sample-notice').style.display = 'none';
+  }
+
+  transactions.push(tx);
+  save();
+  refresh();
+  showToast(currentType === 'income' ? 'Income entry added!' : 'Expense added!');
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-amount').value = '';
+  document.getElementById('f-client').value = '';
+  document.getElementById('f-date').value = today();
+}
+
+// ─── Delete ───────────────────────────────────────────────────────────────────
+function deleteTx(id) {
+  if (!confirm('Delete this entry?')) return;
+  transactions = transactions.filter(x => x.id !== id);
+  save(); refresh(); showToast('Entry deleted.');
+}
+
+// ─── Filter ───────────────────────────────────────────────────────────────────
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  refresh();
+}
+
+function getFiltered() {
+  const now   = new Date();
+  const thisM = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  const lastMDt = new Date(now.getFullYear(), now.getMonth()-1, 1);
+  const lastM = `${lastMDt.getFullYear()}-${String(lastMDt.getMonth()+1).padStart(2,'0')}`;
+  const thisY = String(now.getFullYear());
+  return transactions.filter(tx => {
+    if (activeFilter === 'income')    return tx.type === 'income';
+    if (activeFilter === 'expense')   return tx.type === 'expense';
+    if (activeFilter === 'thismonth') return tx.date && tx.date.startsWith(thisM);
+    if (activeFilter === 'lastmonth') return tx.date && tx.date.startsWith(lastM);
+    if (activeFilter === 'thisyear')  return tx.date && tx.date.startsWith(thisY);
+    return true;
+  });
+}
+
+// ─── Sort ─────────────────────────────────────────────────────────────────────
+function sortTable(field) {
+  if (sortField === field) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  else { sortField = field; sortDir = 'desc'; }
+  refresh();
+}
+
+function getSorted(arr) {
+  return [...arr].sort((a, b) => {
+    let av = a[sortField], bv = b[sortField];
+    if (sortField === 'amount') { av = Number(av); bv = Number(bv); }
+    else { av = String(av||''); bv = String(bv||''); }
+    const cmp = av < bv ? -1 : av > bv ? 1 : 0;
+    return sortDir === 'asc' ? cmp : -cmp;
+  });
+}
+
+// ─── Render All ───────────────────────────────────────────────────────────────
+function refresh() {
+  renderMetrics();
+  renderTable();
+  renderChart();
+  renderBreakdown();
+  renderTax();
+}
+
+// ─── Metrics ──────────────────────────────────────────────────────────────────
+function renderMetrics() {
+  const f    = getFiltered();
+  const inc  = f.filter(x => x.type === 'income');
+  const exp  = f.filter(x => x.type === 'expense');
+  const ti   = inc.reduce((s,x) => s + Number(x.amount), 0);
+  const te   = exp.reduce((s,x) => s + Number(x.amount), 0);
+  const prof = ti - te;
+  const marg = ti > 0 ? Math.round((prof / ti) * 100) : 0;
+  document.getElementById('m-income').textContent     = fmt(ti);
+  document.getElementById('m-expenses').textContent   = fmt(te);
+  document.getElementById('m-profit').textContent     = fmt(prof);
+  document.getElementById('m-margin').textContent     = marg + '%';
+  document.getElementById('m-income-sub').textContent  = inc.length + ' entr' + (inc.length===1?'y':'ies') + ' · ' + filterLabel();
+  document.getElementById('m-expenses-sub').textContent = exp.length + ' entr' + (exp.length===1?'y':'ies');
+  document.getElementById('m-profit').className  = 'metric-value ' + (prof >= 0 ? 'purple' : 'red');
+  document.getElementById('m-margin').className  = 'metric-value ' + (marg >= 50 ? 'green' : marg >= 20 ? 'amber' : 'red');
+}
+
+function filterLabel() {
+  const map = {all:'all time',income:'income only',expense:'expenses only',thismonth:'this month',lastmonth:'last month',thisyear:'this year'};
+  return map[activeFilter] || 'all time';
+}
+
+// ─── Table ────────────────────────────────────────────────────────────────────
+function renderTable() {
+  const rows  = getSorted(getFiltered());
+  const tbody = document.getElementById('tx-tbody');
+  const empty = document.getElementById('tx-empty');
+  const table = document.querySelector('#table-wrap table');
+
+  ['date','type','category','amount'].forEach(f => {
+    const el = document.getElementById('th-'+f);
+    if (el) el.textContent = f.charAt(0).toUpperCase()+f.slice(1) + (sortField===f ? (sortDir==='asc'?' ↑':' ↓') : ' ↕');
+  });
+
+  if (!rows.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    table.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  table.style.display = '';
+
+  tbody.innerHTML = rows.map(tx => {
+    const isInc = tx.type === 'income';
+    const amtColor = isInc ? 'var(--green)' : 'var(--red)';
+    let extra = '';
+    if (isInc && tx.status) {
+      const sc = {Paid:'badge-status-paid',Invoiced:'badge-status-invoiced',Overdue:'badge-status-overdue'}[tx.status]||'badge-cat';
+      extra = `<div style="margin-top:3px"><span class="badge ${sc}" style="font-size:.63rem">${tx.status}</span></div>`;
+    } else if (!isInc && tx.deductible) {
+      extra = `<div style="margin-top:3px"><span class="badge badge-deductible" style="font-size:.63rem">Deductible</span></div>`;
+    }
+    return `<tr class="row-${tx.type}">
+      <td style="color:var(--text-muted);font-size:.8rem;white-space:nowrap">${fmtDate(tx.date)}</td>
+      <td><span class="badge ${isInc?'badge-income':'badge-expense'}">${isInc?'Income':'Expense'}</span></td>
+      <td><span class="badge badge-cat" style="font-size:.68rem">${esc(tx.category)}</span></td>
+      <td style="max-width:220px"><div style="font-weight:600;font-size:.83rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(tx.desc)}">${esc(tx.desc)}</div>${extra}</td>
+      <td class="td-amount" style="color:${amtColor}">${isInc?'+':'-'}${fmt(tx.amount)}</td>
+      <td style="color:var(--text-muted);font-size:.8rem">${esc(tx.client||'—')}</td>
+      <td><div class="td-actions"><button class="btn-icon del" onclick="deleteTx('${tx.id}')" title="Delete">✕</button></div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── Monthly Chart ────────────────────────────────────────────────────────────
+function renderChart() {
+  const now = new Date();
+  const months = [];
+  for (let i = 5; i >= 0; i--) {
+    const dt = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push({
+      key: `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`,
+      label: dt.toLocaleString('default',{month:'short'}),
+      inc: 0, exp: 0
+    });
+  }
+  transactions.forEach(tx => {
+    const m = months.find(x => tx.date && tx.date.startsWith(x.key));
+    if (!m) return;
+    if (tx.type === 'income') m.inc += Number(tx.amount);
+    else                      m.exp += Number(tx.amount);
+  });
+  const maxVal = Math.max(...months.flatMap(m=>[m.inc,m.exp]), 1);
+  const maxH   = 150;
+  document.getElementById('chart-area').innerHTML = months.map(m => {
+    const ih = Math.round((m.inc / maxVal) * maxH);
+    const eh = Math.round((m.exp / maxVal) * maxH);
+    return `<div class="chart-month-col">
+      <div class="chart-bar-pair">
+        <div class="chart-bar inc" style="height:${ih}px" data-tip="${m.label} income: ${fmt(m.inc)}"></div>
+        <div class="chart-bar exp" style="height:${eh}px" data-tip="${m.label} expenses: ${fmt(m.exp)}"></div>
+      </div>
+      <div class="chart-month-label">${m.label}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── Category Breakdown ───────────────────────────────────────────────────────
+function renderBreakdown() {
+  renderCatList('income-breakdown',  transactions.filter(x=>x.type==='income'),  'fill-inc', 'No income entries yet.');
+  renderCatList('expense-breakdown', transactions.filter(x=>x.type==='expense'), 'fill-exp', 'No expense entries yet.');
+}
+
+function renderCatList(elId, items, fillClass, emptyMsg) {
+  const map = {};
+  items.forEach(tx => { map[tx.category] = (map[tx.category]||0) + Number(tx.amount); });
+  const total  = Object.values(map).reduce((s,v)=>s+v,0);
+  const sorted = Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const el = document.getElementById(elId);
+  if (!sorted.length) { el.innerHTML = `<p class="no-data-msg">${emptyMsg}</p>`; return; }
+  el.innerHTML = sorted.map(([cat, val]) => {
+    const pct = total > 0 ? Math.round((val/total)*100) : 0;
+    return `<div class="cat-item">
+      <div class="cat-item-header">
+        <span class="cat-item-name">${esc(cat)}</span>
+        <span><span class="cat-item-amount">${fmt(val)}</span><span class="cat-item-pct"> ${pct}%</span></span>
+      </div>
+      <div class="cat-bar-track"><div class="cat-bar-fill ${fillClass}" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+// ─── Tax Panel ────────────────────────────────────────────────────────────────
+function renderTax() {
+  const rate    = Math.max(1, Math.min(60, parseFloat(document.getElementById('tax-rate').value) || 25)) / 100;
+  const grossInc = transactions.filter(x=>x.type==='income').reduce((s,x)=>s+Number(x.amount),0);
+  const totalExp = transactions.filter(x=>x.type==='expense').reduce((s,x)=>s+Number(x.amount),0);
+  const profit   = Math.max(grossInc - totalExp, 0);
+  const taxOwed  = profit * rate;
+  const takehome = profit - taxOwed;
+  const quarterly = taxOwed / 4;
+  document.getElementById('tax-owed').textContent      = fmt(taxOwed);
+  document.getElementById('tax-takehome').textContent  = fmt(takehome);
+  document.getElementById('tax-quarterly').textContent = fmt(quarterly);
+  document.getElementById('tax-aside').textContent     = fmt(taxOwed);
+}
+
+// ─── Export CSV ───────────────────────────────────────────────────────────────
+function exportCSV() {
+  const rows = [['Date','Type','Category','Description','Amount','Client/Project','Status','Deductible']];
+  [...transactions].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))).forEach(tx => {
+    rows.push([tx.date, tx.type, tx.category, tx.desc, tx.amount, tx.client||'', tx.status||'', tx.deductible!=null?(tx.deductible?'Yes':'No'):'']);
+  });
+  const csv = rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  dlFile('freelance-income-tracker.csv', csv, 'text/csv');
+  showToast('CSV exported successfully!');
+}
+
+// ─── Copy Summary ─────────────────────────────────────────────────────────────
+function copySummary() {
+  const f    = getFiltered();
+  const inc  = f.filter(x=>x.type==='income').reduce((s,x)=>s+Number(x.amount),0);
+  const exp  = f.filter(x=>x.type==='expense').reduce((s,x)=>s+Number(x.amount),0);
+  const prof = inc - exp;
+  const marg = inc > 0 ? Math.round((prof/inc)*100) : 0;
+  const rate = Math.max(1, parseFloat(document.getElementById('tax-rate').value)||25) / 100;
+  const tax  = Math.max(prof,0) * rate;
+  const text = [
+    `FREELANCE FINANCE SUMMARY — ${new Date().toLocaleDateString()}`,
+    `Filter: ${filterLabel().toUpperCase()}`,
+    '─'.repeat(40),
+    `Total Income:    ${fmt(inc)}`,
+    `Total Expenses:  ${fmt(exp)}`,
+    `Net Profit:      ${fmt(prof)}`,
+    `Profit Margin:   ${marg}%`,
+    `Tax Estimate:    ${fmt(tax)} (${Math.round(rate*100)}% rate)`,
+    '─'.repeat(40),
+    'Generated by FreelanceOS Income Tracker',
+    'https://baphometsblade.github.io/freelanceos-storefront/freelance-income-tracker.html'
+  ].join('\n');
+  try {
+    navigator.clipboard.writeText(text).then(()=>showToast('Summary copied to clipboard!'));
+  } catch(e) { showToast('Copy failed — use Export CSV instead.', 'error'); }
+}
+
+function dlFile(name, content, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content],{type}));
+  a.download = name;
+  a.click();
+}
+
+// ─── Clear Data ───────────────────────────────────────────────────────────────
+function clearAllData() {
+  if (!confirm('Clear ALL transactions? This cannot be undone.')) return;
+  transactions = []; isSampleData = false; save();
+  document.getElementById('sample-notice').style.display = 'none';
+  refresh(); showToast('All data cleared.');
+}
+
+function clearSampleData() {
+  if (!confirm('Clear sample data and start fresh?')) return;
+  transactions = []; isSampleData = false; save();
+  document.getElementById('sample-notice').style.display = 'none';
+  refresh(); showToast('Ready — add your first transaction!');
+}
+
+// ─── Lead Capture ─────────────────────────────────────────────────────────────
+function submitLead() {
+  const email = document.getElementById('lead-email').value.trim();
+  if (!email || !email.includes('@')) { showToast('Please enter a valid email.', 'error'); return; }
+  try {
+    const leads = JSON.parse(localStorage.getItem(LEADS_KEY)||'[]');
+    leads.push({ email, source:'income-tracker', date:today() });
+    localStorage.setItem(LEADS_KEY, JSON.stringify(leads));
+  } catch(e) {}
+  document.getElementById('lead-form-wrap').style.display = 'none';
+  document.getElementById('lead-success').style.display = 'block';
+  showToast('Thanks! Check your inbox.');
+}
+
+// ─── Toast ────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.borderColor = type==='error' ? 'var(--red-border)' : 'var(--green-border)';
+  t.style.color = type==='error' ? 'var(--red)' : 'var(--green)';
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function uid()  { return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function today(){ return new Date().toISOString().slice(0,10); }
+function fmt(n) { return '$'+Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmtDate(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-');
+  return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m,10)-1]+' '+parseInt(day,10)+', '+y;
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+document.getElementById('f-date').value = today();
+setType('income');
+load();
+refresh();
+</script>
+</body>
+</html>
