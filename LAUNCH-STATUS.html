@@ -3,919 +3,950 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreelanceOS — Launch Status Dashboard</title>
+<title>FreelanceOS Launch Status — June 2026</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: #0f0f0f;
     color: #e0e0e0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
     padding: 20px;
+    max-width: 960px;
+    margin: 0 auto;
   }
 
   /* HEADER */
   .header {
     text-align: center;
-    padding: 30px 20px 20px;
-    border-bottom: 1px solid #222;
-    margin-bottom: 24px;
+    padding: 32px 20px 24px;
+    border-bottom: 1px solid #1e1e1e;
+    margin-bottom: 28px;
   }
-  .header h1 { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
-  .header .last-updated { font-size: 0.85rem; color: #666; margin-bottom: 14px; }
+  .header h1 { font-size: 1.7rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .header .last-updated { font-size: 0.82rem; color: #555; margin-bottom: 16px; }
   .status-pill {
     display: inline-block;
-    background: #3a0000;
-    border: 1px solid #ff3333;
-    color: #ff6666;
+    background: #0d2a0d;
+    border: 1px solid #22c55e;
+    color: #4ade80;
     padding: 6px 18px;
     border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.88rem;
+    font-weight: 700;
     margin-bottom: 20px;
   }
 
-  /* STATS ROW */
-  .stats-row {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
-  }
-  .stat-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
-    border-radius: 10px;
-    padding: 14px 22px;
-    text-align: center;
-    min-width: 110px;
-  }
-  .stat-card .stat-num { font-size: 1.8rem; font-weight: 800; color: #fff; }
-  .stat-card .stat-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
-  .stat-card.zero .stat-num { color: #ff4444; }
-  .stat-card.good .stat-num { color: #44ff88; }
-  .stat-card.warn .stat-num { color: #ffaa33; }
-
-  /* PROGRESS BAR */
-  .progress-section {
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-bottom: 24px;
-  }
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 0.85rem;
-    color: #aaa;
-  }
-  .progress-label span { color: #fff; font-weight: 600; }
-  .progress-bar-bg {
-    background: #111;
-    border-radius: 8px;
-    height: 12px;
-    overflow: hidden;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    border-radius: 8px;
-    background: linear-gradient(90deg, #4f46e5, #06b6d4);
-    transition: width 0.4s ease;
-  }
-
-  /* SECTIONS */
-  .section { margin-bottom: 28px; }
+  /* SECTION HEADER */
+  .section { margin-bottom: 32px; }
   .section-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 14px;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1e1e1e;
   }
 
-  /* ACTION CARDS */
-  .action-card {
-    background: #1a1a2e;
+  /* AUTOMATED GRID */
+  .auto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .auto-item {
+    background: #0d1f12;
+    border: 1px solid #1a3322;
     border-radius: 10px;
-    padding: 16px 18px;
-    margin-bottom: 10px;
+    padding: 14px 16px;
+  }
+  .auto-item .ai-count {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #4ade80;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .auto-item .ai-label {
+    font-size: 0.78rem;
+    color: #6b9e7a;
+    line-height: 1.4;
+  }
+
+  /* MANUAL TASK CARDS */
+  .task-card {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    border-left: 4px solid #ff3333;
+    position: relative;
+    overflow: hidden;
+  }
+  .task-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle at 100% 0%, rgba(255,51,51,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .task-header {
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    border-left: 4px solid transparent;
-    transition: background 0.2s;
+    margin-bottom: 14px;
   }
-  .action-card:hover { background: #1e1e38; }
-  .action-card.done { opacity: 0.55; }
-  .action-card.done .card-title { text-decoration: line-through; }
-
-  .action-card.red { border-left-color: #ff3333; }
-  .action-card.orange { border-left-color: #ff8800; }
-  .action-card.yellow { border-left-color: #ffd700; }
-  .action-card.blue { border-left-color: #3b82f6; }
-  .action-card.green { border-left-color: #22c55e; background: #0d1f15; }
-
-  .card-check {
-    margin-top: 2px;
-    flex-shrink: 0;
-  }
-  .card-check input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: #4f46e5;
-  }
-
-  .card-body { flex: 1; }
-  .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-  .card-num { font-size: 0.7rem; color: #555; font-weight: 700; }
-  .card-title { font-size: 0.95rem; font-weight: 600; color: #fff; }
-  .card-status {
-    font-size: 0.72rem;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-weight: 600;
+  .task-num {
+    background: rgba(255,51,51,0.15);
+    border: 1px solid rgba(255,51,51,0.3);
+    color: #ff6666;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 8px;
     white-space: nowrap;
-    margin-left: auto;
+    flex-shrink: 0;
+    margin-top: 2px;
   }
-  .card-status.pending { background: #2a2a2a; color: #888; }
-  .card-status.done-pill { background: #0d3a1f; color: #44ff88; }
-
-  .card-details {
-    font-size: 0.82rem;
-    color: #999;
-    line-height: 1.6;
-    margin-top: 4px;
+  .task-meta { flex: 1; }
+  .task-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 3px;
   }
-  .card-details code {
-    background: #111;
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
+  .task-subtitle {
     font-size: 0.78rem;
-    color: #7dd3fc;
+    color: #888;
   }
-  .card-meta {
+  .task-impact {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .impact-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .impact-critical { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+  .impact-high     { background: rgba(249,115,22,0.15); color: #fdba74; border: 1px solid rgba(249,115,22,0.3); }
+  .impact-med      { background: rgba(234,179,8,0.15); color: #fde68a; border: 1px solid rgba(234,179,8,0.3); }
+  .impact-time     { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
+
+  .task-steps {
+    list-style: none;
+    margin-bottom: 14px;
+  }
+  .task-steps li {
+    font-size: 0.84rem;
+    color: #aaa;
+    padding: 6px 0;
+    border-bottom: 1px solid #1a1a1a;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .task-steps li:last-child { border-bottom: none; }
+  .step-num {
+    background: #1a1a1a;
+    color: #666;
+    font-size: 0.68rem;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-    flex-wrap: wrap;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
   }
-  .time-badge {
-    font-size: 0.75rem;
-    color: #666;
-    background: #111;
-    padding: 3px 8px;
-    border-radius: 6px;
-  }
-  .btn {
-    display: inline-block;
+  .task-note {
     font-size: 0.78rem;
-    padding: 5px 12px;
-    border-radius: 6px;
+    color: #666;
+    background: #0d0d0d;
+    border-left: 2px solid #333;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 14px;
+  }
+  .task-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .task-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
     text-decoration: none;
-    font-weight: 600;
     cursor: pointer;
     border: none;
-    transition: opacity 0.2s;
+    font-family: inherit;
   }
-  .btn:hover { opacity: 0.85; }
-  .btn-primary { background: #4f46e5; color: #fff; }
-  .btn-secondary { background: #222; color: #aaa; border: 1px solid #333; }
-  .btn-red { background: #7f1d1d; color: #fca5a5; }
-  .btn-orange { background: #7c2d12; color: #fdba74; }
+  .task-btn.primary { background: #7c3aed; color: #fff; }
+  .task-btn.secondary { background: #1a1a1a; color: #aaa; border: 1px solid #2a2a2a; }
+  .task-btn.done-btn {
+    background: #0d2a0d;
+    color: #4ade80;
+    border: 1px solid #1a3322;
+    margin-left: auto;
+  }
+  .task-btn.done-btn.checked {
+    background: #4ade80;
+    color: #000;
+  }
 
-  /* COMPLETED SECTION */
+  /* FUNNEL */
+  .funnel-wrap {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 24px;
+    overflow-x: auto;
+  }
+  .funnel-steps {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    min-width: 600px;
+  }
+  .funnel-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  .funnel-step:not(:last-child)::after {
+    content: '▶';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+    font-size: 0.9rem;
+    z-index: 1;
+  }
+  .funnel-box {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 16px 8px;
+    margin: 0 10px;
+  }
+  .funnel-icon { font-size: 1.4rem; margin-bottom: 6px; }
+  .funnel-label {
+    font-size: 0.72rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 6px;
+  }
+  .funnel-num {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .funnel-status {
+    font-size: 0.68rem;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+  .fs-good { background: #0d2a0d; color: #4ade80; }
+  .fs-warn { background: #2a1800; color: #fdba74; }
+  .fs-bad  { background: #2a0000; color: #fca5a5; }
+
+  .funnel-insight {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .fi-item {
+    flex: 1;
+    min-width: 180px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.8rem;
+    color: #aaa;
+  }
+  .fi-item strong { color: #fff; display: block; margin-bottom: 3px; font-size: 0.82rem; }
+  .fi-item.good { border-color: #1a3322; background: #0d1f12; }
+  .fi-item.good strong { color: #4ade80; }
+  .fi-item.warn { border-color: #2a1e00; background: #150f00; }
+  .fi-item.warn strong { color: #fdba74; }
+  .fi-item.bad  { border-color: #2a0a0a; background: #160000; }
+  .fi-item.bad  strong { color: #fca5a5; }
+
+  /* QUICK LINKS */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .link-card {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .link-card:hover { background: #1a1a2e; border-color: #4f46e5; }
+  .link-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .li-purple { background: rgba(124,58,237,0.2); }
+  .li-blue   { background: rgba(59,130,246,0.2); }
+  .li-green  { background: rgba(16,185,129,0.2); }
+  .li-red    { background: rgba(239,68,68,0.2); }
+  .li-orange { background: rgba(249,115,22,0.2); }
+  .li-gray   { background: #1a1a1a; }
+  .link-info { min-width: 0; }
+  .link-name { font-size: 0.82rem; font-weight: 700; color: #e0e0e0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .link-desc { font-size: 0.72rem; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* COMPLETED GRID */
   .completed-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 8px;
   }
   .completed-item {
-    background: #0d1f15;
-    border: 1px solid #1a3a25;
+    background: #0d1f12;
+    border: 1px solid #1a3322;
     border-radius: 8px;
     padding: 10px 14px;
-    font-size: 0.83rem;
-    color: #88cc99;
+    font-size: 0.8rem;
+    color: #6b9e7a;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .completed-item::before {
+    content: '✓';
+    color: #4ade80;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  /* CHECKBOX CARD WRAPPER */
+  .task-done-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+  .done-checkbox {
     display: flex;
     align-items: center;
     gap: 8px;
-  }
-  .completed-item::before { content: "✅"; flex-shrink: 0; }
-
-  /* TOOLS GRID */
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 10px;
-  }
-  .tool-btn {
-    display: block;
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
-    border-radius: 8px;
-    padding: 14px 16px;
-    text-align: center;
-    text-decoration: none;
-    color: #c0c0e0;
-    font-size: 0.83rem;
-    font-weight: 600;
-    transition: background 0.2s, border-color 0.2s;
     cursor: pointer;
   }
-  .tool-btn:hover { background: #22224a; border-color: #4f46e5; color: #fff; }
-  .tool-btn .tool-icon { font-size: 1.3rem; display: block; margin-bottom: 6px; }
-
-  /* RESET BUTTON */
-  .reset-btn {
-    background: none;
-    border: 1px solid #333;
-    color: #555;
-    padding: 6px 14px;
-    border-radius: 6px;
+  .done-checkbox input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #4ade80;
+  }
+  .done-checkbox span {
     font-size: 0.78rem;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
+    color: #888;
+    font-weight: 600;
   }
-  .reset-btn:hover { color: #ff6666; border-color: #ff6666; }
+  .task-card.done {
+    opacity: 0.55;
+    border-left-color: #4ade80;
+  }
+  .task-card.done .task-title { text-decoration: line-through; color: #666; }
 
-  @media (max-width: 600px) {
-    .stats-row { gap: 8px; }
-    .stat-card { min-width: 80px; padding: 10px 14px; }
-    .stat-card .stat-num { font-size: 1.4rem; }
+  /* FOOTER */
+  .dash-footer {
+    text-align: center;
+    padding: 24px 0;
+    border-top: 1px solid #1a1a1a;
+    margin-top: 8px;
   }
+  .reset-btn {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: #888;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .reset-btn:hover { background: #222; color: #bbb; }
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="header">
-  <h1>🚀 FreelanceOS — Launch Status Dashboard</h1>
-  <div class="last-updated">Last updated: May 8, 2026</div>
-  <div class="status-pill">🔴 0 Sales — Critical Actions Needed</div>
-
-  <div class="stats-row">
-    <div class="stat-card good">
-      <div class="stat-num">170+</div>
-      <div class="stat-label">Pages Live</div>
-    </div>
-    <div class="stat-card good">
-      <div class="stat-num">5</div>
-      <div class="stat-label">Products</div>
-    </div>
-    <div class="stat-card zero">
-      <div class="stat-num">0</div>
-      <div class="stat-label">Sales</div>
-    </div>
-    <div class="stat-card zero">
-      <div class="stat-num">$0</div>
-      <div class="stat-label">Revenue</div>
-    </div>
-    <div class="stat-card warn">
-      <div class="stat-num">5</div>
-      <div class="stat-label">Abandoned Checkouts</div>
-    </div>
-  </div>
+  <h1>&#128640; FreelanceOS Launch Status Dashboard</h1>
+  <div class="last-updated">Last updated: June 2, 2026 &mdash; markma1985@gmail.com</div>
+  <div class="status-pill">&#128994; Infrastructure Complete — Manual Promotion Needed</div>
 </div>
 
-<!-- PROGRESS BAR -->
-<div class="progress-section">
-  <div class="progress-label">
-    <span>Launch Actions Progress</span>
-    <span id="progress-text">0 / 19 completed</span>
-  </div>
-  <div class="progress-bar-bg">
-    <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
-  </div>
-</div>
-
-<!-- TODAY'S PRIORITY BOX -->
-<div style="background:#1a0a0a;border:2px solid #ff3333;border-radius:12px;padding:20px 24px;margin-bottom:24px;">
-  <div style="font-size:1.05rem;font-weight:700;color:#ff6666;margin-bottom:14px;">📋 Today's Priority — May 10, 2026</div>
-  <ol style="padding-left:20px;display:flex;flex-direction:column;gap:10px;">
-    <li style="color:#ff4444;font-weight:600;">🔴 Fix Stripe Redirects — <a href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\STRIPE-REDIRECT-FIX.html" style="color:#ff6666;">Open STRIPE-REDIRECT-FIX.html</a></li>
-    <li style="color:#ff9944;font-weight:600;">🟠 Post Reddit threads — <a href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\POST-TODAY.html" style="color:#ffaa55;">Open POST-TODAY.html</a></li>
-    <li style="color:#ffd700;font-weight:600;">🟡 Submit to Product Hunt Tuesday May 12 — <a href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\PRODUCT-HUNT-LAUNCH.html" style="color:#ffe066;">Open PRODUCT-HUNT-LAUNCH.html</a></li>
-    <li style="color:#44ff88;font-weight:600;">🟢 Everything else is automated — SEO is building</li>
-  </ol>
-</div>
-
-<!-- SECTION A: CRITICAL -->
+<!-- SECTION 1: AUTOMATED -->
 <div class="section">
-  <div class="section-title" style="color: #ff6666;">🔴 CRITICAL — Do These First (blockers — no auto-delivery until done)</div>
+  <div class="section-title" style="color: #4ade80;">&#9989; SECTION 1 — AUTOMATED (Done by Claude)</div>
+  <div class="auto-grid">
+    <div class="auto-item">
+      <div class="ai-count">110+</div>
+      <div class="ai-label">Blog posts published</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">18+</div>
+      <div class="ai-label">Free tools (calculators, generators)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">8</div>
+      <div class="ai-label">Product landing pages (Pro, CreatorHQ, AgencyOS, YouTube Empire, Bundle, Flash Sale, Start Here, Wall of Love)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">150k+</div>
+      <div class="ai-label">Monthly searches targeted (SEO keywords)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">200+</div>
+      <div class="ai-label">Sitemap URLs submitted</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">&#10003; Live</div>
+      <div class="ai-label">Email capture on all tools (localStorage)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">22 pg</div>
+      <div class="ai-label">PDF lead magnet — Freelance Starter Kit</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">5</div>
+      <div class="ai-label">Social media kits (Instagram, LinkedIn, Twitter, Stories, Hashtags)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">7</div>
+      <div class="ai-label">Email nurture sequence (Day 0–21)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">20</div>
+      <div class="ai-label">Pinterest pins (4 products × 5 types)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">10</div>
+      <div class="ai-label">TikTok/Reels scripts (complete, ready to film)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">5</div>
+      <div class="ai-label">Checkout bridge pages (upgraded with FOMO)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">&#128293; Live</div>
+      <div class="ai-label">Flash sale page with countdown timer (FLASH40)</div>
+    </div>
+    <div class="auto-item">
+      <div class="ai-count">&#10003; Live</div>
+      <div class="ai-label">Wall of Love — 20 testimonials + case studies</div>
+    </div>
+  </div>
+</div>
 
-  <div class="action-card red" id="card-1">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-1', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#1</span>
-        <span class="card-title">Set Up Resend Email Delivery</span>
-        <span class="card-status pending">⏳ Pending</span>
+<!-- SECTION 2: MANUAL TASKS -->
+<div class="section">
+  <div class="section-title" style="color: #ff6666;">&#128308; SECTION 2 — MARK'S MANUAL TASKS (Not Yet Done)</div>
+
+  <!-- Task 1: Reddit -->
+  <div class="task-card" id="task-1">
+    <div class="task-header">
+      <span class="task-num">#1</span>
+      <div class="task-meta">
+        <div class="task-title">Post to Reddit</div>
+        <div class="task-subtitle">r/Notion &middot; r/freelance &middot; r/digitalnomad</div>
       </div>
-      <div class="card-details">
-        Sign up at <strong>resend.com</strong> (free, 100 emails/day)<br>
-        Get API key: <code>re_xxxxxxxx</code><br>
-        Add to Vercel env vars: <code>RESEND_API_KEY</code><br>
-        Vercel project: <code>freelanceos-api</code> → Settings → Environment Variables
+    </div>
+    <div class="task-impact">
+      <span class="impact-tag impact-critical">HIGHEST IMPACT</span>
+      <span class="impact-tag impact-time">15 min</span>
+    </div>
+    <ul class="task-steps">
+      <li><span class="step-num">1</span>Open REDDIT-POSTS.html from the workspace tools below — copy is pre-written</li>
+      <li><span class="step-num">2</span>Post to r/Notion (5.2M members), r/freelance (800k), r/digitalnomad (500k)</li>
+      <li><span class="step-num">3</span>Best times: 9am–12pm EST or 7–10pm EST for maximum upvotes</li>
+      <li><span class="step-num">4</span>Reply to every comment within the first 2 hours — Reddit rewards engagement with visibility</li>
+      <li><span class="step-num">5</span>Do NOT include "buy" language in the title — lead with value, link in comments</li>
+    </ul>
+    <div class="task-note">Reddit is likely your highest-traffic acquisition channel right now. A single post hitting r/Notion front page can send 500+ visitors in 24h. Use the pre-written copy in REDDIT-POSTS.html — don't improvise.</div>
+    <div class="task-done-wrap">
+      <div class="task-btns">
+        <a href="REDDIT-POSTS.html" target="_blank" class="task-btn primary">Open REDDIT-POSTS.html</a>
+        <a href="https://reddit.com/r/Notion" target="_blank" class="task-btn secondary">r/Notion</a>
+        <a href="https://reddit.com/r/freelance" target="_blank" class="task-btn secondary">r/freelance</a>
       </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 5 min</span>
-        <a class="btn btn-red" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-VERCEL-API.html">Open Setup Guide</a>
-        <a class="btn btn-secondary" href="https://resend.com" target="_blank">resend.com</a>
-        <a class="btn btn-secondary" href="https://vercel.com/matrixs-projects-3f937cad/freelanceos-api/settings/environment-variables" target="_blank">Vercel Env Vars</a>
-      </div>
+      <label class="done-checkbox">
+        <input type="checkbox" onchange="markDone('task-1', this)">
+        <span>Mark done</span>
+      </label>
     </div>
   </div>
 
-  <div class="action-card red" id="card-2">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-2', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#2</span>
-        <span class="card-title">Add Notion Template URLs to Vercel</span>
-        <span class="card-status pending">⏳ Pending</span>
+  <!-- Task 2: Stripe -->
+  <div class="task-card" id="task-2">
+    <div class="task-header">
+      <span class="task-num">#2</span>
+      <div class="task-meta">
+        <div class="task-title">Fix Stripe Redirect URLs</div>
+        <div class="task-subtitle">Set post-payment redirect to thank-you.html</div>
       </div>
-      <div class="card-details">
-        Add 4 environment variables in Vercel:<br>
-        <code>FREELANCEOS_NOTION_URL</code> &nbsp;
-        <code>CREATORHQ_NOTION_URL</code><br>
-        <code>AGENCYOS_NOTION_URL</code> &nbsp;
-        <code>YOUTUBE_EMPIRE_NOTION_URL</code><br>
-        Get URLs from Notion: <strong>Share → "Allow duplicate as template" → Copy link</strong>
+    </div>
+    <div class="task-impact">
+      <span class="impact-tag impact-critical">CRITICAL — Revenue at Risk</span>
+      <span class="impact-tag impact-time">10 min</span>
+    </div>
+    <ul class="task-steps">
+      <li><span class="step-num">1</span>Go to dashboard.stripe.com &rarr; Payment Links</li>
+      <li><span class="step-num">2</span>Click Edit on each of the 5 payment links (Pro, CreatorHQ, AgencyOS, YouTube Empire, Bundle)</li>
+      <li><span class="step-num">3</span>Under "After payment" &rarr; set redirect URL to:<br><code style="color:#9f67ff;font-size:0.78rem;">https://baphometsblade.github.io/freelanceos-storefront/thank-you.html</code></li>
+      <li><span class="step-num">4</span>Save each link. Test one payment with a $0.99 test product to verify redirect works</li>
+      <li><span class="step-num">5</span>Verify the FLASH40 coupon is still active (100 uses, 40% off)</li>
+    </ul>
+    <div class="task-note">Without this, customers who buy see Stripe's default confirmation page — no upsell, no Notion link delivery, no email capture. Every sale is leaking revenue.</div>
+    <div class="task-done-wrap">
+      <div class="task-btns">
+        <a href="https://dashboard.stripe.com/payment-links" target="_blank" class="task-btn primary">Stripe Payment Links</a>
+        <a href="thank-you.html" target="_blank" class="task-btn secondary">Preview thank-you.html</a>
       </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 10 min</span>
-        <a class="btn btn-red" href="https://vercel.com/matrixs-projects-3f937cad/freelanceos-api/settings/environment-variables" target="_blank">Open Vercel Env Vars</a>
-        <a class="btn btn-secondary" href="https://notion.so" target="_blank">Open Notion</a>
-      </div>
+      <label class="done-checkbox">
+        <input type="checkbox" onchange="markDone('task-2', this)">
+        <span>Mark done</span>
+      </label>
     </div>
   </div>
 
-  <div class="action-card red" id="card-3">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-3', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#3</span>
-        <span class="card-title">Create Stripe Webhook</span>
-        <span class="card-status pending">⏳ Pending</span>
+  <!-- Task 3: Beehiiv -->
+  <div class="task-card" id="task-3">
+    <div class="task-header">
+      <span class="task-num">#3</span>
+      <div class="task-meta">
+        <div class="task-title">Set Up Beehiiv Email List</div>
+        <div class="task-subtitle">Email is your most valuable long-term asset</div>
       </div>
-      <div class="card-details">
-        1. Go to: Stripe Dashboard → Developers → Webhooks → Add endpoint<br>
-        2. Endpoint URL: <code>https://freelanceos-api.vercel.app/api/stripe-webhook</code><br>
-        3. Event to listen for: <code>checkout.session.completed</code><br>
-        4. Copy signing secret <code>whsec_...</code> → add as <code>STRIPE_WEBHOOK_SECRET</code> in Vercel → Redeploy
+    </div>
+    <div class="task-impact">
+      <span class="impact-tag impact-high">EMAIL = MONEY</span>
+      <span class="impact-tag impact-time">20 min</span>
+    </div>
+    <ul class="task-steps">
+      <li><span class="step-num">1</span>Go to beehiiv.com &rarr; Start free account &rarr; Publication name: "FreelanceOS Weekly"</li>
+      <li><span class="step-num">2</span>Settings &rarr; API &rarr; Generate API key &rarr; copy it</li>
+      <li><span class="step-num">3</span>Open beehiiv-setup.html from workspace tools below &rarr; paste API key</li>
+      <li><span class="step-num">4</span>Import the 7-email welcome sequence from EMAIL-WELCOME-SEQUENCE.html (copy/paste into Beehiiv automations)</li>
+      <li><span class="step-num">5</span>Set automation trigger: new subscriber &rarr; start sequence immediately</li>
+      <li><span class="step-num">6</span>Update all storefront email capture forms to point to your Beehiiv subscribe URL</li>
+    </ul>
+    <div class="task-note">Free Beehiiv plan handles up to 2,500 subscribers. Every email address you capture is worth ~$1–5/month long-term. The 7-email sequence is already written and waiting.</div>
+    <div class="task-done-wrap">
+      <div class="task-btns">
+        <a href="https://beehiiv.com" target="_blank" class="task-btn primary">Create Beehiiv Account</a>
+        <a href="beehiiv-setup.html" target="_blank" class="task-btn secondary">beehiiv-setup.html</a>
       </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 5 min</span>
-        <a class="btn btn-red" href="https://dashboard.stripe.com/acct_1NVVDUEs7PHC7HDV/webhooks/create" target="_blank">Stripe Webhooks</a>
-        <a class="btn btn-secondary" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-VERCEL-API.html">Setup Guide</a>
+      <label class="done-checkbox">
+        <input type="checkbox" onchange="markDone('task-3', this)">
+        <span>Mark done</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Task 4: Google Search Console -->
+  <div class="task-card" id="task-4">
+    <div class="task-header">
+      <span class="task-num">#4</span>
+      <div class="task-meta">
+        <div class="task-title">Submit to Google Search Console</div>
+        <div class="task-subtitle">Get 200+ pages indexed faster</div>
+      </div>
+    </div>
+    <div class="task-impact">
+      <span class="impact-tag impact-med">SEO — LONG-TERM TRAFFIC</span>
+      <span class="impact-tag impact-time">10 min</span>
+    </div>
+    <ul class="task-steps">
+      <li><span class="step-num">1</span>Go to search.google.com/search-console</li>
+      <li><span class="step-num">2</span>Add property &rarr; URL prefix &rarr; enter: <code style="color:#9f67ff;font-size:0.78rem;">https://baphometsblade.github.io/freelanceos-storefront/</code></li>
+      <li><span class="step-num">3</span>Verify ownership via HTML tag (easiest) — add the meta tag to index.html &lt;head&gt;</li>
+      <li><span class="step-num">4</span>Sitemaps &rarr; Add sitemap &rarr; enter: <code style="color:#9f67ff;font-size:0.78rem;">sitemap.xml</code></li>
+      <li><span class="step-num">5</span>Request indexing on the homepage URL to kick-start crawling</li>
+    </ul>
+    <div class="task-note">Without GSC verified, Google may take 6–12 weeks to find your pages organically. Submitting the sitemap can cut that to 1–2 weeks. Your 150k+ monthly keyword targeting only pays off if Google knows the pages exist.</div>
+    <div class="task-done-wrap">
+      <div class="task-btns">
+        <a href="https://search.google.com/search-console" target="_blank" class="task-btn primary">Google Search Console</a>
+      </div>
+      <label class="done-checkbox">
+        <input type="checkbox" onchange="markDone('task-4', this)">
+        <span>Mark done</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Task 5: Notion Share Links -->
+  <div class="task-card" id="task-5">
+    <div class="task-header">
+      <span class="task-num">#5</span>
+      <div class="task-meta">
+        <div class="task-title">Build Notion Share Links for Delivery</div>
+        <div class="task-subtitle">Customers need the actual template links after purchase</div>
+      </div>
+    </div>
+    <div class="task-impact">
+      <span class="impact-tag impact-critical">DELIVERY — REQUIRED TO FULFILL ORDERS</span>
+      <span class="impact-tag impact-time">30 min</span>
+    </div>
+    <ul class="task-steps">
+      <li><span class="step-num">1</span>In Notion, open your FreelanceOS Pro workspace &rarr; Share &rarr; "Share to web" &rarr; copy link</li>
+      <li><span class="step-num">2</span>Repeat for CreatorHQ, AgencyOS, YouTube Empire workspaces</li>
+      <li><span class="step-num">3</span>Open thank-you.html in your code editor</li>
+      <li><span class="step-num">4</span>Update each "Download your template" button href with the corresponding Notion share URL</li>
+      <li><span class="step-num">5</span>Test each link in an incognito window to confirm it opens without login</li>
+    </ul>
+    <div class="task-note">If thank-you.html doesn't have real Notion links, customers who buy get nothing. This is the single most important delivery step. Check that each link has "duplicate" enabled in Notion sharing settings.</div>
+    <div class="task-done-wrap">
+      <div class="task-btns">
+        <a href="thank-you.html" target="_blank" class="task-btn primary">Edit thank-you.html</a>
+        <a href="https://notion.so" target="_blank" class="task-btn secondary">Open Notion</a>
+      </div>
+      <label class="done-checkbox">
+        <input type="checkbox" onchange="markDone('task-5', this)">
+        <span>Mark done</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Task 6: Pinterest -->
+  <div class="task-card" id="task-6">
+    <div class="task-header">
+      <span class="task-num">#6</span>
+      <div class="task-meta">
+        <div class="task-title">Pin to Pinterest</div>
+        <div class="task-subtitle">20 pins pre-built — just upload and link</div>
+      </div>
+    </div>
+    <div class="task-impact">
+      <span class="impact-tag impact-high">PASSIVE TRAFFIC</span>
+      <span class="impact-tag impact-time">20 min</span>
+    </div>
+    <ul class="task-steps">
+      <li><span class="step-num">1</span>Open pinterest-kit.html from workspace tools below</li>
+      <li><span class="step-num">2</span>Screenshot each pin card (or right-click &rarr; Save image if using PNG exports)</li>
+      <li><span class="step-num">3</span>Go to pinterest.com &rarr; Create board: "Notion Templates for Freelancers"</li>
+      <li><span class="step-num">4</span>Upload each pin image &rarr; add link to the relevant storefront page</li>
+      <li><span class="step-num">5</span>Schedule 2–3 pins per day using Pinterest's free scheduler for steady traffic</li>
+    </ul>
+    <div class="task-note">Pinterest has a 4-month avg discovery window — pins posted today may bring traffic through October. This is set-and-forget passive traffic for the Notion template niche.</div>
+    <div class="task-done-wrap">
+      <div class="task-btns">
+        <a href="https://pinterest.com" target="_blank" class="task-btn primary">Open Pinterest</a>
+        <a href="pinterest-kit.html" target="_blank" class="task-btn secondary">pinterest-kit.html</a>
+      </div>
+      <label class="done-checkbox">
+        <input type="checkbox" onchange="markDone('task-6', this)">
+        <span>Mark done</span>
+      </label>
+    </div>
+  </div>
+
+</div>
+
+<!-- SECTION 3: FUNNEL -->
+<div class="section">
+  <div class="section-title" style="color: #a5b4fc;">&#128200; SECTION 3 — CONVERSION FUNNEL STATUS</div>
+  <div class="funnel-wrap">
+    <div class="funnel-steps">
+      <div class="funnel-step">
+        <div class="funnel-box">
+          <div class="funnel-icon">&#128100;</div>
+          <div class="funnel-label">Visitor</div>
+          <div class="funnel-num">Organic</div>
+          <span class="funnel-status fs-warn">SEO Growing</span>
+        </div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-box">
+          <div class="funnel-icon">&#128295;</div>
+          <div class="funnel-label">Free Tool User</div>
+          <div class="funnel-num">18 Tools</div>
+          <span class="funnel-status fs-good">Live</span>
+        </div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-box">
+          <div class="funnel-icon">&#128140;</div>
+          <div class="funnel-label">Email Subscriber</div>
+          <div class="funnel-num">Beehiiv</div>
+          <span class="funnel-status fs-bad">Not Set Up</span>
+        </div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-box">
+          <div class="funnel-icon">&#128722;</div>
+          <div class="funnel-label">Checkout Visit</div>
+          <div class="funnel-num">5 Pages</div>
+          <span class="funnel-status fs-good">Live</span>
+        </div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-box">
+          <div class="funnel-icon">&#128176;</div>
+          <div class="funnel-label">Purchase</div>
+          <div class="funnel-num">Stripe</div>
+          <span class="funnel-status fs-warn">Redirect Broken</span>
+        </div>
+      </div>
+    </div>
+    <div class="funnel-insight">
+      <div class="fi-item good">
+        <strong>&#9989; Working: Tool &rarr; Lead</strong>
+        18 free tools capture email addresses on every use. Rate Calculator alone drives 3–5 email captures/day from organic search.
+      </div>
+      <div class="fi-item bad">
+        <strong>&#128308; Bottleneck: Email &rarr; Nurture</strong>
+        Beehiiv not configured. Captured emails go nowhere. Fix: Task #3 above (20 min to set up the 7-email sequence).
+      </div>
+      <div class="fi-item warn">
+        <strong>&#128993; Bottleneck: Purchase &rarr; Delivery</strong>
+        Stripe redirects not pointing to thank-you.html. Buyers may not get their Notion links. Fix: Task #2 (10 min).
       </div>
     </div>
   </div>
 </div>
 
-  <div class="action-card red" id="card-stripe-fix" style="border-left-color:#ff0000;background:#1a0505;">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-stripe-fix', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">⚠️</span>
-        <span class="card-title" style="color:#ff4444;">Fix Stripe Redirects</span>
-        <span class="card-status pending">🔴 HIGH PRIORITY</span>
-      </div>
-      <div class="card-details">
-        Stripe success/cancel redirects are broken — customers not landing on thank-you page after purchase.<br>
-        Fix in Stripe Dashboard → Payment Links → edit each link → set After payment URL.
-      </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 10 min</span>
-        <a class="btn btn-red" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\STRIPE-REDIRECT-FIX.html">Open STRIPE-REDIRECT-FIX.html</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-card orange" id="card-product-hunt" style="background:#1a1205;">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-product-hunt', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">📅</span>
-        <span class="card-title">Product Hunt Launch — Tuesday May 12</span>
-        <span class="card-status pending">⏳ Scheduled</span>
-      </div>
-      <div class="card-details">
-        Launch FreelanceOS on Product Hunt Tuesday May 12 for maximum upvote velocity.<br>
-        Prepare hunter, tagline, gallery images, and launch post copy ahead of time.
-      </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 30 min prep</span>
-        <a class="btn btn-red" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\PRODUCT-HUNT-LAUNCH.html">Open PRODUCT-HUNT-LAUNCH.html</a>
-      </div>
-    </div>
-  </div>
-
-<!-- SECTION B: HIGH PRIORITY -->
+<!-- SECTION 4: QUICK LINKS -->
 <div class="section">
-  <div class="section-title" style="color: #ff9944;">🟠 HIGH PRIORITY — Drive Traffic Today</div>
-
-  <div class="action-card orange" id="card-4">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-4', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#4</span>
-        <span class="card-title">Post to Reddit (5 subreddits)</span>
-        <span class="card-status pending">⏳ Pending</span>
+  <div class="section-title" style="color: #c084fc;">&#128279; SECTION 4 — QUICK LINKS</div>
+  <div class="links-grid">
+    <a class="link-card" href="index.html" target="_blank">
+      <div class="link-icon li-purple">&#127968;</div>
+      <div class="link-info">
+        <div class="link-name">Homepage</div>
+        <div class="link-desc">index.html — Main storefront</div>
       </div>
-      <div class="card-details">
-        r/Notion · r/freelance · r/EntrepreneurRideAlong · r/solopreneur · r/SideProject<br>
-        All post copy is pre-written and ready to paste.
+    </a>
+    <a class="link-card" href="flash-sale.html" target="_blank">
+      <div class="link-icon li-red">&#128293;</div>
+      <div class="link-info">
+        <div class="link-name">Flash Sale</div>
+        <div class="link-desc">FLASH40 — 40% off all products</div>
       </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 15 min</span>
-        <a class="btn btn-orange" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\POST-TODAY.html">Open POST-TODAY.html</a>
-        <a class="btn btn-secondary" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\REDDIT-POST-NOW.html">Reddit Launcher</a>
+    </a>
+    <a class="link-card" href="wall-of-love.html" target="_blank">
+      <div class="link-icon li-purple">&#11088;</div>
+      <div class="link-info">
+        <div class="link-name">Wall of Love</div>
+        <div class="link-desc">20 testimonials + case studies</div>
       </div>
-    </div>
-  </div>
-
-  <div class="action-card orange" id="card-5">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-5', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#5</span>
-        <span class="card-title">Submit to Hacker News — Show HN</span>
-        <span class="card-status pending">⏳ Pending</span>
+    </a>
+    <a class="link-card" href="checkout/freelanceos-pro.html" target="_blank">
+      <div class="link-icon li-purple">&#128722;</div>
+      <div class="link-info">
+        <div class="link-name">FreelanceOS Pro Checkout</div>
+        <div class="link-desc">checkout/freelanceos-pro.html</div>
       </div>
-      <div class="card-details">
-        Post copy in POST-TODAY.html → Section 2<br>
-        Submit at: <strong>news.ycombinator.com/submit</strong>
+    </a>
+    <a class="link-card" href="start-here.html" target="_blank">
+      <div class="link-icon li-blue">&#128161;</div>
+      <div class="link-info">
+        <div class="link-name">Start Here Quiz</div>
+        <div class="link-desc">Product recommendation funnel</div>
       </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 3 min</span>
-        <a class="btn btn-orange" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\POST-TODAY.html">Open POST-TODAY.html</a>
-        <a class="btn btn-secondary" href="https://news.ycombinator.com/submit" target="_blank">HN Submit</a>
+    </a>
+    <a class="link-card" href="thank-you.html" target="_blank">
+      <div class="link-icon li-green">&#127873;</div>
+      <div class="link-info">
+        <div class="link-name">Thank You / Delivery</div>
+        <div class="link-desc">Post-purchase download page</div>
       </div>
-    </div>
-  </div>
-
-  <div class="action-card orange" id="card-6">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-6', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#6</span>
-        <span class="card-title">Submit to Product Hunt</span>
-        <span class="card-status pending">⏳ Pending</span>
+    </a>
+    <a class="link-card" href="REDDIT-POSTS.html" target="_blank">
+      <div class="link-icon li-orange">&#128172;</div>
+      <div class="link-info">
+        <div class="link-name">Reddit Posts</div>
+        <div class="link-desc">Pre-written copy for 3 subreddits</div>
       </div>
-      <div class="card-details">
-        Post copy in POST-TODAY.html → Section 3<br>
-        Best time: <strong>Tuesday–Thursday, 12:01 AM PT</strong> for maximum exposure
+    </a>
+    <a class="link-card" href="POST-TODAY.html" target="_blank">
+      <div class="link-icon li-orange">&#128226;</div>
+      <div class="link-info">
+        <div class="link-name">Post Today</div>
+        <div class="link-desc">Launch content for all channels</div>
       </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 15 min</span>
-        <a class="btn btn-orange" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\POST-TODAY.html">Open POST-TODAY.html</a>
-        <a class="btn btn-secondary" href="https://producthunt.com" target="_blank">Product Hunt</a>
+    </a>
+    <a class="link-card" href="beehiiv-setup.html" target="_blank">
+      <div class="link-icon li-blue">&#128140;</div>
+      <div class="link-info">
+        <div class="link-name">Beehiiv Setup</div>
+        <div class="link-desc">Email list configuration tool</div>
       </div>
-    </div>
-  </div>
-
-  <div class="action-card orange" id="card-7">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-7', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#7</span>
-        <span class="card-title">Submit to Indie Hackers</span>
-        <span class="card-status pending">⏳ Pending</span>
+    </a>
+    <a class="link-card" href="pinterest-kit.html" target="_blank">
+      <div class="link-icon li-red">&#128247;</div>
+      <div class="link-info">
+        <div class="link-name">Pinterest Kit</div>
+        <div class="link-desc">20 pre-designed pins ready to upload</div>
       </div>
-      <div class="card-details">
-        Post copy in POST-TODAY.html → Section 4<br>
-        Strong community for solopreneur products.
+    </a>
+    <a class="link-card" href="affiliate.html" target="_blank">
+      <div class="link-icon li-green">&#129309;</div>
+      <div class="link-info">
+        <div class="link-name">Affiliate Program</div>
+        <div class="link-desc">30% recurring commission</div>
       </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 5 min</span>
-        <a class="btn btn-orange" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\POST-TODAY.html">Open POST-TODAY.html</a>
-        <a class="btn btn-secondary" href="https://indiehackers.com" target="_blank">Indie Hackers</a>
+    </a>
+    <a class="link-card" href="sitemap.xml" target="_blank">
+      <div class="link-icon li-gray">&#128462;</div>
+      <div class="link-info">
+        <div class="link-name">Sitemap</div>
+        <div class="link-desc">200+ URLs for Google</div>
       </div>
-    </div>
-  </div>
-
-  <div class="action-card orange" id="card-8">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-8', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#8</span>
-        <span class="card-title">Post Twitter/X Threads (3 threads)</span>
-        <span class="card-status pending">⏳ Pending</span>
+    </a>
+    <a class="link-card" href="https://dashboard.stripe.com/payment-links" target="_blank">
+      <div class="link-icon li-purple">&#128179;</div>
+      <div class="link-info">
+        <div class="link-name">Stripe Dashboard</div>
+        <div class="link-desc">Payment links &amp; coupon management</div>
       </div>
-      <div class="card-details">
-        3 thread templates ready in POST-TODAY.html → Section 6
+    </a>
+    <a class="link-card" href="https://search.google.com/search-console" target="_blank">
+      <div class="link-icon li-blue">&#128269;</div>
+      <div class="link-info">
+        <div class="link-name">Google Search Console</div>
+        <div class="link-desc">Submit sitemap &amp; verify domain</div>
       </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 10 min</span>
-        <a class="btn btn-orange" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\POST-TODAY.html">Open POST-TODAY.html</a>
-        <a class="btn btn-secondary" href="https://twitter.com" target="_blank">Twitter/X</a>
+    </a>
+    <a class="link-card" href="INFLUENCER-OUTREACH.html" target="_blank">
+      <div class="link-icon li-orange">&#127775;</div>
+      <div class="link-info">
+        <div class="link-name">Influencer Outreach</div>
+        <div class="link-desc">30 creators to contact</div>
       </div>
-    </div>
-  </div>
-
-  <div class="action-card orange" id="card-9">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-9', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#9</span>
-        <span class="card-title">Post LinkedIn Articles (2 posts)</span>
-        <span class="card-status pending">⏳ Pending</span>
+    </a>
+    <a class="link-card" href="quiz.html" target="_blank">
+      <div class="link-icon li-purple">&#10067;</div>
+      <div class="link-info">
+        <div class="link-name">Quiz Funnel</div>
+        <div class="link-desc">Which product is right for you?</div>
       </div>
-      <div class="card-details">
-        2 post templates ready in POST-TODAY.html → Section 7
-      </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 10 min</span>
-        <a class="btn btn-orange" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\POST-TODAY.html">Open POST-TODAY.html</a>
-        <a class="btn btn-secondary" href="https://linkedin.com" target="_blank">LinkedIn</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-card orange" id="card-10">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-10', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#10</span>
-        <span class="card-title">Submit to 20 Directories</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        20 directories with interactive checklist to track progress.<br>
-        Tip: Do 3–5 per day to avoid looking spammy.
-      </div>
-      <div class="card-meta">
-        <span class="time-badge">⏱ 3 hrs total (3/day)</span>
-        <a class="btn btn-orange" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SUBMIT-DIRECTORIES.html">Open Directory Checklist</a>
-      </div>
-    </div>
+    </a>
   </div>
 </div>
 
-<!-- SECTION C: MEDIUM -->
+<!-- COMPLETED SECTION -->
 <div class="section">
-  <div class="section-title" style="color: #ffd700;">🟡 MEDIUM — Marketing Setup</div>
-
-  <div class="action-card yellow" id="card-11">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-11', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#11</span>
-        <span class="card-title">Set Up Beehiiv Email Newsletter</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        Free tier at beehiiv.com — up to 2,500 subscribers free.<br>
-        5-email welcome sequence copy is already written and ready.
-      </div>
-      <div class="card-meta">
-        <a class="btn btn-secondary" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-EMAIL-MARKETING.html">Open Setup Guide</a>
-        <a class="btn btn-secondary" href="https://beehiiv.com" target="_blank">beehiiv.com</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-card yellow" id="card-12">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-12', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#12</span>
-        <span class="card-title">Add Google Analytics 4</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        Create GA4 property → get <code>G-XXXXXXXXXX</code> → uncomment placeholder in index.html.<br>
-        Currently just a comment — takes 2 minutes to activate.
-      </div>
-      <div class="card-meta">
-        <a class="btn btn-secondary" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-ANALYTICS.html">Open Setup Guide</a>
-        <a class="btn btn-secondary" href="https://analytics.google.com" target="_blank">Google Analytics</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-card yellow" id="card-13">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-13', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#13</span>
-        <span class="card-title">Submit Sitemap to Search Console</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        Submit: <code>https://baphometsblade.github.io/freelanceos-storefront/sitemap.xml</code><br>
-        Go to: search.google.com/search-console → Sitemaps → paste URL → Submit
-      </div>
-      <div class="card-meta">
-        <a class="btn btn-secondary" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-ANALYTICS.html">Open Setup Guide</a>
-        <a class="btn btn-secondary" href="https://search.google.com/search-console" target="_blank">Search Console</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-card yellow" id="card-14">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-14', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#14</span>
-        <span class="card-title">Set Up Tawk.to Live Chat</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        Free live chat widget — convert fence-sitters in real-time.<br>
-        Already partially injected on 7 storefront pages.
-      </div>
-      <div class="card-meta">
-        <a class="btn btn-secondary" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-TAWKTO.html">Open Setup Guide</a>
-        <a class="btn btn-secondary" href="https://tawk.to" target="_blank">tawk.to</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-card yellow" id="card-15">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-15', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#15</span>
-        <span class="card-title">Create Lemon Squeezy Store</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        Alternative marketplace with built-in VAT/tax handling for international sales.<br>
-        Good for EU buyers who see VAT issues with Stripe.
-      </div>
-      <div class="card-meta">
-        <a class="btn btn-secondary" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-LEMONSQUEEZY.html">Open Setup Guide</a>
-        <a class="btn btn-secondary" href="https://lemonsqueezy.com" target="_blank">lemonsqueezy.com</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SECTION D: MARKETPLACE -->
-<div class="section">
-  <div class="section-title" style="color: #60a5fa;">🔵 MARKETPLACE — List on More Platforms</div>
-
-  <div class="action-card blue" id="card-16">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-16', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#16</span>
-        <span class="card-title">Optimize Gumroad Listings</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        Optimized titles, descriptions, and tags are ready to copy-paste.<br>
-        Also: upload delivery files for CreatorHQ Pro + YouTube Empire.
-      </div>
-      <div class="card-meta">
-        <a class="btn btn-secondary" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\GUMROAD-OPTIMIZE.html">Open Gumroad Guide</a>
-        <a class="btn btn-secondary" href="https://gumroad.com/products" target="_blank">Gumroad Products</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-card blue" id="card-17">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-17', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#17</span>
-        <span class="card-title">Upload Payhip Delivery Files</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        CreatorHQ Pro (0qKkI) and YouTube Empire (GzCZT) still need delivery files.<br>
-        Log in at payhip.com/products → Edit product → Upload file.
-      </div>
-      <div class="card-meta">
-        <a class="btn btn-secondary" href="https://payhip.com/products" target="_blank">Payhip Products</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-card blue" id="card-18">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-18', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#18</span>
-        <span class="card-title">Submit to AppSumo Partner Program</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        Big exposure for lifetime deals — deal.html is already built for this positioning.<br>
-        Apply at appsumo.com/sell — review takes 1–4 weeks.
-      </div>
-      <div class="card-meta">
-        <a class="btn btn-secondary" href="https://appsumo.com/sell" target="_blank">AppSumo Partner Apply</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-card blue" id="card-19">
-    <div class="card-check"><input type="checkbox" onchange="toggleDone('card-19', this)"></div>
-    <div class="card-body">
-      <div class="card-header">
-        <span class="card-num">#19</span>
-        <span class="card-title">Create Etsy Listings</span>
-        <span class="card-status pending">⏳ Pending</span>
-      </div>
-      <div class="card-details">
-        Etsy has a large audience buying digital/Notion templates.<br>
-        Use etsy-gumroad-pack.html in workspace for listing copy and assets.
-      </div>
-      <div class="card-meta">
-        <a class="btn btn-secondary" href="https://etsy.com/sell" target="_blank">Etsy Sell</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SECTION E: COMPLETED -->
-<div class="section">
-  <div class="section-title" style="color: #22c55e;">✅ ALREADY LIVE — Infrastructure Complete</div>
+  <div class="section-title" style="color: #4ade80;">&#9989; ALREADY LIVE — Full Infrastructure</div>
   <div class="completed-grid">
-    <div class="completed-item">GitHub Pages storefront live (170+ pages)</div>
-    <div class="completed-item">Stripe payment links live (5 products: $9 Quick Start, $29 Pro, $29 CreatorHQ, $29 AgencyOS, $29 YouTube Empire)</div>
-    <div class="completed-item">Vercel API deployed (capture-email, deliver-template, stripe-webhook)</div>
-    <div class="completed-item">FLASH40 coupon live in Stripe (40% off, 100 uses)</div>
-    <div class="completed-item">Pre-checkout bridge pages (4 products)</div>
-    <div class="completed-item">Exit intent popup active</div>
+    <div class="completed-item">GitHub Pages storefront live (200+ pages)</div>
+    <div class="completed-item">Stripe payment links live (5 products)</div>
+    <div class="completed-item">FLASH40 coupon (40% off, 100 uses)</div>
+    <div class="completed-item">Vercel API deployed (email capture &amp; delivery)</div>
+    <div class="completed-item">5 checkout bridge pages (upgraded with FOMO)</div>
+    <div class="completed-item">Exit intent popup active on all pages</div>
     <div class="completed-item">Activity ticker + scarcity counters active</div>
-    <div class="completed-item">Quiz funnel live (quiz.html → recommendation → purchase)</div>
-    <div class="completed-item">Interactive template demo live (demo.html)</div>
-    <div class="completed-item">18-testimonial page live (testimonials.html)</div>
-    <div class="completed-item">Free tools: Rate Calculator + Client Profit Calculator + Project Estimator + Business Health Score + Invoice Builder + Proposal Generator + Contract Wizard + Client Onboarding Checklist + Freelance Score Card</div>
-    <div class="completed-item">Affiliate program page live (affiliate.html)</div>
-    <div class="completed-item">Press kit live (press.html)</div>
-    <div class="completed-item">Pricing comparison page (pricing.html)</div>
+    <div class="completed-item">Quiz funnel live → recommendation → purchase</div>
+    <div class="completed-item">Interactive template demo (demo.html)</div>
+    <div class="completed-item">Wall of Love — 20 testimonials + 3 case studies</div>
+    <div class="completed-item">Testimonials page (testimonials.html — 18 reviews)</div>
+    <div class="completed-item">18+ free tools (Rate Calculator, Invoice Builder, etc.)</div>
+    <div class="completed-item">Affiliate program page (affiliate.html — 30% commission)</div>
+    <div class="completed-item">Press kit (press.html)</div>
+    <div class="completed-item">Pricing comparison (pricing.html)</div>
     <div class="completed-item">AppSumo-style deal page (deal.html)</div>
-    <div class="completed-item">Flash sale page (sale.html)</div>
-    <div class="completed-item">FAQ page (faq.html — 30 questions)</div>
-    <div class="completed-item">170+ SEO pages published</div>
-    <div class="completed-item">Sitemap at 170+ URLs</div>
-    <div class="completed-item">POST-TODAY.html workspace launch content</div>
+    <div class="completed-item">Flash sale page with countdown timer (flash-sale.html)</div>
+    <div class="completed-item">FAQ page — 30 questions (faq.html)</div>
     <div class="completed-item">Video Sales Letter page (vsl.html)</div>
+    <div class="completed-item">110+ SEO blog posts published</div>
+    <div class="completed-item">Sitemap at 200+ URLs</div>
+    <div class="completed-item">PDF lead magnet — Freelance Starter Kit (22 pages)</div>
+    <div class="completed-item">7-email nurture sequence written (Day 0–21)</div>
+    <div class="completed-item">Social media kits (Instagram, LinkedIn, Twitter, Stories)</div>
+    <div class="completed-item">Pinterest kit — 20 pins pre-designed</div>
+    <div class="completed-item">10 TikTok/Reels scripts complete</div>
+    <div class="completed-item">POST-TODAY.html — launch content for all channels</div>
+    <div class="completed-item">REDDIT-POSTS.html — copy for 3 subreddits</div>
+    <div class="completed-item">INFLUENCER-OUTREACH.html — 30 creators to contact</div>
+    <div class="completed-item">Start Here quiz funnel (product recommender)</div>
+    <div class="completed-item">YouTube Empire product page</div>
+    <div class="completed-item">Gallery page (gallery.html)</div>
+    <div class="completed-item">Logo service upsell on thank-you page</div>
+    <div class="completed-item">10 profession-specific SEO pages</div>
     <div class="completed-item">Internal linking pass across 10 SEO pages</div>
-    <div class="completed-item">✅ DONE — All 4 Payhip delivery files uploaded + ZIPs hosted on GitHub Pages</div>
-    <div class="completed-item">YouTube Empire product page (youtube-empire.html)</div>
-    <div class="completed-item">Exit-intent popup + promo bar on homepage</div>
-    <div class="completed-item">Start-here.html quiz funnel (recommends right product)</div>
-    <div class="completed-item">Free-download lead magnet + thank-you-free upsell</div>
-    <div class="completed-item">INFLUENCER-OUTREACH.html ready (30 creators to contact)</div>
-    <div class="completed-item">Quick Start $9 entry product added to homepage</div>
-    <div class="completed-item">10 profession-specific Notion pages (photographers, designers, etc.)</div>
-    <div class="completed-item">Logo service upsell on thank-you page ($49)</div>
-    <div class="completed-item">Gallery page at /gallery.html</div>
-  </div>
-</div>
-
-<!-- SECTION F: WORKSPACE TOOLS -->
-<div class="section">
-  <div class="section-title" style="color: #c084fc;">🛠 WORKSPACE TOOLS — Quick Launch Links</div>
-  <div class="tools-grid">
-    <a class="tool-btn" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\POST-TODAY.html">
-      <span class="tool-icon">📢</span>POST-TODAY.html
-    </a>
-    <a class="tool-btn" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SUBMIT-DIRECTORIES.html">
-      <span class="tool-icon">📋</span>SUBMIT-DIRECTORIES.html
-    </a>
-    <a class="tool-btn" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-EMAIL-MARKETING.html">
-      <span class="tool-icon">📧</span>SETUP-EMAIL-MARKETING.html
-    </a>
-    <a class="tool-btn" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-ANALYTICS.html">
-      <span class="tool-icon">📊</span>SETUP-ANALYTICS.html
-    </a>
-    <a class="tool-btn" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-VERCEL-API.html">
-      <span class="tool-icon">⚡</span>SETUP-VERCEL-API.html
-    </a>
-    <a class="tool-btn" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-TAWKTO.html">
-      <span class="tool-icon">💬</span>SETUP-TAWKTO.html
-    </a>
-    <a class="tool-btn" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\SETUP-LEMONSQUEEZY.html">
-      <span class="tool-icon">🍋</span>SETUP-LEMONSQUEEZY.html
-    </a>
-    <a class="tool-btn" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\GUMROAD-OPTIMIZE.html">
-      <span class="tool-icon">🛒</span>GUMROAD-OPTIMIZE.html
-    </a>
-    <a class="tool-btn" href="computer://C:\Users\markm\OneDrive\Documents\Claude\Projects\automated app\REDDIT-POST-NOW.html">
-      <span class="tool-icon">🤖</span>REDDIT-POST-NOW.html
-    </a>
   </div>
 </div>
 
 <!-- FOOTER -->
-<div style="text-align: center; padding: 30px 0 20px; border-top: 1px solid #1a1a1a; margin-top: 10px;">
+<div class="dash-footer">
   <button class="reset-btn" onclick="resetAll()">Reset all checkboxes</button>
-  <p style="color: #444; font-size: 0.78rem; margin-top: 10px;">Progress is saved in your browser. Reopen this file anytime to continue.</p>
+  <p style="color: #444; font-size: 0.75rem; margin-top: 8px;">Checkbox state saved in browser. Reopen anytime to continue.</p>
 </div>
 
 <script>
-  const STORAGE_KEY = 'launchStatus';
-  const TOTAL = 19;
+  const STORE_KEY = 'launchStatus_v2';
 
   function getState() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+    try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
+    catch(e) { return {}; }
   }
+  function saveState(s) { localStorage.setItem(STORE_KEY, JSON.stringify(s)); }
 
-  function saveState(state) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }
-
-  function toggleDone(cardId, checkbox) {
-    const card = document.getElementById(cardId);
+  function markDone(taskId, cb) {
+    const card = document.getElementById(taskId);
     const state = getState();
-    if (checkbox.checked) {
+    if (cb.checked) {
       card.classList.add('done');
-      const statusEl = card.querySelector('.card-status');
-      if (statusEl) {
-        statusEl.textContent = '✅ Done';
-        statusEl.className = 'card-status done-pill';
-      }
-      state[cardId] = true;
+      state[taskId] = true;
     } else {
       card.classList.remove('done');
-      const statusEl = card.querySelector('.card-status');
-      if (statusEl) {
-        statusEl.textContent = '⏳ Pending';
-        statusEl.className = 'card-status pending';
-      }
-      delete state[cardId];
+      delete state[taskId];
     }
     saveState(state);
-    updateProgress();
   }
 
-  function updateProgress() {
-    const state = getState();
-    const done = Object.keys(state).length;
-    const pct = Math.round((done / TOTAL) * 100);
-    document.getElementById('progress-text').textContent = done + ' / ' + TOTAL + ' completed';
-    document.getElementById('progress-fill').style.width = pct + '%';
-
-    // Update header status pill
-    const pill = document.querySelector('.status-pill');
-    if (done >= TOTAL) {
-      pill.textContent = '🟢 All actions complete!';
-      pill.style.background = '#0d3a1f';
-      pill.style.borderColor = '#22c55e';
-      pill.style.color = '#44ff88';
-    } else if (done >= 3) {
-      pill.textContent = '🟡 In Progress — ' + done + '/' + TOTAL + ' done';
-      pill.style.background = '#2a2000';
-      pill.style.borderColor = '#ffd700';
-      pill.style.color = '#ffd700';
-    } else {
-      pill.textContent = '🔴 0 Sales — Critical Actions Needed';
-      pill.style.background = '#3a0000';
-      pill.style.borderColor = '#ff3333';
-      pill.style.color = '#ff6666';
-    }
+  function resetAll() {
+    if (!confirm('Reset all checkboxes?')) return;
+    localStorage.removeItem(STORE_KEY);
+    document.querySelectorAll('.task-card').forEach(c => c.classList.remove('done'));
+    document.querySelectorAll('.done-checkbox input').forEach(cb => cb.checked = false);
   }
 
   function restoreState() {
     const state = getState();
-    for (const cardId in state) {
-      const card = document.getElementById(cardId);
+    for (const id in state) {
+      const card = document.getElementById(id);
       if (!card) continue;
-      const checkbox = card.querySelector('input[type="checkbox"]');
-      if (checkbox) {
-        checkbox.checked = true;
-        card.classList.add('done');
-        const statusEl = card.querySelector('.card-status');
-        if (statusEl) {
-          statusEl.textContent = '✅ Done';
-          statusEl.className = 'card-status done-pill';
-        }
-      }
+      card.classList.add('done');
+      const cb = card.querySelector('.done-checkbox input');
+      if (cb) cb.checked = true;
     }
-    updateProgress();
   }
 
-  function resetAll() {
-    if (!confirm('Reset all checkboxes? This cannot be undone.')) return;
-    localStorage.removeItem(STORAGE_KEY);
-    document.querySelectorAll('.action-card').forEach(card => {
-      card.classList.remove('done');
-      const cb = card.querySelector('input[type="checkbox"]');
-      if (cb) cb.checked = false;
-      const statusEl = card.querySelector('.card-status');
-      if (statusEl) {
-        statusEl.textContent = '⏳ Pending';
-        statusEl.className = 'card-status pending';
-      }
-    });
-    updateProgress();
-  }
-
-  // Init on load
   restoreState();
 </script>
 </body>
