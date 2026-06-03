@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Skill Gap Analyzer — Free Assessment | FreelanceOS</title>
+    <meta name="description" content="Rate yourself across 12 critical freelance skills and get a personalized readiness score, radar chart, priority matrix, and learning path. Free skill gap analysis for freelancers.">
+    <meta name="keywords" content="freelance skills, skill gap analysis, freelancer assessment, freelance readiness, freelance career, skill development, freelance business skills">
+    <meta name="author" content="FreelanceOS">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://freelanceos.com/freelanceos-storefront/skill-gap-analyzer.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Freelance Skill Gap Analyzer — Free Assessment | FreelanceOS">
+    <meta property="og:description" content="Rate 12 critical freelance skills. Get your readiness score, radar chart, priority matrix, and a personalized learning path — free.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freelanceos.com/freelanceos-storefront/skill-gap-analyzer.html">
+    <meta property="og:image" content="https://freelanceos.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="FreelanceOS">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Freelance Skill Gap Analyzer — Free Assessment | FreelanceOS">
+    <meta name="twitter:description" content="Rate 12 critical freelance skills. Get your readiness score, radar chart, priority matrix, and a personalized learning path — free.">
+    <meta name="twitter:image" content="https://freelanceos.com/og-image.png">
+    <meta name="twitter:site" content="@freelanceos">
+
+    <!-- Schema.org WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Freelance Skill Gap Analyzer",
+        "description": "Rate yourself across 12 critical freelance skills and receive a personalized readiness score, interactive radar chart, skill priority matrix, and learning path.",
+        "url": "https://freelanceos.com/freelanceos-storefront/skill-gap-analyzer.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "FreelanceOS",
+            "url": "https://freelanceos.com"
+        }
+    }
+    </script>
+
+    <style>
+        /* ============================================
+           CSS CUSTOM PROPERTIES & RESET
+           ============================================ */
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #a855f7;
+            --accent2: #ec4899;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --gradient-subtle: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.15));
+            --glass-bg: rgba(15, 23, 42, 0.8);
+            --glass-border: rgba(168, 85, 247, 0.1);
+            --glass-border-hover: rgba(168, 85, 247, 0.3);
+            --radius-card: 16px;
+            --radius-btn: 12px;
+            --radius-sm: 8px;
+            --shadow-glow: 0 0 40px rgba(168, 85, 247, 0.15);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           BACKGROUND EFFECTS
+           ============================================ */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.12;
+            z-index: 0;
+            pointer-events: none;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .bg-orb-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            right: -200px;
+        }
+
+        .bg-orb-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent2);
+            bottom: -150px;
+            left: -150px;
+            animation-delay: -10s;
+        }
+
+        .bg-orb-3 {
+            width: 300px;
+            height: 300px;
+            background: #6366f1;
+            top: 50%;
+            left: 50%;
+            animation-delay: -5s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* ============================================
+           LAYOUT & CONTAINERS
+           ============================================ */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container-wide {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================
+           HEADER / HERO
+           ============================================ */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient-subtle);
+            border: 1px solid var(--glass-border);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 620px;
+            margin: 0 auto 32px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           GLASS CARDS
+           ============================================ */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-card);
+            padding: 28px;
+            transition: var(--transition);
+        }
+
+        .glass-card:hover {
+            border-color: var(--glass-border-hover);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* ============================================
+           PROGRESS BAR
+           ============================================ */
+        .progress-section {
+            padding: 0 20px 20px;
+        }
+
+        .progress-bar-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .progress-count {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 100px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        /* ============================================
+           ASSESSMENT STEP
+           ============================================ */
+        #assessment-section {
+            padding: 20px 0 60px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .skill-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-card);
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            border-color: var(--glass-border-hover);
+        }
+
+        .skill-card.rated {
+            border-color: rgba(168, 85, 247, 0.25);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .skill-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--gradient-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .skill-info {
+            flex: 1;
+        }
+
+        .skill-number {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            margin-bottom: 2px;
+        }
+
+        .skill-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .skill-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .rating-btn {
+            flex: 1;
+            padding: 10px 4px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            background: rgba(15, 23, 42, 0.5);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-family: inherit;
+            line-height: 1.3;
+        }
+
+        .rating-btn:hover {
+            border-color: var(--accent);
+            color: var(--text);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        .rating-btn.active {
+            background: var(--gradient);
+            border-color: transparent;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .rating-btn .level-num {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+
+        /* ============================================
+           SUBMIT BUTTON
+           ============================================ */
+        .submit-section {
+            text-align: center;
+            padding: 20px 0 40px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 40px;
+            background: var(--gradient);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-btn);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-btn);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(168, 85, 247, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* ============================================
+           RESULTS SECTION
+           ============================================ */
+        #results-section {
+            display: none;
+            padding: 20px 0 60px;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .results-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .results-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* ── Score Gauge ── */
+        .score-gauge-card {
+            text-align: center;
+            padding: 40px 28px;
+            margin-bottom: 24px;
+        }
+
+        .gauge-container {
+            position: relative;
+            width: 220px;
+            height: 130px;
+            margin: 0 auto 24px;
+        }
+
+        .gauge-svg {
+            width: 220px;
+            height: 130px;
+        }
+
+        .gauge-score-text {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .gauge-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .score-tier-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 16px;
+        }
+
+        .score-tier-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 12px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── Radar Chart ── */
+        .radar-card {
+            padding: 32px 20px;
+            margin-bottom: 24px;
+        }
+
+        .radar-card h3 {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .radar-chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .radar-svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ── Strengths & Gaps ── */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 700px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .strength-item, .gap-item {
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+        }
+
+        .strength-item {
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.15);
+        }
+
+        .gap-item {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+        }
+
+        .sg-skill-name {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .sg-rating {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        .sg-advice {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .gap-impact {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin: 8px 0;
+        }
+
+        .gap-resources {
+            margin-top: 12px;
+        }
+
+        .gap-resources h5 {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .gap-resources a {
+            display: block;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 3px 0;
+            transition: var(--transition);
+        }
+
+        .gap-resources a:hover {
+            color: var(--accent2);
+        }
+
+        .gap-challenge {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(168, 85, 247, 0.08);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--accent);
+        }
+
+        .gap-challenge h5 {
+            font-size: 0.82rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .gap-challenge p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Priority Matrix ── */
+        .matrix-card {
+            padding: 32px 28px;
+            margin-bottom: 24px;
+        }
+
+        .matrix-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .matrix-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .matrix-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .matrix-quadrant {
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid;
+        }
+
+        .matrix-quadrant.fix-first {
+            background: rgba(239, 68, 68, 0.06);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .matrix-quadrant.superpowers {
+            background: rgba(34, 197, 94, 0.06);
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .matrix-quadrant.delegate {
+            background: rgba(100, 116, 139, 0.06);
+            border-color: rgba(100, 116, 139, 0.2);
+        }
+
+        .matrix-quadrant.nice-have {
+            background: rgba(59, 130, 246, 0.06);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .quadrant-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .quadrant-icon {
+            font-size: 1.2rem;
+        }
+
+        .quadrant-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .quadrant-desc {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+
+        .quadrant-skills {
+            list-style: none;
+        }
+
+        .quadrant-skills li {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            padding: 4px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quadrant-skills li .score-badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-weight: 600;
+        }
+
+        /* ── Learning Path ── */
+        .learning-path-card {
+            padding: 32px 28px;
+            margin-bottom: 24px;
+        }
+
+        .learning-path-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .learning-path-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .path-timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .path-timeline::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--gradient);
+            opacity: 0.3;
+        }
+
+        .path-step {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .path-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-dot {
+            position: absolute;
+            left: -32px;
+            top: 4px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .path-step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .path-step-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .path-step-time {
+            font-size: 0.78rem;
+            color: var(--accent);
+            font-weight: 600;
+            background: rgba(168, 85, 247, 0.1);
+            padding: 3px 10px;
+            border-radius: 100px;
+        }
+
+        .path-step-reason {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Share Section ── */
+        .share-card {
+            text-align: center;
+            padding: 32px 28px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .share-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .share-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .share-text-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            color: var(--text);
+            font-size: 0.9rem;
+            text-align: left;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--glass-border);
+            background: rgba(15, 23, 42, 0.5);
+            color: var(--text);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .share-btn:hover {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        .share-btn.copied {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        /* ── CTA Section ── */
+        .cta-section {
+            margin-bottom: 40px;
+        }
+
+        .cta-card {
+            background: var(--gradient-subtle);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: var(--radius-card);
+            padding: 40px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient);
+            opacity: 0.04;
+        }
+
+        .cta-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .cta-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 24px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        .cta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: var(--gradient);
+            color: #fff;
+            text-decoration: none;
+            border-radius: var(--radius-btn);
+            font-size: 1.05rem;
+            font-weight: 700;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .cta-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        .cta-price {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .cta-price-old {
+            text-decoration: line-through;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        .cta-price-new {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-tools {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .footer-tool-link {
+            padding: 8px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            transition: var(--transition);
+        }
+
+        .footer-tool-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .footer-disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .footer-brand {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .footer-brand a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gaugeArc {
+            from { stroke-dashoffset: 283; }
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .fade-in-up:nth-child(1) { animation-delay: 0.05s; }
+        .fade-in-up:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in-up:nth-child(3) { animation-delay: 0.15s; }
+        .fade-in-up:nth-child(4) { animation-delay: 0.2s; }
+        .fade-in-up:nth-child(5) { animation-delay: 0.25s; }
+        .fade-in-up:nth-child(6) { animation-delay: 0.3s; }
+
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.4); }
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .hero-stats {
+                gap: 24px;
+            }
+            .skill-card {
+                padding: 18px;
+            }
+            .rating-buttons {
+                gap: 4px;
+            }
+            .rating-btn {
+                padding: 8px 2px;
+                font-size: 0.7rem;
+            }
+            .rating-btn .level-num {
+                font-size: 0.95rem;
+            }
+            .matrix-card, .learning-path-card, .radar-card {
+                padding: 20px 16px;
+            }
+            .gauge-container {
+                width: 180px;
+                height: 110px;
+            }
+            .gauge-svg {
+                width: 180px;
+                height: 110px;
+            }
+            .gauge-score-text {
+                font-size: 2.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <!-- ═══════════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════════ -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">
+                <span>&#9733;</span>
+                <span>Free Skill Assessment</span>
+            </div>
+            <h1>Freelance <span class="gradient-text">Skill Gap</span> Analyzer</h1>
+            <p>Rate yourself across 12 critical freelance skills. Get your readiness score, radar chart, priority matrix, and a personalized learning path to close the gaps holding you back.</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">12</div>
+                    <div class="hero-stat-label">Skills Assessed</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">2 min</div>
+                    <div class="hero-stat-label">To Complete</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">100%</div>
+                    <div class="hero-stat-label">Free Forever</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PROGRESS BAR
+         ═══════════════════════════════════════════ -->
+    <div class="progress-section" id="progress-section">
+        <div class="progress-bar-container">
+            <div class="progress-header">
+                <span class="progress-label">Assessment Progress</span>
+                <span class="progress-count" id="progress-count">0 / 12 skills rated</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         ASSESSMENT SECTION (Step 1)
+         ═══════════════════════════════════════════ -->
+    <section id="assessment-section">
+        <div class="container">
+            <div class="skills-grid" id="skills-grid">
+                <!-- Skills rendered by JS -->
+            </div>
+
+            <div class="submit-section" id="submit-section">
+                <button class="btn-primary" id="analyze-btn" disabled onclick="showResults()">
+                    <span>&#9889;</span> Analyze My Skill Gaps
+                </button>
+                <p style="color: var(--text-dim); font-size: 0.82rem; margin-top: 10px;" id="submit-hint">Rate all 12 skills to unlock your results</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         RESULTS SECTION (Step 2)
+         ═══════════════════════════════════════════ -->
+    <section id="results-section">
+        <div class="container-wide">
+            <div class="results-header">
+                <h2>Your Skill Gap Analysis</h2>
+                <p>Here is a breakdown of your freelance readiness across all 12 dimensions.</p>
+            </div>
+
+            <!-- Score Gauge -->
+            <div class="glass-card score-gauge-card fade-in-up" id="score-gauge-card">
+                <div class="gauge-container">
+                    <svg class="gauge-svg" viewBox="0 0 220 130">
+                        <defs>
+                            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#ef4444"/>
+                                <stop offset="30%" stop-color="#f59e0b"/>
+                                <stop offset="60%" stop-color="#a855f7"/>
+                                <stop offset="100%" stop-color="#22c55e"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Background arc -->
+                        <path d="M 20 120 A 90 90 0 0 1 200 120" fill="none" stroke="rgba(168,85,247,0.1)" stroke-width="14" stroke-linecap="round"/>
+                        <!-- Value arc -->
+                        <path id="gauge-arc" d="M 20 120 A 90 90 0 0 1 200 120" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283"/>
+                    </svg>
+                    <div class="gauge-score-text" id="gauge-score-text">0</div>
+                </div>
+                <div class="gauge-label">Freelance Readiness Score</div>
+                <div id="tier-badge-container"></div>
+                <div class="score-tier-desc" id="tier-desc"></div>
+            </div>
+
+            <!-- Radar Chart -->
+            <div class="glass-card radar-card fade-in-up">
+                <h3>Skills Radar</h3>
+                <div class="radar-chart-container">
+                    <svg id="radar-svg" class="radar-svg" viewBox="0 0 500 480" xmlns="http://www.w3.org/2000/svg"></svg>
+                </div>
+            </div>
+
+            <!-- Strengths & Gaps -->
+            <div class="two-col">
+                <div class="glass-card fade-in-up">
+                    <div class="section-title"><span style="color: var(--success);">&#9650;</span> Top 3 Strengths</div>
+                    <div id="strengths-list"></div>
+                </div>
+                <div class="glass-card fade-in-up">
+                    <div class="section-title"><span style="color: var(--danger);">&#9660;</span> Top 3 Gaps</div>
+                    <div id="gaps-list"></div>
+                </div>
+            </div>
+
+            <!-- Priority Matrix -->
+            <div class="glass-card matrix-card fade-in-up">
+                <h3>Skill Priority Matrix</h3>
+                <p class="matrix-subtitle">Where to focus your energy based on impact and your current level.</p>
+                <div class="matrix-grid" id="matrix-grid"></div>
+            </div>
+
+            <!-- Learning Path -->
+            <div class="glass-card learning-path-card fade-in-up">
+                <h3>Your Personalized Learning Path</h3>
+                <p class="learning-path-desc">Skills ordered by priority. Focus on one at a time for maximum improvement.</p>
+                <div class="path-timeline" id="learning-path"></div>
+            </div>
+
+            <!-- Share -->
+            <div class="glass-card share-card fade-in-up">
+                <h3>Share Your Results</h3>
+                <p>Challenge other freelancers to take the assessment too.</p>
+                <div class="share-text-box" id="share-text"></div>
+                <div class="share-buttons">
+                    <button class="share-btn" onclick="copyShareText()">&#128203; Copy Text</button>
+                    <button class="share-btn" onclick="shareTwitter()">&#120143; Share on X</button>
+                    <button class="share-btn" onclick="shareLinkedIn()">in Share on LinkedIn</button>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section fade-in-up">
+                <div class="cta-card">
+                    <div class="cta-badge">&#9889; Limited Offer: 40% off</div>
+                    <h3>Close Every Gap with FreelanceOS</h3>
+                    <p>The all-in-one Notion system that covers every skill you just assessed. CRM, finances, project management, proposals, and more.</p>
+                    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="cta-link" target="_blank" rel="noopener">
+                        Get FreelanceOS &mdash; 40% Off <span>&#8594;</span>
+                    </a>
+                    <div class="cta-price">
+                        <span class="cta-price-old">$49</span>
+                        <span class="cta-price-new">$29 with FLASH40</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Retake -->
+            <div style="text-align: center; margin-bottom: 40px;">
+                <button class="btn-secondary" onclick="retakeAssessment()">&#8634; Retake Assessment</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-tools">
+                <a href="/freelanceos-storefront/confidence-assessment.html" class="footer-tool-link">Confidence Assessment</a>
+                <a href="/freelanceos-storefront/productivity-score.html" class="footer-tool-link">Productivity Score</a>
+                <a href="/freelanceos-storefront/niche-ranker.html" class="footer-tool-link">Niche Ranker</a>
+                <a href="/freelanceos-storefront/portfolio-grader.html" class="footer-tool-link">Portfolio Grader</a>
+            </div>
+            <p class="footer-disclaimer">
+                Disclaimer: This tool provides general educational guidance based on self-reported data. Results are for informational purposes only and do not constitute professional career, financial, or business advice. Individual results may vary. Resource links are provided as suggestions and FreelanceOS is not affiliated with the linked platforms.
+            </p>
+            <p class="footer-brand">
+                Built by <a href="https://freelanceos.com" target="_blank" rel="noopener">FreelanceOS</a> &mdash; Notion templates for freelancers who mean business.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+         JAVASCRIPT
+         ═══════════════════════════════════════════ -->
+    <script>
+    (function() {
+        'use strict';
+
+        /* ──────────────────────────────────────────
+           SKILL DATA
+           ────────────────────────────────────────── */
+        var SKILLS = [
+            {
+                id: 'technical',
+                name: 'Technical Craft',
+                icon: '\u{1F3AF}',
+                desc: 'Your core deliverable skill — design, code, writing, video, photography, or whatever you sell.',
+                impact: 5,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Your craft is your foundation. Showcase it in case studies and let it generate referrals by consistently over-delivering on quality.',
+                gapWhy: 'Without solid craft skills, clients will churn quickly and referrals dry up. You end up competing on price instead of value.',
+                gapRevenue: 15,
+                resources: [
+                    { title: 'Skillshare — Creative & Professional Courses', url: 'https://www.skillshare.com/' },
+                    { title: 'freeCodeCamp — Full Stack Development (Free)', url: 'https://www.freecodecamp.org/' },
+                    { title: 'Coursera — Professional Certificates', url: 'https://www.coursera.org/professional-certificates' }
+                ],
+                challenge: 'Complete one portfolio-worthy project from scratch. Document your process, publish a case study, and share it on LinkedIn and your portfolio.'
+            },
+            {
+                id: 'communication',
+                name: 'Communication',
+                icon: '\u{1F4AC}',
+                desc: 'Clarity in emails, calls, presentations, and async updates with clients and collaborators.',
+                impact: 7,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Clear communication is rare and clients pay premiums for it. Use structured updates, proactive check-ins, and concise emails to stand out.',
+                gapWhy: 'Poor communication causes scope creep, misaligned expectations, and lost clients. It is the number one complaint clients have about freelancers.',
+                gapRevenue: 20,
+                resources: [
+                    { title: 'Harvard Business Review — Communication Skills', url: 'https://hbr.org/topic/communication' },
+                    { title: 'Grammarly Blog — Professional Writing Tips', url: 'https://www.grammarly.com/blog/category/professional-writing/' },
+                    { title: 'Toastmasters International — Public Speaking', url: 'https://www.toastmasters.org/' }
+                ],
+                challenge: 'For 30 days, send a weekly project update to every active client using a structured template: progress, blockers, next steps, and questions. Track response quality.'
+            },
+            {
+                id: 'sales',
+                name: 'Sales & Pitching',
+                icon: '\u{1F4B0}',
+                desc: 'Winning new clients, writing proposals, closing deals, and converting leads into revenue.',
+                impact: 10,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'You are already closing deals effectively. Build a proposal template library and refine your discovery call script to close even faster.',
+                gapWhy: 'Without sales skills, you depend on inbound luck. You cannot control your pipeline, predict revenue, or scale when you want to.',
+                gapRevenue: 35,
+                resources: [
+                    { title: 'The Futur — Pricing & Selling Creative Services (YouTube)', url: 'https://www.youtube.com/@thefutur' },
+                    { title: 'HubSpot Sales Blog — Techniques & Scripts', url: 'https://blog.hubspot.com/sales' },
+                    { title: 'Book: "Win Without Pitching Manifesto" by Blair Enns', url: 'https://www.winwithoutpitching.com/' }
+                ],
+                challenge: 'Send 5 personalized outreach messages per week for 4 weeks. Track open rates, responses, and meetings booked. Refine your pitch each week based on what works.'
+            },
+            {
+                id: 'marketing',
+                name: 'Marketing & Visibility',
+                icon: '\u{1F4E3}',
+                desc: 'Getting found by ideal clients through content, SEO, social media, and audience building.',
+                impact: 7,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Your marketing is already working. Double down on the channel with the best ROI and create a content calendar to stay consistent.',
+                gapWhy: 'Invisible freelancers rely on feast-or-famine referrals. Marketing creates a steady stream of inbound leads so you can choose your clients.',
+                gapRevenue: 25,
+                resources: [
+                    { title: 'Ali Abdaal — Creator & Marketing Strategies (YouTube)', url: 'https://www.youtube.com/@aliabdaal' },
+                    { title: 'Ahrefs Blog — SEO & Content Marketing', url: 'https://ahrefs.com/blog/' },
+                    { title: 'Buffer Blog — Social Media Strategy', url: 'https://buffer.com/resources/' }
+                ],
+                challenge: 'Publish one piece of content per week for 30 days on your strongest platform (LinkedIn, X, blog). Track impressions, engagement, and inbound leads generated.'
+            },
+            {
+                id: 'financial',
+                name: 'Financial Management',
+                icon: '\u{1F4CA}',
+                desc: 'Invoicing, taxes, budgeting, cash flow management, emergency funds, and profit tracking.',
+                impact: 8,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Strong finances give you confidence to fire bad clients and invest in growth. Keep optimizing your tax strategy and building runway.',
+                gapWhy: 'Poor finances cause anxiety, tax surprises, and bad decisions (like accepting low rates out of desperation). This is the silent business killer.',
+                gapRevenue: 20,
+                resources: [
+                    { title: 'Bola Sokunbi / Clever Girl Finance — Financial Literacy', url: 'https://www.clevergirlfinance.com/' },
+                    { title: 'Bench Accounting Blog — Freelancer Tax & Bookkeeping', url: 'https://bench.co/blog/' },
+                    { title: 'Book: "Profit First" by Mike Michalowicz', url: 'https://mikemichalowicz.com/profit-first/' }
+                ],
+                challenge: 'Set up a simple income/expense tracker (even a spreadsheet), categorize the last 3 months of transactions, calculate your effective hourly rate, and set 3-month and 6-month savings targets.'
+            },
+            {
+                id: 'time',
+                name: 'Time Management',
+                icon: '\u{23F0}',
+                desc: 'Prioritizing tasks, meeting deadlines, avoiding burnout, and maximizing productive hours.',
+                impact: 5,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Your time management is a competitive advantage. Teach your process to VAs or team members as you scale, and protect your deep work blocks.',
+                gapWhy: 'Bad time management means missed deadlines, all-nighters, and burnout. It erodes client trust and forces you into reactive mode.',
+                gapRevenue: 15,
+                resources: [
+                    { title: 'Thomas Frank — Productivity Systems (YouTube)', url: 'https://www.youtube.com/@ThomasFrankExplains' },
+                    { title: 'Todoist Blog — Productivity Methods', url: 'https://todoist.com/inspiration' },
+                    { title: 'Book: "Deep Work" by Cal Newport', url: 'https://calnewport.com/deep-work-rules-for-focused-success-in-a-distracted-world/' }
+                ],
+                challenge: 'Time-block every workday for 30 days. Track how many hours you spend in deep work vs. admin vs. distractions. Aim to increase deep work by 25% by week 4.'
+            },
+            {
+                id: 'negotiation',
+                name: 'Negotiation',
+                icon: '\u{1F91D}',
+                desc: 'Setting rates, negotiating scope, drafting contracts, pushing back on scope creep, and saying no.',
+                impact: 9,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Strong negotiation skills directly increase your income. Start anchoring higher and packaging your services into tiers to capture more value.',
+                gapWhy: 'Weak negotiators leave money on the table on every project. Over a career, this gap compounds into hundreds of thousands in lost income.',
+                gapRevenue: 30,
+                resources: [
+                    { title: 'Chris Voss / MasterClass — Negotiation Tactics', url: 'https://www.masterclass.com/classes/chris-voss-teaches-the-art-of-negotiation' },
+                    { title: 'The Freelancer\'s Union Blog — Rate Negotiation', url: 'https://blog.freelancersunion.org/' },
+                    { title: 'Book: "Never Split the Difference" by Chris Voss', url: 'https://www.blackswanltd.com/never-split-the-difference' }
+                ],
+                challenge: 'Raise your rate by 15-20% on the next 3 proposals. For each, note the response. Practice the "flinch" technique: when a client names a budget, pause 3 seconds before responding.'
+            },
+            {
+                id: 'networking',
+                name: 'Networking',
+                icon: '\u{1F310}',
+                desc: 'Building genuine relationships, getting referrals, joining communities, and collaborating with peers.',
+                impact: 4,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Your network is your safety net. Keep nurturing relationships even when you are booked solid — referrals are the cheapest lead source.',
+                gapWhy: 'Freelancing without a network means doing everything alone. Referrals, partnerships, and support systems all come from relationships.',
+                gapRevenue: 12,
+                resources: [
+                    { title: 'Lunchclub — AI-Powered Professional Networking', url: 'https://lunchclub.com/' },
+                    { title: 'Indie Hackers Community — Peer Support for Solopreneurs', url: 'https://www.indiehackers.com/' },
+                    { title: 'Book: "Never Eat Alone" by Keith Ferrazzi', url: 'https://keithferrazzi.com/books/' }
+                ],
+                challenge: 'Reach out to 2 people per week: one peer and one potential client or collaborator. No pitching — just genuine conversation. Track the relationships you build.'
+            },
+            {
+                id: 'project',
+                name: 'Project Management',
+                icon: '\u{1F4CB}',
+                desc: 'Scoping work, building timelines, managing deliverables, running processes, and tracking progress.',
+                impact: 6,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Your project management skills let you handle larger, more complex (and better-paying) projects. Systematize your workflows to scale.',
+                gapWhy: 'Without project management, deliverables slip, clients get frustrated, and you lose repeat business. Chaos replaces process.',
+                gapRevenue: 18,
+                resources: [
+                    { title: 'Notion Templates — Project Management Systems', url: 'https://www.notion.so/templates/category/project-management' },
+                    { title: 'Asana Academy — Free PM Courses', url: 'https://academy.asana.com/' },
+                    { title: 'Book: "Getting Things Done" by David Allen', url: 'https://gettingthingsdone.com/' }
+                ],
+                challenge: 'Create a reusable project template with phases, milestones, and a client-facing timeline. Use it on your next project and iterate based on what works.'
+            },
+            {
+                id: 'client',
+                name: 'Client Management',
+                icon: '\u{1F465}',
+                desc: 'Setting expectations, onboarding, handling difficult clients, maintaining boundaries, and retaining accounts.',
+                impact: 8,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Excellent client management leads to retainers, referrals, and premium positioning. Build onboarding systems and feedback loops to lock it in.',
+                gapWhy: 'Poor client management means scope creep, payment issues, and stress. The worst part: you lose good clients because of preventable friction.',
+                gapRevenue: 22,
+                resources: [
+                    { title: 'Double Your Freelancing — Client Relationship Guides', url: 'https://doubleyourfreelancing.com/' },
+                    { title: 'Moxie Blog — Client Management for Freelancers', url: 'https://www.withmoxie.com/blog' },
+                    { title: 'Book: "The Win Without Pitching Manifesto" by Blair Enns', url: 'https://www.winwithoutpitching.com/' }
+                ],
+                challenge: 'Create a client onboarding document that covers: welcome message, communication preferences, project timeline, feedback process, and payment terms. Use it on your next client.'
+            },
+            {
+                id: 'branding',
+                name: 'Personal Branding',
+                icon: '\u{2728}',
+                desc: 'Portfolio quality, online presence, social proof, testimonials, and professional reputation.',
+                impact: 6,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Your brand is already attracting opportunities. Keep collecting testimonials, refining your portfolio, and positioning yourself as the go-to expert in your niche.',
+                gapWhy: 'Weak branding means clients cannot find you, trust you, or remember you. You are leaving premium positioning and inbound leads on the table.',
+                gapRevenue: 18,
+                resources: [
+                    { title: 'Justin Welsh — Building a Personal Brand (Newsletter)', url: 'https://www.justinwelsh.me/' },
+                    { title: 'Dribbble Blog — Portfolio Best Practices', url: 'https://dribbble.com/stories' },
+                    { title: 'Book: "Show Your Work" by Austin Kleon', url: 'https://austinkleon.com/show-your-work/' }
+                ],
+                challenge: 'Refresh your portfolio: update your headline, add your 3 best case studies with results, collect 3 new testimonials, and ensure your LinkedIn matches your website.'
+            },
+            {
+                id: 'tools',
+                name: 'Tech & Tools',
+                icon: '\u{1F6E0}',
+                desc: 'Software proficiency, automation, AI tools, workflow efficiency, and staying current with technology.',
+                impact: 3,
+                levels: ['Beginner', 'Basic', 'Competent', 'Advanced', 'Expert'],
+                leverageAdvice: 'Your tech skills let you work faster and deliver more. Teach others your automations and consider productizing your workflows.',
+                gapWhy: 'Poor tool skills mean you spend hours on tasks that could take minutes. You work harder instead of smarter, capping your earning potential.',
+                gapRevenue: 10,
+                resources: [
+                    { title: 'Zapier Blog — Automation Guides & Workflows', url: 'https://zapier.com/blog/' },
+                    { title: 'Notion Academy — Free Courses on Building Systems', url: 'https://www.notion.so/help/guides' },
+                    { title: 'Matt Wolfe / AI Tool Reviews (YouTube)', url: 'https://www.youtube.com/@maboroshi' }
+                ],
+                challenge: 'Identify 3 repetitive tasks in your workflow. Automate or streamline at least one using a tool like Zapier, Notion, or an AI assistant. Measure time saved per week.'
+            }
+        ];
+
+        /* ──────────────────────────────────────────
+           STATE
+           ────────────────────────────────────────── */
+        var ratings = {};
+        var ratedCount = 0;
+
+        /* ──────────────────────────────────────────
+           RENDER ASSESSMENT CARDS
+           ────────────────────────────────────────── */
+        function renderSkillCards() {
+            var grid = document.getElementById('skills-grid');
+            var html = '';
+            for (var i = 0; i < SKILLS.length; i++) {
+                var s = SKILLS[i];
+                html += '<div class="skill-card" id="card-' + s.id + '">';
+                html += '  <div class="skill-header">';
+                html += '    <div class="skill-icon">' + s.icon + '</div>';
+                html += '    <div class="skill-info">';
+                html += '      <div class="skill-number">Skill ' + (i + 1) + ' of 12</div>';
+                html += '      <div class="skill-name">' + s.name + '</div>';
+                html += '      <div class="skill-desc">' + s.desc + '</div>';
+                html += '    </div>';
+                html += '  </div>';
+                html += '  <div class="rating-buttons">';
+                for (var j = 1; j <= 5; j++) {
+                    html += '<button class="rating-btn" data-skill="' + s.id + '" data-value="' + j + '" onclick="rateSkill(\'' + s.id + '\',' + j + ')">';
+                    html += '  <span class="level-num">' + j + '</span>';
+                    html += '  ' + s.levels[j - 1];
+                    html += '</button>';
+                }
+                html += '  </div>';
+                html += '</div>';
+            }
+            grid.innerHTML = html;
+        }
+
+        /* ──────────────────────────────────────────
+           RATING LOGIC
+           ────────────────────────────────────────── */
+        window.rateSkill = function(skillId, value) {
+            var wasNew = !ratings.hasOwnProperty(skillId);
+            ratings[skillId] = value;
+
+            // Update button states
+            var buttons = document.querySelectorAll('[data-skill="' + skillId + '"]');
+            for (var i = 0; i < buttons.length; i++) {
+                var btn = buttons[i];
+                if (parseInt(btn.getAttribute('data-value')) === value) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            }
+
+            // Mark card as rated
+            var card = document.getElementById('card-' + skillId);
+            if (card) card.classList.add('rated');
+
+            // Update progress
+            ratedCount = Object.keys(ratings).length;
+            updateProgress();
+        };
+
+        function updateProgress() {
+            var pct = (ratedCount / 12) * 100;
+            document.getElementById('progress-fill').style.width = pct + '%';
+            document.getElementById('progress-count').textContent = ratedCount + ' / 12 skills rated';
+
+            var btn = document.getElementById('analyze-btn');
+            var hint = document.getElementById('submit-hint');
+            if (ratedCount === 12) {
+                btn.disabled = false;
+                hint.textContent = 'All skills rated — ready to analyze!';
+                hint.style.color = 'var(--success)';
+            } else {
+                btn.disabled = true;
+                hint.textContent = 'Rate all 12 skills to unlock your results';
+                hint.style.color = 'var(--text-dim)';
+            }
+        }
+
+        /* ──────────────────────────────────────────
+           COMPUTE RESULTS
+           ────────────────────────────────────────── */
+        function computeResults() {
+            var totalWeightedScore = 0;
+            var totalWeight = 0;
+            var skillResults = [];
+
+            for (var i = 0; i < SKILLS.length; i++) {
+                var s = SKILLS[i];
+                var rating = ratings[s.id] || 1;
+                totalWeightedScore += ((rating - 1) / 4) * s.impact;
+                totalWeight += s.impact;
+                skillResults.push({
+                    skill: s,
+                    rating: rating,
+                    impact: s.impact,
+                    gapScore: s.impact * (5 - rating)
+                });
+            }
+
+            var overallScore = Math.round((totalWeightedScore / totalWeight) * 100);
+
+            // Sort by rating descending for strengths
+            var strengthsSorted = skillResults.slice().sort(function(a, b) {
+                return b.rating - a.rating || b.impact - a.impact;
+            });
+
+            // Sort by rating ascending for gaps (lowest rating first, weighted by impact)
+            var gapsSorted = skillResults.slice().sort(function(a, b) {
+                return a.rating - b.rating || b.impact - a.impact;
+            });
+
+            // Sort by gap score for learning path
+            var prioritySorted = skillResults.slice().sort(function(a, b) {
+                return b.gapScore - a.gapScore;
+            });
+
+            return {
+                overallScore: overallScore,
+                skillResults: skillResults,
+                strengths: strengthsSorted.slice(0, 3),
+                gaps: gapsSorted.slice(0, 3),
+                prioritySorted: prioritySorted
+            };
+        }
+
+        function getTier(score) {
+            if (score >= 85) return { name: 'Elite Freelancer', desc: 'You have built a real business. Your skills are well-rounded, and you are positioned for premium clients and sustained growth. Focus on scaling and teaching others.', color: '#22c55e', bg: 'rgba(34,197,94,0.12)' };
+            if (score >= 70) return { name: 'Strong Professional', desc: 'Most of your skills are solid. A few targeted improvements could push you into the elite tier and significantly boost your income.', color: '#a855f7', bg: 'rgba(168,85,247,0.12)' };
+            if (score >= 50) return { name: 'Growing Freelancer', desc: 'You have a strong foundation but key gaps are holding you back from reaching your full earning potential. Closing these is your highest-ROI move.', color: '#f59e0b', bg: 'rgba(245,158,11,0.12)' };
+            if (score >= 30) return { name: 'Early Stage', desc: 'Your foundation needs work, but every expert started here. Focus on the high-impact skills first and you will see rapid improvement.', color: '#fb923c', bg: 'rgba(251,146,60,0.12)' };
+            return { name: 'Just Starting', desc: 'You are at the beginning of your freelance journey. Focus on fundamentals: deliver great work, communicate clearly, and build from there.', color: '#ef4444', bg: 'rgba(239,68,68,0.12)' };
+        }
+
+        /* ──────────────────────────────────────────
+           SHOW RESULTS
+           ────────────────────────────────────────── */
+        window.showResults = function() {
+            if (ratedCount < 12) return;
+
+            var results = computeResults();
+            var tier = getTier(results.overallScore);
+
+            // Hide assessment, show results
+            document.getElementById('assessment-section').style.display = 'none';
+            document.getElementById('progress-section').style.display = 'none';
+            document.getElementById('results-section').style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Animate gauge
+            animateGauge(results.overallScore);
+
+            // Tier badge
+            var tierContainer = document.getElementById('tier-badge-container');
+            tierContainer.innerHTML = '<div class="score-tier-badge" style="background:' + tier.bg + '; color:' + tier.color + ';">' + tier.name + '</div>';
+            document.getElementById('tier-desc').textContent = tier.desc;
+
+            // Radar chart
+            renderRadarChart(results.skillResults);
+
+            // Strengths
+            renderStrengths(results.strengths);
+
+            // Gaps
+            renderGaps(results.gaps);
+
+            // Priority Matrix
+            renderPriorityMatrix(results.skillResults);
+
+            // Learning Path
+            renderLearningPath(results.prioritySorted);
+
+            // Share text
+            var biggestGap = results.gaps[0].skill.name;
+            var shareText = 'My freelance readiness score is ' + results.overallScore + '/100. My biggest gap is ' + biggestGap + '. What\'s yours?\n\nTake the free Freelance Skill Gap Analyzer: https://freelanceos.com/freelanceos-storefront/skill-gap-analyzer.html';
+            document.getElementById('share-text').textContent = shareText;
+        };
+
+        /* ──────────────────────────────────────────
+           GAUGE ANIMATION
+           ────────────────────────────────────────── */
+        function animateGauge(score) {
+            var arc = document.getElementById('gauge-arc');
+            var textEl = document.getElementById('gauge-score-text');
+            var targetOffset = 283 - (283 * (score / 100));
+
+            // Animate arc
+            var startTime = null;
+            var duration = 1500;
+
+            function animateArc(timestamp) {
+                if (!startTime) startTime = timestamp;
+                var progress = Math.min((timestamp - startTime) / duration, 1);
+                var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+
+                var currentOffset = 283 - (283 - targetOffset) * eased;
+                arc.setAttribute('stroke-dashoffset', currentOffset);
+
+                var currentScore = Math.round(score * eased);
+                textEl.textContent = currentScore;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateArc);
+                }
+            }
+
+            requestAnimationFrame(animateArc);
+        }
+
+        /* ──────────────────────────────────────────
+           RADAR CHART (SVG)
+           ────────────────────────────────────────── */
+        function renderRadarChart(skillResults) {
+            var svg = document.getElementById('radar-svg');
+            var cx = 250;
+            var cy = 230;
+            var maxR = 170;
+            var levels = 5;
+            var n = skillResults.length;
+            var angleStep = (2 * Math.PI) / n;
+            var startAngle = -Math.PI / 2; // Start at top
+
+            var svgContent = '';
+
+            // Defs for gradient fill
+            svgContent += '<defs>';
+            svgContent += '<linearGradient id="radarFillGrad" x1="0%" y1="0%" x2="100%" y2="100%">';
+            svgContent += '<stop offset="0%" stop-color="#a855f7" stop-opacity="0.35"/>';
+            svgContent += '<stop offset="100%" stop-color="#ec4899" stop-opacity="0.35"/>';
+            svgContent += '</linearGradient>';
+            svgContent += '<linearGradient id="radarStrokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">';
+            svgContent += '<stop offset="0%" stop-color="#a855f7"/>';
+            svgContent += '<stop offset="100%" stop-color="#ec4899"/>';
+            svgContent += '</linearGradient>';
+            svgContent += '</defs>';
+
+            // Draw concentric rings
+            for (var lvl = 1; lvl <= levels; lvl++) {
+                var r = (maxR / levels) * lvl;
+                var ringPoints = [];
+                for (var i = 0; i < n; i++) {
+                    var angle = startAngle + angleStep * i;
+                    ringPoints.push(
+                        (cx + r * Math.cos(angle)).toFixed(1) + ',' +
+                        (cy + r * Math.sin(angle)).toFixed(1)
+                    );
+                }
+                svgContent += '<polygon points="' + ringPoints.join(' ') + '" fill="none" stroke="rgba(168,85,247,0.08)" stroke-width="1"/>';
+            }
+
+            // Draw axis lines and labels
+            for (var i = 0; i < n; i++) {
+                var angle = startAngle + angleStep * i;
+                var x2 = cx + maxR * Math.cos(angle);
+                var y2 = cy + maxR * Math.sin(angle);
+                svgContent += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="rgba(168,85,247,0.08)" stroke-width="1"/>';
+
+                // Label
+                var labelR = maxR + 28;
+                var lx = cx + labelR * Math.cos(angle);
+                var ly = cy + labelR * Math.sin(angle);
+                var anchor = 'middle';
+                if (Math.cos(angle) < -0.1) anchor = 'end';
+                else if (Math.cos(angle) > 0.1) anchor = 'start';
+
+                // Shorten some names for readability
+                var shortNames = {
+                    'Technical Craft': 'Technical',
+                    'Communication': 'Comms',
+                    'Sales & Pitching': 'Sales',
+                    'Marketing & Visibility': 'Marketing',
+                    'Financial Management': 'Finance',
+                    'Time Management': 'Time Mgmt',
+                    'Negotiation': 'Negotiation',
+                    'Networking': 'Networking',
+                    'Project Management': 'Projects',
+                    'Client Management': 'Clients',
+                    'Personal Branding': 'Branding',
+                    'Tech & Tools': 'Tech/Tools'
+                };
+
+                var label = shortNames[skillResults[i].skill.name] || skillResults[i].skill.name;
+                var rating = skillResults[i].rating;
+
+                svgContent += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anchor + '" dominant-baseline="middle" fill="#94a3b8" font-size="11" font-family="system-ui, sans-serif" font-weight="600">' + label + '</text>';
+
+                // Rating number next to label
+                var ratingR = maxR + 14;
+                var rx = cx + ratingR * Math.cos(angle);
+                var ry = cy + ratingR * Math.sin(angle);
+                svgContent += '<text x="' + rx.toFixed(1) + '" y="' + (ry + 14).toFixed(1) + '" text-anchor="' + anchor + '" dominant-baseline="middle" fill="#64748b" font-size="10" font-family="system-ui, sans-serif">' + rating + '/5</text>';
+            }
+
+            // Draw data polygon
+            var dataPoints = [];
+            for (var i = 0; i < n; i++) {
+                var angle = startAngle + angleStep * i;
+                var val = skillResults[i].rating;
+                var r = (maxR / levels) * val;
+                dataPoints.push(
+                    (cx + r * Math.cos(angle)).toFixed(1) + ',' +
+                    (cy + r * Math.sin(angle)).toFixed(1)
+                );
+            }
+
+            svgContent += '<polygon points="' + dataPoints.join(' ') + '" fill="url(#radarFillGrad)" stroke="url(#radarStrokeGrad)" stroke-width="2.5" stroke-linejoin="round"/>';
+
+            // Draw data dots
+            for (var i = 0; i < n; i++) {
+                var angle = startAngle + angleStep * i;
+                var val = skillResults[i].rating;
+                var r = (maxR / levels) * val;
+                var dx = cx + r * Math.cos(angle);
+                var dy = cy + r * Math.sin(angle);
+                svgContent += '<circle cx="' + dx.toFixed(1) + '" cy="' + dy.toFixed(1) + '" r="4" fill="#a855f7" stroke="#fff" stroke-width="1.5"/>';
+            }
+
+            svg.innerHTML = svgContent;
+        }
+
+        /* ──────────────────────────────────────────
+           STRENGTHS
+           ────────────────────────────────────────── */
+        function renderStrengths(strengths) {
+            var container = document.getElementById('strengths-list');
+            var html = '';
+            for (var i = 0; i < strengths.length; i++) {
+                var s = strengths[i];
+                html += '<div class="strength-item">';
+                html += '<div class="sg-skill-name">' + s.skill.icon + ' ' + s.skill.name + '</div>';
+                html += '<div class="sg-rating">Your rating: ' + s.rating + '/5 — ' + s.skill.levels[s.rating - 1] + '</div>';
+                html += '<div class="sg-advice">' + s.skill.leverageAdvice + '</div>';
+                html += '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        /* ──────────────────────────────────────────
+           GAPS
+           ────────────────────────────────────────── */
+        function renderGaps(gaps) {
+            var container = document.getElementById('gaps-list');
+            var html = '';
+            for (var i = 0; i < gaps.length; i++) {
+                var g = gaps[i];
+                html += '<div class="gap-item">';
+                html += '<div class="sg-skill-name">' + g.skill.icon + ' ' + g.skill.name + '</div>';
+                html += '<div class="sg-rating">Your rating: ' + g.rating + '/5 — ' + g.skill.levels[g.rating - 1] + '</div>';
+                html += '<div class="sg-advice">' + g.skill.gapWhy + '</div>';
+                html += '<div class="gap-impact">⚠ This gap is likely costing you ~' + g.skill.gapRevenue + '% of potential revenue</div>';
+
+                // Resources
+                html += '<div class="gap-resources">';
+                html += '<h5>Free Learning Resources</h5>';
+                for (var j = 0; j < g.skill.resources.length; j++) {
+                    var res = g.skill.resources[j];
+                    html += '<a href="' + res.url + '" target="_blank" rel="noopener">→ ' + res.title + '</a>';
+                }
+                html += '</div>';
+
+                // 30-day challenge
+                html += '<div class="gap-challenge">';
+                html += '<h5>30-Day Challenge</h5>';
+                html += '<p>' + g.skill.challenge + '</p>';
+                html += '</div>';
+
+                html += '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        /* ──────────────────────────────────────────
+           PRIORITY MATRIX
+           ────────────────────────────────────────── */
+        function renderPriorityMatrix(skillResults) {
+            var container = document.getElementById('matrix-grid');
+
+            var impactThreshold = 6.5; // Median-ish split
+            var skillThreshold = 3;    // Mid-point split
+
+            var fixFirst = []; // High impact, Low skill
+            var superpowers = []; // High impact, High skill
+            var delegateIgnore = []; // Low impact, Low skill
+            var niceToHave = []; // Low impact, High skill
+
+            for (var i = 0; i < skillResults.length; i++) {
+                var sr = skillResults[i];
+                var highImpact = sr.impact >= impactThreshold;
+                var highSkill = sr.rating >= skillThreshold;
+
+                if (highImpact && !highSkill) fixFirst.push(sr);
+                else if (highImpact && highSkill) superpowers.push(sr);
+                else if (!highImpact && !highSkill) delegateIgnore.push(sr);
+                else niceToHave.push(sr);
+            }
+
+            function renderQuadrant(title, icon, desc, items, cssClass, badgeColor) {
+                var html = '<div class="matrix-quadrant ' + cssClass + '">';
+                html += '<div class="quadrant-header"><span class="quadrant-icon">' + icon + '</span><span class="quadrant-title">' + title + '</span></div>';
+                html += '<div class="quadrant-desc">' + desc + '</div>';
+                html += '<ul class="quadrant-skills">';
+                if (items.length === 0) {
+                    html += '<li style="color: var(--text-dim); font-style: italic;">None in this quadrant</li>';
+                }
+                for (var i = 0; i < items.length; i++) {
+                    html += '<li>';
+                    html += items[i].skill.icon + ' ' + items[i].skill.name;
+                    html += ' <span class="score-badge" style="background: ' + badgeColor + ';">' + items[i].rating + '/5</span>';
+                    html += '</li>';
+                }
+                html += '</ul></div>';
+                return html;
+            }
+
+            var html = '';
+            html += renderQuadrant('Fix These First', '\u{1F6A8}', 'High impact on revenue + low skill = your biggest bottlenecks.', fixFirst, 'fix-first', 'rgba(239,68,68,0.2)');
+            html += renderQuadrant('Your Superpowers', '\u{1F4AA}', 'High impact + high skill = leverage these hard.', superpowers, 'superpowers', 'rgba(34,197,94,0.2)');
+            html += renderQuadrant('Delegate or Ignore', '\u{1F4A4}', 'Low impact + low skill = not worth your time right now.', delegateIgnore, 'delegate', 'rgba(100,116,139,0.2)');
+            html += renderQuadrant('Nice to Have', '✅', 'Low impact + high skill = keep sharp but do not over-invest.', niceToHave, 'nice-have', 'rgba(59,130,246,0.2)');
+
+            container.innerHTML = html;
+        }
+
+        /* ──────────────────────────────────────────
+           LEARNING PATH
+           ────────────────────────────────────────── */
+        function renderLearningPath(prioritySorted) {
+            var container = document.getElementById('learning-path');
+
+            // Filter to skills with room to grow (rating < 5)
+            var toLearn = [];
+            for (var i = 0; i < prioritySorted.length; i++) {
+                if (prioritySorted[i].rating < 5) {
+                    toLearn.push(prioritySorted[i]);
+                }
+            }
+
+            // Cap at 6 steps
+            if (toLearn.length > 6) toLearn = toLearn.slice(0, 6);
+
+            var timeframes = ['Week 1-2', 'Week 3-4', 'Month 2', 'Month 2-3', 'Month 3-4', 'Month 4-6'];
+            var reasons = [
+                'Highest priority — this gap has the biggest revenue impact relative to your current level.',
+                'Second biggest gap — closing this compounds with your first improvement.',
+                'This skill unlocks better positioning and higher rates.',
+                'Strengthening this area protects your current client base.',
+                'This rounds out your skill set for long-term stability.',
+                'Final polish — this pushes you toward elite-level readiness.'
+            ];
+
+            var html = '';
+            for (var i = 0; i < toLearn.length; i++) {
+                var item = toLearn[i];
+                html += '<div class="path-step fade-in-up" style="animation-delay: ' + (0.1 * i) + 's;">';
+                html += '<div class="path-dot">' + (i + 1) + '</div>';
+                html += '<div class="path-step-header">';
+                html += '<span class="path-step-name">' + item.skill.icon + ' ' + item.skill.name + ' (' + item.rating + ' → ' + Math.min(item.rating + 1, 5) + ')</span>';
+                html += '<span class="path-step-time">' + timeframes[i] + '</span>';
+                html += '</div>';
+                html += '<div class="path-step-reason">' + (reasons[i] || 'Continued improvement in this area supports overall growth.') + '</div>';
+                html += '</div>';
+            }
+
+            if (toLearn.length === 0) {
+                html = '<p style="color: var(--success); text-align: center; padding: 20px;">You rated every skill at 5/5 — you are already at the top. Focus on scaling your business and teaching others.</p>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        /* ──────────────────────────────────────────
+           SHARE FUNCTIONS
+           ────────────────────────────────────────── */
+        window.copyShareText = function() {
+            var text = document.getElementById('share-text').textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(function() {
+                    var btns = document.querySelectorAll('.share-btn');
+                    btns[0].classList.add('copied');
+                    btns[0].innerHTML = '✓ Copied!';
+                    setTimeout(function() {
+                        btns[0].classList.remove('copied');
+                        btns[0].innerHTML = '\u{1F4CB} Copy Text';
+                    }, 2000);
+                });
+            } else {
+                // Fallback
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                var btns = document.querySelectorAll('.share-btn');
+                btns[0].classList.add('copied');
+                btns[0].innerHTML = '✓ Copied!';
+                setTimeout(function() {
+                    btns[0].classList.remove('copied');
+                    btns[0].innerHTML = '\u{1F4CB} Copy Text';
+                }, 2000);
+            }
+        };
+
+        window.shareTwitter = function() {
+            var text = document.getElementById('share-text').textContent;
+            var url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+            window.open(url, '_blank', 'width=550,height=420');
+        };
+
+        window.shareLinkedIn = function() {
+            var pageUrl = 'https://freelanceos.com/freelanceos-storefront/skill-gap-analyzer.html';
+            var url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl);
+            window.open(url, '_blank', 'width=550,height=420');
+        };
+
+        /* ──────────────────────────────────────────
+           RETAKE
+           ────────────────────────────────────────── */
+        window.retakeAssessment = function() {
+            ratings = {};
+            ratedCount = 0;
+
+            // Reset UI
+            var buttons = document.querySelectorAll('.rating-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+            var cards = document.querySelectorAll('.skill-card');
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].classList.remove('rated');
+            }
+
+            updateProgress();
+
+            document.getElementById('results-section').style.display = 'none';
+            document.getElementById('assessment-section').style.display = 'block';
+            document.getElementById('progress-section').style.display = 'block';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        /* ──────────────────────────────────────────
+           INIT
+           ────────────────────────────────────────── */
+        renderSkillCards();
+
+    })();
+    </script>
+
+</body>
+</html>
