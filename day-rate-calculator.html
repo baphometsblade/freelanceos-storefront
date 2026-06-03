@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Day Rate Calculator — Convert Hourly to Daily, Weekly, Monthly | FreelanceOS</title>
+<meta name="description" content="Instantly convert between hourly, daily, weekly, monthly, and annual freelance rates. Adjust for non-billable time, taxes, and vacation to see your real effective rate.">
+<meta name="keywords" content="freelance day rate calculator, hourly to day rate, freelance rate converter, freelance pricing, day rate converter, freelance income calculator">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Freelance Day Rate Calculator — Convert Hourly to Daily, Weekly, Monthly">
+<meta property="og:description" content="Instantly convert between all freelance rate formats. See your real effective rate after adjusting for non-billable time, taxes, and vacation.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.io/freelanceos-storefront/day-rate-calculator.html">
+<meta property="og:site_name" content="FreelanceOS">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Freelance Day Rate Calculator — Convert Any Rate Instantly">
+<meta name="twitter:description" content="Convert hourly to day rate, weekly, monthly, annual. See your real effective rate after non-billable time and taxes.">
+
+<!-- Schema.org WebApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Day Rate Calculator",
+  "description": "Instantly convert between hourly, daily, weekly, monthly, and annual freelance rates with reality adjustments for non-billable time, taxes, and vacation.",
+  "url": "https://freelanceos.io/freelanceos-storefront/day-rate-calculator.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "FreelanceOS"
+  }
+}
+</script>
+
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --accent: #a855f7;
+  --accent2: #ec4899;
+  --glass-bg: rgba(15, 23, 42, 0.8);
+  --glass-border: rgba(168, 85, 247, 0.1);
+  --glass-border-hover: rgba(168, 85, 247, 0.25);
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --surface: #1e293b;
+  --surface2: #263348;
+  --green: #22c55e;
+  --yellow: #eab308;
+  --red: #ef4444;
+  --radius: 16px;
+  --radius-btn: 12px;
+  --radius-sm: 8px;
+  --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --gradient-subtle: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Animated background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(168, 85, 247, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(236, 72, 153, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========== HEADER ========== */
+.site-header {
+  background: rgba(2, 6, 23, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--gradient);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.logo-text span {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-cta {
+  background: var(--gradient);
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 14px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.header-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ========== HERO ========== */
+.hero {
+  text-align: center;
+  padding: 56px 24px 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gradient-subtle);
+  border: 1px solid var(--glass-border);
+  padding: 6px 16px;
+  border-radius: 99px;
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 .gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 17px;
+  color: var(--text-muted);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ========== MAIN CONTAINER ========== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== GLASS CARD ========== */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 28px;
+  transition: border-color 0.3s;
+}
+
+.glass-card:hover {
+  border-color: var(--glass-border-hover);
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.section-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+/* ========== TABS ========== */
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: rgba(2, 6, 23, 0.6);
+  padding: 4px;
+  border-radius: var(--radius-btn);
+  margin-bottom: 28px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.tab-btn.active {
+  background: var(--gradient);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.tab-btn:not(.active):hover {
+  color: var(--text);
+  background: rgba(168, 85, 247, 0.1);
+}
+
+/* ========== INPUT PANELS ========== */
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.input-group .currency-wrap {
+  position: relative;
+}
+
+.input-group .currency-symbol {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.rate-input {
+  width: 100%;
+  padding: 16px 20px 16px 36px;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: inherit;
+  background: rgba(2, 6, 23, 0.6);
+  border: 2px solid rgba(168, 85, 247, 0.2);
+  border-radius: var(--radius-btn);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.rate-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.15);
+}
+
+.rate-input::placeholder {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.input-hint {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 8px;
+}
+
+/* ========== QUICK CONVERSIONS ========== */
+.quick-conversions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(168, 85, 247, 0.08);
+}
+
+.quick-conv-item {
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px solid rgba(168, 85, 247, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.quick-conv-item .conv-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.quick-conv-item .conv-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.quick-conv-item.current {
+  border-color: rgba(168, 85, 247, 0.3);
+  background: var(--gradient-subtle);
+}
+
+.quick-conv-item.current .conv-label {
+  color: var(--accent);
+}
+
+/* ========== SLIDERS ========== */
+.sliders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.slider-group {
+  padding: 20px;
+  background: rgba(2, 6, 23, 0.4);
+  border: 1px solid rgba(168, 85, 247, 0.06);
+  border-radius: var(--radius-btn);
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.slider-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.slider-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 50px;
+  text-align: right;
+}
+
+.slider-track {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(168, 85, 247, 0.15);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.slider-track::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--gradient);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4);
+  border: 2px solid #fff;
+  transition: transform 0.15s;
+}
+
+.slider-track::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.slider-track::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--gradient);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4);
+  border: 2px solid #fff;
+}
+
+.slider-desc {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 8px;
+}
+
+/* ========== RATE COMPARISON DASHBOARD ========== */
+.rate-dashboard {
+  overflow-x: auto;
+}
+
+.rate-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 600px;
+}
+
+.rate-table thead th {
+  text-align: center;
+  padding: 14px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+}
+
+.rate-table thead th:first-child {
+  text-align: left;
+  width: 180px;
+}
+
+.rate-table tbody td {
+  text-align: center;
+  padding: 16px 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.05);
+}
+
+.rate-table tbody td:first-child {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.rate-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.row-gross td:first-child::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.row-tax td:first-child::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--yellow);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.row-effective td:first-child::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.row-effective td {
+  color: var(--green) !important;
+}
+
+/* ========== GAP HIGHLIGHT ========== */
+.gap-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(236, 72, 153, 0.08));
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: var(--radius-btn);
+  margin-top: 24px;
+}
+
+.gap-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  background: var(--gradient);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.gap-text {
+  flex: 1;
+}
+
+.gap-text .gap-headline {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.gap-text .gap-detail {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.gap-text .gap-detail strong {
+  color: var(--accent2);
+}
+
+/* ========== INSIGHTS ========== */
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.insight-card {
+  padding: 20px;
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px solid rgba(168, 85, 247, 0.06);
+  border-radius: var(--radius-btn);
+  transition: border-color 0.3s, transform 0.2s;
+}
+
+.insight-card:hover {
+  border-color: var(--glass-border-hover);
+  transform: translateY(-2px);
+}
+
+.insight-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.insight-icon.purple { background: rgba(168, 85, 247, 0.15); }
+.insight-icon.pink { background: rgba(236, 72, 153, 0.15); }
+.insight-icon.green { background: rgba(34, 197, 94, 0.15); }
+.insight-icon.yellow { background: rgba(234, 179, 8, 0.15); }
+
+.insight-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.insight-value {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.insight-value.accent { color: var(--accent); }
+.insight-value.pink { color: var(--accent2); }
+.insight-value.green { color: var(--green); }
+.insight-value.yellow { color: var(--yellow); }
+
+.insight-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ========== SCENARIOS ========== */
+.scenarios-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.scenario-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px solid rgba(168, 85, 247, 0.1);
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+
+.scenario-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--gradient-subtle);
+}
+
+.scenario-chip.active {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--gradient);
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.scenario-chip .chip-icon {
+  font-size: 16px;
+}
+
+/* ========== RATE CARD / SHARE ========== */
+.rate-card-box {
+  background: rgba(2, 6, 23, 0.6);
+  border: 1px solid rgba(168, 85, 247, 0.1);
+  border-radius: var(--radius-btn);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.rate-card-text {
+  font-size: 14px;
+  font-family: 'Courier New', monospace;
+  color: var(--text);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.share-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+
+.share-btn.copy {
+  background: var(--gradient);
+  color: #fff;
+}
+
+.share-btn.copy:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.share-btn.twitter {
+  background: rgba(29, 155, 240, 0.15);
+  color: #1d9bf0;
+  border: 1px solid rgba(29, 155, 240, 0.2);
+}
+
+.share-btn.twitter:hover {
+  background: rgba(29, 155, 240, 0.25);
+  transform: translateY(-1px);
+}
+
+.copy-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--green);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.35s ease;
+  pointer-events: none;
+}
+
+.copy-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ========== CTA SECTION ========== */
+.cta-section {
+  text-align: center;
+  padding: 48px 32px;
+  background: var(--gradient-subtle);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  margin-bottom: 28px;
+}
+
+.cta-section h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.cta-section p {
+  font-size: 15px;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto 24px;
+  line-height: 1.7;
+}
+
+.cta-main-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 36px;
+  background: var(--gradient);
+  color: #fff;
+  text-decoration: none;
+  border-radius: var(--radius-btn);
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.25s;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.35);
+}
+
+.cta-main-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(168, 85, 247, 0.45);
+}
+
+.cta-code {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+.cta-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 12px;
+}
+
+/* ========== FOOTER ========== */
+.site-footer {
+  border-top: 1px solid var(--glass-border);
+  padding: 40px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-disclaimer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .glass-card { padding: 20px 16px; }
+  .tabs { flex-wrap: nowrap; }
+  .tab-btn { font-size: 12px; padding: 8px 10px; }
+  .rate-input { font-size: 22px; padding: 14px 16px 14px 30px; }
+  .currency-symbol { font-size: 16px !important; left: 12px !important; }
+  .sliders-grid { grid-template-columns: 1fr; }
+  .quick-conversions { grid-template-columns: repeat(2, 1fr); }
+  .insights-grid { grid-template-columns: 1fr; }
+  .rate-table tbody td { font-size: 14px; padding: 12px 8px; }
+  .gap-banner { flex-direction: column; text-align: center; }
+  .hero { padding: 36px 16px 24px; }
+  .hero h1 { font-size: 26px; }
+  .container { padding: 0 16px 40px; }
+  .cta-section { padding: 32px 20px; }
+}
+
+@media (max-width: 480px) {
+  .quick-conversions { grid-template-columns: 1fr; }
+  .share-actions { flex-direction: column; }
+  .share-btn { justify-content: center; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">&#9889;</div>
+      <div class="logo-text">Freelance<span>OS</span></div>
+    </a>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="header-cta">Get FreelanceOS &mdash; 40% Off</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">&#128200; Free Calculator</div>
+  <h1>Freelance <span class="gradient-text">Day Rate</span> Calculator</h1>
+  <p>Instantly convert between hourly, daily, weekly, monthly, and annual rates. See your <strong>real effective rate</strong> after non-billable time, taxes, and vacation.</p>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+  <!-- ========== SECTION 1: RATE INPUT ========== -->
+  <div class="glass-card">
+    <div class="section-label">Step 1</div>
+    <div class="section-title">Enter Your Rate</div>
+    <div class="section-desc">Pick any format you know. All others update instantly.</div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="hourly" role="tab">Hourly</button>
+      <button class="tab-btn" data-tab="daily" role="tab">Daily</button>
+      <button class="tab-btn" data-tab="weekly" role="tab">Weekly</button>
+      <button class="tab-btn" data-tab="monthly" role="tab">Monthly</button>
+      <button class="tab-btn" data-tab="annual" role="tab">Annual</button>
+    </div>
+
+    <!-- Hourly -->
+    <div class="tab-panel active" id="panel-hourly" role="tabpanel">
+      <div class="input-group">
+        <label for="input-hourly">Your Hourly Rate</label>
+        <div class="currency-wrap">
+          <span class="currency-symbol">$</span>
+          <input type="number" id="input-hourly" class="rate-input" placeholder="100" min="10" max="500" step="1" value="100">
+        </div>
+        <div class="input-hint">Typical range: $10 &ndash; $500/hr depending on expertise and niche.</div>
+      </div>
+    </div>
+
+    <!-- Daily -->
+    <div class="tab-panel" id="panel-daily" role="tabpanel">
+      <div class="input-group">
+        <label for="input-daily">Your Day Rate</label>
+        <div class="currency-wrap">
+          <span class="currency-symbol">$</span>
+          <input type="number" id="input-daily" class="rate-input" placeholder="800" min="80" max="4000" step="10" value="">
+        </div>
+        <div class="input-hint">Based on 8 working hours per day. Range: $80 &ndash; $4,000/day.</div>
+      </div>
+    </div>
+
+    <!-- Weekly -->
+    <div class="tab-panel" id="panel-weekly" role="tabpanel">
+      <div class="input-group">
+        <label for="input-weekly">Your Weekly Rate</label>
+        <div class="currency-wrap">
+          <span class="currency-symbol">$</span>
+          <input type="number" id="input-weekly" class="rate-input" placeholder="4000" min="400" max="20000" step="50" value="">
+        </div>
+        <div class="input-hint">Based on 5 working days per week. Range: $400 &ndash; $20,000/week.</div>
+      </div>
+    </div>
+
+    <!-- Monthly -->
+    <div class="tab-panel" id="panel-monthly" role="tabpanel">
+      <div class="input-group">
+        <label for="input-monthly">Your Monthly Rate</label>
+        <div class="currency-wrap">
+          <span class="currency-symbol">$</span>
+          <input type="number" id="input-monthly" class="rate-input" placeholder="16000" min="1500" max="80000" step="100" value="">
+        </div>
+        <div class="input-hint">Based on 20 working days per month. Range: $1,500 &ndash; $80,000/month.</div>
+      </div>
+    </div>
+
+    <!-- Annual -->
+    <div class="tab-panel" id="panel-annual" role="tabpanel">
+      <div class="input-group">
+        <label for="input-annual">Your Annual Income Target</label>
+        <div class="currency-wrap">
+          <span class="currency-symbol">$</span>
+          <input type="number" id="input-annual" class="rate-input" placeholder="200000" min="20000" max="1000000" step="1000" value="">
+        </div>
+        <div class="input-hint">Gross annual income target. Range: $20,000 &ndash; $1,000,000/year.</div>
+      </div>
+    </div>
+
+    <!-- Quick conversions -->
+    <div class="quick-conversions" id="quickConversions">
+      <div class="quick-conv-item" data-type="hourly">
+        <div class="conv-label">Hourly</div>
+        <div class="conv-value" id="qc-hourly">$100</div>
+      </div>
+      <div class="quick-conv-item" data-type="daily">
+        <div class="conv-label">Daily</div>
+        <div class="conv-value" id="qc-daily">$800</div>
+      </div>
+      <div class="quick-conv-item" data-type="weekly">
+        <div class="conv-label">Weekly</div>
+        <div class="conv-value" id="qc-weekly">$4,000</div>
+      </div>
+      <div class="quick-conv-item" data-type="monthly">
+        <div class="conv-label">Monthly</div>
+        <div class="conv-value" id="qc-monthly">$16,000</div>
+      </div>
+      <div class="quick-conv-item" data-type="annual">
+        <div class="conv-label">Annual</div>
+        <div class="conv-value" id="qc-annual">$192,000</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 2: REALITY ADJUSTMENTS ========== -->
+  <div class="glass-card">
+    <div class="section-label">Step 2</div>
+    <div class="section-title">Reality Adjustments</div>
+    <div class="section-desc">Most freelancers overestimate their billable time. Adjust these sliders to see your real numbers.</div>
+
+    <div class="sliders-grid">
+      <!-- Billable hours -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Billable Hours Per Day</span>
+          <span class="slider-value" id="val-billable">6 hrs</span>
+        </div>
+        <input type="range" class="slider-track" id="slider-billable" min="4" max="8" step="0.5" value="6">
+        <div class="slider-desc">The rest goes to admin, marketing, bookkeeping, and emails.</div>
+      </div>
+
+      <!-- Working days -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Working Days Per Week</span>
+          <span class="slider-value" id="val-workdays">5 days</span>
+        </div>
+        <input type="range" class="slider-track" id="slider-workdays" min="3" max="5" step="0.5" value="5">
+        <div class="slider-desc">Full-time is 5 days. Many freelancers work 4 for balance.</div>
+      </div>
+
+      <!-- Vacation -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Vacation Weeks Per Year</span>
+          <span class="slider-value" id="val-vacation">4 wks</span>
+        </div>
+        <input type="range" class="slider-track" id="slider-vacation" min="0" max="8" step="1" value="4">
+        <div class="slider-desc">Remember: no PTO means you pay yourself to take time off.</div>
+      </div>
+
+      <!-- Sick days -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Sick / Personal Days Per Year</span>
+          <span class="slider-value" id="val-sick">5 days</span>
+        </div>
+        <input type="range" class="slider-track" id="slider-sick" min="0" max="15" step="1" value="5">
+        <div class="slider-desc">Unplanned days off. Be honest &mdash; it adds up.</div>
+      </div>
+
+      <!-- Tax rate -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Estimated Tax Rate</span>
+          <span class="slider-value" id="val-tax">30%</span>
+        </div>
+        <input type="range" class="slider-track" id="slider-tax" min="15" max="50" step="1" value="30">
+        <div class="slider-desc">Include self-employment tax, income tax, state/local taxes.</div>
+      </div>
+
+      <!-- Summary box -->
+      <div class="slider-group" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--gradient-subtle);border-color:rgba(168,85,247,0.15);">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:8px;">Actual Billable Hours/Year</div>
+        <div id="totalBillableHours" style="font-size:36px;font-weight:800;letter-spacing:-0.02em;">1,170</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">vs 2,080 if you worked every hour</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 3: RATE COMPARISON DASHBOARD ========== -->
+  <div class="glass-card">
+    <div class="section-label">Dashboard</div>
+    <div class="section-title">Rate Comparison</div>
+    <div class="section-desc">See your gross, after-tax, and effective rates side by side across all formats.</div>
+
+    <div class="rate-dashboard">
+      <table class="rate-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Hourly</th>
+            <th>Daily</th>
+            <th>Weekly</th>
+            <th>Monthly</th>
+            <th>Annual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-gross">
+            <td>Gross (stated rate)</td>
+            <td id="dash-gross-hourly">$100</td>
+            <td id="dash-gross-daily">$800</td>
+            <td id="dash-gross-weekly">$4,000</td>
+            <td id="dash-gross-monthly">$16,000</td>
+            <td id="dash-gross-annual">$192,000</td>
+          </tr>
+          <tr class="row-tax">
+            <td>After Tax</td>
+            <td id="dash-tax-hourly">$70</td>
+            <td id="dash-tax-daily">$560</td>
+            <td id="dash-tax-weekly">$2,800</td>
+            <td id="dash-tax-monthly">$11,200</td>
+            <td id="dash-tax-annual">$134,400</td>
+          </tr>
+          <tr class="row-effective">
+            <td>Effective (real)</td>
+            <td id="dash-eff-hourly">$65</td>
+            <td id="dash-eff-daily">$521</td>
+            <td id="dash-eff-weekly">$2,604</td>
+            <td id="dash-eff-monthly">$10,417</td>
+            <td id="dash-eff-annual">$125,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Gap banner -->
+    <div class="gap-banner" id="gapBanner">
+      <div class="gap-icon">&#9888;&#65039;</div>
+      <div class="gap-text">
+        <div class="gap-headline" id="gapHeadline">You charge $100/hr but your effective rate is $65/hr</div>
+        <div class="gap-detail" id="gapDetail">That's a <strong>35%</strong> gap between what you quote and what you actually earn per hour of total time invested.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 4: INSIGHTS ========== -->
+  <div class="glass-card">
+    <div class="section-label">Insights</div>
+    <div class="section-title">What Your Numbers Really Mean</div>
+    <div class="section-desc">Key takeaways based on your current rate and adjustments.</div>
+
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-icon purple">&#128200;</div>
+        <div class="insight-label">Effective Rate Gap</div>
+        <div class="insight-value accent" id="insight-gap">35% lower</div>
+        <div class="insight-desc" id="insight-gap-desc">Your effective hourly rate is 35% lower than your stated rate after adjusting for non-billable time.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon pink">&#9201;</div>
+        <div class="insight-label">Billable Hours / Year</div>
+        <div class="insight-value pink" id="insight-hours">1,170 hrs</div>
+        <div class="insight-desc" id="insight-hours-desc">You have 1,170 billable hours per year &mdash; not the 2,080 a full-time employee gets.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon green">&#128176;</div>
+        <div class="insight-label">Take-Home Monthly</div>
+        <div class="insight-value green" id="insight-takehome">$6,825/mo</div>
+        <div class="insight-desc" id="insight-takehome-desc">To take home $6,825/month after tax, you need to charge $100/hr.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon yellow">&#128640;</div>
+        <div class="insight-label">$10/hr Raise Impact</div>
+        <div class="insight-value yellow" id="insight-raise">+$11,700/yr</div>
+        <div class="insight-desc" id="insight-raise-desc">If you raised your rate by $10/hr, you'd earn $11,700 more per year in gross revenue.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 5: QUICK SCENARIOS ========== -->
+  <div class="glass-card">
+    <div class="section-label">Scenarios</div>
+    <div class="section-title">What If?</div>
+    <div class="section-desc">Click a scenario to instantly see how it changes your numbers.</div>
+
+    <div class="scenarios-wrap">
+      <button class="scenario-chip" data-scenario="4day" id="chip-4day">
+        <span class="chip-icon">&#128197;</span> What if I work 4 days/week?
+      </button>
+      <button class="scenario-chip" data-scenario="6weeks" id="chip-6weeks">
+        <span class="chip-icon">&#127796;</span> What if I take 6 weeks off?
+      </button>
+      <button class="scenario-chip" data-scenario="50pct" id="chip-50pct">
+        <span class="chip-icon">&#9203;</span> What if I only bill 50% of my time?
+      </button>
+      <button class="scenario-chip" data-scenario="3day" id="chip-3day">
+        <span class="chip-icon">&#127774;</span> What if I work 3 days/week?
+      </button>
+      <button class="scenario-chip" data-scenario="8weeks" id="chip-8weeks">
+        <span class="chip-icon">&#9992;&#65039;</span> What if I take 8 weeks off?
+      </button>
+      <button class="scenario-chip" data-scenario="lowtax" id="chip-lowtax">
+        <span class="chip-icon">&#128184;</span> What if my tax rate is 20%?
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 6: RATE CARD / SHARE ========== -->
+  <div class="glass-card">
+    <div class="section-label">Share</div>
+    <div class="section-title">Your Rate Card</div>
+    <div class="section-desc">Copy or share your rate summary with clients or colleagues.</div>
+
+    <div class="rate-card-box">
+      <div class="rate-card-text" id="rateCardText">My Freelance Rates:
+Hourly: $100 | Day: $800 | Weekly: $4,000
+Monthly: $16,000 | Annual: $192,000
+After tax: ~$134,400/yr
+
+Built with freelanceos.io/day-rate-calculator</div>
+    </div>
+
+    <div class="share-actions">
+      <button class="share-btn copy" id="btnCopy">
+        <span>&#128203;</span> Copy to Clipboard
+      </button>
+      <button class="share-btn twitter" id="btnTwitter">
+        <span>&#120143;</span> Share on X / Twitter
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== CTA ========== -->
+  <div class="cta-section">
+    <h2>Stop Guessing Your Pricing</h2>
+    <p>FreelanceOS gives you the complete system &mdash; client management, invoicing, project tracking, and 32+ free tools like this one. Everything a freelancer needs in one Notion workspace.</p>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="cta-main-btn">
+      Get FreelanceOS &mdash; 40% Off <span class="cta-code">FLASH40</span>
+    </a>
+    <div class="cta-sub">One-time purchase. Lifetime access. No subscriptions.</div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="/freelanceos-storefront/freelance-rate-calculator.html">Freelance Rate Calculator</a>
+      <a href="/freelanceos-storefront/pricing-confidence.html">Pricing Confidence Assessment</a>
+      <a href="/freelanceos-storefront/pricing-strategy.html">Pricing Strategy Tool</a>
+      <a href="/freelanceos-storefront/income-projector.html">Income Projector</a>
+      <a href="/freelanceos-storefront/freelance-tax-calculator.html">Tax Calculator</a>
+      <a href="/freelanceos-storefront/scope-creep-calculator.html">Scope Creep Calculator</a>
+    </div>
+    <div class="footer-disclaimer">
+      <strong>Disclaimer:</strong> This calculator provides estimates for informational purposes only. It is not financial, tax, or legal advice. Actual earnings depend on many factors including your niche, experience, market conditions, and local tax laws. Consult a qualified accountant or financial advisor for personalized guidance. &copy; 2026 FreelanceOS. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="copy-toast" id="copyToast">Copied to clipboard!</div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ============================
+     STATE
+     ============================ */
+  const state = {
+    activeTab: 'hourly',
+    hourlyRate: 100,
+    billableHoursPerDay: 6,
+    workingDaysPerWeek: 5,
+    vacationWeeks: 4,
+    sickDays: 5,
+    taxRate: 30,
+    activeScenario: null,
+    scenarioDefaults: {}
+  };
+
+  /* ============================
+     DOM REFS
+     ============================ */
+  const els = {
+    tabs: document.querySelectorAll('.tab-btn'),
+    panels: document.querySelectorAll('.tab-panel'),
+    inputs: {
+      hourly: document.getElementById('input-hourly'),
+      daily: document.getElementById('input-daily'),
+      weekly: document.getElementById('input-weekly'),
+      monthly: document.getElementById('input-monthly'),
+      annual: document.getElementById('input-annual')
+    },
+    sliders: {
+      billable: document.getElementById('slider-billable'),
+      workdays: document.getElementById('slider-workdays'),
+      vacation: document.getElementById('slider-vacation'),
+      sick: document.getElementById('slider-sick'),
+      tax: document.getElementById('slider-tax')
+    },
+    sliderVals: {
+      billable: document.getElementById('val-billable'),
+      workdays: document.getElementById('val-workdays'),
+      vacation: document.getElementById('val-vacation'),
+      sick: document.getElementById('val-sick'),
+      tax: document.getElementById('val-tax')
+    },
+    qc: {
+      hourly: document.getElementById('qc-hourly'),
+      daily: document.getElementById('qc-daily'),
+      weekly: document.getElementById('qc-weekly'),
+      monthly: document.getElementById('qc-monthly'),
+      annual: document.getElementById('qc-annual')
+    },
+    quickConvItems: document.querySelectorAll('.quick-conv-item'),
+    totalBillableHours: document.getElementById('totalBillableHours'),
+    // Dashboard
+    dashGross: {
+      hourly: document.getElementById('dash-gross-hourly'),
+      daily: document.getElementById('dash-gross-daily'),
+      weekly: document.getElementById('dash-gross-weekly'),
+      monthly: document.getElementById('dash-gross-monthly'),
+      annual: document.getElementById('dash-gross-annual')
+    },
+    dashTax: {
+      hourly: document.getElementById('dash-tax-hourly'),
+      daily: document.getElementById('dash-tax-daily'),
+      weekly: document.getElementById('dash-tax-weekly'),
+      monthly: document.getElementById('dash-tax-monthly'),
+      annual: document.getElementById('dash-tax-annual')
+    },
+    dashEff: {
+      hourly: document.getElementById('dash-eff-hourly'),
+      daily: document.getElementById('dash-eff-daily'),
+      weekly: document.getElementById('dash-eff-weekly'),
+      monthly: document.getElementById('dash-eff-monthly'),
+      annual: document.getElementById('dash-eff-annual')
+    },
+    gapBanner: document.getElementById('gapBanner'),
+    gapHeadline: document.getElementById('gapHeadline'),
+    gapDetail: document.getElementById('gapDetail'),
+    // Insights
+    insightGap: document.getElementById('insight-gap'),
+    insightGapDesc: document.getElementById('insight-gap-desc'),
+    insightHours: document.getElementById('insight-hours'),
+    insightHoursDesc: document.getElementById('insight-hours-desc'),
+    insightTakehome: document.getElementById('insight-takehome'),
+    insightTakehomeDesc: document.getElementById('insight-takehome-desc'),
+    insightRaise: document.getElementById('insight-raise'),
+    insightRaiseDesc: document.getElementById('insight-raise-desc'),
+    // Share
+    rateCardText: document.getElementById('rateCardText'),
+    btnCopy: document.getElementById('btnCopy'),
+    btnTwitter: document.getElementById('btnTwitter'),
+    copyToast: document.getElementById('copyToast'),
+    // Scenarios
+    scenarioChips: document.querySelectorAll('.scenario-chip')
+  };
+
+  /* ============================
+     FORMATTING
+     ============================ */
+  function fmt(num) {
+    if (num >= 1000000) {
+      return '$' + (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    }
+    return '$' + Math.round(num).toLocaleString('en-US');
+  }
+
+  function fmtCompact(num) {
+    return '$' + Math.round(num).toLocaleString('en-US');
+  }
+
+  /* ============================
+     CORE CALCULATIONS
+     ============================ */
+  function calcWorkingWeeksPerYear() {
+    return 52 - state.vacationWeeks;
+  }
+
+  function calcWorkingDaysPerYear() {
+    var weeks = calcWorkingWeeksPerYear();
+    var totalDays = weeks * state.workingDaysPerWeek;
+    return Math.max(totalDays - state.sickDays, 0);
+  }
+
+  function calcBillableHoursPerYear() {
+    return calcWorkingDaysPerYear() * state.billableHoursPerDay;
+  }
+
+  function calcTotalHoursPerYear() {
+    return calcWorkingDaysPerYear() * 8;
+  }
+
+  function calcGrossAnnual() {
+    return state.hourlyRate * calcBillableHoursPerYear();
+  }
+
+  function calcAfterTaxAnnual() {
+    return calcGrossAnnual() * (1 - state.taxRate / 100);
+  }
+
+  function calcEffectiveHourlyRate() {
+    var totalHours = calcTotalHoursPerYear();
+    if (totalHours === 0) return 0;
+    return calcAfterTaxAnnual() / totalHours;
+  }
+
+  function getRates() {
+    var hourly = state.hourlyRate;
+    var daily = hourly * 8;
+    var weekly = daily * 5;
+    var monthly = daily * 20;
+    var workingDays = calcWorkingDaysPerYear();
+    var billableHours = calcBillableHoursPerYear();
+    var annual = hourly * billableHours;
+    var taxMul = 1 - state.taxRate / 100;
+    var totalHoursPerYear = calcTotalHoursPerYear();
+    var effectiveHourly = totalHoursPerYear > 0 ? (annual * taxMul) / totalHoursPerYear : 0;
+    var effectiveDaily = effectiveHourly * 8;
+    var workingWeeks = calcWorkingWeeksPerYear();
+    var effectiveWeekly = workingWeeks > 0 ? (annual * taxMul) / workingWeeks : 0;
+    var effectiveMonthly = (annual * taxMul) / 12;
+    var effectiveAnnual = annual * taxMul;
+
+    return {
+      gross: {
+        hourly: hourly,
+        daily: daily,
+        weekly: weekly,
+        monthly: monthly,
+        annual: annual
+      },
+      afterTax: {
+        hourly: hourly * taxMul,
+        daily: daily * taxMul,
+        weekly: weekly * taxMul,
+        monthly: monthly * taxMul,
+        annual: annual * taxMul
+      },
+      effective: {
+        hourly: effectiveHourly,
+        daily: effectiveDaily,
+        weekly: effectiveWeekly,
+        monthly: effectiveMonthly,
+        annual: effectiveAnnual
+      },
+      billableHours: billableHours,
+      totalHours: totalHoursPerYear,
+      workingDays: workingDays
+    };
+  }
+
+  /* ============================
+     UPDATE ALL DISPLAYS
+     ============================ */
+  function updateAll() {
+    var r = getRates();
+
+    // Update quick conversions
+    els.qc.hourly.textContent = fmt(r.gross.hourly);
+    els.qc.daily.textContent = fmt(r.gross.daily);
+    els.qc.weekly.textContent = fmt(r.gross.weekly);
+    els.qc.monthly.textContent = fmt(r.gross.monthly);
+    els.qc.annual.textContent = fmt(r.gross.annual);
+
+    // Highlight current tab in quick conversions
+    els.quickConvItems.forEach(function(item) {
+      item.classList.toggle('current', item.dataset.type === state.activeTab);
+    });
+
+    // Update other input fields (not the active one)
+    if (state.activeTab !== 'hourly') els.inputs.hourly.value = Math.round(state.hourlyRate);
+    if (state.activeTab !== 'daily') els.inputs.daily.value = Math.round(r.gross.daily);
+    if (state.activeTab !== 'weekly') els.inputs.weekly.value = Math.round(r.gross.weekly);
+    if (state.activeTab !== 'monthly') els.inputs.monthly.value = Math.round(r.gross.monthly);
+    if (state.activeTab !== 'annual') els.inputs.annual.value = Math.round(r.gross.annual);
+
+    // Slider value labels
+    els.sliderVals.billable.textContent = state.billableHoursPerDay + ' hrs';
+    els.sliderVals.workdays.textContent = state.workingDaysPerWeek + ' days';
+    els.sliderVals.vacation.textContent = state.vacationWeeks + ' wks';
+    els.sliderVals.sick.textContent = state.sickDays + ' days';
+    els.sliderVals.tax.textContent = state.taxRate + '%';
+
+    // Total billable hours
+    els.totalBillableHours.textContent = r.billableHours.toLocaleString('en-US');
+
+    // Dashboard table
+    els.dashGross.hourly.textContent = fmt(r.gross.hourly);
+    els.dashGross.daily.textContent = fmt(r.gross.daily);
+    els.dashGross.weekly.textContent = fmt(r.gross.weekly);
+    els.dashGross.monthly.textContent = fmt(r.gross.monthly);
+    els.dashGross.annual.textContent = fmt(r.gross.annual);
+
+    els.dashTax.hourly.textContent = fmt(r.afterTax.hourly);
+    els.dashTax.daily.textContent = fmt(r.afterTax.daily);
+    els.dashTax.weekly.textContent = fmt(r.afterTax.weekly);
+    els.dashTax.monthly.textContent = fmt(r.afterTax.monthly);
+    els.dashTax.annual.textContent = fmt(r.afterTax.annual);
+
+    els.dashEff.hourly.textContent = fmt(r.effective.hourly);
+    els.dashEff.daily.textContent = fmt(r.effective.daily);
+    els.dashEff.weekly.textContent = fmt(r.effective.weekly);
+    els.dashEff.monthly.textContent = fmt(r.effective.monthly);
+    els.dashEff.annual.textContent = fmt(r.effective.annual);
+
+    // Gap banner
+    var gapPct = r.gross.hourly > 0
+      ? Math.round((1 - r.effective.hourly / r.gross.hourly) * 100)
+      : 0;
+
+    els.gapHeadline.textContent = 'You charge ' + fmt(r.gross.hourly) + '/hr but your effective rate is ' + fmt(r.effective.hourly) + '/hr';
+    els.gapDetail.innerHTML = 'That\'s a <strong>' + gapPct + '%</strong> gap between what you quote and what you actually earn per hour of total time invested.';
+
+    // Insights
+    els.insightGap.textContent = gapPct + '% lower';
+    els.insightGapDesc.textContent = 'Your effective hourly rate is ' + gapPct + '% lower than your stated rate after adjusting for non-billable time.';
+
+    els.insightHours.textContent = r.billableHours.toLocaleString('en-US') + ' hrs';
+    els.insightHoursDesc.textContent = 'You have ' + r.billableHours.toLocaleString('en-US') + ' billable hours per year — not the 2,080 a full-time employee gets.';
+
+    var takeHomeMonthly = r.effective.monthly;
+    els.insightTakehome.textContent = fmt(takeHomeMonthly) + '/mo';
+    els.insightTakehomeDesc.textContent = 'To take home ' + fmt(takeHomeMonthly) + '/month after tax, you need to charge ' + fmt(r.gross.hourly) + '/hr.';
+
+    var raiseImpact = 10 * r.billableHours;
+    els.insightRaise.textContent = '+' + fmt(raiseImpact) + '/yr';
+    els.insightRaiseDesc.textContent = 'If you raised your rate by $10/hr, you\'d earn ' + fmt(raiseImpact) + ' more per year in gross revenue.';
+
+    // Rate card
+    updateRateCard(r);
+  }
+
+  function updateRateCard(r) {
+    var text = 'My Freelance Rates:\n';
+    text += 'Hourly: ' + fmt(r.gross.hourly) + ' | Day: ' + fmt(r.gross.daily) + ' | Weekly: ' + fmt(r.gross.weekly) + '\n';
+    text += 'Monthly: ' + fmt(r.gross.monthly) + ' | Annual: ' + fmt(r.gross.annual) + '\n';
+    text += 'After tax: ~' + fmt(r.afterTax.annual) + '/yr\n\n';
+    text += 'Built with freelanceos.io/day-rate-calculator';
+    els.rateCardText.textContent = text;
+  }
+
+  /* ============================
+     TAB SWITCHING
+     ============================ */
+  function switchTab(tabName) {
+    state.activeTab = tabName;
+
+    els.tabs.forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.tab === tabName);
+    });
+
+    els.panels.forEach(function(panel) {
+      panel.classList.toggle('active', panel.id === 'panel-' + tabName);
+    });
+
+    updateAll();
+  }
+
+  els.tabs.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      switchTab(this.dataset.tab);
+    });
+  });
+
+  /* ============================
+     RATE INPUT HANDLERS
+     ============================ */
+  function onRateInput(field, value) {
+    var v = parseFloat(value);
+    if (isNaN(v) || v <= 0) return;
+
+    switch (field) {
+      case 'hourly':
+        state.hourlyRate = v;
+        break;
+      case 'daily':
+        state.hourlyRate = v / 8;
+        break;
+      case 'weekly':
+        state.hourlyRate = v / (8 * 5);
+        break;
+      case 'monthly':
+        state.hourlyRate = v / (8 * 20);
+        break;
+      case 'annual':
+        var billableHrs = calcBillableHoursPerYear();
+        state.hourlyRate = billableHrs > 0 ? v / billableHrs : v / 2080;
+        break;
+    }
+
+    updateAll();
+  }
+
+  Object.keys(els.inputs).forEach(function(key) {
+    els.inputs[key].addEventListener('input', function() {
+      state.activeTab = key;
+      els.tabs.forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.tab === key);
+      });
+      els.panels.forEach(function(panel) {
+        panel.classList.toggle('active', panel.id === 'panel-' + key);
+      });
+      onRateInput(key, this.value);
+    });
+  });
+
+  /* ============================
+     SLIDER HANDLERS
+     ============================ */
+  els.sliders.billable.addEventListener('input', function() {
+    state.billableHoursPerDay = parseFloat(this.value);
+    updateAll();
+  });
+
+  els.sliders.workdays.addEventListener('input', function() {
+    state.workingDaysPerWeek = parseFloat(this.value);
+    updateAll();
+  });
+
+  els.sliders.vacation.addEventListener('input', function() {
+    state.vacationWeeks = parseInt(this.value, 10);
+    updateAll();
+  });
+
+  els.sliders.sick.addEventListener('input', function() {
+    state.sickDays = parseInt(this.value, 10);
+    updateAll();
+  });
+
+  els.sliders.tax.addEventListener('input', function() {
+    state.taxRate = parseInt(this.value, 10);
+    updateAll();
+  });
+
+  /* ============================
+     SCENARIOS
+     ============================ */
+  var scenarioConfigs = {
+    '4day': {
+      slider: 'workdays',
+      value: 4,
+      stateKey: 'workingDaysPerWeek'
+    },
+    '6weeks': {
+      slider: 'vacation',
+      value: 6,
+      stateKey: 'vacationWeeks'
+    },
+    '50pct': {
+      slider: 'billable',
+      value: 4,
+      stateKey: 'billableHoursPerDay'
+    },
+    '3day': {
+      slider: 'workdays',
+      value: 3,
+      stateKey: 'workingDaysPerWeek'
+    },
+    '8weeks': {
+      slider: 'vacation',
+      value: 8,
+      stateKey: 'vacationWeeks'
+    },
+    'lowtax': {
+      slider: 'tax',
+      value: 20,
+      stateKey: 'taxRate'
+    }
+  };
+
+  var scenarioDefaults = {
+    workingDaysPerWeek: 5,
+    vacationWeeks: 4,
+    billableHoursPerDay: 6,
+    taxRate: 30
+  };
+
+  els.scenarioChips.forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var scenario = this.dataset.scenario;
+      var config = scenarioConfigs[scenario];
+      if (!config) return;
+
+      // Toggle
+      if (state.activeScenario === scenario) {
+        // Revert
+        state[config.stateKey] = scenarioDefaults[config.stateKey];
+        els.sliders[config.slider].value = scenarioDefaults[config.stateKey];
+        state.activeScenario = null;
+        this.classList.remove('active');
+      } else {
+        // Deactivate previous
+        if (state.activeScenario) {
+          var prevConfig = scenarioConfigs[state.activeScenario];
+          if (prevConfig) {
+            state[prevConfig.stateKey] = scenarioDefaults[prevConfig.stateKey];
+            els.sliders[prevConfig.slider].value = scenarioDefaults[prevConfig.stateKey];
+          }
+          els.scenarioChips.forEach(function(c) { c.classList.remove('active'); });
+        }
+
+        // Activate new
+        state[config.stateKey] = config.value;
+        els.sliders[config.slider].value = config.value;
+        state.activeScenario = scenario;
+        this.classList.add('active');
+      }
+
+      updateAll();
+
+      // Smooth scroll to dashboard
+      document.querySelector('.rate-dashboard').scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    });
+  });
+
+  /* ============================
+     COPY TO CLIPBOARD
+     ============================ */
+  els.btnCopy.addEventListener('click', function() {
+    var text = els.rateCardText.textContent;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        showToast();
+      }).catch(function() {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  });
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      showToast();
+    } catch (e) {
+      // silent fail
+    }
+    document.body.removeChild(ta);
+  }
+
+  function showToast() {
+    var toast = els.copyToast;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2200);
+  }
+
+  /* ============================
+     SHARE ON TWITTER
+     ============================ */
+  els.btnTwitter.addEventListener('click', function() {
+    var r = getRates();
+    var tweetText = 'My freelance rates:\n'
+      + '⏰ Hourly: ' + fmt(r.gross.hourly) + '\n'
+      + '☀️ Day: ' + fmt(r.gross.daily) + '\n'
+      + '\u{1F4C5} Weekly: ' + fmt(r.gross.weekly) + '\n'
+      + '\u{1F4B0} Monthly: ' + fmt(r.gross.monthly) + '\n'
+      + '\u{1F4B5} Annual: ' + fmt(r.gross.annual) + '\n\n'
+      + 'Effective rate after tax + non-billable time: ' + fmt(r.effective.hourly) + '/hr'
+      + '\n\nCalculate yours:';
+
+    var url = 'https://freelanceos.io/freelanceos-storefront/day-rate-calculator.html';
+    var twitterUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) + '&url=' + encodeURIComponent(url);
+    window.open(twitterUrl, '_blank', 'noopener,noreferrer');
+  });
+
+  /* ============================
+     SLIDER GRADIENT FILL (visual)
+     ============================ */
+  function updateSliderFill(slider) {
+    var min = parseFloat(slider.min);
+    var max = parseFloat(slider.max);
+    var val = parseFloat(slider.value);
+    var pct = ((val - min) / (max - min)) * 100;
+    slider.style.background = 'linear-gradient(to right, #a855f7 0%, #ec4899 ' + pct + '%, rgba(168,85,247,0.15) ' + pct + '%)';
+  }
+
+  function initSliderFills() {
+    Object.keys(els.sliders).forEach(function(key) {
+      var slider = els.sliders[key];
+      updateSliderFill(slider);
+      slider.addEventListener('input', function() {
+        updateSliderFill(this);
+      });
+    });
+  }
+
+  /* ============================
+     QUICK CONVERSION CLICK-TO-TAB
+     ============================ */
+  els.quickConvItems.forEach(function(item) {
+    item.addEventListener('click', function() {
+      var type = this.dataset.type;
+      switchTab(type);
+      // Focus the input
+      els.inputs[type].focus();
+    });
+    item.style.cursor = 'pointer';
+  });
+
+  /* ============================
+     KEYBOARD ACCESSIBILITY
+     ============================ */
+  els.tabs.forEach(function(btn) {
+    btn.addEventListener('keydown', function(e) {
+      var tabOrder = ['hourly', 'daily', 'weekly', 'monthly', 'annual'];
+      var currentIndex = tabOrder.indexOf(this.dataset.tab);
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        var nextIndex = (currentIndex + 1) % tabOrder.length;
+        switchTab(tabOrder[nextIndex]);
+        els.tabs[nextIndex].focus();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        var prevIndex = (currentIndex - 1 + tabOrder.length) % tabOrder.length;
+        switchTab(tabOrder[prevIndex]);
+        els.tabs[prevIndex].focus();
+      }
+    });
+  });
+
+  /* ============================
+     INITIALIZATION
+     ============================ */
+  function init() {
+    initSliderFills();
+    updateAll();
+  }
+
+  init();
+
+})();
+</script>
+
+</body>
+</html>
