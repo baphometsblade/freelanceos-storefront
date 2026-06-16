@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Red Flag Detector — Spot a Bad Client Before You Take the Job</title>
+  <meta name="description" content="Free 15-question quiz that scores your potential client 0–200. Detect red flags, check payment terms, and know exactly whether to take the job or walk away.">
+  <meta name="keywords" content="bad client signs, freelance red flags, how to spot a bad client, client red flag detector, freelance client quiz">
+  <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/freelance-client-quiz.html">
+  <meta property="og:title" content="Client Red Flag Detector — Know Before You Say Yes">
+  <meta property="og:description" content="15 questions. 200-point score. Find out if your potential client is a dream or a nightmare — before you sign.">
+  <meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/freelance-client-quiz.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚩</text></svg>">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0f0f0f;
+      --bg-card: #1a1a1a;
+      --bg-card2: #222;
+      --border: #2d2d2d;
+      --purple: #7c3aed;
+      --purple-light: #a78bfa;
+      --green: #10b981;
+      --yellow: #f59e0b;
+      --orange: #f97316;
+      --red: #ef4444;
+      --txt: #e5e7eb;
+      --txt2: #9ca3af;
+      --txt3: #6b7280;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--txt); min-height: 100vh; }
+    a { color: var(--purple-light); }
+
+    /* NAV */
+    nav { background: rgba(15,15,15,0.95); border-bottom: 1px solid var(--border); padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+    .nav-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; font-size: 1.1rem; text-decoration: none; background: linear-gradient(135deg, #7c3aed, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-back { font-size: .85rem; color: var(--txt2); text-decoration: none; }
+    .nav-back:hover { color: var(--txt); }
+
+    /* WRAP */
+    .wrap { max-width: 680px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    /* HERO */
+    .hero { text-align: center; padding: 3.5rem 1.5rem 2rem; }
+    .hero-badge { display: inline-block; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; font-size: .8rem; font-weight: 600; padding: .3rem .9rem; border-radius: 2rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: .06em; }
+    .hero h1 { font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: .75rem; line-height: 1.15; }
+    .hero h1 span { background: linear-gradient(135deg, #ef4444, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { color: var(--txt2); font-size: 1rem; max-width: 500px; margin: 0 auto 1.5rem; }
+    .hero-meta { font-size: .82rem; color: var(--txt3); }
+
+    /* PROGRESS BAR */
+    .progress-bar-wrap { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: .75rem 1.5rem; position: sticky; top: 65px; z-index: 90; }
+    .progress-bar-inner { max-width: 680px; margin: 0 auto; }
+    .progress-label { display: flex; justify-content: space-between; font-size: .78rem; color: var(--txt3); margin-bottom: .5rem; }
+    .progress-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #7c3aed, #a78bfa); border-radius: 3px; transition: width .4s cubic-bezier(.4,0,.2,1); width: 0%; }
+
+    /* QUIZ SCREEN */
+    #quizScreen { display: block; }
+    #resultsScreen { display: none; }
+
+    /* QUESTION CARD */
+    .q-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.75rem; margin-bottom: 1.25rem; transition: border-color .2s; }
+    .q-num { font-size: .72rem; font-weight: 700; color: var(--txt3); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .6rem; }
+    .q-text { font-size: 1.05rem; font-weight: 700; margin-bottom: 1.1rem; line-height: 1.4; }
+    .q-options { display: flex; flex-direction: column; gap: .5rem; }
+    .q-opt {
+      display: flex; align-items: flex-start; gap: .7rem;
+      background: var(--bg-card2); border: 1.5px solid var(--border); border-radius: .65rem;
+      padding: .75rem 1rem; cursor: pointer; transition: border-color .2s, background .2s;
+      font-size: .9rem; line-height: 1.4;
+    }
+    .q-opt:hover { border-color: var(--purple); background: rgba(124,58,237,0.06); }
+    .q-opt.selected { border-color: var(--purple-light); background: rgba(124,58,237,0.12); }
+    .q-opt.selected .opt-radio { background: var(--purple-light); border-color: var(--purple-light); }
+    .opt-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: .1rem; transition: all .2s; }
+    .opt-score { margin-left: auto; font-size: .75rem; font-weight: 700; color: var(--txt3); white-space: nowrap; padding-left: .5rem; }
+    .q-tip { margin-top: .75rem; background: rgba(124,58,237,0.08); border-left: 3px solid var(--purple); border-radius: 0 .5rem .5rem 0; padding: .65rem .9rem; font-size: .82rem; color: var(--txt2); display: none; animation: fadeIn .3s ease; }
+    .q-tip.show { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* SUBMIT BTN */
+    .submit-wrap { text-align: center; margin-top: 2rem; }
+    .submit-btn { display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, #7c3aed, #a78bfa); color: #fff; border: none; padding: .9rem 2.5rem; border-radius: 2rem; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform .15s, box-shadow .2s; box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(124,58,237,0.5); }
+    .submit-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .q-count-note { font-size: .8rem; color: var(--txt3); margin-top: .75rem; }
+
+    /* RESULTS */
+    .score-circle-wrap { text-align: center; padding: 2.5rem 1rem 1.5rem; }
+    .score-circle { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 180px; height: 180px; border-radius: 50%; border: 8px solid; margin-bottom: 1rem; transition: border-color .4s; }
+    .score-circle-num { font-size: 3rem; font-weight: 900; line-height: 1; }
+    .score-circle-max { font-size: .85rem; font-weight: 600; opacity: .6; }
+    .tier-badge { display: inline-block; padding: .55rem 1.4rem; border-radius: 2rem; font-weight: 800; font-size: 1.1rem; margin-bottom: 1.5rem; }
+
+    .res-green { border-color: #10b981; color: #10b981; }
+    .res-teal { border-color: #06b6d4; color: #06b6d4; }
+    .res-yellow { border-color: #f59e0b; color: #f59e0b; }
+    .res-orange { border-color: #f97316; color: #f97316; }
+    .res-red { border-color: #ef4444; color: #ef4444; }
+
+    .badge-green { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+    .badge-teal { background: rgba(6,182,212,0.15); color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); }
+    .badge-yellow { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+    .badge-orange { background: rgba(249,115,22,0.15); color: #f97316; border: 1px solid rgba(249,115,22,0.3); }
+    .badge-red { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+
+    /* RED FLAGS LIST */
+    .redflags-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .redflags-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+    .flag-item { display: flex; gap: .75rem; align-items: flex-start; margin-bottom: .75rem; }
+    .flag-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
+    .flag-text { font-size: .9rem; }
+    .flag-label { font-weight: 700; margin-bottom: .2rem; }
+    .flag-sub { color: var(--txt2); font-size: .82rem; }
+
+    /* ADVICE */
+    .advice-card { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .advice-title { font-size: .9rem; font-weight: 700; color: var(--purple-light); margin-bottom: .75rem; text-transform: uppercase; letter-spacing: .06em; }
+    .advice-list { list-style: none; }
+    .advice-list li { font-size: .9rem; color: var(--txt2); margin-bottom: .5rem; padding-left: 1.2rem; position: relative; }
+    .advice-list li::before { content: '→'; position: absolute; left: 0; color: var(--purple-light); }
+
+    /* SHARE */
+    .share-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.25rem; text-align: center; }
+    .share-card p { font-size: .9rem; color: var(--txt2); margin-bottom: 1rem; }
+    .share-text { background: var(--bg-card2); border: 1px solid var(--border); border-radius: .5rem; padding: .85rem 1rem; font-size: .88rem; color: var(--txt); font-style: italic; margin-bottom: 1rem; text-align: left; line-height: 1.5; }
+    .share-btns { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+    .share-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem 1.1rem; border-radius: 2rem; font-size: .82rem; font-weight: 600; cursor: pointer; border: none; transition: all .2s; }
+    .share-copy { background: var(--bg-card2); border: 1px solid var(--border); color: var(--txt2); }
+    .share-copy:hover { border-color: var(--purple); color: var(--purple-light); }
+    .share-copy.copied { border-color: var(--green); color: var(--green); }
+
+    /* EMAIL */
+    .email-section { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.25rem; text-align: center; }
+    .email-section h3 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; }
+    .email-section p { font-size: .85rem; color: var(--txt2); margin-bottom: 1rem; }
+    .email-form { display: flex; gap: .5rem; max-width: 420px; margin: 0 auto; }
+    .email-input { flex: 1; background: var(--bg-card2); border: 1px solid var(--border); border-radius: .5rem; color: var(--txt); font-size: .9rem; padding: .6rem .9rem; }
+    .email-input:focus { outline: none; border-color: var(--purple); }
+    .email-submit { background: var(--purple); color: #fff; border: none; border-radius: .5rem; padding: .6rem 1.1rem; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .2s; white-space: nowrap; }
+    .email-submit:hover { background: #6d28d9; }
+    .email-success { color: var(--green); font-size: .9rem; font-weight: 600; display: none; }
+
+    /* CTA */
+    .cta-section { background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(167,139,250,0.08)); border: 1px solid rgba(124,58,237,0.25); border-radius: 1rem; padding: 2rem; text-align: center; margin-bottom: 1.25rem; }
+    .cta-section h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: .6rem; }
+    .cta-section p { color: var(--txt2); font-size: .9rem; margin-bottom: 1.25rem; }
+    .cta-btn { display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, #7c3aed, #a78bfa); color: #fff; text-decoration: none; padding: .8rem 1.75rem; border-radius: 2rem; font-weight: 700; font-size: .95rem; transition: transform .15s, box-shadow .2s; box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(124,58,237,0.5); }
+    .cta-sub { font-size: .78rem; color: var(--txt3); margin-top: .6rem; }
+    .retake-btn { display: inline-flex; align-items: center; gap: .4rem; background: var(--bg-card); border: 1px solid var(--border); color: var(--txt2); padding: .65rem 1.4rem; border-radius: 2rem; font-weight: 600; font-size: .88rem; cursor: pointer; margin-top: 1rem; transition: all .2s; }
+    .retake-btn:hover { border-color: var(--purple); color: var(--purple-light); }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 2rem 1rem; border-top: 1px solid var(--border); color: var(--txt3); font-size: .82rem; }
+    footer a { color: var(--purple-light); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">FreelanceOS</a>
+    <a href="/" class="nav-back">← Back to all tools</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">🚩 Free Quiz Tool</div>
+  <h1>Client <span>Red Flag</span> Detector</h1>
+  <p>15 questions. Score your potential client 0–200. Know whether to sign or sprint before a single minute of work.</p>
+  <div class="hero-meta">Takes about 2 minutes · No signup required · Results instant</div>
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-inner">
+    <div class="progress-label">
+      <span id="progressText">Question 0 of 15</span>
+      <span id="progressScore">Score: 0</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div class="wrap" id="quizScreen">
+
+  <div id="questionList"></div>
+
+  <div class="submit-wrap">
+    <button class="submit-btn" id="submitBtn" onclick="showResults()">
+      See My Client Score →
+    </button>
+    <div class="q-count-note" id="countNote">Answer all 15 questions to see your result.</div>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div class="wrap" id="resultsScreen">
+
+  <!-- SCORE CIRCLE -->
+  <div class="score-circle-wrap">
+    <div class="score-circle" id="scoreCircle">
+      <div class="score-circle-num" id="scoreNum">0</div>
+      <div class="score-circle-max">/ 200</div>
+    </div>
+    <div>
+      <div class="tier-badge" id="tierBadge"></div>
+    </div>
+    <p style="color:var(--txt2);font-size:.9rem;margin-top:.75rem;" id="tierDesc"></p>
+  </div>
+
+  <!-- RED FLAGS -->
+  <div class="redflags-card">
+    <div class="redflags-title">🔍 Top Issues Detected</div>
+    <div id="flagsList"></div>
+  </div>
+
+  <!-- PERSONALIZED ADVICE -->
+  <div class="advice-card">
+    <div class="advice-title">💡 Your Action Plan</div>
+    <ul class="advice-list" id="adviceList"></ul>
+  </div>
+
+  <!-- SHARE CARD -->
+  <div class="share-card">
+    <p style="font-weight:700;font-size:1rem;margin-bottom:.5rem;">Share your score</p>
+    <p>Let your freelance network know what to watch out for.</p>
+    <div class="share-text" id="shareText"></div>
+    <div class="share-btns">
+      <button class="share-btn share-copy" id="copyBtn" onclick="copyShare()">📋 Copy to clipboard</button>
+    </div>
+  </div>
+
+  <!-- EMAIL CAPTURE -->
+  <div class="email-section">
+    <h3>📋 Get the Full Client Red Flag Checklist</h3>
+    <p>27-point PDF checklist — know every warning sign before you sign. Free.</p>
+    <div class="email-form">
+      <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
+      <button class="email-submit" onclick="submitEmail()">Send it →</button>
+    </div>
+    <div class="email-success" id="emailSuccess">✓ Check your inbox!</div>
+    <p style="font-size:.75rem;color:var(--txt3);margin-top:.6rem;">No spam. Unsubscribe any time.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h3>Never take a bad client again</h3>
+    <p>FreelanceOS Pro's <strong>Client CRM</strong> lets you track quality scores, payment history, and red flags for every contact — so you always know who's worth working with.</p>
+    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="cta-btn">Get FreelanceOS Pro — 40% off →</a>
+    <div class="cta-sub">Use code <strong>FLASH40</strong> · $29 one-time · 30-day guarantee</div>
+  </div>
+
+  <div style="text-align:center;">
+    <button class="retake-btn" onclick="retake()">↺ Retake the quiz</button>
+  </div>
+</div>
+
+<footer>
+  <a href="/">FreelanceOS</a> · Free tools for freelancers ·
+  <a href="/free-templates.html">All free tools</a> ·
+  <a href="/freelance-project-calculator.html">Project Profitability Calculator</a>
+</footer>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "How did they find you?",
+    opts: [
+      { text: "Referral from someone I know", score: 20, tip: "Referrals come pre-vetted. They already know your value from a trusted source." },
+      { text: "LinkedIn / professional network", score: 15, tip: "Professional platform sourcing shows they're approaching this seriously." },
+      { text: "Cold email or DM to me", score: 10, tip: "Outbound targeting is fine, but they picked you specifically — that's good." },
+      { text: "Upwork / Fiverr / freelance marketplace", score: 5, tip: "Platform clients can be great, but often come with lower budget expectations." },
+      { text: "They were searching for 'affordable' or 'cheap'", score: 0, tip: "🚩 If budget was their primary filter, it'll probably be their primary concern throughout." }
+    ],
+    flagKey: "source"
+  },
+  {
+    q: "Did they ask about your rate before explaining the project?",
+    opts: [
+      { text: "No — they explained the project first", score: 15, tip: "They care about the outcome more than just the price. Good sign." },
+      { text: "Yes — rate was the first thing they asked", score: -5, tip: "🚩 Budget-first clients often struggle to see value beyond cost. Watch for scope creep." }
+    ],
+    flagKey: "rateFirst"
+  },
+  {
+    q: "What's their timeline expectation?",
+    opts: [
+      { text: "Realistic with buffer built in", score: 15, tip: "They've planned ahead. This usually means fewer panicked revisions." },
+      { text: "Tight but manageable", score: 10, tip: "Doable — just set clear milestones upfront." },
+      { text: "\"ASAP\" (unspecified urgency)", score: 5, tip: "⚠️ Ask them to define ASAP. Urgency without a real deadline is usually anxiety, not an actual deadline." },
+      { text: "\"We needed this yesterday\"", score: 0, tip: "🚩 They're already behind schedule before you've even started. Expect rushed feedback and scope pressure." }
+    ],
+    flagKey: "timeline"
+  },
+  {
+    q: "Did they come to you with a clear brief?",
+    opts: [
+      { text: "Very detailed — goals, audience, deliverables all clear", score: 20, tip: "Clear briefs mean fewer revisions and happier outcomes. This is a green flag." },
+      { text: "Somewhat clear — some gaps but mostly there", score: 10, tip: "Workable. A short discovery call should close the gaps." },
+      { text: "Vague but willing to work through it together", score: 5, tip: "Can be fine if they're genuinely collaborative — but price in discovery time." },
+      { text: "\"You'll figure it out\" / no brief at all", score: 0, tip: "🚩 Unclear briefs = unlimited revisions. Do not proceed without a written scope." }
+    ],
+    flagKey: "brief"
+  },
+  {
+    q: "How did they respond to your rate?",
+    opts: [
+      { text: "Accepted immediately", score: 15, tip: "They came in knowing your value. This is a dream client signal." },
+      { text: "Asked for a small discount / package deal", score: 10, tip: "Reasonable negotiation is normal. Just hold your ground on the floor." },
+      { text: "Negotiated hard for a while", score: 5, tip: "⚠️ Long rate negotiations often signal ongoing value disputes. Be clear on what's included." },
+      { text: "Sent a lengthy counter-offer / brought in procurement", score: 0, tip: "🚩 Procurement-level negotiation on a freelance project usually means a painful engagement." }
+    ],
+    flagKey: "rateResponse"
+  },
+  {
+    q: "Did they mention a previous freelancer \"didn't work out\"?",
+    opts: [
+      { text: "No previous issues mentioned", score: 10, tip: "Clean slate is always preferable." },
+      { text: "Yes — mentioned it with a reasonable explanation", score: 5, tip: "One bad experience with a clear reason is forgivable. Ask what went wrong." },
+      { text: "Yes — multiple freelancers haven't worked out", score: 0, tip: "🚩 The common denominator in all their failed projects is them. Proceed with extreme caution." }
+    ],
+    flagKey: "prevFreelancer"
+  },
+  {
+    q: "Is there a clear decision-maker?",
+    opts: [
+      { text: "Yes — one person with full authority", score: 15, tip: "Single decision-maker = fast approvals and consistent feedback. Golden." },
+      { text: "Small committee (2–3 people)", score: 10, tip: "Manageable — just establish who has final say before you start." },
+      { text: "\"Need to check with the team\" (unclear)", score: 5, tip: "⚠️ Feedback-by-committee often means conflicting notes and revision spirals." },
+      { text: "Genuinely unclear who decides", score: 0, tip: "🚩 Without a decision-maker, approvals can be delayed indefinitely. Get this resolved before signing." }
+    ],
+    flagKey: "decisionMaker"
+  },
+  {
+    q: "Did they actually read your proposal or onboarding brief?",
+    opts: [
+      { text: "Yes — referenced specific sections / had thoughtful questions", score: 15, tip: "They're invested in the process. This predicts smooth collaboration." },
+      { text: "Seems like they read it", score: 10, tip: "Fine. You'll know by how they respond to the first deliverable." },
+      { text: "Clearly didn't read it at all", score: 0, tip: "🚩 If they don't read a proposal, they won't read a brief or a contract. This is a warning sign for every deliverable going forward." }
+    ],
+    flagKey: "readProposal"
+  },
+  {
+    q: "What are the payment terms they proposed or agreed to?",
+    opts: [
+      { text: "50% upfront (your standard terms)", score: 20, tip: "Perfect. Upfront deposits filter out non-serious clients instantly." },
+      { text: "Net 15 — due within 15 days of invoice", score: 15, tip: "Fast payment cycle, low risk." },
+      { text: "Net 30 — standard business terms", score: 10, tip: "Normal for larger businesses. Include a late payment clause." },
+      { text: "Net 60 — slow but contractual", score: 5, tip: "⚠️ 60 days is long. Make sure cash flow can handle the gap." },
+      { text: "\"We pay on full project completion only\"", score: 0, tip: "🚩 No upfront = no protection. If they dispute the work, you've lost all leverage." }
+    ],
+    flagKey: "payment"
+  },
+  {
+    q: "How did they respond to your revision policy?",
+    opts: [
+      { text: "Accepted your terms without question", score: 15, tip: "They respect professional boundaries. This is how good clients operate." },
+      { text: "Asked to discuss it — reasonable questions", score: 10, tip: "Totally fine. Work it out in the contract and move on." },
+      { text: "\"We'll see how it goes\" / no commitment", score: 0, tip: "🚩 \"We'll see\" on revision terms almost always means unlimited revisions in practice." }
+    ],
+    flagKey: "revisionPolicy"
+  },
+  {
+    q: "What's their communication style been like so far?",
+    opts: [
+      { text: "Prompt and professional — replies within 24 hours", score: 15, tip: "Responsive clients = faster feedback loops = projects that finish on time." },
+      { text: "Slow but clear when they do reply", score: 10, tip: "Workable. Set expectations about feedback turnaround in the contract." },
+      { text: "Regularly messages outside business hours", score: 5, tip: "⚠️ If they're emailing at 11pm now, they'll expect responses at 11pm too. Set boundaries early." },
+      { text: "Erratic — hard to reach, then suddenly urgent", score: 0, tip: "🚩 Erratic communicators create timeline chaos. Expect delays on their end, then panic on yours." }
+    ],
+    flagKey: "commsStyle"
+  },
+  {
+    q: "Do they have a clear budget?",
+    opts: [
+      { text: "Yes — confirmed and realistic for the scope", score: 20, tip: "Budget clarity is a top-tier green flag. They know what they're buying." },
+      { text: "Has a budget but it's slightly low — willing to discuss", score: 10, tip: "Negotiate. If there's flexibility, this can work." },
+      { text: "\"We'll see what fits\" / budget TBD", score: 5, tip: "⚠️ No budget usually means they're shocked when they see your rate. Qualify this fast." },
+      { text: "No idea what anything costs", score: 0, tip: "🚩 Budget-less clients often anchor to the cheapest price they've seen anywhere. Set expectations immediately." }
+    ],
+    flagKey: "budget"
+  },
+  {
+    q: "How did they react when you mentioned a contract?",
+    opts: [
+      { text: "Happy to sign — asked what you need from them", score: 15, tip: "Contracts protect both parties. Clients who know this are professionals." },
+      { text: "Had minor questions but agreed", score: 10, tip: "Normal. Answer their questions and move on." },
+      { text: "\"We don't usually do contracts with freelancers\"", score: 0, tip: "🚩 No contract = no protection. A business that won't sign a contract is telling you exactly how they operate." }
+    ],
+    flagKey: "contract"
+  },
+  {
+    q: "Did they offer references or testimonials from previous work?",
+    opts: [
+      { text: "Offered without being asked", score: 15, tip: "Proactively offering references signals confidence and professionalism. Rare and valuable." },
+      { text: "Happy to provide when asked", score: 10, tip: "Normal. Always ask for at least one reference from a past vendor or contractor." },
+      { text: "Hesitant but eventually agreed", score: 5, tip: "⚠️ Hesitation doesn't mean guilt, but it's worth noting. Check what they share." },
+      { text: "\"None available\" / deflected the question", score: 0, tip: "🚩 Established businesses can always find a reference. Inability or refusal is a warning sign." }
+    ],
+    flagKey: "references"
+  },
+  {
+    q: "Gut feeling — honestly, how do you feel about this client?",
+    opts: [
+      { text: "Excited — can't wait to start", score: 20, tip: "Enthusiasm is contagious. When you're excited about a client, you do your best work." },
+      { text: "Neutral — seems fine, nothing special", score: 10, tip: "Neutral is okay. Not every project has to spark joy." },
+      { text: "Slightly nervous — something feels off but I can't name it", score: 5, tip: "⚠️ Trust that feeling. Your subconscious is pattern-matching on something. Name it if you can." },
+      { text: "Something feels genuinely wrong", score: 0, tip: "🚩 Your gut is your most calibrated red flag detector. If something feels off, it usually is." }
+    ],
+    flagKey: "gut"
+  }
+];
+
+const TIPS_BY_FLAG = {
+  rateFirst: { label: "Budget-first mentality", sub: "They asked about cost before understanding the problem. Watch for ongoing price pressure." },
+  timeline: { label: "Unrealistic deadline", sub: "\"ASAP\" or \"yesterday\" timelines usually mean poor internal planning — which becomes your emergency." },
+  brief: { label: "Unclear brief", sub: "No clear scope = unlimited revisions. Define deliverables in writing before starting any work." },
+  prevFreelancer: { label: "Multiple failed freelancer relationships", sub: "If several freelancers \"didn't work out,\" ask exactly why. The pattern matters more than any individual case." },
+  decisionMaker: { label: "No clear decision-maker", sub: "Feedback-by-committee creates conflicting notes and endless revision cycles. Establish one approver." },
+  payment: { label: "Weak payment terms", sub: "No upfront payment removes your leverage if they dispute the work. Always get something in advance." },
+  revisionPolicy: { label: "Vague on revisions", sub: "\"We'll see\" on revisions = unlimited revisions in practice. Define rounds explicitly in the contract." },
+  commsStyle: { label: "Erratic communication", sub: "Slow or erratic replies now will delay your feedback loops on every milestone. Set response time expectations." },
+  contract: { label: "Contract resistance", sub: "Any hesitation around contracts is a major red flag. No contract = no protection for either party." },
+  references: { label: "Can't provide references", sub: "A client who has worked with professionals before can always find a reference. Deflection here warrants scrutiny." },
+  gut: { label: "Your gut says no", sub: "You've seen enough clients to calibrate your instincts. If something feels wrong, dig into what's triggering it." },
+  source: { label: "Budget-focused sourcing channel", sub: "Finding you via a price-focused search often means price is their primary decision criterion." },
+  rateResponse: { label: "Intense rate negotiation", sub: "Long negotiation on rate often foreshadows disputes about value throughout the project." },
+  budget: { label: "No clear budget", sub: "Clients without a budget often anchor to unrealistic price expectations. Qualify early." },
+  readProposal: { label: "Didn't read the proposal", sub: "If they won't read a proposal, they won't read a contract, brief, or spec either." }
+};
+
+const MAX_SCORE = 200;
+let answers = new Array(QUESTIONS.length).fill(null);
+
+function buildQuiz() {
+  const list = document.getElementById('questionList');
+  list.innerHTML = QUESTIONS.map((q, qi) => `
+    <div class="q-card" id="qcard-${qi}">
+      <div class="q-num">Question ${qi + 1} of ${QUESTIONS.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o, oi) => `
+          <div class="q-opt" id="opt-${qi}-${oi}" onclick="selectOpt(${qi}, ${oi})">
+            <div class="opt-radio" id="radio-${qi}-${oi}"></div>
+            <span>${o.text}</span>
+            <span class="opt-score">+${Math.max(0,o.score)}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="q-tip" id="tip-${qi}"></div>
+    </div>
+  `).join('');
+}
+
+function selectOpt(qi, oi) {
+  answers[qi] = oi;
+  // Deselect all opts for this question
+  QUESTIONS[qi].opts.forEach((_, i) => {
+    document.getElementById(`opt-${qi}-${i}`).classList.remove('selected');
+    document.getElementById(`radio-${qi}-${i}`).style.background = '';
+  });
+  document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+  // Show tip
+  const tip = document.getElementById(`tip-${qi}`);
+  tip.textContent = QUESTIONS[qi].opts[oi].tip;
+  tip.classList.add('show');
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = answers.filter(a => a !== null).length;
+  const score = calcScore();
+  document.getElementById('progressText').textContent = `Question ${answered} of ${QUESTIONS.length}`;
+  document.getElementById('progressScore').textContent = `Score: ${score}`;
+  document.getElementById('progressFill').style.width = (answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('countNote').textContent = answered < QUESTIONS.length
+    ? `${QUESTIONS.length - answered} more to go`
+    : 'All questions answered — ready!';
+}
+
+function calcScore() {
+  return answers.reduce((sum, ans, qi) => {
+    if (ans === null) return sum;
+    return sum + Math.max(0, QUESTIONS[qi].opts[ans].score);
+  }, 0);
+}
+
+function detectFlags() {
+  const flags = [];
+  answers.forEach((ans, qi) => {
+    if (ans === null) return;
+    const score = QUESTIONS[qi].opts[ans].score;
+    if (score <= 5) {
+      const key = QUESTIONS[qi].flagKey;
+      if (TIPS_BY_FLAG[key]) flags.push({ ...TIPS_BY_FLAG[key], score });
+    }
+  });
+  // Sort by worst score first
+  flags.sort((a, b) => a.score - b.score);
+  return flags.slice(0, 3);
+}
+
+function getTier(score) {
+  if (score >= 200) return { emoji: '🌟', text: 'Dream Client — send that proposal NOW', cls: 'res-green', badge: 'badge-green', desc: 'Every signal says go. This is the kind of client you build a freelance career around.' };
+  if (score >= 150) return { emoji: '✅', text: 'Solid Client — proceed with standard terms', cls: 'res-teal', badge: 'badge-teal', desc: 'Strong client with good fundamentals. Use your standard contract and you\'re likely to have a smooth project.' };
+  if (score >= 100) return { emoji: '⚠️', text: 'Proceed with Caution — tighten your contract', cls: 'res-yellow', badge: 'badge-yellow', desc: 'Some yellow flags here. Address the weak areas explicitly in your contract before starting.' };
+  if (score >= 50) return { emoji: '🚩', text: 'Multiple Red Flags — negotiate hard or walk away', cls: 'res-orange', badge: 'badge-orange', desc: 'Several warning signs. This project could drain more time and energy than the fee justifies. Negotiate protective terms or pass.' };
+  return { emoji: '🚨', text: 'Run. This client will cost you more than they pay.', cls: 'res-red', badge: 'badge-red', desc: 'The pattern here is clear. Clients like this create scope creep, payment delays, and professional headaches. Your time is worth more.' };
+}
+
+function getAdvice(score, flags) {
+  const advice = [];
+  if (score < 150) {
+    advice.push('Add specific deliverable definitions and revision round limits to your contract.');
+    advice.push('Require a written brief sign-off before any production work begins.');
+  }
+  if (score < 100) {
+    advice.push('Increase your upfront deposit to 50% — this filters uncommitted clients.');
+    advice.push('Set explicit response time expectations in your onboarding document.');
+  }
+  if (score < 50) {
+    advice.push('Consider walking away — your energy is better spent on higher-quality leads.');
+    advice.push('If you do proceed, price at 1.5× your normal rate to compensate for risk.');
+    advice.push('Get full payment upfront or split 50% / 50% with no exceptions.');
+  }
+  if (flags.some(f => f.label.includes('contract'))) {
+    advice.push('Do not start a single hour of work without a signed contract. Full stop.');
+  }
+  if (flags.some(f => f.label.includes('decision'))) {
+    advice.push('Name the single approver in the contract and include a "feedback-by-committee" clause.');
+  }
+  if (advice.length === 0) {
+    advice.push('Send a polished proposal that reconfirms scope, timeline, and payment terms.');
+    advice.push('Use your standard onboarding process — this client is ready for it.');
+    advice.push('Build in one brief check-in call per milestone to keep things moving smoothly.');
+  }
+  return advice;
+}
+
+function showResults() {
+  const unanswered = answers.filter(a => a === null).length;
+  if (unanswered > 0) {
+    alert(`Please answer all ${QUESTIONS.length} questions first. (${unanswered} remaining)`);
+    return;
+  }
+  const score = calcScore();
+  const tier = getTier(score);
+  const flags = detectFlags();
+  const advice = getAdvice(score, flags);
+
+  // Score circle
+  const circle = document.getElementById('scoreCircle');
+  circle.className = 'score-circle ' + tier.cls;
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('scoreNum').style.color = 'inherit';
+
+  // Tier badge
+  const badge = document.getElementById('tierBadge');
+  badge.className = 'tier-badge ' + tier.badge;
+  badge.textContent = tier.emoji + ' ' + tier.text;
+  document.getElementById('tierDesc').textContent = tier.desc;
+
+  // Red flags
+  const flagsList = document.getElementById('flagsList');
+  if (flags.length === 0) {
+    flagsList.innerHTML = '<div style="color:var(--green);font-size:.9rem;font-weight:600;">✓ No major red flags detected — clean sweep!</div>';
+  } else {
+    flagsList.innerHTML = flags.map(f => `
+      <div class="flag-item">
+        <div class="flag-icon">🚩</div>
+        <div class="flag-text">
+          <div class="flag-label">${f.label}</div>
+          <div class="flag-sub">${f.sub}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Advice
+  document.getElementById('adviceList').innerHTML = advice.map(a => `<li>${a}</li>`).join('');
+
+  // Share text
+  document.getElementById('shareText').textContent =
+    `I just scored a potential client ${score}/200 on the FreelanceOS Client Red Flag Detector. Verdict: ${tier.emoji} "${tier.text}". Check your next client before you say yes → https://baphometsblade.github.io/freelanceos-storefront/freelance-client-quiz.html`;
+
+  // Show results screen
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('resultsScreen').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyShare() {
+  const text = document.getElementById('shareText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copy to clipboard'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
+function submitEmail() {
+  const val = document.getElementById('emailInput').value;
+  if (!val || !val.includes('@')) { document.getElementById('emailInput').focus(); return; }
+  document.querySelector('.email-form').style.display = 'none';
+  document.getElementById('emailSuccess').style.display = 'block';
+}
+
+function retake() {
+  answers = new Array(QUESTIONS.length).fill(null);
+  document.getElementById('resultsScreen').style.display = 'none';
+  document.getElementById('quizScreen').style.display = 'block';
+  buildQuiz();
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// INIT
+buildQuiz();
+updateProgress();
+</script>
+</body>
+</html>
