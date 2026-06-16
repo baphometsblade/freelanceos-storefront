@@ -1,0 +1,3800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Annual Review &amp; Year in Review Generator for Freelancers | FreelanceOS</title>
+<meta name="description" content="Free annual review generator for freelancers. Track revenue, clients, skills, wins, and goals for the year. Generate a beautiful year-in-review summary to share or export.">
+<meta property="og:title" content="Free Annual Review &amp; Year in Review Generator for Freelancers | FreelanceOS">
+<meta property="og:description" content="Reflect on your freelance year: revenue, clients, skills, wins, and goals. Generate a shareable year-in-review summary — free forever.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.com/annual-review">
+<meta property="og:image" content="https://freelanceos.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Annual Review Generator for Freelancers | FreelanceOS">
+<meta name="twitter:description" content="Reflect on your freelance year: revenue, clients, skills, wins, and goals. Generate a shareable year-in-review summary.">
+<meta name="twitter:image" content="https://freelanceos.com/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Free Annual Review Generator for Freelancers",
+  "description": "Track your freelance year — revenue, clients, skills, wins, and goals — then generate a beautiful shareable year-in-review summary.",
+  "url": "https://freelanceos.com/annual-review",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "FreelanceOS",
+    "url": "https://freelanceos.com"
+  }
+}
+</script>
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #020617;
+  --card-bg: #0f172a;
+  --card-border: rgba(168,85,247,0.2);
+  --accent-from: #a855f7;
+  --accent-to: #ec4899;
+  --accent-gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --accent-gradient-h: linear-gradient(135deg, #b96ef9, #f06fac);
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --subtle: #475569;
+  --border: rgba(148,163,184,0.12);
+  --input-bg: rgba(15,23,42,0.8);
+  --input-border: rgba(168,85,247,0.3);
+  --input-focus: rgba(168,85,247,0.6);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --radius-input: 10px;
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 32px rgba(168,85,247,0.15);
+  --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --transition: 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(168,85,247,0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(168,85,247,0.7); }
+
+/* ============================================================
+   BACKGROUND DECORATION
+   ============================================================ */
+body::before {
+  content: '';
+  position: fixed;
+  top: -200px;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -200px;
+  right: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(236,72,153,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   CTA BANNER
+   ============================================================ */
+.cta-banner {
+  background: var(--accent-gradient);
+  text-align: center;
+  padding: 10px 16px;
+  position: relative;
+  z-index: 100;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  animation: bannerPulse 4s ease-in-out infinite;
+}
+.cta-banner a {
+  color: #fff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cta-banner a:hover { text-decoration: underline; opacity: 0.92; }
+.cta-banner .badge {
+  background: rgba(255,255,255,0.25);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.cta-banner .arrow { font-size: 1rem; }
+
+@keyframes bannerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.88; }
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: rgba(2,6,23,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--card-border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.nav-logo {
+  width: 32px;
+  height: 32px;
+  background: var(--accent-gradient);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+.nav-brand-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.nav-brand-text span {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color var(--transition);
+}
+.nav-link:hover { color: var(--text); }
+.nav-cta {
+  background: var(--accent-gradient);
+  color: #fff;
+  text-decoration: none;
+  padding: 7px 16px;
+  border-radius: var(--radius-btn);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: opacity var(--transition), transform var(--transition);
+  white-space: nowrap;
+}
+.nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+.nav-cta:active { transform: translateY(0); }
+
+/* ============================================================
+   HERO / PAGE HEADER
+   ============================================================ */
+.page-header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 52px 24px 36px;
+}
+.page-header .tool-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(168,85,247,0.12);
+  border: 1px solid rgba(168,85,247,0.3);
+  color: #c084fc;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.page-header h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+.page-header h1 .gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.page-header p {
+  color: var(--muted);
+  font-size: 1.0625rem;
+  max-width: 560px;
+  margin: 0 auto 24px;
+}
+.header-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.header-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+.header-meta-item .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  display: inline-block;
+}
+
+/* ============================================================
+   YEAR SELECTOR
+   ============================================================ */
+.year-selector-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+}
+.year-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 50px;
+  padding: 8px 20px;
+}
+.year-selector label {
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.year-selector select {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  padding-right: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+}
+
+/* ============================================================
+   TAB NAVIGATION
+   ============================================================ */
+.tab-nav-wrapper {
+  position: sticky;
+  top: 60px;
+  z-index: 80;
+  background: rgba(2,6,23,0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+}
+.tab-nav {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2px;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex-shrink: 0;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.01em;
+}
+.tab-btn:hover {
+  color: var(--text);
+  border-bottom-color: rgba(168,85,247,0.4);
+}
+.tab-btn.active {
+  color: #c084fc;
+  border-bottom-color: #a855f7;
+  font-weight: 600;
+}
+.tab-btn .tab-icon { font-size: 0.9rem; }
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 16px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   TAB PANELS
+   ============================================================ */
+.tab-panel {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.tab-panel.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   SECTION HEADERS
+   ============================================================ */
+.section-header {
+  margin-bottom: 28px;
+}
+.section-header h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.section-header p {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.card:hover {
+  border-color: rgba(168,85,247,0.35);
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+}
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title .icon { font-size: 1.1rem; }
+
+/* Glass card variant */
+.card-glass {
+  background: rgba(15,23,42,0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: var(--radius-card);
+}
+
+/* Gradient card variant */
+.card-gradient {
+  background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(236,72,153,0.08));
+  border: 1px solid rgba(168,85,247,0.25);
+  border-radius: var(--radius-card);
+  padding: 24px;
+}
+
+/* Stat card */
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  transition: border-color var(--transition), transform var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent-gradient);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.stat-card:hover::before { opacity: 1; }
+.stat-card:hover {
+  border-color: rgba(168,85,247,0.4);
+  transform: translateY(-2px);
+}
+.stat-card-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.stat-card-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-card-sub {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+/* ============================================================
+   GRID LAYOUTS
+   ============================================================ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+.form-group {
+  margin-bottom: 16px;
+}
+.form-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-input);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  padding: 10px 14px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(168,85,247,0.12);
+}
+.form-input::placeholder,
+.form-textarea::placeholder { color: var(--subtle); }
+.form-textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.6;
+}
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.form-select option { background: #1e293b; color: var(--text); }
+
+/* Input with prefix */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-prefix {
+  position: absolute;
+  left: 12px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  pointer-events: none;
+}
+.input-wrap .form-input { padding-left: 28px; }
+.input-suffix {
+  position: absolute;
+  right: 12px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  pointer-events: none;
+}
+.input-wrap.has-suffix .form-input { padding-right: 40px; }
+
+/* Range slider */
+.form-range {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+.form-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(168,85,247,0.5);
+  transition: transform var(--transition);
+}
+.form-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+/* Star rating */
+.star-rating {
+  display: flex;
+  gap: 4px;
+}
+.star-rating button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--subtle);
+  transition: color var(--transition), transform var(--transition);
+  padding: 2px;
+}
+.star-rating button.active,
+.star-rating button:hover { color: #f59e0b; transform: scale(1.1); }
+
+/* Toggle switch */
+.toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+}
+.toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--subtle);
+  border-radius: 12px;
+  transition: background var(--transition);
+  cursor: pointer;
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  left: 3px;
+  top: 3px;
+  transition: transform var(--transition);
+}
+.toggle input:checked + .toggle-slider { background: var(--accent-from); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+.toggle-label { font-size: 0.875rem; color: var(--muted); cursor: pointer; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-btn);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+  white-space: nowrap;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(168,85,247,0.3);
+}
+.btn-primary:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(168,85,247,0.4);
+}
+
+.btn-secondary {
+  background: rgba(168,85,247,0.1);
+  border: 1px solid rgba(168,85,247,0.3);
+  color: #c084fc;
+}
+.btn-secondary:hover {
+  background: rgba(168,85,247,0.18);
+  border-color: rgba(168,85,247,0.5);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.btn-ghost:hover { border-color: var(--card-border); color: var(--text); background: rgba(255,255,255,0.03); }
+
+.btn-danger {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  color: #f87171;
+}
+.btn-danger:hover { background: rgba(239,68,68,0.2); }
+
+.btn-sm { padding: 7px 14px; font-size: 0.8125rem; border-radius: 10px; }
+.btn-lg { padding: 14px 28px; font-size: 1rem; border-radius: 14px; }
+.btn-full { width: 100%; }
+.btn-icon { padding: 8px; border-radius: 8px; }
+
+/* ============================================================
+   BADGES & TAGS
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.badge-purple { background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
+.badge-green { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+.badge-yellow { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+.badge-red { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.badge-blue { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+.progress-bar-wrap {
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  height: 6px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent-gradient);
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 24px 0;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--muted);
+}
+.empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+.empty-state p { font-size: 0.9375rem; }
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+.table-wrap { overflow-x: auto; border-radius: var(--radius-card); }
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.data-table th {
+  background: rgba(15,23,42,0.8);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover td { background: rgba(168,85,247,0.04); }
+
+/* ============================================================
+   MONTH GRID (tab-monthly)
+   ============================================================ */
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.month-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.month-card:hover {
+  border-color: rgba(168,85,247,0.4);
+  transform: translateY(-2px);
+}
+.month-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.month-name {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.month-total {
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.month-inputs { display: flex; flex-direction: column; gap: 10px; }
+.month-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.month-input-row label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  min-width: 60px;
+  flex-shrink: 0;
+}
+.month-input-row .form-input { padding: 7px 10px; font-size: 0.875rem; }
+
+/* ============================================================
+   GOAL ITEMS (tab-goals)
+   ============================================================ */
+.goals-list { display: flex; flex-direction: column; gap: 12px; }
+.goal-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: border-color var(--transition);
+}
+.goal-item:hover { border-color: rgba(168,85,247,0.35); }
+.goal-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all var(--transition);
+}
+.goal-check.done {
+  background: var(--accent-gradient);
+  border-color: transparent;
+}
+.goal-check.done::after {
+  content: '✓';
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.goal-body { flex: 1; }
+.goal-title { font-weight: 600; margin-bottom: 4px; }
+.goal-meta { display: flex; gap: 10px; align-items: center; }
+.goal-category-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(168,85,247,0.12);
+  color: #c084fc;
+}
+.goal-progress-label { font-size: 0.8125rem; color: var(--muted); }
+.goal-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* Completion ring placeholder */
+.ring-placeholder {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ring-center-text {
+  text-align: center;
+  position: absolute;
+}
+.ring-pct { font-size: 2rem; font-weight: 800; line-height: 1; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.ring-label { font-size: 0.75rem; color: var(--muted); }
+
+/* ============================================================
+   SERVICE ROWS (tab-financial)
+   ============================================================ */
+.service-rows { display: flex; flex-direction: column; gap: 10px; }
+.service-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.service-row .form-input { flex: 1; }
+.service-row .form-input.revenue-col { max-width: 140px; }
+
+/* Quarterly grid */
+.quarterly-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+@media (max-width: 600px) { .quarterly-grid { grid-template-columns: repeat(2, 1fr); } }
+.quarter-card {
+  background: rgba(168,85,247,0.06);
+  border: 1px solid rgba(168,85,247,0.15);
+  border-radius: 12px;
+  padding: 16px;
+}
+.quarter-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.quarter-total {
+  font-size: 1.25rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+
+/* ============================================================
+   SKILLS GRID (tab-skills)
+   ============================================================ */
+.skills-section { margin-bottom: 28px; }
+.skills-section-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.skills-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(168,85,247,0.1);
+  border: 1px solid rgba(168,85,247,0.25);
+  color: #c084fc;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  animation: tagPop 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+.skill-tag button {
+  background: none;
+  border: none;
+  color: rgba(192,132,252,0.6);
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transition: color var(--transition);
+}
+.skill-tag button:hover { color: #f87171; }
+
+@keyframes tagPop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.skill-add-row { display: flex; gap: 8px; }
+.skill-add-row .form-input { flex: 1; }
+
+/* ============================================================
+   WINS / RETRO (tab-wins)
+   ============================================================ */
+.retro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 700px) { .retro-grid { grid-template-columns: 1fr; } }
+
+.retro-card {
+  border-radius: var(--radius-card);
+  padding: 20px;
+}
+.retro-card.stop { background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2); }
+.retro-card.start { background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.2); }
+.retro-card.continue { background: rgba(168,85,247,0.06); border: 1px solid rgba(168,85,247,0.2); }
+
+.retro-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.retro-card-icon { font-size: 1.25rem; }
+.retro-card-title { font-size: 0.9375rem; font-weight: 700; }
+.retro-card.stop .retro-card-title { color: #f87171; }
+.retro-card.start .retro-card-title { color: #34d399; }
+.retro-card.continue .retro-card-title { color: #c084fc; }
+
+/* ============================================================
+   NEXT YEAR GOALS (tab-nextyear)
+   ============================================================ */
+.next-year-goals { display: flex; flex-direction: column; gap: 20px; }
+.next-year-goal-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  gap: 16px;
+  transition: border-color var(--transition);
+}
+.next-year-goal-card:hover { border-color: rgba(168,85,247,0.35); }
+.next-year-goal-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.next-year-goal-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+.next-year-goal-title { font-weight: 700; font-size: 0.9375rem; }
+.next-year-goal-desc { font-size: 0.8125rem; color: var(--muted); }
+.stretch-badge {
+  background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.1));
+  border: 1px solid rgba(168,85,247,0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: center;
+  min-width: 120px;
+}
+.stretch-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.stretch-value { font-size: 1.125rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+@media (max-width: 700px) {
+  .next-year-goal-card { grid-template-columns: 1fr; }
+  .stretch-badge { text-align: left; }
+}
+
+/* ============================================================
+   SHARE PANEL (tab-share)
+   ============================================================ */
+.share-preview {
+  background: linear-gradient(135deg, #1a0533 0%, #0c0820 50%, #0f0f2e 100%);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 40px;
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.share-preview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(168,85,247,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(236,72,153,0.12) 0%, transparent 60%);
+}
+.share-preview-inner { position: relative; z-index: 1; }
+.share-preview-year { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 8px; }
+.share-preview-name { font-size: 2rem; font-weight: 800; margin-bottom: 20px; }
+.share-preview-stats { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+.share-stat { text-align: center; }
+.share-stat-value { font-size: 1.5rem; font-weight: 800; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.share-stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ============================================================
+   EXPORT BUTTONS (tab-export)
+   ============================================================ */
+.export-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 500px) { .export-grid { grid-template-columns: 1fr; } }
+.export-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  text-align: center;
+  transition: border-color var(--transition), transform var(--transition);
+  cursor: pointer;
+}
+.export-card:hover {
+  border-color: rgba(168,85,247,0.4);
+  transform: translateY(-3px);
+}
+.export-icon { font-size: 2rem; margin-bottom: 12px; }
+.export-title { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+.export-desc { font-size: 0.8125rem; color: var(--muted); margin-bottom: 16px; }
+
+/* ============================================================
+   CHART PLACEHOLDER
+   ============================================================ */
+.chart-placeholder {
+  background: rgba(168,85,247,0.04);
+  border: 1px dashed rgba(168,85,247,0.2);
+  border-radius: var(--radius-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  color: var(--subtle);
+  font-size: 0.875rem;
+  gap: 8px;
+}
+
+/* ============================================================
+   NOTIFICATION TOAST
+   ============================================================ */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+}
+#toast.show { transform: translateY(0); opacity: 1; }
+#toast .toast-icon { font-size: 1rem; }
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(168,85,247,0.2); }
+  50% { box-shadow: 0 0 40px rgba(168,85,247,0.4); }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-in { animation: slideUp 0.4s ease forwards; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .page-header { padding: 32px 16px 24px; }
+  .page-header h1 { font-size: 1.5rem; }
+  .nav-right .nav-link { display: none; }
+  .main { padding: 20px 12px 60px; }
+  .card { padding: 18px; }
+}
+@media (max-width: 480px) {
+  .cta-banner { font-size: 0.8rem; padding: 8px 12px; }
+  .tab-btn { padding: 12px 10px; font-size: 0.75rem; }
+}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.text-gradient {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-muted { color: var(--muted); }
+.text-subtle { color: var(--subtle); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-danger { color: var(--danger); }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-3 { margin-bottom: 12px; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.w-full { width: 100%; }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">
+    <span>🚀 Get FreelanceOS Pro — 40% OFF with code</span>
+    <span class="badge">FLASH40</span>
+    <span class="arrow">→</span>
+  </a>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="https://freelanceos.com" target="_blank" rel="noopener">
+    <div class="nav-logo">F</div>
+    <span class="nav-brand-text">Freelance<span>OS</span></span>
+  </a>
+  <div class="nav-right">
+    <a class="nav-link" href="https://freelanceos.com" target="_blank" rel="noopener">Tools</a>
+    <a class="nav-link" href="https://freelanceos.com/freelanceos.html" target="_blank" rel="noopener">Templates</a>
+    <a class="nav-cta" href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get Pro — 40% Off</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="tool-badge">✦ Free Tool · Tool #67</div>
+  <h1>Annual Review &amp; <span class="gradient-text">Year in Review</span> Generator</h1>
+  <p>Reflect on your freelance year. Track revenue, clients, skills, and wins — then generate a shareable summary.</p>
+  <div class="header-meta">
+    <span class="header-meta-item"><span class="dot"></span> 100% free, works in browser</span>
+    <span class="header-meta-item">💾 Auto-saves locally</span>
+    <span class="header-meta-item">📤 Export &amp; share</span>
+  </div>
+</header>
+
+<!-- YEAR SELECTOR -->
+<div class="year-selector-wrap">
+  <div class="year-selector">
+    <label for="review-year">Reviewing year:</label>
+    <select id="review-year">
+      <option value="2026">2026</option>
+      <option value="2025" selected>2025</option>
+      <option value="2024">2024</option>
+      <option value="2023">2023</option>
+      <option value="2022">2022</option>
+    </select>
+  </div>
+</div>
+
+<!-- TAB NAVIGATION -->
+<div class="tab-nav-wrapper">
+  <div class="tab-nav" role="tablist" aria-label="Annual review sections">
+    <button class="tab-btn active" role="tab" data-tab="overview" aria-selected="true">
+      <span class="tab-icon">📊</span> Overview
+    </button>
+    <button class="tab-btn" role="tab" data-tab="monthly" aria-selected="false">
+      <span class="tab-icon">📅</span> Monthly
+    </button>
+    <button class="tab-btn" role="tab" data-tab="goals" aria-selected="false">
+      <span class="tab-icon">🎯</span> Goals
+    </button>
+    <button class="tab-btn" role="tab" data-tab="clients" aria-selected="false">
+      <span class="tab-icon">🤝</span> Clients
+    </button>
+    <button class="tab-btn" role="tab" data-tab="financial" aria-selected="false">
+      <span class="tab-icon">💰</span> Financial
+    </button>
+    <button class="tab-btn" role="tab" data-tab="skills" aria-selected="false">
+      <span class="tab-icon">🧠</span> Skills
+    </button>
+    <button class="tab-btn" role="tab" data-tab="wins" aria-selected="false">
+      <span class="tab-icon">🏆</span> Wins
+    </button>
+    <button class="tab-btn" role="tab" data-tab="nextyear" aria-selected="false">
+      <span class="tab-icon">🚀</span> Next Year
+    </button>
+    <button class="tab-btn" role="tab" data-tab="share" aria-selected="false">
+      <span class="tab-icon">✨</span> Share
+    </button>
+    <button class="tab-btn" role="tab" data-tab="export" aria-selected="false">
+      <span class="tab-icon">📤</span> Export
+    </button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ======================================================
+       TAB: OVERVIEW
+       ====================================================== -->
+  <div id="tab-overview" class="tab-panel active" role="tabpanel">
+    <div class="section-header">
+      <h2>📊 Year at a Glance</h2>
+      <p>Enter your annual totals — we'll calculate the key metrics automatically.</p>
+    </div>
+
+    <!-- Input form -->
+    <div class="card mb-6">
+      <div class="card-title"><span class="icon">✏️</span> Enter Your Annual Numbers</div>
+      <div class="grid-3">
+        <div class="form-group">
+          <label class="form-label" for="total-revenue">Total Revenue</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input class="form-input" type="number" id="total-revenue" placeholder="0" min="0" step="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="total-expenses">Total Expenses</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input class="form-input" type="number" id="total-expenses" placeholder="0" min="0" step="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="hours-worked">Total Hours Worked</label>
+          <div class="input-wrap has-suffix">
+            <input class="form-input" type="number" id="hours-worked" placeholder="0" min="0">
+            <span class="input-suffix">hrs</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="projects-completed">Projects Completed</label>
+          <input class="form-input" type="number" id="projects-completed" placeholder="0" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="new-clients">New Clients</label>
+          <input class="form-input" type="number" id="new-clients" placeholder="0" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="repeat-clients">Repeat Clients</label>
+          <input class="form-input" type="number" id="repeat-clients" placeholder="0" min="0">
+        </div>
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label class="form-label" for="biggest-win">Biggest Win of the Year</label>
+          <textarea class="form-textarea" id="biggest-win" placeholder="Describe your proudest achievement or milestone this year…" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat cards display -->
+    <div class="grid-4 mb-6" id="stat-cards-grid">
+      <div class="stat-card">
+        <div class="stat-card-label">Total Revenue</div>
+        <div class="stat-card-value" id="display-revenue">$0</div>
+        <div class="stat-card-sub">Gross income</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Net Profit</div>
+        <div class="stat-card-value" id="display-profit">$0</div>
+        <div class="stat-card-sub" id="display-margin">0% margin</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Effective Rate</div>
+        <div class="stat-card-value" id="display-rate">$0/hr</div>
+        <div class="stat-card-sub" id="display-hours">0 hours billed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Avg Project Value</div>
+        <div class="stat-card-value" id="display-avg-project">$0</div>
+        <div class="stat-card-sub" id="display-projects">0 projects</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Total Clients</div>
+        <div class="stat-card-value" id="display-total-clients">0</div>
+        <div class="stat-card-sub" id="display-client-mix">0 new · 0 repeat</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Repeat Rate</div>
+        <div class="stat-card-value" id="display-repeat-rate">0%</div>
+        <div class="stat-card-sub">Client retention</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Monthly Avg Revenue</div>
+        <div class="stat-card-value" id="display-monthly-avg">$0</div>
+        <div class="stat-card-sub">Per month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Revenue / Client</div>
+        <div class="stat-card-value" id="display-rev-per-client">$0</div>
+        <div class="stat-card-sub">Avg client value</div>
+      </div>
+    </div>
+
+    <!-- Biggest win display -->
+    <div class="card-gradient" id="biggest-win-display" style="display:none;">
+      <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:8px;">🏆 Biggest Win</div>
+      <p id="biggest-win-text" style="font-size:1.0625rem;font-weight:500;line-height:1.6;"></p>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       TAB: MONTHLY
+       ====================================================== -->
+  <div id="tab-monthly" class="tab-panel" role="tabpanel">
+    <div class="section-header">
+      <h2>📅 Month-by-Month Breakdown</h2>
+      <p>Track revenue, projects, and highlights for each month of the year.</p>
+    </div>
+
+    <div class="month-grid" id="month-grid">
+      <!-- Jan -->
+      <div class="month-card" data-month="0">
+        <div class="month-card-header">
+          <span class="month-name">January</span>
+          <span class="month-total" id="month-total-0">$0</span>
+        </div>
+        <div class="month-inputs">
+          <div class="month-input-row">
+            <label>Revenue</label>
+            <div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="0" placeholder="0" min="0"></div>
+          </div>
+          <div class="month-input-row">
+            <label>Projects</label>
+            <input class="form-input month-projects" type="number" data-month="0" placeholder="0" min="0" style="flex:1;">
+          </div>
+          <div class="month-input-row" style="align-items:flex-start;">
+            <label style="margin-top:8px;">Highlights</label>
+            <textarea class="form-textarea month-highlights" data-month="0" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea>
+          </div>
+        </div>
+      </div>
+      <!-- Feb -->
+      <div class="month-card" data-month="1">
+        <div class="month-card-header"><span class="month-name">February</span><span class="month-total" id="month-total-1">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="1" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="1" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="1" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- Mar -->
+      <div class="month-card" data-month="2">
+        <div class="month-card-header"><span class="month-name">March</span><span class="month-total" id="month-total-2">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="2" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="2" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="2" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- Apr -->
+      <div class="month-card" data-month="3">
+        <div class="month-card-header"><span class="month-name">April</span><span class="month-total" id="month-total-3">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="3" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="3" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="3" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- May -->
+      <div class="month-card" data-month="4">
+        <div class="month-card-header"><span class="month-name">May</span><span class="month-total" id="month-total-4">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="4" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="4" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="4" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- Jun -->
+      <div class="month-card" data-month="5">
+        <div class="month-card-header"><span class="month-name">June</span><span class="month-total" id="month-total-5">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="5" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="5" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="5" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- Jul -->
+      <div class="month-card" data-month="6">
+        <div class="month-card-header"><span class="month-name">July</span><span class="month-total" id="month-total-6">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="6" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="6" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="6" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- Aug -->
+      <div class="month-card" data-month="7">
+        <div class="month-card-header"><span class="month-name">August</span><span class="month-total" id="month-total-7">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="7" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="7" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="7" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- Sep -->
+      <div class="month-card" data-month="8">
+        <div class="month-card-header"><span class="month-name">September</span><span class="month-total" id="month-total-8">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="8" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="8" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="8" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- Oct -->
+      <div class="month-card" data-month="9">
+        <div class="month-card-header"><span class="month-name">October</span><span class="month-total" id="month-total-9">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="9" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="9" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="9" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- Nov -->
+      <div class="month-card" data-month="10">
+        <div class="month-card-header"><span class="month-name">November</span><span class="month-total" id="month-total-10">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="10" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="10" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="10" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+      <!-- Dec -->
+      <div class="month-card" data-month="11">
+        <div class="month-card-header"><span class="month-name">December</span><span class="month-total" id="month-total-11">$0</span></div>
+        <div class="month-inputs">
+          <div class="month-input-row"><label>Revenue</label><div class="input-wrap" style="flex:1;"><span class="input-prefix">$</span><input class="form-input month-revenue" type="number" data-month="11" placeholder="0" min="0"></div></div>
+          <div class="month-input-row"><label>Projects</label><input class="form-input month-projects" type="number" data-month="11" placeholder="0" min="0" style="flex:1;"></div>
+          <div class="month-input-row" style="align-items:flex-start;"><label style="margin-top:8px;">Highlights</label><textarea class="form-textarea month-highlights" data-month="11" placeholder="Key moments…" rows="2" style="flex:1;min-height:60px;"></textarea></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart placeholder -->
+    <div class="card">
+      <div class="card-title"><span class="icon">📈</span> Monthly Revenue Chart</div>
+      <div class="chart-placeholder" id="monthly-chart-placeholder">
+        <span>📊</span> Enter monthly revenue above to see your chart
+      </div>
+      <svg id="monthly-chart-svg" width="100%" height="220" viewBox="0 0 800 220" style="display:none;" aria-label="Monthly revenue bar chart"></svg>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       TAB: GOALS
+       ====================================================== -->
+  <div id="tab-goals" class="tab-panel" role="tabpanel">
+    <div class="section-header">
+      <h2>🎯 Goals Review</h2>
+      <p>How did you track against your goals this year? Add them and mark which ones you hit.</p>
+    </div>
+
+    <div class="grid-2 mb-6" style="grid-template-columns: 1fr 280px; align-items: start;">
+      <!-- Add goal form -->
+      <div class="card">
+        <div class="card-title"><span class="icon">➕</span> Add a Goal</div>
+        <div class="form-group">
+          <label class="form-label" for="goal-title-input">Goal</label>
+          <input class="form-input" type="text" id="goal-title-input" placeholder="e.g. Hit $120k revenue">
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="goal-category">Category</label>
+            <select class="form-select" id="goal-category">
+              <option value="revenue">Revenue</option>
+              <option value="clients">Clients</option>
+              <option value="skills">Skills</option>
+              <option value="marketing">Marketing</option>
+              <option value="personal">Personal</option>
+              <option value="health">Health</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="goal-status">Status</label>
+            <select class="form-select" id="goal-status">
+              <option value="achieved">Achieved ✅</option>
+              <option value="partial">Partial 🔶</option>
+              <option value="missed">Missed ❌</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="goal-notes">Notes</label>
+          <textarea class="form-textarea" id="goal-notes" placeholder="What happened with this goal?" rows="2"></textarea>
+        </div>
+        <button class="btn btn-primary btn-full" id="add-goal-btn">Add Goal</button>
+      </div>
+
+      <!-- Completion ring -->
+      <div class="card" style="text-align:center;">
+        <div class="card-title" style="justify-content:center;"><span class="icon">🏅</span> Goal Completion</div>
+        <div class="ring-placeholder">
+          <svg width="160" height="160" viewBox="0 0 160 160" id="goal-ring-svg">
+            <circle cx="80" cy="80" r="64" fill="none" stroke="rgba(168,85,247,0.1)" stroke-width="14"/>
+            <circle cx="80" cy="80" r="64" fill="none" stroke="url(#goalRingGrad)" stroke-width="14"
+              stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="402"
+              id="goal-ring-circle" transform="rotate(-90 80 80)" style="transition: stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1);"/>
+            <defs>
+              <linearGradient id="goalRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#a855f7"/>
+                <stop offset="100%" stop-color="#ec4899"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="ring-center-text">
+            <div class="ring-pct" id="goal-ring-pct">0%</div>
+            <div class="ring-label">achieved</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:12px;">
+          <div style="text-align:center;">
+            <div style="font-size:1.25rem;font-weight:800;color:#34d399;" id="goals-achieved-count">0</div>
+            <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Achieved</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:1.25rem;font-weight:800;color:#fbbf24;" id="goals-partial-count">0</div>
+            <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Partial</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:1.25rem;font-weight:800;color:#f87171;" id="goals-missed-count">0</div>
+            <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Missed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Goals list -->
+    <div id="goals-list" class="goals-list">
+      <div class="empty-state" id="goals-empty">
+        <div class="empty-icon">🎯</div>
+        <p>No goals added yet. Use the form above to add your annual goals.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       TAB: CLIENTS
+       ====================================================== -->
+  <div id="tab-clients" class="tab-panel" role="tabpanel">
+    <div class="section-header">
+      <h2>🤝 Client Roster</h2>
+      <p>Log every client you worked with this year — see who drove the most value.</p>
+    </div>
+
+    <!-- Client entry form -->
+    <div class="card mb-6">
+      <div class="card-title"><span class="icon">➕</span> Add a Client</div>
+      <div class="grid-3">
+        <div class="form-group">
+          <label class="form-label" for="client-name">Client / Company Name</label>
+          <input class="form-input" type="text" id="client-name" placeholder="e.g. Acme Corp">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="client-revenue">Revenue from Client</label>
+          <div class="input-wrap"><span class="input-prefix">$</span>
+            <input class="form-input" type="number" id="client-revenue" placeholder="0" min="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="client-projects">Projects Completed</label>
+          <input class="form-input" type="number" id="client-projects" placeholder="0" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Satisfaction (1–5)</label>
+          <div class="star-rating" id="client-satisfaction-stars">
+            <button type="button" data-star="1">★</button>
+            <button type="button" data-star="2">★</button>
+            <button type="button" data-star="3">★</button>
+            <button type="button" data-star="4">★</button>
+            <button type="button" data-star="5">★</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Client Type</label>
+          <label class="toggle-wrap">
+            <div class="toggle">
+              <input type="checkbox" id="client-is-new">
+              <span class="toggle-slider"></span>
+            </div>
+            <span class="toggle-label">New client this year</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="client-notes">Notes</label>
+          <input class="form-input" type="text" id="client-notes" placeholder="Industry, context…">
+        </div>
+      </div>
+      <button class="btn btn-primary mt-3" id="add-client-btn">Add Client</button>
+    </div>
+
+    <!-- Summary cards -->
+    <div class="grid-4 mb-6">
+      <div class="stat-card">
+        <div class="stat-card-label">Total Clients</div>
+        <div class="stat-card-value" id="client-total-count">0</div>
+        <div class="stat-card-sub">This year</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Top Client Revenue</div>
+        <div class="stat-card-value" id="client-top-revenue">$0</div>
+        <div class="stat-card-sub" id="client-top-name">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Avg Satisfaction</div>
+        <div class="stat-card-value" id="client-avg-satisfaction">—</div>
+        <div class="stat-card-sub">Out of 5 stars</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Client Concentration</div>
+        <div class="stat-card-value" id="client-concentration">0%</div>
+        <div class="stat-card-sub">Top client share</div>
+      </div>
+    </div>
+
+    <!-- Clients table -->
+    <div class="card">
+      <div class="card-title"><span class="icon">📋</span> Client List</div>
+      <div class="table-wrap">
+        <table class="data-table" id="clients-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Revenue</th>
+              <th>Projects</th>
+              <th>Satisfaction</th>
+              <th>Type</th>
+              <th>Notes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="clients-tbody">
+            <tr id="clients-empty-row">
+              <td colspan="7" style="text-align:center;color:var(--subtle);padding:32px;">No clients added yet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       TAB: FINANCIAL
+       ====================================================== -->
+  <div id="tab-financial" class="tab-panel" role="tabpanel">
+    <div class="section-header">
+      <h2>💰 Financial Deep Dive</h2>
+      <p>Break down your income by service, quarter, and profitability.</p>
+    </div>
+
+    <div class="grid-2 mb-6" style="align-items:start;">
+      <!-- Revenue & expenses -->
+      <div class="card">
+        <div class="card-title"><span class="icon">📥</span> Revenue &amp; Expenses</div>
+        <div class="form-group">
+          <label class="form-label" for="fin-revenue">Total Revenue</label>
+          <div class="input-wrap"><span class="input-prefix">$</span>
+            <input class="form-input" type="number" id="fin-revenue" placeholder="0" min="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fin-expenses">Total Expenses</label>
+          <div class="input-wrap"><span class="input-prefix">$</span>
+            <input class="form-input" type="number" id="fin-expenses" placeholder="0" min="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fin-hours">Total Hours Worked</label>
+          <div class="input-wrap has-suffix">
+            <input class="form-input" type="number" id="fin-hours" placeholder="0" min="0">
+            <span class="input-suffix">hrs</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fin-tax-rate">Estimated Tax Rate</label>
+          <div class="input-wrap has-suffix">
+            <input class="form-input" type="number" id="fin-tax-rate" placeholder="25" min="0" max="100">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculated metrics -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="stat-card">
+          <div class="stat-card-label">Gross Profit</div>
+          <div class="stat-card-value" id="fin-gross-profit">$0</div>
+          <div class="stat-card-sub" id="fin-profit-margin">0% margin</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">After-Tax Estimate</div>
+          <div class="stat-card-value" id="fin-after-tax">$0</div>
+          <div class="stat-card-sub" id="fin-tax-owed">~$0 estimated tax</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Effective Hourly Rate</div>
+          <div class="stat-card-value" id="fin-eff-rate">$0/hr</div>
+          <div class="stat-card-sub">Based on hours worked</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Income by service type -->
+    <div class="card mb-6">
+      <div class="card-title"><span class="icon">🗂️</span> Income by Service Type</div>
+      <div class="service-rows" id="service-rows">
+        <div class="service-row">
+          <input class="form-input" type="text" placeholder="Service name (e.g. Design)" style="flex:1;">
+          <div class="input-wrap" style="max-width:160px;"><span class="input-prefix">$</span>
+            <input class="form-input revenue-col" type="number" placeholder="0" min="0">
+          </div>
+          <button class="btn btn-ghost btn-icon btn-sm remove-service-row" title="Remove">×</button>
+        </div>
+        <div class="service-row">
+          <input class="form-input" type="text" placeholder="Service name (e.g. Consulting)" style="flex:1;">
+          <div class="input-wrap" style="max-width:160px;"><span class="input-prefix">$</span>
+            <input class="form-input revenue-col" type="number" placeholder="0" min="0">
+          </div>
+          <button class="btn btn-ghost btn-icon btn-sm remove-service-row" title="Remove">×</button>
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-sm mt-3" id="add-service-row-btn">+ Add Service</button>
+    </div>
+
+    <!-- Quarterly breakdown -->
+    <div class="card">
+      <div class="card-title"><span class="icon">📆</span> Quarterly Breakdown</div>
+      <div class="quarterly-grid mb-4">
+        <div class="quarter-card">
+          <div class="quarter-label">Q1 · Jan–Mar</div>
+          <div class="quarter-total" id="q1-total">$0</div>
+          <div class="form-group" style="margin-bottom:0;">
+            <div class="input-wrap"><span class="input-prefix">$</span>
+              <input class="form-input quarter-input" type="number" id="q1-revenue" placeholder="0" min="0" data-quarter="q1">
+            </div>
+          </div>
+        </div>
+        <div class="quarter-card">
+          <div class="quarter-label">Q2 · Apr–Jun</div>
+          <div class="quarter-total" id="q2-total">$0</div>
+          <div class="form-group" style="margin-bottom:0;">
+            <div class="input-wrap"><span class="input-prefix">$</span>
+              <input class="form-input quarter-input" type="number" id="q2-revenue" placeholder="0" min="0" data-quarter="q2">
+            </div>
+          </div>
+        </div>
+        <div class="quarter-card">
+          <div class="quarter-label">Q3 · Jul–Sep</div>
+          <div class="quarter-total" id="q3-total">$0</div>
+          <div class="form-group" style="margin-bottom:0;">
+            <div class="input-wrap"><span class="input-prefix">$</span>
+              <input class="form-input quarter-input" type="number" id="q3-revenue" placeholder="0" min="0" data-quarter="q3">
+            </div>
+          </div>
+        </div>
+        <div class="quarter-card">
+          <div class="quarter-label">Q4 · Oct–Dec</div>
+          <div class="quarter-total" id="q4-total">$0</div>
+          <div class="form-group" style="margin-bottom:0;">
+            <div class="input-wrap"><span class="input-prefix">$</span>
+              <input class="form-input quarter-input" type="number" id="q4-revenue" placeholder="0" min="0" data-quarter="q4">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-placeholder" id="quarterly-chart-placeholder">
+        <span>📊</span> Enter quarterly revenue above to see distribution
+      </div>
+      <svg id="quarterly-chart-svg" width="100%" height="180" viewBox="0 0 600 180" style="display:none;" aria-label="Quarterly revenue comparison chart"></svg>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       TAB: SKILLS
+       ====================================================== -->
+  <div id="tab-skills" class="tab-panel" role="tabpanel">
+    <div class="section-header">
+      <h2>🧠 Skills &amp; Learning</h2>
+      <p>Document everything you learned, earned, and adopted this year.</p>
+    </div>
+
+    <div class="grid-2" style="align-items:start;">
+      <!-- Skills Learned -->
+      <div class="card">
+        <div class="skills-section">
+          <div class="skills-section-title">💡 Skills Learned</div>
+          <div class="skill-tags" id="skills-learned-tags"></div>
+          <div class="skill-add-row">
+            <input class="form-input" type="text" id="skill-learned-input" placeholder="e.g. Figma, Python, SEO…">
+            <button class="btn btn-secondary btn-sm" data-add-to="skills-learned">Add</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="skills-section">
+          <div class="skills-section-title">🏆 Certifications</div>
+          <div class="skill-tags" id="certs-tags"></div>
+          <div class="skill-add-row">
+            <input class="form-input" type="text" id="cert-input" placeholder="e.g. Google Analytics, AWS…">
+            <button class="btn btn-secondary btn-sm" data-add-to="certs">Add</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="skills-section">
+          <div class="skills-section-title">📚 Courses &amp; Books</div>
+          <div class="skill-tags" id="courses-tags"></div>
+          <div class="skill-add-row">
+            <input class="form-input" type="text" id="course-input" placeholder="e.g. Deep Work, Coursera UX…">
+            <button class="btn btn-secondary btn-sm" data-add-to="courses">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools, Conferences, Mentoring -->
+      <div class="card">
+        <div class="skills-section">
+          <div class="skills-section-title">🛠️ Tools Adopted</div>
+          <div class="skill-tags" id="tools-tags"></div>
+          <div class="skill-add-row">
+            <input class="form-input" type="text" id="tool-input" placeholder="e.g. Notion, Linear, Claude…">
+            <button class="btn btn-secondary btn-sm" data-add-to="tools">Add</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="skills-section">
+          <div class="skills-section-title">🎤 Conferences &amp; Events</div>
+          <div class="skill-tags" id="conferences-tags"></div>
+          <div class="skill-add-row">
+            <input class="form-input" type="text" id="conference-input" placeholder="e.g. MicroConf, SXSW…">
+            <button class="btn btn-secondary btn-sm" data-add-to="conferences">Add</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="skills-section">
+          <div class="skills-section-title">🤝 Mentoring &amp; Teaching</div>
+          <div class="skill-tags" id="mentoring-tags"></div>
+          <div class="skill-add-row">
+            <input class="form-input" type="text" id="mentoring-input" placeholder="e.g. Mentored 2 juniors…">
+            <button class="btn btn-secondary btn-sm" data-add-to="mentoring">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning stats -->
+    <div class="grid-4 mt-4">
+      <div class="stat-card">
+        <div class="stat-card-label">Skills Learned</div>
+        <div class="stat-card-value" id="skills-count">0</div>
+        <div class="stat-card-sub">New capabilities</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Certifications</div>
+        <div class="stat-card-value" id="certs-count">0</div>
+        <div class="stat-card-sub">Earned this year</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Tools Adopted</div>
+        <div class="stat-card-value" id="tools-count">0</div>
+        <div class="stat-card-sub">Added to stack</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Total Learning Items</div>
+        <div class="stat-card-value" id="total-learning-count">0</div>
+        <div class="stat-card-sub">Across all categories</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       TAB: WINS
+       ====================================================== -->
+  <div id="tab-wins" class="tab-panel" role="tabpanel">
+    <div class="section-header">
+      <h2>🏆 Wins, Challenges &amp; Lessons</h2>
+      <p>Capture the highs, lows, and learnings that defined your year.</p>
+    </div>
+
+    <!-- Top 3 Wins -->
+    <div class="card mb-4">
+      <div class="card-title"><span class="icon">🥇</span> Top 3 Wins</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Win #1</label>
+          <textarea class="form-textarea" id="win-1" placeholder="Your biggest win this year…" rows="2"></textarea>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Win #2</label>
+          <textarea class="form-textarea" id="win-2" placeholder="Second proudest achievement…" rows="2"></textarea>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Win #3</label>
+          <textarea class="form-textarea" id="win-3" placeholder="Third major accomplishment…" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top 3 Challenges -->
+    <div class="card mb-4">
+      <div class="card-title"><span class="icon">💪</span> Top 3 Challenges</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Challenge #1</label>
+          <textarea class="form-textarea" id="challenge-1" placeholder="Hardest thing you faced…" rows="2"></textarea>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Challenge #2</label>
+          <textarea class="form-textarea" id="challenge-2" placeholder="Second major obstacle…" rows="2"></textarea>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Challenge #3</label>
+          <textarea class="form-textarea" id="challenge-3" placeholder="Third difficulty…" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Lessons & Surprises -->
+    <div class="grid-2 mb-4">
+      <div class="card">
+        <div class="card-title"><span class="icon">💡</span> Key Lessons</div>
+        <textarea class="form-textarea" id="key-lessons" placeholder="What did this year teach you? What would you do differently?" rows="5"></textarea>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="icon">🎉</span> Surprises</div>
+        <textarea class="form-textarea" id="surprises" placeholder="What caught you off guard — good or bad?" rows="5"></textarea>
+      </div>
+    </div>
+
+    <!-- Stop / Start / Continue -->
+    <div class="card">
+      <div class="card-title"><span class="icon">🔄</span> Stop · Start · Continue</div>
+      <p style="font-size:0.875rem;color:var(--muted);margin-bottom:20px;">A retrospective framework: what should change going forward?</p>
+      <div class="retro-grid">
+        <div class="retro-card stop">
+          <div class="retro-card-header">
+            <span class="retro-card-icon">🛑</span>
+            <span class="retro-card-title">Stop</span>
+          </div>
+          <textarea class="form-textarea" id="retro-stop-1" placeholder="Stop doing…" rows="2" style="margin-bottom:10px;"></textarea>
+          <textarea class="form-textarea" id="retro-stop-2" placeholder="Stop doing…" rows="2" style="margin-bottom:10px;"></textarea>
+          <textarea class="form-textarea" id="retro-stop-3" placeholder="Stop doing…" rows="2"></textarea>
+        </div>
+        <div class="retro-card start">
+          <div class="retro-card-header">
+            <span class="retro-card-icon">🚦</span>
+            <span class="retro-card-title">Start</span>
+          </div>
+          <textarea class="form-textarea" id="retro-start-1" placeholder="Start doing…" rows="2" style="margin-bottom:10px;"></textarea>
+          <textarea class="form-textarea" id="retro-start-2" placeholder="Start doing…" rows="2" style="margin-bottom:10px;"></textarea>
+          <textarea class="form-textarea" id="retro-start-3" placeholder="Start doing…" rows="2"></textarea>
+        </div>
+        <div class="retro-card continue">
+          <div class="retro-card-header">
+            <span class="retro-card-icon">✅</span>
+            <span class="retro-card-title">Continue</span>
+          </div>
+          <textarea class="form-textarea" id="retro-continue-1" placeholder="Keep doing…" rows="2" style="margin-bottom:10px;"></textarea>
+          <textarea class="form-textarea" id="retro-continue-2" placeholder="Keep doing…" rows="2" style="margin-bottom:10px;"></textarea>
+          <textarea class="form-textarea" id="retro-continue-3" placeholder="Keep doing…" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       TAB: NEXT YEAR
+       ====================================================== -->
+  <div id="tab-nextyear" class="tab-panel" role="tabpanel">
+    <div class="section-header">
+      <h2>🚀 Goals for Next Year</h2>
+      <p>Set your targets across five key categories. Enter your goal and we'll calculate a stretch target.</p>
+    </div>
+
+    <div class="next-year-goals">
+      <!-- Revenue -->
+      <div class="next-year-goal-card">
+        <div class="next-year-goal-label">
+          <div class="next-year-goal-icon" style="background:rgba(168,85,247,0.15);">💰</div>
+          <div>
+            <div class="next-year-goal-title">Revenue Goal</div>
+            <div class="next-year-goal-desc">Total gross income target</div>
+          </div>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label" for="ny-revenue">Target Revenue</label>
+          <div class="input-wrap"><span class="input-prefix">$</span>
+            <input class="form-input ny-goal-input" type="number" id="ny-revenue" placeholder="0" min="0" data-stretch-mult="1.25">
+          </div>
+        </div>
+        <div class="stretch-badge">
+          <div class="stretch-label">Stretch (+25%)</div>
+          <div class="stretch-value" id="ny-revenue-stretch">$0</div>
+        </div>
+      </div>
+
+      <!-- Clients -->
+      <div class="next-year-goal-card">
+        <div class="next-year-goal-label">
+          <div class="next-year-goal-icon" style="background:rgba(236,72,153,0.12);">🤝</div>
+          <div>
+            <div class="next-year-goal-title">Client Goal</div>
+            <div class="next-year-goal-desc">Number of clients to serve</div>
+          </div>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label" for="ny-clients">Target Clients</label>
+          <input class="form-input ny-goal-input" type="number" id="ny-clients" placeholder="0" min="0" data-stretch-mult="1.3">
+        </div>
+        <div class="stretch-badge">
+          <div class="stretch-label">Stretch (+30%)</div>
+          <div class="stretch-value" id="ny-clients-stretch">0</div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="next-year-goal-card">
+        <div class="next-year-goal-label">
+          <div class="next-year-goal-icon" style="background:rgba(59,130,246,0.12);">🧠</div>
+          <div>
+            <div class="next-year-goal-title">Skills Goal</div>
+            <div class="next-year-goal-desc">New skills or certifications</div>
+          </div>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label" for="ny-skills-goal">Target Skills</label>
+          <input class="form-input ny-goal-input" type="number" id="ny-skills-goal" placeholder="0" min="0" data-stretch-mult="1.5">
+        </div>
+        <div class="stretch-badge">
+          <div class="stretch-label">Stretch (+50%)</div>
+          <div class="stretch-value" id="ny-skills-stretch">0</div>
+        </div>
+      </div>
+
+      <!-- Marketing -->
+      <div class="next-year-goal-card">
+        <div class="next-year-goal-label">
+          <div class="next-year-goal-icon" style="background:rgba(16,185,129,0.12);">📣</div>
+          <div>
+            <div class="next-year-goal-title">Marketing Goal</div>
+            <div class="next-year-goal-desc">Content pieces, posts, or leads</div>
+          </div>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label" for="ny-marketing">Target Output</label>
+          <input class="form-input ny-goal-input" type="number" id="ny-marketing" placeholder="0" min="0" data-stretch-mult="1.4">
+        </div>
+        <div class="stretch-badge">
+          <div class="stretch-label">Stretch (+40%)</div>
+          <div class="stretch-value" id="ny-marketing-stretch">0</div>
+        </div>
+      </div>
+
+      <!-- Personal -->
+      <div class="next-year-goal-card">
+        <div class="next-year-goal-label">
+          <div class="next-year-goal-icon" style="background:rgba(245,158,11,0.12);">🌱</div>
+          <div>
+            <div class="next-year-goal-title">Personal Goal</div>
+            <div class="next-year-goal-desc">Work-life, health, or wellbeing</div>
+          </div>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label" for="ny-personal">Goal (optional)</label>
+          <input class="form-input" type="text" id="ny-personal" placeholder="e.g. Take 4 weeks off…">
+        </div>
+        <div class="stretch-badge">
+          <div class="stretch-label">Your word for the year</div>
+          <input class="form-input" type="text" id="ny-word" placeholder="e.g. Focus" style="font-weight:700;text-align:center;font-size:1rem;margin-top:4px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       TAB: SHARE
+       ====================================================== -->
+  <div id="tab-share" class="tab-panel" role="tabpanel">
+    <div class="section-header">
+      <h2>✨ Share Your Year</h2>
+      <p>Generate a shareable year-in-review summary card for social media or your newsletter.</p>
+    </div>
+
+    <!-- Preview -->
+    <div class="share-preview" id="share-preview-area">
+      <div class="share-preview-inner">
+        <div class="share-preview-year" id="share-year-label">2025 YEAR IN REVIEW</div>
+        <div class="share-preview-name" id="share-name-display">Your Freelance Year 🚀</div>
+        <div class="share-preview-stats">
+          <div class="share-stat">
+            <div class="share-stat-value" id="share-revenue">$0</div>
+            <div class="share-stat-label">Revenue</div>
+          </div>
+          <div class="share-stat">
+            <div class="share-stat-value" id="share-clients">0</div>
+            <div class="share-stat-label">Clients</div>
+          </div>
+          <div class="share-stat">
+            <div class="share-stat-value" id="share-projects">0</div>
+            <div class="share-stat-label">Projects</div>
+          </div>
+          <div class="share-stat">
+            <div class="share-stat-value" id="share-skills">0</div>
+            <div class="share-stat-label">Skills Learned</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share options -->
+    <div class="card">
+      <div class="card-title"><span class="icon">⚙️</span> Customize Your Card</div>
+      <div class="grid-2 mb-4">
+        <div class="form-group">
+          <label class="form-label" for="share-your-name">Your Name / Handle</label>
+          <input class="form-input" type="text" id="share-your-name" placeholder="e.g. @yourhandle or Jane Smith">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="share-tagline">Tagline</label>
+          <input class="form-input" type="text" id="share-tagline" placeholder="e.g. Freelance Designer · Building in public">
+        </div>
+      </div>
+      <div class="flex gap-3 flex-wrap">
+        <button class="btn btn-primary" id="generate-share-btn">✨ Generate Card</button>
+        <button class="btn btn-secondary" id="copy-share-text-btn">📋 Copy Share Text</button>
+        <button class="btn btn-ghost" id="download-card-btn">⬇️ Download Image</button>
+      </div>
+    </div>
+
+    <!-- Share text preview -->
+    <div class="card mt-4">
+      <div class="card-title"><span class="icon">📝</span> Share Text</div>
+      <textarea class="form-textarea" id="share-text-output" rows="6" placeholder="Click 'Generate Card' above to create your share text…" readonly></textarea>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       TAB: EXPORT
+       ====================================================== -->
+  <div id="tab-export" class="tab-panel" role="tabpanel">
+    <div class="section-header">
+      <h2>📤 Export Your Review</h2>
+      <p>Save your annual review in multiple formats to keep, share, or archive.</p>
+    </div>
+
+    <div class="export-grid">
+      <!-- HTML Export -->
+      <div class="export-card" id="export-html-btn">
+        <div class="export-icon">🌐</div>
+        <div class="export-title">Export as HTML</div>
+        <div class="export-desc">Download a standalone HTML file with all your data — keep it forever, no account needed.</div>
+        <button class="btn btn-primary btn-full">Download HTML</button>
+      </div>
+
+      <!-- PDF / Print view -->
+      <div class="export-card" id="export-pdf-btn">
+        <div class="export-icon">📄</div>
+        <div class="export-title">PDF / Print View</div>
+        <div class="export-desc">Open a print-optimized view you can save as PDF using your browser's print dialog.</div>
+        <button class="btn btn-secondary btn-full">Open Print View</button>
+      </div>
+
+      <!-- Social post -->
+      <div class="export-card" id="export-social-btn">
+        <div class="export-icon">📱</div>
+        <div class="export-title">Social Post Text</div>
+        <div class="export-desc">Generate a ready-to-post summary for Twitter/X, LinkedIn, or your newsletter.</div>
+        <button class="btn btn-secondary btn-full">Generate Post</button>
+      </div>
+
+      <!-- Save to library -->
+      <div class="export-card" id="export-save-btn">
+        <div class="export-icon">💾</div>
+        <div class="export-title">Save to Library</div>
+        <div class="export-desc">Save your review data as a JSON file — reload it anytime to pick up where you left off.</div>
+        <button class="btn btn-ghost btn-full">Save JSON</button>
+      </div>
+    </div>
+
+    <!-- Pro upsell -->
+    <div class="card-gradient mt-6" style="text-align:center;padding:36px 24px;">
+      <div style="font-size:1.5rem;margin-bottom:12px;">⭐</div>
+      <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:8px;">Want your reviews organized in Notion?</h3>
+      <p style="color:var(--muted);font-size:0.9375rem;margin-bottom:20px;max-width:440px;margin-left:auto;margin-right:auto;">
+        FreelanceOS Pro includes a full Annual Review Notion template — sync your numbers, track year-over-year trends, and keep everything in one place.
+      </p>
+      <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">
+        Get FreelanceOS Pro — 40% Off with FLASH40
+      </a>
+    </div>
+  </div>
+
+<!-- SITE FOOTER -->
+<footer style="background:#0a0f1e;border-top:1px solid rgba(168,85,247,0.15);padding:40px 24px 32px;margin-top:60px;">
+  <div style="max-width:900px;margin:0 auto;text-align:center;">
+    <div style="margin-bottom:20px;">
+      <a href="https://freelanceos.com" style="color:#a78bfa;text-decoration:none;font-weight:700;font-size:1.1rem;">FreelanceOS</a>
+      <span style="color:#334155;margin:0 12px;">·</span>
+      <span style="color:#475569;font-size:0.9rem;">Free tools for freelancers</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:24px;">
+      <a href="/freelanceos-storefront/free-templates.html" style="color:#94a3b8;font-size:0.875rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#94a3b8'">Free Templates</a>
+      <a href="/freelanceos-storefront/freelanceos.html" style="color:#94a3b8;font-size:0.875rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#94a3b8'">All Tools</a>
+      <a href="/freelanceos-storefront/invoice-generator.html" style="color:#94a3b8;font-size:0.875rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#94a3b8'">Invoice Generator</a>
+      <a href="/freelanceos-storefront/rate-calculator.html" style="color:#94a3b8;font-size:0.875rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#94a3b8'">Rate Calculator</a>
+      <a href="/freelanceos-storefront/client-onboarding.html" style="color:#94a3b8;font-size:0.875rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#94a3b8'">Client Onboarding</a>
+      <a href="/freelanceos-storefront/proposal-generator.html" style="color:#94a3b8;font-size:0.875rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color='#94a3b8'">Proposal Generator</a>
+    </div>
+    <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:14px 20px;margin-bottom:20px;font-size:0.8125rem;color:#64748b;display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <span style="color:#a78bfa;">🔒</span>
+      <span><strong style="color:#94a3b8;">Privacy:</strong> This tool runs entirely in your browser. No data is sent to any server. Your review data stays on your device.</span>
+    </div>
+    <p style="color:#334155;font-size:0.8125rem;margin:0;">© 2025 FreelanceOS · Tool #67 of 49+ Free Tools · <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" style="color:#a78bfa;text-decoration:none;" target="_blank" rel="noopener">Get FreelanceOS Pro — 40% Off</a></p>
+  </div>
+</footer>
+
+</main>
+
+<div id="toast"><span class="toast-icon">✓</span><span id="toast-msg">Saved</span></div>
+
+<script>
+/* ============================================================
+   FREELANCEOS ANNUAL REVIEW — COMPLETE JAVASCRIPT
+   ============================================================ */
+
+/* ── Utility Functions ──────────────────────────────────── */
+
+function formatCurrency(n) {
+  const num = parseFloat(n) || 0;
+  return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+function formatNumber(n) {
+  return (parseFloat(n) || 0).toLocaleString('en-US');
+}
+
+function generateId() {
+  return '_' + Math.random().toString(36).substr(2, 9);
+}
+
+function debounce(fn, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+function animateNumber(el, start, end, duration) {
+  if (!el) return;
+  const startTime = performance.now();
+  const isCurrency = el.dataset.format === 'currency';
+  const isPercent = el.dataset.format === 'percent';
+  function step(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = start + (end - start) * eased;
+    if (isCurrency) {
+      el.textContent = formatCurrency(current);
+    } else if (isPercent) {
+      el.textContent = current.toFixed(1) + '%';
+    } else {
+      el.textContent = Math.round(current).toLocaleString('en-US');
+    }
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function showToast(message, type) {
+  const toast = document.getElementById('toast');
+  const msg = document.getElementById('toast-msg');
+  if (!toast || !msg) return;
+  msg.textContent = message;
+  toast.className = '';
+  if (type === 'error') toast.classList.add('toast-error');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+/* ── Default State ──────────────────────────────────────── */
+
+function defaultState(year) {
+  return {
+    year: year,
+    overview: {
+      totalRevenue: 0,
+      projectsCompleted: 0,
+      newClients: 0,
+      repeatClients: 0,
+      hoursWorked: 0,
+      avgProjectValue: 0,
+      biggestWin: ''
+    },
+    monthly: Array.from({ length: 12 }, (_, i) => ({
+      month: i,
+      revenue: 0,
+      projects: 0,
+      hours: 0,
+      notes: ''
+    })),
+    goals: [],
+    clients: [],
+    financials: {
+      revenue: 0,
+      expenses: 0,
+      taxRate: 25,
+      services: [],
+      quarterly: [
+        { label: 'Q1', revenue: 0, expenses: 0 },
+        { label: 'Q2', revenue: 0, expenses: 0 },
+        { label: 'Q3', revenue: 0, expenses: 0 },
+        { label: 'Q4', revenue: 0, expenses: 0 }
+      ]
+    },
+    skills: {
+      learned: [],
+      certs: [],
+      courses: [],
+      tools: [],
+      conferences: [],
+      mentoringGiven: [],
+      mentoringReceived: []
+    },
+    wins: {
+      win1: '', win2: '', win3: '',
+      challenge1: '', challenge2: '', challenge3: '',
+      lesson1: '', lesson2: '', lesson3: '',
+      surprises: '',
+      stop: '', start: '', continue: ''
+    },
+    nextYear: {
+      revenue: { goal: '', target: 0, stretch20: 0, stretch50: 0 },
+      clients: { goal: '', target: 0, stretch20: 0, stretch50: 0 },
+      skills: { goal: '' },
+      marketing: { goal: '' },
+      personal: { goal: '' }
+    },
+    share: {
+      name: ''
+    }
+  };
+}
+
+/* ── App State ──────────────────────────────────────────── */
+
+let state = defaultState(new Date().getFullYear());
+
+function saveState() {
+  try {
+    localStorage.setItem('freelanceos_annual_review_' + state.year, JSON.stringify(state));
+  } catch (e) {
+    console.warn('Could not save state:', e);
+  }
+}
+
+function loadState(year) {
+  try {
+    const saved = localStorage.getItem('freelanceos_annual_review_' + year);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = deepMerge(defaultState(year), parsed);
+    } else {
+      state = defaultState(year);
+    }
+    state.year = year;
+  } catch (e) {
+    state = defaultState(year);
+  }
+}
+
+function deepMerge(target, source) {
+  if (!source) return target;
+  const result = Object.assign({}, target);
+  for (const key of Object.keys(source)) {
+    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+      result[key] = deepMerge(target[key] || {}, source[key]);
+    } else {
+      result[key] = source[key];
+    }
+  }
+  return result;
+}
+
+const debouncedSave = debounce(saveState, 500);
+
+/* ── Tab Navigation ─────────────────────────────────────── */
+
+function showTab(tabId) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  const panel = document.getElementById('tab-' + tabId);
+  if (panel) panel.classList.add('active');
+  const btn = document.querySelector('[data-tab="' + tabId + '"]');
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+  }
+  // Re-render charts when switching to relevant tabs
+  if (tabId === 'monthly') renderMonthlyChart();
+  if (tabId === 'financials') { renderPieChart(); renderQuarterlyChart(); }
+  if (tabId === 'goals') renderCompletionRing();
+  if (tabId === 'share') generateSharePreview();
+  if (tabId === 'next-year') renderStretchGoals();
+}
+
+function setupTabNavigation() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.dataset.tab;
+      if (tabId) showTab(tabId);
+    });
+  });
+}
+
+/* ── Year Selector ──────────────────────────────────────── */
+
+function setupYearSelector() {
+  const sel = document.getElementById('year-select');
+  if (!sel) return;
+  sel.innerHTML = '';
+  const currentYear = new Date().getFullYear();
+  for (let y = 2020; y <= 2030; y++) {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    if (y === state.year) opt.selected = true;
+    sel.appendChild(opt);
+  }
+  sel.addEventListener('change', () => {
+    saveState();
+    loadState(parseInt(sel.value));
+    populateAllInputs();
+    renderAllTabs();
+    showToast('Loaded ' + state.year + ' review', 'success');
+  });
+}
+
+/* ── Overview Tab ───────────────────────────────────────── */
+
+function getOverviewFromInputs() {
+  const fields = ['totalRevenue', 'projectsCompleted', 'newClients', 'repeatClients', 'hoursWorked', 'avgProjectValue'];
+  fields.forEach(f => {
+    const el = document.getElementById(f);
+    if (el) state.overview[f] = parseFloat(el.value) || 0;
+  });
+  const bw = document.getElementById('biggestWin');
+  if (bw) state.overview.biggestWin = bw.value;
+}
+
+function renderOverviewStats() {
+  const o = state.overview;
+  const totalRevenue = o.totalRevenue || 0;
+  const newClients = o.newClients || 0;
+  const repeatClients = o.repeatClients || 0;
+  const hoursWorked = o.hoursWorked || 1;
+  const projectsCompleted = o.projectsCompleted || 0;
+
+  const retentionRate = (newClients + repeatClients) > 0
+    ? (repeatClients / (newClients + repeatClients)) * 100 : 0;
+  const effectiveHourlyRate = hoursWorked > 0 ? totalRevenue / hoursWorked : 0;
+
+  setStatDisplay('stat-revenue', totalRevenue, 'currency');
+  setStatDisplay('stat-projects', projectsCompleted, 'number');
+  setStatDisplay('stat-clients', newClients + repeatClients, 'number');
+  setStatDisplay('stat-retention', retentionRate, 'percent');
+  setStatDisplay('stat-hourly', effectiveHourlyRate, 'currency');
+  setStatDisplay('stat-avg-project', o.avgProjectValue || 0, 'currency');
+}
+
+function setStatDisplay(id, value, format) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.dataset.format = format;
+  const target = parseFloat(value) || 0;
+  const current = parseFloat(el.dataset.current) || 0;
+  el.dataset.current = target;
+  animateNumber(el, current, target, 800);
+}
+
+function setupOverviewListeners() {
+  const fields = ['totalRevenue', 'projectsCompleted', 'newClients', 'repeatClients', 'hoursWorked', 'avgProjectValue', 'biggestWin'];
+  fields.forEach(f => {
+    const el = document.getElementById(f);
+    if (el) {
+      el.addEventListener('input', () => {
+        getOverviewFromInputs();
+        renderOverviewStats();
+        debouncedSave();
+      });
+    }
+  });
+}
+
+function populateOverview() {
+  const o = state.overview;
+  const fields = ['totalRevenue', 'projectsCompleted', 'newClients', 'repeatClients', 'hoursWorked', 'avgProjectValue', 'biggestWin'];
+  fields.forEach(f => {
+    const el = document.getElementById(f);
+    if (el) el.value = o[f] || '';
+  });
+  renderOverviewStats();
+}
+
+/* ── Monthly Tab ────────────────────────────────────────── */
+
+function getMonthlyFromInputs() {
+  state.monthly.forEach((m, i) => {
+    const r = document.getElementById('month-revenue-' + i);
+    const p = document.getElementById('month-projects-' + i);
+    const h = document.getElementById('month-hours-' + i);
+    const n = document.getElementById('month-notes-' + i);
+    if (r) m.revenue = parseFloat(r.value) || 0;
+    if (p) m.projects = parseFloat(p.value) || 0;
+    if (h) m.hours = parseFloat(h.value) || 0;
+    if (n) m.notes = n.value;
+  });
+}
+
+function renderMonthlyChart() {
+  const svg = document.getElementById('monthly-chart');
+  if (!svg) return;
+  const months = state.monthly;
+  const revenues = months.map(m => m.revenue || 0);
+  const maxRev = Math.max(...revenues, 1);
+  const W = 600, H = 200;
+  const barW = 36, gap = 14;
+  const totalBars = 12;
+  const totalW = totalBars * (barW + gap) - gap;
+  const offsetX = (W - totalW) / 2;
+  const chartH = 140;
+  const chartTop = 30;
+
+  const MONTH_LABELS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const bestIdx = revenues.indexOf(Math.max(...revenues));
+  const worstIdx = revenues.indexOf(Math.min(...revenues.filter(v => v > 0)));
+
+  let rects = '';
+  revenues.forEach((rev, i) => {
+    const barH = maxRev > 0 ? (rev / maxRev) * chartH : 0;
+    const x = offsetX + i * (barW + gap);
+    const y = chartTop + chartH - barH;
+    const isBase = rev === 0;
+    const isBest = i === bestIdx && rev > 0;
+    const fill = isBest
+      ? 'url(#bestGrad)'
+      : isBase ? 'url(#emptyGrad)' : 'url(#barGrad)';
+    const actualH = Math.max(barH, isBase ? 3 : barH);
+    rects += `<rect x="${x}" y="${isBase ? chartTop + chartH - 3 : y}" width="${barW}" height="${Math.max(actualH, 3)}" rx="4" fill="${fill}" />`;
+    // Label on top
+    if (rev > 0) {
+      const label = rev >= 1000 ? '$' + (rev / 1000).toFixed(0) + 'k' : '$' + rev;
+      rects += `<text x="${x + barW / 2}" y="${Math.max(y - 4, chartTop + 10)}" text-anchor="middle" font-size="8" fill="#a78bfa" font-family="system-ui">${label}</text>`;
+    }
+    // Month label below
+    rects += `<text x="${x + barW / 2}" y="${chartTop + chartH + 16}" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="system-ui">${MONTH_LABELS[i]}</text>`;
+  });
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#a78bfa"/>
+        <stop offset="100%" stop-color="#7c3aed"/>
+      </linearGradient>
+      <linearGradient id="bestGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f472b6"/>
+        <stop offset="100%" stop-color="#db2777"/>
+      </linearGradient>
+      <linearGradient id="emptyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#334155"/>
+        <stop offset="100%" stop-color="#1e293b"/>
+      </linearGradient>
+    </defs>
+    ${rects}
+  `;
+
+  // Update monthly summary stats
+  const total = revenues.reduce((a, b) => a + b, 0);
+  const avg = total / 12;
+  const el = document.getElementById('monthly-total');
+  if (el) el.textContent = formatCurrency(total);
+  const el2 = document.getElementById('monthly-avg');
+  if (el2) el2.textContent = formatCurrency(avg);
+  const el3 = document.getElementById('monthly-best');
+  if (el3) el3.textContent = MONTH_LABELS[bestIdx] + ': ' + formatCurrency(revenues[bestIdx]);
+}
+
+function populateMonthly() {
+  state.monthly.forEach((m, i) => {
+    const r = document.getElementById('month-revenue-' + i);
+    const p = document.getElementById('month-projects-' + i);
+    const h = document.getElementById('month-hours-' + i);
+    const n = document.getElementById('month-notes-' + i);
+    if (r) r.value = m.revenue || '';
+    if (p) p.value = m.projects || '';
+    if (h) h.value = m.hours || '';
+    if (n) n.value = m.notes || '';
+  });
+  renderMonthlyChart();
+}
+
+function setupMonthlyListeners() {
+  for (let i = 0; i < 12; i++) {
+    ['revenue', 'projects', 'hours', 'notes'].forEach(field => {
+      const el = document.getElementById(`month-${field}-${i}`);
+      if (el) {
+        el.addEventListener('input', () => {
+          getMonthlyFromInputs();
+          renderMonthlyChart();
+          debouncedSave();
+        });
+      }
+    });
+  }
+}
+
+/* ── Goals Tab ──────────────────────────────────────────── */
+
+function addGoal(text) {
+  if (!text || !text.trim()) return;
+  state.goals.push({
+    id: generateId(),
+    text: text.trim(),
+    status: 'pending',
+    note: ''
+  });
+  renderGoals();
+  debouncedSave();
+}
+
+function updateGoalStatus(id, status) {
+  const goal = state.goals.find(g => g.id === id);
+  if (goal) {
+    goal.status = status;
+    renderCompletionRing();
+    debouncedSave();
+  }
+}
+
+function updateGoalNote(id, note) {
+  const goal = state.goals.find(g => g.id === id);
+  if (goal) {
+    goal.note = note;
+    debouncedSave();
+  }
+}
+
+function deleteGoal(id) {
+  state.goals = state.goals.filter(g => g.id !== id);
+  renderGoals();
+  renderCompletionRing();
+  debouncedSave();
+}
+
+function renderGoals() {
+  const container = document.getElementById('goals-list');
+  if (!container) return;
+  if (!state.goals.length) {
+    container.innerHTML = '<p style="color:var(--muted);text-align:center;padding:32px 0;">No goals yet — add one above.</p>';
+    renderCompletionRing();
+    return;
+  }
+  container.innerHTML = state.goals.map((g, idx) => `
+    <div class="goal-item" data-id="${g.id}">
+      <div class="goal-header">
+        <span class="goal-number">${idx + 1}</span>
+        <span class="goal-text">${escapeHtml(g.text)}</span>
+        <button class="goal-delete-btn" onclick="deleteGoal('${g.id}')" title="Delete goal">×</button>
+      </div>
+      <div class="goal-controls">
+        <select class="goal-status-select ${g.status}" onchange="updateGoalStatus('${g.id}', this.value)">
+          <option value="pending" ${g.status === 'pending' ? 'selected' : ''}>⏳ Pending</option>
+          <option value="achieved" ${g.status === 'achieved' ? 'selected' : ''}>✅ Achieved</option>
+          <option value="partially" ${g.status === 'partially' ? 'selected' : ''}>🔶 Partially</option>
+          <option value="missed" ${g.status === 'missed' ? 'selected' : ''}>❌ Missed</option>
+        </select>
+        <input class="goal-note-input" type="text" placeholder="Add a reflection note..." value="${escapeHtml(g.note || '')}"
+          oninput="updateGoalNote('${g.id}', this.value)" />
+      </div>
+    </div>
+  `).join('');
+  renderCompletionRing();
+}
+
+function renderCompletionRing() {
+  const svg = document.getElementById('goals-ring');
+  const pctEl = document.getElementById('goals-ring-pct');
+  if (!svg) return;
+  const goals = state.goals;
+  if (!goals.length) {
+    svg.innerHTML = '';
+    if (pctEl) pctEl.textContent = '–';
+    return;
+  }
+  const score = goals.reduce((acc, g) => {
+    if (g.status === 'achieved') return acc + 1;
+    if (g.status === 'partially') return acc + 0.5;
+    return acc;
+  }, 0);
+  const pct = (score / goals.length) * 100;
+  const r = 54, cx = 64, cy = 64;
+  const circumference = 2 * Math.PI * r;
+  const dashOffset = circumference * (1 - pct / 100);
+
+  svg.innerHTML = `
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#1e293b" stroke-width="10"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="url(#ringGrad)" stroke-width="10"
+      stroke-dasharray="${circumference}" stroke-dashoffset="${dashOffset}"
+      stroke-linecap="round" transform="rotate(-90 ${cx} ${cy})"/>
+    <defs>
+      <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#a78bfa"/>
+        <stop offset="100%" stop-color="#f472b6"/>
+      </linearGradient>
+    </defs>
+  `;
+  if (pctEl) pctEl.textContent = Math.round(pct) + '%';
+
+  // Update goal counts
+  const achieved = goals.filter(g => g.status === 'achieved').length;
+  const partial = goals.filter(g => g.status === 'partially').length;
+  const missed = goals.filter(g => g.status === 'missed').length;
+  const el1 = document.getElementById('goals-achieved-count');
+  const el2 = document.getElementById('goals-partial-count');
+  const el3 = document.getElementById('goals-missed-count');
+  if (el1) el1.textContent = achieved;
+  if (el2) el2.textContent = partial;
+  if (el3) el3.textContent = missed;
+}
+
+function setupGoalsListeners() {
+  const input = document.getElementById('new-goal-input');
+  const btn = document.getElementById('add-goal-btn');
+  if (btn && input) {
+    btn.addEventListener('click', () => {
+      addGoal(input.value);
+      input.value = '';
+      input.focus();
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        addGoal(input.value);
+        input.value = '';
+      }
+    });
+  }
+}
+
+/* ── Clients Tab ─────────────────────────────────────────── */
+
+function addClient(name, revenue, projects, satisfaction, type) {
+  if (!name || !name.trim()) return;
+  state.clients.push({
+    id: generateId(),
+    name: name.trim(),
+    revenue: parseFloat(revenue) || 0,
+    projects: parseInt(projects) || 1,
+    satisfaction: parseFloat(satisfaction) || 5,
+    type: type || 'new'
+  });
+  renderClientsTable();
+  renderClientStats();
+  debouncedSave();
+}
+
+function deleteClient(id) {
+  state.clients = state.clients.filter(c => c.id !== id);
+  renderClientsTable();
+  renderClientStats();
+  debouncedSave();
+}
+
+function updateClient(id, field, value) {
+  const client = state.clients.find(c => c.id === id);
+  if (!client) return;
+  if (['revenue', 'projects', 'satisfaction'].includes(field)) {
+    client[field] = parseFloat(value) || 0;
+  } else {
+    client[field] = value;
+  }
+  renderClientStats();
+  debouncedSave();
+}
+
+function renderClientsTable() {
+  const container = document.getElementById('clients-list');
+  if (!container) return;
+  if (!state.clients.length) {
+    container.innerHTML = '<p style="color:var(--muted);text-align:center;padding:32px 0;">No clients yet — add one above.</p>';
+    return;
+  }
+  const sorted = [...state.clients].sort((a, b) => b.revenue - a.revenue);
+  container.innerHTML = `
+    <table class="clients-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Client</th>
+          <th>Revenue</th>
+          <th>Projects</th>
+          <th>Avg Value</th>
+          <th>Satisfaction</th>
+          <th>Type</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${sorted.map((c, idx) => `
+          <tr>
+            <td><span class="rank-badge">${idx + 1}</span></td>
+            <td><strong>${escapeHtml(c.name)}</strong></td>
+            <td>${formatCurrency(c.revenue)}</td>
+            <td>${c.projects}</td>
+            <td>${formatCurrency(c.projects > 0 ? c.revenue / c.projects : 0)}</td>
+            <td>${renderStars(c.satisfaction)}</td>
+            <td><span class="type-badge type-${c.type}">${c.type === 'new' ? 'New' : 'Returning'}</span></td>
+            <td><button class="icon-btn" onclick="deleteClient('${c.id}')" title="Remove">×</button></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function renderStars(rating) {
+  const full = Math.round(rating);
+  return '★'.repeat(full) + '☆'.repeat(Math.max(0, 5 - full));
+}
+
+function renderClientStats() {
+  const clients = state.clients;
+  const totalRevenue = clients.reduce((a, c) => a + c.revenue, 0);
+  const newCount = clients.filter(c => c.type === 'new').length;
+  const retCount = clients.filter(c => c.type === 'returning').length;
+  const avgSat = clients.length > 0
+    ? clients.reduce((a, c) => a + c.satisfaction, 0) / clients.length : 0;
+
+  const el1 = document.getElementById('client-total-revenue');
+  const el2 = document.getElementById('client-new-count');
+  const el3 = document.getElementById('client-return-count');
+  const el4 = document.getElementById('client-avg-sat');
+  if (el1) el1.textContent = formatCurrency(totalRevenue);
+  if (el2) el2.textContent = newCount;
+  if (el3) el3.textContent = retCount;
+  if (el4) el4.textContent = avgSat.toFixed(1) + ' / 5';
+}
+
+function setupClientsListeners() {
+  const btn = document.getElementById('add-client-btn');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const name = document.getElementById('new-client-name');
+      const revenue = document.getElementById('new-client-revenue');
+      const projects = document.getElementById('new-client-projects');
+      const satisfaction = document.getElementById('new-client-satisfaction');
+      const type = document.getElementById('new-client-type');
+      if (!name || !name.value.trim()) {
+        showToast('Client name is required', 'error');
+        return;
+      }
+      addClient(
+        name.value,
+        revenue ? revenue.value : 0,
+        projects ? projects.value : 1,
+        satisfaction ? satisfaction.value : 5,
+        type ? type.value : 'new'
+      );
+      [name, revenue, projects, satisfaction].forEach(el => { if (el) el.value = ''; });
+      if (type) type.value = 'new';
+      showToast('Client added', 'success');
+    });
+  }
+}
+
+/* ── Financial Tab ──────────────────────────────────────── */
+
+function getFinancialsFromInputs() {
+  const fields = ['revenue', 'expenses', 'taxRate'];
+  fields.forEach(f => {
+    const el = document.getElementById('fin-' + f);
+    if (el) state.financials[f] = parseFloat(el.value) || 0;
+  });
+  // Quarterly
+  for (let q = 0; q < 4; q++) {
+    const r = document.getElementById('q' + (q+1) + '-revenue');
+    const e = document.getElementById('q' + (q+1) + '-expenses');
+    if (r) state.financials.quarterly[q].revenue = parseFloat(r.value) || 0;
+    if (e) state.financials.quarterly[q].expenses = parseFloat(e.value) || 0;
+  }
+}
+
+function renderFinancials() {
+  const f = state.financials;
+  const revenue = f.revenue || 0;
+  const expenses = f.expenses || 0;
+  const profit = revenue - expenses;
+  const margin = revenue > 0 ? (profit / revenue) * 100 : 0;
+  const taxRate = f.taxRate || 25;
+  const taxSetAside = revenue * (taxRate / 100);
+  const hoursWorked = state.overview.hoursWorked || 1;
+  const effectiveRate = hoursWorked > 0 ? revenue / hoursWorked : 0;
+
+  const ids = {
+    'fin-profit': formatCurrency(profit),
+    'fin-margin': margin.toFixed(1) + '%',
+    'fin-tax': formatCurrency(taxSetAside),
+    'fin-effective-rate': formatCurrency(effectiveRate) + '/hr'
+  };
+  Object.entries(ids).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  });
+}
+
+function renderPieChart() {
+  const svg = document.getElementById('pie-chart');
+  if (!svg) return;
+  const services = state.financials.services.filter(s => s.revenue > 0);
+  if (!services.length) {
+    svg.innerHTML = '<text x="100" y="105" text-anchor="middle" fill="#475569" font-size="12" font-family="system-ui">No services added yet</text>';
+    return;
+  }
+  const total = services.reduce((a, s) => a + s.revenue, 0);
+  if (total === 0) return;
+
+  const colors = ['#a78bfa', '#f472b6', '#60a5fa', '#34d399', '#fb923c', '#facc15', '#e879f9', '#38bdf8'];
+  const cx = 90, cy = 90, r = 70, innerR = 40;
+  let startAngle = -Math.PI / 2;
+  let paths = '';
+  let legend = '';
+
+  services.forEach((s, i) => {
+    const fraction = s.revenue / total;
+    const angle = fraction * 2 * Math.PI;
+    const endAngle = startAngle + angle;
+    const x1 = cx + r * Math.cos(startAngle);
+    const y1 = cy + r * Math.sin(startAngle);
+    const x2 = cx + r * Math.cos(endAngle);
+    const y2 = cy + r * Math.sin(endAngle);
+    const ix1 = cx + innerR * Math.cos(startAngle);
+    const iy1 = cy + innerR * Math.sin(startAngle);
+    const ix2 = cx + innerR * Math.cos(endAngle);
+    const iy2 = cy + innerR * Math.sin(endAngle);
+    const large = angle > Math.PI ? 1 : 0;
+    const color = colors[i % colors.length];
+
+    paths += `<path d="M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} L ${ix2} ${iy2} A ${innerR} ${innerR} 0 ${large} 0 ${ix1} ${iy1} Z"
+      fill="${color}" stroke="#0f172a" stroke-width="1.5"/>`;
+
+    legend += `<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:12px;">
+      <span style="width:10px;height:10px;border-radius:2px;background:${color};flex-shrink:0;"></span>
+      <span style="color:#e2e8f0;">${escapeHtml(s.name)}</span>
+      <span style="color:#94a3b8;margin-left:auto;">${Math.round(fraction * 100)}%</span>
+    </div>`;
+
+    startAngle = endAngle;
+  });
+
+  svg.innerHTML = `<g>${paths}</g>
+    <circle cx="${cx}" cy="${cy}" r="${innerR - 2}" fill="#0f172a"/>
+    <text x="${cx}" y="${cy - 6}" text-anchor="middle" fill="#e2e8f0" font-size="11" font-family="system-ui">Total</text>
+    <text x="${cx}" y="${cy + 12}" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="bold" font-family="system-ui">${formatCurrency(total)}</text>`;
+
+  const legendEl = document.getElementById('pie-legend');
+  if (legendEl) legendEl.innerHTML = legend;
+}
+
+function renderQuarterlyChart() {
+  const svg = document.getElementById('quarterly-chart');
+  if (!svg) return;
+  const quarters = state.financials.quarterly;
+  const allVals = quarters.flatMap(q => [q.revenue, q.expenses]);
+  const maxVal = Math.max(...allVals, 1);
+  const W = 400, H = 160;
+  const barW = 28, gap = 10, groupGap = 24;
+  const chartH = 110, chartTop = 20;
+  const colors = { revenue: '#a78bfa', expenses: '#f472b6' };
+
+  let bars = '';
+  quarters.forEach((q, i) => {
+    const groupX = 30 + i * (barW * 2 + gap + groupGap);
+    const revH = maxVal > 0 ? (q.revenue / maxVal) * chartH : 0;
+    const expH = maxVal > 0 ? (q.expenses / maxVal) * chartH : 0;
+
+    bars += `<rect x="${groupX}" y="${chartTop + chartH - revH}" width="${barW}" height="${Math.max(revH, 2)}" rx="3" fill="${colors.revenue}"/>`;
+    bars += `<rect x="${groupX + barW + gap}" y="${chartTop + chartH - expH}" width="${barW}" height="${Math.max(expH, 2)}" rx="3" fill="${colors.expenses}"/>`;
+    bars += `<text x="${groupX + barW}" y="${chartTop + chartH + 16}" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="system-ui">${q.label}</text>`;
+
+    if (q.revenue > 0) {
+      const label = q.revenue >= 1000 ? '$' + (q.revenue/1000).toFixed(0) + 'k' : '$' + q.revenue;
+      bars += `<text x="${groupX + barW / 2}" y="${Math.max(chartTop + chartH - revH - 4, chartTop + 8)}" text-anchor="middle" font-size="8" fill="#a78bfa" font-family="system-ui">${label}</text>`;
+    }
+  });
+
+  // Legend
+  bars += `<rect x="10" y="1" width="10" height="10" rx="2" fill="${colors.revenue}"/>
+    <text x="24" y="10" font-size="9" fill="#94a3b8" font-family="system-ui">Revenue</text>
+    <rect x="80" y="1" width="10" height="10" rx="2" fill="${colors.expenses}"/>
+    <text x="94" y="10" font-size="9" fill="#94a3b8" font-family="system-ui">Expenses</text>`;
+
+  svg.innerHTML = bars;
+}
+
+function addServiceRow() {
+  const name = document.getElementById('new-service-name');
+  const revenue = document.getElementById('new-service-revenue');
+  if (!name || !name.value.trim()) return;
+  state.financials.services.push({
+    id: generateId(),
+    name: name.value.trim(),
+    revenue: parseFloat(revenue ? revenue.value : 0) || 0
+  });
+  name.value = '';
+  if (revenue) revenue.value = '';
+  renderServicesTable();
+  renderPieChart();
+  debouncedSave();
+}
+
+function removeServiceRow(id) {
+  state.financials.services = state.financials.services.filter(s => s.id !== id);
+  renderServicesTable();
+  renderPieChart();
+  debouncedSave();
+}
+
+function renderServicesTable() {
+  const container = document.getElementById('services-list');
+  if (!container) return;
+  if (!state.financials.services.length) {
+    container.innerHTML = '<p style="color:var(--muted);font-size:0.875rem;">No services yet — add one above.</p>';
+    return;
+  }
+  container.innerHTML = state.financials.services.map(s => `
+    <div class="service-row">
+      <span>${escapeHtml(s.name)}</span>
+      <span>${formatCurrency(s.revenue)}</span>
+      <button class="icon-btn" onclick="removeServiceRow('${s.id}')">×</button>
+    </div>
+  `).join('');
+}
+
+function setupFinancialsListeners() {
+  ['revenue', 'expenses', 'taxRate'].forEach(f => {
+    const el = document.getElementById('fin-' + f);
+    if (el) el.addEventListener('input', () => {
+      getFinancialsFromInputs();
+      renderFinancials();
+      debouncedSave();
+    });
+  });
+  for (let q = 0; q < 4; q++) {
+    ['revenue', 'expenses'].forEach(f => {
+      const el = document.getElementById('q' + (q+1) + '-' + f);
+      if (el) el.addEventListener('input', () => {
+        getFinancialsFromInputs();
+        renderQuarterlyChart();
+        debouncedSave();
+      });
+    });
+  }
+  const addSvcBtn = document.getElementById('add-service-btn');
+  if (addSvcBtn) addSvcBtn.addEventListener('click', addServiceRow);
+}
+
+function populateFinancials() {
+  const f = state.financials;
+  ['revenue', 'expenses', 'taxRate'].forEach(field => {
+    const el = document.getElementById('fin-' + field);
+    if (el) el.value = f[field] || '';
+  });
+  for (let q = 0; q < 4; q++) {
+    const r = document.getElementById('q' + (q+1) + '-revenue');
+    const e = document.getElementById('q' + (q+1) + '-expenses');
+    if (r) r.value = f.quarterly[q].revenue || '';
+    if (e) e.value = f.quarterly[q].expenses || '';
+  }
+  renderServicesTable();
+  renderFinancials();
+}
+
+/* ── Skills Tab ─────────────────────────────────────────── */
+
+const SKILLS_SECTIONS = ['learned', 'certs', 'courses', 'tools', 'conferences', 'mentoringGiven', 'mentoringReceived'];
+
+function addTag(section, value) {
+  if (!value || !value.trim()) return;
+  if (!state.skills[section]) state.skills[section] = [];
+  if (!state.skills[section].includes(value.trim())) {
+    state.skills[section].push(value.trim());
+    renderTags(section);
+    debouncedSave();
+  }
+}
+
+function removeTag(section, index) {
+  if (!state.skills[section]) return;
+  state.skills[section].splice(index, 1);
+  renderTags(section);
+  debouncedSave();
+}
+
+function renderTags(section) {
+  const container = document.getElementById('tags-' + section);
+  if (!container) return;
+  const tags = state.skills[section] || [];
+  container.innerHTML = tags.map((tag, i) => `
+    <span class="tag">
+      ${escapeHtml(tag)}
+      <button class="tag-remove" onclick="removeTag('${section}', ${i})" title="Remove">×</button>
+    </span>
+  `).join('');
+}
+
+function setupSkillsListeners() {
+  SKILLS_SECTIONS.forEach(section => {
+    const input = document.getElementById('skill-input-' + section);
+    const btn = document.getElementById('skill-add-' + section);
+    if (input) {
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          addTag(section, input.value);
+          input.value = '';
+        }
+      });
+    }
+    if (btn && input) {
+      btn.addEventListener('click', () => {
+        addTag(section, input.value);
+        input.value = '';
+        if (input) input.focus();
+      });
+    }
+  });
+}
+
+function populateSkills() {
+  SKILLS_SECTIONS.forEach(section => renderTags(section));
+}
+
+/* ── Wins Tab ───────────────────────────────────────────── */
+
+const WINS_FIELDS = ['win1', 'win2', 'win3', 'challenge1', 'challenge2', 'challenge3',
+  'lesson1', 'lesson2', 'lesson3', 'surprises', 'stop', 'start', 'continue'];
+
+function renderWinsTab() {
+  WINS_FIELDS.forEach(field => {
+    const el = document.getElementById('wins-' + field);
+    if (el) {
+      el.value = state.wins[field] || '';
+      updateCharCount(el);
+    }
+  });
+}
+
+function updateCharCount(textarea) {
+  const countEl = document.getElementById('count-' + textarea.id);
+  if (countEl) countEl.textContent = textarea.value.length + ' chars';
+}
+
+function setupWinsListeners() {
+  WINS_FIELDS.forEach(field => {
+    const el = document.getElementById('wins-' + field);
+    if (el) {
+      el.addEventListener('input', () => {
+        state.wins[field] = el.value;
+        updateCharCount(el);
+        debouncedSave();
+      });
+    }
+  });
+}
+
+/* ── Next Year Tab ──────────────────────────────────────── */
+
+function renderStretchGoals() {
+  const rev = state.overview.totalRevenue || 0;
+  const clients = (state.overview.newClients || 0) + (state.overview.repeatClients || 0);
+
+  const stretch20Rev = Math.round(rev * 1.2);
+  const stretch50Rev = Math.round(rev * 1.5);
+  const stretch20Cli = Math.ceil(clients * 1.2);
+  const stretch50Cli = Math.ceil(clients * 1.5);
+
+  const el1 = document.getElementById('stretch-rev-20');
+  const el2 = document.getElementById('stretch-rev-50');
+  const el3 = document.getElementById('stretch-cli-20');
+  const el4 = document.getElementById('stretch-cli-50');
+  if (el1) el1.textContent = formatCurrency(stretch20Rev);
+  if (el2) el2.textContent = formatCurrency(stretch50Rev);
+  if (el3) el3.textContent = stretch20Cli;
+  if (el4) el4.textContent = stretch50Cli;
+
+  // Populate saved goals
+  const categories = ['revenue', 'clients', 'skills', 'marketing', 'personal'];
+  categories.forEach(cat => {
+    const goalEl = document.getElementById('next-' + cat + '-goal');
+    if (goalEl) goalEl.value = state.nextYear[cat] ? (state.nextYear[cat].goal || '') : '';
+    const targetEl = document.getElementById('next-' + cat + '-target');
+    if (targetEl) targetEl.value = state.nextYear[cat] ? (state.nextYear[cat].target || '') : '';
+  });
+}
+
+function setupNextYearListeners() {
+  const categories = ['revenue', 'clients', 'skills', 'marketing', 'personal'];
+  categories.forEach(cat => {
+    const goalEl = document.getElementById('next-' + cat + '-goal');
+    const targetEl = document.getElementById('next-' + cat + '-target');
+    if (goalEl) {
+      goalEl.addEventListener('input', () => {
+        if (!state.nextYear[cat]) state.nextYear[cat] = {};
+        state.nextYear[cat].goal = goalEl.value;
+        debouncedSave();
+      });
+    }
+    if (targetEl) {
+      targetEl.addEventListener('input', () => {
+        if (!state.nextYear[cat]) state.nextYear[cat] = {};
+        state.nextYear[cat].target = parseFloat(targetEl.value) || 0;
+        debouncedSave();
+      });
+    }
+  });
+
+  // Priority up/down buttons
+  document.querySelectorAll('.priority-up').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('[data-priority]');
+      if (item && item.previousElementSibling) {
+        item.parentNode.insertBefore(item, item.previousElementSibling);
+      }
+    });
+  });
+  document.querySelectorAll('.priority-down').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('[data-priority]');
+      if (item && item.nextElementSibling) {
+        item.parentNode.insertBefore(item.nextElementSibling, item);
+      }
+    });
+  });
+}
+
+/* ── Share Tab ──────────────────────────────────────────── */
+
+function generateShareHTML() {
+  const o = state.overview;
+  const year = state.year;
+  const nameEl = document.getElementById('share-name');
+  const name = nameEl ? nameEl.value || 'A Freelancer' : 'A Freelancer';
+  if (!state.share) state.share = {};
+  state.share.name = name;
+
+  const totalRevenue = o.totalRevenue || 0;
+  const projects = o.projectsCompleted || 0;
+  const clients = (o.newClients || 0) + (o.repeatClients || 0);
+  const hours = o.hoursWorked || 0;
+  const win1 = state.wins.win1 || '';
+  const win2 = state.wins.win2 || '';
+  const win3 = state.wins.win3 || '';
+
+  const goalsScore = (() => {
+    const goals = state.goals;
+    if (!goals.length) return null;
+    const score = goals.reduce((acc, g) => {
+      if (g.status === 'achieved') return acc + 1;
+      if (g.status === 'partially') return acc + 0.5;
+      return acc;
+    }, 0);
+    return Math.round((score / goals.length) * 100);
+  })();
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${year} Year in Review — ${escapeHtml(name)}</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:linear-gradient(135deg,#1e0a3c 0%,#0f172a 50%,#1a0533 100%);
+    min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e2e8f0;padding:40px 20px;}
+  .container{max-width:700px;margin:0 auto;}
+  .header{text-align:center;margin-bottom:48px;}
+  .year-badge{display:inline-block;background:linear-gradient(135deg,#7c3aed,#db2777);
+    color:#fff;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    padding:6px 16px;border-radius:100px;margin-bottom:16px;}
+  .hero-name{font-size:2.5rem;font-weight:800;margin-bottom:8px;
+    background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero-subtitle{color:#94a3b8;font-size:1rem;}
+  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:40px;}
+  .stat-card{background:rgba(255,255,255,0.05);border:1px solid rgba(167,139,250,0.2);
+    border-radius:16px;padding:24px;text-align:center;}
+  .stat-value{font-size:2rem;font-weight:800;color:#a78bfa;margin-bottom:4px;}
+  .stat-label{font-size:0.8125rem;color:#64748b;text-transform:uppercase;letter-spacing:1px;}
+  .section{margin-bottom:40px;}
+  .section-title{font-size:1.125rem;font-weight:700;margin-bottom:16px;color:#a78bfa;
+    display:flex;align-items:center;gap:8px;}
+  .section-title::before{content:'';display:block;width:4px;height:20px;
+    background:linear-gradient(#a78bfa,#f472b6);border-radius:2px;}
+  .wins-list{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .wins-list li{background:rgba(255,255,255,0.04);border-left:3px solid #a78bfa;
+    border-radius:0 12px 12px 0;padding:14px 18px;font-size:0.9375rem;color:#cbd5e1;}
+  .goals-row{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.04);
+    border-radius:12px;padding:20px;}
+  .goals-pct{font-size:3rem;font-weight:800;color:#a78bfa;}
+  .goals-label{color:#94a3b8;font-size:0.9375rem;}
+  .footer{text-align:center;margin-top:60px;padding-top:24px;
+    border-top:1px solid rgba(255,255,255,0.08);color:#475569;font-size:0.8125rem;}
+  .footer a{color:#a78bfa;text-decoration:none;}
+  @media(max-width:480px){.stats-grid{grid-template-columns:1fr;}.hero-name{font-size:1.75rem;}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="year-badge">${year} Year in Review</div>
+    <div class="hero-name">${escapeHtml(name)}</div>
+    <div class="hero-subtitle">A year of freelance growth, lessons, and wins.</div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value">${formatCurrency(totalRevenue)}</div>
+      <div class="stat-label">Total Revenue</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${projects}</div>
+      <div class="stat-label">Projects Completed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${clients}</div>
+      <div class="stat-label">Clients Served</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${formatNumber(hours)}</div>
+      <div class="stat-label">Hours Worked</div>
+    </div>
+  </div>
+  ${(win1 || win2 || win3) ? `
+  <div class="section">
+    <div class="section-title">Top Wins</div>
+    <ul class="wins-list">
+      ${win1 ? '<li>' + escapeHtml(win1) + '</li>' : ''}
+      ${win2 ? '<li>' + escapeHtml(win2) + '</li>' : ''}
+      ${win3 ? '<li>' + escapeHtml(win3) + '</li>' : ''}
+    </ul>
+  </div>` : ''}
+  ${goalsScore !== null ? `
+  <div class="section">
+    <div class="section-title">Goals Completion</div>
+    <div class="goals-row">
+      <div class="goals-pct">${goalsScore}%</div>
+      <div class="goals-label">of goals achieved this year<br><small style="color:#475569;">${state.goals.filter(g=>g.status==='achieved').length} achieved · ${state.goals.filter(g=>g.status==='partially').length} partially · ${state.goals.filter(g=>g.status==='missed').length} missed</small></div>
+    </div>
+  </div>` : ''}
+  <div class="footer">
+    <p>Built with <a href="https://freelanceos.com" target="_blank" rel="noopener">FreelanceOS</a> — the free annual review tool for freelancers.</p>
+  </div>
+</div>
+</body>
+</html>`;
+}
+
+function generateSharePreview() {
+  const preview = document.getElementById('share-preview-iframe');
+  if (!preview) return;
+  const html = generateShareHTML();
+  preview.srcdoc = html;
+}
+
+function setupShareListeners() {
+  const nameEl = document.getElementById('share-name');
+  if (nameEl) {
+    nameEl.value = (state.share && state.share.name) || '';
+    nameEl.addEventListener('input', () => {
+      if (!state.share) state.share = {};
+      state.share.name = nameEl.value;
+      generateSharePreview();
+      debouncedSave();
+    });
+  }
+
+  const copyBtn = document.getElementById('share-copy-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const html = generateShareHTML();
+      navigator.clipboard.writeText(html).then(() => {
+        showToast('HTML copied to clipboard!', 'success');
+      }).catch(() => {
+        showToast('Copy failed — try the download button', 'error');
+      });
+    });
+  }
+
+  const downloadBtn = document.getElementById('share-download-btn');
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => exportHTML(true));
+  }
+}
+
+/* ── Export Tab ─────────────────────────────────────────── */
+
+function exportHTML(fromShare) {
+  const html = generateShareHTML();
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'freelance-review-' + state.year + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('HTML file downloaded!', 'success');
+}
+
+function exportPDFView() {
+  const html = generateShareHTML();
+  const w = window.open('', '_blank');
+  if (w) {
+    w.document.write(html);
+    w.document.close();
+    setTimeout(() => w.print(), 600);
+  }
+}
+
+function copySocialPost() {
+  const o = state.overview;
+  const year = state.year;
+  const name = (state.share && state.share.name) ? state.share.name + "'s" : 'My';
+  const rev = formatCurrency(o.totalRevenue || 0);
+  const proj = o.projectsCompleted || 0;
+  const clients = (o.newClients || 0) + (o.repeatClients || 0);
+  const hours = formatNumber(o.hoursWorked || 0);
+  const win1 = state.wins.win1 || '';
+
+  const post = `${name} ${year} Year in Review 🎉
+
+💰 Revenue: ${rev}
+📁 Projects: ${proj}
+👥 Clients: ${clients}
+⏱ Hours: ${hours}
+
+${win1 ? `✨ Biggest win: "${win1}"\n\n` : ''}Built with the free Annual Review tool from @FreelanceOS
+👉 freelanceos.com/annual-review`;
+
+  navigator.clipboard.writeText(post).then(() => {
+    showToast('Social post copied to clipboard!', 'success');
+  }).catch(() => {
+    showToast('Could not copy — please try manually', 'error');
+  });
+}
+
+function saveToLibrary() {
+  try {
+    const key = 'freelanceos_review_library';
+    const lib = JSON.parse(localStorage.getItem(key) || '[]');
+    const snapshot = {
+      year: state.year,
+      savedAt: new Date().toISOString(),
+      revenue: state.overview.totalRevenue,
+      projects: state.overview.projectsCompleted,
+      clients: (state.overview.newClients || 0) + (state.overview.repeatClients || 0),
+      state: JSON.parse(JSON.stringify(state))
+    };
+    const existingIdx = lib.findIndex(s => s.year === state.year);
+    if (existingIdx >= 0) lib[existingIdx] = snapshot;
+    else lib.push(snapshot);
+    localStorage.setItem(key, JSON.stringify(lib));
+    showToast('Saved to review library!', 'success');
+  } catch (e) {
+    showToast('Could not save to library', 'error');
+  }
+}
+
+function setupExportListeners() {
+  const htmlBtn = document.getElementById('export-html-btn');
+  const pdfBtn = document.getElementById('export-pdf-btn');
+  const socialBtn = document.getElementById('export-social-btn');
+  const saveBtn = document.getElementById('export-save-btn');
+
+  if (htmlBtn) {
+    const inner = htmlBtn.querySelector('button');
+    const target = inner || htmlBtn;
+    target.addEventListener('click', () => exportHTML(false));
+  }
+  if (pdfBtn) {
+    const inner = pdfBtn.querySelector('button');
+    const target = inner || pdfBtn;
+    target.addEventListener('click', exportPDFView);
+  }
+  if (socialBtn) {
+    const inner = socialBtn.querySelector('button');
+    const target = inner || socialBtn;
+    target.addEventListener('click', copySocialPost);
+  }
+  if (saveBtn) {
+    const inner = saveBtn.querySelector('button');
+    const target = inner || saveBtn;
+    target.addEventListener('click', saveToLibrary);
+  }
+}
+
+/* ── HTML Escape Utility ────────────────────────────────── */
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+/* ── Populate All Inputs ────────────────────────────────── */
+
+function populateAllInputs() {
+  populateOverview();
+  populateMonthly();
+  renderGoals();
+  renderClientsTable();
+  renderClientStats();
+  populateFinancials();
+  populateSkills();
+  renderWinsTab();
+  renderStretchGoals();
+  const nameEl = document.getElementById('share-name');
+  if (nameEl) nameEl.value = (state.share && state.share.name) || '';
+}
+
+/* ── Render All Tabs ────────────────────────────────────── */
+
+function renderAllTabs() {
+  renderOverviewStats();
+  renderMonthlyChart();
+  renderCompletionRing();
+  renderClientStats();
+  renderFinancials();
+  renderServicesTable();
+  renderPieChart();
+  renderQuarterlyChart();
+  renderStretchGoals();
+}
+
+/* ── Init ───────────────────────────────────────────────── */
+
+function init() {
+  // Determine current year
+  const currentYear = new Date().getFullYear();
+  loadState(currentYear);
+
+  // Setup year selector
+  setupYearSelector();
+
+  // Setup tab navigation
+  setupTabNavigation();
+
+  // Populate inputs from loaded state
+  populateAllInputs();
+
+  // Render all visualizations
+  renderAllTabs();
+
+  // Setup all event listeners
+  setupOverviewListeners();
+  setupMonthlyListeners();
+  setupGoalsListeners();
+  setupClientsListeners();
+  setupFinancialsListeners();
+  setupSkillsListeners();
+  setupWinsListeners();
+  setupNextYearListeners();
+  setupShareListeners();
+  setupExportListeners();
+
+  // Show default tab
+  showTab('overview');
+
+  // Global auto-save on any input change
+  document.addEventListener('input', () => debouncedSave(), true);
+  document.addEventListener('change', () => debouncedSave(), true);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
