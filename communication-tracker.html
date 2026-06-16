@@ -1,0 +1,2661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Communication Tracker — Free Freelance Tool | FreelanceOS</title>
+<meta name="description" content="Track client interactions, monitor response times, analyze sentiment, and maintain healthy freelance relationships. Free, no sign-up required.">
+<meta property="og:title" content="Client Communication Tracker — Free Tool">
+<meta property="og:description" content="Your client ghosted you 3 times. Now you have proof. Track every interaction.">
+<meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/communication-tracker.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Client Communication Tracker — Free Tool">
+<meta name="twitter:description" content="Your client ghosted you 3 times. Now you have proof. Track every interaction.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Client Communication Tracker",
+  "description": "Track client interactions, response times, and communication health for freelancers",
+  "url": "https://baphometsblade.github.io/freelanceos-storefront/communication-tracker.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+/* ===================== RESET & ROOT ===================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --card-border: #1e293b;
+  --accent: #a855f7;
+  --accent2: #ec4899;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --glass-bg: rgba(15, 23, 42, 0.8);
+  --glass-border: rgba(139, 92, 246, 0.2);
+  --sidebar-width: 320px;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { cursor: pointer; font-family: inherit; }
+input, textarea, select { font-family: inherit; }
+
+/* ===================== ANIMATIONS ===================== */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 8px rgba(168, 85, 247, 0.3); } 50% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.6); } }
+@keyframes gaugeAnim { from { stroke-dashoffset: 283; } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes alertPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+/* ===================== LAYOUT ===================== */
+.app-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.app-header .back-link { font-size: 0.9rem; white-space: nowrap; }
+.app-header .logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.app-container {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid var(--card-border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar-header h3 { font-size: 1rem; font-weight: 600; }
+.sidebar-list { flex: 1; overflow-y: auto; padding: 0.5rem; }
+
+.main-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  animation: fadeIn 0.4s ease;
+}
+
+/* ===================== GLASSMORPHISM CARD ===================== */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.4s ease;
+}
+.glass-card:hover { border-color: rgba(139, 92, 246, 0.4); }
+
+/* ===================== BUTTONS ===================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.btn:hover { transform: scale(1.02); }
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  background: var(--gradient);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(168, 85, 247, 0.3);
+}
+.btn-primary:hover { box-shadow: 0 4px 20px rgba(168, 85, 247, 0.5); }
+.btn-secondary {
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+.btn-secondary:hover { background: rgba(148, 163, 184, 0.25); }
+.btn-danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.btn-danger:hover { background: rgba(239, 68, 68, 0.35); }
+.btn-success {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--success);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+.btn-success:hover { background: rgba(34, 197, 94, 0.35); }
+.btn-sm { padding: 0.35rem 0.75rem; font-size: 0.78rem; }
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+.btn-icon:hover { background: rgba(148, 163, 184, 0.25); color: var(--text); }
+
+/* ===================== FORM ELEMENTS ===================== */
+.form-group { margin-bottom: 1rem; }
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.form-input {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+}
+textarea.form-input { resize: vertical; min-height: 80px; }
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+/* ===================== BADGES ===================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.badge-active { background: rgba(34, 197, 94, 0.2); color: var(--success); }
+.badge-paused { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+.badge-completed { background: rgba(148, 163, 184, 0.2); color: var(--text-muted); }
+
+/* ===================== CLIENT CARD (sidebar) ===================== */
+.client-card {
+  padding: 0.85rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  margin-bottom: 0.4rem;
+  animation: slideInLeft 0.3s ease;
+}
+.client-card:hover { background: rgba(148, 163, 184, 0.08); border-color: var(--glass-border); }
+.client-card.active { background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.35); }
+.client-card .client-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.15rem; }
+.client-card .client-company { font-size: 0.8rem; color: var(--text-muted); }
+.client-card .client-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+}
+.client-card .health-mini {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 8px;
+}
+.health-high { background: rgba(34, 197, 94, 0.2); color: var(--success); }
+.health-med { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+.health-low { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+
+/* ===================== STATS GRID ===================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.stat-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.2rem;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+.stat-card .stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-card .stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.3rem;
+}
+
+/* ===================== HEALTH GAUGE ===================== */
+.gauge-container { display: flex; justify-content: center; margin: 1rem 0; }
+.gauge-svg { width: 160px; height: 160px; }
+.gauge-bg { fill: none; stroke: var(--card-border); stroke-width: 10; }
+.gauge-fill { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1s ease, stroke 0.5s ease; }
+.gauge-text {
+  font-size: 2rem;
+  font-weight: 800;
+  fill: var(--text);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.gauge-label {
+  font-size: 0.65rem;
+  fill: var(--text-muted);
+  text-anchor: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ===================== TIMELINE ===================== */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--card-border);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.2rem;
+  animation: slideInRight 0.35s ease;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.6rem;
+  top: 0.5rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--card-border);
+  background: var(--bg);
+}
+.timeline-item.sentiment-positive::before { border-color: var(--success); background: rgba(34, 197, 94, 0.3); }
+.timeline-item.sentiment-neutral::before { border-color: var(--text-muted); background: rgba(148, 163, 184, 0.3); }
+.timeline-item.sentiment-concerned::before { border-color: var(--warning); background: rgba(245, 158, 11, 0.3); }
+.timeline-item.sentiment-negative::before { border-color: var(--danger); background: rgba(239, 68, 68, 0.3); }
+.timeline-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 0.85rem;
+}
+.timeline-card .tl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+.timeline-card .tl-type {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--accent);
+}
+.timeline-card .tl-direction {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.timeline-card .tl-date { font-size: 0.75rem; color: var(--text-muted); }
+.timeline-card .tl-subject { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
+.timeline-card .tl-summary { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+.timeline-card .tl-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+.timeline-card .tl-tag {
+  font-size: 0.7rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 6px;
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-muted);
+}
+.tl-tag.followup { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+.tl-tag.overdue { background: rgba(239, 68, 68, 0.15); color: var(--danger); animation: alertPulse 2s infinite; }
+
+/* ===================== BAR CHART ===================== */
+.bar-chart { display: flex; align-items: flex-end; gap: 0.5rem; height: 160px; padding-top: 1rem; }
+.bar-col { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 0; }
+.bar {
+  width: 100%;
+  max-width: 40px;
+  border-radius: 6px 6px 0 0;
+  background: var(--gradient);
+  transition: height 0.6s ease;
+  min-height: 4px;
+}
+.bar-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60px;
+}
+.bar-value {
+  font-size: 0.7rem;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+/* ===================== SENTIMENT DOTS ===================== */
+.sentiment-track {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+}
+.sentiment-dot {
+  font-size: 1.3rem;
+  transition: transform 0.2s;
+  cursor: default;
+  position: relative;
+}
+.sentiment-dot:hover { transform: scale(1.3); }
+.sentiment-dot .dot-tooltip {
+  display: none;
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  z-index: 10;
+}
+.sentiment-dot:hover .dot-tooltip { display: block; }
+
+/* ===================== ALERTS ===================== */
+.alert-section { margin-bottom: 1.5rem; }
+.alert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  font-size: 0.88rem;
+  animation: fadeIn 0.35s ease;
+}
+.alert-item .alert-icon { font-size: 1.2rem; flex-shrink: 0; }
+.alert-warning { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); }
+.alert-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); }
+.alert-orange { background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.25); }
+.alert-success { background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.25); }
+
+/* ===================== MODAL ===================== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+.modal h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1.2rem;
+}
+
+/* ===================== SENTIMENT SELECTOR ===================== */
+.sentiment-selector { display: flex; gap: 0.5rem; }
+.sentiment-btn {
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: rgba(15, 23, 42, 0.5);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.sentiment-btn span { font-size: 0.75rem; color: var(--text-muted); }
+.sentiment-btn:hover { border-color: var(--accent); }
+.sentiment-btn.selected { border-color: var(--accent); background: rgba(168, 85, 247, 0.15); }
+
+/* ===================== TOGGLE ===================== */
+.toggle-wrap { display: flex; align-items: center; gap: 0.6rem; }
+.toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--card-border);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.toggle.on { background: var(--accent); }
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text);
+  transition: transform 0.2s;
+}
+.toggle.on::after { transform: translateX(20px); }
+
+/* ===================== CHECKBOX ROW ===================== */
+.checkbox-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  transition: all 0.2s;
+}
+.check-item:hover { border-color: var(--accent); }
+.check-item.checked { border-color: var(--accent); background: rgba(168, 85, 247, 0.12); }
+.check-item .check-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  transition: all 0.2s;
+}
+.check-item.checked .check-box { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+/* ===================== SECTION HEADERS ===================== */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.section-title .icon { font-size: 1.2rem; }
+.section-subtitle { font-size: 0.8rem; color: var(--text-muted); font-weight: 400; margin-left: auto; }
+
+/* ===================== TAB NAVIGATION ===================== */
+.tabs { display: flex; gap: 0.25rem; margin-bottom: 1.5rem; overflow-x: auto; padding-bottom: 0.25rem; }
+.tab-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text); background: rgba(148, 163, 184, 0.08); }
+.tab-btn.active {
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--accent);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+/* ===================== EMPTY STATE ===================== */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--text-muted);
+}
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+.empty-state h3 { color: var(--text); margin-bottom: 0.5rem; font-size: 1.1rem; }
+.empty-state p { font-size: 0.9rem; margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+
+/* ===================== OVERVIEW GRID ===================== */
+.overview-highlights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.highlight-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+.highlight-card h4 {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem;
+}
+.highlight-card .h-client {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.15rem;
+}
+.highlight-card .h-detail { font-size: 0.82rem; color: var(--text-muted); }
+
+/* ===================== ACTIVITY FEED ===================== */
+.activity-feed { list-style: none; }
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+  font-size: 0.88rem;
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-item .act-emoji { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+.activity-item .act-text { color: var(--text-muted); }
+.activity-item .act-text strong { color: var(--text); }
+.activity-item .act-time { font-size: 0.72rem; color: var(--text-muted); margin-left: auto; white-space: nowrap; flex-shrink: 0; }
+
+/* ===================== MOBILE SIDEBAR TOGGLE ===================== */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 200;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient);
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .app-container { flex-direction: column; }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 150;
+    transform: translateX(-100%);
+    width: 85vw;
+    max-width: 340px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+  .main-content { padding: 1rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .overview-highlights { grid-template-columns: 1fr; }
+  .bar-chart { height: 120px; }
+  .tabs { gap: 0.15rem; }
+  .tab-btn { padding: 0.4rem 0.7rem; font-size: 0.78rem; }
+  .app-header .logo { font-size: 1.1rem; }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .sentiment-selector { flex-wrap: wrap; }
+  .header-actions { width: 100%; justify-content: flex-end; }
+}
+
+/* ===================== SCROLLBAR ===================== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ===================== TOAST ===================== */
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.toast {
+  padding: 0.7rem 1.2rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  animation: slideInRight 0.3s ease;
+  max-width: 340px;
+  backdrop-filter: blur(12px);
+}
+.toast-success { background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.35); color: var(--success); }
+.toast-warning { background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.35); color: var(--warning); }
+.toast-danger { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.35); color: var(--danger); }
+.toast-info { background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.35); color: var(--accent); }
+
+/* ===================== CTA BANNER ===================== */
+.cta-banner {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(236,72,153,0.2));
+  border: 1px solid rgba(168,85,247,0.4);
+  border-radius: 16px;
+  text-align: center;
+}
+.cta-banner p:first-child { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+.cta-banner p:nth-child(2) { color: var(--text-muted); margin-bottom: 1rem; }
+.cta-banner a {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: var(--gradient);
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.cta-banner a:hover { text-decoration: none; transform: scale(1.02); box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4); }
+
+/* ===================== FOOTER ===================== */
+.app-footer {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+  font-size: 0.85rem;
+  border-top: 1px solid var(--card-border);
+  margin-top: 3rem;
+}
+.app-footer a { color: var(--accent); }
+
+/* ===================== CONFIRM DIALOG ===================== */
+.confirm-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.9);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.confirm-overlay.show { display: flex; }
+.confirm-box {
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+.confirm-box h3 { margin-bottom: 0.6rem; font-size: 1.1rem; }
+.confirm-box p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem; }
+.confirm-box .confirm-actions { display: flex; gap: 0.5rem; justify-content: center; }
+
+/* ===================== HIDDEN FILE INPUT ===================== */
+.hidden-input { display: none; }
+
+/* ===================== DELETE COMM BUTTON ===================== */
+.tl-delete-btn {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0.2rem;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+.tl-delete-btn:hover { color: var(--danger); }
+</style>
+</head>
+<body>
+
+<!-- ===================== TOAST CONTAINER ===================== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===================== CONFIRM DIALOG ===================== -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <h3 id="confirmTitle">Are you sure?</h3>
+    <p id="confirmMessage">This action cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-danger" id="confirmAction" onclick="closeConfirm()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HEADER ===================== -->
+<header class="app-header">
+  <a href="/freelanceos-storefront/free-templates.html" class="back-link" style="color:#a855f7;text-decoration:none;font-size:0.9rem;">&#8592; Back to All Free Tools</a>
+  <span class="logo">Communication Tracker</span>
+  <div class="header-actions">
+    <button class="btn btn-sm btn-secondary" onclick="exportCSV()" title="Export CSV">&#128229; Export</button>
+    <button class="btn btn-sm btn-secondary" onclick="document.getElementById('importFile').click()" title="Import CSV">&#128228; Import</button>
+    <button class="btn btn-sm btn-danger" onclick="confirmClearAll()" title="Clear Data">&#128465; Clear</button>
+    <input type="file" id="importFile" class="hidden-input" accept=".csv" onchange="importCSV(event)">
+  </div>
+</header>
+
+<!-- ===================== MAIN APP ===================== -->
+<div class="app-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3>Clients</h3>
+      <button class="btn btn-sm btn-primary" onclick="openClientModal()">+ Add</button>
+    </div>
+    <div class="sidebar-list" id="clientList">
+      <!-- populated by JS -->
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content" id="mainContent">
+    <!-- populated by JS -->
+  </main>
+</div>
+
+<!-- MOBILE SIDEBAR TOGGLE -->
+<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">&#9776;</button>
+
+<!-- ===================== CLIENT MODAL ===================== -->
+<div class="modal-overlay" id="clientModal">
+  <div class="modal">
+    <h2 id="clientModalTitle">Add New Client</h2>
+    <input type="hidden" id="editClientId">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Client Name *</label>
+        <input type="text" class="form-input" id="clientName" placeholder="Jane Smith">
+      </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" class="form-input" id="clientCompany" placeholder="Acme Corp">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-input" id="clientEmail" placeholder="jane@acme.com">
+      </div>
+      <div class="form-group">
+        <label>Project Name</label>
+        <input type="text" class="form-input" id="clientProject" placeholder="Website Redesign">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Start Date</label>
+        <input type="date" class="form-input" id="clientStartDate">
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select class="form-input" id="clientStatus">
+          <option value="active">Active</option>
+          <option value="paused">Paused</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeClientModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveClient()">Save Client</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== COMMUNICATION MODAL ===================== -->
+<div class="modal-overlay" id="commModal">
+  <div class="modal">
+    <h2>Log Communication</h2>
+    <input type="hidden" id="editCommId">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date &amp; Time</label>
+        <input type="datetime-local" class="form-input" id="commDate">
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select class="form-input" id="commType">
+          <option value="email">Email</option>
+          <option value="call">Call</option>
+          <option value="video">Video Meeting</option>
+          <option value="chat">Slack / Chat</option>
+          <option value="inperson">In-person</option>
+          <option value="text">Text</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Direction</label>
+        <select class="form-input" id="commDirection">
+          <option value="sent">Sent</option>
+          <option value="received">Received</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Subject / Topic</label>
+        <input type="text" class="form-input" id="commSubject" placeholder="Project update">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Summary</label>
+      <textarea class="form-input" id="commSummary" placeholder="Key points discussed..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Sentiment</label>
+      <div class="sentiment-selector" id="sentimentSelector">
+        <div class="sentiment-btn" data-sentiment="positive" onclick="selectSentiment('positive')">&#128522;<span>Positive</span></div>
+        <div class="sentiment-btn" data-sentiment="neutral" onclick="selectSentiment('neutral')">&#128528;<span>Neutral</span></div>
+        <div class="sentiment-btn" data-sentiment="concerned" onclick="selectSentiment('concerned')">&#128533;<span>Concerned</span></div>
+        <div class="sentiment-btn" data-sentiment="negative" onclick="selectSentiment('negative')">&#128544;<span>Negative</span></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="toggle-wrap">
+        <div class="toggle" id="followupToggle" onclick="toggleFollowup()"></div>
+        <span style="font-size:0.88rem;">Follow-up needed</span>
+      </div>
+    </div>
+    <div class="form-group" id="followupDateGroup" style="display:none;">
+      <label>Follow-up Date</label>
+      <input type="date" class="form-input" id="followupDate">
+    </div>
+    <div class="form-group">
+      <label>Attachments Mentioned</label>
+      <div class="checkbox-group" id="attachmentsGroup">
+        <div class="check-item" data-val="contract" onclick="toggleCheck(this)">
+          <div class="check-box">&#10003;</div>
+          <span>Contract sent</span>
+        </div>
+        <div class="check-item" data-val="invoice" onclick="toggleCheck(this)">
+          <div class="check-box">&#10003;</div>
+          <span>Invoice sent</span>
+        </div>
+        <div class="check-item" data-val="deliverable" onclick="toggleCheck(this)">
+          <div class="check-box">&#10003;</div>
+          <span>Deliverable shared</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeCommModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveComm()">Save Communication</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   CLIENT COMMUNICATION TRACKER — FreelanceOS
+   Pure vanilla JS, localStorage persistence
+   ================================================================ */
+
+// ===================== DATA LAYER =====================
+const STORAGE_KEY = 'freelanceos_comm_tracker';
+let appState = { clients: [], selectedClientId: null };
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      appState.clients = parsed.clients || [];
+    }
+  } catch (e) {
+    console.warn('Failed to load data:', e);
+  }
+}
+
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ clients: appState.clients }));
+  } catch (e) {
+    console.warn('Failed to save data:', e);
+  }
+}
+
+function generateId() {
+  return 'id_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
+}
+
+// ===================== TOAST =====================
+function showToast(message, type) {
+  type = type || 'info';
+  var container = document.getElementById('toastContainer');
+  var toast = document.createElement('div');
+  toast.className = 'toast toast-' + type;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(function() {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(20px)';
+    toast.style.transition = 'all 0.3s ease';
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 3000);
+}
+
+// ===================== CONFIRM DIALOG =====================
+var confirmCallback = null;
+function showConfirm(title, message, actionLabel, callback) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmMessage').textContent = message;
+  document.getElementById('confirmAction').textContent = actionLabel;
+  confirmCallback = callback;
+  document.getElementById('confirmAction').onclick = function() {
+    closeConfirm();
+    if (confirmCallback) confirmCallback();
+  };
+  document.getElementById('confirmOverlay').classList.add('show');
+}
+function closeConfirm() {
+  document.getElementById('confirmOverlay').classList.remove('show');
+  confirmCallback = null;
+}
+
+// ===================== SIDEBAR TOGGLE (mobile) =====================
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+// ===================== CLIENT MODAL =====================
+function openClientModal(clientId) {
+  var modal = document.getElementById('clientModal');
+  document.getElementById('editClientId').value = '';
+  document.getElementById('clientName').value = '';
+  document.getElementById('clientCompany').value = '';
+  document.getElementById('clientEmail').value = '';
+  document.getElementById('clientProject').value = '';
+  document.getElementById('clientStartDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('clientStatus').value = 'active';
+  document.getElementById('clientModalTitle').textContent = 'Add New Client';
+
+  if (clientId) {
+    var client = appState.clients.find(function(c) { return c.id === clientId; });
+    if (client) {
+      document.getElementById('editClientId').value = client.id;
+      document.getElementById('clientName').value = client.name;
+      document.getElementById('clientCompany').value = client.company || '';
+      document.getElementById('clientEmail').value = client.email || '';
+      document.getElementById('clientProject').value = client.project || '';
+      document.getElementById('clientStartDate').value = client.startDate || '';
+      document.getElementById('clientStatus').value = client.status || 'active';
+      document.getElementById('clientModalTitle').textContent = 'Edit Client';
+    }
+  }
+  modal.classList.add('show');
+  document.getElementById('clientName').focus();
+}
+
+function closeClientModal() {
+  document.getElementById('clientModal').classList.remove('show');
+}
+
+function saveClient() {
+  var name = document.getElementById('clientName').value.trim();
+  if (!name) { showToast('Client name is required', 'warning'); return; }
+
+  var editId = document.getElementById('editClientId').value;
+  var clientData = {
+    name: name,
+    company: document.getElementById('clientCompany').value.trim(),
+    email: document.getElementById('clientEmail').value.trim(),
+    project: document.getElementById('clientProject').value.trim(),
+    startDate: document.getElementById('clientStartDate').value,
+    status: document.getElementById('clientStatus').value
+  };
+
+  if (editId) {
+    var idx = appState.clients.findIndex(function(c) { return c.id === editId; });
+    if (idx >= 0) {
+      Object.assign(appState.clients[idx], clientData);
+      showToast('Client updated', 'success');
+    }
+  } else {
+    clientData.id = generateId();
+    clientData.comms = [];
+    clientData.createdAt = new Date().toISOString();
+    appState.clients.push(clientData);
+    appState.selectedClientId = clientData.id;
+    showToast('Client added', 'success');
+  }
+
+  saveData();
+  closeClientModal();
+  renderSidebar();
+  renderMain();
+}
+
+function deleteClient(clientId) {
+  showConfirm('Delete Client', 'This will remove the client and all their communications. This cannot be undone.', 'Delete', function() {
+    appState.clients = appState.clients.filter(function(c) { return c.id !== clientId; });
+    if (appState.selectedClientId === clientId) appState.selectedClientId = null;
+    saveData();
+    renderSidebar();
+    renderMain();
+    showToast('Client deleted', 'danger');
+  });
+}
+
+// ===================== COMMUNICATION MODAL =====================
+var selectedSentiment = 'neutral';
+var followupEnabled = false;
+
+function openCommModal(commId) {
+  var modal = document.getElementById('commModal');
+  document.getElementById('editCommId').value = '';
+  var now = new Date();
+  var localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+  document.getElementById('commDate').value = localISO;
+  document.getElementById('commType').value = 'email';
+  document.getElementById('commDirection').value = 'sent';
+  document.getElementById('commSubject').value = '';
+  document.getElementById('commSummary').value = '';
+  selectedSentiment = 'neutral';
+  followupEnabled = false;
+  document.getElementById('followupToggle').classList.remove('on');
+  document.getElementById('followupDateGroup').style.display = 'none';
+  document.getElementById('followupDate').value = '';
+
+  // Reset checkboxes
+  document.querySelectorAll('#attachmentsGroup .check-item').forEach(function(el) { el.classList.remove('checked'); });
+
+  // Reset sentiment
+  document.querySelectorAll('#sentimentSelector .sentiment-btn').forEach(function(el) {
+    el.classList.toggle('selected', el.getAttribute('data-sentiment') === 'neutral');
+  });
+
+  if (commId) {
+    var client = getSelectedClient();
+    if (client) {
+      var comm = client.comms.find(function(c) { return c.id === commId; });
+      if (comm) {
+        document.getElementById('editCommId').value = comm.id;
+        document.getElementById('commDate').value = comm.date ? comm.date.slice(0, 16) : localISO;
+        document.getElementById('commType').value = comm.type || 'email';
+        document.getElementById('commDirection').value = comm.direction || 'sent';
+        document.getElementById('commSubject').value = comm.subject || '';
+        document.getElementById('commSummary').value = comm.summary || '';
+        selectedSentiment = comm.sentiment || 'neutral';
+        document.querySelectorAll('#sentimentSelector .sentiment-btn').forEach(function(el) {
+          el.classList.toggle('selected', el.getAttribute('data-sentiment') === selectedSentiment);
+        });
+        if (comm.followup) {
+          followupEnabled = true;
+          document.getElementById('followupToggle').classList.add('on');
+          document.getElementById('followupDateGroup').style.display = '';
+          document.getElementById('followupDate').value = comm.followupDate || '';
+        }
+        if (comm.attachments && comm.attachments.length) {
+          comm.attachments.forEach(function(att) {
+            var el = document.querySelector('#attachmentsGroup .check-item[data-val="' + att + '"]');
+            if (el) el.classList.add('checked');
+          });
+        }
+      }
+    }
+  }
+
+  modal.classList.add('show');
+}
+
+function closeCommModal() {
+  document.getElementById('commModal').classList.remove('show');
+}
+
+function selectSentiment(val) {
+  selectedSentiment = val;
+  document.querySelectorAll('#sentimentSelector .sentiment-btn').forEach(function(el) {
+    el.classList.toggle('selected', el.getAttribute('data-sentiment') === val);
+  });
+}
+
+function toggleFollowup() {
+  followupEnabled = !followupEnabled;
+  document.getElementById('followupToggle').classList.toggle('on', followupEnabled);
+  document.getElementById('followupDateGroup').style.display = followupEnabled ? '' : 'none';
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
+
+function saveComm() {
+  var client = getSelectedClient();
+  if (!client) { showToast('No client selected', 'warning'); return; }
+
+  var subject = document.getElementById('commSubject').value.trim();
+  if (!subject) { showToast('Subject is required', 'warning'); return; }
+
+  var attachments = [];
+  document.querySelectorAll('#attachmentsGroup .check-item.checked').forEach(function(el) {
+    attachments.push(el.getAttribute('data-val'));
+  });
+
+  var commData = {
+    date: document.getElementById('commDate').value,
+    type: document.getElementById('commType').value,
+    direction: document.getElementById('commDirection').value,
+    subject: subject,
+    summary: document.getElementById('commSummary').value.trim(),
+    sentiment: selectedSentiment,
+    followup: followupEnabled,
+    followupDate: followupEnabled ? document.getElementById('followupDate').value : '',
+    followupCompleted: false,
+    attachments: attachments
+  };
+
+  var editId = document.getElementById('editCommId').value;
+  if (editId) {
+    var idx = client.comms.findIndex(function(c) { return c.id === editId; });
+    if (idx >= 0) {
+      var existing = client.comms[idx];
+      commData.followupCompleted = existing.followupCompleted || false;
+      Object.assign(client.comms[idx], commData);
+      showToast('Communication updated', 'success');
+    }
+  } else {
+    commData.id = generateId();
+    commData.followupCompleted = false;
+    client.comms.push(commData);
+    showToast('Communication logged', 'success');
+  }
+
+  // Sort comms by date descending
+  client.comms.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+
+  saveData();
+  closeCommModal();
+  renderMain();
+}
+
+function deleteComm(commId) {
+  var client = getSelectedClient();
+  if (!client) return;
+  showConfirm('Delete Communication', 'This will permanently remove this interaction log.', 'Delete', function() {
+    client.comms = client.comms.filter(function(c) { return c.id !== commId; });
+    saveData();
+    renderMain();
+    showToast('Communication deleted', 'danger');
+  });
+}
+
+function toggleFollowupComplete(commId) {
+  var client = getSelectedClient();
+  if (!client) return;
+  var comm = client.comms.find(function(c) { return c.id === commId; });
+  if (comm) {
+    comm.followupCompleted = !comm.followupCompleted;
+    saveData();
+    renderMain();
+    showToast(comm.followupCompleted ? 'Follow-up completed' : 'Follow-up reopened', 'success');
+  }
+}
+
+// ===================== HELPERS =====================
+function getSelectedClient() {
+  if (!appState.selectedClientId) return null;
+  return appState.clients.find(function(c) { return c.id === appState.selectedClientId; });
+}
+
+function selectClient(clientId) {
+  appState.selectedClientId = clientId;
+  closeSidebar();
+  renderSidebar();
+  renderMain();
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return 'N/A';
+  var d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function formatDateTime(dateStr) {
+  if (!dateStr) return 'N/A';
+  var d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' at ' +
+    d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  var now = new Date();
+  var d = new Date(dateStr);
+  var diffMs = now - d;
+  var diffMins = Math.floor(diffMs / 60000);
+  if (diffMins < 1) return 'just now';
+  if (diffMins < 60) return diffMins + 'm ago';
+  var diffHrs = Math.floor(diffMins / 60);
+  if (diffHrs < 24) return diffHrs + 'h ago';
+  var diffDays = Math.floor(diffHrs / 24);
+  if (diffDays < 30) return diffDays + 'd ago';
+  var diffMonths = Math.floor(diffDays / 30);
+  return diffMonths + 'mo ago';
+}
+
+function daysBetween(d1, d2) {
+  return Math.abs(Math.floor((new Date(d1) - new Date(d2)) / 86400000));
+}
+
+function commTypeIcon(type) {
+  var map = { email: '✉️', call: '📞', video: '📹', chat: '💬', inperson: '🤝', text: '📱' };
+  return map[type] || '📨';
+}
+
+function commTypeLabel(type) {
+  var map = { email: 'Email', call: 'Call', video: 'Video Meeting', chat: 'Slack/Chat', inperson: 'In-person', text: 'Text' };
+  return map[type] || type;
+}
+
+function sentimentEmoji(sentiment) {
+  var map = { positive: '😊', neutral: '😐', concerned: '😟', negative: '😠' };
+  return map[sentiment] || '😐';
+}
+
+function statusBadge(status) {
+  var cls = status === 'active' ? 'badge-active' : status === 'paused' ? 'badge-paused' : 'badge-completed';
+  var dot = status === 'active' ? '●' : status === 'paused' ? '○' : '✓';
+  return '<span class="badge ' + cls + '">' + dot + ' ' + status.charAt(0).toUpperCase() + status.slice(1) + '</span>';
+}
+
+// ===================== HEALTH SCORE =====================
+function calcHealthScore(client) {
+  if (!client.comms || client.comms.length === 0) return 50;
+
+  var score = 50; // base
+
+  // 1. Response time consistency (up to +20)
+  var responseTimes = calcResponseTimes(client);
+  if (responseTimes.length > 0) {
+    var avgRT = responseTimes.reduce(function(a, b) { return a + b; }, 0) / responseTimes.length;
+    if (avgRT <= 2) score += 20;
+    else if (avgRT <= 6) score += 15;
+    else if (avgRT <= 12) score += 10;
+    else if (avgRT <= 24) score += 5;
+    else if (avgRT <= 48) score += 0;
+    else score -= 5;
+  }
+
+  // 2. Sentiment trend (up to +20)
+  var sentimentScores = client.comms.map(function(c) {
+    var map = { positive: 3, neutral: 1, concerned: -1, negative: -3 };
+    return map[c.sentiment] || 0;
+  });
+  var avgSentiment = sentimentScores.reduce(function(a, b) { return a + b; }, 0) / sentimentScores.length;
+  score += Math.round(avgSentiment * 6.5);
+
+  // 3. Follow-up completion rate (up to +15)
+  var followups = client.comms.filter(function(c) { return c.followup; });
+  if (followups.length > 0) {
+    var completed = followups.filter(function(c) { return c.followupCompleted; }).length;
+    var rate = completed / followups.length;
+    score += Math.round(rate * 15);
+  } else {
+    score += 8; // no followups needed = decent
+  }
+
+  // 4. Communication frequency vs project duration (up to +15)
+  if (client.startDate) {
+    var projectDays = daysBetween(client.startDate, new Date()) || 1;
+    var commsPerWeek = (client.comms.length / projectDays) * 7;
+    if (commsPerWeek >= 3) score += 15;
+    else if (commsPerWeek >= 1.5) score += 12;
+    else if (commsPerWeek >= 0.5) score += 8;
+    else if (commsPerWeek >= 0.2) score += 4;
+    else score -= 5;
+  }
+
+  // 5. Recency penalty: no communication in 7+ days
+  var lastCommDate = new Date(client.comms[0].date);
+  var daysSinceLastComm = daysBetween(lastCommDate, new Date());
+  if (daysSinceLastComm > 14) score -= 15;
+  else if (daysSinceLastComm > 7) score -= 8;
+
+  // 6. Negative streak penalty
+  var negStreak = 0;
+  for (var i = 0; i < client.comms.length && i < 5; i++) {
+    if (client.comms[i].sentiment === 'negative' || client.comms[i].sentiment === 'concerned') negStreak++;
+    else break;
+  }
+  if (negStreak >= 3) score -= 15;
+
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+function calcResponseTimes(client) {
+  if (!client.comms || client.comms.length < 2) return [];
+  var sorted = client.comms.slice().sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+  var times = [];
+  for (var i = 1; i < sorted.length; i++) {
+    if (sorted[i].direction !== sorted[i - 1].direction) {
+      var hours = (new Date(sorted[i].date) - new Date(sorted[i - 1].date)) / 3600000;
+      if (hours > 0) times.push(hours);
+    }
+  }
+  return times;
+}
+
+function getAvgResponseTime(client) {
+  var times = calcResponseTimes(client);
+  if (times.length === 0) return null;
+  var avg = times.reduce(function(a, b) { return a + b; }, 0) / times.length;
+  return avg;
+}
+
+function formatHours(hours) {
+  if (hours === null || hours === undefined) return 'N/A';
+  if (hours < 1) return Math.round(hours * 60) + 'm';
+  if (hours < 24) return Math.round(hours) + 'h';
+  return Math.round(hours / 24) + 'd';
+}
+
+function healthColor(score) {
+  if (score >= 75) return 'var(--success)';
+  if (score >= 45) return 'var(--warning)';
+  return 'var(--danger)';
+}
+
+function healthClass(score) {
+  if (score >= 75) return 'health-high';
+  if (score >= 45) return 'health-med';
+  return 'health-low';
+}
+
+// ===================== ALERTS =====================
+function generateAlerts() {
+  var alerts = [];
+  var now = new Date();
+
+  appState.clients.forEach(function(client) {
+    if (client.status !== 'active') return;
+
+    // No communication in 7+ days
+    if (client.comms.length > 0) {
+      var lastComm = new Date(client.comms[0].date);
+      var daysSince = daysBetween(lastComm, now);
+      if (daysSince >= 7) {
+        alerts.push({
+          type: 'warning',
+          icon: '⚠️',
+          message: 'No communication with ' + client.name + ' in ' + daysSince + ' days',
+          clientId: client.id,
+          priority: 2
+        });
+      }
+    } else if (client.startDate) {
+      var daysSinceStart = daysBetween(client.startDate, now);
+      if (daysSinceStart >= 3) {
+        alerts.push({
+          type: 'warning',
+          icon: '⚠️',
+          message: 'No interactions logged with ' + client.name + ' yet (' + daysSinceStart + ' days since project start)',
+          clientId: client.id,
+          priority: 1
+        });
+      }
+    }
+
+    // 3 negative interactions in a row
+    if (client.comms.length >= 3) {
+      var recent = client.comms.slice(0, 3);
+      var allNeg = recent.every(function(c) { return c.sentiment === 'negative'; });
+      if (allNeg) {
+        alerts.push({
+          type: 'danger',
+          icon: '🚨',
+          message: '3 negative interactions in a row with ' + client.name + ' — relationship at risk',
+          clientId: client.id,
+          priority: 3
+        });
+      }
+    }
+
+    // Overdue follow-ups
+    client.comms.forEach(function(comm) {
+      if (comm.followup && !comm.followupCompleted && comm.followupDate) {
+        var fDate = new Date(comm.followupDate);
+        if (fDate < now) {
+          var overdueDays = daysBetween(fDate, now);
+          alerts.push({
+            type: 'orange',
+            icon: '📅',
+            message: 'Follow-up overdue: "' + comm.subject + '" was due ' + formatDate(comm.followupDate) + ' (' + overdueDays + ' days ago)',
+            clientId: client.id,
+            priority: 2
+          });
+        }
+      }
+    });
+
+    // Great relationship
+    var score = calcHealthScore(client);
+    if (score >= 90 && client.comms.length >= 5) {
+      alerts.push({
+        type: 'success',
+        icon: '🌟',
+        message: 'Great relationship with ' + client.name + '! Health score: ' + score,
+        clientId: client.id,
+        priority: 0
+      });
+    }
+  });
+
+  // Sort by priority descending
+  alerts.sort(function(a, b) { return b.priority - a.priority; });
+  return alerts;
+}
+
+// ===================== RENDER: SIDEBAR =====================
+function renderSidebar() {
+  var list = document.getElementById('clientList');
+  if (appState.clients.length === 0) {
+    list.innerHTML = '<div class="empty-state" style="padding:2rem 1rem;"><span class="empty-icon">📋</span><p style="font-size:0.85rem;">No clients yet. Add your first client to get started.</p></div>';
+    return;
+  }
+
+  var html = '';
+  appState.clients.forEach(function(client) {
+    var isActive = client.id === appState.selectedClientId;
+    var score = calcHealthScore(client);
+    var commCount = client.comms ? client.comms.length : 0;
+    html += '<div class="client-card' + (isActive ? ' active' : '') + '" onclick="selectClient(\'' + client.id + '\')">';
+    html += '<div class="client-name">' + escHtml(client.name) + '</div>';
+    html += '<div class="client-company">' + escHtml(client.company || 'No company') + (client.project ? ' • ' + escHtml(client.project) : '') + '</div>';
+    html += '<div class="client-meta">';
+    html += statusBadge(client.status);
+    html += '<span class="health-mini ' + healthClass(score) + '">' + score + '</span>';
+    html += '</div>';
+    html += '</div>';
+  });
+  list.innerHTML = html;
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// ===================== RENDER: MAIN =====================
+function renderMain() {
+  var main = document.getElementById('mainContent');
+  var client = getSelectedClient();
+
+  if (!client) {
+    renderOverview(main);
+    return;
+  }
+
+  renderClientDashboard(main, client);
+}
+
+// ===================== RENDER: OVERVIEW =====================
+function renderOverview(container) {
+  var activeClients = appState.clients.filter(function(c) { return c.status === 'active'; });
+  var totalComms = 0;
+  var totalScore = 0;
+  var scoredClients = 0;
+  var overdueCount = 0;
+  var now = new Date();
+
+  appState.clients.forEach(function(c) {
+    totalComms += (c.comms ? c.comms.length : 0);
+    if (c.comms && c.comms.length > 0) {
+      totalScore += calcHealthScore(c);
+      scoredClients++;
+    }
+    if (c.comms) {
+      c.comms.forEach(function(comm) {
+        if (comm.followup && !comm.followupCompleted && comm.followupDate && new Date(comm.followupDate) < now) {
+          overdueCount++;
+        }
+      });
+    }
+  });
+
+  var avgScore = scoredClients > 0 ? Math.round(totalScore / scoredClients) : 0;
+
+  // Find healthiest and needs attention
+  var healthiest = null;
+  var needsAttention = null;
+  var highestScore = -1;
+  var lowestScore = 101;
+  appState.clients.forEach(function(c) {
+    if (c.comms && c.comms.length > 0 && c.status === 'active') {
+      var s = calcHealthScore(c);
+      if (s > highestScore) { highestScore = s; healthiest = c; }
+      if (s < lowestScore) { lowestScore = s; needsAttention = c; }
+    }
+  });
+
+  // Recent activity
+  var allComms = [];
+  appState.clients.forEach(function(c) {
+    if (c.comms) {
+      c.comms.forEach(function(comm) {
+        allComms.push({ client: c, comm: comm });
+      });
+    }
+  });
+  allComms.sort(function(a, b) { return new Date(b.comm.date) - new Date(a.comm.date); });
+  var recentActivity = allComms.slice(0, 10);
+
+  var alerts = generateAlerts();
+
+  var html = '<div style="margin-bottom:1.5rem;">';
+  html += '<h2 style="font-size:1.5rem;font-weight:800;margin-bottom:0.3rem;">Dashboard Overview</h2>';
+  html += '<p style="color:var(--text-muted);font-size:0.9rem;">Your client communication hub at a glance</p>';
+  html += '</div>';
+
+  // Stats
+  html += '<div class="stats-grid">';
+  html += '<div class="stat-card"><div class="stat-value">' + activeClients.length + '</div><div class="stat-label">Active Clients</div></div>';
+  html += '<div class="stat-card"><div class="stat-value">' + avgScore + '</div><div class="stat-label">Avg Health Score</div></div>';
+  html += '<div class="stat-card"><div class="stat-value" style="' + (overdueCount > 0 ? '-webkit-text-fill-color:var(--danger);color:var(--danger);background:none;' : '') + '">' + overdueCount + '</div><div class="stat-label">Overdue Follow-ups</div></div>';
+  html += '<div class="stat-card"><div class="stat-value">' + totalComms + '</div><div class="stat-label">Total Interactions</div></div>';
+  html += '</div>';
+
+  // Alerts
+  if (alerts.length > 0) {
+    html += '<div class="alert-section">';
+    html += '<div class="section-title"><span class="icon">🔔</span> Smart Alerts</div>';
+    alerts.forEach(function(alert) {
+      html += '<div class="alert-item alert-' + alert.type + '" style="cursor:pointer;" onclick="selectClient(\'' + alert.clientId + '\')">';
+      html += '<span class="alert-icon">' + alert.icon + '</span>';
+      html += '<span>' + escHtml(alert.message) + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Highlights
+  if (healthiest || needsAttention) {
+    html += '<div class="overview-highlights">';
+    if (healthiest) {
+      html += '<div class="highlight-card" style="cursor:pointer;" onclick="selectClient(\'' + healthiest.id + '\')">';
+      html += '<h4>🏆 Healthiest Relationship</h4>';
+      html += '<div class="h-client">' + escHtml(healthiest.name) + '</div>';
+      html += '<div class="h-detail">Score: ' + highestScore + ' • ' + healthiest.comms.length + ' interactions</div>';
+      html += '</div>';
+    }
+    if (needsAttention && needsAttention.id !== (healthiest ? healthiest.id : '')) {
+      html += '<div class="highlight-card" style="cursor:pointer;" onclick="selectClient(\'' + needsAttention.id + '\')">';
+      html += '<h4>⚠️ Needs Attention</h4>';
+      html += '<div class="h-client">' + escHtml(needsAttention.name) + '</div>';
+      html += '<div class="h-detail">Score: ' + lowestScore + ' • ' + needsAttention.comms.length + ' interactions</div>';
+      html += '</div>';
+    }
+    html += '</div>';
+  }
+
+  // Recent Activity Feed
+  if (recentActivity.length > 0) {
+    html += '<div class="glass-card">';
+    html += '<div class="section-title"><span class="icon">📊</span> Recent Activity <span class="section-subtitle">Last 10 interactions</span></div>';
+    html += '<ul class="activity-feed">';
+    recentActivity.forEach(function(item) {
+      html += '<li class="activity-item">';
+      html += '<span class="act-emoji">' + commTypeIcon(item.comm.type) + '</span>';
+      html += '<span class="act-text"><strong>' + escHtml(item.client.name) + '</strong> — ' + escHtml(item.comm.subject) + ' ' + sentimentEmoji(item.comm.sentiment) + '</span>';
+      html += '<span class="act-time">' + timeAgo(item.comm.date) + '</span>';
+      html += '</li>';
+    });
+    html += '</ul>';
+    html += '</div>';
+  }
+
+  // Response time chart across all clients (if any)
+  var clientsWithRT = [];
+  appState.clients.forEach(function(c) {
+    if (c.comms && c.comms.length >= 2) {
+      var avgRT = getAvgResponseTime(c);
+      if (avgRT !== null) {
+        clientsWithRT.push({ name: c.name, avgRT: avgRT });
+      }
+    }
+  });
+  if (clientsWithRT.length > 0) {
+    var maxRT = Math.max.apply(null, clientsWithRT.map(function(x) { return x.avgRT; }));
+    if (maxRT === 0) maxRT = 1;
+    html += '<div class="glass-card">';
+    html += '<div class="section-title"><span class="icon">⏱️</span> Avg Response Time by Client</div>';
+    html += '<div class="bar-chart">';
+    clientsWithRT.forEach(function(item) {
+      var pct = Math.max(5, (item.avgRT / maxRT) * 100);
+      html += '<div class="bar-col">';
+      html += '<div class="bar-value">' + formatHours(item.avgRT) + '</div>';
+      html += '<div class="bar" style="height:' + pct + '%;"></div>';
+      html += '<div class="bar-label">' + escHtml(item.name) + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+    html += '</div>';
+  }
+
+  // Empty state if no clients
+  if (appState.clients.length === 0) {
+    html += '<div class="empty-state">';
+    html += '<span class="empty-icon">🚀</span>';
+    html += '<h3>Welcome to Communication Tracker</h3>';
+    html += '<p>Start by adding your first client. Track every interaction, monitor relationship health, and never miss a follow-up again.</p>';
+    html += '<button class="btn btn-primary" onclick="openClientModal()">+ Add Your First Client</button>';
+    html += '</div>';
+  }
+
+  // CTA Banner
+  html += '<div class="cta-banner">';
+  html += '<p>Want the full FreelanceOS system?</p>';
+  html += '<p>40+ free tools like this one. Premium Notion workspace starting at $17.40</p>';
+  html += '<a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank">Get 40% Off with FLASH40 →</a>';
+  html += '</div>';
+
+  // Footer
+  html += '<footer class="app-footer">';
+  html += '<p>Part of the <a href="/freelanceos-storefront/free-templates.html">FreelanceOS Free Tools</a> collection</p>';
+  html += '<p style="margin-top:0.5rem;">&copy; 2025 FreelanceOS. For informational purposes only.</p>';
+  html += '</footer>';
+
+  container.innerHTML = html;
+}
+
+// ===================== RENDER: CLIENT DASHBOARD =====================
+var activeTab = 'timeline';
+
+function switchTab(tab) {
+  activeTab = tab;
+  renderMain();
+}
+
+function renderClientDashboard(container, client) {
+  var score = calcHealthScore(client);
+  var avgRT = getAvgResponseTime(client);
+  var comms = client.comms || [];
+  var now = new Date();
+
+  // Count stats
+  var sentimentCounts = { positive: 0, neutral: 0, concerned: 0, negative: 0 };
+  var typeCounts = {};
+  var dayOfWeekCounts = [0, 0, 0, 0, 0, 0, 0];
+  var hourCounts = new Array(24).fill(0);
+  var overdueFollowups = [];
+  var pendingFollowups = [];
+
+  comms.forEach(function(c) {
+    sentimentCounts[c.sentiment] = (sentimentCounts[c.sentiment] || 0) + 1;
+    typeCounts[c.type] = (typeCounts[c.type] || 0) + 1;
+    var d = new Date(c.date);
+    if (!isNaN(d.getTime())) {
+      dayOfWeekCounts[d.getDay()]++;
+      hourCounts[d.getHours()]++;
+    }
+    if (c.followup && !c.followupCompleted) {
+      if (c.followupDate && new Date(c.followupDate) < now) {
+        overdueFollowups.push(c);
+      } else {
+        pendingFollowups.push(c);
+      }
+    }
+  });
+
+  var busiestDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayOfWeekCounts.indexOf(Math.max.apply(null, dayOfWeekCounts))];
+  var busiestHour = hourCounts.indexOf(Math.max.apply(null, hourCounts));
+  var busiestTime = busiestHour > 12 ? (busiestHour - 12) + 'PM' : (busiestHour === 0 ? '12AM' : busiestHour + 'AM');
+
+  var html = '';
+
+  // Client header
+  html += '<div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;">';
+  html += '<div>';
+  html += '<div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.3rem;">';
+  html += '<h2 style="font-size:1.5rem;font-weight:800;">' + escHtml(client.name) + '</h2>';
+  html += statusBadge(client.status);
+  html += '</div>';
+  html += '<p style="color:var(--text-muted);font-size:0.88rem;">';
+  if (client.company) html += escHtml(client.company);
+  if (client.project) html += ' • ' + escHtml(client.project);
+  if (client.email) html += ' • ' + escHtml(client.email);
+  html += '</p>';
+  html += '</div>';
+  html += '<div style="display:flex;gap:0.4rem;flex-wrap:wrap;">';
+  html += '<button class="btn btn-primary btn-sm" onclick="openCommModal()">+ Log Communication</button>';
+  html += '<button class="btn btn-secondary btn-sm" onclick="openClientModal(\'' + client.id + '\')">✏️ Edit</button>';
+  html += '<button class="btn btn-danger btn-sm" onclick="deleteClient(\'' + client.id + '\')">🗑️</button>';
+  html += '<button class="btn btn-secondary btn-sm" onclick="appState.selectedClientId=null;renderSidebar();renderMain();">← Overview</button>';
+  html += '</div>';
+  html += '</div>';
+
+  // Stats row
+  html += '<div class="stats-grid">';
+  html += '<div class="stat-card"><div class="stat-value">' + comms.length + '</div><div class="stat-label">Total Interactions</div></div>';
+  html += '<div class="stat-card"><div class="stat-value">' + formatHours(avgRT) + '</div><div class="stat-label">Avg Response Time</div></div>';
+  html += '<div class="stat-card"><div class="stat-value" style="' + (overdueFollowups.length > 0 ? '-webkit-text-fill-color:var(--danger);color:var(--danger);background:none;' : '') + '">' + overdueFollowups.length + '</div><div class="stat-label">Overdue Follow-ups</div></div>';
+  html += '<div class="stat-card"><div class="stat-value">' + (comms.length > 0 ? busiestDay + ' ' + busiestTime : 'N/A') + '</div><div class="stat-label">Busiest Day/Time</div></div>';
+  html += '</div>';
+
+  // Health gauge + sentiment breakdown side by side
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;" class="gauge-sentiment-row">';
+
+  // Health gauge card
+  html += '<div class="glass-card" style="text-align:center;">';
+  html += '<div class="section-title"><span class="icon">💚</span> Health Score</div>';
+  html += renderGauge(score);
+  html += '<p style="font-size:0.82rem;color:var(--text-muted);margin-top:0.5rem;">';
+  if (score >= 90) html += 'Excellent relationship health';
+  else if (score >= 75) html += 'Healthy relationship';
+  else if (score >= 60) html += 'Relationship is okay';
+  else if (score >= 45) html += 'Needs some attention';
+  else html += 'Relationship at risk';
+  html += '</p>';
+  html += '</div>';
+
+  // Sentiment breakdown card
+  html += '<div class="glass-card">';
+  html += '<div class="section-title"><span class="icon">😀</span> Sentiment Breakdown</div>';
+  var totalSent = Math.max(1, sentimentCounts.positive + sentimentCounts.neutral + sentimentCounts.concerned + sentimentCounts.negative);
+  html += renderSentimentBar('Positive', sentimentCounts.positive, totalSent, 'var(--success)');
+  html += renderSentimentBar('Neutral', sentimentCounts.neutral, totalSent, 'var(--text-muted)');
+  html += renderSentimentBar('Concerned', sentimentCounts.concerned, totalSent, 'var(--warning)');
+  html += renderSentimentBar('Negative', sentimentCounts.negative, totalSent, 'var(--danger)');
+  html += '</div>';
+  html += '</div>';
+
+  // Alerts for this client
+  var clientAlerts = generateAlerts().filter(function(a) { return a.clientId === client.id; });
+  if (clientAlerts.length > 0) {
+    html += '<div class="alert-section">';
+    html += '<div class="section-title"><span class="icon">🔔</span> Alerts</div>';
+    clientAlerts.forEach(function(alert) {
+      html += '<div class="alert-item alert-' + alert.type + '">';
+      html += '<span class="alert-icon">' + alert.icon + '</span>';
+      html += '<span>' + escHtml(alert.message) + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Overdue follow-ups section
+  if (overdueFollowups.length > 0) {
+    html += '<div class="glass-card" style="border-color:rgba(239,68,68,0.3);">';
+    html += '<div class="section-title"><span class="icon" style="animation:bounce 1s infinite;">🚨</span> Overdue Follow-ups</div>';
+    overdueFollowups.forEach(function(c) {
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid rgba(30,41,59,0.5);flex-wrap:wrap;gap:0.4rem;">';
+      html += '<div>';
+      html += '<div style="font-weight:600;font-size:0.9rem;">' + escHtml(c.subject) + '</div>';
+      html += '<div style="font-size:0.78rem;color:var(--danger);">Due: ' + formatDate(c.followupDate) + ' (' + daysBetween(c.followupDate, now) + ' days overdue)</div>';
+      html += '</div>';
+      html += '<button class="btn btn-sm btn-success" onclick="toggleFollowupComplete(\'' + c.id + '\')">✓ Complete</button>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Pending follow-ups
+  if (pendingFollowups.length > 0) {
+    html += '<div class="glass-card">';
+    html += '<div class="section-title"><span class="icon">📅</span> Upcoming Follow-ups</div>';
+    pendingFollowups.forEach(function(c) {
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid rgba(30,41,59,0.5);flex-wrap:wrap;gap:0.4rem;">';
+      html += '<div>';
+      html += '<div style="font-weight:600;font-size:0.9rem;">' + escHtml(c.subject) + '</div>';
+      html += '<div style="font-size:0.78rem;color:var(--text-muted);">Due: ' + formatDate(c.followupDate) + '</div>';
+      html += '</div>';
+      html += '<button class="btn btn-sm btn-success" onclick="toggleFollowupComplete(\'' + c.id + '\')">✓ Complete</button>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Tabs
+  html += '<div class="tabs">';
+  html += '<button class="tab-btn' + (activeTab === 'timeline' ? ' active' : '') + '" onclick="switchTab(\'timeline\')">Timeline</button>';
+  html += '<button class="tab-btn' + (activeTab === 'charts' ? ' active' : '') + '" onclick="switchTab(\'charts\')">Charts</button>';
+  html += '<button class="tab-btn' + (activeTab === 'sentiment' ? ' active' : '') + '" onclick="switchTab(\'sentiment\')">Sentiment</button>';
+  html += '<button class="tab-btn' + (activeTab === 'stats' ? ' active' : '') + '" onclick="switchTab(\'stats\')">Stats</button>';
+  html += '</div>';
+
+  // Tab content
+  if (activeTab === 'timeline') {
+    html += renderTimelineTab(client);
+  } else if (activeTab === 'charts') {
+    html += renderChartsTab(client);
+  } else if (activeTab === 'sentiment') {
+    html += renderSentimentTab(client);
+  } else if (activeTab === 'stats') {
+    html += renderStatsTab(client, sentimentCounts, typeCounts, dayOfWeekCounts, hourCounts, busiestDay, busiestTime);
+  }
+
+  // CTA Banner
+  html += '<div class="cta-banner">';
+  html += '<p>Want the full FreelanceOS system?</p>';
+  html += '<p>40+ free tools like this one. Premium Notion workspace starting at $17.40</p>';
+  html += '<a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank">Get 40% Off with FLASH40 →</a>';
+  html += '</div>';
+
+  // Footer
+  html += '<footer class="app-footer">';
+  html += '<p>Part of the <a href="/freelanceos-storefront/free-templates.html">FreelanceOS Free Tools</a> collection</p>';
+  html += '<p style="margin-top:0.5rem;">&copy; 2025 FreelanceOS. For informational purposes only.</p>';
+  html += '</footer>';
+
+  container.innerHTML = html;
+
+  // Fix gauge-sentiment-row on mobile
+  if (window.innerWidth <= 640) {
+    var row = container.querySelector('.gauge-sentiment-row');
+    if (row) row.style.gridTemplateColumns = '1fr';
+  }
+}
+
+// ===================== RENDER HELPERS =====================
+function renderGauge(score) {
+  var circumference = 2 * Math.PI * 45;
+  var offset = circumference - (score / 100) * circumference;
+  var color = healthColor(score);
+  var html = '<div class="gauge-container">';
+  html += '<svg class="gauge-svg" viewBox="0 0 120 120">';
+  html += '<circle class="gauge-bg" cx="60" cy="60" r="45"/>';
+  html += '<circle class="gauge-fill" cx="60" cy="60" r="45" stroke="' + color + '" stroke-dasharray="' + circumference + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 60 60)" style="animation:gaugeAnim 1.2s ease forwards;"/>';
+  html += '<text class="gauge-text" x="60" y="56">' + score + '</text>';
+  html += '<text class="gauge-label" x="60" y="74">HEALTH</text>';
+  html += '</svg>';
+  html += '</div>';
+  return html;
+}
+
+function renderSentimentBar(label, count, total, color) {
+  var pct = total > 0 ? Math.round((count / total) * 100) : 0;
+  var html = '<div style="margin-bottom:0.7rem;">';
+  html += '<div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.25rem;">';
+  html += '<span>' + label + '</span><span style="color:var(--text-muted);">' + count + ' (' + pct + '%)</span>';
+  html += '</div>';
+  html += '<div style="height:6px;background:rgba(148,163,184,0.15);border-radius:3px;overflow:hidden;">';
+  html += '<div style="height:100%;width:' + pct + '%;background:' + color + ';border-radius:3px;transition:width 0.6s ease;"></div>';
+  html += '</div>';
+  html += '</div>';
+  return html;
+}
+
+// ===================== TAB: TIMELINE =====================
+function renderTimelineTab(client) {
+  var comms = client.comms || [];
+  if (comms.length === 0) {
+    return '<div class="empty-state"><span class="empty-icon">💬</span><h3>No interactions yet</h3><p>Log your first communication with this client to start tracking.</p><button class="btn btn-primary" onclick="openCommModal()">+ Log Communication</button></div>';
+  }
+
+  var now = new Date();
+  var html = '<div class="glass-card">';
+  html += '<div class="section-title"><span class="icon">📋</span> Activity Timeline <span class="section-subtitle">' + comms.length + ' interactions</span></div>';
+  html += '<div class="timeline">';
+  comms.forEach(function(c) {
+    html += '<div class="timeline-item sentiment-' + c.sentiment + '">';
+    html += '<div class="timeline-card">';
+    html += '<div class="tl-header">';
+    html += '<span class="tl-type">' + commTypeIcon(c.type) + ' ' + commTypeLabel(c.type) + '</span>';
+    html += '<span class="tl-direction">' + (c.direction === 'sent' ? '↗️ Sent' : '↙️ Received') + '</span>';
+    html += '<span class="tl-date">' + formatDateTime(c.date) + '</span>';
+    html += '</div>';
+    html += '<div class="tl-subject">' + sentimentEmoji(c.sentiment) + ' ' + escHtml(c.subject) + '</div>';
+    if (c.summary) {
+      html += '<div class="tl-summary">' + escHtml(c.summary) + '</div>';
+    }
+    html += '<div class="tl-footer">';
+    if (c.followup) {
+      if (c.followupCompleted) {
+        html += '<span class="tl-tag" style="background:rgba(34,197,94,0.15);color:var(--success);">✓ Follow-up done</span>';
+      } else if (c.followupDate && new Date(c.followupDate) < now) {
+        html += '<span class="tl-tag overdue">🚨 Overdue: ' + formatDate(c.followupDate) + '</span>';
+        html += '<button class="btn btn-sm btn-success" style="padding:0.2rem 0.5rem;font-size:0.72rem;" onclick="event.stopPropagation();toggleFollowupComplete(\'' + c.id + '\')">✓ Done</button>';
+      } else {
+        html += '<span class="tl-tag followup">📅 Follow-up: ' + formatDate(c.followupDate) + '</span>';
+        html += '<button class="btn btn-sm btn-success" style="padding:0.2rem 0.5rem;font-size:0.72rem;" onclick="event.stopPropagation();toggleFollowupComplete(\'' + c.id + '\')">✓ Done</button>';
+      }
+    }
+    if (c.attachments && c.attachments.length) {
+      c.attachments.forEach(function(att) {
+        var labels = { contract: '📝 Contract', invoice: '💰 Invoice', deliverable: '📦 Deliverable' };
+        html += '<span class="tl-tag">' + (labels[att] || att) + '</span>';
+      });
+    }
+    html += '<button class="btn btn-sm btn-secondary" style="padding:0.2rem 0.5rem;font-size:0.72rem;margin-left:auto;" onclick="event.stopPropagation();openCommModal(\'' + c.id + '\')">✏️</button>';
+    html += '<button class="tl-delete-btn" onclick="event.stopPropagation();deleteComm(\'' + c.id + '\')" title="Delete">✕</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  html += '</div>';
+  return html;
+}
+
+// ===================== TAB: CHARTS =====================
+function renderChartsTab(client) {
+  var comms = client.comms || [];
+  var html = '';
+
+  // Response time chart
+  var responseTimes = calcResponseTimes(client);
+  if (responseTimes.length > 0) {
+    html += '<div class="glass-card">';
+    html += '<div class="section-title"><span class="icon">⏱️</span> Response Times</div>';
+    var maxRT = Math.max.apply(null, responseTimes);
+    if (maxRT === 0) maxRT = 1;
+    html += '<div class="bar-chart">';
+    responseTimes.forEach(function(rt, i) {
+      var pct = Math.max(5, (rt / maxRT) * 100);
+      html += '<div class="bar-col">';
+      html += '<div class="bar-value">' + formatHours(rt) + '</div>';
+      html += '<div class="bar" style="height:' + pct + '%;"></div>';
+      html += '<div class="bar-label">#' + (i + 1) + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+    html += '</div>';
+  }
+
+  // Communication frequency by type
+  var types = {};
+  comms.forEach(function(c) { types[c.type] = (types[c.type] || 0) + 1; });
+  var typeKeys = Object.keys(types);
+  if (typeKeys.length > 0) {
+    html += '<div class="glass-card">';
+    html += '<div class="section-title"><span class="icon">📊</span> Communication by Type</div>';
+    var maxType = Math.max.apply(null, typeKeys.map(function(k) { return types[k]; }));
+    if (maxType === 0) maxType = 1;
+    html += '<div class="bar-chart">';
+    typeKeys.forEach(function(key) {
+      var pct = Math.max(5, (types[key] / maxType) * 100);
+      html += '<div class="bar-col">';
+      html += '<div class="bar-value">' + types[key] + '</div>';
+      html += '<div class="bar" style="height:' + pct + '%;"></div>';
+      html += '<div class="bar-label">' + commTypeIcon(key) + ' ' + commTypeLabel(key) + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+    html += '</div>';
+  }
+
+  // Direction split
+  var sent = comms.filter(function(c) { return c.direction === 'sent'; }).length;
+  var received = comms.filter(function(c) { return c.direction === 'received'; }).length;
+  var total = Math.max(1, sent + received);
+  html += '<div class="glass-card">';
+  html += '<div class="section-title"><span class="icon">↔️</span> Direction Split</div>';
+  html += '<div style="display:flex;gap:1rem;align-items:center;">';
+  html += '<div style="flex:1;">';
+  html += '<div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.3rem;"><span>↗️ Sent</span><span>' + sent + ' (' + Math.round(sent / total * 100) + '%)</span></div>';
+  html += '<div style="height:8px;background:rgba(148,163,184,0.15);border-radius:4px;overflow:hidden;">';
+  html += '<div style="height:100%;width:' + (sent / total * 100) + '%;background:var(--accent);border-radius:4px;transition:width 0.6s;"></div>';
+  html += '</div>';
+  html += '</div>';
+  html += '<div style="flex:1;">';
+  html += '<div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.3rem;"><span>↙️ Received</span><span>' + received + ' (' + Math.round(received / total * 100) + '%)</span></div>';
+  html += '<div style="height:8px;background:rgba(148,163,184,0.15);border-radius:4px;overflow:hidden;">';
+  html += '<div style="height:100%;width:' + (received / total * 100) + '%;background:var(--accent2);border-radius:4px;transition:width 0.6s;"></div>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+
+  // Day of week distribution
+  html += '<div class="glass-card">';
+  html += '<div class="section-title"><span class="icon">📆</span> Activity by Day of Week</div>';
+  var dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var dayData = [0, 0, 0, 0, 0, 0, 0];
+  comms.forEach(function(c) {
+    var d = new Date(c.date);
+    if (!isNaN(d.getTime())) dayData[d.getDay()]++;
+  });
+  var maxDay = Math.max.apply(null, dayData);
+  if (maxDay === 0) maxDay = 1;
+  html += '<div class="bar-chart" style="height:100px;">';
+  dayNames.forEach(function(name, i) {
+    var pct = Math.max(5, (dayData[i] / maxDay) * 100);
+    html += '<div class="bar-col">';
+    html += '<div class="bar-value">' + dayData[i] + '</div>';
+    html += '<div class="bar" style="height:' + pct + '%;"></div>';
+    html += '<div class="bar-label">' + name + '</div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  html += '</div>';
+
+  if (comms.length === 0) {
+    html = '<div class="empty-state"><span class="empty-icon">📊</span><h3>No data yet</h3><p>Log some communications to see charts and analytics.</p></div>';
+  }
+
+  return html;
+}
+
+// ===================== TAB: SENTIMENT =====================
+function renderSentimentTab(client) {
+  var comms = client.comms || [];
+  if (comms.length === 0) {
+    return '<div class="empty-state"><span class="empty-icon">😀</span><h3>No sentiment data</h3><p>Log communications to track sentiment over time.</p></div>';
+  }
+
+  var html = '';
+
+  // Sentiment over time (dots)
+  var sorted = comms.slice().sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+  html += '<div class="glass-card">';
+  html += '<div class="section-title"><span class="icon">📈</span> Sentiment Over Time</div>';
+  html += '<p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.7rem;">Oldest → Newest (hover for details)</p>';
+  html += '<div class="sentiment-track">';
+  sorted.forEach(function(c) {
+    html += '<span class="sentiment-dot">' + sentimentEmoji(c.sentiment);
+    html += '<span class="dot-tooltip">' + formatDate(c.date) + ' — ' + escHtml(c.subject) + '</span>';
+    html += '</span>';
+  });
+  html += '</div>';
+  html += '</div>';
+
+  // Sentiment trend analysis
+  html += '<div class="glass-card">';
+  html += '<div class="section-title"><span class="icon">🔍</span> Trend Analysis</div>';
+
+  // Calculate trend
+  var half = Math.floor(sorted.length / 2);
+  if (half > 0 && sorted.length >= 4) {
+    var sentimentMap = { positive: 3, neutral: 1, concerned: -1, negative: -3 };
+    var firstHalf = sorted.slice(0, half);
+    var secondHalf = sorted.slice(half);
+    var avgFirst = firstHalf.reduce(function(sum, c) { return sum + (sentimentMap[c.sentiment] || 0); }, 0) / firstHalf.length;
+    var avgSecond = secondHalf.reduce(function(sum, c) { return sum + (sentimentMap[c.sentiment] || 0); }, 0) / secondHalf.length;
+    var diff = avgSecond - avgFirst;
+
+    if (diff > 0.5) {
+      html += '<div class="alert-item alert-success"><span class="alert-icon">📈</span><span>Sentiment is <strong>improving</strong>. Recent interactions are more positive than earlier ones.</span></div>';
+    } else if (diff < -0.5) {
+      html += '<div class="alert-item alert-danger"><span class="alert-icon">📉</span><span>Sentiment is <strong>declining</strong>. Recent interactions are more negative. Consider addressing concerns proactively.</span></div>';
+    } else {
+      html += '<div class="alert-item alert-warning"><span class="alert-icon">➡️</span><span>Sentiment is <strong>stable</strong>. No significant change between earlier and recent interactions.</span></div>';
+    }
+  } else {
+    html += '<p style="color:var(--text-muted);font-size:0.88rem;">Need at least 4 interactions to calculate trend.</p>';
+  }
+  html += '</div>';
+
+  // Sentiment per communication type
+  var sentByType = {};
+  comms.forEach(function(c) {
+    if (!sentByType[c.type]) sentByType[c.type] = { positive: 0, neutral: 0, concerned: 0, negative: 0 };
+    sentByType[c.type][c.sentiment]++;
+  });
+  var typeKeys = Object.keys(sentByType);
+  if (typeKeys.length > 0) {
+    html += '<div class="glass-card">';
+    html += '<div class="section-title"><span class="icon">🎨</span> Sentiment by Communication Type</div>';
+    typeKeys.forEach(function(type) {
+      var data = sentByType[type];
+      var t = data.positive + data.neutral + data.concerned + data.negative;
+      html += '<div style="margin-bottom:1rem;">';
+      html += '<div style="font-weight:600;font-size:0.88rem;margin-bottom:0.4rem;">' + commTypeIcon(type) + ' ' + commTypeLabel(type) + ' (' + t + ')</div>';
+      html += '<div style="display:flex;height:8px;border-radius:4px;overflow:hidden;gap:1px;">';
+      if (data.positive > 0) html += '<div style="flex:' + data.positive + ';background:var(--success);"></div>';
+      if (data.neutral > 0) html += '<div style="flex:' + data.neutral + ';background:var(--text-muted);"></div>';
+      if (data.concerned > 0) html += '<div style="flex:' + data.concerned + ';background:var(--warning);"></div>';
+      if (data.negative > 0) html += '<div style="flex:' + data.negative + ';background:var(--danger);"></div>';
+      html += '</div>';
+      html += '</div>';
+    });
+    html += '<div style="display:flex;gap:1rem;font-size:0.75rem;color:var(--text-muted);flex-wrap:wrap;">';
+    html += '<span>🟢 Positive</span><span>⚪ Neutral</span><span>🟡 Concerned</span><span>🔴 Negative</span>';
+    html += '</div>';
+    html += '</div>';
+  }
+
+  return html;
+}
+
+// ===================== TAB: STATS =====================
+function renderStatsTab(client, sentimentCounts, typeCounts, dayOfWeekCounts, hourCounts, busiestDay, busiestTime) {
+  var comms = client.comms || [];
+  if (comms.length === 0) {
+    return '<div class="empty-state"><span class="empty-icon">📊</span><h3>No statistics yet</h3><p>Log communications to see detailed statistics.</p></div>';
+  }
+
+  var html = '';
+
+  // Communication summary
+  html += '<div class="glass-card">';
+  html += '<div class="section-title"><span class="icon">📋</span> Communication Summary</div>';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">';
+
+  // Left column
+  html += '<div>';
+  html += '<div style="margin-bottom:1rem;">';
+  html += '<div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:0.2rem;">Total Interactions</div>';
+  html += '<div style="font-size:1.4rem;font-weight:700;">' + comms.length + '</div>';
+  html += '</div>';
+
+  html += '<div style="margin-bottom:1rem;">';
+  html += '<div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:0.2rem;">Avg Response Time</div>';
+  html += '<div style="font-size:1.4rem;font-weight:700;">' + formatHours(getAvgResponseTime(client)) + '</div>';
+  html += '</div>';
+
+  html += '<div style="margin-bottom:1rem;">';
+  html += '<div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:0.2rem;">Busiest Day</div>';
+  html += '<div style="font-size:1.4rem;font-weight:700;">' + busiestDay + '</div>';
+  html += '</div>';
+  html += '</div>';
+
+  // Right column
+  html += '<div>';
+  html += '<div style="margin-bottom:1rem;">';
+  html += '<div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:0.2rem;">Sent vs Received</div>';
+  var sent = comms.filter(function(c) { return c.direction === 'sent'; }).length;
+  var received = comms.filter(function(c) { return c.direction === 'received'; }).length;
+  html += '<div style="font-size:1.4rem;font-weight:700;">' + sent + ' / ' + received + '</div>';
+  html += '</div>';
+
+  html += '<div style="margin-bottom:1rem;">';
+  html += '<div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:0.2rem;">Busiest Time</div>';
+  html += '<div style="font-size:1.4rem;font-weight:700;">' + busiestTime + '</div>';
+  html += '</div>';
+
+  html += '<div style="margin-bottom:1rem;">';
+  html += '<div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:0.2rem;">Project Duration</div>';
+  var duration = client.startDate ? daysBetween(client.startDate, new Date()) : 0;
+  html += '<div style="font-size:1.4rem;font-weight:700;">' + duration + ' days</div>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
+
+  // Sentiment detail table
+  html += '<div class="glass-card">';
+  html += '<div class="section-title"><span class="icon">😀</span> Sentiment Detail</div>';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:0.88rem;">';
+  html += '<tr style="border-bottom:1px solid var(--card-border);">';
+  html += '<th style="text-align:left;padding:0.5rem 0;color:var(--text-muted);font-weight:600;">Sentiment</th>';
+  html += '<th style="text-align:center;padding:0.5rem 0;color:var(--text-muted);font-weight:600;">Count</th>';
+  html += '<th style="text-align:right;padding:0.5rem 0;color:var(--text-muted);font-weight:600;">Percentage</th>';
+  html += '</tr>';
+  var total = comms.length || 1;
+  var sentOrder = ['positive', 'neutral', 'concerned', 'negative'];
+  sentOrder.forEach(function(s) {
+    var count = sentimentCounts[s] || 0;
+    html += '<tr style="border-bottom:1px solid rgba(30,41,59,0.5);">';
+    html += '<td style="padding:0.5rem 0;">' + sentimentEmoji(s) + ' ' + s.charAt(0).toUpperCase() + s.slice(1) + '</td>';
+    html += '<td style="text-align:center;padding:0.5rem 0;">' + count + '</td>';
+    html += '<td style="text-align:right;padding:0.5rem 0;">' + Math.round(count / total * 100) + '%</td>';
+    html += '</tr>';
+  });
+  html += '</table>';
+  html += '</div>';
+
+  // Type detail table
+  html += '<div class="glass-card">';
+  html += '<div class="section-title"><span class="icon">📞</span> Communication Types</div>';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:0.88rem;">';
+  html += '<tr style="border-bottom:1px solid var(--card-border);">';
+  html += '<th style="text-align:left;padding:0.5rem 0;color:var(--text-muted);font-weight:600;">Type</th>';
+  html += '<th style="text-align:center;padding:0.5rem 0;color:var(--text-muted);font-weight:600;">Count</th>';
+  html += '<th style="text-align:right;padding:0.5rem 0;color:var(--text-muted);font-weight:600;">Percentage</th>';
+  html += '</tr>';
+  var typeList = Object.keys(typeCounts).sort(function(a, b) { return typeCounts[b] - typeCounts[a]; });
+  typeList.forEach(function(type) {
+    html += '<tr style="border-bottom:1px solid rgba(30,41,59,0.5);">';
+    html += '<td style="padding:0.5rem 0;">' + commTypeIcon(type) + ' ' + commTypeLabel(type) + '</td>';
+    html += '<td style="text-align:center;padding:0.5rem 0;">' + typeCounts[type] + '</td>';
+    html += '<td style="text-align:right;padding:0.5rem 0;">' + Math.round(typeCounts[type] / total * 100) + '%</td>';
+    html += '</tr>';
+  });
+  html += '</table>';
+  html += '</div>';
+
+  // Attachments summary
+  var attachCounts = { contract: 0, invoice: 0, deliverable: 0 };
+  comms.forEach(function(c) {
+    if (c.attachments) {
+      c.attachments.forEach(function(a) { attachCounts[a] = (attachCounts[a] || 0) + 1; });
+    }
+  });
+  var hasAttachments = attachCounts.contract + attachCounts.invoice + attachCounts.deliverable > 0;
+  if (hasAttachments) {
+    html += '<div class="glass-card">';
+    html += '<div class="section-title"><span class="icon">📎</span> Attachments Summary</div>';
+    html += '<div style="display:flex;gap:1.5rem;flex-wrap:wrap;">';
+    html += '<div><div style="font-size:1.5rem;font-weight:700;">' + attachCounts.contract + '</div><div style="font-size:0.78rem;color:var(--text-muted);">📝 Contracts</div></div>';
+    html += '<div><div style="font-size:1.5rem;font-weight:700;">' + attachCounts.invoice + '</div><div style="font-size:0.78rem;color:var(--text-muted);">💰 Invoices</div></div>';
+    html += '<div><div style="font-size:1.5rem;font-weight:700;">' + attachCounts.deliverable + '</div><div style="font-size:0.78rem;color:var(--text-muted);">📦 Deliverables</div></div>';
+    html += '</div>';
+    html += '</div>';
+  }
+
+  // Follow-up stats
+  var followups = comms.filter(function(c) { return c.followup; });
+  if (followups.length > 0) {
+    var completed = followups.filter(function(c) { return c.followupCompleted; }).length;
+    var pending = followups.length - completed;
+    var rate = Math.round((completed / followups.length) * 100);
+    html += '<div class="glass-card">';
+    html += '<div class="section-title"><span class="icon">✅</span> Follow-up Performance</div>';
+    html += '<div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:0.7rem;">';
+    html += '<div><div style="font-size:1.5rem;font-weight:700;">' + followups.length + '</div><div style="font-size:0.78rem;color:var(--text-muted);">Total</div></div>';
+    html += '<div><div style="font-size:1.5rem;font-weight:700;color:var(--success);">' + completed + '</div><div style="font-size:0.78rem;color:var(--text-muted);">Completed</div></div>';
+    html += '<div><div style="font-size:1.5rem;font-weight:700;color:var(--warning);">' + pending + '</div><div style="font-size:0.78rem;color:var(--text-muted);">Pending</div></div>';
+    html += '</div>';
+    html += '<div style="display:flex;align-items:center;gap:0.6rem;">';
+    html += '<div style="flex:1;height:8px;background:rgba(148,163,184,0.15);border-radius:4px;overflow:hidden;">';
+    html += '<div style="height:100%;width:' + rate + '%;background:var(--success);border-radius:4px;transition:width 0.6s;"></div>';
+    html += '</div>';
+    html += '<span style="font-size:0.82rem;font-weight:600;">' + rate + '%</span>';
+    html += '</div>';
+    html += '</div>';
+  }
+
+  return html;
+}
+
+// ===================== EXPORT CSV =====================
+function exportCSV() {
+  if (appState.clients.length === 0) {
+    showToast('No data to export', 'warning');
+    return;
+  }
+
+  var rows = [['Client Name', 'Company', 'Email', 'Project', 'Start Date', 'Status', 'Comm Date', 'Type', 'Direction', 'Subject', 'Summary', 'Sentiment', 'Follow-up', 'Follow-up Date', 'Follow-up Completed', 'Attachments']];
+
+  appState.clients.forEach(function(client) {
+    if (client.comms && client.comms.length > 0) {
+      client.comms.forEach(function(c) {
+        rows.push([
+          client.name || '',
+          client.company || '',
+          client.email || '',
+          client.project || '',
+          client.startDate || '',
+          client.status || '',
+          c.date || '',
+          c.type || '',
+          c.direction || '',
+          c.subject || '',
+          c.summary || '',
+          c.sentiment || '',
+          c.followup ? 'Yes' : 'No',
+          c.followupDate || '',
+          c.followupCompleted ? 'Yes' : 'No',
+          (c.attachments || []).join('; ')
+        ]);
+      });
+    } else {
+      rows.push([
+        client.name || '',
+        client.company || '',
+        client.email || '',
+        client.project || '',
+        client.startDate || '',
+        client.status || '',
+        '', '', '', '', '', '', '', '', '', ''
+      ]);
+    }
+  });
+
+  var csvContent = rows.map(function(row) {
+    return row.map(function(cell) {
+      var str = String(cell).replace(/"/g, '""');
+      if (str.indexOf(',') >= 0 || str.indexOf('"') >= 0 || str.indexOf('\n') >= 0) {
+        return '"' + str + '"';
+      }
+      return str;
+    }).join(',');
+  }).join('\n');
+
+  var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement('a');
+  link.href = url;
+  link.download = 'communication-tracker-export-' + new Date().toISOString().split('T')[0] + '.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  showToast('CSV exported successfully', 'success');
+}
+
+// ===================== IMPORT CSV =====================
+function importCSV(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var text = e.target.result;
+      var lines = parseCSV(text);
+      if (lines.length < 2) { showToast('CSV file is empty or invalid', 'warning'); return; }
+
+      var header = lines[0].map(function(h) { return h.toLowerCase().trim(); });
+      var nameIdx = header.indexOf('client name');
+      var companyIdx = header.indexOf('company');
+      var emailIdx = header.indexOf('email');
+      var projectIdx = header.indexOf('project');
+      var startDateIdx = header.indexOf('start date');
+      var statusIdx = header.indexOf('status');
+      var commDateIdx = header.indexOf('comm date');
+      var typeIdx = header.indexOf('type');
+      var directionIdx = header.indexOf('direction');
+      var subjectIdx = header.indexOf('subject');
+      var summaryIdx = header.indexOf('summary');
+      var sentimentIdx = header.indexOf('sentiment');
+      var followupIdx = header.indexOf('follow-up');
+      var followupDateIdx = header.indexOf('follow-up date');
+      var followupCompletedIdx = header.indexOf('follow-up completed');
+      var attachmentsIdx = header.indexOf('attachments');
+
+      if (nameIdx < 0) { showToast('CSV must have a "Client Name" column', 'warning'); return; }
+
+      var clientMap = {};
+      for (var i = 1; i < lines.length; i++) {
+        var row = lines[i];
+        if (row.length <= nameIdx || !row[nameIdx].trim()) continue;
+
+        var cName = row[nameIdx].trim();
+        if (!clientMap[cName]) {
+          clientMap[cName] = {
+            id: generateId(),
+            name: cName,
+            company: (companyIdx >= 0 && row[companyIdx]) ? row[companyIdx].trim() : '',
+            email: (emailIdx >= 0 && row[emailIdx]) ? row[emailIdx].trim() : '',
+            project: (projectIdx >= 0 && row[projectIdx]) ? row[projectIdx].trim() : '',
+            startDate: (startDateIdx >= 0 && row[startDateIdx]) ? row[startDateIdx].trim() : '',
+            status: (statusIdx >= 0 && row[statusIdx]) ? row[statusIdx].trim().toLowerCase() : 'active',
+            comms: [],
+            createdAt: new Date().toISOString()
+          };
+        }
+
+        var commDate = (commDateIdx >= 0 && row[commDateIdx]) ? row[commDateIdx].trim() : '';
+        var subject = (subjectIdx >= 0 && row[subjectIdx]) ? row[subjectIdx].trim() : '';
+        if (commDate || subject) {
+          var attachStr = (attachmentsIdx >= 0 && row[attachmentsIdx]) ? row[attachmentsIdx].trim() : '';
+          var attachArr = attachStr ? attachStr.split(';').map(function(a) { return a.trim(); }).filter(Boolean) : [];
+          clientMap[cName].comms.push({
+            id: generateId(),
+            date: commDate,
+            type: (typeIdx >= 0 && row[typeIdx]) ? row[typeIdx].trim().toLowerCase() : 'email',
+            direction: (directionIdx >= 0 && row[directionIdx]) ? row[directionIdx].trim().toLowerCase() : 'sent',
+            subject: subject,
+            summary: (summaryIdx >= 0 && row[summaryIdx]) ? row[summaryIdx].trim() : '',
+            sentiment: (sentimentIdx >= 0 && row[sentimentIdx]) ? row[sentimentIdx].trim().toLowerCase() : 'neutral',
+            followup: (followupIdx >= 0 && row[followupIdx]) ? row[followupIdx].trim().toLowerCase() === 'yes' : false,
+            followupDate: (followupDateIdx >= 0 && row[followupDateIdx]) ? row[followupDateIdx].trim() : '',
+            followupCompleted: (followupCompletedIdx >= 0 && row[followupCompletedIdx]) ? row[followupCompletedIdx].trim().toLowerCase() === 'yes' : false,
+            attachments: attachArr
+          });
+        }
+      }
+
+      var imported = Object.values(clientMap);
+      imported.forEach(function(c) {
+        c.comms.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+      });
+
+      appState.clients = appState.clients.concat(imported);
+      saveData();
+      renderSidebar();
+      renderMain();
+      showToast('Imported ' + imported.length + ' client(s)', 'success');
+    } catch (err) {
+      showToast('Error parsing CSV: ' + err.message, 'danger');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function parseCSV(text) {
+  var lines = [];
+  var current = [];
+  var field = '';
+  var inQuotes = false;
+  for (var i = 0; i < text.length; i++) {
+    var ch = text[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (i + 1 < text.length && text[i + 1] === '"') {
+          field += '"';
+          i++;
+        } else {
+          inQuotes = false;
+        }
+      } else {
+        field += ch;
+      }
+    } else {
+      if (ch === '"') {
+        inQuotes = true;
+      } else if (ch === ',') {
+        current.push(field);
+        field = '';
+      } else if (ch === '\n' || (ch === '\r' && i + 1 < text.length && text[i + 1] === '\n')) {
+        current.push(field);
+        field = '';
+        lines.push(current);
+        current = [];
+        if (ch === '\r') i++;
+      } else if (ch === '\r') {
+        current.push(field);
+        field = '';
+        lines.push(current);
+        current = [];
+      } else {
+        field += ch;
+      }
+    }
+  }
+  if (field || current.length > 0) {
+    current.push(field);
+    lines.push(current);
+  }
+  return lines;
+}
+
+// ===================== CLEAR ALL DATA =====================
+function confirmClearAll() {
+  showConfirm('Clear All Data', 'This will permanently delete all clients and communications. This cannot be undone.', 'Clear Everything', function() {
+    appState.clients = [];
+    appState.selectedClientId = null;
+    saveData();
+    renderSidebar();
+    renderMain();
+    showToast('All data cleared', 'danger');
+  });
+}
+
+// ===================== KEYBOARD SHORTCUTS =====================
+document.addEventListener('keydown', function(e) {
+  // Escape to close modals
+  if (e.key === 'Escape') {
+    if (document.getElementById('commModal').classList.contains('show')) {
+      closeCommModal();
+    } else if (document.getElementById('clientModal').classList.contains('show')) {
+      closeClientModal();
+    } else if (document.getElementById('confirmOverlay').classList.contains('show')) {
+      closeConfirm();
+    }
+  }
+  // Ctrl+N to add client
+  if ((e.ctrlKey || e.metaKey) && e.key === 'n' && !e.shiftKey) {
+    var anyModalOpen = document.getElementById('commModal').classList.contains('show') || document.getElementById('clientModal').classList.contains('show');
+    if (!anyModalOpen) {
+      e.preventDefault();
+      openClientModal();
+    }
+  }
+  // Ctrl+L to log communication
+  if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+    var client = getSelectedClient();
+    var anyModalOpen2 = document.getElementById('commModal').classList.contains('show') || document.getElementById('clientModal').classList.contains('show');
+    if (client && !anyModalOpen2) {
+      e.preventDefault();
+      openCommModal();
+    }
+  }
+});
+
+// Close modals on overlay click
+document.getElementById('clientModal').addEventListener('click', function(e) {
+  if (e.target === this) closeClientModal();
+});
+document.getElementById('commModal').addEventListener('click', function(e) {
+  if (e.target === this) closeCommModal();
+});
+document.getElementById('confirmOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeConfirm();
+});
+
+// Close sidebar on outside click (mobile)
+document.addEventListener('click', function(e) {
+  var sidebar = document.getElementById('sidebar');
+  var toggle = document.getElementById('sidebarToggle');
+  if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
+    closeSidebar();
+  }
+});
+
+// ===================== INIT =====================
+function init() {
+  loadData();
+  renderSidebar();
+  renderMain();
+}
+
+init();
+</script>
+
+</body>
+</html>
