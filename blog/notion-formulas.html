@@ -1,0 +1,483 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notion Formulas Explained: The Complete Guide for 2026 | FreelanceOS</title>
+<meta name="description" content="Notion formulas complete guide — syntax basics, 15 practical examples (date calculations, progress bars, invoice totals, time tracking), common errors, and advanced tips for 2026.">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-formulas.html">
+<meta property="og:title" content="Notion Formulas Explained: The Complete Guide for 2026 | FreelanceOS">
+<meta property="og:description" content="Notion formulas complete guide — syntax basics, 15 practical examples, common errors, and advanced tips. Real-world examples for freelancers.">
+<meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-formulas.html">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Notion Formulas: The Complete Guide (With Real-World Examples)","author":{"@type":"Organization","name":"FreelanceOS"},"publisher":{"@type":"Organization","name":"FreelanceOS","url":"https://baphometsblade.github.io/freelanceos-storefront/"},"datePublished":"2026-06-16","dateModified":"2026-06-16","description":"Notion formulas complete guide — syntax basics, 15 practical examples, common errors, and advanced tips for 2026."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What are Notion formulas?","acceptedAnswer":{"@type":"Answer","text":"Notion formulas are calculations you can write inside a Formula property in any Notion database. They can reference other properties using prop('Property Name'), perform math operations, manipulate dates and text, and return conditional outputs. Formulas run automatically whenever the referenced properties change, enabling things like automatic due date calculations, completion percentages, and conditional status badges."}},{"@type":"Question","name":"How do I write a Notion formula?","acceptedAnswer":{"@type":"Answer","text":"Add a Formula property to any Notion database by clicking the + button in the database header and selecting Formula. Click the formula property to open the formula editor. Type your formula — reference other properties with prop('Property Name'), use functions like if(), dateBetween(), now(), and operators like +, -, *, /. Notion auto-suggests property names and function names as you type. Click Done to save."}},{"@type":"Question","name":"How do I calculate days until a due date in Notion?","acceptedAnswer":{"@type":"Answer","text":"Use the dateBetween() function: dateBetween(prop('Due Date'), now(), 'days'). This returns the number of days between today (now()) and the Due Date property. A positive number means days remaining; negative means overdue. Wrap it in an if() to add an overdue flag: if(dateBetween(prop('Due Date'), now(), 'days') < 0, '⚠️ OVERDUE', dateBetween(prop('Due Date'), now(), 'days') + ' days left')."}},{"@type":"Question","name":"Can Notion formulas reference other properties?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use prop('Property Name') to reference any other property in the same database. The property name must exactly match (including capitalization and spaces). You can reference Text, Number, Select, Date, Checkbox, and even Rollup and Relation properties in formulas. You cannot reference properties from other databases — for that, use a Relation + Rollup combination."}},{"@type":"Question","name":"What is the Notion if() formula?","acceptedAnswer":{"@type":"Answer","text":"The if() formula in Notion returns different values based on a condition: if(condition, value_if_true, value_if_false). Example: if(prop('Status') == 'Complete', '✅ Done', '⏳ In Progress'). Conditions use comparison operators: == (equals), != (not equals), > (greater than), < (less than), >= (greater or equal), <= (less or equal). Combine multiple conditions with and() and or()."}},{"@type":"Question","name":"Why is my Notion formula showing an error?","acceptedAnswer":{"@type":"Answer","text":"The most common Notion formula errors: (1) Property name typo — prop() is case-sensitive, the name must exactly match. (2) Wrong property type — you can't do math on a Select property; use Number properties for calculations. (3) Null/empty values — if a property is empty, prop() returns null, which breaks math formulas. Wrap in an if(empty(prop('Name')), 0, prop('Name')) guard. (4) Mismatched output types — if() requires both branches to return the same type (both text or both number)."}},{"@type":"Question","name":"Can I create progress bars with Notion formulas?","acceptedAnswer":{"@type":"Answer","text":"Yes. A visual progress bar formula uses slice() to build an emoji string: slice('██████████', 0, floor(prop('Progress') / 10)) + slice('░░░░░░░░░░', 0, 10 - floor(prop('Progress') / 10)). This creates a 10-block bar where filled blocks (█) represent the completed percentage and empty blocks (░) represent the remainder. Set your Progress property to a Number between 0 and 100."}},{"@type":"Question","name":"What is the difference between Notion formulas and rollups?","acceptedAnswer":{"@type":"Answer","text":"Notion formulas calculate values from properties within the same database row. Rollups aggregate data across a Relation from a different database — like summing all invoice amounts related to a client, or counting completed tasks related to a project. Formulas are for row-level calculations; rollups are for cross-database aggregation. You can use a rollup result inside a formula for advanced calculations."}},{"@type":"Question","name":"Are Notion formulas case sensitive?","acceptedAnswer":{"@type":"Answer","text":"Property names in prop() are case-sensitive. prop('Status') is different from prop('status'). Function names like if(), dateBetween(), and now() are not case-sensitive. String comparisons (== 'Complete') are case-sensitive by default. Use lower() to normalize case when comparing text values: lower(prop('Status')) == 'complete'."}}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://baphometsblade.github.io/freelanceos-storefront/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://baphometsblade.github.io/freelanceos-storefront/blog/"},{"@type":"ListItem","position":3,"name":"Notion Formulas","item":"https://baphometsblade.github.io/freelanceos-storefront/blog/notion-formulas.html"}]}
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#7c3aed,#a78bfa);width:0%;z-index:9999;transition:width .1s}
+nav{background:#111;border-bottom:1px solid #222;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+nav a{color:#e5e7eb;text-decoration:none;font-weight:700;font-size:17px}
+.nav-links a{color:#9ca3af;font-size:14px;margin-left:20px;text-decoration:none;font-weight:500}.nav-links a:hover{color:#fff}
+.hero{background:linear-gradient(135deg,#111827,#1e1b4b);padding:60px 24px 40px;text-align:center}
+.eyebrow{color:#7c3aed;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.hero h1{color:#f9fafb;font-size:clamp(24px,4vw,42px);font-weight:900;max-width:860px;margin:0 auto 16px;line-height:1.2}
+.hero-sub{color:#9ca3af;max-width:660px;margin:0 auto 16px;font-size:15px}
+.meta{color:#6b7280;font-size:13px}
+.breadcrumb{color:#6b7280;font-size:13px;max-width:800px;margin:0 auto;padding:16px 24px 0}
+.breadcrumb a{color:#7c3aed;text-decoration:none}.breadcrumb a:hover{color:#a78bfa}
+article{max-width:800px;margin:0 auto;padding:48px 24px}
+h2{color:#f9fafb;font-size:20px;font-weight:800;margin:44px 0 16px;background:linear-gradient(135deg,#4c1d95,#1e1b4b);padding:12px 16px;border-radius:8px;border-left:4px solid #7c3aed}
+h3{color:#e5e7eb;font-size:17px;font-weight:700;margin:28px 0 8px}
+p{color:#d1d5db;margin-bottom:16px}
+ul,ol{color:#d1d5db;margin:0 0 16px 22px}li{margin-bottom:8px}
+a{color:#7c3aed}a:hover{color:#a78bfa}
+strong{color:#f9fafb}
+code{background:#1f2937;color:#a78bfa;padding:2px 6px;border-radius:4px;font-size:13px;font-family:monospace}
+.formula-block{background:#0f172a;border:1px solid #374151;border-radius:10px;margin:20px 0;overflow:hidden}
+.formula-header{background:#1f2937;padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+.formula-title{color:#f9fafb;font-size:13px;font-weight:700}
+.formula-tag{background:rgba(124,58,237,.3);color:#a78bfa;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.5px;text-transform:uppercase}
+.formula-code{padding:16px;font-family:monospace;font-size:13px;color:#c4b5fd;line-height:1.6;overflow-x:auto}
+.formula-desc{padding:0 16px 16px;color:#6b7280;font-size:13px;line-height:1.5}
+.syntax-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+@media(max-width:620px){.syntax-grid{grid-template-columns:1fr}}
+.syntax-card{background:#111827;border:1px solid #1f2937;border-radius:10px;padding:16px}
+.syntax-func{color:#a78bfa;font-size:13px;font-weight:700;margin-bottom:4px;font-family:monospace}
+.syntax-desc{color:#9ca3af;font-size:12px;line-height:1.5}
+.error-item{background:#111827;border:1px solid #1f2937;border-radius:10px;padding:18px;margin:12px 0}
+.error-title{color:#ef4444;font-size:14px;font-weight:700;margin-bottom:8px}
+.error-cause{color:#9ca3af;font-size:13px;margin-bottom:8px}
+.error-fix{background:#0f172a;border-left:3px solid #10b981;padding:8px 12px;border-radius:4px;color:#6ee7b7;font-size:12px;font-family:monospace}
+.tip-box{background:#0f172a;border:1px solid #374151;border-left:4px solid #7c3aed;border-radius:8px;padding:16px 20px;margin:20px 0}
+.tip-label{color:#a78bfa;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.tip-box p{color:#d1d5db;font-size:14px;margin:0}
+.cta-box{background:linear-gradient(135deg,#4c1d95,#1e1b4b);border:2px solid #6d28d9;border-radius:16px;padding:40px 32px;text-align:center;margin:48px 0}
+.cta-box h3{color:#f9fafb;font-size:22px;font-weight:800;margin-bottom:10px}
+.cta-box p{color:#c4b5fd;margin-bottom:20px}
+.btn{display:inline-block;background:#7c3aed;color:#fff;font-weight:700;padding:14px 32px;border-radius:10px;text-decoration:none;font-size:15px}.btn:hover{background:#6d28d9;color:#fff}
+.lead-capture{background:#111827;border:1px solid #374151;border-radius:16px;padding:36px 32px;text-align:center;margin:48px 0}
+.lead-capture h3{color:#f9fafb;font-size:20px;font-weight:800;margin-bottom:8px}
+.lead-capture p{color:#9ca3af;font-size:14px;margin-bottom:20px}
+.email-form{display:flex;gap:10px;max-width:420px;margin:0 auto;flex-wrap:wrap}
+.email-form input{flex:1;background:#0f0f0f;border:1px solid #374151;border-radius:8px;padding:12px 16px;color:#e5e7eb;font-size:14px;outline:none;min-width:0}
+.email-form input:focus{border-color:#7c3aed}
+.email-form button{background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:12px 20px;font-weight:700;font-size:14px;cursor:pointer}.email-form button:hover{background:#6d28d9}
+.email-success{display:none;color:#10b981;font-size:14px;font-weight:600;margin-top:10px}
+.faq-item{border-bottom:1px solid #1f2937;padding:20px 0}
+.faq-item:last-child{border-bottom:none}
+.faq-q{color:#f9fafb;font-size:16px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q::after{content:'+';color:#7c3aed;font-size:20px;flex-shrink:0;transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{color:#9ca3af;font-size:14px;display:none;padding-top:12px}
+.faq-item.open .faq-a{display:block}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+@media(max-width:700px){.related-grid{grid-template-columns:1fr}}
+.related-card{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:20px;text-decoration:none;display:block;transition:border-color .2s}
+.related-card:hover{border-color:#7c3aed}
+.related-tag{color:#7c3aed;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.related-card h4{color:#f9fafb;font-size:14px;font-weight:700;line-height:1.4;margin-bottom:6px}
+.related-card p{color:#6b7280;font-size:12px;margin:0}
+footer{background:#111;border-top:1px solid #222;padding:32px 24px;text-align:center;color:#6b7280;font-size:13px}
+footer a{color:#9ca3af;text-decoration:none;margin:0 8px}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav>
+  <a href="https://baphometsblade.github.io/freelanceos-storefront/">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/#products">Products</a>
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/free-download.html">Free Tools</a>
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/blog/">Blog</a>
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/start-here.html">Start Here</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Notion Guide — 2026</div>
+  <h1>Notion Formulas: The Complete Guide (With Real-World Examples)</h1>
+  <p class="hero-sub">Master Notion formulas — syntax, 15 practical examples covering dates, progress bars, invoice totals, time tracking, and conditional logic. No coding experience required.</p>
+  <div class="meta">June 2026 &nbsp;·&nbsp; 15 min read</div>
+</div>
+
+<div class="breadcrumb">
+  <a href="https://baphometsblade.github.io/freelanceos-storefront/">Home</a> &rsaquo;
+  <a href="https://baphometsblade.github.io/freelanceos-storefront/blog/">Blog</a> &rsaquo;
+  Notion Formulas Guide
+</div>
+
+<article>
+
+  <p>Notion formulas are the feature that separates a basic Notion setup from a genuinely powerful one. Without formulas, your databases show you what you entered. With formulas, your databases calculate, infer, and surface things you didn't have to enter manually — deadline countdowns, invoice totals, completion percentages, overdue flags, revenue-per-hour rates, and more.</p>
+
+  <p>The good news: Notion formulas are far simpler than they look. You don't need to know programming. If you've ever written an Excel formula, Notion formulas will feel familiar. If you haven't, the 15 examples in this guide give you everything you need to copy, adapt, and build your own.</p>
+
+  <h2>What Are Notion Formulas?</h2>
+
+  <p>A Notion formula is a calculation you write inside a Formula property in any Notion database. When you add a Formula property, it shows one calculated value per row — computed automatically from other properties in that row. Change a property that a formula references, and the formula result updates instantly.</p>
+
+  <p>Formulas can:</p>
+  <ul>
+    <li>Perform arithmetic: add, subtract, multiply, divide number properties</li>
+    <li>Calculate dates: days between dates, days until a deadline, week numbers</li>
+    <li>Work with text: join strings, extract substrings, change case</li>
+    <li>Apply logic: return different values based on conditions (if/else)</li>
+    <li>Reference rollup results: use aggregated data from related databases</li>
+    <li>Create visual indicators: emoji progress bars, colored status badges via text</li>
+  </ul>
+
+  <p>The key constraint: formulas can only reference properties in the <em>same database row</em>. To reference data from another database, you need a Relation + Rollup combination to pull that data into the current row first, then reference it in a formula.</p>
+
+  <h2>Notion Formula Syntax Basics</h2>
+
+  <p>Every Notion formula is an expression that returns a single value. The three things you need to understand:</p>
+
+  <h3>1. Referencing Properties</h3>
+  <p>Use <code>prop("Property Name")</code> to reference another property in the same row. The property name must exactly match (case-sensitive, spaces included). Example: <code>prop("Due Date")</code> returns the value of the Due Date property.</p>
+
+  <h3>2. Functions</h3>
+  <p>Functions take inputs and return outputs. Notion has 70+ built-in functions. The most important ones:</p>
+
+  <div class="syntax-grid">
+    <div class="syntax-card">
+      <div class="syntax-func">if(condition, true, false)</div>
+      <div class="syntax-desc">Returns the first value if condition is true, second if false. The most used function.</div>
+    </div>
+    <div class="syntax-card">
+      <div class="syntax-func">now()</div>
+      <div class="syntax-desc">Returns the current date and time. Recalculates on page load.</div>
+    </div>
+    <div class="syntax-card">
+      <div class="syntax-func">dateBetween(a, b, unit)</div>
+      <div class="syntax-desc">Returns the difference between two dates in "days", "months", "years", "hours", etc.</div>
+    </div>
+    <div class="syntax-card">
+      <div class="syntax-func">dateAdd(date, n, unit)</div>
+      <div class="syntax-desc">Adds n units to a date. dateAdd(now(), 7, "days") = one week from today.</div>
+    </div>
+    <div class="syntax-card">
+      <div class="syntax-func">round(n) / floor(n) / ceil(n)</div>
+      <div class="syntax-desc">Round a number to nearest integer, round down, or round up.</div>
+    </div>
+    <div class="syntax-card">
+      <div class="syntax-func">empty(value)</div>
+      <div class="syntax-desc">Returns true if the value is empty/null. Use to guard against empty property references.</div>
+    </div>
+    <div class="syntax-card">
+      <div class="syntax-func">and(a, b) / or(a, b)</div>
+      <div class="syntax-desc">Combine multiple conditions. and() requires both true; or() requires either true.</div>
+    </div>
+    <div class="syntax-card">
+      <div class="syntax-func">concat(a, b, ...)</div>
+      <div class="syntax-desc">Joins text strings together. concat("Hello", " ", "World") = "Hello World".</div>
+    </div>
+  </div>
+
+  <h3>3. Operators</h3>
+  <p>Math: <code>+</code> <code>-</code> <code>*</code> <code>/</code> &nbsp; Comparison: <code>==</code> <code>!=</code> <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> &nbsp; Logic: <code>and</code> <code>or</code> <code>not</code></p>
+
+  <div class="tip-box">
+    <div class="tip-label">Formula Editor Tip</div>
+    <p>Notion's formula editor has auto-complete. As you type prop(" it will suggest your property names. As you type a function name it will suggest the correct function. Use this to avoid typos in property names — the number one cause of formula errors.</p>
+  </div>
+
+  <h2>15 Practical Notion Formulas (Copy & Use)</h2>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">1. Days Until Due Date</div>
+      <div class="formula-tag">Dates</div>
+    </div>
+    <div class="formula-code">dateBetween(prop("Due Date"), now(), "days")</div>
+    <div class="formula-desc">Returns the number of days between today and the Due Date. Positive = days remaining. Negative = overdue. Use in project trackers, client databases, invoice trackers.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">2. Overdue Flag with Days Remaining</div>
+      <div class="formula-tag">Dates + Conditional</div>
+    </div>
+    <div class="formula-code">if(empty(prop("Due Date")), "No date", if(dateBetween(prop("Due Date"), now(), "days") &lt; 0, "⚠️ " + format(abs(dateBetween(prop("Due Date"), now(), "days"))) + " days overdue", format(dateBetween(prop("Due Date"), now(), "days")) + " days left"))</div>
+    <div class="formula-desc">Returns "⚠️ 3 days overdue" for past-due items, "5 days left" for upcoming ones, and "No date" for undated items. Guards against empty Due Date to prevent errors.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">3. Completion Percentage</div>
+      <div class="formula-tag">Progress</div>
+    </div>
+    <div class="formula-code">if(prop("Total Tasks") > 0, round(prop("Done Tasks") / prop("Total Tasks") * 100), 0)</div>
+    <div class="formula-desc">Calculates percent complete from Done Tasks and Total Tasks rollup properties. Requires two Rollup properties: one counting completed tasks, one counting all tasks for that project via a Relation.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">4. Visual Progress Bar</div>
+      <div class="formula-tag">Visual</div>
+    </div>
+    <div class="formula-code">slice("██████████", 0, floor(prop("Progress") / 10)) + slice("░░░░░░░░░░", 0, 10 - floor(prop("Progress") / 10)) + " " + format(prop("Progress")) + "%"</div>
+    <div class="formula-desc">Creates a 10-block emoji progress bar. Requires a Number property called "Progress" (0–100). Output looks like: ████░░░░░░ 40%. Use in project databases, habit trackers, or goal trackers.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">5. Invoice Total with Tax</div>
+      <div class="formula-tag">Finance</div>
+    </div>
+    <div class="formula-code">prop("Rate") * prop("Hours") * (1 + prop("Tax Rate") / 100)</div>
+    <div class="formula-desc">Calculates invoice total from Rate (Number), Hours (Number), and Tax Rate (Number, e.g. 20 for 20%). Requires Rate, Hours, and Tax Rate Number properties. Add formatting by wrapping in format() if you want a $ prefix.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">6. Revenue Per Hour</div>
+      <div class="formula-tag">Finance</div>
+    </div>
+    <div class="formula-code">if(prop("Hours Logged") > 0, round(prop("Project Revenue") / prop("Hours Logged")), 0)</div>
+    <div class="formula-desc">Calculates your effective hourly rate for a project. Useful for identifying which project types are most profitable. Requires Project Revenue (Number) and Hours Logged (Number) properties.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">7. Days Since Last Contact (CRM)</div>
+      <div class="formula-tag">CRM / Dates</div>
+    </div>
+    <div class="formula-code">if(empty(prop("Last Contact")), "Never contacted", if(dateBetween(now(), prop("Last Contact"), "days") > 30, "🔴 " + format(dateBetween(now(), prop("Last Contact"), "days")) + " days", if(dateBetween(now(), prop("Last Contact"), "days") > 14, "🟡 " + format(dateBetween(now(), prop("Last Contact"), "days")) + " days", "🟢 " + format(dateBetween(now(), prop("Last Contact"), "days")) + " days")))</div>
+    <div class="formula-desc">CRM health indicator. Returns green (recent contact), yellow (14–30 days), or red (30+ days) with day count. Flags relationships that need attention before they go cold.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">8. Automatic Priority Score</div>
+      <div class="formula-tag">Prioritization</div>
+    </div>
+    <div class="formula-code">if(prop("Priority") == "P1", 100, if(prop("Priority") == "P2", 50, 10)) + if(dateBetween(prop("Due Date"), now(), "days") &lt; 3, 50, if(dateBetween(prop("Due Date"), now(), "days") &lt; 7, 25, 0))</div>
+    <div class="formula-desc">Calculates a numeric priority score combining Priority level and deadline urgency. P1 with a 2-day deadline scores 150; P3 with no near deadline scores 10. Sort by this formula to auto-prioritize your task list.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">9. Time Tracking: Duration in Hours</div>
+      <div class="formula-tag">Time Tracking</div>
+    </div>
+    <div class="formula-code">dateBetween(prop("End Time"), prop("Start Time"), "minutes") / 60</div>
+    <div class="formula-desc">Calculates session duration in hours from Start Time and End Time (both Date properties with time enabled). Round with round(... * 100) / 100 for 2 decimal places.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">10. Week Number of Year</div>
+      <div class="formula-tag">Dates</div>
+    </div>
+    <div class="formula-code">ceil(dateBetween(prop("Date"), dateSubtract(prop("Date"), date(formatDate(prop("Date"), "D")) - 1, "days"), "days") / 7)</div>
+    <div class="formula-desc">Returns the ISO week number (1–52) for any date property. Useful for grouping entries by week in content calendars, time trackers, and weekly planning databases.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">11. Conditional Status Badge</div>
+      <div class="formula-tag">Visual + Conditional</div>
+    </div>
+    <div class="formula-code">if(prop("Status") == "Complete", "✅ Complete", if(prop("Status") == "In Progress", "🔄 In Progress", if(prop("Status") == "Blocked", "🚫 Blocked", "📋 Not Started")))</div>
+    <div class="formula-desc">Adds emoji badges to status values for visual clarity in gallery and board views. Customize the emoji and text to match your Status property options exactly.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">12. Late Payment Flag (Invoices)</div>
+      <div class="formula-tag">Finance + Dates</div>
+    </div>
+    <div class="formula-code">if(and(prop("Payment Status") != "Paid", dateBetween(now(), prop("Due Date"), "days") > 0), "🔴 LATE — " + format(dateBetween(now(), prop("Due Date"), "days")) + " days", if(prop("Payment Status") == "Paid", "✅ Paid", "⏳ Pending"))</div>
+    <div class="formula-desc">Invoice status tracker that automatically flags overdue unpaid invoices. Requires Payment Status (Select) and Due Date (Date) properties. Shows "LATE — 5 days" for overdue, "Paid" for settled, "Pending" for upcoming invoices.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">13. Content Word Count Estimate</div>
+      <div class="formula-tag">Content / Calculation</div>
+    </div>
+    <div class="formula-code">if(prop("Word Count") &lt; 500, "Short (&lt;500w)", if(prop("Word Count") &lt; 1500, "Medium (500–1500w)", if(prop("Word Count") &lt; 3000, "Long (1500–3000w)", "Deep Dive (3000w+)")))</div>
+    <div class="formula-desc">Categorizes content by length for content calendars. Requires a Word Count (Number) property. Shows a human-readable label instead of a raw number for quick scanning.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">14. Reading Time Estimate</div>
+      <div class="formula-tag">Content</div>
+    </div>
+    <div class="formula-code">format(ceil(prop("Word Count") / 200)) + " min read"</div>
+    <div class="formula-desc">Calculates reading time at 200 words per minute (average adult reading speed). Returns "7 min read" format. Use in content databases, book trackers, and article research databases.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-header">
+      <div class="formula-title">15. Habit Streak Counter</div>
+      <div class="formula-tag">Habit Tracking</div>
+    </div>
+    <div class="formula-code">if(prop("Completed Today") == true, "🔥 " + format(prop("Current Streak") + 1), if(dateBetween(now(), prop("Last Completed"), "days") > 1, "💔 Streak lost — " + format(prop("Best Streak")), "🎯 Keep going!"))</div>
+    <div class="formula-desc">Habit tracker feedback formula. Requires Completed Today (Checkbox), Current Streak (Number rollup or manual), Last Completed (Date), and Best Streak (Number) properties. Shows motivational feedback based on current state.</div>
+  </div>
+
+  <h2>Common Notion Formula Errors and Fixes</h2>
+
+  <div class="error-item">
+    <div class="error-title">Error: Property not found / "red underline on prop()"</div>
+    <div class="error-cause">The property name in your formula doesn't exactly match the property name in the database. Formulas are case-sensitive and space-sensitive.</div>
+    <div class="error-fix">Fix: Check the exact property name. "due date" ≠ "Due Date". Copy-paste from the property editor to be safe.</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-title">Error: Type mismatch — can't use math on Select property</div>
+    <div class="error-cause">You're trying to do arithmetic on a Select or Text property. Select properties return text, not numbers.</div>
+    <div class="error-fix">Fix: Use a Number property for any value you want to calculate with. Convert the Select to a Number property, or use if() to map Select values to numbers.</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-title">Error: Formula returns blank for some rows</div>
+    <div class="error-cause">Referenced properties are empty for those rows. A formula referencing an empty Date property returns null, which propagates through calculations.</div>
+    <div class="error-fix">Fix: Wrap property references in empty() guards: if(empty(prop("Due Date")), "No date set", dateBetween(...))</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-title">Error: if() branches return mismatched types</div>
+    <div class="error-cause">Both branches of an if() must return the same type (both text, or both number, or both date). Returning a number in the true branch and text in the false branch causes an error.</div>
+    <div class="error-fix">Fix: Use format() to convert numbers to text, or ensure both branches return the same type. if(x > 5, "High", "Low") works. if(x > 5, 10, "Low") does not.</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-title">Error: dateBetween returns wrong sign</div>
+    <div class="error-cause">dateBetween(a, b, unit) returns a - b. If you want days until the due date (positive when future), the order matters: dateBetween(future, now()) gives positive. dateBetween(now(), future) gives negative.</div>
+    <div class="error-fix">Fix: dateBetween(prop("Due Date"), now(), "days") gives positive for future dates, negative for past dates. This is usually what you want for countdowns.</div>
+  </div>
+
+  <h2>Advanced Formula Tips</h2>
+
+  <p><strong>Nest if() for multi-branch logic:</strong> Notion's if() is binary (true/false), but you can nest multiple if() calls to create multi-branch logic: <code>if(a, result1, if(b, result2, if(c, result3, default)))</code>.</p>
+
+  <p><strong>Combine formulas with rollups:</strong> Rollup properties aggregate data from related databases. You can reference rollup results in formulas — for example, calculate profitability as a formula using a rollup that sums all invoices related to a client.</p>
+
+  <p><strong>Use format() to convert numbers to text:</strong> Many formulas need to combine a number with text ("5 days left"). You must convert the number first: <code>format(5) + " days left"</code> works. <code>5 + " days left"</code> throws a type error.</p>
+
+  <p><strong>Use abs() for absolute values:</strong> When calculating overdue days, dateBetween returns a negative number for past dates. Wrap in abs() to get the positive value: <code>abs(dateBetween(prop("Due Date"), now(), "days"))</code>.</p>
+
+  <p><strong>Templates with pre-built formulas:</strong> The most practical approach is to start with a template that has formulas already working, then study them to understand the patterns. Get templates with formulas pre-built from <a href="https://baphometsblade.github.io/freelanceos-storefront/#products">FreelanceOS Pro</a> — the invoice tracker, project tracker, and CRM all use formulas for automatic calculations.</p>
+
+  <div class="cta-box">
+    <h3>Get templates with formulas pre-built</h3>
+    <p>FreelanceOS Pro includes 10+ databases with working formulas — invoice totals, days-since-contact CRM indicators, project completion percentages, revenue-per-hour calculations, and overdue payment flags. All formulas tested, all properties connected, ready to use on day one.</p>
+    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro — 40% Off &rarr;</a>
+  </div>
+
+  <div class="lead-capture">
+    <h3>Get the Free Notion Starter Kit</h3>
+    <p>5 Notion templates with formulas included — free download, no credit card required.</p>
+    <div class="email-form">
+      <input type="email" id="leadEmail" placeholder="your@email.com">
+      <button onclick="captureEmail()">Get Free Kit</button>
+    </div>
+    <div class="email-success" id="emailSuccess">Check your email for the download link!</div>
+  </div>
+
+  <div style="margin:48px 0 32px">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What are Notion formulas?</div>
+      <div class="faq-a">Notion formulas are calculations you can write inside a Formula property in any Notion database. They can reference other properties using prop('Property Name'), perform math operations, manipulate dates and text, and return conditional outputs. Formulas run automatically whenever the referenced properties change.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I write a Notion formula?</div>
+      <div class="faq-a">Add a Formula property to any Notion database by clicking the + button in the database header and selecting Formula. Click the formula property to open the formula editor. Type your formula — reference other properties with prop('Property Name'), use functions like if(), dateBetween(), now(), and operators like +, -, *, /. Notion auto-suggests property names and function names as you type.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I calculate days until a due date in Notion?</div>
+      <div class="faq-a">Use the dateBetween() function: dateBetween(prop('Due Date'), now(), 'days'). This returns the number of days between today and the Due Date. A positive number means days remaining; negative means overdue. Wrap it in an if() to add an overdue flag.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can Notion formulas reference other properties?</div>
+      <div class="faq-a">Yes. Use prop('Property Name') to reference any other property in the same database row. The property name must exactly match (including capitalization and spaces). You can reference Text, Number, Select, Date, Checkbox, and Rollup properties in formulas.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the Notion if() formula?</div>
+      <div class="faq-a">The if() formula returns different values based on a condition: if(condition, value_if_true, value_if_false). Example: if(prop('Status') == 'Complete', '✅ Done', '⏳ In Progress'). Combine multiple conditions with and() and or().</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why is my Notion formula showing an error?</div>
+      <div class="faq-a">The most common errors: (1) Property name typo — prop() is case-sensitive. (2) Wrong property type — you can't do math on a Select property. (3) Null/empty values — wrap in empty() guards. (4) Mismatched output types — both branches of if() must return the same type.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I create progress bars with Notion formulas?</div>
+      <div class="faq-a">Yes. Use slice() to build an emoji progress bar: slice('██████████', 0, floor(prop('Progress') / 10)) + slice('░░░░░░░░░░', 0, 10 - floor(prop('Progress') / 10)). Set your Progress property to a Number between 0 and 100.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the difference between Notion formulas and rollups?</div>
+      <div class="faq-a">Notion formulas calculate values from properties within the same database row. Rollups aggregate data across a Relation from a different database — like summing all invoice amounts related to a client. Formulas are for row-level calculations; rollups are for cross-database aggregation. You can use a rollup result inside a formula.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Are Notion formulas case sensitive?</div>
+      <div class="faq-a">Property names in prop() are case-sensitive. prop('Status') is different from prop('status'). Function names like if(), dateBetween(), and now() are not case-sensitive. String comparisons (== 'Complete') are case-sensitive — use lower() to normalize case when comparing text values.</div>
+    </div>
+  </div>
+
+  <h2>Related Articles</h2>
+  <div class="related-grid">
+    <a class="related-card" href="how-to-create-notion-templates.html">
+      <div class="related-tag">Notion</div>
+      <h4>How to Create Notion Templates</h4>
+      <p>Step-by-step guide to building templates with formulas and linked databases.</p>
+    </a>
+    <a class="related-card" href="best-notion-setup-2026.html">
+      <div class="related-tag">Notion</div>
+      <h4>The Best Notion Setup for 2026</h4>
+      <p>The 5-layer architecture that power Notion users actually stick with.</p>
+    </a>
+    <a class="related-card" href="notion-roadmap-template.html">
+      <div class="related-tag">Templates</div>
+      <h4>Notion Roadmap Template</h4>
+      <p>Build a product, project, or personal roadmap in Notion — free template included.</p>
+    </a>
+  </div>
+
+</article>
+
+<footer>
+  <p style="margin-bottom:8px">
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/">FreelanceOS</a> &nbsp;·&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/blog/">Blog</a> &nbsp;·&nbsp;
+    <a href="https://baphometsblade.github.io/freelanceos-storefront/#products">Templates</a>
+  </p>
+  <p>&copy; 2026 FreelanceOS. All rights reserved.</p>
+</footer>
+
+<script>
+window.addEventListener('scroll', function() {
+  var el = document.documentElement;
+  var scrolled = el.scrollTop || document.body.scrollTop;
+  var total = el.scrollHeight - el.clientHeight;
+  document.getElementById('progress-bar').style.width = (total > 0 ? scrolled / total * 100 : 0) + '%';
+});
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function captureEmail() {
+  var email = document.getElementById('leadEmail').value;
+  if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+  var leads = JSON.parse(localStorage.getItem('freelanceos_leads') || '[]');
+  leads.push({ email: email, source: 'notion-formulas', date: new Date().toISOString() });
+  localStorage.setItem('freelanceos_leads', JSON.stringify(leads));
+  document.getElementById('emailSuccess').style.display = 'block';
+  document.getElementById('leadEmail').value = '';
+}
+</script>
+</body></html>
