@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Subcontractor Manager for Freelancers | FreelanceOS</title>
+<meta name="description" content="Manage freelance subcontractors with ease. Track availability, assignments, payments, performance, and generate agreements — all free, runs in your browser.">
+<meta property="og:title" content="Free Subcontractor Manager for Freelancers | FreelanceOS">
+<meta property="og:description" content="Manage subcontractors, track payments, generate NDAs, and monitor performance — 100% free browser tool by FreelanceOS.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.vercel.app/automated%20app/subcontractor-manager.html">
+<meta property="og:image" content="https://freelanceos.vercel.app/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Subcontractor Manager for Freelancers | FreelanceOS">
+<meta name="twitter:description" content="Manage subcontractors, track payments, generate NDAs, and monitor performance — 100% free browser tool by FreelanceOS.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Subcontractor Manager",
+  "url": "https://freelanceos.vercel.app/automated%20app/subcontractor-manager.html",
+  "description": "A free browser-based tool for freelancers to manage subcontractors, track payments, generate agreements, and monitor performance.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "creator": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#020617;--card:#0f172a;--border:rgba(168,85,247,0.2);--border-strong:rgba(168,85,247,0.4);
+  --text:#e2e8f0;--muted:#94a3b8;--accent1:#a855f7;--accent2:#ec4899;
+  --success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--info:#3b82f6;
+  --radius-card:16px;--radius-btn:12px;--radius-sm:8px;
+}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh;font-size:15px;line-height:1.6}
+a{color:var(--accent1);text-decoration:none}
+a:hover{text-decoration:underline}
+h1{font-size:1.6rem;font-weight:700}
+h2{font-size:1.2rem;font-weight:600}
+h3{font-size:1rem;font-weight:600}
+
+/* CTA Banner */
+.cta-banner{background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(236,72,153,0.2));border-bottom:1px solid var(--border);padding:10px 20px;text-align:center;font-size:13px}
+.cta-banner a{color:#fff;font-weight:600;background:linear-gradient(135deg,#a855f7,#ec4899);padding:4px 14px;border-radius:20px;margin-left:8px;white-space:nowrap}
+
+/* Header */
+.header{padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#a855f7,#ec4899);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.disclaimer{font-size:12px;color:var(--muted);background:rgba(168,85,247,0.08);border:1px solid var(--border);border-radius:20px;padding:4px 12px}
+
+/* Nav Tabs */
+.nav{display:flex;gap:4px;padding:16px 24px 0;overflow-x:auto;flex-wrap:wrap}
+.nav-tab{padding:8px 14px;border-radius:var(--radius-btn);border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;font-size:13px;font-weight:500;white-space:nowrap;transition:all .2s}
+.nav-tab:hover{color:var(--text);border-color:var(--border)}
+.nav-tab.active{background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(236,72,153,0.2));border-color:var(--border-strong);color:#fff}
+
+/* Main content */
+.main{padding:20px 24px 40px}
+.section{display:none}
+.section.active{display:block}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-card);padding:20px}
+.card-sm{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-btn);padding:14px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-btn);border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font-size:13px;font-weight:500;transition:all .2s}
+.btn:hover{border-color:var(--border-strong);background:rgba(168,85,247,0.08)}
+.btn-primary{background:linear-gradient(135deg,#a855f7,#ec4899);border-color:transparent;color:#fff}
+.btn-primary:hover{opacity:.9}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-danger{border-color:rgba(239,68,68,0.3);color:var(--danger)}
+.btn-danger:hover{background:rgba(239,68,68,0.1)}
+
+/* Forms */
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.form-control{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;font-family:inherit;transition:border .2s}
+.form-control:focus{outline:none;border-color:var(--accent1)}
+.form-control::placeholder{color:var(--muted)}
+select.form-control option{background:#1e293b;color:var(--text)}
+textarea.form-control{resize:vertical;min-height:80px}
+
+/* Grid helpers */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.flex{display:flex;align-items:center;gap:10px}
+.flex-between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.gap-2{gap:8px}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-success{background:rgba(34,197,94,0.15);color:var(--success)}
+.badge-warning{background:rgba(245,158,11,0.15);color:var(--warning)}
+.badge-danger{background:rgba(239,68,68,0.15);color:var(--danger)}
+.badge-info{background:rgba(59,130,246,0.15);color:var(--info)}
+.badge-purple{background:rgba(168,85,247,0.15);color:var(--accent1)}
+.badge-pink{background:rgba(236,72,153,0.15);color:var(--accent2)}
+
+/* Stars */
+.stars{color:#f59e0b;font-size:14px;letter-spacing:2px}
+
+/* Kanban */
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
+.kanban-col{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-card);padding:14px}
+.kanban-col-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;color:var(--muted)}
+.kanban-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:10px}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:8px 12px;border-bottom:1px solid var(--border)}
+.tbl td{padding:10px 12px;border-bottom:1px solid rgba(168,85,247,0.06);font-size:13px;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(168,85,247,0.04)}
+
+/* Score circle */
+.score-circle{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;border:3px solid}
+.score-a{border-color:var(--success);color:var(--success)}
+.score-b{border-color:#84cc16;color:#84cc16}
+.score-c{border-color:var(--warning);color:var(--warning)}
+.score-d{border-color:#f97316;color:#f97316}
+.score-f{border-color:var(--danger);color:var(--danger)}
+
+/* Calendar */
+.cal-grid{display:grid;grid-template-columns:140px repeat(8,1fr);gap:4px;font-size:12px}
+.cal-header{padding:6px;text-align:center;color:var(--muted);font-weight:600}
+.cal-name{padding:8px 10px;color:var(--text);font-weight:500;display:flex;align-items:center}
+.cal-cell{padding:6px 4px;border-radius:6px;text-align:center;cursor:pointer;transition:all .15s;font-size:11px}
+.cal-available{background:rgba(34,197,94,0.15);color:var(--success)}
+.cal-busy{background:rgba(239,68,68,0.15);color:var(--danger)}
+.cal-tentative{background:rgba(245,158,11,0.15);color:var(--warning)}
+.cal-empty{background:rgba(255,255,255,0.03);color:var(--muted)}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border-strong);border-radius:var(--radius-card);padding:24px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative}
+.modal-title{font-size:1.1rem;font-weight:600;margin-bottom:18px;padding-right:30px}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:20px;line-height:1}
+.modal-close:hover{color:var(--text)}
+
+/* Agreement output */
+.agreement-output{background:#0a0f1e;border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;font-size:13px;line-height:1.8;white-space:pre-wrap;font-family:Georgia,serif;max-height:400px;overflow-y:auto;color:var(--text)}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-btn);padding:14px}
+.stat-value{font-size:1.5rem;font-weight:700;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Search bar */
+.search-bar{position:relative;flex:1;min-width:200px}
+.search-bar input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:var(--radius-btn);padding:9px 12px 9px 36px;color:var(--text);font-size:13px}
+.search-bar input:focus{outline:none;border-color:var(--accent1)}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+
+/* Progress bar */
+.progress{background:rgba(255,255,255,0.06);border-radius:20px;height:6px;overflow:hidden}
+.progress-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,#a855f7,#ec4899)}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted)}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty-state h3{color:var(--text);margin-bottom:6px}
+
+/* Sub card */
+.sub-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-card);padding:18px;transition:border-color .2s}
+.sub-card:hover{border-color:var(--border-strong)}
+.sub-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#ec4899);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;flex-shrink:0}
+.sub-card-actions{display:flex;gap:6px;margin-top:14px}
+
+/* Comm log */
+.comm-entry{border-left:3px solid var(--border-strong);padding:10px 14px;margin-bottom:10px;background:rgba(168,85,247,0.04);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+
+/* Footer */
+.footer{text-align:center;padding:24px;border-top:1px solid var(--border);color:var(--muted);font-size:13px;margin-top:20px}
+
+@media(max-width:768px){
+  .kanban{grid-template-columns:1fr 1fr}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .cal-grid{grid-template-columns:100px repeat(4,1fr)}
+  .cal-header:nth-child(n+7),.cal-cell:nth-child(n+7){display:none}
+  .header{padding:14px 16px 0}
+  .nav{padding:12px 16px 0}
+  .main{padding:14px 16px 32px}
+}
+@media(max-width:500px){
+  .kanban{grid-template-columns:1fr}
+  h1{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+  ⚡ FreelanceOS Pro — 120+ templates, tools &amp; systems for freelancers
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get 40% off with FLASH40 →</a>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">🤝</div>
+    <div>
+      <div style="font-size:1.1rem;font-weight:700">Subcontractor Manager</div>
+      <div style="font-size:12px;color:var(--muted)">by FreelanceOS — Tool #70</div>
+    </div>
+  </div>
+  <div class="disclaimer">🔒 Runs entirely in your browser. No data sent to any server.</div>
+</div>
+
+<!-- Nav -->
+<div class="nav">
+  <button class="nav-tab active" onclick="showSection('directory')">📋 Directory</button>
+  <button class="nav-tab" onclick="showSection('projects')">📌 Projects</button>
+  <button class="nav-tab" onclick="showSection('margin')">💰 Profit Margin</button>
+  <button class="nav-tab" onclick="showSection('payments')">💳 Payments</button>
+  <button class="nav-tab" onclick="showSection('scorecard')">⭐ Scorecard</button>
+  <button class="nav-tab" onclick="showSection('agreements')">📄 Agreements</button>
+  <button class="nav-tab" onclick="showSection('calendar')">📅 Availability</button>
+  <button class="nav-tab" onclick="showSection('comms')">💬 Comms Log</button>
+  <button class="nav-tab" onclick="showSection('export')">📤 Export</button>
+</div>
+
+<div class="main">
+
+<!-- ===== DIRECTORY ===== -->
+<div id="sec-directory" class="section active">
+  <div class="flex-between" style="margin-bottom:18px">
+    <h2>Subcontractor Directory</h2>
+    <button class="btn btn-primary" onclick="openModal('modal-add-sub')">+ Add Subcontractor</button>
+  </div>
+  <div class="flex-between" style="margin-bottom:16px;gap:10px">
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="sub-search" placeholder="Search by name or specialization…" oninput="renderDirectory()">
+    </div>
+    <select class="form-control" style="width:auto;min-width:150px" id="sub-filter-avail" onchange="renderDirectory()">
+      <option value="">All Availability</option>
+      <option value="Available">Available</option>
+      <option value="Busy">Busy</option>
+      <option value="Tentative">Tentative</option>
+    </select>
+    <select class="form-control" style="width:auto;min-width:140px" id="sub-filter-spec" onchange="renderDirectory()">
+      <option value="">All Specializations</option>
+    </select>
+  </div>
+  <div class="stats-row" id="dir-stats"></div>
+  <div class="card-grid" id="sub-grid"></div>
+</div>
+
+<!-- ===== PROJECTS ===== -->
+<div id="sec-projects" class="section">
+  <div class="flex-between" style="margin-bottom:18px">
+    <h2>Project Assignment Board</h2>
+    <button class="btn btn-primary" onclick="openModal('modal-add-project')">+ New Project</button>
+  </div>
+  <div class="kanban" id="kanban-board"></div>
+</div>
+
+<!-- ===== PROFIT MARGIN ===== -->
+<div id="sec-margin" class="section">
+  <div class="flex-between" style="margin-bottom:18px">
+    <h2>Profit Margin Calculator</h2>
+    <button class="btn btn-primary" onclick="openModal('modal-add-margin')">+ Add Calculation</button>
+  </div>
+  <div class="stats-row" id="margin-summary"></div>
+  <div class="card" style="margin-bottom:16px">
+    <h3 style="margin-bottom:16px">Quick Calculator</h3>
+    <div class="grid-3" style="margin-bottom:14px">
+      <div class="form-group" style="margin:0">
+        <label>Client Pays ($)</label>
+        <input type="number" class="form-control" id="calc-client" placeholder="0.00" oninput="calcMargin()">
+      </div>
+      <div class="form-group" style="margin:0">
+        <label>Sub Costs ($)</label>
+        <input type="number" class="form-control" id="calc-sub" placeholder="0.00" oninput="calcMargin()">
+      </div>
+      <div class="form-group" style="margin:0">
+        <label>Est. Hours</label>
+        <input type="number" class="form-control" id="calc-hours" placeholder="0" oninput="calcMargin()">
+      </div>
+    </div>
+    <div class="grid-3" id="calc-results">
+      <div class="stat-card"><div class="stat-value" id="r-margin">$0</div><div class="stat-label">Your Margin</div></div>
+      <div class="stat-card"><div class="stat-value" id="r-pct">0%</div><div class="stat-label">Margin %</div></div>
+      <div class="stat-card"><div class="stat-value" id="r-rate">$0/hr</div><div class="stat-label">Effective Rate</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:14px">Saved Calculations</h3>
+    <div style="overflow-x:auto">
+      <table class="tbl" id="margin-table">
+        <thead><tr><th>Project</th><th>Sub</th><th>Client $</th><th>Sub $</th><th>Margin</th><th>Margin %</th><th>Eff. Rate</th><th></th></tr></thead>
+        <tbody id="margin-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAYMENTS ===== -->
+<div id="sec-payments" class="section">
+  <div class="flex-between" style="margin-bottom:18px">
+    <h2>Payment Tracker</h2>
+    <button class="btn btn-primary" onclick="openModal('modal-add-payment')">+ Log Payment</button>
+  </div>
+  <div class="stats-row" id="payment-stats"></div>
+  <div class="flex-between" style="margin-bottom:14px">
+    <select class="form-control" style="width:auto;min-width:160px" id="pay-filter-sub" onchange="renderPayments()">
+      <option value="">All Subcontractors</option>
+    </select>
+    <select class="form-control" style="width:auto;min-width:140px" id="pay-filter-status" onchange="renderPayments()">
+      <option value="">All Status</option>
+      <option value="Pending">Pending</option>
+      <option value="Paid">Paid</option>
+      <option value="Overdue">Overdue</option>
+    </select>
+  </div>
+  <div class="card">
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th>Sub</th><th>Project</th><th>Amount</th><th>Date</th><th>Method</th><th>Status</th><th>Notes</th><th></th></tr></thead>
+        <tbody id="payment-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCORECARD ===== -->
+<div id="sec-scorecard" class="section">
+  <div class="flex-between" style="margin-bottom:18px">
+    <h2>Performance Scorecard</h2>
+    <button class="btn btn-primary" onclick="openModal('modal-add-score')">+ Add Review</button>
+  </div>
+  <div id="scorecard-grid" class="card-grid"></div>
+</div>
+
+<!-- ===== AGREEMENTS ===== -->
+<div id="sec-agreements" class="section">
+  <h2 style="margin-bottom:18px">NDA &amp; Agreement Generator</h2>
+  <div class="grid-2" style="align-items:start">
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <h3 style="margin-bottom:14px">Template Type</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+            <input type="radio" name="agr-type" value="nda" checked onchange="updateAgreement()"> Simple NDA
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+            <input type="radio" name="agr-type" value="full" onchange="updateAgreement()"> Full Subcontractor Agreement
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+            <input type="radio" name="agr-type" value="wfh" onchange="updateAgreement()"> Work-for-Hire Agreement
+          </label>
+        </div>
+        <h3 style="margin-bottom:14px">Agreement Details</h3>
+        <div class="form-group"><label>Your Name / Company</label><input type="text" class="form-control" id="agr-client" placeholder="Acme Freelance LLC" oninput="updateAgreement()"></div>
+        <div class="form-group"><label>Subcontractor Name</label><input type="text" class="form-control" id="agr-sub" placeholder="Jane Designer" oninput="updateAgreement()"></div>
+        <div class="form-group"><label>Project / Scope</label><input type="text" class="form-control" id="agr-scope" placeholder="Website redesign for Client X" oninput="updateAgreement()"></div>
+        <div class="form-group"><label>Payment Amount</label><input type="text" class="form-control" id="agr-pay" placeholder="$2,500 upon completion" oninput="updateAgreement()"></div>
+        <div class="form-group"><label>Start Date</label><input type="date" class="form-control" id="agr-start" oninput="updateAgreement()"></div>
+        <div class="form-group"><label>End Date / Deadline</label><input type="date" class="form-control" id="agr-end" oninput="updateAgreement()"></div>
+        <div class="form-group"><label>Governing Law (State/Country)</label><input type="text" class="form-control" id="agr-law" placeholder="California, USA" oninput="updateAgreement()"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:12px">
+          <h3>Generated Agreement</h3>
+          <div class="flex gap-2">
+            <button class="btn btn-sm" onclick="copyAgreement()">📋 Copy</button>
+            <button class="btn btn-sm btn-primary" onclick="downloadAgreement()">⬇ Download</button>
+          </div>
+        </div>
+        <div class="agreement-output" id="agreement-text">Fill in the fields on the left to generate your agreement…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CALENDAR ===== -->
+<div id="sec-calendar" class="section">
+  <div class="flex-between" style="margin-bottom:18px">
+    <h2>Availability Calendar</h2>
+    <div class="flex gap-2">
+      <span class="badge badge-success">■ Available</span>
+      <span class="badge badge-warning">■ Tentative</span>
+      <span class="badge badge-danger">■ Busy</span>
+    </div>
+  </div>
+  <div class="card">
+    <div style="overflow-x:auto" id="cal-wrapper"></div>
+  </div>
+  <div style="margin-top:14px;color:var(--muted);font-size:12px">Click any cell to toggle availability status for that week.</div>
+</div>
+
+<!-- ===== COMMS LOG ===== -->
+<div id="sec-comms" class="section">
+  <div class="flex-between" style="margin-bottom:18px">
+    <h2>Communication Log</h2>
+    <button class="btn btn-primary" onclick="openModal('modal-add-comm')">+ Log Communication</button>
+  </div>
+  <div class="flex-between" style="margin-bottom:14px">
+    <select class="form-control" style="width:auto;min-width:180px" id="comm-filter-sub" onchange="renderComms()">
+      <option value="">All Subcontractors</option>
+    </select>
+    <select class="form-control" style="width:auto;min-width:140px" id="comm-filter-type" onchange="renderComms()">
+      <option value="">All Types</option>
+      <option value="Email">Email</option>
+      <option value="Call">Call</option>
+      <option value="Chat">Chat</option>
+      <option value="Meeting">Meeting</option>
+    </select>
+  </div>
+  <div id="comms-list"></div>
+</div>
+
+<!-- ===== EXPORT ===== -->
+<div id="sec-export" class="section">
+  <h2 style="margin-bottom:18px">Export Data</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div style="font-size:28px;margin-bottom:10px">📊</div>
+      <h3 style="margin-bottom:6px">Sub Directory CSV</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Export all subcontractor details as a CSV file for spreadsheets.</p>
+      <button class="btn btn-primary" onclick="exportCSV('subs')">Download CSV</button>
+    </div>
+    <div class="card">
+      <div style="font-size:28px;margin-bottom:10px">💳</div>
+      <h3 style="margin-bottom:6px">Payment Report CSV</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">All payment records with totals, status, and outstanding balances.</p>
+      <button class="btn btn-primary" onclick="exportCSV('payments')">Download CSV</button>
+    </div>
+    <div class="card">
+      <div style="font-size:28px;margin-bottom:10px">⭐</div>
+      <h3 style="margin-bottom:6px">Performance Report CSV</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Scorecard data: ratings, grades, and averages for each sub.</p>
+      <button class="btn btn-primary" onclick="exportCSV('scores')">Download CSV</button>
+    </div>
+    <div class="card">
+      <div style="font-size:28px;margin-bottom:10px">📄</div>
+      <h3 style="margin-bottom:6px">Current Agreement HTML</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Download the agreement currently shown in the Agreements tab.</p>
+      <button class="btn btn-primary" onclick="downloadAgreement()">Download HTML</button>
+    </div>
+    <div class="card">
+      <div style="font-size:28px;margin-bottom:10px">🗄️</div>
+      <h3 style="margin-bottom:6px">Full Data Backup</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Export all tool data as JSON for backup or migration.</p>
+      <button class="btn btn-primary" onclick="exportJSON()">Download JSON</button>
+    </div>
+    <div class="card">
+      <div style="font-size:28px;margin-bottom:10px">📥</div>
+      <h3 style="margin-bottom:6px">Import Backup</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Restore from a previously exported JSON backup file.</p>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
+      <button class="btn" onclick="document.getElementById('import-file').click()">Choose File</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <p style="margin-bottom:6px">🔒 This tool runs entirely in your browser. No data is sent to any server.</p>
+  <p>Part of the <a href="/freelanceos-storefront/free-templates.html">FreelanceOS Free Tools Collection</a> &nbsp;|&nbsp;
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Upgrade to FreelanceOS Pro (40% off)</a></p>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Add Sub -->
+<div class="modal-overlay" id="modal-add-sub">
+  <div class="modal">
+    <div class="modal-title" id="modal-sub-title">Add Subcontractor</div>
+    <button class="modal-close" onclick="closeModal('modal-add-sub')">✕</button>
+    <input type="hidden" id="edit-sub-id">
+    <div class="grid-2">
+      <div class="form-group"><label>Full Name *</label><input type="text" class="form-control" id="sub-name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Specialization *</label><input type="text" class="form-control" id="sub-spec" placeholder="UI/UX Design"></div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Hourly Rate ($)</label><input type="number" class="form-control" id="sub-rate" placeholder="75"></div>
+      <div class="form-group"><label>Availability</label>
+        <select class="form-control" id="sub-avail">
+          <option value="Available">Available</option>
+          <option value="Busy">Busy</option>
+          <option value="Tentative">Tentative</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Email</label><input type="email" class="form-control" id="sub-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Phone</label><input type="text" class="form-control" id="sub-phone" placeholder="+1 555-0100"></div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Portfolio / Website</label><input type="url" class="form-control" id="sub-portfolio" placeholder="https://janesmith.com"></div>
+      <div class="form-group"><label>Rating (1–5)</label>
+        <select class="form-control" id="sub-rating">
+          <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+          <option value="4">⭐⭐⭐⭐ Good</option>
+          <option value="3" selected>⭐⭐⭐ Average</option>
+          <option value="2">⭐⭐ Below Average</option>
+          <option value="1">⭐ Poor</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>Notes</label><textarea class="form-control" id="sub-notes" placeholder="Reliable for quick turnarounds, prefers async communication…"></textarea></div>
+    <div class="flex-between" style="margin-top:4px">
+      <button class="btn" onclick="closeModal('modal-add-sub')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSub()">Save Subcontractor</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Project -->
+<div class="modal-overlay" id="modal-add-project">
+  <div class="modal">
+    <div class="modal-title" id="modal-proj-title">New Project Assignment</div>
+    <button class="modal-close" onclick="closeModal('modal-add-project')">✕</button>
+    <input type="hidden" id="edit-proj-id">
+    <div class="grid-2">
+      <div class="form-group"><label>Project Name *</label><input type="text" class="form-control" id="proj-name" placeholder="Website Redesign"></div>
+      <div class="form-group"><label>Subcontractor *</label>
+        <select class="form-control" id="proj-sub"></select>
+      </div>
+    </div>
+    <div class="form-group"><label>Scope / Deliverables</label><textarea class="form-control" id="proj-scope" placeholder="Design 5 page templates, deliver Figma files and exported assets…"></textarea></div>
+    <div class="grid-2">
+      <div class="form-group"><label>Deadline</label><input type="date" class="form-control" id="proj-deadline"></div>
+      <div class="form-group"><label>Pay to Sub ($)</label><input type="number" class="form-control" id="proj-pay" placeholder="1500"></div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Client Budget ($)</label><input type="number" class="form-control" id="proj-budget" placeholder="2500"></div>
+      <div class="form-group"><label>Status</label>
+        <select class="form-control" id="proj-status">
+          <option value="Assigned">Assigned</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Review">Review</option>
+          <option value="Complete">Complete</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex-between" style="margin-top:4px">
+      <button class="btn" onclick="closeModal('modal-add-project')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProject()">Save Project</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Margin -->
+<div class="modal-overlay" id="modal-add-margin">
+  <div class="modal">
+    <div class="modal-title">Save Margin Calculation</div>
+    <button class="modal-close" onclick="closeModal('modal-add-margin')">✕</button>
+    <div class="form-group"><label>Project Name</label><input type="text" class="form-control" id="margin-proj-name" placeholder="Client website project"></div>
+    <div class="form-group"><label>Subcontractor</label><select class="form-control" id="margin-sub-sel"></select></div>
+    <div class="grid-3">
+      <div class="form-group"><label>Client Pays ($)</label><input type="number" class="form-control" id="margin-client" placeholder="0"></div>
+      <div class="form-group"><label>Sub Costs ($)</label><input type="number" class="form-control" id="margin-sub-cost" placeholder="0"></div>
+      <div class="form-group"><label>Hours</label><input type="number" class="form-control" id="margin-hours" placeholder="0"></div>
+    </div>
+    <div class="flex-between" style="margin-top:4px">
+      <button class="btn" onclick="closeModal('modal-add-margin')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveMargin()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Payment -->
+<div class="modal-overlay" id="modal-add-payment">
+  <div class="modal">
+    <div class="modal-title" id="modal-pay-title">Log Payment</div>
+    <button class="modal-close" onclick="closeModal('modal-add-payment')">✕</button>
+    <input type="hidden" id="edit-pay-id">
+    <div class="grid-2">
+      <div class="form-group"><label>Subcontractor *</label><select class="form-control" id="pay-sub-sel"></select></div>
+      <div class="form-group"><label>Project</label><input type="text" class="form-control" id="pay-project" placeholder="Website project"></div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Amount ($) *</label><input type="number" class="form-control" id="pay-amount" placeholder="0.00"></div>
+      <div class="form-group"><label>Date</label><input type="date" class="form-control" id="pay-date"></div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Payment Method</label>
+        <select class="form-control" id="pay-method">
+          <option>Bank Transfer</option>
+          <option>PayPal</option>
+          <option>Venmo</option>
+          <option>Wise</option>
+          <option>Check</option>
+          <option>Crypto</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Status</label>
+        <select class="form-control" id="pay-status">
+          <option value="Pending">Pending</option>
+          <option value="Paid">Paid</option>
+          <option value="Overdue">Overdue</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>Notes</label><input type="text" class="form-control" id="pay-notes" placeholder="Invoice #001, milestone 1…"></div>
+    <div class="flex-between" style="margin-top:4px">
+      <button class="btn" onclick="closeModal('modal-add-payment')">Cancel</button>
+      <button class="btn btn-primary" onclick="savePayment()">Save Payment</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Score -->
+<div class="modal-overlay" id="modal-add-score">
+  <div class="modal">
+    <div class="modal-title">Performance Review</div>
+    <button class="modal-close" onclick="closeModal('modal-add-score')">✕</button>
+    <div class="form-group"><label>Subcontractor *</label><select class="form-control" id="score-sub-sel"></select></div>
+    <div class="form-group"><label>Project / Context</label><input type="text" class="form-control" id="score-project" placeholder="Website redesign Q1"></div>
+    <div class="grid-2">
+      <div class="form-group"><label>Quality (1–5)</label>
+        <select class="form-control" id="score-quality">
+          <option value="5">5 — Exceptional</option><option value="4">4 — Good</option><option value="3" selected>3 — Acceptable</option><option value="2">2 — Below Average</option><option value="1">1 — Poor</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Timeliness (1–5)</label>
+        <select class="form-control" id="score-time">
+          <option value="5">5 — Always on time</option><option value="4">4 — Mostly on time</option><option value="3" selected>3 — Sometimes late</option><option value="2">2 — Often late</option><option value="1">1 — Consistently late</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Communication (1–5)</label>
+        <select class="form-control" id="score-comm">
+          <option value="5">5 — Proactive</option><option value="4">4 — Responsive</option><option value="3" selected>3 — Adequate</option><option value="2">2 — Hard to reach</option><option value="1">1 — Very poor</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Value for Money (1–5)</label>
+        <select class="form-control" id="score-value">
+          <option value="5">5 — Outstanding value</option><option value="4">4 — Good value</option><option value="3" selected>3 — Fair</option><option value="2">2 — Overpriced</option><option value="1">1 — Poor value</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>Review Notes</label><textarea class="form-control" id="score-notes" placeholder="Detailed feedback…"></textarea></div>
+    <div class="flex-between" style="margin-top:4px">
+      <button class="btn" onclick="closeModal('modal-add-score')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveScore()">Save Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Comm -->
+<div class="modal-overlay" id="modal-add-comm">
+  <div class="modal">
+    <div class="modal-title">Log Communication</div>
+    <button class="modal-close" onclick="closeModal('modal-add-comm')">✕</button>
+    <div class="grid-2">
+      <div class="form-group"><label>Subcontractor *</label><select class="form-control" id="comm-sub-sel"></select></div>
+      <div class="form-group"><label>Type</label>
+        <select class="form-control" id="comm-type">
+          <option>Email</option><option>Call</option><option>Chat</option><option>Meeting</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Date</label><input type="date" class="form-control" id="comm-date"></div>
+      <div class="form-group"><label>Follow-up Needed?</label>
+        <select class="form-control" id="comm-followup">
+          <option value="No">No</option><option value="Yes">Yes</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>Summary *</label><textarea class="form-control" id="comm-summary" placeholder="Discussed project milestones, agreed on new deadline…"></textarea></div>
+    <div class="flex-between" style="margin-top:4px">
+      <button class="btn" onclick="closeModal('modal-add-comm')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveComm()">Save Log</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA LAYER
+// ============================================================
+const KEYS = {subs:'fos_subs',projects:'fos_projects',margins:'fos_margins',payments:'fos_payments',scores:'fos_scores',comms:'fos_comms',cal:'fos_cal'};
+
+function load(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch{return[]}}
+function save(k,d){localStorage.setItem(k,JSON.stringify(d))}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+
+let subs=load(KEYS.subs);
+let projects=load(KEYS.projects);
+let margins=load(KEYS.margins);
+let payments=load(KEYS.payments);
+let scores=load(KEYS.scores);
+let comms=load(KEYS.comms);
+let cal=load(KEYS.cal);
+
+// ============================================================
+// NAV
+// ============================================================
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='directory')renderDirectory();
+  if(id==='projects')renderProjects();
+  if(id==='margin')renderMargin();
+  if(id==='payments')renderPayments();
+  if(id==='scorecard')renderScorecard();
+  if(id==='calendar')renderCalendar();
+  if(id==='comms')renderComms();
+  populateSubDropdowns();
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(id){
+  populateSubDropdowns();
+  document.getElementById(id).classList.add('open');
+  if(id==='modal-add-sub'){
+    document.getElementById('modal-sub-title').textContent='Add Subcontractor';
+    document.getElementById('edit-sub-id').value='';
+    clearForm(['sub-name','sub-spec','sub-rate','sub-email','sub-phone','sub-portfolio','sub-notes']);
+    document.getElementById('sub-avail').value='Available';
+    document.getElementById('sub-rating').value='3';
+  }
+  if(id==='modal-add-project'){
+    document.getElementById('modal-proj-title').textContent='New Project Assignment';
+    document.getElementById('edit-proj-id').value='';
+    clearForm(['proj-name','proj-scope','proj-deadline','proj-pay','proj-budget']);
+    document.getElementById('proj-status').value='Assigned';
+  }
+  if(id==='modal-add-payment'){
+    document.getElementById('modal-pay-title').textContent='Log Payment';
+    document.getElementById('edit-pay-id').value='';
+    clearForm(['pay-project','pay-amount','pay-notes']);
+    document.getElementById('pay-date').value=today();
+    document.getElementById('pay-status').value='Pending';
+  }
+  if(id==='modal-add-comm'){
+    document.getElementById('comm-date').value=today();
+  }
+}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function clearForm(ids){ids.forEach(i=>{const el=document.getElementById(i);if(el)el.value=''})}
+function today(){return new Date().toISOString().slice(0,10)}
+
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
+
+function populateSubDropdowns(){
+  const selects=['proj-sub','pay-sub-sel','score-sub-sel','comm-sub-sel','margin-sub-sel','pay-filter-sub','comm-filter-sub','sub-filter-spec'];
+  const specSet=new Set(subs.map(s=>s.spec).filter(Boolean));
+  selects.forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    if(id==='sub-filter-spec'){
+      const cur=el.value;
+      el.innerHTML='<option value="">All Specializations</option>';
+      specSet.forEach(sp=>el.innerHTML+=`<option value="${esc(sp)}"${cur===sp?'selected':''}>${esc(sp)}</option>`);
+      return;
+    }
+    const isFilter=id.includes('filter');
+    const cur=el.value;
+    el.innerHTML=isFilter?'<option value="">All Subcontractors</option>':'<option value="">— Select —</option>';
+    subs.forEach(s=>el.innerHTML+=`<option value="${s.id}"${cur===s.id?'selected':''}>${esc(s.name)}</option>`);
+  });
+}
+
+// ============================================================
+// DIRECTORY
+// ============================================================
+function saveSub(){
+  const name=document.getElementById('sub-name').value.trim();
+  const spec=document.getElementById('sub-spec').value.trim();
+  if(!name||!spec){alert('Name and Specialization are required.');return;}
+  const editId=document.getElementById('edit-sub-id').value;
+  const sub={
+    id:editId||uid(), name,spec,
+    rate:parseFloat(document.getElementById('sub-rate').value)||0,
+    avail:document.getElementById('sub-avail').value,
+    email:document.getElementById('sub-email').value.trim(),
+    phone:document.getElementById('sub-phone').value.trim(),
+    portfolio:document.getElementById('sub-portfolio').value.trim(),
+    rating:parseInt(document.getElementById('sub-rating').value),
+    notes:document.getElementById('sub-notes').value.trim(),
+    created:editId?undefined:new Date().toISOString()
+  };
+  if(editId){
+    const idx=subs.findIndex(s=>s.id===editId);
+    if(idx>=0){sub.created=subs[idx].created;subs[idx]=sub;}
+  }else{subs.push(sub);}
+  save(KEYS.subs,subs);
+  closeModal('modal-add-sub');
+  renderDirectory();
+  populateSubDropdowns();
+}
+
+function editSub(id){
+  const s=subs.find(x=>x.id===id);if(!s)return;
+  openModal('modal-add-sub');
+  document.getElementById('modal-sub-title').textContent='Edit Subcontractor';
+  document.getElementById('edit-sub-id').value=s.id;
+  document.getElementById('sub-name').value=s.name;
+  document.getElementById('sub-spec').value=s.spec;
+  document.getElementById('sub-rate').value=s.rate;
+  document.getElementById('sub-avail').value=s.avail;
+  document.getElementById('sub-email').value=s.email||'';
+  document.getElementById('sub-phone').value=s.phone||'';
+  document.getElementById('sub-portfolio').value=s.portfolio||'';
+  document.getElementById('sub-rating').value=s.rating||3;
+  document.getElementById('sub-notes').value=s.notes||'';
+}
+
+function deleteSub(id){
+  if(!confirm('Delete this subcontractor? This will not delete their associated records.'))return;
+  subs=subs.filter(s=>s.id!==id);
+  save(KEYS.subs,subs);
+  renderDirectory();populateSubDropdowns();
+}
+
+function renderDirectory(){
+  const q=(document.getElementById('sub-search').value||'').toLowerCase();
+  const avail=document.getElementById('sub-filter-avail').value;
+  const spec=document.getElementById('sub-filter-spec').value;
+  let filtered=subs.filter(s=>{
+    const matchQ=!q||s.name.toLowerCase().includes(q)||s.spec.toLowerCase().includes(q);
+    const matchA=!avail||s.avail===avail;
+    const matchS=!spec||s.spec===spec;
+    return matchQ&&matchA&&matchS;
+  });
+  const grid=document.getElementById('sub-grid');
+  const stats=document.getElementById('dir-stats');
+  const availCount=subs.filter(s=>s.avail==='Available').length;
+  const avgRate=subs.length?subs.reduce((a,s)=>a+s.rate,0)/subs.length:0;
+  stats.innerHTML=`
+    <div class="stat-card"><div class="stat-value">${subs.length}</div><div class="stat-label">Total Subs</div></div>
+    <div class="stat-card"><div class="stat-value">${availCount}</div><div class="stat-label">Available Now</div></div>
+    <div class="stat-card"><div class="stat-value">$${avgRate.toFixed(0)}/hr</div><div class="stat-label">Avg Rate</div></div>
+    <div class="stat-card"><div class="stat-value">${new Set(subs.map(s=>s.spec)).size}</div><div class="stat-label">Specializations</div></div>
+  `;
+  if(!filtered.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">👥</div><h3>${subs.length?'No matches found':'No subcontractors yet'}</h3><p>${subs.length?'Try adjusting your filters.':'Click "Add Subcontractor" to get started.'}</p></div>`;
+    return;
+  }
+  const availBadge={Available:'badge-success',Busy:'badge-danger',Tentative:'badge-warning'};
+  grid.innerHTML=filtered.map(s=>`
+    <div class="sub-card">
+      <div class="flex" style="margin-bottom:12px">
+        <div class="sub-avatar">${s.name.slice(0,2).toUpperCase()}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:600;font-size:15px">${esc(s.name)}</div>
+          <div style="color:var(--muted);font-size:13px">${esc(s.spec)}</div>
+        </div>
+        <span class="badge ${availBadge[s.avail]||'badge-purple'}">${s.avail}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;margin-bottom:10px">
+        <div><span class="stars">${'★'.repeat(s.rating)+'☆'.repeat(5-s.rating)}</span></div>
+        <div style="text-align:right;font-weight:600;color:var(--accent1)">$${s.rate}/hr</div>
+        ${s.email?`<div style="color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">✉ ${esc(s.email)}</div>`:''}
+        ${s.phone?`<div style="color:var(--muted)">📞 ${esc(s.phone)}</div>`:''}
+      </div>
+      ${s.portfolio?`<div style="margin-bottom:8px"><a href="${esc(s.portfolio)}" target="_blank" rel="noopener" style="font-size:12px">🔗 Portfolio</a></div>`:''}
+      ${s.notes?`<div style="font-size:12px;color:var(--muted);margin-bottom:8px;font-style:italic">"${esc(s.notes.slice(0,80))}${s.notes.length>80?'…':''}"</div>`:''}
+      <div class="sub-card-actions">
+        <button class="btn btn-sm" onclick="editSub('${s.id}')">✏ Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteSub('${s.id}')">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// PROJECTS / KANBAN
+// ============================================================
+function saveProject(){
+  const name=document.getElementById('proj-name').value.trim();
+  const subId=document.getElementById('proj-sub').value;
+  if(!name||!subId){alert('Project name and subcontractor are required.');return;}
+  const editId=document.getElementById('edit-proj-id').value;
+  const proj={
+    id:editId||uid(),name,subId,
+    scope:document.getElementById('proj-scope').value.trim(),
+    deadline:document.getElementById('proj-deadline').value,
+    pay:parseFloat(document.getElementById('proj-pay').value)||0,
+    budget:parseFloat(document.getElementById('proj-budget').value)||0,
+    status:document.getElementById('proj-status').value,
+    created:editId?undefined:new Date().toISOString()
+  };
+  if(editId){const idx=projects.findIndex(p=>p.id===editId);if(idx>=0){proj.created=projects[idx].created;projects[idx]=proj;}}
+  else{projects.push(proj);}
+  save(KEYS.projects,projects);
+  closeModal('modal-add-project');
+  renderProjects();
+}
+
+function editProject(id){
+  const p=projects.find(x=>x.id===id);if(!p)return;
+  openModal('modal-add-project');
+  document.getElementById('modal-proj-title').textContent='Edit Project';
+  document.getElementById('edit-proj-id').value=p.id;
+  document.getElementById('proj-name').value=p.name;
+  document.getElementById('proj-sub').value=p.subId;
+  document.getElementById('proj-scope').value=p.scope||'';
+  document.getElementById('proj-deadline').value=p.deadline||'';
+  document.getElementById('proj-pay').value=p.pay||'';
+  document.getElementById('proj-budget').value=p.budget||'';
+  document.getElementById('proj-status').value=p.status;
+}
+
+function deleteProject(id){
+  if(!confirm('Delete this project?'))return;
+  projects=projects.filter(p=>p.id!==id);
+  save(KEYS.projects,projects);renderProjects();
+}
+
+function moveProject(id,status){
+  const p=projects.find(x=>x.id===id);if(!p)return;
+  p.status=status;save(KEYS.projects,projects);renderProjects();
+}
+
+function renderProjects(){
+  const cols=['Assigned','In Progress','Review','Complete'];
+  const colColors={Assigned:'badge-info','In Progress':'badge-warning',Review:'badge-purple',Complete:'badge-success'};
+  const board=document.getElementById('kanban-board');
+  board.innerHTML=cols.map(col=>{
+    const items=projects.filter(p=>p.status===col);
+    const sub=id=>subs.find(s=>s.id===id);
+    return `<div class="kanban-col">
+      <div class="kanban-col-title flex-between"><span>${col}</span><span class="badge ${colColors[col]}">${items.length}</span></div>
+      ${items.length?items.map(p=>{
+        const s=sub(p.subId);
+        const margin=p.budget-p.pay;
+        const overdue=p.deadline&&new Date(p.deadline)<new Date()&&col!=='Complete';
+        return `<div class="kanban-card">
+          <div style="font-weight:600;font-size:14px;margin-bottom:6px">${esc(p.name)}</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:8px">${s?esc(s.name):'Unknown sub'}</div>
+          ${p.scope?`<div style="font-size:12px;color:var(--muted);margin-bottom:8px">${esc(p.scope.slice(0,80))}${p.scope.length>80?'…':''}</div>`:''}
+          <div class="flex" style="gap:6px;flex-wrap:wrap;margin-bottom:8px">
+            ${p.deadline?`<span class="badge ${overdue?'badge-danger':'badge-info'}">${overdue?'⚠ ':''}${p.deadline}</span>`:''}
+            ${p.pay?`<span class="badge badge-purple">$${p.pay.toLocaleString()} to sub</span>`:''}
+            ${margin>0?`<span class="badge badge-success">$${margin.toLocaleString()} margin</span>`:''}
+          </div>
+          <div class="flex gap-2">
+            <button class="btn btn-sm" onclick="editProject('${p.id}')">✏</button>
+            <select class="form-control" style="font-size:11px;padding:4px 8px;height:28px" onchange="moveProject('${p.id}',this.value)">
+              ${cols.map(c=>`<option value="${c}"${c===col?'selected':''}>${c}</option>`).join('')}
+            </select>
+            <button class="btn btn-sm btn-danger" onclick="deleteProject('${p.id}')">🗑</button>
+          </div>
+        </div>`;
+      }).join(''):`<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px">No projects</div>`}
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// MARGIN CALCULATOR
+// ============================================================
+function calcMargin(){
+  const c=parseFloat(document.getElementById('calc-client').value)||0;
+  const s=parseFloat(document.getElementById('calc-sub').value)||0;
+  const h=parseFloat(document.getElementById('calc-hours').value)||0;
+  const m=c-s;
+  const pct=c>0?((m/c)*100):0;
+  const rate=h>0?(m/h):0;
+  document.getElementById('r-margin').textContent='$'+m.toFixed(2);
+  document.getElementById('r-pct').textContent=pct.toFixed(1)+'%';
+  document.getElementById('r-rate').textContent='$'+rate.toFixed(2)+'/hr';
+}
+
+function saveMargin(){
+  const proj=document.getElementById('margin-proj-name').value.trim();
+  const subId=document.getElementById('margin-sub-sel').value;
+  const c=parseFloat(document.getElementById('margin-client').value)||0;
+  const s=parseFloat(document.getElementById('margin-sub-cost').value)||0;
+  const h=parseFloat(document.getElementById('margin-hours').value)||0;
+  if(!proj){alert('Project name required.');return;}
+  margins.push({id:uid(),proj,subId,client:c,sub:s,hours:h,created:new Date().toISOString()});
+  save(KEYS.margins,margins);
+  closeModal('modal-add-margin');
+  renderMargin();
+}
+
+function deleteMargin(id){
+  margins=margins.filter(m=>m.id!==id);save(KEYS.margins,margins);renderMargin();
+}
+
+function renderMargin(){
+  const sub=id=>subs.find(s=>s.id===id);
+  const totalClient=margins.reduce((a,m)=>a+m.client,0);
+  const totalSub=margins.reduce((a,m)=>a+m.sub,0);
+  const totalMargin=totalClient-totalSub;
+  const avgPct=totalClient>0?((totalMargin/totalClient)*100):0;
+  document.getElementById('margin-summary').innerHTML=`
+    <div class="stat-card"><div class="stat-value">$${totalClient.toLocaleString()}</div><div class="stat-label">Total Client Revenue</div></div>
+    <div class="stat-card"><div class="stat-value">$${totalSub.toLocaleString()}</div><div class="stat-label">Total Sub Costs</div></div>
+    <div class="stat-card"><div class="stat-value">$${totalMargin.toLocaleString()}</div><div class="stat-label">Total Margin</div></div>
+    <div class="stat-card"><div class="stat-value">${avgPct.toFixed(1)}%</div><div class="stat-label">Avg Margin %</div></div>
+  `;
+  const tbody=document.getElementById('margin-tbody');
+  if(!margins.length){tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:24px">No saved calculations yet.</td></tr>`;return;}
+  tbody.innerHTML=margins.map(m=>{
+    const s=sub(m.subId);
+    const margin=m.client-m.sub;
+    const pct=m.client>0?((margin/m.client)*100):0;
+    const rate=m.hours>0?(margin/m.hours):0;
+    return `<tr>
+      <td>${esc(m.proj)}</td>
+      <td>${s?esc(s.name):'—'}</td>
+      <td>$${m.client.toLocaleString()}</td>
+      <td>$${m.sub.toLocaleString()}</td>
+      <td style="color:${margin>=0?'var(--success)':'var(--danger)'}">$${margin.toLocaleString()}</td>
+      <td>${pct.toFixed(1)}%</td>
+      <td>${m.hours?'$'+rate.toFixed(2)+'/hr':'—'}</td>
+      <td><button class="btn btn-sm btn-danger" onclick="deleteMargin('${m.id}')">🗑</button></td>
+    </tr>`;
+  }).join('');
+}
+
+// ============================================================
+// PAYMENTS
+// ============================================================
+function savePayment(){
+  const subId=document.getElementById('pay-sub-sel').value;
+  const amt=parseFloat(document.getElementById('pay-amount').value);
+  if(!subId||!amt){alert('Subcontractor and amount are required.');return;}
+  const editId=document.getElementById('edit-pay-id').value;
+  const pay={
+    id:editId||uid(),subId,
+    project:document.getElementById('pay-project').value.trim(),
+    amount:amt,
+    date:document.getElementById('pay-date').value,
+    method:document.getElementById('pay-method').value,
+    status:document.getElementById('pay-status').value,
+    notes:document.getElementById('pay-notes').value.trim()
+  };
+  if(editId){const idx=payments.findIndex(p=>p.id===editId);if(idx>=0)payments[idx]=pay;}
+  else payments.push(pay);
+  save(KEYS.payments,payments);
+  closeModal('modal-add-payment');renderPayments();
+}
+
+function editPayment(id){
+  const p=payments.find(x=>x.id===id);if(!p)return;
+  openModal('modal-add-payment');
+  document.getElementById('modal-pay-title').textContent='Edit Payment';
+  document.getElementById('edit-pay-id').value=p.id;
+  document.getElementById('pay-sub-sel').value=p.subId;
+  document.getElementById('pay-project').value=p.project||'';
+  document.getElementById('pay-amount').value=p.amount;
+  document.getElementById('pay-date').value=p.date||'';
+  document.getElementById('pay-method').value=p.method||'Bank Transfer';
+  document.getElementById('pay-status').value=p.status;
+  document.getElementById('pay-notes').value=p.notes||'';
+}
+
+function deletePayment(id){
+  if(!confirm('Delete this payment record?'))return;
+  payments=payments.filter(p=>p.id!==id);save(KEYS.payments,payments);renderPayments();
+}
+
+function renderPayments(){
+  const filterSub=document.getElementById('pay-filter-sub').value;
+  const filterStatus=document.getElementById('pay-filter-status').value;
+  let filtered=payments.filter(p=>
+    (!filterSub||p.subId===filterSub)&&(!filterStatus||p.status===filterStatus)
+  );
+  const totalPaid=payments.filter(p=>p.status==='Paid').reduce((a,p)=>a+p.amount,0);
+  const totalPending=payments.filter(p=>p.status==='Pending').reduce((a,p)=>a+p.amount,0);
+  const totalOverdue=payments.filter(p=>p.status==='Overdue').reduce((a,p)=>a+p.amount,0);
+  document.getElementById('payment-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-value">$${totalPaid.toLocaleString()}</div><div class="stat-label">Total Paid</div></div>
+    <div class="stat-card"><div class="stat-value" style="-webkit-text-fill-color:var(--warning);color:var(--warning)">$${totalPending.toLocaleString()}</div><div class="stat-label">Pending</div></div>
+    <div class="stat-card"><div class="stat-value" style="-webkit-text-fill-color:var(--danger);color:var(--danger)">$${totalOverdue.toLocaleString()}</div><div class="stat-label">Overdue</div></div>
+    <div class="stat-card"><div class="stat-value">${payments.length}</div><div class="stat-label">Total Records</div></div>
+  `;
+  const badge={Paid:'badge-success',Pending:'badge-warning',Overdue:'badge-danger'};
+  const tbody=document.getElementById('payment-tbody');
+  if(!filtered.length){tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:24px">No payment records${filterSub||filterStatus?' matching filters':' yet'}.</td></tr>`;return;}
+  tbody.innerHTML=filtered.map(p=>{
+    const s=subs.find(x=>x.id===p.subId);
+    return `<tr>
+      <td>${s?esc(s.name):'—'}</td>
+      <td>${esc(p.project||'—')}</td>
+      <td style="font-weight:600">$${p.amount.toLocaleString()}</td>
+      <td>${p.date||'—'}</td>
+      <td>${esc(p.method)}</td>
+      <td><span class="badge ${badge[p.status]||''}">${p.status}</span></td>
+      <td style="color:var(--muted);font-size:12px">${esc(p.notes||'')}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-sm" onclick="editPayment('${p.id}')">✏</button>
+        <button class="btn btn-sm btn-danger" onclick="deletePayment('${p.id}')">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ============================================================
+// SCORECARD
+// ============================================================
+function saveScore(){
+  const subId=document.getElementById('score-sub-sel').value;
+  if(!subId){alert('Select a subcontractor.');return;}
+  scores.push({
+    id:uid(),subId,
+    project:document.getElementById('score-project').value.trim(),
+    quality:parseInt(document.getElementById('score-quality').value),
+    time:parseInt(document.getElementById('score-time').value),
+    comm:parseInt(document.getElementById('score-comm').value),
+    value:parseInt(document.getElementById('score-value').value),
+    notes:document.getElementById('score-notes').value.trim(),
+    date:new Date().toISOString()
+  });
+  save(KEYS.scores,scores);closeModal('modal-add-score');renderScorecard();
+}
+
+function deleteScore(id){
+  scores=scores.filter(s=>s.id!==id);save(KEYS.scores,scores);renderScorecard();
+}
+
+function letterGrade(avg){
+  if(avg>=4.5)return{grade:'A+',cls:'score-a'};
+  if(avg>=4.0)return{grade:'A',cls:'score-a'};
+  if(avg>=3.5)return{grade:'B+',cls:'score-b'};
+  if(avg>=3.0)return{grade:'B',cls:'score-b'};
+  if(avg>=2.5)return{grade:'C',cls:'score-c'};
+  if(avg>=2.0)return{grade:'D',cls:'score-d'};
+  return{grade:'F',cls:'score-f'};
+}
+
+function renderScorecard(){
+  const grid=document.getElementById('scorecard-grid');
+  if(!subs.length){grid.innerHTML=`<div class="empty-state"><div class="empty-icon">⭐</div><h3>No subcontractors</h3><p>Add subcontractors first.</p></div>`;return;}
+  grid.innerHTML=subs.map(s=>{
+    const sr=scores.filter(x=>x.subId===s.id);
+    if(!sr.length)return`<div class="card"><div class="flex" style="margin-bottom:12px"><div class="sub-avatar">${s.name.slice(0,2).toUpperCase()}</div><div><div style="font-weight:600">${esc(s.name)}</div><div style="color:var(--muted);font-size:13px">${esc(s.spec)}</div></div></div><p style="color:var(--muted);font-size:13px">No reviews yet.</p><button class="btn btn-sm btn-primary" style="margin-top:10px" onclick="document.getElementById('score-sub-sel').value='${s.id}';openModal('modal-add-score')">+ Add Review</button></div>`;
+    const avg=(arr,k)=>arr.reduce((a,x)=>a+x[k],0)/arr.length;
+    const q=avg(sr,'quality'),t=avg(sr,'time'),c=avg(sr,'comm'),v=avg(sr,'value');
+    const overall=(q+t+c+v)/4;
+    const {grade,cls}=letterGrade(overall);
+    const bar=(val)=>`<div class="progress" style="margin-top:4px"><div class="progress-bar" style="width:${(val/5)*100}%"></div></div>`;
+    return`<div class="card">
+      <div class="flex-between" style="margin-bottom:14px">
+        <div class="flex"><div class="sub-avatar">${s.name.slice(0,2).toUpperCase()}</div><div><div style="font-weight:600">${esc(s.name)}</div><div style="color:var(--muted);font-size:12px">${sr.length} review${sr.length!==1?'s':''}</div></div></div>
+        <div class="score-circle ${cls}">${grade}</div>
+      </div>
+      <div style="font-size:13px">
+        <div class="flex-between" style="margin-bottom:6px"><span>Quality</span><span style="font-weight:600">${q.toFixed(1)}/5</span></div>${bar(q)}
+        <div class="flex-between" style="margin-bottom:6px;margin-top:10px"><span>Timeliness</span><span style="font-weight:600">${t.toFixed(1)}/5</span></div>${bar(t)}
+        <div class="flex-between" style="margin-bottom:6px;margin-top:10px"><span>Communication</span><span style="font-weight:600">${c.toFixed(1)}/5</span></div>${bar(c)}
+        <div class="flex-between" style="margin-bottom:6px;margin-top:10px"><span>Value for Money</span><span style="font-weight:600">${v.toFixed(1)}/5</span></div>${bar(v)}
+      </div>
+      <div style="margin-top:14px;font-size:12px;color:var(--muted)">Overall: <strong style="color:var(--text)">${overall.toFixed(2)}/5</strong></div>
+      <div style="margin-top:12px">
+        ${sr.slice(-3).reverse().map(r=>`<div class="comm-entry" style="margin-bottom:6px">
+          <div style="font-size:11px;color:var(--muted)">${r.project||'General review'} · ${r.date?r.date.slice(0,10):''}</div>
+          <div style="font-size:12px;margin-top:2px">${r.notes?esc(r.notes.slice(0,80)):''}</div>
+          <button class="btn btn-sm btn-danger" style="margin-top:4px;padding:2px 8px;font-size:11px" onclick="deleteScore('${r.id}')">🗑</button>
+        </div>`).join('')}
+      </div>
+      <button class="btn btn-sm" style="margin-top:10px" onclick="document.getElementById('score-sub-sel').value='${s.id}';openModal('modal-add-score')">+ Add Review</button>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// AGREEMENTS
+// ============================================================
+const AGR_TEMPLATES={
+  nda:(d)=>`NON-DISCLOSURE AGREEMENT
+
+Effective Date: ${d.start||'[Date]'}
+
+This Non-Disclosure Agreement ("Agreement") is entered into between:
+
+Disclosing Party: ${d.client||'[Your Name/Company]'}
+Receiving Party: ${d.sub||'[Subcontractor Name]'}
+
+1. CONFIDENTIAL INFORMATION
+The Receiving Party agrees to hold in strict confidence all proprietary, technical, business, financial, client, and other information disclosed by the Disclosing Party in connection with: ${d.scope||'[Project/Scope]'}.
+
+2. OBLIGATIONS
+The Receiving Party shall:
+(a) Not disclose Confidential Information to any third party without prior written consent.
+(b) Use Confidential Information solely for the purpose of performing services under this Agreement.
+(c) Protect Confidential Information with at least the same degree of care used for its own confidential information.
+
+3. EXCLUSIONS
+This Agreement does not apply to information that: (a) is or becomes publicly available through no breach of this Agreement; (b) was already known to the Receiving Party; (c) is required to be disclosed by law or court order.
+
+4. TERM
+This Agreement remains in effect from ${d.start||'[Start Date]'} to ${d.end||'[End Date]'}, and obligations survive for 3 years thereafter.
+
+5. GOVERNING LAW
+This Agreement shall be governed by the laws of ${d.law||'[State/Country]'}.
+
+6. ENTIRE AGREEMENT
+This Agreement constitutes the entire agreement between the parties regarding confidentiality.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement.
+
+_________________________________          Date: ___________
+${d.client||'[Your Name]'}
+
+_________________________________          Date: ___________
+${d.sub||'[Subcontractor Name]'}`,
+
+  full:(d)=>`SUBCONTRACTOR AGREEMENT
+
+Effective Date: ${d.start||'[Start Date]'}
+
+This Subcontractor Agreement ("Agreement") is between:
+
+Client/Contractor: ${d.client||'[Your Name/Company]'} ("Contractor")
+Subcontractor: ${d.sub||'[Subcontractor Name]'} ("Subcontractor")
+
+1. SCOPE OF WORK
+Subcontractor agrees to perform the following services: ${d.scope||'[Describe project/deliverables]'}
+
+2. TERM
+This Agreement begins ${d.start||'[Start Date]'} and ends ${d.end||'[End Date]'}, unless extended by mutual written agreement.
+
+3. COMPENSATION
+Contractor shall pay Subcontractor: ${d.pay||'[Payment Amount/Terms]'}
+Payment shall be made upon satisfactory completion of agreed milestones.
+
+4. INDEPENDENT CONTRACTOR STATUS
+Subcontractor is an independent contractor, not an employee. Subcontractor is responsible for all taxes, insurance, and benefits.
+
+5. INTELLECTUAL PROPERTY
+All work product, deliverables, and materials created by Subcontractor under this Agreement shall be considered work-for-hire and shall be the sole property of Contractor (and its clients). Subcontractor assigns all rights, title, and interest in such work to Contractor.
+
+6. CONFIDENTIALITY
+Subcontractor shall maintain strict confidentiality of all client information, project details, business strategies, and proprietary information. This obligation survives termination for 3 years.
+
+7. NON-SOLICITATION
+For 12 months following termination, Subcontractor agrees not to directly solicit or contract with Contractor's clients introduced through this engagement.
+
+8. QUALITY & REVISIONS
+Subcontractor agrees to deliver work meeting industry-standard quality. Up to 2 rounds of revisions are included. Additional revisions may be billed at Subcontractor's standard rate.
+
+9. TERMINATION
+Either party may terminate this Agreement with 7 days written notice. Contractor shall compensate Subcontractor for work completed to date of termination.
+
+10. LIMITATION OF LIABILITY
+Subcontractor's total liability shall not exceed the total fees paid under this Agreement.
+
+11. GOVERNING LAW
+This Agreement is governed by the laws of ${d.law||'[State/Country]'}.
+
+12. ENTIRE AGREEMENT
+This Agreement constitutes the complete understanding between the parties and supersedes all prior negotiations.
+
+IN WITNESS WHEREOF, the parties have signed this Agreement.
+
+_________________________________          Date: ___________
+${d.client||'[Your Name/Company]'}
+
+_________________________________          Date: ___________
+${d.sub||'[Subcontractor Name]'}`,
+
+  wfh:(d)=>`WORK-FOR-HIRE AGREEMENT
+
+Effective Date: ${d.start||'[Start Date]'}
+
+This Work-for-Hire Agreement ("Agreement") is between:
+
+Commissioning Party: ${d.client||'[Your Name/Company]'} ("Client")
+Creator/Contractor: ${d.sub||'[Subcontractor Name]'} ("Creator")
+
+1. PROJECT DESCRIPTION
+Creator agrees to create the following work ("Work"): ${d.scope||'[Describe the work/deliverables]'}
+
+2. DELIVERY
+Creator shall deliver the Work no later than ${d.end||'[Deadline]'} in the following format(s): [Specify file formats, e.g., Figma, PNG, MP4, etc.]
+
+3. PAYMENT
+Client shall pay Creator: ${d.pay||'[Payment Amount/Terms]'}
+Payment is due within 7 days of delivery and acceptance of Work.
+
+4. WORK FOR HIRE
+The Work is specifically commissioned as a "work made for hire" as defined under applicable copyright law. To the extent the Work is not legally classified as work-for-hire, Creator hereby irrevocably assigns all copyright, title, and intellectual property rights in the Work to Client, including all derivative works and reproductions.
+
+5. CREATOR CREDIT
+Client [shall / shall not] provide Creator credit when publishing the Work. (Strike as applicable.)
+
+6. REPRESENTATIONS & WARRANTIES
+Creator represents that: (a) the Work is original; (b) Creator has full authority to enter this Agreement; (c) the Work does not infringe third-party rights; (d) Creator has not and will not assign overlapping rights.
+
+7. REVISIONS
+Creator will provide up to [#] rounds of revisions. Additional revisions billed at Creator's standard rate of $[rate]/hr.
+
+8. CONFIDENTIALITY
+Creator shall keep all project details, client information, and business information confidential.
+
+9. GOVERNING LAW
+This Agreement is governed by the laws of ${d.law||'[State/Country]'}.
+
+10. ENTIRE AGREEMENT
+This Agreement represents the complete understanding of the parties.
+
+IN WITNESS WHEREOF:
+
+_________________________________          Date: ___________
+${d.client||'[Client/Commissioning Party]'}
+
+_________________________________          Date: ___________
+${d.sub||'[Creator/Subcontractor]'}`
+};
+
+function updateAgreement(){
+  const type=document.querySelector('input[name="agr-type"]:checked').value;
+  const d={
+    client:document.getElementById('agr-client').value,
+    sub:document.getElementById('agr-sub').value,
+    scope:document.getElementById('agr-scope').value,
+    pay:document.getElementById('agr-pay').value,
+    start:document.getElementById('agr-start').value,
+    end:document.getElementById('agr-end').value,
+    law:document.getElementById('agr-law').value
+  };
+  document.getElementById('agreement-text').textContent=AGR_TEMPLATES[type](d);
+}
+
+function copyAgreement(){
+  const text=document.getElementById('agreement-text').textContent;
+  navigator.clipboard.writeText(text).then(()=>alert('Agreement copied to clipboard!')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);alert('Copied!');
+  });
+}
+
+function downloadAgreement(){
+  const text=document.getElementById('agreement-text').textContent;
+  const type=document.querySelector('input[name="agr-type"]:checked').value;
+  const titles={nda:'Simple NDA',full:'Subcontractor Agreement',wfh:'Work-for-Hire Agreement'};
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${titles[type]}</title><style>body{font-family:Georgia,serif;max-width:700px;margin:40px auto;padding:0 20px;line-height:1.8;color:#111}h1{font-size:18px;text-align:center}pre{white-space:pre-wrap;font-family:Georgia,serif}</style></head><body><pre>${text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre></body></html>`;
+  download(html,'agreement.html','text/html');
+}
+
+// ============================================================
+// CALENDAR
+// ============================================================
+const WEEKS=8;
+function getWeekLabel(offset){
+  const d=new Date();d.setDate(d.getDate()+offset*7-d.getDay());
+  return`${d.getMonth()+1}/${d.getDate()}`;
+}
+
+function getCalKey(subId,week){return`${subId}:${week}`}
+function getCalStatus(subId,week){
+  const entry=cal.find(c=>c.key===getCalKey(subId,week));
+  return entry?entry.status:null;
+}
+
+function toggleCal(subId,week){
+  const key=getCalKey(subId,week);
+  const idx=cal.findIndex(c=>c.key===key);
+  const cycle=[null,'Available','Tentative','Busy'];
+  let cur=idx>=0?cal[idx].status:null;
+  let next=cycle[(cycle.indexOf(cur)+1)%cycle.length];
+  if(idx>=0){if(next===null)cal.splice(idx,1);else cal[idx].status=next;}
+  else if(next)cal.push({key,status:next});
+  save(KEYS.cal,cal);
+  renderCalendar();
+}
+
+function renderCalendar(){
+  const wrapper=document.getElementById('cal-wrapper');
+  if(!subs.length){wrapper.innerHTML=`<div class="empty-state"><div class="empty-icon">📅</div><h3>No subcontractors</h3><p>Add subcontractors to use the availability calendar.</p></div>`;return;}
+  const cols=Array.from({length:WEEKS},(_,i)=>i);
+  let html=`<div class="cal-grid">`;
+  html+=`<div class="cal-header">Subcontractor</div>`;
+  cols.forEach(i=>html+=`<div class="cal-header">Wk ${i+1}<br><span style="font-weight:400;color:var(--muted)">${getWeekLabel(i)}</span></div>`);
+  subs.forEach(s=>{
+    html+=`<div class="cal-name">${esc(s.name)}</div>`;
+    cols.forEach(i=>{
+      const st=getCalStatus(s.id,i);
+      const cls=st?`cal-${st.toLowerCase()}`:'cal-empty';
+      const label=st?st.slice(0,3):'—';
+      html+=`<div class="cal-cell ${cls}" onclick="toggleCal('${s.id}',${i})" title="Click to change">${label}</div>`;
+    });
+  });
+  html+='</div>';
+  wrapper.innerHTML=html;
+}
+
+// ============================================================
+// COMMS LOG
+// ============================================================
+function saveComm(){
+  const subId=document.getElementById('comm-sub-sel').value;
+  const summary=document.getElementById('comm-summary').value.trim();
+  if(!subId||!summary){alert('Subcontractor and summary are required.');return;}
+  comms.push({
+    id:uid(),subId,
+    type:document.getElementById('comm-type').value,
+    date:document.getElementById('comm-date').value,
+    followup:document.getElementById('comm-followup').value,
+    summary,
+    created:new Date().toISOString()
+  });
+  save(KEYS.comms,comms);closeModal('modal-add-comm');renderComms();
+}
+
+function deleteComm(id){
+  comms=comms.filter(c=>c.id!==id);save(KEYS.comms,comms);renderComms();
+}
+
+function renderComms(){
+  const filterSub=document.getElementById('comm-filter-sub').value;
+  const filterType=document.getElementById('comm-filter-type').value;
+  let filtered=comms.filter(c=>(!filterSub||c.subId===filterSub)&&(!filterType||c.type===filterType))
+    .sort((a,b)=>b.created.localeCompare(a.created));
+  const list=document.getElementById('comms-list');
+  if(!filtered.length){list.innerHTML=`<div class="empty-state"><div class="empty-icon">💬</div><h3>No communications logged</h3><p>Click "Log Communication" to start tracking.</p></div>`;return;}
+  const typeIcon={Email:'✉',Call:'📞',Chat:'💬',Meeting:'🤝'};
+  list.innerHTML=filtered.map(c=>{
+    const s=subs.find(x=>x.id===c.subId);
+    return`<div class="comm-entry">
+      <div class="flex-between" style="margin-bottom:4px">
+        <div class="flex gap-2">
+          <span style="font-size:15px">${typeIcon[c.type]||'💬'}</span>
+          <span class="badge badge-purple">${c.type}</span>
+          ${s?`<strong style="font-size:13px">${esc(s.name)}</strong>`:''}
+          ${c.followup==='Yes'?`<span class="badge badge-warning">Follow-up needed</span>`:''}
+        </div>
+        <div class="flex gap-2">
+          <span style="color:var(--muted);font-size:12px">${c.date||''}</span>
+          <button class="btn btn-sm btn-danger" onclick="deleteComm('${c.id}')">🗑</button>
+        </div>
+      </div>
+      <div style="font-size:13px;margin-top:4px">${esc(c.summary)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// EXPORT
+// ============================================================
+function download(content,filename,type){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([content],{type}));
+  a.download=filename;a.click();URL.revokeObjectURL(a.href);
+}
+
+function exportCSV(type){
+  let rows=[],filename='';
+  if(type==='subs'){
+    filename='subcontractors.csv';
+    rows=[['Name','Specialization','Rate ($/hr)','Availability','Rating','Email','Phone','Portfolio','Notes']];
+    subs.forEach(s=>rows.push([s.name,s.spec,s.rate,s.avail,s.rating,s.email||'',s.phone||'',s.portfolio||'',s.notes||'']));
+  }else if(type==='payments'){
+    filename='payments.csv';
+    rows=[['Sub Name','Project','Amount','Date','Method','Status','Notes']];
+    payments.forEach(p=>{const s=subs.find(x=>x.id===p.subId);rows.push([s?s.name:'Unknown',p.project||'',p.amount,p.date||'',p.method,p.status,p.notes||'']);});
+  }else if(type==='scores'){
+    filename='performance.csv';
+    rows=[['Sub Name','Project','Quality','Timeliness','Communication','Value','Overall','Grade','Date','Notes']];
+    scores.forEach(sc=>{
+      const s=subs.find(x=>x.id===sc.subId);
+      const avg=(sc.quality+sc.time+sc.comm+sc.value)/4;
+      const {grade}=letterGrade(avg);
+      rows.push([s?s.name:'Unknown',sc.project||'',sc.quality,sc.time,sc.comm,sc.value,avg.toFixed(2),grade,sc.date?sc.date.slice(0,10):'',sc.notes||'']);
+    });
+  }
+  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  download(csv,filename,'text/csv');
+}
+
+function exportJSON(){
+  const data={subs,projects,margins,payments,scores,comms,cal,exported:new Date().toISOString()};
+  download(JSON.stringify(data,null,2),'subcontractor-manager-backup.json','application/json');
+}
+
+function importJSON(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(confirm('This will replace ALL current data. Continue?')){
+        if(d.subs)subs=d.subs,save(KEYS.subs,subs);
+        if(d.projects)projects=d.projects,save(KEYS.projects,projects);
+        if(d.margins)margins=d.margins,save(KEYS.margins,margins);
+        if(d.payments)payments=d.payments,save(KEYS.payments,payments);
+        if(d.scores)scores=d.scores,save(KEYS.scores,scores);
+        if(d.comms)comms=d.comms,save(KEYS.comms,comms);
+        if(d.cal)cal=d.cal,save(KEYS.cal,cal);
+        alert('Import successful!');
+        renderDirectory();populateSubDropdowns();
+      }
+    }catch{alert('Invalid JSON file.');}
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function esc(str){
+  if(!str)return'';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+populateSubDropdowns();
+renderDirectory();
+updateAgreement();
+document.getElementById('agr-start').value=today();
+</script>
+</body>
+</html>
