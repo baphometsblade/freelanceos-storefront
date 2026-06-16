@@ -1,0 +1,3584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Client Meeting Notes Generator | FreelanceOS</title>
+    <meta name="description" content="Free client meeting notes generator for freelancers. Capture decisions, action items, and follow-ups. Auto-generate follow-up emails. Built for freelancers by FreelanceOS.">
+    <meta name="keywords" content="meeting notes generator, freelancer tools, client meeting template, action item tracker, follow-up email generator, freelance productivity">
+    <meta name="author" content="FreelanceOS">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/meeting-notes.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Free Client Meeting Notes Generator | FreelanceOS">
+    <meta property="og:description" content="Capture meeting notes, track action items, and auto-generate follow-up emails. Free tool for freelancers.">
+    <meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/meeting-notes.html">
+    <meta property="og:site_name" content="FreelanceOS">
+    <meta property="og:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Client Meeting Notes Generator | FreelanceOS">
+    <meta name="twitter:description" content="Capture meeting notes, track action items, and auto-generate follow-up emails. Free tool for freelancers.">
+    <meta name="twitter:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.png">
+
+    <!-- Schema.org WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Client Meeting Notes Generator",
+        "description": "Free client meeting notes generator for freelancers. Capture decisions, action items, and follow-ups. Auto-generate follow-up emails.",
+        "url": "https://baphometsblade.github.io/freelanceos-storefront/meeting-notes.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "FreelanceOS"
+        }
+    }
+    </script>
+
+    <style>
+        /* ========== RESET & BASE ========== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #020617;
+            --bg-card: #0f172a;
+            --bg-input: #1e293b;
+            --bg-hover: #1e293b;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --accent-gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --text-body: #e2e8f0;
+            --text-heading: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border-card: rgba(168, 85, 247, 0.2);
+            --border-input: rgba(168, 85, 247, 0.3);
+            --border-focus: rgba(168, 85, 247, 0.6);
+            --radius-card: 16px;
+            --radius-btn: 12px;
+            --radius-input: 12px;
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 20px rgba(168, 85, 247, 0.15);
+            --transition: 0.3s ease;
+            --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --priority-high: #ef4444;
+            --priority-medium: #f59e0b;
+            --priority-low: #22c55e;
+            --status-open: #3b82f6;
+            --status-progress: #f59e0b;
+            --status-complete: #22c55e;
+            --status-overdue: #ef4444;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-body);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(168, 85, 247, 0.5); }
+
+        /* ========== CTA BANNER ========== */
+        .cta-banner {
+            background: var(--accent-gradient);
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .cta-banner a {
+            color: #fff;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 8px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .cta-banner a:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* ========== HEADER ========== */
+        .app-header {
+            padding: 40px 20px 20px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .app-header .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--border-card);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent-purple);
+            margin-bottom: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .app-header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .app-header h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .app-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== NAVIGATION TABS ========== */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 10px 20px;
+            border-radius: var(--radius-btn);
+            border: 1px solid var(--border-card);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: var(--font-family);
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--accent-purple);
+            color: var(--text-body);
+        }
+
+        .nav-tab.active {
+            background: var(--accent-gradient);
+            color: #fff;
+            border-color: transparent;
+            font-weight: 600;
+        }
+
+        /* ========== MAIN LAYOUT ========== */
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .view-panel {
+            display: none;
+        }
+
+        .view-panel.active {
+            display: block;
+        }
+
+        /* ========== CARD ========== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-card);
+            padding: 28px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-glow);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title .icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        /* ========== FORM ELEMENTS ========== */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-input);
+            border-radius: var(--radius-input);
+            color: var(--text-body);
+            font-size: 0.95rem;
+            font-family: var(--font-family);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text-dim);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        .form-select option {
+            background: var(--bg-input);
+            color: var(--text-body);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* ========== BUTTONS ========== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-btn);
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-family);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-input);
+            color: var(--text-body);
+            border: 1px solid var(--border-card);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.25);
+        }
+
+        .btn-sm {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+        }
+
+        .btn-xs {
+            padding: 4px 10px;
+            font-size: 0.75rem;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* ========== MEETING TYPE GRID ========== */
+        .meeting-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .meeting-type-card {
+            padding: 16px;
+            background: var(--bg-input);
+            border: 2px solid transparent;
+            border-radius: var(--radius-btn);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .meeting-type-card:hover {
+            border-color: var(--border-input);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .meeting-type-card.selected {
+            border-color: var(--accent-purple);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        .meeting-type-card .type-icon {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .meeting-type-card .type-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
+
+        /* ========== ATTENDEES ========== */
+        .attendees-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .attendee-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .attendee-row .form-input {
+            flex: 1;
+        }
+
+        .attendee-row .form-select {
+            width: 140px;
+            flex-shrink: 0;
+        }
+
+        /* ========== NOTE SECTIONS ========== */
+        .note-section {
+            margin-bottom: 24px;
+        }
+
+        .note-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .note-section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note-section-title .section-icon {
+            font-size: 1rem;
+        }
+
+        .note-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .note-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 10px 14px;
+            background: var(--bg-input);
+            border-radius: 10px;
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            transition: var(--transition);
+        }
+
+        .note-item:hover {
+            border-color: var(--border-input);
+        }
+
+        .note-item .drag-handle {
+            cursor: grab;
+            color: var(--text-dim);
+            padding: 2px;
+            user-select: none;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .note-item .item-content {
+            flex: 1;
+        }
+
+        .note-item .item-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-body);
+            font-size: 0.9rem;
+            font-family: var(--font-family);
+            outline: none;
+            resize: none;
+            line-height: 1.5;
+        }
+
+        .note-item .item-meta {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .note-item .item-meta .form-input,
+        .note-item .item-meta .form-select {
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            border-radius: 8px;
+        }
+
+        .note-item .remove-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 2px;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .note-item .remove-btn:hover {
+            color: #ef4444;
+        }
+
+        /* ========== ACTION ITEM SPECIAL ========== */
+        .action-item-row {
+            display: grid;
+            grid-template-columns: 1fr 120px 120px 100px 32px;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .action-item-row .form-input,
+        .action-item-row .form-select {
+            padding: 8px 10px;
+            font-size: 0.85rem;
+        }
+
+        /* ========== QUESTION TOGGLE ========== */
+        .question-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: var(--font-family);
+        }
+
+        .question-status.unanswered {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .question-status.answered {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        /* ========== PRIORITY BADGES ========== */
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .priority-badge.high { background: rgba(239, 68, 68, 0.15); color: var(--priority-high); }
+        .priority-badge.medium { background: rgba(245, 158, 11, 0.15); color: var(--priority-medium); }
+        .priority-badge.low { background: rgba(34, 197, 94, 0.15); color: var(--priority-low); }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-badge.open { background: rgba(59, 130, 246, 0.15); color: var(--status-open); }
+        .status-badge.in-progress { background: rgba(245, 158, 11, 0.15); color: var(--status-progress); }
+        .status-badge.complete { background: rgba(34, 197, 94, 0.15); color: var(--status-complete); }
+        .status-badge.overdue { background: rgba(239, 68, 68, 0.15); color: var(--status-overdue); }
+
+        /* ========== TIMER ========== */
+        .timer-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-btn);
+            margin-bottom: 20px;
+        }
+
+        .timer-display {
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: var(--text-heading);
+            min-width: 90px;
+        }
+
+        .timer-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timer-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--status-open);
+            flex-shrink: 0;
+        }
+
+        .timer-dot.running {
+            background: #22c55e;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ========== AUTOSAVE INDICATOR ========== */
+        .autosave-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            padding: 4px 12px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .autosave-indicator.saving {
+            color: var(--accent-purple);
+        }
+
+        .autosave-indicator.saved {
+            color: #22c55e;
+        }
+
+        .autosave-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-dim);
+            transition: var(--transition);
+        }
+
+        .autosave-indicator.saving .autosave-dot { background: var(--accent-purple); }
+        .autosave-indicator.saved .autosave-dot { background: #22c55e; }
+
+        /* ========== ACTION ITEMS DASHBOARD ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-input);
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            border-radius: var(--radius-btn);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-value.danger { color: var(--priority-high); }
+        .stat-value.success { color: var(--status-complete); }
+        .stat-value.warning { color: var(--priority-medium); }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        /* ========== ACTION ITEMS TABLE ========== */
+        .action-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 6px;
+        }
+
+        .action-table thead th {
+            padding: 10px 14px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        .action-table tbody tr {
+            background: var(--bg-input);
+            transition: var(--transition);
+        }
+
+        .action-table tbody tr:hover {
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .action-table td {
+            padding: 12px 14px;
+            font-size: 0.88rem;
+            vertical-align: middle;
+        }
+
+        .action-table tbody tr td:first-child { border-radius: 10px 0 0 10px; }
+        .action-table tbody tr td:last-child { border-radius: 0 10px 10px 0; }
+
+        .action-table .status-select {
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-body);
+            cursor: pointer;
+            font-family: var(--font-family);
+            outline: none;
+        }
+
+        /* ========== FILTERS BAR ========== */
+        .filters-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filters-bar .form-input,
+        .filters-bar .form-select {
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            min-width: 140px;
+        }
+
+        .filters-bar .search-input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* ========== MEETING HISTORY ========== */
+        .meeting-history-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--bg-input);
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            border-radius: var(--radius-btn);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .meeting-history-item:hover {
+            border-color: var(--border-input);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .meeting-history-item .mh-date {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            min-width: 85px;
+            flex-shrink: 0;
+        }
+
+        .meeting-history-item .mh-type-badge {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--accent-purple);
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .meeting-history-item .mh-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .meeting-history-item .mh-client {
+            font-weight: 600;
+            color: var(--text-heading);
+            font-size: 0.95rem;
+        }
+
+        .meeting-history-item .mh-objective {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .meeting-history-item .mh-actions-count {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        .meeting-history-item .mh-buttons {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        /* ========== EMAIL PREVIEW ========== */
+        .email-preview {
+            background: var(--bg-input);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-btn);
+            padding: 24px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .tone-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tone-btn {
+            padding: 8px 18px;
+            border-radius: var(--radius-btn);
+            border: 1px solid var(--border-card);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: var(--font-family);
+            transition: var(--transition);
+        }
+
+        .tone-btn:hover {
+            border-color: var(--accent-purple);
+        }
+
+        .tone-btn.active {
+            background: var(--accent-gradient);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        /* ========== TEMPLATES ========== */
+        .template-card {
+            padding: 16px 20px;
+            background: var(--bg-input);
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            border-radius: var(--radius-btn);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .template-card:hover {
+            border-color: var(--border-input);
+        }
+
+        .template-card .template-name {
+            font-weight: 600;
+            color: var(--text-heading);
+            font-size: 0.95rem;
+        }
+
+        .template-card .template-meta {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--text-body);
+        }
+
+        /* ========== TOAST ========== */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            padding: 12px 20px;
+            border-radius: var(--radius-btn);
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-body);
+            font-size: 0.88rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            animation: toast-in 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.success { border-color: rgba(34, 197, 94, 0.4); }
+        .toast.error { border-color: rgba(239, 68, 68, 0.4); }
+
+        @keyframes toast-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== KEYBOARD SHORTCUTS HINT ========== */
+        .shortcuts-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .shortcut-key {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+
+        .shortcut-key kbd {
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: var(--bg-input);
+            font-family: var(--font-family);
+            font-size: 0.7rem;
+        }
+
+        /* ========== EMPTY STATE ========== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-dim);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        /* ========== ANALYTICS ========== */
+        .analytics-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .analytics-bar .bar-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            min-width: 120px;
+        }
+
+        .analytics-bar .bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-input);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .analytics-bar .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--accent-gradient);
+            transition: width 0.5s ease;
+        }
+
+        .analytics-bar .bar-value {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* ========== FOOTER ========== */
+        .app-footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-card);
+            margin-top: 40px;
+        }
+
+        .app-footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .app-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: var(--transition);
+        }
+
+        .app-footer a:hover {
+            color: var(--accent-purple);
+        }
+
+        .app-footer .disclaimer {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-top: 12px;
+        }
+
+        /* ========== PRINT ========== */
+        @media print {
+            .cta-banner, .nav-tabs, .shortcuts-hint, .toast-container,
+            .timer-bar, .btn, .modal-overlay, .app-footer, .filters-bar { display: none !important; }
+            body { background: #fff; color: #111; }
+            .card { border: 1px solid #ddd; box-shadow: none; background: #fff; }
+            .note-item { background: #f9f9f9; border-color: #ddd; }
+            .note-item .item-input { color: #111; }
+            .form-input, .form-select, .form-textarea { background: #fff; border-color: #ccc; color: #111; }
+            .card-title, .note-section-title, .meeting-history-item .mh-client { color: #111; }
+            .app-header h1 { color: #111; }
+            .app-header h1 span { -webkit-text-fill-color: #7c3aed; color: #7c3aed; }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .form-row, .form-row-3 { grid-template-columns: 1fr; }
+            .action-item-row { grid-template-columns: 1fr; }
+            .meeting-type-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-tabs { gap: 4px; }
+            .nav-tab { padding: 8px 14px; font-size: 0.8rem; }
+            .card { padding: 20px; }
+            .attendee-row { flex-wrap: wrap; }
+            .attendee-row .form-select { width: 100%; }
+            .meeting-history-item { flex-wrap: wrap; gap: 8px; }
+            .meeting-history-item .mh-buttons { width: 100%; justify-content: flex-end; }
+            .shortcuts-hint { display: none; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .filters-bar { flex-direction: column; }
+            .filters-bar .search-input { min-width: auto; }
+            .action-table { font-size: 0.8rem; }
+            .action-table thead { display: none; }
+            .action-table tbody tr { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px; border-radius: 10px; }
+            .action-table td { padding: 2px 0; border-radius: 0 !important; }
+            .timer-bar { flex-wrap: wrap; }
+        }
+
+        @media (max-width: 480px) {
+            .meeting-type-grid { grid-template-columns: 1fr 1fr; }
+            .app-header { padding: 24px 16px 16px; }
+            .main-container { padding: 0 12px 40px; }
+            .cta-banner { font-size: 0.85rem; padding: 10px 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner">
+        <span>Get FreelanceOS Pro &mdash; 40% OFF with code FLASH40</span>
+        <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Claim Discount &rarr;</a>
+    </div>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="logo-badge">FreelanceOS &middot; Tool #52</div>
+        <h1>Client <span>Meeting Notes</span> Generator</h1>
+        <p>Capture every decision, action item, and follow-up. Auto-generate professional follow-up emails. Never lose a detail again.</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs" id="navTabs">
+        <button class="nav-tab active" data-view="new-meeting">+ New Meeting</button>
+        <button class="nav-tab" data-view="note-taking">Notes</button>
+        <button class="nav-tab" data-view="action-items">Action Items</button>
+        <button class="nav-tab" data-view="history">History</button>
+        <button class="nav-tab" data-view="email-gen">Email</button>
+        <button class="nav-tab" data-view="templates">Templates</button>
+        <button class="nav-tab" data-view="export">Export</button>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="main-container">
+
+        <!-- ==================== NEW MEETING SETUP ==================== -->
+        <div class="view-panel active" id="view-new-meeting">
+            <div class="card">
+                <div class="card-title"><div class="icon">&#128197;</div> Meeting Setup</div>
+
+                <!-- Meeting Type -->
+                <div class="form-group">
+                    <label class="form-label">Meeting Type</label>
+                    <div class="meeting-type-grid" id="meetingTypeGrid">
+                        <div class="meeting-type-card" data-type="discovery" onclick="selectMeetingType(this)">
+                            <div class="type-icon">&#128269;</div>
+                            <div class="type-name">Discovery Call</div>
+                        </div>
+                        <div class="meeting-type-card" data-type="kickoff" onclick="selectMeetingType(this)">
+                            <div class="type-icon">&#128640;</div>
+                            <div class="type-name">Project Kickoff</div>
+                        </div>
+                        <div class="meeting-type-card" data-type="status" onclick="selectMeetingType(this)">
+                            <div class="type-icon">&#128202;</div>
+                            <div class="type-name">Status Update</div>
+                        </div>
+                        <div class="meeting-type-card" data-type="design" onclick="selectMeetingType(this)">
+                            <div class="type-icon">&#127912;</div>
+                            <div class="type-name">Design Review</div>
+                        </div>
+                        <div class="meeting-type-card" data-type="feedback" onclick="selectMeetingType(this)">
+                            <div class="type-icon">&#128172;</div>
+                            <div class="type-name">Feedback Session</div>
+                        </div>
+                        <div class="meeting-type-card" data-type="scope" onclick="selectMeetingType(this)">
+                            <div class="type-icon">&#128203;</div>
+                            <div class="type-name">Scope Discussion</div>
+                        </div>
+                        <div class="meeting-type-card" data-type="retro" onclick="selectMeetingType(this)">
+                            <div class="type-icon">&#128260;</div>
+                            <div class="type-name">Retrospective</div>
+                        </div>
+                        <div class="meeting-type-card" data-type="delivery" onclick="selectMeetingType(this)">
+                            <div class="type-icon">&#127881;</div>
+                            <div class="type-name">Final Delivery</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date, Time, Duration, Platform -->
+                <div class="form-row" style="margin-bottom:16px;">
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" id="meetingDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-input" id="meetingTime">
+                    </div>
+                </div>
+                <div class="form-row" style="margin-bottom:16px;">
+                    <div class="form-group">
+                        <label class="form-label">Duration (minutes)</label>
+                        <select class="form-select" id="meetingDuration">
+                            <option value="15">15 minutes</option>
+                            <option value="30" selected>30 minutes</option>
+                            <option value="45">45 minutes</option>
+                            <option value="60">60 minutes</option>
+                            <option value="90">90 minutes</option>
+                            <option value="120">120 minutes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location / Platform</label>
+                        <select class="form-select" id="meetingPlatform">
+                            <option value="Zoom">Zoom</option>
+                            <option value="Google Meet">Google Meet</option>
+                            <option value="Microsoft Teams">Microsoft Teams</option>
+                            <option value="Phone">Phone</option>
+                            <option value="In-Person">In-Person</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Client / Company -->
+                <div class="form-row" style="margin-bottom:16px;">
+                    <div class="form-group">
+                        <label class="form-label">Client Name</label>
+                        <input type="text" class="form-input" id="clientName" placeholder="e.g. Sarah Johnson">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Company</label>
+                        <input type="text" class="form-input" id="clientCompany" placeholder="e.g. Acme Corp">
+                    </div>
+                </div>
+
+                <!-- Objective -->
+                <div class="form-group">
+                    <label class="form-label">Meeting Objective</label>
+                    <input type="text" class="form-input" id="meetingObjective" placeholder="What's the main goal of this meeting?">
+                </div>
+
+                <!-- Attendees -->
+                <div class="form-group">
+                    <label class="form-label">Attendees</label>
+                    <div id="attendeesList" class="attendees-list">
+                        <div class="attendee-row">
+                            <input type="text" class="form-input" placeholder="Name" data-field="name">
+                            <select class="form-select" data-field="role">
+                                <option value="Client">Client</option>
+                                <option value="Freelancer">Freelancer</option>
+                                <option value="Stakeholder">Stakeholder</option>
+                                <option value="Developer">Developer</option>
+                                <option value="Designer">Designer</option>
+                                <option value="PM">Project Manager</option>
+                                <option value="Observer">Observer</option>
+                            </select>
+                            <button class="btn btn-icon btn-danger btn-xs" onclick="removeAttendee(this)" title="Remove">&times;</button>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="addAttendee()" style="margin-top:10px;">+ Add Attendee</button>
+                </div>
+
+                <!-- Start Meeting Button -->
+                <div style="margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="startMeeting()">Start Meeting &amp; Take Notes &rarr;</button>
+                    <button class="btn btn-secondary" onclick="loadFromTemplate()">Load from Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== NOTE-TAKING ==================== -->
+        <div class="view-panel" id="view-note-taking">
+
+            <!-- Timer Bar -->
+            <div class="timer-bar" id="timerBar">
+                <div class="timer-dot" id="timerDot"></div>
+                <div>
+                    <div class="timer-display" id="timerDisplay">00:00:00</div>
+                    <div class="timer-label">Elapsed Time</div>
+                </div>
+                <div style="flex:1;"></div>
+                <div class="autosave-indicator" id="autosaveIndicator">
+                    <div class="autosave-dot"></div>
+                    <span>Ready</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" id="timerToggleBtn" onclick="toggleTimer()">Start Timer</button>
+                <button class="btn btn-secondary btn-sm" onclick="resetTimer()">Reset</button>
+            </div>
+
+            <!-- Meeting Summary Header -->
+            <div class="card" id="meetingSummaryCard" style="margin-bottom:20px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                    <div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--text-heading);" id="noteMeetingTitle">Meeting Notes</div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);" id="noteMeetingMeta">-</div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-sm" onclick="saveMeeting()">Save Meeting</button>
+                        <button class="btn btn-secondary btn-sm" onclick="switchView('email-gen')">Generate Email</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Note Sections Container -->
+            <div id="noteSectionsContainer"></div>
+        </div>
+
+        <!-- ==================== ACTION ITEMS DASHBOARD ==================== -->
+        <div class="view-panel" id="view-action-items">
+            <div class="card">
+                <div class="card-title"><div class="icon">&#9989;</div> Action Items Dashboard</div>
+
+                <!-- Stats -->
+                <div class="stats-grid" id="actionStats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTotal">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statOpen">0</div>
+                        <div class="stat-label">Open</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value warning" id="statInProgress">0</div>
+                        <div class="stat-label">In Progress</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value success" id="statComplete">0</div>
+                        <div class="stat-label">Complete</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value danger" id="statOverdue">0</div>
+                        <div class="stat-label">Overdue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value success" id="statCompletionRate">0%</div>
+                        <div class="stat-label">Completion Rate</div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-bar">
+                    <input type="text" class="form-input search-input" id="actionSearch" placeholder="Search action items..." oninput="filterActionItems()">
+                    <select class="form-select" id="actionFilterStatus" onchange="filterActionItems()">
+                        <option value="">All Statuses</option>
+                        <option value="Open">Open</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Complete">Complete</option>
+                        <option value="Overdue">Overdue</option>
+                    </select>
+                    <select class="form-select" id="actionFilterPriority" onchange="filterActionItems()">
+                        <option value="">All Priorities</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    <select class="form-select" id="actionFilterClient" onchange="filterActionItems()">
+                        <option value="">All Clients</option>
+                    </select>
+                </div>
+
+                <!-- Action Items Table -->
+                <div style="overflow-x:auto;">
+                    <table class="action-table" id="actionItemsTable">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Assignee</th>
+                                <th>Due Date</th>
+                                <th>Priority</th>
+                                <th>Client</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="actionItemsBody">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="actionEmptyState" style="display:none;">
+                    <div class="empty-icon">&#128203;</div>
+                    <h3>No Action Items Yet</h3>
+                    <p>Action items from your meetings will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== HISTORY ==================== -->
+        <div class="view-panel" id="view-history">
+            <div class="card">
+                <div class="card-title"><div class="icon">&#128197;</div> Meeting History</div>
+
+                <!-- Filters -->
+                <div class="filters-bar">
+                    <input type="text" class="form-input search-input" id="historySearch" placeholder="Search by client, keyword..." oninput="filterHistory()">
+                    <select class="form-select" id="historyFilterType" onchange="filterHistory()">
+                        <option value="">All Types</option>
+                        <option value="discovery">Discovery Call</option>
+                        <option value="kickoff">Project Kickoff</option>
+                        <option value="status">Status Update</option>
+                        <option value="design">Design Review</option>
+                        <option value="feedback">Feedback Session</option>
+                        <option value="scope">Scope Discussion</option>
+                        <option value="retro">Retrospective</option>
+                        <option value="delivery">Final Delivery</option>
+                    </select>
+                    <input type="date" class="form-input" id="historyDateFrom" onchange="filterHistory()" style="max-width:160px;">
+                    <input type="date" class="form-input" id="historyDateTo" onchange="filterHistory()" style="max-width:160px;">
+                </div>
+
+                <div id="historyList"></div>
+                <div class="empty-state" id="historyEmptyState" style="display:none;">
+                    <div class="empty-icon">&#128196;</div>
+                    <h3>No Meetings Recorded</h3>
+                    <p>Your completed meetings will appear here.</p>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div class="card" id="analyticsCard" style="display:none;">
+                <div class="card-title"><div class="icon">&#128200;</div> Meeting Analytics</div>
+                <div id="analyticsContent"></div>
+            </div>
+        </div>
+
+        <!-- ==================== EMAIL GENERATOR ==================== -->
+        <div class="view-panel" id="view-email-gen">
+            <div class="card">
+                <div class="card-title"><div class="icon">&#9993;</div> Follow-Up Email Generator</div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Meeting</label>
+                    <select class="form-select" id="emailMeetingSelect" onchange="generateEmail()">
+                        <option value="">Choose a meeting...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Tone</label>
+                    <div class="tone-selector" id="toneSelector">
+                        <button class="tone-btn active" data-tone="formal" onclick="selectTone(this)">Formal</button>
+                        <button class="tone-btn" data-tone="friendly" onclick="selectTone(this)">Friendly</button>
+                        <button class="tone-btn" data-tone="brief" onclick="selectTone(this)">Brief</button>
+                    </div>
+                </div>
+
+                <div id="emailPreviewWrapper" style="display:none;">
+                    <label class="form-label">Generated Email</label>
+                    <div class="email-preview" id="emailPreview"></div>
+                    <div class="btn-group" style="margin-top:16px;">
+                        <button class="btn btn-primary btn-sm" onclick="copyEmail()">Copy to Clipboard</button>
+                        <button class="btn btn-secondary btn-sm" onclick="copyEmailHTML()">Copy as HTML</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TEMPLATES ==================== -->
+        <div class="view-panel" id="view-templates">
+            <div class="card">
+                <div class="card-title"><div class="icon">&#128230;</div> Meeting Templates</div>
+                <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px;">
+                    Save custom templates from your meeting setups for quick reuse.
+                </p>
+
+                <div id="templatesList"></div>
+                <div class="empty-state" id="templatesEmptyState" style="display:none;">
+                    <div class="empty-icon">&#128230;</div>
+                    <h3>No Custom Templates</h3>
+                    <p>Save a meeting setup as a template to reuse it later.</p>
+                </div>
+
+                <div style="margin-top:20px;">
+                    <button class="btn btn-primary" onclick="saveCurrentAsTemplate()">Save Current Setup as Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXPORT ==================== -->
+        <div class="view-panel" id="view-export">
+            <div class="card">
+                <div class="card-title"><div class="icon">&#128190;</div> Export Options</div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Meeting</label>
+                    <select class="form-select" id="exportMeetingSelect" onchange="prepareExport()">
+                        <option value="">Choose a meeting...</option>
+                    </select>
+                </div>
+
+                <div id="exportButtons" style="display:none;">
+                    <div class="btn-group" style="margin-bottom:20px;">
+                        <button class="btn btn-primary" onclick="exportFormattedText()">Copy as Formatted Text</button>
+                        <button class="btn btn-secondary" onclick="exportHTMLEmail()">Copy as HTML Email</button>
+                        <button class="btn btn-secondary" onclick="exportCSVActions()">Export Action Items CSV</button>
+                        <button class="btn btn-secondary" onclick="printMeeting()">Print-Friendly View</button>
+                    </div>
+                </div>
+
+                <div id="exportPreview" style="display:none;">
+                    <label class="form-label">Preview</label>
+                    <div class="email-preview" id="exportPreviewContent"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Keyboard Shortcuts -->
+    <div class="shortcuts-hint">
+        <div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>N</kbd> New</div>
+        <div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>S</kbd> Save</div>
+        <div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>E</kbd> Email</div>
+        <div class="shortcut-key"><kbd>Esc</kbd> Close</div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" id="modalContent" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Modal</div>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-links">
+            <a href="/freelanceos-storefront/free-templates.html">Free Templates</a>
+            <a href="/freelanceos-storefront/">FreelanceOS Home</a>
+            <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get Pro &mdash; 40% Off</a>
+        </div>
+        <div class="disclaimer">This tool is for organizational purposes only.</div>
+        <div style="margin-top:8px;font-size:0.75rem;color:var(--text-dim);">&copy; 2026 FreelanceOS. All rights reserved.</div>
+    </footer>
+
+    <script>
+    /* ==================================================================
+       CLIENT MEETING NOTES GENERATOR - FreelanceOS Tool #52
+       Complete Application Logic
+       ================================================================== */
+
+    // ==================== STORAGE KEYS ====================
+    const STORAGE_KEY = 'freelanceos_meeting_notes';
+    const TEMPLATES_KEY = 'freelanceos_meeting_templates';
+
+    // ==================== STATE ====================
+    let appState = {
+        meetings: [],
+        templates: [],
+        currentMeeting: null,
+        currentMeetingId: null,
+        timer: { running: false, seconds: 0, interval: null },
+        autosaveInterval: null,
+        selectedMeetingType: null
+    };
+
+    // ==================== MEETING TYPE TEMPLATES ====================
+    const MEETING_TEMPLATES = {
+        discovery: {
+            name: 'Discovery Call',
+            icon: '\u{1F50D}',
+            sections: {
+                discussion: [
+                    'Client background and current situation',
+                    'Pain points and challenges',
+                    'Goals and desired outcomes',
+                    'Budget range discussion',
+                    'Timeline expectations'
+                ],
+                decisions: [],
+                actions: [],
+                questions: [
+                    'What is the project scope?',
+                    'Who are the key stakeholders?',
+                    'What does success look like?'
+                ],
+                feedback: [],
+                nextsteps: [
+                    'Send proposal/quote',
+                    'Schedule follow-up call'
+                ]
+            }
+        },
+        kickoff: {
+            name: 'Project Kickoff',
+            icon: '\u{1F680}',
+            sections: {
+                discussion: [
+                    'Project overview and objectives',
+                    'Deliverables and milestones',
+                    'Communication plan',
+                    'Tools and access requirements',
+                    'Roles and responsibilities'
+                ],
+                decisions: [
+                    'Communication channel confirmed',
+                    'Project timeline agreed'
+                ],
+                actions: [],
+                questions: [
+                    'Access credentials needed?',
+                    'Brand guidelines available?'
+                ],
+                feedback: [],
+                nextsteps: [
+                    'Set up project workspace',
+                    'Share initial timeline',
+                    'Schedule first check-in'
+                ]
+            }
+        },
+        status: {
+            name: 'Status Update',
+            icon: '\u{1F4CA}',
+            sections: {
+                discussion: [
+                    'Progress since last meeting',
+                    'Current blockers',
+                    'Upcoming milestones',
+                    'Resource needs'
+                ],
+                decisions: [],
+                actions: [],
+                questions: [],
+                feedback: [
+                    'Client satisfaction with progress'
+                ],
+                nextsteps: [
+                    'Schedule next check-in'
+                ]
+            }
+        },
+        design: {
+            name: 'Design Review',
+            icon: '\u{1F3A8}',
+            sections: {
+                discussion: [
+                    'Design walkthrough',
+                    'Visual direction feedback',
+                    'Functionality review',
+                    'User flow discussion',
+                    'Accessibility considerations'
+                ],
+                decisions: [
+                    'Design direction approved/revision needed'
+                ],
+                actions: [],
+                questions: [
+                    'Any additional design assets needed?'
+                ],
+                feedback: [
+                    'Overall design impression',
+                    'Specific change requests'
+                ],
+                nextsteps: [
+                    'Implement revisions',
+                    'Schedule next review'
+                ]
+            }
+        },
+        feedback: {
+            name: 'Feedback Session',
+            icon: '\u{1F4AC}',
+            sections: {
+                discussion: [
+                    'Work presented for review',
+                    'Positive feedback',
+                    'Areas for improvement',
+                    'Priority changes'
+                ],
+                decisions: [],
+                actions: [],
+                questions: [],
+                feedback: [
+                    'Client feedback on deliverables',
+                    'Alignment with expectations'
+                ],
+                nextsteps: [
+                    'Implement feedback',
+                    'Confirm revised timeline'
+                ]
+            }
+        },
+        scope: {
+            name: 'Scope Discussion',
+            icon: '\u{1F4CB}',
+            sections: {
+                discussion: [
+                    'Current scope review',
+                    'Requested changes/additions',
+                    'Impact on timeline',
+                    'Impact on budget',
+                    'Priority assessment'
+                ],
+                decisions: [
+                    'Scope change approved/declined'
+                ],
+                actions: [],
+                questions: [
+                    'Does this require a change order?',
+                    'New deadline feasible?'
+                ],
+                feedback: [],
+                nextsteps: [
+                    'Update scope document',
+                    'Revise timeline/budget if needed',
+                    'Send updated proposal'
+                ]
+            }
+        },
+        retro: {
+            name: 'Retrospective',
+            icon: '\u{1F504}',
+            sections: {
+                discussion: [
+                    'What went well',
+                    'What could be improved',
+                    'Unexpected challenges',
+                    'Key learnings',
+                    'Process improvements'
+                ],
+                decisions: [
+                    'Process changes agreed upon'
+                ],
+                actions: [],
+                questions: [],
+                feedback: [
+                    'Client satisfaction rating',
+                    'Working relationship feedback'
+                ],
+                nextsteps: [
+                    'Document lessons learned',
+                    'Apply improvements to next phase'
+                ]
+            }
+        },
+        delivery: {
+            name: 'Final Delivery',
+            icon: '\u{1F389}',
+            sections: {
+                discussion: [
+                    'Final deliverables walkthrough',
+                    'Handoff documentation',
+                    'Training/onboarding needs',
+                    'Warranty/support period',
+                    'Testimonial/referral discussion'
+                ],
+                decisions: [
+                    'Deliverables accepted'
+                ],
+                actions: [],
+                questions: [
+                    'Ongoing support needed?',
+                    'Future projects to discuss?'
+                ],
+                feedback: [
+                    'Overall project satisfaction',
+                    'Would they recommend you?'
+                ],
+                nextsteps: [
+                    'Send final invoice',
+                    'Transfer all assets',
+                    'Request testimonial',
+                    'Schedule follow-up in 30 days'
+                ]
+            }
+        }
+    };
+
+    // ==================== INITIALIZATION ====================
+    function init() {
+        loadState();
+        setDefaultDate();
+        renderTemplates();
+        populateMeetingSelects();
+        renderHistory();
+        renderActionItemsDashboard();
+    }
+
+    function loadState() {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                appState.meetings = parsed.meetings || [];
+                appState.currentMeetingId = parsed.currentMeetingId || null;
+            }
+            const templates = localStorage.getItem(TEMPLATES_KEY);
+            if (templates) {
+                appState.templates = JSON.parse(templates) || [];
+            }
+        } catch (e) {
+            console.error('Error loading state:', e);
+        }
+    }
+
+    function saveState() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                meetings: appState.meetings,
+                currentMeetingId: appState.currentMeetingId
+            }));
+            localStorage.setItem(TEMPLATES_KEY, JSON.stringify(appState.templates));
+        } catch (e) {
+            console.error('Error saving state:', e);
+        }
+    }
+
+    function setDefaultDate() {
+        const now = new Date();
+        document.getElementById('meetingDate').value = now.toISOString().split('T')[0];
+        const hours = String(now.getHours()).padStart(2, '0');
+        const mins = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('meetingTime').value = hours + ':' + mins;
+    }
+
+    // ==================== VIEW SWITCHING ====================
+    function switchView(viewId) {
+        document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        const panel = document.getElementById('view-' + viewId);
+        if (panel) panel.classList.add('active');
+        const tab = document.querySelector('.nav-tab[data-view="' + viewId + '"]');
+        if (tab) tab.classList.add('active');
+
+        if (viewId === 'action-items') renderActionItemsDashboard();
+        if (viewId === 'history') renderHistory();
+        if (viewId === 'email-gen') populateMeetingSelects();
+        if (viewId === 'export') populateMeetingSelects();
+        if (viewId === 'templates') renderTemplates();
+    }
+
+    document.getElementById('navTabs').addEventListener('click', function(e) {
+        if (e.target.classList.contains('nav-tab')) {
+            switchView(e.target.dataset.view);
+        }
+    });
+
+    // ==================== MEETING TYPE SELECTION ====================
+    function selectMeetingType(card) {
+        document.querySelectorAll('.meeting-type-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        appState.selectedMeetingType = card.dataset.type;
+    }
+
+    // ==================== ATTENDEES ====================
+    function addAttendee() {
+        const list = document.getElementById('attendeesList');
+        const row = document.createElement('div');
+        row.className = 'attendee-row';
+        row.innerHTML = '<input type="text" class="form-input" placeholder="Name" data-field="name">' +
+            '<select class="form-select" data-field="role">' +
+            '<option value="Client">Client</option>' +
+            '<option value="Freelancer">Freelancer</option>' +
+            '<option value="Stakeholder">Stakeholder</option>' +
+            '<option value="Developer">Developer</option>' +
+            '<option value="Designer">Designer</option>' +
+            '<option value="PM">Project Manager</option>' +
+            '<option value="Observer">Observer</option>' +
+            '</select>' +
+            '<button class="btn btn-icon btn-danger btn-xs" onclick="removeAttendee(this)" title="Remove">&times;</button>';
+        list.appendChild(row);
+    }
+
+    function removeAttendee(btn) {
+        const row = btn.closest('.attendee-row');
+        const list = document.getElementById('attendeesList');
+        if (list.children.length > 1) {
+            row.remove();
+        } else {
+            showToast('At least one attendee is required.', 'error');
+        }
+    }
+
+    function getAttendees() {
+        const rows = document.querySelectorAll('#attendeesList .attendee-row');
+        const attendees = [];
+        rows.forEach(row => {
+            const name = row.querySelector('[data-field="name"]').value.trim();
+            const role = row.querySelector('[data-field="role"]').value;
+            if (name) attendees.push({ name, role });
+        });
+        return attendees;
+    }
+
+    // ==================== START MEETING ====================
+    function startMeeting() {
+        const type = appState.selectedMeetingType;
+        if (!type) {
+            showToast('Please select a meeting type.', 'error');
+            return;
+        }
+
+        const clientName = document.getElementById('clientName').value.trim();
+        if (!clientName) {
+            showToast('Please enter the client name.', 'error');
+            return;
+        }
+
+        const meeting = {
+            id: generateId(),
+            type: type,
+            typeName: MEETING_TEMPLATES[type].name,
+            date: document.getElementById('meetingDate').value,
+            time: document.getElementById('meetingTime').value,
+            duration: parseInt(document.getElementById('meetingDuration').value),
+            platform: document.getElementById('meetingPlatform').value,
+            clientName: clientName,
+            company: document.getElementById('clientCompany').value.trim(),
+            objective: document.getElementById('meetingObjective').value.trim(),
+            attendees: getAttendees(),
+            notes: {
+                discussion: MEETING_TEMPLATES[type].sections.discussion.map(text => ({
+                    id: generateId(), text: text, completed: false
+                })),
+                decisions: MEETING_TEMPLATES[type].sections.decisions.map(text => ({
+                    id: generateId(), text: text, owner: ''
+                })),
+                actions: MEETING_TEMPLATES[type].sections.actions.map(text => ({
+                    id: generateId(), task: text, assignee: '', dueDate: '', priority: 'Medium', status: 'Open'
+                })),
+                questions: MEETING_TEMPLATES[type].sections.questions.map(text => ({
+                    id: generateId(), text: text, answered: false
+                })),
+                feedback: MEETING_TEMPLATES[type].sections.feedback.map(text => ({
+                    id: generateId(), text: text
+                })),
+                nextsteps: MEETING_TEMPLATES[type].sections.nextsteps.map(text => ({
+                    id: generateId(), text: text
+                }))
+            },
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+
+        appState.currentMeeting = meeting;
+        appState.currentMeetingId = meeting.id;
+
+        // Check if meeting already exists in array (editing)
+        const existingIndex = appState.meetings.findIndex(m => m.id === meeting.id);
+        if (existingIndex >= 0) {
+            appState.meetings[existingIndex] = meeting;
+        } else {
+            appState.meetings.push(meeting);
+        }
+
+        saveState();
+        renderNoteTaking();
+        switchView('note-taking');
+        startAutosave();
+        showToast('Meeting started! Take notes below.', 'success');
+    }
+
+    // ==================== NOTE TAKING INTERFACE ====================
+    function renderNoteTaking() {
+        const m = appState.currentMeeting;
+        if (!m) return;
+
+        const template = MEETING_TEMPLATES[m.type];
+        document.getElementById('noteMeetingTitle').textContent =
+            template.icon + ' ' + m.typeName + ' with ' + m.clientName;
+        document.getElementById('noteMeetingMeta').textContent =
+            formatDate(m.date) + ' at ' + m.time + ' | ' + m.platform +
+            (m.company ? ' | ' + m.company : '') +
+            (m.objective ? ' | ' + m.objective : '');
+
+        const container = document.getElementById('noteSectionsContainer');
+        container.innerHTML = '';
+
+        // Discussion Points
+        container.appendChild(createNoteSection(
+            '\u{1F4DD}', 'Key Discussion Points', 'discussion', m.notes.discussion,
+            'Add discussion point...', 'text'
+        ));
+
+        // Decisions Made
+        container.appendChild(createNoteSection(
+            '✅', 'Decisions Made', 'decisions', m.notes.decisions,
+            'Add decision...', 'decision'
+        ));
+
+        // Action Items
+        container.appendChild(createActionItemsSection(m.notes.actions));
+
+        // Questions Raised
+        container.appendChild(createNoteSection(
+            '❓', 'Questions Raised', 'questions', m.notes.questions,
+            'Add question...', 'question'
+        ));
+
+        // Client Feedback/Concerns
+        container.appendChild(createNoteSection(
+            '\u{1F4AC}', 'Client Feedback / Concerns', 'feedback', m.notes.feedback,
+            'Add feedback...', 'text'
+        ));
+
+        // Next Steps
+        container.appendChild(createNoteSection(
+            '\u{1F449}', 'Next Steps', 'nextsteps', m.notes.nextsteps,
+            'Add next step...', 'text'
+        ));
+    }
+
+    function createNoteSection(icon, title, key, items, placeholder, itemType) {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        let html = '<div class="note-section">' +
+            '<div class="note-section-header">' +
+            '<div class="note-section-title"><span class="section-icon">' + icon + '</span> ' + title +
+            ' <span style="color:var(--text-dim);font-weight:400;font-size:0.8rem;">(' + items.length + ')</span></div>' +
+            '<button class="btn btn-secondary btn-xs" onclick="addNoteItem(\'' + key + '\', \'' + itemType + '\')">+ Add</button>' +
+            '</div>' +
+            '<div class="note-items" id="noteItems_' + key + '">';
+
+        items.forEach((item, index) => {
+            html += renderNoteItem(key, item, index, itemType);
+        });
+
+        html += '</div></div>';
+        card.innerHTML = html;
+        return card;
+    }
+
+    function renderNoteItem(sectionKey, item, index, itemType) {
+        let html = '<div class="note-item" data-id="' + item.id + '">' +
+            '<span class="drag-handle" title="Drag to reorder">&#8942;&#8942;</span>' +
+            '<div class="item-content">';
+
+        if (itemType === 'text') {
+            html += '<textarea class="item-input" rows="1" placeholder="Type here..." ' +
+                'oninput="updateNoteItem(\'' + sectionKey + '\', \'' + item.id + '\', \'text\', this.value); autoResizeTextarea(this)">' +
+                escapeHtml(item.text) + '</textarea>';
+        } else if (itemType === 'decision') {
+            html += '<textarea class="item-input" rows="1" placeholder="Decision..." ' +
+                'oninput="updateNoteItem(\'' + sectionKey + '\', \'' + item.id + '\', \'text\', this.value); autoResizeTextarea(this)">' +
+                escapeHtml(item.text) + '</textarea>' +
+                '<div class="item-meta">' +
+                '<input type="text" class="form-input" placeholder="Decision owner" value="' + escapeHtml(item.owner || '') + '" ' +
+                'oninput="updateNoteItem(\'' + sectionKey + '\', \'' + item.id + '\', \'owner\', this.value)" style="max-width:200px;">' +
+                '</div>';
+        } else if (itemType === 'question') {
+            html += '<textarea class="item-input" rows="1" placeholder="Question..." ' +
+                'oninput="updateNoteItem(\'' + sectionKey + '\', \'' + item.id + '\', \'text\', this.value); autoResizeTextarea(this)">' +
+                escapeHtml(item.text) + '</textarea>' +
+                '<div class="item-meta">' +
+                '<button class="question-status ' + (item.answered ? 'answered' : 'unanswered') + '" ' +
+                'onclick="toggleQuestionStatus(\'' + item.id + '\', this)">' +
+                (item.answered ? '✓ Answered' : '○ Unanswered') + '</button>' +
+                '</div>';
+        }
+
+        html += '</div>' +
+            '<button class="remove-btn" onclick="removeNoteItem(\'' + sectionKey + '\', \'' + item.id + '\')" title="Remove">&times;</button>' +
+            '</div>';
+
+        return html;
+    }
+
+    function createActionItemsSection(items) {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        let html = '<div class="note-section">' +
+            '<div class="note-section-header">' +
+            '<div class="note-section-title"><span class="section-icon">\u{1F3AF}</span> Action Items' +
+            ' <span style="color:var(--text-dim);font-weight:400;font-size:0.8rem;">(' + items.length + ')</span></div>' +
+            '<button class="btn btn-secondary btn-xs" onclick="addActionItem()">+ Add</button>' +
+            '</div>' +
+            '<div class="note-items" id="noteItems_actions">';
+
+        items.forEach((item, index) => {
+            html += renderActionItem(item, index);
+        });
+
+        html += '</div></div>';
+        card.innerHTML = html;
+        return card;
+    }
+
+    function renderActionItem(item, index) {
+        return '<div class="note-item" data-id="' + item.id + '" style="flex-direction:column;">' +
+            '<div style="display:flex;width:100%;gap:8px;align-items:flex-start;">' +
+            '<span class="drag-handle" title="Drag to reorder">&#8942;&#8942;</span>' +
+            '<div class="item-content" style="flex:1;">' +
+            '<textarea class="item-input" rows="1" placeholder="Action item..." ' +
+            'oninput="updateActionField(\'' + item.id + '\', \'task\', this.value); autoResizeTextarea(this)">' +
+            escapeHtml(item.task) + '</textarea>' +
+            '<div class="item-meta" style="margin-top:8px;">' +
+            '<input type="text" class="form-input" placeholder="Assignee" value="' + escapeHtml(item.assignee || '') + '" ' +
+            'oninput="updateActionField(\'' + item.id + '\', \'assignee\', this.value)" style="max-width:140px;">' +
+            '<input type="date" class="form-input" value="' + (item.dueDate || '') + '" ' +
+            'onchange="updateActionField(\'' + item.id + '\', \'dueDate\', this.value)" style="max-width:150px;">' +
+            '<select class="form-select" onchange="updateActionField(\'' + item.id + '\', \'priority\', this.value)" style="max-width:110px;">' +
+            '<option value="High"' + (item.priority === 'High' ? ' selected' : '') + '>High</option>' +
+            '<option value="Medium"' + (item.priority === 'Medium' ? ' selected' : '') + '>Medium</option>' +
+            '<option value="Low"' + (item.priority === 'Low' ? ' selected' : '') + '>Low</option>' +
+            '</select>' +
+            '<select class="form-select" onchange="updateActionField(\'' + item.id + '\', \'status\', this.value)" style="max-width:120px;">' +
+            '<option value="Open"' + (item.status === 'Open' ? ' selected' : '') + '>Open</option>' +
+            '<option value="In Progress"' + (item.status === 'In Progress' ? ' selected' : '') + '>In Progress</option>' +
+            '<option value="Complete"' + (item.status === 'Complete' ? ' selected' : '') + '>Complete</option>' +
+            '</select>' +
+            '</div>' +
+            '</div>' +
+            '<button class="remove-btn" onclick="removeNoteItem(\'actions\', \'' + item.id + '\')" title="Remove">&times;</button>' +
+            '</div></div>';
+    }
+
+    // ==================== NOTE ITEM OPERATIONS ====================
+    function addNoteItem(sectionKey, itemType) {
+        if (!appState.currentMeeting) return;
+
+        let newItem;
+        if (itemType === 'text') {
+            newItem = { id: generateId(), text: '' };
+        } else if (itemType === 'decision') {
+            newItem = { id: generateId(), text: '', owner: '' };
+        } else if (itemType === 'question') {
+            newItem = { id: generateId(), text: '', answered: false };
+        }
+
+        appState.currentMeeting.notes[sectionKey].push(newItem);
+        updateMeetingInArray();
+        renderNoteTaking();
+        triggerAutosave();
+
+        // Focus the new item
+        setTimeout(() => {
+            const container = document.getElementById('noteItems_' + sectionKey);
+            if (container) {
+                const items = container.querySelectorAll('.item-input');
+                if (items.length > 0) {
+                    items[items.length - 1].focus();
+                }
+            }
+        }, 50);
+    }
+
+    function addActionItem() {
+        if (!appState.currentMeeting) return;
+
+        const newItem = {
+            id: generateId(),
+            task: '',
+            assignee: '',
+            dueDate: '',
+            priority: 'Medium',
+            status: 'Open'
+        };
+
+        appState.currentMeeting.notes.actions.push(newItem);
+        updateMeetingInArray();
+        renderNoteTaking();
+        triggerAutosave();
+
+        setTimeout(() => {
+            const container = document.getElementById('noteItems_actions');
+            if (container) {
+                const items = container.querySelectorAll('.item-input');
+                if (items.length > 0) {
+                    items[items.length - 1].focus();
+                }
+            }
+        }, 50);
+    }
+
+    function updateNoteItem(sectionKey, itemId, field, value) {
+        if (!appState.currentMeeting) return;
+        const items = appState.currentMeeting.notes[sectionKey];
+        const item = items.find(i => i.id === itemId);
+        if (item) {
+            item[field] = value;
+            updateMeetingInArray();
+            triggerAutosave();
+        }
+    }
+
+    function updateActionField(itemId, field, value) {
+        if (!appState.currentMeeting) return;
+        const item = appState.currentMeeting.notes.actions.find(i => i.id === itemId);
+        if (item) {
+            item[field] = value;
+            updateMeetingInArray();
+            triggerAutosave();
+        }
+    }
+
+    function removeNoteItem(sectionKey, itemId) {
+        if (!appState.currentMeeting) return;
+        appState.currentMeeting.notes[sectionKey] =
+            appState.currentMeeting.notes[sectionKey].filter(i => i.id !== itemId);
+        updateMeetingInArray();
+        renderNoteTaking();
+        triggerAutosave();
+    }
+
+    function toggleQuestionStatus(itemId, btn) {
+        if (!appState.currentMeeting) return;
+        const item = appState.currentMeeting.notes.questions.find(i => i.id === itemId);
+        if (item) {
+            item.answered = !item.answered;
+            btn.className = 'question-status ' + (item.answered ? 'answered' : 'unanswered');
+            btn.innerHTML = item.answered ? '✓ Answered' : '○ Unanswered';
+            updateMeetingInArray();
+            triggerAutosave();
+        }
+    }
+
+    function autoResizeTextarea(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    }
+
+    // Initialize textareas after render
+    function initTextareas() {
+        document.querySelectorAll('.item-input').forEach(ta => {
+            ta.style.height = 'auto';
+            ta.style.height = ta.scrollHeight + 'px';
+        });
+    }
+
+    // ==================== MEETING PERSISTENCE ====================
+    function updateMeetingInArray() {
+        if (!appState.currentMeeting) return;
+        appState.currentMeeting.updatedAt = new Date().toISOString();
+        const idx = appState.meetings.findIndex(m => m.id === appState.currentMeeting.id);
+        if (idx >= 0) {
+            appState.meetings[idx] = { ...appState.currentMeeting };
+        }
+    }
+
+    function saveMeeting() {
+        if (!appState.currentMeeting) {
+            showToast('No active meeting to save.', 'error');
+            return;
+        }
+        updateMeetingInArray();
+        saveState();
+        showSaveIndicator();
+        showToast('Meeting saved successfully!', 'success');
+    }
+
+    function startAutosave() {
+        if (appState.autosaveInterval) clearInterval(appState.autosaveInterval);
+        appState.autosaveInterval = setInterval(() => {
+            if (appState.currentMeeting) {
+                updateMeetingInArray();
+                saveState();
+                showSaveIndicator();
+            }
+        }, 15000); // Auto-save every 15 seconds
+    }
+
+    function triggerAutosave() {
+        // Debounced save
+        if (appState.autosaveTimeout) clearTimeout(appState.autosaveTimeout);
+        appState.autosaveTimeout = setTimeout(() => {
+            updateMeetingInArray();
+            saveState();
+            showSaveIndicator();
+        }, 2000);
+    }
+
+    function showSaveIndicator() {
+        const indicator = document.getElementById('autosaveIndicator');
+        if (!indicator) return;
+        indicator.className = 'autosave-indicator saving';
+        indicator.querySelector('span').textContent = 'Saving...';
+        setTimeout(() => {
+            indicator.className = 'autosave-indicator saved';
+            indicator.querySelector('span').textContent = 'Saved';
+            setTimeout(() => {
+                indicator.className = 'autosave-indicator';
+                indicator.querySelector('span').textContent = 'Auto-save on';
+            }, 2000);
+        }, 500);
+    }
+
+    // ==================== TIMER ====================
+    function toggleTimer() {
+        if (appState.timer.running) {
+            clearInterval(appState.timer.interval);
+            appState.timer.running = false;
+            document.getElementById('timerToggleBtn').textContent = 'Resume';
+            document.getElementById('timerDot').classList.remove('running');
+        } else {
+            appState.timer.running = true;
+            appState.timer.interval = setInterval(() => {
+                appState.timer.seconds++;
+                updateTimerDisplay();
+            }, 1000);
+            document.getElementById('timerToggleBtn').textContent = 'Pause';
+            document.getElementById('timerDot').classList.add('running');
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(appState.timer.interval);
+        appState.timer.seconds = 0;
+        appState.timer.running = false;
+        updateTimerDisplay();
+        document.getElementById('timerToggleBtn').textContent = 'Start Timer';
+        document.getElementById('timerDot').classList.remove('running');
+    }
+
+    function updateTimerDisplay() {
+        const s = appState.timer.seconds;
+        const hours = Math.floor(s / 3600);
+        const minutes = Math.floor((s % 3600) / 60);
+        const seconds = s % 60;
+        document.getElementById('timerDisplay').textContent =
+            String(hours).padStart(2, '0') + ':' +
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0');
+    }
+
+    // ==================== ACTION ITEMS DASHBOARD ====================
+    function renderActionItemsDashboard() {
+        const allActions = getAllActionItems();
+        const today = new Date().toISOString().split('T')[0];
+
+        // Mark overdue items
+        allActions.forEach(a => {
+            if (a.dueDate && a.dueDate < today && a.status !== 'Complete') {
+                a.displayStatus = 'Overdue';
+            } else {
+                a.displayStatus = a.status;
+            }
+        });
+
+        // Stats
+        const total = allActions.length;
+        const open = allActions.filter(a => a.displayStatus === 'Open').length;
+        const inProgress = allActions.filter(a => a.displayStatus === 'In Progress').length;
+        const complete = allActions.filter(a => a.displayStatus === 'Complete').length;
+        const overdue = allActions.filter(a => a.displayStatus === 'Overdue').length;
+        const rate = total > 0 ? Math.round((complete / total) * 100) : 0;
+
+        document.getElementById('statTotal').textContent = total;
+        document.getElementById('statOpen').textContent = open;
+        document.getElementById('statInProgress').textContent = inProgress;
+        document.getElementById('statComplete').textContent = complete;
+        document.getElementById('statOverdue').textContent = overdue;
+        document.getElementById('statCompletionRate').textContent = rate + '%';
+
+        // Populate client filter
+        const clientSelect = document.getElementById('actionFilterClient');
+        const clients = [...new Set(allActions.map(a => a.clientName).filter(Boolean))];
+        const currentClientVal = clientSelect.value;
+        clientSelect.innerHTML = '<option value="">All Clients</option>';
+        clients.forEach(c => {
+            clientSelect.innerHTML += '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + '</option>';
+        });
+        clientSelect.value = currentClientVal;
+
+        filterActionItems();
+    }
+
+    function getAllActionItems() {
+        const allActions = [];
+        appState.meetings.forEach(meeting => {
+            if (meeting.notes && meeting.notes.actions) {
+                meeting.notes.actions.forEach(action => {
+                    allActions.push({
+                        ...action,
+                        meetingId: meeting.id,
+                        clientName: meeting.clientName,
+                        company: meeting.company,
+                        meetingDate: meeting.date,
+                        meetingType: meeting.typeName
+                    });
+                });
+            }
+        });
+        return allActions;
+    }
+
+    function filterActionItems() {
+        const search = document.getElementById('actionSearch').value.toLowerCase();
+        const statusFilter = document.getElementById('actionFilterStatus').value;
+        const priorityFilter = document.getElementById('actionFilterPriority').value;
+        const clientFilter = document.getElementById('actionFilterClient').value;
+        const today = new Date().toISOString().split('T')[0];
+
+        let actions = getAllActionItems();
+
+        // Mark overdue
+        actions.forEach(a => {
+            if (a.dueDate && a.dueDate < today && a.status !== 'Complete') {
+                a.displayStatus = 'Overdue';
+            } else {
+                a.displayStatus = a.status;
+            }
+        });
+
+        if (search) {
+            actions = actions.filter(a =>
+                (a.task && a.task.toLowerCase().includes(search)) ||
+                (a.assignee && a.assignee.toLowerCase().includes(search)) ||
+                (a.clientName && a.clientName.toLowerCase().includes(search))
+            );
+        }
+
+        if (statusFilter) {
+            actions = actions.filter(a => a.displayStatus === statusFilter);
+        }
+
+        if (priorityFilter) {
+            actions = actions.filter(a => a.priority === priorityFilter);
+        }
+
+        if (clientFilter) {
+            actions = actions.filter(a => a.clientName === clientFilter);
+        }
+
+        // Sort: overdue first, then by due date
+        actions.sort((a, b) => {
+            if (a.displayStatus === 'Overdue' && b.displayStatus !== 'Overdue') return -1;
+            if (b.displayStatus === 'Overdue' && a.displayStatus !== 'Overdue') return 1;
+            if (a.dueDate && b.dueDate) return a.dueDate.localeCompare(b.dueDate);
+            if (a.dueDate) return -1;
+            if (b.dueDate) return 1;
+            return 0;
+        });
+
+        const tbody = document.getElementById('actionItemsBody');
+        const emptyState = document.getElementById('actionEmptyState');
+
+        if (actions.length === 0) {
+            tbody.innerHTML = '';
+            emptyState.style.display = 'block';
+            return;
+        }
+
+        emptyState.style.display = 'none';
+        tbody.innerHTML = actions.map(a => {
+            const priorityClass = a.priority ? a.priority.toLowerCase() : 'medium';
+            const statusClass = a.displayStatus ? a.displayStatus.toLowerCase().replace(' ', '-') : 'open';
+
+            return '<tr>' +
+                '<td style="max-width:250px;">' + escapeHtml(a.task || 'Untitled') + '</td>' +
+                '<td>' + escapeHtml(a.assignee || '-') + '</td>' +
+                '<td>' + (a.dueDate ? formatDate(a.dueDate) : '-') + '</td>' +
+                '<td><span class="priority-badge ' + priorityClass + '">' + escapeHtml(a.priority || 'Medium') + '</span></td>' +
+                '<td>' + escapeHtml(a.clientName || '-') + '</td>' +
+                '<td>' +
+                '<select class="status-select" onchange="updateActionItemStatus(\'' + a.meetingId + '\', \'' + a.id + '\', this.value)">' +
+                '<option value="Open"' + (a.status === 'Open' ? ' selected' : '') + '>Open</option>' +
+                '<option value="In Progress"' + (a.status === 'In Progress' ? ' selected' : '') + '>In Progress</option>' +
+                '<option value="Complete"' + (a.status === 'Complete' ? ' selected' : '') + '>Complete</option>' +
+                '</select>' +
+                '</td>' +
+                '</tr>';
+        }).join('');
+    }
+
+    function updateActionItemStatus(meetingId, actionId, newStatus) {
+        const meeting = appState.meetings.find(m => m.id === meetingId);
+        if (meeting && meeting.notes && meeting.notes.actions) {
+            const action = meeting.notes.actions.find(a => a.id === actionId);
+            if (action) {
+                action.status = newStatus;
+                // Update current meeting if it's the same
+                if (appState.currentMeeting && appState.currentMeeting.id === meetingId) {
+                    const currentAction = appState.currentMeeting.notes.actions.find(a => a.id === actionId);
+                    if (currentAction) currentAction.status = newStatus;
+                }
+                saveState();
+                renderActionItemsDashboard();
+                showToast('Status updated.', 'success');
+            }
+        }
+    }
+
+    // ==================== MEETING HISTORY ====================
+    function renderHistory() {
+        const list = document.getElementById('historyList');
+        const emptyState = document.getElementById('historyEmptyState');
+        const analyticsCard = document.getElementById('analyticsCard');
+
+        if (appState.meetings.length === 0) {
+            list.innerHTML = '';
+            emptyState.style.display = 'block';
+            analyticsCard.style.display = 'none';
+            return;
+        }
+
+        emptyState.style.display = 'none';
+        analyticsCard.style.display = 'block';
+
+        filterHistory();
+        renderAnalytics();
+    }
+
+    function filterHistory() {
+        const search = document.getElementById('historySearch').value.toLowerCase();
+        const typeFilter = document.getElementById('historyFilterType').value;
+        const dateFrom = document.getElementById('historyDateFrom').value;
+        const dateTo = document.getElementById('historyDateTo').value;
+
+        let meetings = [...appState.meetings];
+
+        if (search) {
+            meetings = meetings.filter(m =>
+                m.clientName.toLowerCase().includes(search) ||
+                (m.company && m.company.toLowerCase().includes(search)) ||
+                (m.objective && m.objective.toLowerCase().includes(search)) ||
+                m.typeName.toLowerCase().includes(search)
+            );
+        }
+
+        if (typeFilter) {
+            meetings = meetings.filter(m => m.type === typeFilter);
+        }
+
+        if (dateFrom) {
+            meetings = meetings.filter(m => m.date >= dateFrom);
+        }
+
+        if (dateTo) {
+            meetings = meetings.filter(m => m.date <= dateTo);
+        }
+
+        // Sort by date descending
+        meetings.sort((a, b) => {
+            if (a.date !== b.date) return b.date.localeCompare(a.date);
+            return (b.time || '').localeCompare(a.time || '');
+        });
+
+        const list = document.getElementById('historyList');
+        const emptyState = document.getElementById('historyEmptyState');
+
+        if (meetings.length === 0) {
+            list.innerHTML = '';
+            emptyState.style.display = 'block';
+            return;
+        }
+
+        emptyState.style.display = 'none';
+
+        list.innerHTML = meetings.map(m => {
+            const actionCount = m.notes && m.notes.actions ? m.notes.actions.length : 0;
+            const icon = MEETING_TEMPLATES[m.type] ? MEETING_TEMPLATES[m.type].icon : '\u{1F4C5}';
+
+            return '<div class="meeting-history-item">' +
+                '<div class="mh-date">' + formatDate(m.date) + '</div>' +
+                '<div class="mh-type-badge">' + icon + ' ' + escapeHtml(m.typeName) + '</div>' +
+                '<div class="mh-info">' +
+                '<div class="mh-client">' + escapeHtml(m.clientName) +
+                (m.company ? ' <span style="font-weight:400;color:var(--text-muted);">(' + escapeHtml(m.company) + ')</span>' : '') +
+                '</div>' +
+                '<div class="mh-objective">' + escapeHtml(m.objective || 'No objective set') + '</div>' +
+                '</div>' +
+                '<div class="mh-actions-count">' + actionCount + ' action' + (actionCount !== 1 ? 's' : '') + '</div>' +
+                '<div class="mh-buttons">' +
+                '<button class="btn btn-secondary btn-xs" onclick="editMeeting(\'' + m.id + '\')" title="Edit">Edit</button>' +
+                '<button class="btn btn-secondary btn-xs" onclick="duplicateMeeting(\'' + m.id + '\')" title="Duplicate">Copy</button>' +
+                '<button class="btn btn-danger btn-xs" onclick="deleteMeeting(\'' + m.id + '\')" title="Delete">&times;</button>' +
+                '</div>' +
+                '</div>';
+        }).join('');
+    }
+
+    function renderAnalytics() {
+        const content = document.getElementById('analyticsContent');
+        if (appState.meetings.length === 0) {
+            content.innerHTML = '<p style="color:var(--text-dim);">No data yet.</p>';
+            return;
+        }
+
+        // Client frequency
+        const clientCounts = {};
+        appState.meetings.forEach(m => {
+            const key = m.clientName + (m.company ? ' (' + m.company + ')' : '');
+            clientCounts[key] = (clientCounts[key] || 0) + 1;
+        });
+
+        const sortedClients = Object.entries(clientCounts).sort((a, b) => b[1] - a[1]);
+        const maxCount = sortedClients.length > 0 ? sortedClients[0][1] : 1;
+
+        let html = '<h4 style="color:var(--text-heading);margin-bottom:16px;font-size:0.95rem;">Meeting Frequency by Client</h4>';
+        sortedClients.slice(0, 10).forEach(([client, count]) => {
+            const pct = Math.round((count / maxCount) * 100);
+            html += '<div class="analytics-bar">' +
+                '<div class="bar-label">' + escapeHtml(client) + '</div>' +
+                '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;"></div></div>' +
+                '<div class="bar-value">' + count + '</div>' +
+                '</div>';
+        });
+
+        // Meeting type distribution
+        const typeCounts = {};
+        appState.meetings.forEach(m => {
+            typeCounts[m.typeName] = (typeCounts[m.typeName] || 0) + 1;
+        });
+
+        const sortedTypes = Object.entries(typeCounts).sort((a, b) => b[1] - a[1]);
+        const maxTypeCount = sortedTypes.length > 0 ? sortedTypes[0][1] : 1;
+
+        html += '<h4 style="color:var(--text-heading);margin:24px 0 16px;font-size:0.95rem;">Meeting Type Distribution</h4>';
+        sortedTypes.forEach(([type, count]) => {
+            const pct = Math.round((count / maxTypeCount) * 100);
+            html += '<div class="analytics-bar">' +
+                '<div class="bar-label">' + escapeHtml(type) + '</div>' +
+                '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;"></div></div>' +
+                '<div class="bar-value">' + count + '</div>' +
+                '</div>';
+        });
+
+        // Summary stats
+        html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:24px;">' +
+            '<div class="stat-card"><div class="stat-value">' + appState.meetings.length + '</div><div class="stat-label">Total Meetings</div></div>' +
+            '<div class="stat-card"><div class="stat-value">' + Object.keys(clientCounts).length + '</div><div class="stat-label">Unique Clients</div></div>' +
+            '<div class="stat-card"><div class="stat-value">' + Object.keys(typeCounts).length + '</div><div class="stat-label">Meeting Types</div></div>' +
+            '</div>';
+
+        content.innerHTML = html;
+    }
+
+    function editMeeting(meetingId) {
+        const meeting = appState.meetings.find(m => m.id === meetingId);
+        if (!meeting) return;
+
+        appState.currentMeeting = JSON.parse(JSON.stringify(meeting));
+        appState.currentMeetingId = meetingId;
+        renderNoteTaking();
+        switchView('note-taking');
+        startAutosave();
+        showToast('Editing meeting notes.', 'success');
+    }
+
+    function duplicateMeeting(meetingId) {
+        const meeting = appState.meetings.find(m => m.id === meetingId);
+        if (!meeting) return;
+
+        const newMeeting = JSON.parse(JSON.stringify(meeting));
+        newMeeting.id = generateId();
+        newMeeting.date = new Date().toISOString().split('T')[0];
+        newMeeting.createdAt = new Date().toISOString();
+        newMeeting.updatedAt = new Date().toISOString();
+
+        // Clear action item statuses
+        if (newMeeting.notes && newMeeting.notes.actions) {
+            newMeeting.notes.actions.forEach(a => {
+                a.id = generateId();
+                a.status = 'Open';
+            });
+        }
+
+        // Reset other IDs
+        Object.keys(newMeeting.notes).forEach(key => {
+            if (Array.isArray(newMeeting.notes[key])) {
+                newMeeting.notes[key].forEach(item => {
+                    item.id = generateId();
+                });
+            }
+        });
+
+        appState.meetings.push(newMeeting);
+        saveState();
+        renderHistory();
+        showToast('Meeting duplicated.', 'success');
+    }
+
+    function deleteMeeting(meetingId) {
+        if (!confirm('Delete this meeting? This cannot be undone.')) return;
+
+        appState.meetings = appState.meetings.filter(m => m.id !== meetingId);
+        if (appState.currentMeeting && appState.currentMeeting.id === meetingId) {
+            appState.currentMeeting = null;
+            appState.currentMeetingId = null;
+        }
+        saveState();
+        renderHistory();
+        renderActionItemsDashboard();
+        populateMeetingSelects();
+        showToast('Meeting deleted.', 'success');
+    }
+
+    // ==================== EMAIL GENERATOR ====================
+    function populateMeetingSelects() {
+        const selects = ['emailMeetingSelect', 'exportMeetingSelect'];
+        const sorted = [...appState.meetings].sort((a, b) => b.date.localeCompare(a.date));
+
+        selects.forEach(selectId => {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">Choose a meeting...</option>';
+            sorted.forEach(m => {
+                const label = formatDate(m.date) + ' - ' + m.typeName + ' with ' + m.clientName;
+                select.innerHTML += '<option value="' + m.id + '">' + escapeHtml(label) + '</option>';
+            });
+            if (currentVal) select.value = currentVal;
+        });
+    }
+
+    function selectTone(btn) {
+        document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        generateEmail();
+    }
+
+    function generateEmail() {
+        const meetingId = document.getElementById('emailMeetingSelect').value;
+        if (!meetingId) {
+            document.getElementById('emailPreviewWrapper').style.display = 'none';
+            return;
+        }
+
+        const meeting = appState.meetings.find(m => m.id === meetingId);
+        if (!meeting) return;
+
+        const toneBtn = document.querySelector('.tone-btn.active');
+        const tone = toneBtn ? toneBtn.dataset.tone : 'formal';
+
+        const email = buildEmail(meeting, tone);
+        document.getElementById('emailPreview').textContent = email;
+        document.getElementById('emailPreviewWrapper').style.display = 'block';
+    }
+
+    function buildEmail(meeting, tone) {
+        const m = meeting;
+        const notes = m.notes;
+        let email = '';
+
+        // Greeting
+        const firstName = m.clientName.split(' ')[0];
+
+        if (tone === 'formal') {
+            email += 'Subject: Meeting Follow-Up: ' + m.typeName + ' - ' + formatDate(m.date) + '\n\n';
+            email += 'Dear ' + m.clientName + ',\n\n';
+            email += 'Thank you for taking the time to meet ';
+            if (m.platform === 'In-Person') {
+                email += 'in person ';
+            } else {
+                email += 'via ' + m.platform + ' ';
+            }
+            email += 'on ' + formatDate(m.date) + '. ';
+            email += 'I appreciate the productive discussion and wanted to provide a summary of our conversation.\n\n';
+        } else if (tone === 'friendly') {
+            email += 'Subject: Quick recap: Our ' + m.typeName.toLowerCase() + ' on ' + formatDate(m.date) + '\n\n';
+            email += 'Hi ' + firstName + ',\n\n';
+            email += 'Great chatting with you today! Here\'s a quick summary of what we covered:\n\n';
+        } else { // brief
+            email += 'Subject: Meeting Notes - ' + formatDate(m.date) + '\n\n';
+            email += 'Hi ' + firstName + ',\n\n';
+            email += 'Here are the key takeaways from our meeting:\n\n';
+        }
+
+        // Discussion points (top 5 with content)
+        const discussions = notes.discussion.filter(d => d.text.trim());
+        if (discussions.length > 0) {
+            if (tone === 'brief') {
+                email += 'KEY POINTS:\n';
+            } else {
+                email += 'DISCUSSION SUMMARY:\n';
+            }
+            discussions.forEach(d => {
+                email += '  • ' + d.text + '\n';
+            });
+            email += '\n';
+        }
+
+        // Decisions
+        const decisions = notes.decisions.filter(d => d.text.trim());
+        if (decisions.length > 0) {
+            email += 'DECISIONS MADE:\n';
+            decisions.forEach(d => {
+                email += '  • ' + d.text;
+                if (d.owner) email += ' (Owner: ' + d.owner + ')';
+                email += '\n';
+            });
+            email += '\n';
+        }
+
+        // Action Items
+        const actions = notes.actions.filter(a => a.task.trim());
+        if (actions.length > 0) {
+            email += 'ACTION ITEMS:\n';
+            actions.forEach(a => {
+                email += '  • ' + a.task;
+                if (a.assignee) email += ' → ' + a.assignee;
+                if (a.dueDate) email += ' (Due: ' + formatDate(a.dueDate) + ')';
+                if (a.priority === 'High') email += ' [HIGH PRIORITY]';
+                email += '\n';
+            });
+            email += '\n';
+        }
+
+        // Questions (unanswered)
+        const unanswered = notes.questions.filter(q => q.text.trim() && !q.answered);
+        if (unanswered.length > 0) {
+            email += 'OPEN QUESTIONS:\n';
+            unanswered.forEach(q => {
+                email += '  • ' + q.text + '\n';
+            });
+            email += '\n';
+        }
+
+        // Next Steps
+        const nextSteps = notes.nextsteps.filter(n => n.text.trim());
+        if (nextSteps.length > 0) {
+            email += 'NEXT STEPS:\n';
+            nextSteps.forEach(n => {
+                email += '  • ' + n.text + '\n';
+            });
+            email += '\n';
+        }
+
+        // Closing
+        if (tone === 'formal') {
+            email += 'Please review the above and let me know if I\'ve missed anything or if any corrections are needed. ';
+            email += 'I look forward to our continued collaboration.\n\n';
+            email += 'Best regards,\n[Your Name]';
+        } else if (tone === 'friendly') {
+            email += 'Let me know if I missed anything or if you have any questions. Looking forward to the next steps!\n\n';
+            email += 'Cheers,\n[Your Name]';
+        } else {
+            email += 'Let me know if anything needs adjusting.\n\n';
+            email += 'Best,\n[Your Name]';
+        }
+
+        return email;
+    }
+
+    function copyEmail() {
+        const text = document.getElementById('emailPreview').textContent;
+        copyToClipboard(text);
+        showToast('Email copied to clipboard!', 'success');
+    }
+
+    function copyEmailHTML() {
+        const text = document.getElementById('emailPreview').textContent;
+        const html = text.replace(/\n/g, '<br>').replace(/  /g, '&nbsp;&nbsp;');
+
+        const htmlEmail = '<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;font-size:14px;line-height:1.6;color:#333;">' +
+            '<div style="max-width:600px;margin:0 auto;padding:20px;">' +
+            html + '</div></body></html>';
+
+        copyToClipboard(htmlEmail);
+        showToast('HTML email copied to clipboard!', 'success');
+    }
+
+    // ==================== TEMPLATES ====================
+    function renderTemplates() {
+        const list = document.getElementById('templatesList');
+        const emptyState = document.getElementById('templatesEmptyState');
+
+        if (appState.templates.length === 0) {
+            list.innerHTML = '';
+            emptyState.style.display = 'block';
+            return;
+        }
+
+        emptyState.style.display = 'none';
+        list.innerHTML = appState.templates.map(t => {
+            return '<div class="template-card">' +
+                '<div>' +
+                '<div class="template-name">' + escapeHtml(t.name) + '</div>' +
+                '<div class="template-meta">' + escapeHtml(t.typeName) + ' | Created ' + formatDate(t.createdAt.split('T')[0]) + '</div>' +
+                '</div>' +
+                '<div class="btn-group">' +
+                '<button class="btn btn-primary btn-xs" onclick="useTemplate(\'' + t.id + '\')">Use</button>' +
+                '<button class="btn btn-danger btn-xs" onclick="deleteTemplate(\'' + t.id + '\')">&times;</button>' +
+                '</div>' +
+                '</div>';
+        }).join('');
+    }
+
+    function saveCurrentAsTemplate() {
+        const type = appState.selectedMeetingType;
+        if (!type) {
+            showToast('Please select a meeting type first.', 'error');
+            return;
+        }
+
+        const name = prompt('Template name:');
+        if (!name || !name.trim()) return;
+
+        const template = {
+            id: generateId(),
+            name: name.trim(),
+            type: type,
+            typeName: MEETING_TEMPLATES[type].name,
+            platform: document.getElementById('meetingPlatform').value,
+            duration: parseInt(document.getElementById('meetingDuration').value),
+            objective: document.getElementById('meetingObjective').value.trim(),
+            attendeeRoles: getAttendees().map(a => a.role),
+            createdAt: new Date().toISOString()
+        };
+
+        appState.templates.push(template);
+        saveState();
+        renderTemplates();
+        showToast('Template saved!', 'success');
+    }
+
+    function useTemplate(templateId) {
+        const template = appState.templates.find(t => t.id === templateId);
+        if (!template) return;
+
+        // Apply template to form
+        const typeCard = document.querySelector('.meeting-type-card[data-type="' + template.type + '"]');
+        if (typeCard) selectMeetingType(typeCard);
+
+        document.getElementById('meetingPlatform').value = template.platform;
+        document.getElementById('meetingDuration').value = template.duration;
+        if (template.objective) document.getElementById('meetingObjective').value = template.objective;
+
+        switchView('new-meeting');
+        showToast('Template loaded! Fill in the remaining details.', 'success');
+    }
+
+    function loadFromTemplate() {
+        if (appState.templates.length === 0) {
+            showToast('No templates saved yet. Create a template first.', 'error');
+            return;
+        }
+
+        // Show modal with template list
+        let html = '<div style="display:flex;flex-direction:column;gap:8px;">';
+        appState.templates.forEach(t => {
+            html += '<div class="template-card" style="cursor:pointer;" onclick="useTemplate(\'' + t.id + '\'); closeModal();">' +
+                '<div>' +
+                '<div class="template-name">' + escapeHtml(t.name) + '</div>' +
+                '<div class="template-meta">' + escapeHtml(t.typeName) + '</div>' +
+                '</div>' +
+                '</div>';
+        });
+        html += '</div>';
+
+        openModal('Select Template', html);
+    }
+
+    function deleteTemplate(templateId) {
+        if (!confirm('Delete this template?')) return;
+        appState.templates = appState.templates.filter(t => t.id !== templateId);
+        saveState();
+        renderTemplates();
+        showToast('Template deleted.', 'success');
+    }
+
+    // ==================== EXPORT ====================
+    function prepareExport() {
+        const meetingId = document.getElementById('exportMeetingSelect').value;
+        const buttons = document.getElementById('exportButtons');
+        const preview = document.getElementById('exportPreview');
+
+        if (!meetingId) {
+            buttons.style.display = 'none';
+            preview.style.display = 'none';
+            return;
+        }
+
+        buttons.style.display = 'block';
+        preview.style.display = 'none';
+    }
+
+    function exportFormattedText() {
+        const meetingId = document.getElementById('exportMeetingSelect').value;
+        const meeting = appState.meetings.find(m => m.id === meetingId);
+        if (!meeting) return;
+
+        const text = buildFormattedText(meeting);
+        document.getElementById('exportPreviewContent').textContent = text;
+        document.getElementById('exportPreview').style.display = 'block';
+        copyToClipboard(text);
+        showToast('Formatted text copied to clipboard!', 'success');
+    }
+
+    function buildFormattedText(meeting) {
+        const m = meeting;
+        const n = m.notes;
+        let text = '';
+
+        text += '==================================================\n';
+        text += 'MEETING NOTES: ' + m.typeName.toUpperCase() + '\n';
+        text += '==================================================\n\n';
+
+        text += 'Date:      ' + formatDate(m.date) + ' at ' + m.time + '\n';
+        text += 'Duration:  ' + m.duration + ' minutes\n';
+        text += 'Platform:  ' + m.platform + '\n';
+        text += 'Client:    ' + m.clientName + (m.company ? ' (' + m.company + ')' : '') + '\n';
+        if (m.objective) text += 'Objective: ' + m.objective + '\n';
+
+        if (m.attendees && m.attendees.length > 0) {
+            text += '\nAttendees:\n';
+            m.attendees.forEach(a => {
+                text += '  • ' + a.name + ' (' + a.role + ')\n';
+            });
+        }
+
+        text += '\n--------------------------------------------------\n';
+
+        const sections = [
+            { key: 'discussion', title: 'KEY DISCUSSION POINTS', field: 'text' },
+            { key: 'decisions', title: 'DECISIONS MADE', field: 'text', extraField: 'owner' },
+            { key: 'actions', title: 'ACTION ITEMS', field: 'task' },
+            { key: 'questions', title: 'QUESTIONS', field: 'text' },
+            { key: 'feedback', title: 'CLIENT FEEDBACK / CONCERNS', field: 'text' },
+            { key: 'nextsteps', title: 'NEXT STEPS', field: 'text' }
+        ];
+
+        sections.forEach(sec => {
+            const items = n[sec.key].filter(i => (i[sec.field] || '').trim());
+            if (items.length > 0) {
+                text += '\n' + sec.title + ':\n';
+                items.forEach(i => {
+                    if (sec.key === 'actions') {
+                        text += '  [ ] ' + i.task;
+                        if (i.assignee) text += ' → ' + i.assignee;
+                        if (i.dueDate) text += ' (Due: ' + formatDate(i.dueDate) + ')';
+                        if (i.priority) text += ' [' + i.priority + ']';
+                        text += '\n';
+                    } else if (sec.key === 'decisions') {
+                        text += '  ✔ ' + i.text;
+                        if (i.owner) text += ' (Owner: ' + i.owner + ')';
+                        text += '\n';
+                    } else if (sec.key === 'questions') {
+                        text += '  ' + (i.answered ? '✔' : '○') + ' ' + i.text;
+                        text += ' [' + (i.answered ? 'Answered' : 'Unanswered') + ']\n';
+                    } else {
+                        text += '  • ' + i.text + '\n';
+                    }
+                });
+            }
+        });
+
+        text += '\n==================================================\n';
+        text += 'Generated by FreelanceOS Meeting Notes Generator\n';
+
+        return text;
+    }
+
+    function exportHTMLEmail() {
+        const meetingId = document.getElementById('exportMeetingSelect').value;
+        const meeting = appState.meetings.find(m => m.id === meetingId);
+        if (!meeting) return;
+
+        const html = buildHTMLExport(meeting);
+        copyToClipboard(html);
+
+        document.getElementById('exportPreviewContent').textContent = html;
+        document.getElementById('exportPreview').style.display = 'block';
+        showToast('HTML email copied to clipboard!', 'success');
+    }
+
+    function buildHTMLExport(meeting) {
+        const m = meeting;
+        const n = m.notes;
+
+        let html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head>' +
+            '<body style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#333;max-width:640px;margin:0 auto;padding:20px;">';
+
+        html += '<h2 style="color:#1a1a2e;border-bottom:2px solid #6c63ff;padding-bottom:8px;">Meeting Notes: ' +
+            escapeHtml(m.typeName) + '</h2>';
+
+        html += '<table style="width:100%;border-collapse:collapse;margin-bottom:16px;">' +
+            '<tr><td style="padding:4px 12px 4px 0;font-weight:bold;color:#555;">Date:</td><td>' + formatDate(m.date) + ' at ' + m.time + '</td></tr>' +
+            '<tr><td style="padding:4px 12px 4px 0;font-weight:bold;color:#555;">Client:</td><td>' + escapeHtml(m.clientName) + (m.company ? ' (' + escapeHtml(m.company) + ')' : '') + '</td></tr>' +
+            '<tr><td style="padding:4px 12px 4px 0;font-weight:bold;color:#555;">Platform:</td><td>' + m.platform + '</td></tr>' +
+            (m.objective ? '<tr><td style="padding:4px 12px 4px 0;font-weight:bold;color:#555;">Objective:</td><td>' + escapeHtml(m.objective) + '</td></tr>' : '') +
+            '</table>';
+
+        const sectionStyle = 'style="color:#1a1a2e;margin:20px 0 8px;font-size:16px;"';
+
+        // Discussion
+        const discussions = n.discussion.filter(d => d.text.trim());
+        if (discussions.length > 0) {
+            html += '<h3 ' + sectionStyle + '>Key Discussion Points</h3><ul>';
+            discussions.forEach(d => html += '<li>' + escapeHtml(d.text) + '</li>');
+            html += '</ul>';
+        }
+
+        // Decisions
+        const decisions = n.decisions.filter(d => d.text.trim());
+        if (decisions.length > 0) {
+            html += '<h3 ' + sectionStyle + '>Decisions Made</h3><ul>';
+            decisions.forEach(d => {
+                html += '<li>' + escapeHtml(d.text);
+                if (d.owner) html += ' <em style="color:#666;">(Owner: ' + escapeHtml(d.owner) + ')</em>';
+                html += '</li>';
+            });
+            html += '</ul>';
+        }
+
+        // Actions
+        const actions = n.actions.filter(a => a.task.trim());
+        if (actions.length > 0) {
+            html += '<h3 ' + sectionStyle + '>Action Items</h3>' +
+                '<table style="width:100%;border-collapse:collapse;border:1px solid #ddd;">' +
+                '<thead><tr style="background:#f5f5f5;">' +
+                '<th style="padding:8px;text-align:left;border:1px solid #ddd;">Task</th>' +
+                '<th style="padding:8px;text-align:left;border:1px solid #ddd;">Assignee</th>' +
+                '<th style="padding:8px;text-align:left;border:1px solid #ddd;">Due Date</th>' +
+                '<th style="padding:8px;text-align:left;border:1px solid #ddd;">Priority</th>' +
+                '</tr></thead><tbody>';
+            actions.forEach(a => {
+                html += '<tr>' +
+                    '<td style="padding:8px;border:1px solid #ddd;">' + escapeHtml(a.task) + '</td>' +
+                    '<td style="padding:8px;border:1px solid #ddd;">' + escapeHtml(a.assignee || '-') + '</td>' +
+                    '<td style="padding:8px;border:1px solid #ddd;">' + (a.dueDate ? formatDate(a.dueDate) : '-') + '</td>' +
+                    '<td style="padding:8px;border:1px solid #ddd;">' + escapeHtml(a.priority) + '</td>' +
+                    '</tr>';
+            });
+            html += '</tbody></table>';
+        }
+
+        // Questions
+        const questions = n.questions.filter(q => q.text.trim());
+        if (questions.length > 0) {
+            html += '<h3 ' + sectionStyle + '>Questions</h3><ul>';
+            questions.forEach(q => {
+                html += '<li>' + escapeHtml(q.text) +
+                    ' <span style="color:' + (q.answered ? '#22c55e' : '#f59e0b') + ';font-weight:bold;">[' +
+                    (q.answered ? 'Answered' : 'Unanswered') + ']</span></li>';
+            });
+            html += '</ul>';
+        }
+
+        // Feedback
+        const feedback = n.feedback.filter(f => f.text.trim());
+        if (feedback.length > 0) {
+            html += '<h3 ' + sectionStyle + '>Client Feedback</h3><ul>';
+            feedback.forEach(f => html += '<li>' + escapeHtml(f.text) + '</li>');
+            html += '</ul>';
+        }
+
+        // Next steps
+        const nextSteps = n.nextsteps.filter(ns => ns.text.trim());
+        if (nextSteps.length > 0) {
+            html += '<h3 ' + sectionStyle + '>Next Steps</h3><ul>';
+            nextSteps.forEach(ns => html += '<li>' + escapeHtml(ns.text) + '</li>');
+            html += '</ul>';
+        }
+
+        html += '<hr style="border:none;border-top:1px solid #ddd;margin:24px 0;">' +
+            '<p style="color:#999;font-size:12px;">Generated by FreelanceOS Meeting Notes Generator</p>';
+
+        html += '</body></html>';
+        return html;
+    }
+
+    function exportCSVActions() {
+        const meetingId = document.getElementById('exportMeetingSelect').value;
+        const meeting = appState.meetings.find(m => m.id === meetingId);
+        if (!meeting) return;
+
+        const actions = meeting.notes.actions;
+        let csv = 'Task,Assignee,Due Date,Priority,Status,Client,Meeting Type,Meeting Date\n';
+
+        actions.forEach(a => {
+            csv += '"' + (a.task || '').replace(/"/g, '""') + '",';
+            csv += '"' + (a.assignee || '').replace(/"/g, '""') + '",';
+            csv += '"' + (a.dueDate || '') + '",';
+            csv += '"' + (a.priority || '') + '",';
+            csv += '"' + (a.status || '') + '",';
+            csv += '"' + (meeting.clientName || '').replace(/"/g, '""') + '",';
+            csv += '"' + (meeting.typeName || '') + '",';
+            csv += '"' + (meeting.date || '') + '"\n';
+        });
+
+        // Create download
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'action-items-' + meeting.clientName.replace(/\s+/g, '-').toLowerCase() + '-' + meeting.date + '.csv';
+        link.click();
+        URL.revokeObjectURL(url);
+
+        showToast('CSV downloaded!', 'success');
+    }
+
+    function printMeeting() {
+        const meetingId = document.getElementById('exportMeetingSelect').value;
+        const meeting = appState.meetings.find(m => m.id === meetingId);
+        if (!meeting) return;
+
+        const html = buildHTMLExport(meeting);
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.print();
+    }
+
+    // ==================== MODALS ====================
+    function openModal(title, bodyHTML) {
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalBody').innerHTML = bodyHTML;
+        document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal(event) {
+        if (event && event.target !== document.getElementById('modalOverlay') && !event.target.classList.contains('modal-close')) return;
+        document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    // ==================== TOASTS ====================
+    function showToast(message, type) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = 'toast ' + (type || '');
+        toast.innerHTML = (type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ') + ' ' + escapeHtml(message);
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(20px)';
+            toast.style.transition = '0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // ==================== KEYBOARD SHORTCUTS ====================
+    document.addEventListener('keydown', function(e) {
+        // Ctrl+N: New meeting
+        if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+            e.preventDefault();
+            switchView('new-meeting');
+        }
+        // Ctrl+S: Save
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            saveMeeting();
+        }
+        // Ctrl+E: Email generator
+        if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+            e.preventDefault();
+            switchView('email-gen');
+        }
+        // Escape: Close modal
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    // ==================== UTILITY FUNCTIONS ====================
+    function generateId() {
+        return 'mtg_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 8);
+    }
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        try {
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return months[parseInt(parts[1]) - 1] + ' ' + parseInt(parts[2]) + ', ' + parts[0];
+        } catch (e) {
+            return dateStr;
+        }
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).catch(() => {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+        } catch (e) {
+            console.error('Copy failed:', e);
+        }
+        document.body.removeChild(textarea);
+    }
+
+    // ==================== DRAG AND DROP (Discussion Points Reorder) ====================
+    let dragState = { dragging: null, sectionKey: null };
+
+    document.addEventListener('mousedown', function(e) {
+        if (e.target.classList.contains('drag-handle')) {
+            const item = e.target.closest('.note-item');
+            const container = e.target.closest('.note-items');
+            if (!item || !container) return;
+
+            dragState.dragging = item;
+            dragState.sectionKey = container.id.replace('noteItems_', '');
+            item.style.opacity = '0.5';
+            item.style.cursor = 'grabbing';
+        }
+    });
+
+    document.addEventListener('mouseover', function(e) {
+        if (!dragState.dragging) return;
+        const target = e.target.closest('.note-item');
+        if (target && target !== dragState.dragging) {
+            const container = target.closest('.note-items');
+            if (!container) return;
+            const items = Array.from(container.children);
+            const dragIdx = items.indexOf(dragState.dragging);
+            const targetIdx = items.indexOf(target);
+            if (dragIdx < targetIdx) {
+                container.insertBefore(dragState.dragging, target.nextSibling);
+            } else {
+                container.insertBefore(dragState.dragging, target);
+            }
+        }
+    });
+
+    document.addEventListener('mouseup', function(e) {
+        if (!dragState.dragging) return;
+        dragState.dragging.style.opacity = '1';
+        dragState.dragging.style.cursor = '';
+
+        // Update the data order
+        if (appState.currentMeeting && dragState.sectionKey) {
+            const container = document.getElementById('noteItems_' + dragState.sectionKey);
+            if (container) {
+                const newOrder = Array.from(container.children).map(el => el.dataset.id);
+                const items = appState.currentMeeting.notes[dragState.sectionKey];
+                const reordered = [];
+                newOrder.forEach(id => {
+                    const item = items.find(i => i.id === id);
+                    if (item) reordered.push(item);
+                });
+                // Add any items not found in DOM (shouldn't happen, but safety)
+                items.forEach(item => {
+                    if (!reordered.find(r => r.id === item.id)) reordered.push(item);
+                });
+                appState.currentMeeting.notes[dragState.sectionKey] = reordered;
+                updateMeetingInArray();
+                triggerAutosave();
+            }
+        }
+
+        dragState.dragging = null;
+        dragState.sectionKey = null;
+    });
+
+    // ==================== QUICK ADD BUTTONS ====================
+    // Add quick-add buttons to note taking view after render
+    const originalRenderNoteTaking = renderNoteTaking;
+    renderNoteTaking = function() {
+        originalRenderNoteTaking();
+
+        // Add quick-add bar
+        const container = document.getElementById('noteSectionsContainer');
+        if (!container) return;
+
+        const quickBar = document.createElement('div');
+        quickBar.className = 'card';
+        quickBar.innerHTML = '<div class="card-title"><div class="icon">&#9889;</div> Quick Add</div>' +
+            '<div class="btn-group" style="flex-wrap:wrap;">' +
+            '<button class="btn btn-secondary btn-sm" onclick="quickAdd(\'discussion\', \'Client mentioned...\')">+ Discussion Point</button>' +
+            '<button class="btn btn-secondary btn-sm" onclick="quickAdd(\'decisions\', \'Agreed to...\')">+ Decision</button>' +
+            '<button class="btn btn-secondary btn-sm" onclick="quickAddAction()">+ Action Item</button>' +
+            '<button class="btn btn-secondary btn-sm" onclick="quickAdd(\'questions\', \'\')">+ Question</button>' +
+            '<button class="btn btn-secondary btn-sm" onclick="quickAdd(\'feedback\', \'\')">+ Feedback</button>' +
+            '<button class="btn btn-secondary btn-sm" onclick="quickAdd(\'nextsteps\', \'\')">+ Next Step</button>' +
+            '</div>';
+        container.appendChild(quickBar);
+
+        // Init auto-resize on textareas
+        setTimeout(initTextareas, 50);
+    };
+
+    function quickAdd(sectionKey, defaultText) {
+        if (!appState.currentMeeting) return;
+
+        let newItem;
+        if (sectionKey === 'decisions') {
+            newItem = { id: generateId(), text: defaultText, owner: '' };
+        } else if (sectionKey === 'questions') {
+            newItem = { id: generateId(), text: defaultText, answered: false };
+        } else {
+            newItem = { id: generateId(), text: defaultText };
+        }
+
+        appState.currentMeeting.notes[sectionKey].push(newItem);
+        updateMeetingInArray();
+        renderNoteTaking();
+        triggerAutosave();
+
+        // Scroll to and focus
+        setTimeout(() => {
+            const container = document.getElementById('noteItems_' + sectionKey);
+            if (container) {
+                const items = container.querySelectorAll('.item-input');
+                if (items.length > 0) {
+                    const lastItem = items[items.length - 1];
+                    lastItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    lastItem.focus();
+                    lastItem.select();
+                }
+            }
+        }, 100);
+    }
+
+    function quickAddAction() {
+        if (!appState.currentMeeting) return;
+
+        const newItem = {
+            id: generateId(),
+            task: '',
+            assignee: '',
+            dueDate: '',
+            priority: 'Medium',
+            status: 'Open'
+        };
+
+        appState.currentMeeting.notes.actions.push(newItem);
+        updateMeetingInArray();
+        renderNoteTaking();
+        triggerAutosave();
+
+        setTimeout(() => {
+            const container = document.getElementById('noteItems_actions');
+            if (container) {
+                const items = container.querySelectorAll('.item-input');
+                if (items.length > 0) {
+                    const lastItem = items[items.length - 1];
+                    lastItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    lastItem.focus();
+                }
+            }
+        }, 100);
+    }
+
+    // ==================== RESUME ACTIVE MEETING ON LOAD ====================
+    function checkForActiveMeeting() {
+        if (appState.currentMeetingId) {
+            const meeting = appState.meetings.find(m => m.id === appState.currentMeetingId);
+            if (meeting) {
+                appState.currentMeeting = JSON.parse(JSON.stringify(meeting));
+            }
+        }
+    }
+
+    // ==================== INITIALIZE ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        init();
+        checkForActiveMeeting();
+    });
+
+    // Run init immediately if DOM already loaded
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+        init();
+        checkForActiveMeeting();
+    }
+
+    </script>
+</body>
+</html>
