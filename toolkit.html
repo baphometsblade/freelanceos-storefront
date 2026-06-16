@@ -737,4 +737,19 @@ function resetFilter() {
 
 function submitEmail(e) {
   e.preventDefault();
-  const em
+  const email = document.getElementById('email-input').value;
+  try {
+    const leads = JSON.parse(localStorage.getItem('freelanceos_leads')||'[]');
+    leads.push({ email, source:'toolkit-page', date: new Date().toISOString().slice(0,10) });
+    localStorage.setItem('freelanceos_leads', JSON.stringify(leads));
+  } catch(err) {}
+  fetch('https://api.beehiiv.com/v2/publications/pub_freelanceos/subscriptions', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ email, utm_source:'toolkit-page', utm_medium:'email-capture' })
+  }).catch(()=>{});
+  document.getElementById('email-form').style.display = 'none';
+  document.getElementById('email-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
