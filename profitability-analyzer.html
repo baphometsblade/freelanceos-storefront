@@ -1,0 +1,3049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Project Profitability Analyzer | FreelanceOS</title>
+<meta name="description" content="Track project profitability, calculate effective hourly rates, analyze costs vs revenue, and optimize your freelance business with this free profitability analyzer tool.">
+<meta name="keywords" content="project profitability, freelance profit calculator, hourly rate calculator, freelance business tools, cost tracking, revenue analysis">
+<meta name="author" content="FreelanceOS">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://freelanceos.pro/profitability-analyzer.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Free Project Profitability Analyzer | FreelanceOS">
+<meta property="og:description" content="Track project profitability, calculate effective hourly rates, and optimize your freelance business with real-time analytics.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.pro/profitability-analyzer.html">
+<meta property="og:image" content="https://freelanceos.pro/og-image.png">
+<meta property="og:site_name" content="FreelanceOS">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Project Profitability Analyzer | FreelanceOS">
+<meta name="twitter:description" content="Track project profitability, calculate effective hourly rates, and optimize your freelance business.">
+<meta name="twitter:image" content="https://freelanceos.pro/og-image.png">
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Project Profitability Analyzer",
+  "description": "Track project profitability, calculate effective hourly rates, analyze costs vs revenue, and optimize your freelance business.",
+  "url": "https://freelanceos.pro/profitability-analyzer.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "FreelanceOS",
+    "url": "https://freelanceos.pro"
+  }
+}
+</script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --input-bg: #1e293b;
+  --accent-start: #a855f7;
+  --accent-end: #ec4899;
+  --accent-gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --text: #e2e8f0;
+  --heading: #f8fafc;
+  --border: rgba(168, 85, 247, 0.2);
+  --input-border: rgba(168, 85, 247, 0.3);
+  --focus-ring: rgba(168, 85, 247, 0.5);
+  --green: #22c55e;
+  --yellow: #eab308;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --orange: #f97316;
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --glass: blur(20px);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(168,85,247,0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(168,85,247,0.5); }
+
+/* CTA Banner */
+.cta-banner {
+  background: var(--accent-gradient);
+  padding: 12px 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+.cta-banner:hover { opacity: 0.92; }
+.cta-banner a { color: #fff; text-decoration: none; }
+.cta-banner .cta-close {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 48px 20px 32px;
+  position: relative;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: var(--heading);
+  margin-bottom: 12px;
+  position: relative;
+}
+header h1 span {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header p {
+  font-size: 1.1rem;
+  color: var(--text);
+  max-width: 640px;
+  margin: 0 auto;
+  opacity: 0.85;
+}
+.keyboard-hint {
+  margin-top: 12px;
+  font-size: 0.82rem;
+  opacity: 0.5;
+}
+.keyboard-hint kbd {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: inherit;
+  font-size: 0.78rem;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 20px 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.nav-tab {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 20px;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.nav-tab:hover { border-color: var(--accent-start); transform: scale(1.02); }
+.nav-tab.active {
+  background: var(--accent-gradient);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Main Layout */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+/* Tab Panels */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  margin-bottom: 20px;
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+}
+.card h2 {
+  color: var(--heading);
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card h3 {
+  color: var(--heading);
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+}
+
+/* Forms */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  opacity: 0.8;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--heading);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--accent-start);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+.form-group textarea { resize: vertical; min-height: 60px; }
+select option { background: var(--input-bg); color: var(--heading); }
+
+/* Buttons */
+.btn {
+  background: var(--accent-gradient);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn:hover { transform: scale(1.02); box-shadow: 0 4px 20px rgba(168,85,247,0.3); }
+.btn:active { transform: scale(0.98); }
+.btn-secondary {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--accent-start); }
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+.btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+.btn-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; margin-top: 16px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: rgba(168,85,247,0.08);
+  font-weight: 600;
+  color: var(--heading);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+td { color: var(--text); }
+tr:hover td { background: rgba(168,85,247,0.04); }
+
+/* Status badges */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.badge-green { background: rgba(34,197,94,0.15); color: var(--green); }
+.badge-yellow { background: rgba(234,179,8,0.15); color: var(--yellow); }
+.badge-red { background: rgba(239,68,68,0.15); color: var(--red); }
+.badge-blue { background: rgba(59,130,246,0.15); color: var(--blue); }
+.badge-purple { background: rgba(168,85,247,0.15); color: var(--accent-start); }
+
+/* Metric cards */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.metric-card {
+  background: rgba(168,85,247,0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  text-align: center;
+}
+.metric-card .metric-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--heading);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.metric-card .metric-label {
+  font-size: 0.82rem;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+/* Charts (Canvas) */
+.chart-container {
+  position: relative;
+  width: 100%;
+  margin: 16px 0;
+}
+.chart-container canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Scorecard */
+.grade-display {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0 auto 16px;
+  border: 4px solid;
+}
+.grade-A { border-color: var(--green); color: var(--green); background: rgba(34,197,94,0.1); }
+.grade-B { border-color: #22d3ee; color: #22d3ee; background: rgba(34,211,238,0.1); }
+.grade-C { border-color: var(--yellow); color: var(--yellow); background: rgba(234,179,8,0.1); }
+.grade-D { border-color: var(--orange); color: var(--orange); background: rgba(249,115,22,0.1); }
+.grade-F { border-color: var(--red); color: var(--red); background: rgba(239,68,68,0.1); }
+
+/* Recommendations */
+.rec-item {
+  background: rgba(168,85,247,0.05);
+  border-left: 3px solid var(--accent-start);
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 0 10px 10px 0;
+  font-size: 0.92rem;
+}
+
+/* What-If Sliders */
+.slider-group { margin-bottom: 20px; }
+.slider-group label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+.slider-group input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: var(--input-bg);
+  border-radius: 3px;
+  outline: none;
+}
+.slider-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--accent-gradient);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.slider-group input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--accent-start);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* Report area */
+.report-output {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  max-height: 500px;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+/* Benchmark bars */
+.benchmark-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.benchmark-label { width: 140px; font-size: 0.85rem; flex-shrink: 0; }
+.benchmark-bar-wrap {
+  flex: 1;
+  height: 28px;
+  background: var(--input-bg);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.benchmark-bar {
+  height: 100%;
+  border-radius: 14px;
+  transition: width 0.6s ease;
+}
+.benchmark-bar.yours { background: var(--accent-gradient); }
+.benchmark-bar.industry { background: rgba(168,85,247,0.25); position: absolute; top: 0; }
+.benchmark-value {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* Toggle switch */
+.toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toggle {
+  width: 44px;
+  height: 24px;
+  background: var(--input-bg);
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+  border: 1px solid var(--input-border);
+}
+.toggle.active { background: var(--accent-start); border-color: var(--accent-start); }
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.toggle.active::after { transform: translateX(20px); }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  opacity: 0.5;
+}
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+.empty-state p { font-size: 0.95rem; }
+
+/* Modal overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(2,6,23,0.85);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.modal h2 { margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+/* Project selector */
+.project-selector {
+  margin-bottom: 20px;
+}
+.project-selector select {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--heading);
+  font-size: 0.95rem;
+  font-family: inherit;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+footer a { color: var(--accent-start); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+footer .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 16px; }
+footer .disclaimer { font-size: 0.78rem; opacity: 0.5; max-width: 600px; margin: 12px auto 0; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--card);
+  border: 1px solid var(--accent-start);
+  border-radius: var(--radius-btn);
+  padding: 14px 24px;
+  color: var(--heading);
+  font-weight: 500;
+  z-index: 3000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s;
+  max-width: 360px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .metrics-row { grid-template-columns: repeat(2, 1fr); }
+  .card { padding: 20px; }
+  header { padding: 32px 16px 24px; }
+  .nav-tabs { gap: 6px; }
+  .nav-tab { padding: 8px 14px; font-size: 0.82rem; }
+  .benchmark-label { width: 100px; font-size: 0.78rem; }
+  .btn-group { flex-direction: column; }
+  .btn-group .btn { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .metrics-row { grid-template-columns: 1fr; }
+  header h1 { font-size: 1.5rem; }
+  .cta-banner { font-size: 0.85rem; padding: 10px 40px 10px 16px; }
+}
+
+/* Print */
+@media print {
+  .cta-banner, .nav-tabs, .btn-group, footer, .keyboard-hint { display: none; }
+  body { background: #fff; color: #000; }
+  .card { border: 1px solid #ddd; background: #fff; }
+}
+</style>
+</head>
+<body>
+
+<!-- CTA Banner -->
+<div class="cta-banner" id="ctaBanner">
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">
+    Get the complete FreelanceOS system &mdash; 40% OFF with code FLASH40. Grab the deal &rarr;
+  </a>
+  <button class="cta-close" onclick="document.getElementById('ctaBanner').style.display='none'" aria-label="Close banner">&times;</button>
+</div>
+
+<!-- Header -->
+<header>
+  <h1>Project <span>Profitability</span> Analyzer</h1>
+  <p>Track every dollar in, every dollar out. See which projects make you money and which drain your time. Built for freelancers who want to run a real business.</p>
+  <div class="keyboard-hint">
+    <kbd>N</kbd> New project &nbsp; <kbd>T</kbd> Log time &nbsp; <kbd>C</kbd> Log cost &nbsp; <kbd>E</kbd> Export &nbsp; <kbd>?</kbd> All shortcuts
+  </div>
+</header>
+
+<!-- Navigation -->
+<nav class="nav-tabs" role="tablist">
+  <button class="nav-tab active" data-tab="projects" role="tab">Projects</button>
+  <button class="nav-tab" data-tab="time" role="tab">Time</button>
+  <button class="nav-tab" data-tab="costs" role="tab">Costs</button>
+  <button class="nav-tab" data-tab="dashboard" role="tab">Dashboard</button>
+  <button class="nav-tab" data-tab="portfolio" role="tab">Portfolio</button>
+  <button class="nav-tab" data-tab="scorecard" role="tab">Scorecard</button>
+  <button class="nav-tab" data-tab="whatif" role="tab">What-If</button>
+  <button class="nav-tab" data-tab="benchmarks" role="tab">Benchmarks</button>
+  <button class="nav-tab" data-tab="reports" role="tab">Reports</button>
+</nav>
+
+<!-- Main Container -->
+<div class="app-container">
+
+  <!-- ============ PROJECTS TAB ============ -->
+  <div class="tab-panel active" id="panel-projects">
+    <div class="card">
+      <h2>Add New Project</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="projName">Project Name *</label>
+          <input type="text" id="projName" placeholder="e.g. Brand Redesign">
+        </div>
+        <div class="form-group">
+          <label for="projClient">Client *</label>
+          <input type="text" id="projClient" placeholder="e.g. Acme Corp">
+        </div>
+        <div class="form-group">
+          <label for="projType">Pricing Type</label>
+          <select id="projType">
+            <option value="fixed">Fixed Price</option>
+            <option value="hourly">Hourly</option>
+            <option value="retainer">Retainer</option>
+            <option value="value">Value-Based</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="projAmount">Contracted Amount ($)</label>
+          <input type="number" id="projAmount" placeholder="5000" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label for="projHourlyRate">Hourly Rate ($)</label>
+          <input type="number" id="projHourlyRate" placeholder="100" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label for="projEstHours">Estimated Hours</label>
+          <input type="number" id="projEstHours" placeholder="50" min="0" step="0.5">
+        </div>
+        <div class="form-group">
+          <label for="projStart">Start Date</label>
+          <input type="date" id="projStart">
+        </div>
+        <div class="form-group">
+          <label for="projEnd">End Date</label>
+          <input type="date" id="projEnd">
+        </div>
+        <div class="form-group">
+          <label for="projStatus">Status</label>
+          <select id="projStatus">
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+            <option value="on-hold">On Hold</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="projCategory">Category</label>
+          <select id="projCategory">
+            <option value="web-design">Web Design</option>
+            <option value="web-dev">Web Development</option>
+            <option value="branding">Branding / Identity</option>
+            <option value="copywriting">Copywriting</option>
+            <option value="marketing">Marketing / SEO</option>
+            <option value="consulting">Consulting</option>
+            <option value="video">Video / Animation</option>
+            <option value="photography">Photography</option>
+            <option value="illustration">Illustration</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:16px">
+        <label for="projNotes">Notes</label>
+        <textarea id="projNotes" placeholder="Scope details, milestones, special terms..."></textarea>
+      </div>
+      <div class="btn-group">
+        <button class="btn" onclick="addProject()">Add Project</button>
+        <button class="btn btn-secondary" onclick="clearProjectForm()">Clear</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your Projects</h2>
+      <div class="btn-group" style="margin-bottom:16px; margin-top:0;">
+        <select id="filterStatus" onchange="renderProjects()" style="background:var(--input-bg);border:1px solid var(--input-border);border-radius:10px;padding:8px 12px;color:var(--heading);font-family:inherit;">
+          <option value="all">All Status</option>
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="on-hold">On Hold</option>
+        </select>
+        <select id="filterClient" onchange="renderProjects()" style="background:var(--input-bg);border:1px solid var(--input-border);border-radius:10px;padding:8px 12px;color:var(--heading);font-family:inherit;">
+          <option value="all">All Clients</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table id="projectsTable">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Client</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Margin</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="projectsBody"></tbody>
+        </table>
+      </div>
+      <div id="projectsEmpty" class="empty-state" style="display:none;">
+        <div class="empty-icon">&#128202;</div>
+        <p>No projects yet. Add your first project above to start tracking profitability.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TIME TAB ============ -->
+  <div class="tab-panel" id="panel-time">
+    <div class="card">
+      <h2>Log Time Entry</h2>
+      <div class="project-selector">
+        <label style="font-size:0.85rem;opacity:0.8;display:block;margin-bottom:6px;">Select Project</label>
+        <select id="timeProject"></select>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="timeDate">Date</label>
+          <input type="date" id="timeDate">
+        </div>
+        <div class="form-group">
+          <label for="timeHours">Hours</label>
+          <input type="number" id="timeHours" placeholder="2.5" min="0" step="0.25">
+        </div>
+        <div class="form-group">
+          <label for="timeDesc">Description</label>
+          <input type="text" id="timeDesc" placeholder="What did you work on?">
+        </div>
+        <div class="form-group">
+          <label>Billable?</label>
+          <div class="toggle-wrap" style="margin-top:4px">
+            <div class="toggle active" id="timeBillable" onclick="this.classList.toggle('active')"></div>
+            <span id="timeBillableLabel">Yes</span>
+          </div>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn" onclick="addTimeEntry()">Log Time</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Time Log</h2>
+      <div class="project-selector">
+        <label style="font-size:0.85rem;opacity:0.8;display:block;margin-bottom:6px;">Filter by Project</label>
+        <select id="timeFilterProject" onchange="renderTimeEntries()">
+          <option value="all">All Projects</option>
+        </select>
+      </div>
+      <div id="timeSummary" class="metrics-row" style="display:none;"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Project</th>
+              <th>Hours</th>
+              <th>Description</th>
+              <th>Billable</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="timeBody"></tbody>
+        </table>
+      </div>
+      <div id="timeEmpty" class="empty-state" style="display:none;">
+        <div class="empty-icon">&#9202;</div>
+        <p>No time entries yet. Start logging hours to track your effective rate.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ COSTS TAB ============ -->
+  <div class="tab-panel" id="panel-costs">
+    <div class="card">
+      <h2>Log Expense</h2>
+      <div class="project-selector">
+        <label style="font-size:0.85rem;opacity:0.8;display:block;margin-bottom:6px;">Select Project</label>
+        <select id="costProject"></select>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="costDate">Date</label>
+          <input type="date" id="costDate">
+        </div>
+        <div class="form-group">
+          <label for="costCategory">Category</label>
+          <select id="costCategory">
+            <option value="software">Software / Tools</option>
+            <option value="outsourcing">Outsourcing / Subcontracting</option>
+            <option value="materials">Materials / Assets</option>
+            <option value="travel">Travel</option>
+            <option value="hosting">Hosting / Infrastructure</option>
+            <option value="marketing">Marketing</option>
+            <option value="misc">Miscellaneous</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="costAmount">Amount ($)</label>
+          <input type="number" id="costAmount" placeholder="99.00" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label for="costDesc">Description</label>
+          <input type="text" id="costDesc" placeholder="What was this expense for?">
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn" onclick="addCostEntry()">Log Expense</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Expense Log</h2>
+      <div class="project-selector">
+        <label style="font-size:0.85rem;opacity:0.8;display:block;margin-bottom:6px;">Filter by Project</label>
+        <select id="costFilterProject" onchange="renderCostEntries()">
+          <option value="all">All Projects</option>
+        </select>
+      </div>
+      <div id="costSummary" class="metrics-row" style="display:none;"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Project</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="costBody"></tbody>
+        </table>
+      </div>
+      <div id="costEmpty" class="empty-state" style="display:none;">
+        <div class="empty-icon">&#128176;</div>
+        <p>No expenses logged yet. Track project costs to see true profitability.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DASHBOARD TAB ============ -->
+  <div class="tab-panel" id="panel-dashboard">
+    <div class="card">
+      <h2>Project Profitability Dashboard</h2>
+      <div class="project-selector">
+        <label style="font-size:0.85rem;opacity:0.8;display:block;margin-bottom:6px;">Select Project</label>
+        <select id="dashProject" onchange="renderDashboard()"></select>
+      </div>
+    </div>
+    <div id="dashContent">
+      <div id="dashMetrics" class="metrics-row"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="card">
+          <h3>Revenue vs Costs Waterfall</h3>
+          <div class="chart-container">
+            <canvas id="waterfallChart" width="500" height="300"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Cost Breakdown</h3>
+          <div class="chart-container">
+            <canvas id="donutChart" width="500" height="300"></canvas>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="card">
+          <h3>Hours: Estimated vs Actual</h3>
+          <div class="chart-container">
+            <canvas id="hoursChart" width="500" height="280"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Cumulative Hours Over Time</h3>
+          <div class="chart-container">
+            <canvas id="cumulativeChart" width="500" height="280"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="dashEmpty" class="empty-state" style="display:none;">
+      <div class="empty-icon">&#128200;</div>
+      <p>Select a project to view its profitability dashboard.</p>
+    </div>
+  </div>
+
+  <!-- ============ PORTFOLIO TAB ============ -->
+  <div class="tab-panel" id="panel-portfolio">
+    <div id="portfolioMetrics" class="metrics-row"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div class="card">
+        <h3>Revenue by Client</h3>
+        <div class="chart-container">
+          <canvas id="clientRevenueChart" width="500" height="300"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Profit Margin by Project Type</h3>
+        <div class="chart-container">
+          <canvas id="typeMarginChart" width="500" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Monthly Revenue Trend</h3>
+      <div class="chart-container">
+        <canvas id="monthlyTrendChart" width="1000" height="300"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <h3>All Projects Comparison</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Client</th>
+              <th>Revenue</th>
+              <th>Costs</th>
+              <th>Profit</th>
+              <th>Margin</th>
+              <th>Eff. Rate</th>
+            </tr>
+          </thead>
+          <tbody id="portfolioBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="portfolioEmpty" class="empty-state" style="display:none;">
+      <div class="empty-icon">&#127959;</div>
+      <p>Add projects to see your portfolio overview and analytics.</p>
+    </div>
+  </div>
+
+  <!-- ============ SCORECARD TAB ============ -->
+  <div class="tab-panel" id="panel-scorecard">
+    <div class="card" style="text-align:center;">
+      <h2 style="justify-content:center;">Profitability Scorecard</h2>
+      <div class="project-selector" style="text-align:left;">
+        <label style="font-size:0.85rem;opacity:0.8;display:block;margin-bottom:6px;">Select Project</label>
+        <select id="scorecardProject" onchange="renderScorecard()"></select>
+      </div>
+      <div id="scorecardGrade"></div>
+      <div id="scorecardBreakdown" style="text-align:left;"></div>
+      <div id="scorecardRecs" style="text-align:left;margin-top:20px;"></div>
+    </div>
+    <div id="scorecardEmpty" class="empty-state" style="display:none;">
+      <div class="empty-icon">&#127942;</div>
+      <p>Select a project to see its profitability scorecard.</p>
+    </div>
+  </div>
+
+  <!-- ============ WHAT-IF TAB ============ -->
+  <div class="tab-panel" id="panel-whatif">
+    <div class="card">
+      <h2>What-If Scenario Analysis</h2>
+      <div class="project-selector">
+        <label style="font-size:0.85rem;opacity:0.8;display:block;margin-bottom:6px;">Select Project</label>
+        <select id="whatifProject" onchange="renderWhatIf()"></select>
+      </div>
+      <div id="whatifControls" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px;">
+        <div>
+          <div class="slider-group">
+            <label>Rate Adjustment <span id="whatifRateVal">0%</span></label>
+            <input type="range" id="whatifRate" min="-50" max="100" value="0" oninput="updateWhatIf()">
+          </div>
+          <div class="slider-group">
+            <label>Hours Change <span id="whatifHoursVal">0%</span></label>
+            <input type="range" id="whatifHours" min="-50" max="50" value="0" oninput="updateWhatIf()">
+          </div>
+          <div class="slider-group">
+            <label>Cost Change <span id="whatifCostVal">0%</span></label>
+            <input type="range" id="whatifCost" min="-50" max="100" value="0" oninput="updateWhatIf()">
+          </div>
+          <div class="form-group" style="margin-top:12px;">
+            <label for="whatifAddCost">Add One-Time Cost ($)</label>
+            <input type="number" id="whatifAddCost" value="0" min="0" step="1" oninput="updateWhatIf()">
+          </div>
+          <div class="form-group" style="margin-top:12px;">
+            <label for="whatifRemoveCost">Remove Cost ($)</label>
+            <input type="number" id="whatifRemoveCost" value="0" min="0" step="1" oninput="updateWhatIf()">
+          </div>
+        </div>
+        <div>
+          <div id="whatifResults" class="card" style="margin-bottom:0;"></div>
+        </div>
+      </div>
+    </div>
+    <div id="whatifEmpty" class="empty-state" style="display:none;">
+      <div class="empty-icon">&#128300;</div>
+      <p>Add projects with time and cost data to run what-if scenarios.</p>
+    </div>
+  </div>
+
+  <!-- ============ BENCHMARKS TAB ============ -->
+  <div class="tab-panel" id="panel-benchmarks">
+    <div class="card">
+      <h2>Industry Benchmarks</h2>
+      <p style="opacity:0.7;font-size:0.9rem;margin-bottom:20px;">Compare your metrics against industry averages for common freelance categories. Benchmarks are based on aggregated industry data and surveys.</p>
+      <div class="project-selector">
+        <label style="font-size:0.85rem;opacity:0.8;display:block;margin-bottom:6px;">Your Category</label>
+        <select id="benchCategory" onchange="renderBenchmarks()">
+          <option value="web-design">Web Design</option>
+          <option value="web-dev">Web Development</option>
+          <option value="branding">Branding / Identity</option>
+          <option value="copywriting">Copywriting</option>
+          <option value="marketing">Marketing / SEO</option>
+          <option value="consulting">Consulting</option>
+          <option value="video">Video / Animation</option>
+          <option value="photography">Photography</option>
+          <option value="illustration">Illustration</option>
+        </select>
+      </div>
+      <div id="benchContent" style="margin-top:24px;"></div>
+    </div>
+  </div>
+
+  <!-- ============ REPORTS TAB ============ -->
+  <div class="tab-panel" id="panel-reports">
+    <div class="card">
+      <h2>Generate Reports</h2>
+      <div class="btn-group" style="margin-top:0;">
+        <button class="btn" onclick="generateProjectPL()">Project P&amp;L</button>
+        <button class="btn" onclick="generatePortfolioSummary()">Portfolio Summary</button>
+        <button class="btn" onclick="generateClientRanking()">Client Ranking</button>
+      </div>
+      <div class="project-selector" style="margin-top:16px;">
+        <label style="font-size:0.85rem;opacity:0.8;display:block;margin-bottom:6px;">Project (for P&amp;L report)</label>
+        <select id="reportProject"></select>
+      </div>
+    </div>
+    <div class="card" id="reportOutputCard" style="display:none;">
+      <h3 id="reportTitle">Report</h3>
+      <div class="report-output" id="reportOutput"></div>
+      <div class="btn-group">
+        <button class="btn btn-sm" onclick="copyReport()">Copy to Clipboard</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Import / Export Data</h2>
+      <div class="btn-group" style="margin-top:0;">
+        <button class="btn" onclick="exportCSV()">Export All (CSV)</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('csvImport').click()">Import CSV</button>
+        <input type="file" id="csvImport" accept=".csv" style="display:none" onchange="importCSV(event)">
+        <button class="btn btn-danger btn-sm" onclick="clearAllData()">Clear All Data</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Keyboard Shortcuts Modal -->
+<div class="modal-overlay" id="shortcutsModal">
+  <div class="modal">
+    <h2>Keyboard Shortcuts</h2>
+    <table style="font-size:0.9rem;">
+      <tbody>
+        <tr><td><kbd>N</kbd></td><td>New project (go to Projects tab)</td></tr>
+        <tr><td><kbd>T</kbd></td><td>Log time (go to Time tab)</td></tr>
+        <tr><td><kbd>C</kbd></td><td>Log cost (go to Costs tab)</td></tr>
+        <tr><td><kbd>D</kbd></td><td>Dashboard</td></tr>
+        <tr><td><kbd>P</kbd></td><td>Portfolio overview</td></tr>
+        <tr><td><kbd>S</kbd></td><td>Scorecard</td></tr>
+        <tr><td><kbd>W</kbd></td><td>What-If scenarios</td></tr>
+        <tr><td><kbd>B</kbd></td><td>Benchmarks</td></tr>
+        <tr><td><kbd>R</kbd></td><td>Reports</td></tr>
+        <tr><td><kbd>E</kbd></td><td>Export CSV</td></tr>
+        <tr><td><kbd>?</kbd></td><td>Show/hide this help</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Close modals</td></tr>
+      </tbody>
+    </table>
+    <div class="modal-actions">
+      <button class="btn btn-sm" onclick="toggleShortcutsModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Project Modal -->
+<div class="modal-overlay" id="editProjectModal">
+  <div class="modal">
+    <h2>Edit Project</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Project Name</label>
+        <input type="text" id="editProjName">
+      </div>
+      <div class="form-group">
+        <label>Client</label>
+        <input type="text" id="editProjClient">
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select id="editProjType">
+          <option value="fixed">Fixed Price</option>
+          <option value="hourly">Hourly</option>
+          <option value="retainer">Retainer</option>
+          <option value="value">Value-Based</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Amount ($)</label>
+        <input type="number" id="editProjAmount" min="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Hourly Rate ($)</label>
+        <input type="number" id="editProjHourlyRate" min="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Estimated Hours</label>
+        <input type="number" id="editProjEstHours" min="0" step="0.5">
+      </div>
+      <div class="form-group">
+        <label>Start Date</label>
+        <input type="date" id="editProjStart">
+      </div>
+      <div class="form-group">
+        <label>End Date</label>
+        <input type="date" id="editProjEnd">
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="editProjStatus">
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="on-hold">On Hold</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="editProjCategory">
+          <option value="web-design">Web Design</option>
+          <option value="web-dev">Web Development</option>
+          <option value="branding">Branding / Identity</option>
+          <option value="copywriting">Copywriting</option>
+          <option value="marketing">Marketing / SEO</option>
+          <option value="consulting">Consulting</option>
+          <option value="video">Video / Animation</option>
+          <option value="photography">Photography</option>
+          <option value="illustration">Illustration</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:16px;">
+      <label>Notes</label>
+      <textarea id="editProjNotes"></textarea>
+    </div>
+    <input type="hidden" id="editProjId">
+    <div class="modal-actions">
+      <button class="btn btn-secondary btn-sm" onclick="closeEditModal()">Cancel</button>
+      <button class="btn btn-sm" onclick="saveProjectEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="https://freelanceos.pro" target="_blank" rel="noopener">FreelanceOS Home</a>
+    <a href="https://freelanceos.pro/free-templates.html" target="_blank" rel="noopener">Free Tools</a>
+    <a href="https://freelanceos.pro/compare.html" target="_blank" rel="noopener">Compare Plans</a>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get FreelanceOS Pro (40% OFF)</a>
+  </div>
+  <p style="opacity:0.6;font-size:0.85rem;">&copy; 2026 FreelanceOS. All rights reserved.</p>
+  <p class="disclaimer">Financial Disclaimer: This tool is for informational and educational purposes only. It does not constitute financial, tax, or legal advice. Consult with a qualified professional before making business or financial decisions. All calculations are estimates and actual results may vary.</p>
+</footer>
+
+<script>
+/* =========================================================================
+   PROJECT PROFITABILITY ANALYZER - FreelanceOS Tool #61
+   ========================================================================= */
+
+// =================== DATA STORE ===================
+const STORAGE_KEY = 'freelanceos_profitability_v1';
+
+let state = {
+  projects: [],
+  timeEntries: [],
+  costEntries: [],
+  nextId: 1
+};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+    }
+  } catch (e) {
+    console.warn('Could not load saved state:', e);
+  }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    console.warn('Could not save state:', e);
+  }
+}
+
+function genId() {
+  return state.nextId++;
+}
+
+// =================== TOAST ===================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// =================== TAB NAVIGATION ===================
+const tabs = document.querySelectorAll('.nav-tab');
+const panels = document.querySelectorAll('.tab-panel');
+
+function switchTab(tabName) {
+  tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tabName));
+  panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + tabName));
+  // Refresh the tab content
+  if (tabName === 'dashboard') renderDashboard();
+  if (tabName === 'portfolio') renderPortfolio();
+  if (tabName === 'scorecard') renderScorecard();
+  if (tabName === 'whatif') renderWhatIf();
+  if (tabName === 'benchmarks') renderBenchmarks();
+  if (tabName === 'time') renderTimeEntries();
+  if (tabName === 'costs') renderCostEntries();
+}
+
+tabs.forEach(t => {
+  t.addEventListener('click', () => switchTab(t.dataset.tab));
+});
+
+// =================== PROJECT CRUD ===================
+function addProject() {
+  const name = document.getElementById('projName').value.trim();
+  const client = document.getElementById('projClient').value.trim();
+  if (!name || !client) {
+    showToast('Please enter project name and client.');
+    return;
+  }
+  const project = {
+    id: genId(),
+    name,
+    client,
+    type: document.getElementById('projType').value,
+    amount: parseFloat(document.getElementById('projAmount').value) || 0,
+    hourlyRate: parseFloat(document.getElementById('projHourlyRate').value) || 0,
+    estHours: parseFloat(document.getElementById('projEstHours').value) || 0,
+    startDate: document.getElementById('projStart').value,
+    endDate: document.getElementById('projEnd').value,
+    status: document.getElementById('projStatus').value,
+    category: document.getElementById('projCategory').value,
+    notes: document.getElementById('projNotes').value.trim(),
+    createdAt: new Date().toISOString()
+  };
+  state.projects.push(project);
+  saveState();
+  clearProjectForm();
+  refreshAll();
+  showToast('Project added: ' + name);
+}
+
+function clearProjectForm() {
+  ['projName','projClient','projAmount','projHourlyRate','projEstHours','projStart','projEnd','projNotes'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('projType').value = 'fixed';
+  document.getElementById('projStatus').value = 'active';
+  document.getElementById('projCategory').value = 'web-design';
+}
+
+function deleteProject(id) {
+  if (!confirm('Delete this project and all associated time/cost entries?')) return;
+  state.projects = state.projects.filter(p => p.id !== id);
+  state.timeEntries = state.timeEntries.filter(t => t.projectId !== id);
+  state.costEntries = state.costEntries.filter(c => c.projectId !== id);
+  saveState();
+  refreshAll();
+  showToast('Project deleted.');
+}
+
+function openEditModal(id) {
+  const p = state.projects.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('editProjId').value = id;
+  document.getElementById('editProjName').value = p.name;
+  document.getElementById('editProjClient').value = p.client;
+  document.getElementById('editProjType').value = p.type;
+  document.getElementById('editProjAmount').value = p.amount;
+  document.getElementById('editProjHourlyRate').value = p.hourlyRate || '';
+  document.getElementById('editProjEstHours').value = p.estHours || '';
+  document.getElementById('editProjStart').value = p.startDate;
+  document.getElementById('editProjEnd').value = p.endDate;
+  document.getElementById('editProjStatus').value = p.status;
+  document.getElementById('editProjCategory').value = p.category;
+  document.getElementById('editProjNotes').value = p.notes || '';
+  document.getElementById('editProjectModal').classList.add('active');
+}
+
+function closeEditModal() {
+  document.getElementById('editProjectModal').classList.remove('active');
+}
+
+function saveProjectEdit() {
+  const id = parseInt(document.getElementById('editProjId').value);
+  const p = state.projects.find(x => x.id === id);
+  if (!p) return;
+  p.name = document.getElementById('editProjName').value.trim();
+  p.client = document.getElementById('editProjClient').value.trim();
+  p.type = document.getElementById('editProjType').value;
+  p.amount = parseFloat(document.getElementById('editProjAmount').value) || 0;
+  p.hourlyRate = parseFloat(document.getElementById('editProjHourlyRate').value) || 0;
+  p.estHours = parseFloat(document.getElementById('editProjEstHours').value) || 0;
+  p.startDate = document.getElementById('editProjStart').value;
+  p.endDate = document.getElementById('editProjEnd').value;
+  p.status = document.getElementById('editProjStatus').value;
+  p.category = document.getElementById('editProjCategory').value;
+  p.notes = document.getElementById('editProjNotes').value.trim();
+  saveState();
+  closeEditModal();
+  refreshAll();
+  showToast('Project updated.');
+}
+
+function getProjectRevenue(p) {
+  if (p.type === 'hourly') {
+    const hrs = getProjectHours(p.id);
+    return hrs.billable * (p.hourlyRate || 0);
+  }
+  return p.amount || 0;
+}
+
+function getProjectHours(pid) {
+  const entries = state.timeEntries.filter(t => t.projectId === pid);
+  const total = entries.reduce((s, t) => s + t.hours, 0);
+  const billable = entries.filter(t => t.billable).reduce((s, t) => s + t.hours, 0);
+  return { total, billable, count: entries.length };
+}
+
+function getProjectCosts(pid) {
+  const entries = state.costEntries.filter(c => c.projectId === pid);
+  const total = entries.reduce((s, c) => s + c.amount, 0);
+  const byCategory = {};
+  entries.forEach(c => {
+    byCategory[c.category] = (byCategory[c.category] || 0) + c.amount;
+  });
+  return { total, byCategory, count: entries.length };
+}
+
+function getProjectProfit(p) {
+  const rev = getProjectRevenue(p);
+  const costs = getProjectCosts(p.id).total;
+  return rev - costs;
+}
+
+function getProjectMargin(p) {
+  const rev = getProjectRevenue(p);
+  if (rev === 0) return 0;
+  return ((getProjectProfit(p)) / rev) * 100;
+}
+
+function getEffectiveRate(p) {
+  const rev = getProjectRevenue(p);
+  const hrs = getProjectHours(p.id).total;
+  if (hrs === 0) return 0;
+  return rev / hrs;
+}
+
+function marginBadge(margin) {
+  if (margin >= 50) return '<span class="badge badge-green">' + margin.toFixed(1) + '%</span>';
+  if (margin >= 20) return '<span class="badge badge-yellow">' + margin.toFixed(1) + '%</span>';
+  return '<span class="badge badge-red">' + margin.toFixed(1) + '%</span>';
+}
+
+function statusBadge(status) {
+  const map = { active: 'badge-green', completed: 'badge-blue', 'on-hold': 'badge-yellow' };
+  const labels = { active: 'Active', completed: 'Completed', 'on-hold': 'On Hold' };
+  return '<span class="badge ' + (map[status] || 'badge-purple') + '">' + (labels[status] || status) + '</span>';
+}
+
+function typeName(type) {
+  const map = { fixed: 'Fixed', hourly: 'Hourly', retainer: 'Retainer', value: 'Value-Based' };
+  return map[type] || type;
+}
+
+function categoryName(cat) {
+  const map = {
+    'web-design': 'Web Design', 'web-dev': 'Web Development', 'branding': 'Branding',
+    'copywriting': 'Copywriting', 'marketing': 'Marketing/SEO', 'consulting': 'Consulting',
+    'video': 'Video/Animation', 'photography': 'Photography', 'illustration': 'Illustration',
+    'other': 'Other', 'software': 'Software/Tools', 'outsourcing': 'Outsourcing',
+    'materials': 'Materials', 'travel': 'Travel', 'hosting': 'Hosting', 'misc': 'Misc'
+  };
+  return map[cat] || cat;
+}
+
+function fmtCurrency(n) {
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtHours(n) {
+  return n.toFixed(1) + 'h';
+}
+
+// =================== RENDER PROJECTS TABLE ===================
+function renderProjects() {
+  const filterSt = document.getElementById('filterStatus').value;
+  const filterCl = document.getElementById('filterClient').value;
+
+  let projects = [...state.projects];
+  if (filterSt !== 'all') projects = projects.filter(p => p.status === filterSt);
+  if (filterCl !== 'all') projects = projects.filter(p => p.client === filterCl);
+
+  const tbody = document.getElementById('projectsBody');
+  const empty = document.getElementById('projectsEmpty');
+
+  if (projects.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    document.getElementById('projectsTable').style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  document.getElementById('projectsTable').style.display = '';
+
+  tbody.innerHTML = projects.map(p => {
+    const margin = getProjectMargin(p);
+    return `<tr>
+      <td style="font-weight:600;color:var(--heading)">${esc(p.name)}</td>
+      <td>${esc(p.client)}</td>
+      <td>${typeName(p.type)}</td>
+      <td>${fmtCurrency(getProjectRevenue(p))}</td>
+      <td>${statusBadge(p.status)}</td>
+      <td>${marginBadge(margin)}</td>
+      <td>
+        <button class="btn btn-sm btn-secondary" onclick="openEditModal(${p.id})" style="padding:5px 10px;font-size:0.78rem;">Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteProject(${p.id})" style="padding:5px 10px;font-size:0.78rem;">Del</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// =================== POPULATE PROJECT SELECTORS ===================
+function populateProjectSelectors() {
+  const selectors = ['timeProject','costProject','dashProject','scorecardProject','whatifProject','reportProject','timeFilterProject','costFilterProject'];
+  const options = state.projects.map(p =>
+    '<option value="' + p.id + '">' + esc(p.name) + ' (' + esc(p.client) + ')</option>'
+  ).join('');
+
+  selectors.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const current = el.value;
+    if (id === 'timeFilterProject' || id === 'costFilterProject') {
+      el.innerHTML = '<option value="all">All Projects</option>' + options;
+    } else {
+      el.innerHTML = options || '<option value="">No projects</option>';
+    }
+    // Restore selection if possible
+    if (current && el.querySelector('option[value="' + current + '"]')) {
+      el.value = current;
+    }
+  });
+
+  // Client filter
+  const clients = [...new Set(state.projects.map(p => p.client))];
+  const cFilter = document.getElementById('filterClient');
+  const curClient = cFilter.value;
+  cFilter.innerHTML = '<option value="all">All Clients</option>' + clients.map(c =>
+    '<option value="' + esc(c) + '">' + esc(c) + '</option>'
+  ).join('');
+  if (curClient && cFilter.querySelector('option[value="' + curClient + '"]')) {
+    cFilter.value = curClient;
+  }
+}
+
+// =================== TIME ENTRIES ===================
+function addTimeEntry() {
+  const projectId = parseInt(document.getElementById('timeProject').value);
+  if (!projectId) { showToast('Select a project first.'); return; }
+  const hours = parseFloat(document.getElementById('timeHours').value);
+  if (!hours || hours <= 0) { showToast('Enter valid hours.'); return; }
+
+  const entry = {
+    id: genId(),
+    projectId,
+    date: document.getElementById('timeDate').value || new Date().toISOString().split('T')[0],
+    hours,
+    description: document.getElementById('timeDesc').value.trim(),
+    billable: document.getElementById('timeBillable').classList.contains('active')
+  };
+  state.timeEntries.push(entry);
+  saveState();
+  document.getElementById('timeHours').value = '';
+  document.getElementById('timeDesc').value = '';
+  renderTimeEntries();
+  showToast(hours + 'h logged.');
+}
+
+function deleteTimeEntry(id) {
+  state.timeEntries = state.timeEntries.filter(t => t.id !== id);
+  saveState();
+  renderTimeEntries();
+  showToast('Time entry deleted.');
+}
+
+function renderTimeEntries() {
+  const filter = document.getElementById('timeFilterProject').value;
+  let entries = [...state.timeEntries].sort((a, b) => b.date.localeCompare(a.date));
+  if (filter !== 'all') entries = entries.filter(t => t.projectId === parseInt(filter));
+
+  const tbody = document.getElementById('timeBody');
+  const empty = document.getElementById('timeEmpty');
+  const summary = document.getElementById('timeSummary');
+
+  if (entries.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    summary.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // Summary metrics
+  const totalHrs = entries.reduce((s, t) => s + t.hours, 0);
+  const billableHrs = entries.filter(t => t.billable).reduce((s, t) => s + t.hours, 0);
+  const billableRatio = totalHrs > 0 ? (billableHrs / totalHrs * 100) : 0;
+  summary.style.display = 'grid';
+  summary.innerHTML = `
+    <div class="metric-card">
+      <div class="metric-value">${fmtHours(totalHrs)}</div>
+      <div class="metric-label">Total Hours</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${fmtHours(billableHrs)}</div>
+      <div class="metric-label">Billable Hours</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${billableRatio.toFixed(0)}%</div>
+      <div class="metric-label">Billable Ratio</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${entries.length}</div>
+      <div class="metric-label">Entries</div>
+    </div>
+  `;
+
+  tbody.innerHTML = entries.map(t => {
+    const proj = state.projects.find(p => p.id === t.projectId);
+    return `<tr>
+      <td>${t.date}</td>
+      <td>${proj ? esc(proj.name) : 'Unknown'}</td>
+      <td>${t.hours.toFixed(2)}</td>
+      <td>${esc(t.description)}</td>
+      <td>${t.billable ? '<span class="badge badge-green">Yes</span>' : '<span class="badge badge-red">No</span>'}</td>
+      <td><button class="btn btn-sm btn-danger" onclick="deleteTimeEntry(${t.id})" style="padding:4px 8px;font-size:0.75rem;">Del</button></td>
+    </tr>`;
+  }).join('');
+}
+
+// =================== COST ENTRIES ===================
+function addCostEntry() {
+  const projectId = parseInt(document.getElementById('costProject').value);
+  if (!projectId) { showToast('Select a project first.'); return; }
+  const amount = parseFloat(document.getElementById('costAmount').value);
+  if (!amount || amount <= 0) { showToast('Enter valid amount.'); return; }
+
+  const entry = {
+    id: genId(),
+    projectId,
+    date: document.getElementById('costDate').value || new Date().toISOString().split('T')[0],
+    category: document.getElementById('costCategory').value,
+    amount,
+    description: document.getElementById('costDesc').value.trim()
+  };
+  state.costEntries.push(entry);
+  saveState();
+  document.getElementById('costAmount').value = '';
+  document.getElementById('costDesc').value = '';
+  renderCostEntries();
+  showToast('Expense of ' + fmtCurrency(amount) + ' logged.');
+}
+
+function deleteCostEntry(id) {
+  state.costEntries = state.costEntries.filter(c => c.id !== id);
+  saveState();
+  renderCostEntries();
+  showToast('Expense deleted.');
+}
+
+function renderCostEntries() {
+  const filter = document.getElementById('costFilterProject').value;
+  let entries = [...state.costEntries].sort((a, b) => b.date.localeCompare(a.date));
+  if (filter !== 'all') entries = entries.filter(c => c.projectId === parseInt(filter));
+
+  const tbody = document.getElementById('costBody');
+  const empty = document.getElementById('costEmpty');
+  const summary = document.getElementById('costSummary');
+
+  if (entries.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    summary.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const totalCost = entries.reduce((s, c) => s + c.amount, 0);
+  const cats = {};
+  entries.forEach(c => { cats[c.category] = (cats[c.category] || 0) + c.amount; });
+  const topCat = Object.entries(cats).sort((a, b) => b[1] - a[1])[0];
+
+  summary.style.display = 'grid';
+  summary.innerHTML = `
+    <div class="metric-card">
+      <div class="metric-value">${fmtCurrency(totalCost)}</div>
+      <div class="metric-label">Total Costs</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${entries.length}</div>
+      <div class="metric-label">Entries</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${fmtCurrency(totalCost / (entries.length || 1))}</div>
+      <div class="metric-label">Avg per Entry</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${topCat ? categoryName(topCat[0]) : 'N/A'}</div>
+      <div class="metric-label">Top Category</div>
+    </div>
+  `;
+
+  tbody.innerHTML = entries.map(c => {
+    const proj = state.projects.find(p => p.id === c.projectId);
+    return `<tr>
+      <td>${c.date}</td>
+      <td>${proj ? esc(proj.name) : 'Unknown'}</td>
+      <td>${categoryName(c.category)}</td>
+      <td style="font-weight:600;">${fmtCurrency(c.amount)}</td>
+      <td>${esc(c.description)}</td>
+      <td><button class="btn btn-sm btn-danger" onclick="deleteCostEntry(${c.id})" style="padding:4px 8px;font-size:0.75rem;">Del</button></td>
+    </tr>`;
+  }).join('');
+}
+
+// =================== DASHBOARD (PER-PROJECT) ===================
+function renderDashboard() {
+  const pid = parseInt(document.getElementById('dashProject').value);
+  const p = state.projects.find(x => x.id === pid);
+  const content = document.getElementById('dashContent');
+  const empty = document.getElementById('dashEmpty');
+
+  if (!p) {
+    content.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  content.style.display = 'block';
+  empty.style.display = 'none';
+
+  const revenue = getProjectRevenue(p);
+  const costs = getProjectCosts(p.id);
+  const hours = getProjectHours(p.id);
+  const profit = revenue - costs.total;
+  const margin = revenue > 0 ? (profit / revenue * 100) : 0;
+  const effRate = hours.total > 0 ? revenue / hours.total : 0;
+  const hoursVariance = p.estHours > 0 ? ((hours.total - p.estHours) / p.estHours * 100) : 0;
+  const timeEfficiency = p.estHours > 0 ? Math.min((p.estHours / Math.max(hours.total, 0.1)) * 100, 200) : 100;
+
+  const metrics = document.getElementById('dashMetrics');
+  metrics.innerHTML = `
+    <div class="metric-card">
+      <div class="metric-value">${fmtCurrency(revenue)}</div>
+      <div class="metric-label">Revenue</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${fmtCurrency(costs.total)}</div>
+      <div class="metric-label">Total Costs</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" style="${profit < 0 ? 'background:linear-gradient(135deg,#ef4444,#dc2626);-webkit-background-clip:text;' : ''}">${fmtCurrency(profit)}</div>
+      <div class="metric-label">Net Profit</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${margin.toFixed(1)}%</div>
+      <div class="metric-label">Profit Margin</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${fmtCurrency(effRate)}/h</div>
+      <div class="metric-label">Effective Rate</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">${timeEfficiency.toFixed(0)}%</div>
+      <div class="metric-label">Time Efficiency</div>
+    </div>
+  `;
+
+  drawWaterfallChart(revenue, costs);
+  drawDonutChart(costs);
+  drawHoursChart(p, hours);
+  drawCumulativeChart(pid);
+}
+
+// =================== CANVAS CHARTS ===================
+function getCanvasCtx(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return null;
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const w = rect.width || canvas.width;
+  const h = parseInt(canvas.getAttribute('height')) || 300;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+  return { ctx, w, h };
+}
+
+function drawWaterfallChart(revenue, costs) {
+  const data = getCanvasCtx('waterfallChart');
+  if (!data) return;
+  const { ctx, w, h } = data;
+  const padding = { top: 30, right: 20, bottom: 50, left: 70 };
+  const chartW = w - padding.left - padding.right;
+  const chartH = h - padding.top - padding.bottom;
+
+  const costsByCategory = costs.byCategory;
+  const catKeys = Object.keys(costsByCategory);
+  const items = [
+    { label: 'Revenue', value: revenue, color: '#22c55e', cumulative: revenue },
+  ];
+  let running = revenue;
+  catKeys.forEach(k => {
+    running -= costsByCategory[k];
+    items.push({ label: categoryName(k), value: -costsByCategory[k], color: '#ef4444', cumulative: running });
+  });
+  items.push({ label: 'Profit', value: running, color: running >= 0 ? '#a855f7' : '#ef4444', cumulative: running });
+
+  const maxVal = Math.max(revenue, ...items.map(i => Math.abs(i.cumulative)), 1);
+  const barW = Math.min(chartW / items.length - 10, 50);
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(168,85,247,0.1)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = padding.top + (chartH / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(w - padding.right, y);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(226,232,240,0.5)';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText(fmtCurrency(maxVal - (maxVal / 4) * i), padding.left - 8, y + 4);
+  }
+
+  items.forEach((item, i) => {
+    const x = padding.left + (chartW / items.length) * i + (chartW / items.length - barW) / 2;
+    const barH = (Math.abs(item.value) / maxVal) * chartH;
+    let y;
+    if (i === 0 || i === items.length - 1) {
+      y = padding.top + chartH - barH;
+    } else {
+      y = padding.top + chartH - (item.cumulative / maxVal) * chartH - (item.value < 0 ? 0 : barH);
+      y = padding.top + (1 - (item.cumulative + Math.abs(item.value)) / maxVal) * chartH;
+    }
+
+    const grd = ctx.createLinearGradient(x, y, x, y + barH);
+    grd.addColorStop(0, item.color);
+    grd.addColorStop(1, item.color + '80');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
+    ctx.fill();
+
+    // Label
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = '10px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(item.label, x + barW / 2, h - padding.bottom + 16);
+
+    // Value
+    ctx.fillStyle = item.color;
+    ctx.font = 'bold 11px system-ui';
+    ctx.fillText(fmtCurrency(Math.abs(item.value)), x + barW / 2, y - 6);
+  });
+}
+
+function drawDonutChart(costs) {
+  const data = getCanvasCtx('donutChart');
+  if (!data) return;
+  const { ctx, w, h } = data;
+
+  const cats = costs.byCategory;
+  const entries = Object.entries(cats);
+  if (entries.length === 0) {
+    ctx.fillStyle = 'rgba(226,232,240,0.4)';
+    ctx.font = '14px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('No costs recorded yet', w / 2, h / 2);
+    return;
+  }
+
+  const total = entries.reduce((s, e) => s + e[1], 0);
+  const colors = ['#a855f7', '#ec4899', '#3b82f6', '#22c55e', '#eab308', '#f97316', '#06b6d4', '#8b5cf6'];
+  const cx = w * 0.35;
+  const cy = h / 2;
+  const r = Math.min(w * 0.3, h * 0.38);
+  const innerR = r * 0.55;
+
+  let startAngle = -Math.PI / 2;
+  entries.forEach(([cat, val], i) => {
+    const slice = (val / total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, startAngle, startAngle + slice);
+    ctx.arc(cx, cy, innerR, startAngle + slice, startAngle, true);
+    ctx.closePath();
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.fill();
+    startAngle += slice;
+  });
+
+  // Center text
+  ctx.fillStyle = '#f8fafc';
+  ctx.font = 'bold 16px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText(fmtCurrency(total), cx, cy);
+  ctx.fillStyle = 'rgba(226,232,240,0.5)';
+  ctx.font = '11px system-ui';
+  ctx.fillText('Total Costs', cx, cy + 18);
+
+  // Legend
+  const lx = w * 0.68;
+  let ly = 30;
+  entries.forEach(([cat, val], i) => {
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.beginPath();
+    ctx.roundRect(lx, ly, 12, 12, 2);
+    ctx.fill();
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText(categoryName(cat) + ' (' + ((val / total) * 100).toFixed(0) + '%)', lx + 18, ly + 10);
+    ly += 22;
+  });
+}
+
+function drawHoursChart(project, hours) {
+  const data = getCanvasCtx('hoursChart');
+  if (!data) return;
+  const { ctx, w, h } = data;
+  const padding = { top: 30, right: 20, bottom: 50, left: 60 };
+
+  const est = project.estHours || 0;
+  const actual = hours.total;
+  const maxVal = Math.max(est, actual, 1) * 1.15;
+  const barW = 60;
+  const chartH = h - padding.top - padding.bottom;
+
+  // Bars
+  const items = [
+    { label: 'Estimated', value: est, color: '#3b82f6' },
+    { label: 'Actual', value: actual, color: actual > est && est > 0 ? '#ef4444' : '#22c55e' },
+    { label: 'Billable', value: hours.billable, color: '#a855f7' }
+  ];
+
+  // Grid
+  ctx.strokeStyle = 'rgba(168,85,247,0.1)';
+  for (let i = 0; i <= 4; i++) {
+    const y = padding.top + (chartH / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(w - padding.right, y);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(226,232,240,0.5)';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText((maxVal - (maxVal / 4) * i).toFixed(0) + 'h', padding.left - 8, y + 4);
+  }
+
+  const totalBarArea = w - padding.left - padding.right;
+  items.forEach((item, i) => {
+    const x = padding.left + (totalBarArea / items.length) * i + (totalBarArea / items.length - barW) / 2;
+    const barH = (item.value / maxVal) * chartH;
+    const y = padding.top + chartH - barH;
+
+    const grd = ctx.createLinearGradient(x, y, x, y + barH);
+    grd.addColorStop(0, item.color);
+    grd.addColorStop(1, item.color + '60');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
+    ctx.fill();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(item.label, x + barW / 2, h - padding.bottom + 16);
+    ctx.fillStyle = item.color;
+    ctx.font = 'bold 12px system-ui';
+    ctx.fillText(item.value.toFixed(1) + 'h', x + barW / 2, y - 8);
+  });
+
+  // Variance
+  if (est > 0) {
+    const variance = ((actual - est) / est * 100).toFixed(1);
+    ctx.fillStyle = actual > est ? '#ef4444' : '#22c55e';
+    ctx.font = 'bold 12px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('Variance: ' + (actual > est ? '+' : '') + variance + '%', w / 2, h - 8);
+  }
+}
+
+function drawCumulativeChart(pid) {
+  const data = getCanvasCtx('cumulativeChart');
+  if (!data) return;
+  const { ctx, w, h } = data;
+  const padding = { top: 20, right: 20, bottom: 50, left: 60 };
+
+  const entries = state.timeEntries.filter(t => t.projectId === pid).sort((a, b) => a.date.localeCompare(b.date));
+  if (entries.length === 0) {
+    ctx.fillStyle = 'rgba(226,232,240,0.4)';
+    ctx.font = '14px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('Log time entries to see cumulative hours', w / 2, h / 2);
+    return;
+  }
+
+  // Build cumulative points
+  let cumulative = 0;
+  const points = entries.map(e => {
+    cumulative += e.hours;
+    return { date: e.date, hours: cumulative };
+  });
+
+  const proj = state.projects.find(p => p.id === pid);
+  const maxHrs = Math.max(cumulative, (proj ? proj.estHours : 0) || 0, 1) * 1.1;
+  const chartW = w - padding.left - padding.right;
+  const chartH = h - padding.top - padding.bottom;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(168,85,247,0.1)';
+  for (let i = 0; i <= 4; i++) {
+    const y = padding.top + (chartH / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(w - padding.right, y);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(226,232,240,0.5)';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText((maxHrs - (maxHrs / 4) * i).toFixed(0) + 'h', padding.left - 8, y + 4);
+  }
+
+  // Estimated line
+  if (proj && proj.estHours > 0) {
+    const estY = padding.top + chartH - (proj.estHours / maxHrs) * chartH;
+    ctx.strokeStyle = 'rgba(234,179,8,0.5)';
+    ctx.setLineDash([6, 4]);
+    ctx.beginPath();
+    ctx.moveTo(padding.left, estY);
+    ctx.lineTo(w - padding.right, estY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#eab308';
+    ctx.font = '10px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText('Est: ' + proj.estHours + 'h', w - padding.right - 60, estY - 6);
+  }
+
+  // Line and area
+  const getX = (i) => padding.left + (i / Math.max(points.length - 1, 1)) * chartW;
+  const getY = (hrs) => padding.top + chartH - (hrs / maxHrs) * chartH;
+
+  // Area fill
+  ctx.beginPath();
+  ctx.moveTo(getX(0), padding.top + chartH);
+  points.forEach((p, i) => ctx.lineTo(getX(i), getY(p.hours)));
+  ctx.lineTo(getX(points.length - 1), padding.top + chartH);
+  ctx.closePath();
+  const areaGrd = ctx.createLinearGradient(0, padding.top, 0, padding.top + chartH);
+  areaGrd.addColorStop(0, 'rgba(168,85,247,0.3)');
+  areaGrd.addColorStop(1, 'rgba(168,85,247,0)');
+  ctx.fillStyle = areaGrd;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  points.forEach((p, i) => {
+    if (i === 0) ctx.moveTo(getX(i), getY(p.hours));
+    else ctx.lineTo(getX(i), getY(p.hours));
+  });
+  ctx.strokeStyle = '#a855f7';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Points
+  points.forEach((p, i) => {
+    ctx.beginPath();
+    ctx.arc(getX(i), getY(p.hours), 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#a855f7';
+    ctx.fill();
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // Date labels
+  ctx.fillStyle = 'rgba(226,232,240,0.5)';
+  ctx.font = '9px system-ui';
+  ctx.textAlign = 'center';
+  const labelStep = Math.max(1, Math.floor(points.length / 6));
+  points.forEach((p, i) => {
+    if (i % labelStep === 0 || i === points.length - 1) {
+      ctx.fillText(p.date.substring(5), getX(i), h - padding.bottom + 14);
+    }
+  });
+}
+
+// =================== PORTFOLIO ===================
+function renderPortfolio() {
+  const empty = document.getElementById('portfolioEmpty');
+  if (state.projects.length === 0) {
+    empty.style.display = 'block';
+    document.getElementById('portfolioMetrics').innerHTML = '';
+    document.getElementById('portfolioBody').innerHTML = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  let totalRevenue = 0, totalCosts = 0, totalProfit = 0;
+  const projectData = state.projects.map(p => {
+    const rev = getProjectRevenue(p);
+    const cost = getProjectCosts(p.id).total;
+    const prof = rev - cost;
+    const margin = rev > 0 ? (prof / rev * 100) : 0;
+    const hrs = getProjectHours(p.id);
+    const effRate = hrs.total > 0 ? rev / hrs.total : 0;
+    totalRevenue += rev;
+    totalCosts += cost;
+    totalProfit += prof;
+    return { ...p, rev, cost, prof, margin, effRate, hrs };
+  });
+
+  const avgMargin = projectData.length > 0 ? projectData.reduce((s, d) => s + d.margin, 0) / projectData.length : 0;
+  const best = projectData.reduce((a, b) => a.margin > b.margin ? a : b, projectData[0]);
+  const worst = projectData.reduce((a, b) => a.margin < b.margin ? a : b, projectData[0]);
+
+  document.getElementById('portfolioMetrics').innerHTML = `
+    <div class="metric-card"><div class="metric-value">${fmtCurrency(totalRevenue)}</div><div class="metric-label">Total Revenue</div></div>
+    <div class="metric-card"><div class="metric-value">${fmtCurrency(totalCosts)}</div><div class="metric-label">Total Costs</div></div>
+    <div class="metric-card"><div class="metric-value">${fmtCurrency(totalProfit)}</div><div class="metric-label">Total Profit</div></div>
+    <div class="metric-card"><div class="metric-value">${avgMargin.toFixed(1)}%</div><div class="metric-label">Avg Margin</div></div>
+    <div class="metric-card"><div class="metric-value">${esc(best.name)}</div><div class="metric-label">Most Profitable</div></div>
+    <div class="metric-card"><div class="metric-value">${esc(worst.name)}</div><div class="metric-label">Least Profitable</div></div>
+  `;
+
+  document.getElementById('portfolioBody').innerHTML = projectData.map(d => `<tr>
+    <td style="font-weight:600;color:var(--heading)">${esc(d.name)}</td>
+    <td>${esc(d.client)}</td>
+    <td>${fmtCurrency(d.rev)}</td>
+    <td>${fmtCurrency(d.cost)}</td>
+    <td style="color:${d.prof >= 0 ? 'var(--green)' : 'var(--red)'}">${fmtCurrency(d.prof)}</td>
+    <td>${marginBadge(d.margin)}</td>
+    <td>${fmtCurrency(d.effRate)}/h</td>
+  </tr>`).join('');
+
+  drawClientRevenueChart(projectData);
+  drawTypeMarginChart(projectData);
+  drawMonthlyTrendChart();
+}
+
+function drawClientRevenueChart(projectData) {
+  const data = getCanvasCtx('clientRevenueChart');
+  if (!data) return;
+  const { ctx, w, h } = data;
+  const padding = { top: 20, right: 20, bottom: 20, left: 120 };
+
+  const byClient = {};
+  projectData.forEach(d => {
+    byClient[d.client] = (byClient[d.client] || 0) + d.rev;
+  });
+  const clients = Object.entries(byClient).sort((a, b) => b[1] - a[1]);
+  if (clients.length === 0) return;
+
+  const maxVal = clients[0][1] || 1;
+  const barH = Math.min((h - padding.top - padding.bottom) / clients.length - 8, 30);
+  const chartW = w - padding.left - padding.right;
+
+  clients.forEach(([client, rev], i) => {
+    const y = padding.top + i * (barH + 8);
+    const barW = (rev / maxVal) * chartW;
+
+    const grd = ctx.createLinearGradient(padding.left, 0, padding.left + barW, 0);
+    grd.addColorStop(0, '#a855f7');
+    grd.addColorStop(1, '#ec4899');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.roundRect(padding.left, y, barW, barH, [0, 4, 4, 0]);
+    ctx.fill();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText(client.length > 14 ? client.substring(0, 14) + '..' : client, padding.left - 8, y + barH / 2 + 4);
+
+    ctx.fillStyle = '#f8fafc';
+    ctx.textAlign = 'left';
+    ctx.font = 'bold 11px system-ui';
+    ctx.fillText(fmtCurrency(rev), padding.left + barW + 8, y + barH / 2 + 4);
+  });
+}
+
+function drawTypeMarginChart(projectData) {
+  const data = getCanvasCtx('typeMarginChart');
+  if (!data) return;
+  const { ctx, w, h } = data;
+  const padding = { top: 30, right: 20, bottom: 50, left: 60 };
+
+  const byType = {};
+  const typeCount = {};
+  projectData.forEach(d => {
+    byType[d.type] = (byType[d.type] || 0) + d.margin;
+    typeCount[d.type] = (typeCount[d.type] || 0) + 1;
+  });
+  const types = Object.keys(byType).map(t => ({
+    type: t,
+    margin: byType[t] / typeCount[t]
+  })).sort((a, b) => b.margin - a.margin);
+
+  if (types.length === 0) return;
+  const maxVal = Math.max(...types.map(t => Math.abs(t.margin)), 1) * 1.2;
+  const chartW = w - padding.left - padding.right;
+  const chartH = h - padding.top - padding.bottom;
+  const barW = Math.min(chartW / types.length - 12, 50);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(168,85,247,0.1)';
+  for (let i = 0; i <= 4; i++) {
+    const y = padding.top + (chartH / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(w - padding.right, y);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(226,232,240,0.5)';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText((maxVal - (maxVal / 4) * i).toFixed(0) + '%', padding.left - 8, y + 4);
+  }
+
+  const colors = ['#a855f7', '#ec4899', '#3b82f6', '#22c55e'];
+  types.forEach((t, i) => {
+    const x = padding.left + (chartW / types.length) * i + (chartW / types.length - barW) / 2;
+    const barH = (Math.abs(t.margin) / maxVal) * chartH;
+    const y = padding.top + chartH - barH;
+
+    const grd = ctx.createLinearGradient(x, y, x, y + barH);
+    grd.addColorStop(0, colors[i % colors.length]);
+    grd.addColorStop(1, colors[i % colors.length] + '60');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.roundRect(x, y, barW, barH, [4, 4, 0, 0]);
+    ctx.fill();
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = '10px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(typeName(t.type), x + barW / 2, h - padding.bottom + 14);
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.font = 'bold 11px system-ui';
+    ctx.fillText(t.margin.toFixed(1) + '%', x + barW / 2, y - 6);
+  });
+}
+
+function drawMonthlyTrendChart() {
+  const data = getCanvasCtx('monthlyTrendChart');
+  if (!data) return;
+  const { ctx, w, h } = data;
+  const padding = { top: 20, right: 20, bottom: 50, left: 70 };
+
+  // Aggregate revenue by month
+  const monthly = {};
+  state.projects.forEach(p => {
+    const date = p.startDate || p.createdAt?.substring(0, 10) || '';
+    if (!date) return;
+    const month = date.substring(0, 7);
+    monthly[month] = (monthly[month] || 0) + getProjectRevenue(p);
+  });
+  state.timeEntries.forEach(t => {
+    const month = t.date.substring(0, 7);
+    const proj = state.projects.find(p => p.id === t.projectId);
+    if (proj && proj.type === 'hourly') {
+      // Already counted via project
+    }
+  });
+
+  const months = Object.keys(monthly).sort();
+  if (months.length === 0) {
+    ctx.fillStyle = 'rgba(226,232,240,0.4)';
+    ctx.font = '14px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('Add projects with dates to see revenue trend', w / 2, h / 2);
+    return;
+  }
+
+  const values = months.map(m => monthly[m]);
+  const maxVal = Math.max(...values, 1) * 1.15;
+  const chartW = w - padding.left - padding.right;
+  const chartH = h - padding.top - padding.bottom;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(168,85,247,0.1)';
+  for (let i = 0; i <= 4; i++) {
+    const y = padding.top + (chartH / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(w - padding.right, y);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(226,232,240,0.5)';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText(fmtCurrency(maxVal - (maxVal / 4) * i), padding.left - 8, y + 4);
+  }
+
+  const getX = (i) => padding.left + (i / Math.max(months.length - 1, 1)) * chartW;
+  const getY = (val) => padding.top + chartH - (val / maxVal) * chartH;
+
+  // Area
+  ctx.beginPath();
+  ctx.moveTo(getX(0), padding.top + chartH);
+  values.forEach((v, i) => ctx.lineTo(getX(i), getY(v)));
+  ctx.lineTo(getX(values.length - 1), padding.top + chartH);
+  ctx.closePath();
+  const grd = ctx.createLinearGradient(0, padding.top, 0, padding.top + chartH);
+  grd.addColorStop(0, 'rgba(168,85,247,0.25)');
+  grd.addColorStop(1, 'rgba(168,85,247,0)');
+  ctx.fillStyle = grd;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  values.forEach((v, i) => {
+    if (i === 0) ctx.moveTo(getX(i), getY(v));
+    else ctx.lineTo(getX(i), getY(v));
+  });
+  ctx.strokeStyle = '#a855f7';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Points
+  values.forEach((v, i) => {
+    ctx.beginPath();
+    ctx.arc(getX(i), getY(v), 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#a855f7';
+    ctx.fill();
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // Month labels
+  ctx.fillStyle = 'rgba(226,232,240,0.5)';
+  ctx.font = '10px system-ui';
+  ctx.textAlign = 'center';
+  months.forEach((m, i) => {
+    ctx.fillText(m, getX(i), h - padding.bottom + 16);
+  });
+}
+
+// =================== SCORECARD ===================
+function renderScorecard() {
+  const pid = parseInt(document.getElementById('scorecardProject').value);
+  const p = state.projects.find(x => x.id === pid);
+  const empty = document.getElementById('scorecardEmpty');
+  const gradeDiv = document.getElementById('scorecardGrade');
+  const breakdown = document.getElementById('scorecardBreakdown');
+  const recs = document.getElementById('scorecardRecs');
+
+  if (!p) {
+    empty.style.display = 'block';
+    gradeDiv.innerHTML = '';
+    breakdown.innerHTML = '';
+    recs.innerHTML = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const rev = getProjectRevenue(p);
+  const costs = getProjectCosts(p.id).total;
+  const profit = rev - costs;
+  const margin = rev > 0 ? (profit / rev * 100) : 0;
+  const hours = getProjectHours(p.id);
+  const effRate = hours.total > 0 ? rev / hours.total : 0;
+  const hoursVariance = p.estHours > 0 ? Math.abs((hours.total - p.estHours) / p.estHours * 100) : 0;
+  const timeEfficiency = p.estHours > 0 ? Math.min((p.estHours / Math.max(hours.total, 0.1)) * 100, 200) : 100;
+  const billableRatio = hours.total > 0 ? (hours.billable / hours.total * 100) : 100;
+
+  // Score components (each out of 25 = total 100)
+  let marginScore = 0;
+  if (margin >= 60) marginScore = 25;
+  else if (margin >= 50) marginScore = 22;
+  else if (margin >= 40) marginScore = 18;
+  else if (margin >= 30) marginScore = 15;
+  else if (margin >= 20) marginScore = 10;
+  else if (margin >= 10) marginScore = 5;
+  else marginScore = 0;
+
+  let efficiencyScore = 0;
+  if (timeEfficiency >= 100) efficiencyScore = 25;
+  else if (timeEfficiency >= 90) efficiencyScore = 22;
+  else if (timeEfficiency >= 80) efficiencyScore = 18;
+  else if (timeEfficiency >= 70) efficiencyScore = 14;
+  else if (timeEfficiency >= 60) efficiencyScore = 10;
+  else efficiencyScore = 5;
+
+  let scopeScore = 0;
+  if (hoursVariance <= 5) scopeScore = 25;
+  else if (hoursVariance <= 10) scopeScore = 22;
+  else if (hoursVariance <= 20) scopeScore = 18;
+  else if (hoursVariance <= 30) scopeScore = 14;
+  else if (hoursVariance <= 50) scopeScore = 8;
+  else scopeScore = 3;
+
+  let billableScore = 0;
+  if (billableRatio >= 95) billableScore = 25;
+  else if (billableRatio >= 85) billableScore = 22;
+  else if (billableRatio >= 75) billableScore = 18;
+  else if (billableRatio >= 60) billableScore = 14;
+  else if (billableRatio >= 50) billableScore = 10;
+  else billableScore = 5;
+
+  const totalScore = marginScore + efficiencyScore + scopeScore + billableScore;
+  let grade, gradeClass;
+  if (totalScore >= 85) { grade = 'A'; gradeClass = 'grade-A'; }
+  else if (totalScore >= 70) { grade = 'B'; gradeClass = 'grade-B'; }
+  else if (totalScore >= 55) { grade = 'C'; gradeClass = 'grade-C'; }
+  else if (totalScore >= 40) { grade = 'D'; gradeClass = 'grade-D'; }
+  else { grade = 'F'; gradeClass = 'grade-F'; }
+
+  gradeDiv.innerHTML = `
+    <div class="grade-display ${gradeClass}">${grade}</div>
+    <p style="font-size:1.2rem;color:var(--heading);font-weight:700;margin-bottom:4px;">Overall Score: ${totalScore}/100</p>
+    <p style="opacity:0.7;">${esc(p.name)} for ${esc(p.client)}</p>
+  `;
+
+  breakdown.innerHTML = `
+    <h3 style="margin-top:24px;">Score Breakdown</h3>
+    <div class="metrics-row" style="margin-top:12px;">
+      <div class="metric-card">
+        <div class="metric-value">${marginScore}/25</div>
+        <div class="metric-label">Profit Margin (${margin.toFixed(1)}%)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">${efficiencyScore}/25</div>
+        <div class="metric-label">Time Efficiency (${timeEfficiency.toFixed(0)}%)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">${scopeScore}/25</div>
+        <div class="metric-label">Scope Adherence (${hoursVariance.toFixed(0)}% var)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">${billableScore}/25</div>
+        <div class="metric-label">Billable Ratio (${billableRatio.toFixed(0)}%)</div>
+      </div>
+    </div>
+  `;
+
+  // Recommendations
+  const recommendations = [];
+  if (margin < 30) recommendations.push('Your profit margin is low. Consider raising your rates or reducing project costs. Aim for at least 40-50% margin on freelance work.');
+  if (margin < 0) recommendations.push('This project is losing money. Evaluate if scope has expanded beyond the original agreement and negotiate additional compensation.');
+  if (hoursVariance > 20 && p.estHours > 0) recommendations.push('Hours exceeded your estimate by ' + hoursVariance.toFixed(0) + '%. Build in a 20-30% buffer on future estimates, or break projects into smaller milestones.');
+  if (billableRatio < 80) recommendations.push('Only ' + billableRatio.toFixed(0) + '% of your time is billable. Track non-billable tasks (admin, revisions, meetings) and consider including them in your pricing.');
+  if (effRate < 50 && hours.total > 0) recommendations.push('Your effective rate of ' + fmtCurrency(effRate) + '/hr is below industry average. Either the scope grew or the contracted amount is too low for the work involved.');
+  if (p.type === 'fixed' && hours.total > p.estHours * 1.3 && p.estHours > 0) recommendations.push('For fixed-price projects that run over, add a change-order clause to your contracts. Bill separately for additional rounds of revision.');
+  if (costs.total > rev * 0.4 && rev > 0) recommendations.push('Direct costs are consuming ' + (costs.total / rev * 100).toFixed(0) + '% of revenue. Review each cost category and look for alternatives or efficiencies.');
+  if (recommendations.length === 0) recommendations.push('Great work! This project is performing well. Continue tracking metrics to maintain profitability.');
+
+  recs.innerHTML = '<h3 style="margin-top:24px;">Recommendations</h3>' +
+    recommendations.map(r => '<div class="rec-item">' + r + '</div>').join('');
+}
+
+// =================== WHAT-IF ===================
+function renderWhatIf() {
+  const pid = parseInt(document.getElementById('whatifProject').value);
+  const p = state.projects.find(x => x.id === pid);
+  const empty = document.getElementById('whatifEmpty');
+  const controls = document.getElementById('whatifControls');
+
+  if (!p) {
+    empty.style.display = 'block';
+    controls.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  controls.style.display = 'grid';
+
+  // Reset sliders
+  document.getElementById('whatifRate').value = 0;
+  document.getElementById('whatifHours').value = 0;
+  document.getElementById('whatifCost').value = 0;
+  document.getElementById('whatifAddCost').value = 0;
+  document.getElementById('whatifRemoveCost').value = 0;
+  updateWhatIf();
+}
+
+function updateWhatIf() {
+  const pid = parseInt(document.getElementById('whatifProject').value);
+  const p = state.projects.find(x => x.id === pid);
+  if (!p) return;
+
+  const rateAdj = parseInt(document.getElementById('whatifRate').value);
+  const hoursAdj = parseInt(document.getElementById('whatifHours').value);
+  const costAdj = parseInt(document.getElementById('whatifCost').value);
+  const addCost = parseFloat(document.getElementById('whatifAddCost').value) || 0;
+  const removeCost = parseFloat(document.getElementById('whatifRemoveCost').value) || 0;
+
+  document.getElementById('whatifRateVal').textContent = (rateAdj >= 0 ? '+' : '') + rateAdj + '%';
+  document.getElementById('whatifHoursVal').textContent = (hoursAdj >= 0 ? '+' : '') + hoursAdj + '%';
+  document.getElementById('whatifCostVal').textContent = (costAdj >= 0 ? '+' : '') + costAdj + '%';
+
+  // Current values
+  const currentRev = getProjectRevenue(p);
+  const currentCosts = getProjectCosts(p.id).total;
+  const currentHrs = getProjectHours(p.id).total;
+  const currentProfit = currentRev - currentCosts;
+  const currentMargin = currentRev > 0 ? (currentProfit / currentRev * 100) : 0;
+
+  // Scenario values
+  let newRev = currentRev;
+  if (p.type === 'hourly') {
+    const newRate = p.hourlyRate * (1 + rateAdj / 100);
+    const newHrs = currentHrs * (1 + hoursAdj / 100);
+    newRev = newRate * newHrs;
+  } else {
+    newRev = currentRev * (1 + rateAdj / 100);
+  }
+  const newCosts = currentCosts * (1 + costAdj / 100) + addCost - removeCost;
+  const newProfit = newRev - Math.max(newCosts, 0);
+  const newMargin = newRev > 0 ? (newProfit / newRev * 100) : 0;
+  const newHrs = currentHrs * (1 + hoursAdj / 100);
+  const newEffRate = newHrs > 0 ? newRev / newHrs : 0;
+
+  const profitDelta = newProfit - currentProfit;
+  const marginDelta = newMargin - currentMargin;
+
+  document.getElementById('whatifResults').innerHTML = `
+    <h3>Scenario Results</h3>
+    <div style="margin-top:16px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span>Revenue</span>
+        <span style="font-weight:700;color:var(--heading)">${fmtCurrency(newRev)}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span>Costs</span>
+        <span style="font-weight:700;color:var(--heading)">${fmtCurrency(Math.max(newCosts, 0))}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span>Profit</span>
+        <span style="font-weight:700;color:${newProfit >= 0 ? 'var(--green)' : 'var(--red)'}">${fmtCurrency(newProfit)}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span>Margin</span>
+        <span style="font-weight:700;color:${newMargin >= 50 ? 'var(--green)' : newMargin >= 20 ? 'var(--yellow)' : 'var(--red)'}">${newMargin.toFixed(1)}%</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span>Eff. Rate</span>
+        <span style="font-weight:700;color:var(--heading)">${fmtCurrency(newEffRate)}/h</span>
+      </div>
+      <hr style="border-color:var(--border);margin:12px 0;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span>Profit Change</span>
+        <span style="font-weight:700;color:${profitDelta >= 0 ? 'var(--green)' : 'var(--red)'}">${profitDelta >= 0 ? '+' : ''}${fmtCurrency(profitDelta)}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;">
+        <span>Margin Change</span>
+        <span style="font-weight:700;color:${marginDelta >= 0 ? 'var(--green)' : 'var(--red)'}">${marginDelta >= 0 ? '+' : ''}${marginDelta.toFixed(1)}%</span>
+      </div>
+    </div>
+  `;
+}
+
+// =================== BENCHMARKS ===================
+const BENCHMARKS = {
+  'web-design': { avgRate: 85, avgMargin: 52, avgProjectSize: 5500, avgHoursPerProject: 65, billableRatio: 72 },
+  'web-dev': { avgRate: 110, avgMargin: 48, avgProjectSize: 12000, avgHoursPerProject: 110, billableRatio: 75 },
+  'branding': { avgRate: 95, avgMargin: 55, avgProjectSize: 8000, avgHoursPerProject: 80, billableRatio: 70 },
+  'copywriting': { avgRate: 75, avgMargin: 62, avgProjectSize: 3000, avgHoursPerProject: 40, billableRatio: 80 },
+  'marketing': { avgRate: 90, avgMargin: 45, avgProjectSize: 4500, avgHoursPerProject: 50, billableRatio: 68 },
+  'consulting': { avgRate: 150, avgMargin: 70, avgProjectSize: 10000, avgHoursPerProject: 65, billableRatio: 78 },
+  'video': { avgRate: 100, avgMargin: 40, avgProjectSize: 7000, avgHoursPerProject: 70, billableRatio: 65 },
+  'photography': { avgRate: 80, avgMargin: 38, avgProjectSize: 2500, avgHoursPerProject: 30, billableRatio: 60 },
+  'illustration': { avgRate: 70, avgMargin: 58, avgProjectSize: 3500, avgHoursPerProject: 50, billableRatio: 75 }
+};
+
+function renderBenchmarks() {
+  const cat = document.getElementById('benchCategory').value;
+  const bench = BENCHMARKS[cat];
+  const container = document.getElementById('benchContent');
+
+  // Calculate user's metrics for this category
+  const catProjects = state.projects.filter(p => p.category === cat);
+  let yourRate = 0, yourMargin = 0, yourProjectSize = 0, yourBillable = 0;
+  if (catProjects.length > 0) {
+    const rates = catProjects.map(p => getEffectiveRate(p)).filter(r => r > 0);
+    yourRate = rates.length > 0 ? rates.reduce((a, b) => a + b, 0) / rates.length : 0;
+    const margins = catProjects.map(p => getProjectMargin(p));
+    yourMargin = margins.reduce((a, b) => a + b, 0) / margins.length;
+    yourProjectSize = catProjects.reduce((s, p) => s + getProjectRevenue(p), 0) / catProjects.length;
+    const allHrs = catProjects.reduce((s, p) => {
+      const h = getProjectHours(p.id);
+      return { total: s.total + h.total, billable: s.billable + h.billable };
+    }, { total: 0, billable: 0 });
+    yourBillable = allHrs.total > 0 ? (allHrs.billable / allHrs.total * 100) : 0;
+  }
+
+  const metrics = [
+    { label: 'Eff. Hourly Rate', yours: yourRate, industry: bench.avgRate, format: v => fmtCurrency(v) + '/h' },
+    { label: 'Profit Margin', yours: yourMargin, industry: bench.avgMargin, format: v => v.toFixed(1) + '%' },
+    { label: 'Avg Project Size', yours: yourProjectSize, industry: bench.avgProjectSize, format: v => fmtCurrency(v) },
+    { label: 'Billable Ratio', yours: yourBillable, industry: bench.billableRatio, format: v => v.toFixed(0) + '%' }
+  ];
+
+  const hasData = catProjects.length > 0;
+
+  container.innerHTML = `
+    ${!hasData ? '<div class="rec-item" style="margin-bottom:20px;">No projects in this category yet. Add projects categorized as "' + categoryName(cat) + '" to compare against benchmarks.</div>' : ''}
+    <div style="display:flex;gap:12px;margin-bottom:20px;font-size:0.85rem;">
+      <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:var(--accent-gradient);border-radius:2px;display:inline-block;"></span> Your metrics</span>
+      <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:rgba(168,85,247,0.25);border-radius:2px;display:inline-block;"></span> Industry average</span>
+    </div>
+    ${metrics.map(m => {
+      const maxVal = Math.max(m.yours, m.industry, 1);
+      const yoursWidth = (m.yours / maxVal * 100);
+      const industryWidth = (m.industry / maxVal * 100);
+      return `<div class="benchmark-row">
+        <div class="benchmark-label">${m.label}</div>
+        <div class="benchmark-bar-wrap">
+          <div class="benchmark-bar industry" style="width:${industryWidth}%"></div>
+          <div class="benchmark-bar yours" style="width:${hasData ? yoursWidth : 0}%"></div>
+          <div class="benchmark-value">${hasData ? m.format(m.yours) : 'N/A'} vs ${m.format(m.industry)}</div>
+        </div>
+      </div>`;
+    }).join('')}
+    <div style="margin-top:24px;">
+      <h3>Category Insights: ${categoryName(cat)}</h3>
+      <div class="metrics-row" style="margin-top:12px;">
+        <div class="metric-card">
+          <div class="metric-value">${fmtCurrency(bench.avgRate)}/h</div>
+          <div class="metric-label">Avg Industry Rate</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">${bench.avgMargin}%</div>
+          <div class="metric-label">Avg Industry Margin</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">${bench.avgHoursPerProject}h</div>
+          <div class="metric-label">Avg Hours/Project</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">${fmtCurrency(bench.avgProjectSize)}</div>
+          <div class="metric-label">Avg Project Size</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// =================== REPORTS ===================
+function generateProjectPL() {
+  const pid = parseInt(document.getElementById('reportProject').value);
+  const p = state.projects.find(x => x.id === pid);
+  if (!p) { showToast('Select a project first.'); return; }
+
+  const rev = getProjectRevenue(p);
+  const costs = getProjectCosts(p.id);
+  const hours = getProjectHours(p.id);
+  const profit = rev - costs.total;
+  const margin = rev > 0 ? (profit / rev * 100) : 0;
+  const effRate = hours.total > 0 ? rev / hours.total : 0;
+
+  let report = `PROJECT PROFIT & LOSS STATEMENT
+${'='.repeat(50)}
+
+Project:        ${p.name}
+Client:         ${p.client}
+Type:           ${typeName(p.type)}
+Status:         ${p.status.charAt(0).toUpperCase() + p.status.slice(1)}
+Period:         ${p.startDate || 'N/A'} to ${p.endDate || 'Ongoing'}
+
+${'─'.repeat(50)}
+REVENUE
+${'─'.repeat(50)}
+  Contracted Amount:    ${fmtCurrency(p.amount)}
+  Calculated Revenue:   ${fmtCurrency(rev)}
+
+${'─'.repeat(50)}
+DIRECT COSTS
+${'─'.repeat(50)}`;
+
+  Object.entries(costs.byCategory).forEach(([cat, amt]) => {
+    report += '\n  ' + categoryName(cat).padEnd(22) + fmtCurrency(amt);
+  });
+  report += `
+${'─'.repeat(50)}
+  TOTAL COSTS:          ${fmtCurrency(costs.total)}
+
+${'─'.repeat(50)}
+NET PROFIT:             ${fmtCurrency(profit)}
+PROFIT MARGIN:          ${margin.toFixed(1)}%
+${'─'.repeat(50)}
+
+TIME ANALYSIS
+${'─'.repeat(50)}
+  Estimated Hours:      ${p.estHours || 'N/A'}
+  Actual Hours:         ${hours.total.toFixed(1)}
+  Billable Hours:       ${hours.billable.toFixed(1)}
+  Effective Rate:       ${fmtCurrency(effRate)}/hr
+  Hours Variance:       ${p.estHours ? ((hours.total - p.estHours) / p.estHours * 100).toFixed(1) + '%' : 'N/A'}
+
+Generated: ${new Date().toLocaleDateString()} | FreelanceOS Profitability Analyzer`;
+
+  showReport('Project P&L: ' + p.name, report);
+}
+
+function generatePortfolioSummary() {
+  if (state.projects.length === 0) { showToast('No projects to report on.'); return; }
+
+  let totalRev = 0, totalCosts = 0, totalHrs = 0;
+  const lines = state.projects.map(p => {
+    const rev = getProjectRevenue(p);
+    const cost = getProjectCosts(p.id).total;
+    const hrs = getProjectHours(p.id).total;
+    totalRev += rev;
+    totalCosts += cost;
+    totalHrs += hrs;
+    const margin = rev > 0 ? ((rev - cost) / rev * 100).toFixed(1) : '0.0';
+    return `  ${p.name.padEnd(25)} ${fmtCurrency(rev).padStart(12)} ${fmtCurrency(cost).padStart(12)} ${fmtCurrency(rev - cost).padStart(12)} ${(margin + '%').padStart(8)}`;
+  });
+
+  const report = `PORTFOLIO SUMMARY REPORT
+${'='.repeat(74)}
+
+${('  Project').padEnd(25)} ${'Revenue'.padStart(12)} ${'Costs'.padStart(12)} ${'Profit'.padStart(12)} ${'Margin'.padStart(8)}
+${'─'.repeat(74)}
+${lines.join('\n')}
+${'─'.repeat(74)}
+${('  TOTAL').padEnd(25)} ${fmtCurrency(totalRev).padStart(12)} ${fmtCurrency(totalCosts).padStart(12)} ${fmtCurrency(totalRev - totalCosts).padStart(12)} ${(totalRev > 0 ? ((totalRev - totalCosts) / totalRev * 100).toFixed(1) + '%' : '0.0%').padStart(8)}
+
+Total Projects:     ${state.projects.length}
+Active:             ${state.projects.filter(p => p.status === 'active').length}
+Completed:          ${state.projects.filter(p => p.status === 'completed').length}
+Total Hours:        ${totalHrs.toFixed(1)}
+Avg Effective Rate: ${totalHrs > 0 ? fmtCurrency(totalRev / totalHrs) + '/hr' : 'N/A'}
+
+Generated: ${new Date().toLocaleDateString()} | FreelanceOS Profitability Analyzer`;
+
+  showReport('Portfolio Summary', report);
+}
+
+function generateClientRanking() {
+  if (state.projects.length === 0) { showToast('No projects to report on.'); return; }
+
+  const byClient = {};
+  state.projects.forEach(p => {
+    if (!byClient[p.client]) byClient[p.client] = { revenue: 0, costs: 0, projects: 0, hours: 0 };
+    byClient[p.client].revenue += getProjectRevenue(p);
+    byClient[p.client].costs += getProjectCosts(p.id).total;
+    byClient[p.client].projects += 1;
+    byClient[p.client].hours += getProjectHours(p.id).total;
+  });
+
+  const ranked = Object.entries(byClient)
+    .map(([name, d]) => ({ name, ...d, profit: d.revenue - d.costs, margin: d.revenue > 0 ? ((d.revenue - d.costs) / d.revenue * 100) : 0 }))
+    .sort((a, b) => b.profit - a.profit);
+
+  let report = `CLIENT PROFITABILITY RANKING
+${'='.repeat(80)}
+
+Rank  Client                   Revenue       Costs       Profit    Margin  Projects
+${'─'.repeat(80)}`;
+
+  ranked.forEach((c, i) => {
+    report += `\n${String(i + 1).padStart(3)}.  ${c.name.padEnd(22)} ${fmtCurrency(c.revenue).padStart(12)} ${fmtCurrency(c.costs).padStart(11)} ${fmtCurrency(c.profit).padStart(11)} ${(c.margin.toFixed(1) + '%').padStart(8)} ${String(c.projects).padStart(6)}`;
+  });
+
+  report += `\n${'─'.repeat(80)}
+
+Total Clients:     ${ranked.length}
+Top Client:        ${ranked[0]?.name || 'N/A'} (${fmtCurrency(ranked[0]?.profit || 0)} profit)
+Avg per Client:    ${fmtCurrency(ranked.reduce((s, c) => s + c.profit, 0) / (ranked.length || 1))} profit
+
+Generated: ${new Date().toLocaleDateString()} | FreelanceOS Profitability Analyzer`;
+
+  showReport('Client Profitability Ranking', report);
+}
+
+function showReport(title, text) {
+  document.getElementById('reportTitle').textContent = title;
+  document.getElementById('reportOutput').textContent = text;
+  document.getElementById('reportOutputCard').style.display = 'block';
+}
+
+function copyReport() {
+  const text = document.getElementById('reportOutput').textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('Report copied to clipboard!'));
+}
+
+// =================== CSV EXPORT / IMPORT ===================
+function exportCSV() {
+  if (state.projects.length === 0) { showToast('No data to export.'); return; }
+
+  let csv = 'Type,ProjectID,ProjectName,Client,PricingType,Amount,HourlyRate,EstHours,StartDate,EndDate,Status,Category,Notes,Date,Hours,Description,Billable,CostCategory,CostAmount,CostDescription\n';
+
+  state.projects.forEach(p => {
+    csv += `"project","${p.id}","${csvEsc(p.name)}","${csvEsc(p.client)}","${p.type}","${p.amount}","${p.hourlyRate}","${p.estHours}","${p.startDate}","${p.endDate}","${p.status}","${p.category}","${csvEsc(p.notes)}","","","","","","",""\n`;
+  });
+
+  state.timeEntries.forEach(t => {
+    const p = state.projects.find(x => x.id === t.projectId);
+    csv += `"time","${t.projectId}","${p ? csvEsc(p.name) : ''}","","","","","","","","","","","${t.date}","${t.hours}","${csvEsc(t.description)}","${t.billable}","","",""\n`;
+  });
+
+  state.costEntries.forEach(c => {
+    const p = state.projects.find(x => x.id === c.projectId);
+    csv += `"cost","${c.projectId}","${p ? csvEsc(p.name) : ''}","","","","","","","","","","","${c.date}","","","","${c.category}","${c.amount}","${csvEsc(c.description)}"\n`;
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'freelanceos-profitability-' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV exported!');
+}
+
+function csvEsc(str) {
+  return (str || '').replace(/"/g, '""');
+}
+
+function importCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const lines = e.target.result.split('\n').slice(1); // skip header
+      let imported = { projects: 0, time: 0, costs: 0 };
+
+      lines.forEach(line => {
+        if (!line.trim()) return;
+        const cols = parseCSVLine(line);
+        const type = cols[0]?.replace(/"/g, '').trim();
+
+        if (type === 'project') {
+          const proj = {
+            id: genId(),
+            name: cols[2]?.replace(/"/g, '') || '',
+            client: cols[3]?.replace(/"/g, '') || '',
+            type: cols[4]?.replace(/"/g, '') || 'fixed',
+            amount: parseFloat(cols[5]?.replace(/"/g, '')) || 0,
+            hourlyRate: parseFloat(cols[6]?.replace(/"/g, '')) || 0,
+            estHours: parseFloat(cols[7]?.replace(/"/g, '')) || 0,
+            startDate: cols[8]?.replace(/"/g, '') || '',
+            endDate: cols[9]?.replace(/"/g, '') || '',
+            status: cols[10]?.replace(/"/g, '') || 'active',
+            category: cols[11]?.replace(/"/g, '') || 'other',
+            notes: cols[12]?.replace(/"/g, '') || '',
+            createdAt: new Date().toISOString()
+          };
+          if (proj.name) { state.projects.push(proj); imported.projects++; }
+        } else if (type === 'time') {
+          const pid = findProjectIdByName(cols[2]?.replace(/"/g, ''));
+          if (pid) {
+            state.timeEntries.push({
+              id: genId(),
+              projectId: pid,
+              date: cols[13]?.replace(/"/g, '') || new Date().toISOString().split('T')[0],
+              hours: parseFloat(cols[14]?.replace(/"/g, '')) || 0,
+              description: cols[15]?.replace(/"/g, '') || '',
+              billable: cols[16]?.replace(/"/g, '') === 'true'
+            });
+            imported.time++;
+          }
+        } else if (type === 'cost') {
+          const pid = findProjectIdByName(cols[2]?.replace(/"/g, ''));
+          if (pid) {
+            state.costEntries.push({
+              id: genId(),
+              projectId: pid,
+              date: cols[13]?.replace(/"/g, '') || new Date().toISOString().split('T')[0],
+              category: cols[17]?.replace(/"/g, '') || 'misc',
+              amount: parseFloat(cols[18]?.replace(/"/g, '')) || 0,
+              description: cols[19]?.replace(/"/g, '') || ''
+            });
+            imported.costs++;
+          }
+        }
+      });
+
+      saveState();
+      refreshAll();
+      showToast(`Imported: ${imported.projects} projects, ${imported.time} time entries, ${imported.costs} costs`);
+    } catch (err) {
+      showToast('Error importing CSV. Check the file format.');
+      console.error(err);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function findProjectIdByName(name) {
+  if (!name) return null;
+  const p = state.projects.find(x => x.name === name);
+  return p ? p.id : null;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (ch === ',' && !inQuotes) {
+      result.push(current);
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+  result.push(current);
+  return result;
+}
+
+// =================== CLEAR DATA ===================
+function clearAllData() {
+  if (!confirm('This will permanently delete all projects, time entries, and costs. Are you sure?')) return;
+  if (!confirm('Really? This cannot be undone.')) return;
+  state = { projects: [], timeEntries: [], costEntries: [], nextId: 1 };
+  saveState();
+  refreshAll();
+  showToast('All data cleared.');
+}
+
+// =================== KEYBOARD SHORTCUTS ===================
+function toggleShortcutsModal() {
+  document.getElementById('shortcutsModal').classList.toggle('active');
+}
+
+document.addEventListener('keydown', function(e) {
+  // Don't trigger when typing in inputs
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+  const key = e.key.toLowerCase();
+  const map = {
+    'n': 'projects',
+    't': 'time',
+    'c': 'costs',
+    'd': 'dashboard',
+    'p': 'portfolio',
+    's': 'scorecard',
+    'w': 'whatif',
+    'b': 'benchmarks',
+    'r': 'reports'
+  };
+
+  if (map[key]) {
+    e.preventDefault();
+    switchTab(map[key]);
+    return;
+  }
+  if (key === 'e') {
+    e.preventDefault();
+    exportCSV();
+    return;
+  }
+  if (key === '?') {
+    e.preventDefault();
+    toggleShortcutsModal();
+    return;
+  }
+  if (key === 'escape') {
+    document.getElementById('shortcutsModal').classList.remove('active');
+    document.getElementById('editProjectModal').classList.remove('active');
+  }
+});
+
+// =================== UTILITY ===================
+function esc(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// =================== TOGGLE LISTENER ===================
+document.getElementById('timeBillable').addEventListener('click', function() {
+  document.getElementById('timeBillableLabel').textContent = this.classList.contains('active') ? 'Yes' : 'No';
+});
+
+// =================== SET DEFAULT DATES ===================
+function setDefaultDates() {
+  const today = new Date().toISOString().split('T')[0];
+  ['projStart', 'timeDate', 'costDate'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.value) el.value = today;
+  });
+}
+
+// =================== REFRESH ALL ===================
+function refreshAll() {
+  populateProjectSelectors();
+  renderProjects();
+  renderTimeEntries();
+  renderCostEntries();
+  setDefaultDates();
+}
+
+// =================== RESPONSIVE CHART RESIZE ===================
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    const activeTab = document.querySelector('.nav-tab.active');
+    if (activeTab) {
+      const tab = activeTab.dataset.tab;
+      if (tab === 'dashboard') renderDashboard();
+      if (tab === 'portfolio') renderPortfolio();
+    }
+  }, 250);
+});
+
+// =================== RESPONSIVE GRID FIX ===================
+const style = document.createElement('style');
+style.textContent = `
+  @media (max-width: 768px) {
+    #dashContent > div[style*="grid-template-columns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+    #whatifControls {
+      grid-template-columns: 1fr !important;
+    }
+  }
+`;
+document.head.appendChild(style);
+
+// =================== INIT ===================
+loadState();
+refreshAll();
+
+// Render initial views for visible tabs
+setTimeout(() => {
+  renderBenchmarks();
+}, 100);
+
+</script>
+</body>
+</html>
