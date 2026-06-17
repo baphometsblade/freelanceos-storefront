@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Project Risk Register for Freelancers | FreelanceOS</title>
+<meta name="description" content="Free interactive project risk register and mitigation planner for freelancers. Track risks, build mitigation plans, visualize your risk matrix, and export professional risk reports.">
+<meta name="keywords" content="project risk register, freelancer risk management, risk mitigation planner, project management tools, freelance tools">
+<meta name="author" content="FreelanceOS">
+<meta property="og:title" content="Free Project Risk Register for Freelancers | FreelanceOS">
+<meta property="og:description" content="Interactive risk register with heat map matrix, mitigation tracking, early warning indicators, and export tools — built for freelancers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.com/tools/risk-register">
+<meta property="og:image" content="https://freelanceos.com/og-risk-register.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Project Risk Register for Freelancers | FreelanceOS">
+<meta name="twitter:description" content="Track, mitigate, and monitor project risks with this free interactive tool from FreelanceOS.">
+<meta name="twitter:image" content="https://freelanceos.com/og-risk-register.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Project Risk Register & Mitigation Planner",
+  "description": "Free interactive project risk register and mitigation planner for freelancers. Track risks, build mitigation plans, and export professional reports.",
+  "url": "https://freelanceos.com/tools/risk-register",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#020617;--card:#0f172a;--border:rgba(168,85,247,0.2);--accent1:#a855f7;--accent2:#ec4899;
+  --text:#e2e8f0;--muted:#94a3b8;--green:#22c55e;--yellow:#eab308;--orange:#f97316;--red:#ef4444;
+  --radius-card:16px;--radius-btn:12px;--radius-sm:8px;
+}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh;line-height:1.6}
+a{color:var(--accent1);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* CTA Banner */
+.cta-banner{background:linear-gradient(135deg,rgba(168,85,247,0.25),rgba(236,72,153,0.25));border-bottom:1px solid var(--border);padding:12px 20px;text-align:center;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.cta-banner p{font-size:13px;color:var(--text)}
+.cta-banner a.cta-btn{display:inline-block;background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#fff;padding:6px 18px;border-radius:var(--radius-btn);font-size:13px;font-weight:600;margin-left:10px;text-decoration:none;transition:opacity .2s}
+.cta-banner a.cta-btn:hover{opacity:.85;text-decoration:none}
+
+/* Layout */
+.container{max-width:1280px;margin:0 auto;padding:0 20px}
+header{padding:32px 20px 24px;text-align:center;max-width:1280px;margin:0 auto}
+header h1{font-size:clamp(24px,4vw,38px);font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+header p{color:var(--muted);font-size:15px;max-width:600px;margin:0 auto}
+
+/* Nav tabs */
+.nav-tabs{display:flex;gap:4px;padding:0 20px 0;max-width:1280px;margin:0 auto 24px;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.tab-btn{padding:9px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:13px;white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:6px}
+.tab-btn:hover{color:var(--text);border-color:var(--accent1)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(236,72,153,0.15));color:var(--text);border-color:var(--accent1)}
+.tab-icon{font-size:15px}
+
+/* Sections */
+.section{display:none;padding:0 20px 40px;max-width:1280px;margin:0 auto}
+.section.active{display:block}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-card);padding:24px;margin-bottom:20px}
+.card-sm{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
+.card h2{font-size:18px;font-weight:600;margin-bottom:16px;color:var(--text)}
+.card h3{font-size:15px;font-weight:600;margin-bottom:12px;color:var(--text)}
+
+/* Grid */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+
+/* Form */
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:500}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent1)}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-group select option{background:#1e293b;color:var(--text)}
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+
+/* Buttons */
+.btn{padding:10px 20px;border-radius:var(--radius-btn);border:none;cursor:pointer;font-size:14px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#fff}
+.btn-primary:hover{opacity:.85}
+.btn-secondary{background:rgba(168,85,247,0.15);color:var(--accent1);border:1px solid rgba(168,85,247,0.3)}
+.btn-secondary:hover{background:rgba(168,85,247,0.25)}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--text);border-color:var(--muted)}
+.btn-danger{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
+.btn-danger:hover{background:rgba(239,68,68,0.25)}
+.btn-sm{padding:6px 14px;font-size:12px;border-radius:8px}
+
+/* Score badges */
+.badge{display:inline-flex;align-items:center;justify-content:center;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.badge-green{background:rgba(34,197,94,0.15);color:var(--green)}
+.badge-yellow{background:rgba(234,179,8,0.15);color:var(--yellow)}
+.badge-orange{background:rgba(249,115,22,0.15);color:var(--orange)}
+.badge-red{background:rgba(239,68,68,0.15);color:var(--red)}
+.badge-purple{background:rgba(168,85,247,0.15);color:var(--accent1)}
+.badge-muted{background:rgba(148,163,184,0.15);color:var(--muted)}
+
+/* Risk Matrix */
+.matrix-wrap{overflow-x:auto}
+.matrix-grid{display:grid;grid-template-columns:40px repeat(5,1fr);gap:3px;min-width:360px}
+.matrix-cell{height:64px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .2s;flex-direction:column;gap:2px;font-size:11px;font-weight:600}
+.matrix-cell:hover{transform:scale(1.04);z-index:2}
+.matrix-cell.selected{box-shadow:0 0 0 2px #fff}
+.cell-green{background:rgba(34,197,94,0.25);color:var(--green)}
+.cell-yellow{background:rgba(234,179,8,0.25);color:var(--yellow)}
+.cell-orange{background:rgba(249,115,22,0.25);color:var(--orange)}
+.cell-red{background:rgba(239,68,68,0.25);color:var(--red)}
+.matrix-label{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;font-weight:600}
+.matrix-axis-label{color:var(--muted);font-size:12px;text-align:center;padding:8px 0}
+.risk-dot{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,0.7);display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;cursor:pointer;position:relative;z-index:3}
+
+/* Dashboard stat cards */
+.stat-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-num{font-size:32px;font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Risk list */
+.risk-row{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:8px;transition:border-color .2s;cursor:pointer}
+.risk-row:hover{border-color:rgba(168,85,247,0.4)}
+.risk-row.expanded{border-color:var(--accent1)}
+.risk-row-header{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.risk-title{font-weight:600;font-size:14px;flex:1;min-width:120px}
+.risk-detail{padding:16px 0 4px;border-top:1px solid var(--border);margin-top:12px}
+.risk-detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.detail-item label{font-size:11px;color:var(--muted);display:block;margin-bottom:3px}
+.detail-item p{font-size:13px;color:var(--text)}
+
+/* Alert banner */
+.alert{padding:12px 16px;border-radius:var(--radius-sm);margin-bottom:12px;font-size:13px;display:flex;align-items:center;gap:10px}
+.alert-warning{background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);color:var(--yellow)}
+.alert-danger{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:var(--red)}
+.alert-info{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3);color:var(--accent1)}
+
+/* Mini chart bars */
+.chart-bar-wrap{display:flex;align-items:flex-end;gap:4px;height:80px}
+.chart-bar{background:linear-gradient(to top,var(--accent1),var(--accent2));border-radius:3px 3px 0 0;flex:1;min-width:20px;transition:height .4s;position:relative}
+.chart-bar-label{font-size:10px;color:var(--muted);text-align:center;margin-top:4px}
+
+/* Mitigation actions */
+.mitigation-action{display:flex;align-items:flex-start;gap:10px;padding:10px;background:rgba(255,255,255,0.03);border-radius:var(--radius-sm);margin-bottom:6px;border:1px solid var(--border)}
+.mitigation-action .action-text{flex:1;font-size:13px}
+
+/* Templates */
+.template-card{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;cursor:pointer;transition:all .2s;position:relative}
+.template-card:hover{border-color:var(--accent1);background:rgba(168,85,247,0.08)}
+.template-card h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.template-card p{font-size:12px;color:var(--muted)}
+.template-card .risk-count{position:absolute;top:12px;right:12px;font-size:11px;font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Review log */
+.review-entry{padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:var(--radius-sm);border-left:3px solid var(--accent1);margin-bottom:8px}
+.review-entry .review-meta{font-size:12px;color:var(--muted);margin-bottom:4px}
+
+/* Warning indicator dot */
+.indicator-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px}
+.dot-safe{background:var(--green)}
+.dot-warning{background:var(--yellow)}
+.dot-triggered{background:var(--red)}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-card);padding:28px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:20px;font-weight:700;margin-bottom:20px;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+
+/* Progress bar */
+.progress-bar{height:6px;border-radius:3px;background:rgba(255,255,255,0.1);overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent1),var(--accent2));transition:width .4s}
+
+/* Stars */
+.stars{display:flex;gap:3px}
+.star{font-size:18px;cursor:pointer;color:rgba(255,255,255,0.15);transition:color .15s}
+.star.filled{color:var(--yellow)}
+
+/* Footer */
+footer{background:var(--card);border-top:1px solid var(--border);padding:24px 20px;text-align:center;margin-top:40px}
+footer p{color:var(--muted);font-size:13px;line-height:1.8}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted)}
+.empty-state .empty-icon{font-size:48px;margin-bottom:12px;opacity:.4}
+.empty-state p{font-size:14px;margin-bottom:16px}
+
+/* Tooltip */
+.tooltip-wrap{position:relative;display:inline-block}
+.tooltip-wrap .tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1e293b;color:var(--text);font-size:12px;padding:6px 10px;border-radius:6px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:50;border:1px solid var(--border)}
+.tooltip-wrap:hover .tooltip{opacity:1}
+
+/* Divider */
+.divider{height:1px;background:var(--border);margin:20px 0}
+
+/* Search & filter bar */
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.filter-bar input,.filter-bar select{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;color:var(--text);font-size:13px;outline:none}
+.filter-bar input:focus,.filter-bar select:focus{border-color:var(--accent1)}
+.filter-bar input{flex:1;min-width:140px}
+
+/* Mobile tweaks */
+@media(max-width:600px){
+  .modal-actions{flex-direction:column}
+  .btn{justify-content:center}
+  .risk-row-header{gap:8px}
+  header h1{font-size:22px}
+  .matrix-cell{height:48px}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(168,85,247,0.3);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+  <p>&#127381; Get the complete FreelanceOS Template Pack — 280+ pages, 49 free tools &nbsp;<a class="cta-btn" href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Use Code FLASH40 &#8594;</a></p>
+</div>
+
+<header>
+  <h1>Project Risk Register &amp; Mitigation Planner</h1>
+  <p>Track, assess, and mitigate project risks before they derail your freelance work. Free tool by FreelanceOS.</p>
+</header>
+
+<!-- Nav Tabs -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab('dashboard')" id="tab-dashboard"><span class="tab-icon">&#128200;</span> Dashboard</button>
+  <button class="tab-btn" onclick="showTab('risks')" id="tab-risks"><span class="tab-icon">&#9888;</span> Risk Register</button>
+  <button class="tab-btn" onclick="showTab('matrix')" id="tab-matrix"><span class="tab-icon">&#9646;</span> Risk Matrix</button>
+  <button class="tab-btn" onclick="showTab('mitigation')" id="tab-mitigation"><span class="tab-icon">&#128737;</span> Mitigation</button>
+  <button class="tab-btn" onclick="showTab('impact')" id="tab-impact"><span class="tab-icon">&#128178;</span> Impact Analysis</button>
+  <button class="tab-btn" onclick="showTab('indicators')" id="tab-indicators"><span class="tab-icon">&#128276;</span> Early Warnings <span id="alert-badge" style="display:none;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;"></span></button>
+  <button class="tab-btn" onclick="showTab('templates')" id="tab-templates"><span class="tab-icon">&#128196;</span> Templates</button>
+  <button class="tab-btn" onclick="showTab('reviews')" id="tab-reviews"><span class="tab-icon">&#128203;</span> Review Log</button>
+  <button class="tab-btn" onclick="showTab('export')" id="tab-export"><span class="tab-icon">&#128229;</span> Export</button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="section active" id="section-dashboard">
+  <div id="alert-area"></div>
+  <div class="grid-4" id="stat-cards" style="margin-bottom:20px"></div>
+  <div class="grid-2">
+    <div class="card">
+      <h2>&#128293; Top 5 Risks by Score</h2>
+      <div id="top-risks-list"></div>
+    </div>
+    <div class="card">
+      <h2>&#128200; Risk Trend (Weekly)</h2>
+      <div id="trend-chart"></div>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px">Risks added per week</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:0">
+    <h2>&#128225; Category Breakdown</h2>
+    <div id="category-breakdown" class="grid-3"></div>
+  </div>
+</div>
+
+<!-- RISK REGISTER -->
+<div class="section" id="section-risks">
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+      <h2 style="margin:0">&#9888; Risk Register</h2>
+      <button class="btn btn-primary" onclick="openAddRiskModal()">+ Add Risk</button>
+    </div>
+    <div class="filter-bar">
+      <input type="text" id="risk-search" placeholder="Search risks..." oninput="renderRisks()">
+      <select id="filter-category" onchange="renderRisks()">
+        <option value="">All Categories</option>
+        <option>Scope</option><option>Budget</option><option>Timeline</option>
+        <option>Resource</option><option>Technical</option><option>Client</option><option>External</option>
+      </select>
+      <select id="filter-status" onchange="renderRisks()">
+        <option value="">All Statuses</option>
+        <option>Open</option><option>Mitigating</option><option>Accepted</option><option>Closed</option>
+      </select>
+      <select id="filter-score" onchange="renderRisks()">
+        <option value="">All Scores</option>
+        <option value="critical">Critical (16+)</option>
+        <option value="high">High (10-15)</option>
+        <option value="medium">Medium (5-9)</option>
+        <option value="low">Low (1-4)</option>
+      </select>
+    </div>
+    <div id="risk-list"></div>
+  </div>
+</div>
+
+<!-- RISK MATRIX -->
+<div class="section" id="section-matrix">
+  <div class="card">
+    <h2>&#9646; Interactive Risk Matrix</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Click any cell to filter risks by probability and impact. Dots represent your risks — hover for details.</p>
+    <div class="matrix-wrap">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div>
+          <div class="matrix-axis-label" style="writing-mode:vertical-rl;transform:rotate(180deg);height:320px;display:flex;align-items:center;color:var(--muted);font-size:13px;font-weight:600">PROBABILITY &#8593;</div>
+        </div>
+        <div style="flex:1;min-width:300px">
+          <div class="matrix-grid" id="risk-matrix-grid"></div>
+          <div style="display:grid;grid-template-columns:40px repeat(5,1fr);gap:3px;margin-top:4px">
+            <div></div>
+            <div class="matrix-label" style="font-size:11px">1</div>
+            <div class="matrix-label" style="font-size:11px">2</div>
+            <div class="matrix-label" style="font-size:11px">3</div>
+            <div class="matrix-label" style="font-size:11px">4</div>
+            <div class="matrix-label" style="font-size:11px">5</div>
+          </div>
+          <div class="matrix-axis-label">IMPACT &#8594;</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px">
+      <span class="badge badge-green">&#9632; Low (1–4)</span>
+      <span class="badge badge-yellow">&#9632; Medium (5–9)</span>
+      <span class="badge badge-orange">&#9632; High (10–15)</span>
+      <span class="badge badge-red">&#9632; Critical (16–25)</span>
+    </div>
+    <div class="divider"></div>
+    <h3 id="matrix-filter-label">All risks</h3>
+    <div id="matrix-filtered-list" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<!-- MITIGATION -->
+<div class="section" id="section-mitigation">
+  <div class="card">
+    <h2>&#128737; Mitigation Tracker</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Manage mitigation actions and track residual risk for each open risk.</p>
+    <div id="mitigation-list"></div>
+  </div>
+</div>
+
+<!-- IMPACT ANALYSIS -->
+<div class="section" id="section-impact">
+  <div class="card">
+    <h2>&#128178; Impact Analysis</h2>
+    <div id="impact-summary" style="margin-bottom:20px"></div>
+    <div id="impact-list"></div>
+  </div>
+</div>
+
+<!-- EARLY WARNING INDICATORS -->
+<div class="section" id="section-indicators">
+  <div class="card">
+    <h2>&#128276; Early Warning Indicators</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Define trigger conditions for each risk. Update their status as warning signs appear.</p>
+    <div id="indicator-list"></div>
+  </div>
+</div>
+
+<!-- TEMPLATES -->
+<div class="section" id="section-templates">
+  <div class="card">
+    <h2>&#128196; Risk Templates</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Load pre-built risk sets for common freelance project types. Loading a template adds risks to your register (existing risks are preserved).</p>
+    <div class="grid-3" id="template-grid"></div>
+  </div>
+  <div id="template-preview" style="display:none"></div>
+</div>
+
+<!-- REVIEW LOG -->
+<div class="section" id="section-reviews">
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+      <h2 style="margin:0">&#128203; Risk Review Log</h2>
+      <button class="btn btn-primary" onclick="openAddReviewModal()">+ Log Review</button>
+    </div>
+    <div id="review-reminder" style="margin-bottom:16px"></div>
+    <div id="review-list"></div>
+  </div>
+</div>
+
+<!-- EXPORT -->
+<div class="section" id="section-export">
+  <div class="card">
+    <h2>&#128229; Export &amp; Backup</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:24px">Download your risk data in multiple formats for reporting and backup.</p>
+    <div class="grid-2">
+      <div class="card-sm">
+        <h3>&#128202; Risk Register CSV</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Full risk register as a spreadsheet-ready CSV with all fields.</p>
+        <button class="btn btn-secondary" onclick="exportCSV()">&#8595; Download CSV</button>
+      </div>
+      <div class="card-sm">
+        <h3>&#128247; Printable Risk Matrix</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Risk heat map formatted for printing or PDF export.</p>
+        <button class="btn btn-secondary" onclick="exportMatrix()">&#8595; Print Matrix</button>
+      </div>
+      <div class="card-sm">
+        <h3>&#128190; JSON Backup</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Full data backup in JSON format. Use to restore or migrate your register.</p>
+        <button class="btn btn-secondary" onclick="exportJSON()">&#8595; Export JSON</button>
+        <button class="btn btn-ghost" style="margin-left:8px" onclick="document.getElementById('import-file').click()">&#8593; Import JSON</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
+      </div>
+      <div class="card-sm">
+        <h3>&#128203; Executive Summary</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Formatted HTML report with risk overview, matrix summary, and top risks for stakeholders.</p>
+        <button class="btn btn-secondary" onclick="exportExecutiveSummary()">&#8595; Generate Report</button>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-danger btn-sm" onclick="confirmClearAll()">&#128465; Clear All Data</button>
+      <span style="font-size:12px;color:var(--muted)">This will permanently delete all risks, reviews, and settings.</span>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Add/Edit Risk -->
+<div class="modal-overlay" id="risk-modal" style="display:none" onclick="handleModalClick(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h2 id="risk-modal-title">Add New Risk</h2>
+    <input type="hidden" id="edit-risk-id">
+    <div class="form-row">
+      <div class="form-group" style="grid-column:1/-1">
+        <label>Risk Title *</label>
+        <input type="text" id="risk-title" placeholder="e.g. Scope creep from unclear requirements">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="risk-desc" placeholder="Describe the risk in detail..."></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="risk-category">
+          <option>Scope</option><option>Budget</option><option>Timeline</option>
+          <option>Resource</option><option>Technical</option><option>Client</option><option>External</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="risk-status">
+          <option>Open</option><option>Mitigating</option><option>Accepted</option><option>Closed</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Owner</label>
+        <input type="text" id="risk-owner" placeholder="Who owns this risk?">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Probability (1–5) <span id="prob-val" style="color:var(--accent1);font-weight:700">3</span></label>
+        <input type="range" min="1" max="5" value="3" id="risk-prob" oninput="updateScorePreview()">
+      </div>
+      <div class="form-group">
+        <label>Impact (1–5) <span id="impact-val" style="color:var(--accent1);font-weight:700">3</span></label>
+        <input type="range" min="1" max="5" value="3" id="risk-impact" oninput="updateScorePreview()">
+      </div>
+      <div class="form-group" style="display:flex;align-items:flex-end">
+        <div style="width:100%">
+          <label>Risk Score</label>
+          <div id="score-preview" style="font-size:28px;font-weight:700;padding:6px 0"></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Mitigation Plan</label>
+      <textarea id="risk-mitigation" placeholder="What steps will you take to reduce this risk?"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Contingency Plan</label>
+      <textarea id="risk-contingency" placeholder="What will you do if the risk occurs despite mitigation?"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Trigger / Early Warning Condition</label>
+      <input type="text" id="risk-trigger" placeholder="e.g. Client misses 2+ feedback deadlines">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Potential Cost Impact ($)</label>
+        <input type="number" id="risk-cost" placeholder="0" min="0">
+      </div>
+      <div class="form-group">
+        <label>Indicator Status</label>
+        <select id="risk-indicator-status">
+          <option value="safe">Not Triggered</option>
+          <option value="warning">Warning</option>
+          <option value="triggered">Triggered</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Impact on Scope</label>
+      <input type="text" id="risk-scope-impact" placeholder="How does this risk affect project scope?">
+    </div>
+    <div class="form-group">
+      <label>Impact on Timeline</label>
+      <input type="text" id="risk-timeline-impact" placeholder="Days / weeks of potential delay?">
+    </div>
+    <div class="form-group">
+      <label>Impact on Client Relationship</label>
+      <input type="text" id="risk-client-impact" placeholder="How could this affect client satisfaction?">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeRiskModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveRisk()">Save Risk</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Mitigation Action -->
+<div class="modal-overlay" id="action-modal" style="display:none" onclick="handleActionModalClick(event)">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:480px">
+    <h2>Add Mitigation Action</h2>
+    <input type="hidden" id="action-risk-id">
+    <div class="form-group">
+      <label>Action Description *</label>
+      <textarea id="action-text" placeholder="Describe the specific mitigation step..."></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Status</label>
+        <select id="action-status">
+          <option>Planned</option><option>In Progress</option><option>Done</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Due Date</label>
+        <input type="date" id="action-due">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Effectiveness (after implementation)</label>
+      <div class="stars" id="action-stars">
+        <span class="star" onclick="setActionStar(1)">&#9733;</span>
+        <span class="star" onclick="setActionStar(2)">&#9733;</span>
+        <span class="star" onclick="setActionStar(3)">&#9733;</span>
+        <span class="star" onclick="setActionStar(4)">&#9733;</span>
+        <span class="star" onclick="setActionStar(5)">&#9733;</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Residual Risk Score (after mitigation)</label>
+      <input type="number" id="action-residual" min="1" max="25" placeholder="Estimated score post-mitigation">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeActionModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAction()">Save Action</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Add Review -->
+<div class="modal-overlay" id="review-modal" style="display:none" onclick="handleReviewModalClick(event)">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:520px">
+    <h2>Log Risk Review</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Review Date *</label>
+        <input type="date" id="review-date">
+      </div>
+      <div class="form-group">
+        <label>Reviewer Name *</label>
+        <input type="text" id="review-reviewer" placeholder="Your name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Risks Reviewed (count)</label>
+      <input type="number" id="review-count" min="0" placeholder="How many risks were reviewed?">
+    </div>
+    <div class="form-group">
+      <label>Score Changes</label>
+      <textarea id="review-changes" placeholder="Describe any risk score changes made during this review..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>New Mitigations Added</label>
+      <textarea id="review-mitigations" placeholder="What new mitigation actions were added?"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea id="review-notes" placeholder="Any other observations or decisions from this review..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeReviewModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveReview()">Save Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Confirm -->
+<div class="modal-overlay" id="confirm-modal" style="display:none">
+  <div class="modal" style="max-width:400px">
+    <h2 id="confirm-title">Confirm</h2>
+    <p id="confirm-msg" style="color:var(--muted);margin-bottom:20px;font-size:14px"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-danger" id="confirm-ok-btn" onclick="">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>
+    <strong style="background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">FreelanceOS</strong> &mdash; Free project risk register for freelancers. Tool 81 of the FreelanceOS Template Pack.<br>
+    <a href="/freelanceos-storefront/free-templates.html">&#8592; Back to Free Templates</a> &nbsp;&middot;&nbsp;
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Unlock Full FreelanceOS Pack with FLASH40</a>
+  </p>
+  <p style="margin-top:8px;font-size:11px;color:#475569">
+    <em>Disclaimer: This tool is for planning purposes only. It does not constitute professional risk management advice. Freelancers should consult a business advisor for complex project risk decisions. All data is stored locally in your browser and never transmitted.</em>
+  </p>
+</footer>
+
+<script>
+// ─── DATA STORE ───────────────────────────────────────────────────────────────
+let risks = [];
+let reviews = [];
+let currentActionStar = 0;
+let matrixFilterP = null;
+let matrixFilterI = null;
+
+const STORAGE_KEY = 'freelanceos_risk_register';
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ risks, reviews })); } catch(e) {}
+}
+
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    risks = d.risks || [];
+    reviews = d.reviews || [];
+  } catch(e) { risks = []; reviews = []; }
+}
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+// ─── TABS ─────────────────────────────────────────────────────────────────────
+function showTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  renderSection(name);
+}
+
+function renderSection(name) {
+  if (name === 'dashboard') renderDashboard();
+  if (name === 'risks') renderRisks();
+  if (name === 'matrix') renderMatrix();
+  if (name === 'mitigation') renderMitigation();
+  if (name === 'impact') renderImpact();
+  if (name === 'indicators') renderIndicators();
+  if (name === 'templates') renderTemplates();
+  if (name === 'reviews') renderReviews();
+}
+
+// ─── SCORE UTILS ──────────────────────────────────────────────────────────────
+function scoreColor(s) {
+  if (s >= 16) return 'badge-red';
+  if (s >= 10) return 'badge-orange';
+  if (s >= 5)  return 'badge-yellow';
+  return 'badge-green';
+}
+function scoreLabel(s) {
+  if (s >= 16) return 'Critical';
+  if (s >= 10) return 'High';
+  if (s >= 5)  return 'Medium';
+  return 'Low';
+}
+function cellClass(p, i) {
+  const s = p * i;
+  if (s >= 16) return 'cell-red';
+  if (s >= 10) return 'cell-orange';
+  if (s >= 5)  return 'cell-yellow';
+  return 'cell-green';
+}
+
+function categoryColor(cat) {
+  const m = {Scope:'badge-purple',Budget:'badge-red',Timeline:'badge-orange',Resource:'badge-yellow',Technical:'badge-green',Client:'badge-muted',External:'badge-muted'};
+  return m[cat] || 'badge-muted';
+}
+
+function updateScorePreview() {
+  const p = parseInt(document.getElementById('risk-prob').value);
+  const i = parseInt(document.getElementById('risk-impact').value);
+  document.getElementById('prob-val').textContent = p;
+  document.getElementById('impact-val').textContent = i;
+  const s = p * i;
+  const el = document.getElementById('score-preview');
+  const colors = {green:'#22c55e',yellow:'#eab308',orange:'#f97316',red:'#ef4444'};
+  const c = s >= 16 ? 'red' : s >= 10 ? 'orange' : s >= 5 ? 'yellow' : 'green';
+  el.textContent = s + ' — ' + scoreLabel(s);
+  el.style.color = colors[c];
+}
+
+// ─── DASHBOARD ────────────────────────────────────────────────────────────────
+function renderDashboard() {
+  const total = risks.length;
+  const critical = risks.filter(r => r.prob * r.impact >= 16).length;
+  const open = risks.filter(r => r.status === 'Open' || r.status === 'Mitigating').length;
+  const closed = risks.filter(r => r.status === 'Closed' || r.status === 'Accepted').length;
+  const avg = total ? (risks.reduce((a,r) => a + r.prob * r.impact, 0) / total).toFixed(1) : 0;
+
+  document.getElementById('stat-cards').innerHTML = `
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">Total Risks</div></div>
+    <div class="stat-card"><div class="stat-num" style="-webkit-text-fill-color:var(--red);background:none;color:var(--red)">${critical}</div><div class="stat-label">Critical Risks</div><div class="stat-sub">Score 16+</div></div>
+    <div class="stat-card"><div class="stat-num" style="-webkit-text-fill-color:var(--yellow);background:none;color:var(--yellow)">${open}</div><div class="stat-label">Open / Active</div></div>
+    <div class="stat-card"><div class="stat-num" style="-webkit-text-fill-color:var(--green);background:none;color:var(--green)">${avg}</div><div class="stat-label">Avg Risk Score</div></div>
+  `;
+
+  // Alerts
+  const triggered = risks.filter(r => r.indicatorStatus === 'triggered');
+  const warnings = risks.filter(r => r.indicatorStatus === 'warning');
+  let alertHTML = '';
+  if (triggered.length) alertHTML += `<div class="alert alert-danger">&#128680; ${triggered.length} risk trigger(s) ACTIVE: ${triggered.map(r=>r.title).join(', ')}</div>`;
+  if (warnings.length) alertHTML += `<div class="alert alert-warning">&#9888; ${warnings.length} risk(s) at WARNING: ${warnings.map(r=>r.title).join(', ')}</div>`;
+  document.getElementById('alert-area').innerHTML = alertHTML;
+
+  const badge = document.getElementById('alert-badge');
+  const total_alerts = triggered.length + warnings.length;
+  if (total_alerts > 0) { badge.style.display='inline'; badge.textContent = total_alerts; }
+  else badge.style.display = 'none';
+
+  // Top 5
+  const top5 = [...risks].sort((a,b) => (b.prob*b.impact) - (a.prob*a.impact)).slice(0,5);
+  if (!top5.length) {
+    document.getElementById('top-risks-list').innerHTML = '<div class="empty-state"><div class="empty-icon">&#9888;</div><p>No risks added yet. Go to Risk Register to add your first risk.</p></div>';
+  } else {
+    document.getElementById('top-risks-list').innerHTML = top5.map(r => {
+      const s = r.prob * r.impact;
+      const pct = (s / 25) * 100;
+      return `<div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:13px;font-weight:600">${escHtml(r.title)}</span>
+          <span class="badge ${scoreColor(s)}">${s} — ${scoreLabel(s)}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div>`;
+    }).join('');
+  }
+
+  // Trend chart
+  renderTrendChart();
+
+  // Category breakdown
+  const cats = ['Scope','Budget','Timeline','Resource','Technical','Client','External'];
+  const catCounts = {};
+  cats.forEach(c => catCounts[c] = risks.filter(r => r.category === c).length);
+  document.getElementById('category-breakdown').innerHTML = cats.map(c => `
+    <div class="card-sm" style="text-align:center">
+      <div style="font-size:20px;font-weight:700;color:var(--accent1)">${catCounts[c]}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px">${c}</div>
+    </div>
+  `).join('');
+}
+
+function renderTrendChart() {
+  const weeks = 8;
+  const now = Date.now();
+  const weekMs = 7 * 24 * 60 * 60 * 1000;
+  const counts = Array(weeks).fill(0);
+  risks.forEach(r => {
+    const age = now - new Date(r.createdAt).getTime();
+    const wi = Math.floor(age / weekMs);
+    if (wi < weeks) counts[weeks - 1 - wi]++;
+  });
+  const max = Math.max(...counts, 1);
+  const labels = [];
+  for (let i = weeks - 1; i >= 0; i--) {
+    const d = new Date(now - i * weekMs);
+    labels.push(d.toLocaleDateString('en',{month:'short',day:'numeric'}));
+  }
+  const bars = counts.map((c,i) => {
+    const h = Math.max(4, Math.round((c / max) * 72));
+    return `<div style="flex:1;text-align:center">
+      <div style="height:72px;display:flex;align-items:flex-end;justify-content:center">
+        <div style="width:100%;height:${h}px;background:linear-gradient(to top,var(--accent1),var(--accent2));border-radius:3px 3px 0 0"></div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:4px">${c}</div>
+      <div style="font-size:9px;color:var(--muted)">${labels[i]}</div>
+    </div>`;
+  });
+  document.getElementById('trend-chart').innerHTML = `<div style="display:flex;gap:3px;align-items:flex-end">${bars.join('')}</div>`;
+}
+
+// ─── RISK REGISTER ────────────────────────────────────────────────────────────
+function renderRisks() {
+  const search = (document.getElementById('risk-search')?.value || '').toLowerCase();
+  const cat = document.getElementById('filter-category')?.value || '';
+  const status = document.getElementById('filter-status')?.value || '';
+  const scoreFilter = document.getElementById('filter-score')?.value || '';
+
+  let filtered = risks.filter(r => {
+    if (search && !r.title.toLowerCase().includes(search) && !(r.desc||'').toLowerCase().includes(search)) return false;
+    if (cat && r.category !== cat) return false;
+    if (status && r.status !== status) return false;
+    if (scoreFilter) {
+      const s = r.prob * r.impact;
+      if (scoreFilter === 'critical' && s < 16) return false;
+      if (scoreFilter === 'high' && (s < 10 || s > 15)) return false;
+      if (scoreFilter === 'medium' && (s < 5 || s > 9)) return false;
+      if (scoreFilter === 'low' && s > 4) return false;
+    }
+    return true;
+  });
+
+  filtered.sort((a,b) => (b.prob*b.impact) - (a.prob*a.impact));
+
+  const el = document.getElementById('risk-list');
+  if (!filtered.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">&#9888;</div><p>${risks.length ? 'No risks match your filters.' : 'No risks yet. Add your first risk to get started.'}</p><button class="btn btn-primary" onclick="openAddRiskModal()">+ Add First Risk</button></div>`;
+    return;
+  }
+  el.innerHTML = filtered.map(r => riskRowHTML(r)).join('');
+}
+
+function riskRowHTML(r) {
+  const s = r.prob * r.impact;
+  const dotColor = {safe:' style="color:var(--green)"',warning:' style="color:var(--yellow)"',triggered:' style="color:var(--red)"'}[r.indicatorStatus||'safe'] || '';
+  return `<div class="risk-row" id="row-${r.id}">
+    <div class="risk-row-header" onclick="toggleRiskRow('${r.id}')">
+      <div class="risk-title">${escHtml(r.title)}</div>
+      <span class="badge ${categoryColor(r.category)}">${r.category}</span>
+      <span class="badge ${scoreColor(s)}">${s}</span>
+      <span class="badge badge-muted">${r.status}</span>
+      ${r.indicatorStatus && r.indicatorStatus !== 'safe' ? `<span${dotColor}>&#9632; ${r.indicatorStatus === 'triggered' ? 'Triggered' : 'Warning'}</span>` : ''}
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openEditRiskModal('${r.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteRisk('${r.id}')">Delete</button>
+      </div>
+    </div>
+    <div class="risk-detail" id="detail-${r.id}" style="display:none">
+      <div class="risk-detail-grid">
+        <div class="detail-item"><label>Description</label><p>${escHtml(r.desc || '—')}</p></div>
+        <div class="detail-item"><label>Owner</label><p>${escHtml(r.owner || '—')}</p></div>
+        <div class="detail-item"><label>Probability × Impact</label><p>${r.prob} × ${r.impact} = <strong>${s}</strong></p></div>
+        <div class="detail-item"><label>Mitigation Plan</label><p>${escHtml(r.mitigation || '—')}</p></div>
+        <div class="detail-item"><label>Contingency Plan</label><p>${escHtml(r.contingency || '—')}</p></div>
+        <div class="detail-item"><label>Trigger Condition</label><p>${escHtml(r.trigger || '—')}</p></div>
+        <div class="detail-item"><label>Potential Cost</label><p>${r.cost ? '$' + Number(r.cost).toLocaleString() : '—'}</p></div>
+        <div class="detail-item"><label>Added</label><p>${new Date(r.createdAt).toLocaleDateString()}</p></div>
+      </div>
+      ${r.actions && r.actions.length ? `<div style="margin-top:12px"><label style="font-size:12px;color:var(--muted);font-weight:600">MITIGATION ACTIONS (${r.actions.length})</label>${r.actions.map(a=>`<div class="mitigation-action"><span class="badge ${a.status==='Done'?'badge-green':a.status==='In Progress'?'badge-yellow':'badge-muted'}">${a.status}</span><span class="action-text">${escHtml(a.text)}</span>${a.residual?`<span class="badge badge-muted">Residual: ${a.residual}</span>`:''}</div>`).join('')}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function toggleRiskRow(id) {
+  const el = document.getElementById('detail-' + id);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('row-' + id)?.classList.toggle('expanded');
+}
+
+// ─── RISK MATRIX ──────────────────────────────────────────────────────────────
+function renderMatrix() {
+  const grid = document.getElementById('risk-matrix-grid');
+  let html = '';
+  for (let p = 5; p >= 1; p--) {
+    html += `<div class="matrix-label">${p}</div>`;
+    for (let i = 1; i <= 5; i++) {
+      const cc = cellClass(p, i);
+      const inCell = risks.filter(r => r.prob == p && r.impact == i);
+      const isSelected = matrixFilterP === p && matrixFilterI === i;
+      const dots = inCell.slice(0,4).map((r,idx) => {
+        const s = r.prob * r.impact;
+        const dotC = s >= 16 ? '#ef4444' : s >= 10 ? '#f97316' : s >= 5 ? '#eab308' : '#22c55e';
+        return `<div class="risk-dot tooltip-wrap" style="background:${dotC};font-size:8px" onclick="event.stopPropagation()">
+          ${idx+1}${inCell.length > 4 && idx===3 ? '+' : ''}
+          <span class="tooltip">${escHtml(r.title.substring(0,30))}</span>
+        </div>`;
+      }).join('');
+      const extra = inCell.length > 4 ? `<span style="font-size:9px;color:rgba(255,255,255,0.7)">+${inCell.length-4}</span>` : '';
+      html += `<div class="matrix-cell ${cc}${isSelected?' selected':''}" onclick="filterByCell(${p},${i})" title="${p}×${i}=${p*i}">
+        <div style="display:flex;flex-wrap:wrap;gap:2px;justify-content:center">${dots}${extra}</div>
+        ${!inCell.length ? `<span style="opacity:0.4;font-size:10px">${p*i}</span>` : ''}
+      </div>`;
+    }
+  }
+  grid.innerHTML = html;
+  renderMatrixFilteredList();
+}
+
+function filterByCell(p, i) {
+  if (matrixFilterP === p && matrixFilterI === i) { matrixFilterP = null; matrixFilterI = null; }
+  else { matrixFilterP = p; matrixFilterI = i; }
+  renderMatrix();
+}
+
+function renderMatrixFilteredList() {
+  const label = document.getElementById('matrix-filter-label');
+  const list = document.getElementById('matrix-filtered-list');
+  let filtered;
+  if (matrixFilterP !== null) {
+    filtered = risks.filter(r => r.prob == matrixFilterP && r.impact == matrixFilterI);
+    label.textContent = `Risks at P=${matrixFilterP}, I=${matrixFilterI} (Score ${matrixFilterP * matrixFilterI}) — ${filtered.length} risk(s)`;
+  } else {
+    filtered = [...risks].sort((a,b) => (b.prob*b.impact)-(a.prob*a.impact));
+    label.textContent = `All risks (${filtered.length})`;
+  }
+  if (!filtered.length) { list.innerHTML = '<p style="color:var(--muted);font-size:13px">No risks in this cell.</p>'; return; }
+  list.innerHTML = filtered.map(r => {
+    const s = r.prob * r.impact;
+    return `<div class="risk-row" style="cursor:default">
+      <div class="risk-row-header">
+        <div class="risk-title">${escHtml(r.title)}</div>
+        <span class="badge ${categoryColor(r.category)}">${r.category}</span>
+        <span class="badge ${scoreColor(s)}">${s} — ${scoreLabel(s)}</span>
+        <span class="badge badge-muted">${r.status}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── MITIGATION TRACKER ───────────────────────────────────────────────────────
+function renderMitigation() {
+  const active = risks.filter(r => r.status !== 'Closed');
+  const el = document.getElementById('mitigation-list');
+  if (!active.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">&#128737;</div><p>No active risks. Add risks to the register first.</p></div>`;
+    return;
+  }
+  el.innerHTML = active.sort((a,b) => (b.prob*b.impact)-(a.prob*a.impact)).map(r => {
+    const s = r.prob * r.impact;
+    const actions = r.actions || [];
+    const done = actions.filter(a => a.status === 'Done').length;
+    const pct = actions.length ? Math.round((done/actions.length)*100) : 0;
+    const residuals = actions.filter(a => a.residual).map(a => a.residual);
+    const bestResidual = residuals.length ? Math.min(...residuals) : null;
+    return `<div class="card" style="margin-bottom:16px;padding:20px">
+      <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+            <span style="font-size:15px;font-weight:700">${escHtml(r.title)}</span>
+            <span class="badge ${scoreColor(s)}">${s}</span>
+            <span class="badge ${categoryColor(r.category)}">${r.category}</span>
+          </div>
+          ${r.mitigation ? `<p style="font-size:13px;color:var(--muted);margin-bottom:8px">${escHtml(r.mitigation)}</p>` : ''}
+          ${actions.length ? `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <span style="font-size:12px;color:var(--muted)">${done}/${actions.length} done</span>
+            <div class="progress-bar" style="flex:1;max-width:200px"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <span style="font-size:12px;color:var(--muted)">${pct}%</span>
+          </div>` : ''}
+          ${bestResidual !== null ? `<span class="badge badge-purple">Residual risk: ${bestResidual}</span>` : ''}
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="openActionModal('${r.id}')">+ Add Action</button>
+      </div>
+      ${actions.length ? `<div>${actions.map((a,i) => `<div class="mitigation-action">
+        <span class="badge ${a.status==='Done'?'badge-green':a.status==='In Progress'?'badge-yellow':'badge-muted'}">${a.status}</span>
+        <div class="action-text">
+          <div>${escHtml(a.text)}</div>
+          ${a.due ? `<div style="font-size:11px;color:var(--muted)">Due: ${a.due}</div>` : ''}
+          ${a.effectiveness ? `<div style="font-size:11px;color:var(--yellow)">${'★'.repeat(a.effectiveness)}${'☆'.repeat(5-a.effectiveness)} effectiveness</div>` : ''}
+        </div>
+        <div style="display:flex;gap:6px">
+          ${a.status !== 'Done' ? `<button class="btn btn-ghost btn-sm" onclick="cycleActionStatus('${r.id}',${i})">&#10003;</button>` : ''}
+          <button class="btn btn-danger btn-sm" onclick="deleteAction('${r.id}',${i})">&#10005;</button>
+        </div>
+      </div>`).join('')}</div>` : `<p style="font-size:13px;color:var(--muted)">No mitigation actions yet. Add your first action above.</p>`}
+    </div>`;
+  }).join('');
+}
+
+function openActionModal(riskId) {
+  document.getElementById('action-risk-id').value = riskId;
+  document.getElementById('action-text').value = '';
+  document.getElementById('action-status').value = 'Planned';
+  document.getElementById('action-due').value = '';
+  document.getElementById('action-residual').value = '';
+  currentActionStar = 0;
+  renderActionStars();
+  document.getElementById('action-modal').style.display = 'flex';
+}
+
+function closeActionModal() { document.getElementById('action-modal').style.display = 'none'; }
+function handleActionModalClick(e) { if (e.target === document.getElementById('action-modal')) closeActionModal(); }
+
+function setActionStar(n) { currentActionStar = n; renderActionStars(); }
+function renderActionStars() {
+  const stars = document.querySelectorAll('#action-stars .star');
+  stars.forEach((s,i) => s.classList.toggle('filled', i < currentActionStar));
+}
+
+function saveAction() {
+  const riskId = document.getElementById('action-risk-id').value;
+  const text = document.getElementById('action-text').value.trim();
+  if (!text) { alert('Please enter an action description.'); return; }
+  const r = risks.find(r => r.id === riskId);
+  if (!r) return;
+  if (!r.actions) r.actions = [];
+  r.actions.push({
+    text,
+    status: document.getElementById('action-status').value,
+    due: document.getElementById('action-due').value,
+    effectiveness: currentActionStar,
+    residual: parseInt(document.getElementById('action-residual').value) || null
+  });
+  save();
+  closeActionModal();
+  renderMitigation();
+}
+
+function cycleActionStatus(riskId, idx) {
+  const r = risks.find(r => r.id === riskId);
+  if (!r || !r.actions[idx]) return;
+  const cycle = ['Planned','In Progress','Done'];
+  const cur = cycle.indexOf(r.actions[idx].status);
+  r.actions[idx].status = cycle[(cur + 1) % cycle.length];
+  save(); renderMitigation();
+}
+
+function deleteAction(riskId, idx) {
+  const r = risks.find(r => r.id === riskId);
+  if (!r) return;
+  r.actions.splice(idx, 1);
+  save(); renderMitigation();
+}
+
+// ─── IMPACT ANALYSIS ──────────────────────────────────────────────────────────
+function renderImpact() {
+  const totalExposure = risks.reduce((a, r) => {
+    const s = r.prob * r.impact;
+    const cost = parseFloat(r.cost) || 0;
+    return a + s * cost;
+  }, 0);
+  const withCost = risks.filter(r => r.cost && parseFloat(r.cost) > 0);
+
+  document.getElementById('impact-summary').innerHTML = `
+    <div class="grid-3">
+      <div class="stat-card"><div class="stat-num">$${Math.round(totalExposure).toLocaleString()}</div><div class="stat-label">Total Project Exposure</div><div class="stat-sub">Sum of (Score × Cost)</div></div>
+      <div class="stat-card"><div class="stat-num">${withCost.length}</div><div class="stat-label">Risks with Cost Data</div></div>
+      <div class="stat-card"><div class="stat-num">$${withCost.length ? Math.round(withCost.reduce((a,r)=>a+parseFloat(r.cost||0),0)/withCost.length).toLocaleString() : 0}</div><div class="stat-label">Avg Risk Cost</div></div>
+    </div>`;
+
+  if (!risks.length) {
+    document.getElementById('impact-list').innerHTML = `<div class="empty-state"><div class="empty-icon">&#128178;</div><p>Add risks with cost estimates to see impact analysis.</p></div>`;
+    return;
+  }
+
+  const sorted = [...risks].sort((a,b) => {
+    const ea = a.prob * a.impact * (parseFloat(a.cost)||0);
+    const eb = b.prob * b.impact * (parseFloat(b.cost)||0);
+    return eb - ea;
+  });
+
+  document.getElementById('impact-list').innerHTML = sorted.map(r => {
+    const s = r.prob * r.impact;
+    const cost = parseFloat(r.cost) || 0;
+    const exposure = s * cost;
+    return `<div class="card" style="margin-bottom:12px;padding:18px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:12px">
+        <div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:4px">${escHtml(r.title)}</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span class="badge ${scoreColor(s)}">${s} — ${scoreLabel(s)}</span>
+            <span class="badge ${categoryColor(r.category)}">${r.category}</span>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:20px;font-weight:700;color:var(--accent1)">$${exposure ? Math.round(exposure).toLocaleString() : '—'}</div>
+          <div style="font-size:11px;color:var(--muted)">Weighted exposure</div>
+        </div>
+      </div>
+      <div class="risk-detail-grid">
+        <div class="detail-item"><label>Scope Impact</label><p>${escHtml(r.scopeImpact || '—')}</p></div>
+        <div class="detail-item"><label>Timeline Impact</label><p>${escHtml(r.timelineImpact || '—')}</p></div>
+        <div class="detail-item"><label>Client Impact</label><p>${escHtml(r.clientImpact || '—')}</p></div>
+        <div class="detail-item"><label>Potential Cost</label><p>${cost ? '$' + cost.toLocaleString() : '—'}</p></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── EARLY WARNING INDICATORS ─────────────────────────────────────────────────
+function renderIndicators() {
+  const el = document.getElementById('indicator-list');
+  const withTriggers = risks.filter(r => r.trigger);
+  if (!withTriggers.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">&#128276;</div><p>Add trigger conditions when editing risks to see early warning indicators here.</p><button class="btn btn-primary" onclick="showTab('risks')">Go to Risk Register</button></div>`;
+    return;
+  }
+  el.innerHTML = withTriggers.sort((a,b) => {
+    const order = {triggered:0,warning:1,safe:2};
+    return (order[a.indicatorStatus||'safe']||2) - (order[b.indicatorStatus||'safe']||2);
+  }).map(r => {
+    const s = r.prob * r.impact;
+    const status = r.indicatorStatus || 'safe';
+    const statusLabels = {safe:'Not Triggered',warning:'Warning',triggered:'Triggered'};
+    const statusColors = {safe:'badge-green',warning:'badge-yellow',triggered:'badge-red'};
+    return `<div class="card" style="margin-bottom:12px;padding:18px;border-left:3px solid ${status==='triggered'?'var(--red)':status==='warning'?'var(--yellow)':'var(--green)'}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:10px">
+        <div>
+          <span style="font-size:15px;font-weight:700">${escHtml(r.title)}</span>
+          <span class="badge ${scoreColor(s)}" style="margin-left:8px">${s}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="badge ${statusColors[status]}"><span class="indicator-dot dot-${status}"></span>${statusLabels[status]}</span>
+          <select class="btn btn-ghost btn-sm" onchange="updateIndicatorStatus('${r.id}',this.value)" style="padding:4px 8px;font-size:12px;cursor:pointer">
+            <option value="safe"${status==='safe'?' selected':''}>Not Triggered</option>
+            <option value="warning"${status==='warning'?' selected':''}>Warning</option>
+            <option value="triggered"${status==='triggered'?' selected':''}>Triggered</option>
+          </select>
+        </div>
+      </div>
+      <div class="detail-item">
+        <label>Trigger Condition</label>
+        <p>${escHtml(r.trigger)}</p>
+      </div>
+      ${r.contingency ? `<div class="detail-item" style="margin-top:8px"><label>Contingency Plan</label><p>${escHtml(r.contingency)}</p></div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function updateIndicatorStatus(riskId, status) {
+  const r = risks.find(r => r.id === riskId);
+  if (!r) return;
+  r.indicatorStatus = status;
+  save();
+  renderIndicators();
+  const badge = document.getElementById('alert-badge');
+  const total_alerts = risks.filter(r => r.indicatorStatus === 'triggered' || r.indicatorStatus === 'warning').length;
+  if (total_alerts > 0) { badge.style.display='inline'; badge.textContent = total_alerts; }
+  else badge.style.display = 'none';
+}
+
+// ─── TEMPLATES ────────────────────────────────────────────────────────────────
+const TEMPLATES = {
+  'Web Design': {
+    icon: '&#127760;',
+    desc: '12 common risks for web design & development projects',
+    count: 12,
+    risks: [
+      {title:'Scope creep from changing requirements',category:'Scope',prob:4,impact:4,mitigation:'Define detailed scope in contract; change order process for additions',contingency:'Bill at hourly rate for all out-of-scope work',trigger:'Client requests changes affecting >10% of agreed scope'},
+      {title:'Client delays in providing content/assets',category:'Timeline',prob:4,impact:3,mitigation:'Provide content checklist 4 weeks before needed; set deadlines in contract',contingency:'Proceed with placeholder content; delay launch accordingly',trigger:'Content not received 2 weeks past agreed deadline'},
+      {title:'Browser/device compatibility issues discovered late',category:'Technical',prob:3,impact:3,mitigation:'Test on all target browsers/devices throughout development',contingency:'Prioritize fixes for most-used browsers; document known issues',trigger:'Major visual bug found in review or UAT phase'},
+      {title:'Third-party integrations fail or change',category:'Technical',prob:3,impact:4,mitigation:'Review API stability; test all integrations before launch',contingency:'Build manual fallback or alternative solution',trigger:'Integration throws errors in staging environment'},
+      {title:'Client approval delays push launch date',category:'Timeline',prob:4,impact:3,mitigation:'Weekly check-ins; clearly state feedback deadlines in contract',contingency:'Move launch date; communicate impact to client',trigger:'No feedback received within 5 business days'},
+      {title:'Payment delays or non-payment',category:'Budget',prob:3,impact:5,mitigation:'50% upfront deposit; milestone-based billing',contingency:'Pause work until payment received; late fees apply',trigger:'Invoice overdue by 14+ days'},
+      {title:'Hosting/domain issues at launch',category:'Technical',prob:2,impact:4,mitigation:'Set up hosting 1 week before launch; test DNS changes',contingency:'Use temporary hosting while resolving; communicate status',trigger:'DNS issues persist 24h after changes'},
+      {title:'Designer or developer unavailable mid-project',category:'Resource',prob:2,impact:4,mitigation:'Maintain updated project documentation; identify backup resources',contingency:'Subcontract to trusted partner with client approval',trigger:'Key team member unavailable for 3+ business days'},
+      {title:'Performance/loading speed requirements not met',category:'Technical',prob:3,impact:3,mitigation:'Performance budget agreed upfront; regular audits during build',contingency:'Code optimization sprint; consider CDN or caching layer',trigger:'PageSpeed score below 70 in final review'},
+      {title:'Miscommunication on design direction',category:'Client',prob:3,impact:3,mitigation:'Detailed design brief and mood board approval before design starts',contingency:'Offer one free revision round; charge for further changes',trigger:'Client says deliverable "doesn\'t match their vision" at review'},
+      {title:'SEO migration risks during redesign',category:'Technical',prob:3,impact:4,mitigation:'Redirect map before launch; SEO audit of new site',contingency:'Monitor rankings for 30 days post-launch; fix regressions quickly',trigger:'Traffic drops >20% after launch'},
+      {title:'Data privacy/GDPR compliance gaps',category:'External',prob:2,impact:5,mitigation:'Cookie consent, privacy policy, and data handling review',contingency:'Engage compliance consultant; implement fixes immediately',trigger:'Client flagged by regulator or user complaint received'}
+    ]
+  },
+  'App Development': {
+    icon: '&#128241;',
+    desc: '15 risks for mobile and web app development projects',
+    count: 15,
+    risks: [
+      {title:'Feature scope exceeds initial estimate',category:'Scope',prob:5,impact:4,mitigation:'Detailed PRD before starting; time-boxed sprints with scope control',contingency:'Deprioritize nice-to-have features; adjust timeline/budget',trigger:'Sprint velocity consistently below estimate'},
+      {title:'App store rejection at launch',category:'External',prob:3,impact:5,mitigation:'Review App Store guidelines; test submission in staging',contingency:'Expedited review request; address rejection reasons within 48h',trigger:'Rejection notice received from Apple/Google'},
+      {title:'Database schema changes needed mid-development',category:'Technical',prob:4,impact:4,mitigation:'Thorough data modelling before development starts',contingency:'Migration scripts; staged rollout with rollback plan',trigger:'New feature requirements conflict with existing schema'},
+      {title:'Third-party API rate limits or deprecation',category:'Technical',prob:3,impact:4,mitigation:'Implement caching; review API terms; build abstraction layer',contingency:'Switch to alternative API or build own endpoint',trigger:'API error rate rises above 5% or deprecation notice received'},
+      {title:'Security vulnerability discovered in dependencies',category:'Technical',prob:3,impact:5,mitigation:'Automated dependency audits (npm audit); regular updates',contingency:'Emergency patch release; security audit with fix timeline',trigger:'CVE with severity >7 found in project dependencies'},
+      {title:'Performance degradation under load',category:'Technical',prob:3,impact:4,mitigation:'Load testing before launch; set performance benchmarks',contingency:'Scale infrastructure; optimize hot paths; CDN caching',trigger:'Response time exceeds 2 seconds under expected load'},
+      {title:'Unclear UX/user flow requirements',category:'Scope',prob:4,impact:3,mitigation:'Wireframes and user flow diagrams approved before build',contingency:'UX review session; rework affected screens',trigger:'Stakeholder can\'t agree on user flow in demo'},
+      {title:'Client changes tech stack or platform mid-project',category:'Client',prob:2,impact:5,mitigation:'Lock tech stack in contract; change order required for platform switch',contingency:'Assess migration cost; requote remaining work',trigger:'Client requests technology change after development starts'},
+      {title:'Insufficient testing leading to production bugs',category:'Technical',prob:4,impact:4,mitigation:'Automated test suite; QA sprint before launch; staging environment',contingency:'Hotfix deployment; user communication; post-mortem',trigger:'Bug count in staging exceeds 10 open issues at launch gate'},
+      {title:'Backend/frontend integration issues',category:'Technical',prob:4,impact:3,mitigation:'API contracts defined upfront; integration testing throughout',contingency:'Integration sprint; daily syncs between BE/FE teams',trigger:'Integration test failures blocking sprint completion'},
+      {title:'Client lacks technical expertise to provide feedback',category:'Client',prob:4,impact:3,mitigation:'Use plain-language demos; provide guided UAT sessions',contingency:'Extend review cycle; add weekly walkthrough calls',trigger:'Client feedback is vague or contradictory in 2+ cycles'},
+      {title:'Regulatory compliance requirements emerge',category:'External',prob:2,impact:5,mitigation:'Compliance review at project start; legal sign-off on data handling',contingency:'Compliance audit; delay launch if needed',trigger:'New regulatory guidance affects app functionality or data'},
+      {title:'Key developer leaves project',category:'Resource',prob:2,impact:5,mitigation:'Documentation standards; pair programming for knowledge sharing',contingency:'Bring in contract developer; extend timeline',trigger:'Developer gives notice or becomes unavailable'},
+      {title:'Infrastructure/cloud cost overruns',category:'Budget',prob:3,impact:3,mitigation:'Cloud cost budget agreed upfront; monitoring alerts set',contingency:'Optimise queries and caching; discuss cost sharing with client',trigger:'Monthly cloud bill exceeds budget by 30%'},
+      {title:'MVP feature creep delays go-live',category:'Scope',prob:5,impact:4,mitigation:'Strict MVP definition in contract; feature backlog for v2',contingency:'Hard freeze MVP scope; release on time with agreed features only',trigger:'MVP feature list grows by 25% from original spec'}
+    ]
+  },
+  'Brand & Marketing': {
+    icon: '&#127775;',
+    desc: '10 risks for brand identity and marketing campaigns',
+    count: 10,
+    risks: [
+      {title:'Brand direction changes after design starts',category:'Client',prob:4,impact:4,mitigation:'Brand strategy workshop before design; written brief approval',contingency:'Pause and re-brief; rebill from discovery phase',trigger:'Client requests fundamental direction change after concepts delivered'},
+      {title:'Trademark conflicts with proposed name/logo',category:'Legal',prob:2,impact:5,mitigation:'Trademark search before finalizing brand assets',contingency:'Rework affected elements; engage IP attorney if needed',trigger:'Conflict found in trademark database search'},
+      {title:'Inconsistent feedback from multiple stakeholders',category:'Client',prob:4,impact:3,mitigation:'Designate single point of contact for feedback consolidation',contingency:'Facilitated alignment session; revised timeline to absorb',trigger:'Conflicting feedback from 2+ stakeholders in same round'},
+      {title:'Campaign underperforms against KPI targets',category:'Budget',prob:3,impact:4,mitigation:'Conservative KPI projections; A/B test before full spend',contingency:'Pause, analyse, and optimise; revise strategy with client',trigger:'Campaign metrics >30% below target after 2 weeks'},
+      {title:'Content approval delays stall campaign launch',category:'Timeline',prob:4,impact:3,mitigation:'Content calendar with hard approval deadlines in contract',contingency:'Launch with approved content; queue delayed content',trigger:'Key content piece not approved 48h before scheduled launch'},
+      {title:'Social media platform algorithm/policy changes',category:'External',prob:3,impact:3,mitigation:'Multi-channel strategy; stay updated on platform changes',contingency:'Shift budget to unaffected channels; adapt content format',trigger:'Organic reach drops >40% without campaign changes'},
+      {title:'Photography/video production delays',category:'Timeline',prob:3,impact:3,mitigation:'Book early; have backup stock asset plan',contingency:'Use approved stock assets for launch; update with custom assets',trigger:'Production delayed past agreed delivery date'},
+      {title:'Brand assets used incorrectly by client team',category:'Client',prob:4,impact:2,mitigation:'Brand guidelines document; asset management system',contingency:'Correct asset usage; create additional guidance docs',trigger:'Unapproved brand usage spotted on client channels'},
+      {title:'Competitive response to campaign launch',category:'External',prob:2,impact:3,mitigation:'Competitive analysis pre-launch; differentiated messaging',contingency:'Adapt messaging; accelerate campaign elements',trigger:'Competitor launches directly competing campaign within 1 week'},
+      {title:'Client budget cut mid-campaign',category:'Budget',prob:3,impact:4,mitigation:'Signed contract with payment terms; staged budget releases',contingency:'Scale back to highest-ROI channels; renegotiate scope',trigger:'Client signals budget concern or delays invoice payment'}
+    ]
+  },
+  'Consulting': {
+    icon: '&#128203;',
+    desc: '8 risks common to consulting and advisory engagements',
+    count: 8,
+    risks: [
+      {title:'Engagement scope expands beyond original brief',category:'Scope',prob:5,impact:3,mitigation:'Detailed statement of work; formal change order process',contingency:'Stop work on new scope until change order signed',trigger:'Client requests work clearly outside original brief'},
+      {title:'Key stakeholder champion leaves the organization',category:'Client',prob:3,impact:4,mitigation:'Relationships with multiple stakeholders; executive sponsorship',contingency:'Re-engage with new stakeholder; reframe value proposition',trigger:'Primary contact announces departure or role change'},
+      {title:'Recommendations not implemented by client',category:'Client',prob:4,impact:3,mitigation:'Implementation roadmap with ownership; executive alignment',contingency:'Offer implementation support; document risks of inaction',trigger:'No progress on recommendations after 30 days'},
+      {title:'Confidential client data accessed inappropriately',category:'External',prob:1,impact:5,mitigation:'Data handling policy; NDA; secure storage and sharing tools',contingency:'Immediate breach response; legal and PR management',trigger:'Unauthorized access detected or suspected'},
+      {title:'Project timeline compressed without scope reduction',category:'Timeline',prob:3,impact:3,mitigation:'Realistic timeline in contract; compressed timeline = reduced scope',contingency:'Prioritize deliverables; communicate trade-offs clearly',trigger:'Client requests same scope in 50%+ less time'},
+      {title:'Disagreement over deliverable quality or approach',category:'Client',prob:3,impact:4,mitigation:'Clear acceptance criteria in contract; milestone check-ins',contingency:'Structured review meeting; involve neutral third party if needed',trigger:'Client formally disputes a deliverable in writing'},
+      {title:'Conflict of interest identified mid-engagement',category:'External',prob:2,impact:4,mitigation:'Conflict of interest check before engagement; disclosure policy',contingency:'Disclose immediately; assess materiality; consider withdrawal',trigger:'New engagement opportunity conflicts with current client'},
+      {title:'Overcommitment across multiple clients',category:'Resource',prob:4,impact:4,mitigation:'Capacity planning; buffer time in schedules; sub-contractor relationships',contingency:'Renegotiate timelines; bring in trusted associates',trigger:'Hours logged per week exceed capacity by 25%+ for 2+ weeks'}
+    ]
+  },
+  'Content': {
+    icon: '&#9997;',
+    desc: '10 risks for content creation and writing projects',
+    count: 10,
+    risks: [
+      {title:'Unclear or changing content brief',category:'Scope',prob:4,impact:3,mitigation:'Detailed content brief template; written approval before writing',contingency:'Brief revision call; charge for complete rewrites',trigger:'Client requests substantial tone/topic shift after draft 1'},
+      {title:'Revision cycles exceed contract allowance',category:'Budget',prob:4,impact:3,mitigation:'Define revision rounds in contract (typically 2); extra billed at rate',contingency:'Invoice for additional rounds; discuss scope if pattern continues',trigger:'Client requests 3rd+ round of revisions'},
+      {title:'Subject matter expert unavailable for interviews',category:'Resource',prob:3,impact:3,mitigation:'Book SME interviews 3+ weeks in advance; alternatives identified',contingency:'Proceed with secondary research; note SME gap in content',trigger:'SME cancels with <48h notice and no rescheduling offered'},
+      {title:'Content rejected by client legal/compliance team',category:'Client',prob:3,impact:4,mitigation:'Compliance review in brief; include legal contact in review loop',contingency:'Revision sprint; re-route through legal',trigger:'Legal team returns content with substantive changes required'},
+      {title:'Plagiarism or AI content accusation',category:'External',prob:2,impact:5,mitigation:'Original research; plagiarism check all content before delivery',contingency:'Provide sources and evidence of originality; revise if needed',trigger:'Client or third party raises plagiarism concern'},
+      {title:'Client delays in providing background information',category:'Timeline',prob:4,impact:3,mitigation:'Info request list sent at kickoff; deadline set in project plan',contingency:'Write around available info; flag gaps clearly in draft',trigger:'Background materials not received by agreed date'},
+      {title:'SEO keyword targets conflict with readability',category:'Scope',prob:3,impact:2,mitigation:'Align on SEO vs. readability priority in brief',contingency:'Discuss trade-offs; deliver two versions if budget allows',trigger:'Client requests keyword density that breaks natural writing'},
+      {title:'Publication delays outside content creator\'s control',category:'External',prob:3,impact:2,mitigation:'Define payment tied to delivery, not publication',contingency:'Invoice on delivery regardless of publication timing',trigger:'Content unpublished 30+ days after client acceptance'},
+      {title:'Content requires specialized expertise not in scope',category:'Scope',prob:3,impact:3,mitigation:'Expertise requirements discussed in discovery; declare limitations',contingency:'Bring in specialist subcontractor; adjust timeline',trigger:'Technical complexity significantly exceeds brief description'},
+      {title:'Low traffic/engagement after publication',category:'Client',prob:3,impact:2,mitigation:'Set realistic expectations; content is one part of the system',contingency:'Offer promotion strategy session; optimize based on data',trigger:'Client blames content for poor traffic without data context'}
+    ]
+  },
+  'E-commerce': {
+    icon: '&#128722;',
+    desc: '12 risks for e-commerce store builds and migrations',
+    count: 12,
+    risks: [
+      {title:'Product data migration errors',category:'Technical',prob:4,impact:4,mitigation:'Test migration with sample data first; validation scripts',contingency:'Manual data correction; rollback to old system if critical',trigger:'Validation errors in >5% of product records after migration'},
+      {title:'Payment gateway integration fails',category:'Technical',prob:3,impact:5,mitigation:'Test all payment flows in sandbox before go-live',contingency:'Switch to backup payment provider; manual order processing',trigger:'Payment failure rate above 2% in testing'},
+      {title:'Inventory system sync issues',category:'Technical',prob:3,impact:4,mitigation:'Real-time sync testing; error logging and alerting',contingency:'Temporary manual inventory management; emergency sync job',trigger:'Stock levels don\'t match between e-com and warehouse system'},
+      {title:'Platform (Shopify/WooCommerce) limitations emerge',category:'Technical',prob:3,impact:3,mitigation:'Platform evaluation before project starts; limitations documented',contingency:'Custom development workaround; discuss alternative platform',trigger:'Client requirement impossible on chosen platform out-of-box'},
+      {title:'Shipping/tax configuration errors',category:'Technical',prob:3,impact:4,mitigation:'Configuration checklist; test orders to all shipping zones',contingency:'Manual rate adjustments; customer communication if impacted',trigger:'Test order shows incorrect shipping price or tax amount'},
+      {title:'Store performance too slow on mobile',category:'Technical',prob:4,impact:4,mitigation:'Performance budget; image optimization; Core Web Vitals targets',contingency:'Performance sprint; CDN; lazy loading implementation',trigger:'Mobile PageSpeed score below 60 on final review'},
+      {title:'Client changes product range/pricing mid-build',category:'Client',prob:4,impact:3,mitigation:'Product catalog freeze date in contract; change order for late changes',contingency:'Assess rework cost; issue change order',trigger:'Product list changes by >20% after catalog import'},
+      {title:'Email/marketing automation setup complexity exceeds estimate',category:'Scope',prob:3,impact:3,mitigation:'Detailed automation spec before build; platform limits researched',contingency:'Simplify flows; defer complex automations to phase 2',trigger:'Automation build taking 2× estimated time'},
+      {title:'SSL/security certificate issues at launch',category:'Technical',prob:2,impact:5,mitigation:'SSL setup checklist; security scan before launch',contingency:'Emergency SSL renewal; hosting support escalation',trigger:'Browser shows security warning on store URL'},
+      {title:'App/plugin conflicts cause store errors',category:'Technical',prob:3,impact:4,mitigation:'Test all apps in staging; minimal plugin approach',contingency:'Identify and disable conflicting apps; find alternative',trigger:'Store error appears after app installation or update'},
+      {title:'GDPR/cookie consent non-compliance',category:'External',prob:3,impact:4,mitigation:'Compliance checklist; cookie audit; privacy policy review',contingency:'Immediate compliance sprint; legal review if needed',trigger:'Compliance audit flags missing consent mechanisms'},
+      {title:'Launch timing conflicts with client\'s peak season',category:'Timeline',prob:2,impact:5,mitigation:'Launch date agreed and locked in project plan; buffer for delays',contingency:'Phased launch; critical features first; hold non-essential items',trigger:'Build delays risk launch during key trading period'}
+    ]
+  }
+};
+
+function renderTemplates() {
+  const grid = document.getElementById('template-grid');
+  grid.innerHTML = Object.entries(TEMPLATES).map(([name, t]) => `
+    <div class="template-card" onclick="loadTemplate('${name}')">
+      <div style="font-size:28px;margin-bottom:8px">${t.icon}</div>
+      <h4>${name}</h4>
+      <p>${t.desc}</p>
+      <div class="risk-count">${t.count} risks</div>
+    </div>
+  `).join('');
+}
+
+function loadTemplate(name) {
+  const t = TEMPLATES[name];
+  if (!t) return;
+  showConfirm(
+    `Load ${name} Template`,
+    `This will add ${t.count} pre-built risks to your register. Your existing ${risks.length} risks will be preserved. Continue?`,
+    () => {
+      t.risks.forEach(r => {
+        risks.push({
+          id: uid(),
+          title: r.title,
+          desc: '',
+          category: r.category,
+          prob: r.prob,
+          impact: r.impact,
+          status: 'Open',
+          owner: '',
+          mitigation: r.mitigation || '',
+          contingency: r.contingency || '',
+          trigger: r.trigger || '',
+          cost: 0,
+          indicatorStatus: 'safe',
+          scopeImpact: '',
+          timelineImpact: '',
+          clientImpact: '',
+          actions: [],
+          createdAt: new Date().toISOString()
+        });
+      });
+      save();
+      alert(`✓ ${t.count} ${name} risks added to your register.`);
+      showTab('risks');
+    }
+  );
+}
+
+// ─── REVIEW LOG ───────────────────────────────────────────────────────────────
+function renderReviews() {
+  const el = document.getElementById('review-list');
+  const reminder = document.getElementById('review-reminder');
+
+  if (reviews.length === 0) {
+    reminder.innerHTML = '';
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">&#128203;</div><p>No reviews logged yet. Log your first risk review to track how your risk register evolves over time.</p></div>`;
+    return;
+  }
+
+  const lastReview = reviews[reviews.length - 1];
+  const daysSince = Math.floor((Date.now() - new Date(lastReview.date).getTime()) / (1000 * 60 * 60 * 24));
+  if (daysSince >= 28) {
+    reminder.innerHTML = `<div class="alert alert-warning">&#8987; Last review was ${daysSince} days ago. Monthly risk reviews are recommended. <button class="btn btn-secondary btn-sm" onclick="openAddReviewModal()" style="margin-left:8px">Log Review Now</button></div>`;
+  } else {
+    reminder.innerHTML = `<div class="alert alert-info">&#10004; Last review: ${daysSince} day(s) ago by ${escHtml(lastReview.reviewer)}. Next review due in ~${28-daysSince} days.</div>`;
+  }
+
+  el.innerHTML = [...reviews].reverse().map(r => `
+    <div class="review-entry">
+      <div class="review-meta">${r.date} &middot; Reviewer: ${escHtml(r.reviewer)} &middot; ${r.count || 0} risks reviewed</div>
+      ${r.changes ? `<div style="margin-top:6px"><label style="font-size:11px;color:var(--muted)">SCORE CHANGES</label><p style="font-size:13px">${escHtml(r.changes)}</p></div>` : ''}
+      ${r.mitigations ? `<div style="margin-top:6px"><label style="font-size:11px;color:var(--muted)">NEW MITIGATIONS</label><p style="font-size:13px">${escHtml(r.mitigations)}</p></div>` : ''}
+      ${r.notes ? `<div style="margin-top:6px"><label style="font-size:11px;color:var(--muted)">NOTES</label><p style="font-size:13px">${escHtml(r.notes)}</p></div>` : ''}
+    </div>
+  `).join('');
+}
+
+function openAddReviewModal() {
+  document.getElementById('review-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('review-reviewer').value = '';
+  document.getElementById('review-count').value = risks.filter(r=>r.status !== 'Closed').length;
+  document.getElementById('review-changes').value = '';
+  document.getElementById('review-mitigations').value = '';
+  document.getElementById('review-notes').value = '';
+  document.getElementById('review-modal').style.display = 'flex';
+}
+
+function closeReviewModal() { document.getElementById('review-modal').style.display = 'none'; }
+function handleReviewModalClick(e) { if (e.target === document.getElementById('review-modal')) closeReviewModal(); }
+
+function saveReview() {
+  const date = document.getElementById('review-date').value;
+  const reviewer = document.getElementById('review-reviewer').value.trim();
+  if (!date || !reviewer) { alert('Please enter review date and reviewer name.'); return; }
+  reviews.push({
+    id: uid(),
+    date,
+    reviewer,
+    count: parseInt(document.getElementById('review-count').value) || 0,
+    changes: document.getElementById('review-changes').value.trim(),
+    mitigations: document.getElementById('review-mitigations').value.trim(),
+    notes: document.getElementById('review-notes').value.trim()
+  });
+  save();
+  closeReviewModal();
+  renderReviews();
+}
+
+// ─── RISK MODAL ───────────────────────────────────────────────────────────────
+function openAddRiskModal() {
+  document.getElementById('risk-modal-title').textContent = 'Add New Risk';
+  document.getElementById('edit-risk-id').value = '';
+  document.getElementById('risk-title').value = '';
+  document.getElementById('risk-desc').value = '';
+  document.getElementById('risk-category').value = 'Scope';
+  document.getElementById('risk-status').value = 'Open';
+  document.getElementById('risk-owner').value = '';
+  document.getElementById('risk-prob').value = 3;
+  document.getElementById('risk-impact').value = 3;
+  document.getElementById('risk-mitigation').value = '';
+  document.getElementById('risk-contingency').value = '';
+  document.getElementById('risk-trigger').value = '';
+  document.getElementById('risk-cost').value = '';
+  document.getElementById('risk-indicator-status').value = 'safe';
+  document.getElementById('risk-scope-impact').value = '';
+  document.getElementById('risk-timeline-impact').value = '';
+  document.getElementById('risk-client-impact').value = '';
+  updateScorePreview();
+  document.getElementById('risk-modal').style.display = 'flex';
+}
+
+function openEditRiskModal(id) {
+  const r = risks.find(r => r.id === id);
+  if (!r) return;
+  document.getElementById('risk-modal-title').textContent = 'Edit Risk';
+  document.getElementById('edit-risk-id').value = id;
+  document.getElementById('risk-title').value = r.title;
+  document.getElementById('risk-desc').value = r.desc || '';
+  document.getElementById('risk-category').value = r.category;
+  document.getElementById('risk-status').value = r.status;
+  document.getElementById('risk-owner').value = r.owner || '';
+  document.getElementById('risk-prob').value = r.prob;
+  document.getElementById('risk-impact').value = r.impact;
+  document.getElementById('risk-mitigation').value = r.mitigation || '';
+  document.getElementById('risk-contingency').value = r.contingency || '';
+  document.getElementById('risk-trigger').value = r.trigger || '';
+  document.getElementById('risk-cost').value = r.cost || '';
+  document.getElementById('risk-indicator-status').value = r.indicatorStatus || 'safe';
+  document.getElementById('risk-scope-impact').value = r.scopeImpact || '';
+  document.getElementById('risk-timeline-impact').value = r.timelineImpact || '';
+  document.getElementById('risk-client-impact').value = r.clientImpact || '';
+  updateScorePreview();
+  document.getElementById('risk-modal').style.display = 'flex';
+}
+
+function closeRiskModal() { document.getElementById('risk-modal').style.display = 'none'; }
+function handleModalClick(e) { if (e.target === document.getElementById('risk-modal')) closeRiskModal(); }
+
+function saveRisk() {
+  const title = document.getElementById('risk-title').value.trim();
+  if (!title) { alert('Risk title is required.'); return; }
+  const editId = document.getElementById('edit-risk-id').value;
+  const data = {
+    title,
+    desc: document.getElementById('risk-desc').value.trim(),
+    category: document.getElementById('risk-category').value,
+    status: document.getElementById('risk-status').value,
+    owner: document.getElementById('risk-owner').value.trim(),
+    prob: parseInt(document.getElementById('risk-prob').value),
+    impact: parseInt(document.getElementById('risk-impact').value),
+    mitigation: document.getElementById('risk-mitigation').value.trim(),
+    contingency: document.getElementById('risk-contingency').value.trim(),
+    trigger: document.getElementById('risk-trigger').value.trim(),
+    cost: parseFloat(document.getElementById('risk-cost').value) || 0,
+    indicatorStatus: document.getElementById('risk-indicator-status').value,
+    scopeImpact: document.getElementById('risk-scope-impact').value.trim(),
+    timelineImpact: document.getElementById('risk-timeline-impact').value.trim(),
+    clientImpact: document.getElementById('risk-client-impact').value.trim(),
+  };
+  if (editId) {
+    const idx = risks.findIndex(r => r.id === editId);
+    if (idx >= 0) { risks[idx] = { ...risks[idx], ...data }; }
+  } else {
+    risks.push({ id: uid(), ...data, actions: [], createdAt: new Date().toISOString() });
+  }
+  save();
+  closeRiskModal();
+  renderRisks();
+}
+
+function deleteRisk(id) {
+  showConfirm('Delete Risk', 'Are you sure you want to delete this risk? This action cannot be undone.', () => {
+    risks = risks.filter(r => r.id !== id);
+    save(); renderRisks();
+  });
+}
+
+// ─── CONFIRM MODAL ────────────────────────────────────────────────────────────
+function showConfirm(title, msg, onOk) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent = msg;
+  document.getElementById('confirm-ok-btn').onclick = () => { onOk(); closeConfirm(); };
+  document.getElementById('confirm-modal').style.display = 'flex';
+}
+function closeConfirm() { document.getElementById('confirm-modal').style.display = 'none'; }
+
+function confirmClearAll() {
+  showConfirm('Clear All Data', 'This will permanently delete all risks, reviews, and data from this tool. This cannot be undone.', () => {
+    risks = []; reviews = []; save();
+    showTab('dashboard');
+  });
+}
+
+// ─── EXPORT ───────────────────────────────────────────────────────────────────
+function exportCSV() {
+  const headers = ['ID','Title','Description','Category','Status','Owner','Probability','Impact','Score','Risk Level','Mitigation','Contingency','Trigger','Potential Cost ($)','Scope Impact','Timeline Impact','Client Impact','Actions Count','Indicator Status','Created'];
+  const rows = risks.map(r => {
+    const s = r.prob * r.impact;
+    return [
+      r.id, r.title, r.desc||'', r.category, r.status, r.owner||'',
+      r.prob, r.impact, s, scoreLabel(s),
+      r.mitigation||'', r.contingency||'', r.trigger||'',
+      r.cost||0, r.scopeImpact||'', r.timelineImpact||'', r.clientImpact||'',
+      (r.actions||[]).length, r.indicatorStatus||'safe',
+      new Date(r.createdAt).toLocaleDateString()
+    ].map(v => `"${String(v).replace(/"/g,'""')}"`);
+  });
+  const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+  download('risk-register.csv', csv, 'text/csv');
+}
+
+function exportJSON() {
+  download('risk-register-backup.json', JSON.stringify({risks,reviews,exportedAt:new Date().toISOString()},null,2), 'application/json');
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.risks) {
+        showConfirm('Import JSON', `This will replace all current data with ${data.risks.length} risks from the backup. Continue?`, () => {
+          risks = data.risks || [];
+          reviews = data.reviews || [];
+          save(); renderDashboard(); showTab('dashboard');
+          alert('Import successful!');
+        });
+      } else { alert('Invalid JSON format. Expected a FreelanceOS Risk Register backup file.'); }
+    } catch(e) { alert('Failed to parse JSON file.'); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function exportMatrix() {
+  const cats = ['green','yellow','orange','red'];
+  let matHTML = `<!DOCTYPE html><html><head><title>Risk Matrix — FreelanceOS</title>
+  <style>body{font-family:system-ui;padding:40px;background:#fff;color:#111}
+  h1{font-size:22px;margin-bottom:24px}
+  .grid{display:grid;grid-template-columns:50px repeat(5,1fr);gap:4px;max-width:500px}
+  .cell{height:70px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-direction:column;gap:3px}
+  .label{display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;font-weight:700}
+  .g{background:#dcfce7;color:#166534}.y{background:#fef9c3;color:#854d0e}.o{background:#ffedd5;color:#9a3412}.r{background:#fee2e2;color:#991b1b}
+  .legend{display:flex;gap:16px;margin-top:20px;font-size:12px}
+  .litem{display:flex;align-items:center;gap:6px}
+  .lswatch{width:14px;height:14px;border-radius:3px}
+  </style></head><body>
+  <h1>Project Risk Matrix</h1>
+  <p style="font-size:13px;color:#666;margin-bottom:20px">Generated ${new Date().toLocaleDateString()} from FreelanceOS Risk Register</p>
+  <div class="grid">`;
+  for (let p = 5; p >= 1; p--) {
+    matHTML += `<div class="label">${p}</div>`;
+    for (let i = 1; i <= 5; i++) {
+      const s = p * i;
+      const c = s >= 16 ? 'r' : s >= 10 ? 'o' : s >= 5 ? 'y' : 'g';
+      const inCell = risks.filter(r => r.prob == p && r.impact == i);
+      matHTML += `<div class="cell ${c}">${s}<br>${inCell.map(r => `<span style="font-size:8px;text-align:center">${escHtml(r.title.substring(0,15))}</span>`).join('')}</div>`;
+    }
+  }
+  matHTML += `<div></div>${[1,2,3,4,5].map(i=>`<div class="label">${i}</div>`).join('')}
+  </div>
+  <p style="font-size:11px;color:#666;margin-top:8px">← Impact →</p>
+  <div class="legend">
+    <div class="litem"><div class="lswatch g"></div>Low (1–4)</div>
+    <div class="litem"><div class="lswatch y"></div>Medium (5–9)</div>
+    <div class="litem"><div class="lswatch o"></div>High (10–15)</div>
+    <div class="litem"><div class="lswatch r"></div>Critical (16–25)</div>
+  </div>
+  <p style="margin-top:32px;font-size:11px;color:#999">FreelanceOS Risk Register — freelanceos.com</p>
+  </body></html>`;
+  const w = window.open('', '_blank');
+  w.document.write(matHTML);
+  w.document.close();
+  setTimeout(() => w.print(), 400);
+}
+
+function exportExecutiveSummary() {
+  const total = risks.length;
+  const critical = risks.filter(r => r.prob*r.impact >= 16);
+  const high = risks.filter(r => { const s=r.prob*r.impact; return s>=10&&s<16; });
+  const open = risks.filter(r => r.status==='Open'||r.status==='Mitigating');
+  const triggered = risks.filter(r => r.indicatorStatus==='triggered');
+  const top5 = [...risks].sort((a,b)=>(b.prob*b.impact)-(a.prob*a.impact)).slice(0,5);
+  const totalExposure = risks.reduce((a,r)=>a+(r.prob*r.impact)*(parseFloat(r.cost)||0),0);
+
+  const levelColors = {Critical:'#ef4444',High:'#f97316',Medium:'#eab308',Low:'#22c55e'};
+  const riskRows = top5.map(r => {
+    const s = r.prob*r.impact; const lv = scoreLabel(s);
+    return `<tr><td>${escHtml(r.title)}</td><td>${r.category}</td><td><span style="color:${levelColors[lv]};font-weight:700">${s} — ${lv}</span></td><td>${r.status}</td><td>${escHtml(r.owner||'—')}</td></tr>`;
+  }).join('');
+
+  const html = `<!DOCTYPE html><html><head><title>Risk Register — Executive Summary</title>
+  <style>body{font-family:system-ui;padding:48px 60px;max-width:900px;margin:0 auto;color:#111;line-height:1.6}
+  h1{font-size:26px;margin-bottom:4px}h2{font-size:17px;font-weight:700;margin:28px 0 12px;border-bottom:2px solid #e2e8f0;padding-bottom:6px}
+  .meta{color:#64748b;font-size:13px;margin-bottom:32px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+  .stat{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;text-align:center}
+  .stat-n{font-size:28px;font-weight:700;color:#7c3aed}.stat-l{font-size:12px;color:#64748b}
+  table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #e2e8f0}th{background:#f8fafc;font-weight:700;font-size:12px;color:#475569;text-transform:uppercase;letter-spacing:.05em}
+  .alert-box{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#991b1b}
+  footer{margin-top:48px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8}
+  @media print{body{padding:32px}}
+  </style></head><body>
+  <h1>Project Risk Register — Executive Summary</h1>
+  <div class="meta">Generated ${new Date().toLocaleDateString('en',{year:'numeric',month:'long',day:'numeric'})} &middot; FreelanceOS Risk Register</div>
+  ${triggered.length ? `<div class="alert-box">&#128680; ALERT: ${triggered.length} risk trigger(s) are currently ACTIVE and require immediate attention.</div>` : ''}
+  <h2>Risk Overview</h2>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">${total}</div><div class="stat-l">Total Risks</div></div>
+    <div class="stat"><div class="stat-n" style="color:#ef4444">${critical.length}</div><div class="stat-l">Critical (16+)</div></div>
+    <div class="stat"><div class="stat-n" style="color:#f97316">${high.length}</div><div class="stat-l">High (10–15)</div></div>
+    <div class="stat"><div class="stat-n" style="color:#eab308">${open.length}</div><div class="stat-l">Open / Active</div></div>
+  </div>
+  ${totalExposure > 0 ? `<p style="font-size:14px"><strong>Total weighted project exposure:</strong> $${Math.round(totalExposure).toLocaleString()}</p>` : ''}
+  <h2>Top 5 Risks by Score</h2>
+  <table><thead><tr><th>Risk</th><th>Category</th><th>Score</th><th>Status</th><th>Owner</th></tr></thead><tbody>${riskRows}</tbody></table>
+  ${critical.length ? `<h2>Critical Risks Requiring Immediate Action</h2>
+  <table><thead><tr><th>Risk</th><th>Score</th><th>Mitigation Plan</th><th>Contingency</th></tr></thead><tbody>
+  ${critical.map(r=>`<tr><td><strong>${escHtml(r.title)}</strong></td><td style="color:#ef4444;font-weight:700">${r.prob*r.impact}</td><td>${escHtml(r.mitigation||'—')}</td><td>${escHtml(r.contingency||'—')}</td></tr>`).join('')}
+  </tbody></table>` : ''}
+  <h2>Risk Distribution by Category</h2>
+  <table><thead><tr><th>Category</th><th>Count</th><th>Open</th><th>Avg Score</th></tr></thead><tbody>
+  ${['Scope','Budget','Timeline','Resource','Technical','Client','External'].map(c=>{
+    const cr = risks.filter(r=>r.category===c);
+    if (!cr.length) return '';
+    const avg = cr.length ? (cr.reduce((a,r)=>a+r.prob*r.impact,0)/cr.length).toFixed(1) : '—';
+    const openC = cr.filter(r=>r.status==='Open'||r.status==='Mitigating').length;
+    return `<tr><td>${c}</td><td>${cr.length}</td><td>${openC}</td><td>${avg}</td></tr>`;
+  }).join('')}
+  </tbody></table>
+  <footer>FreelanceOS Risk Register &middot; freelanceos.com &middot; This report was generated automatically and is for planning purposes only.</footer>
+  </body></html>`;
+
+  const w = window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+}
+
+function download(filename, content, type) {
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+load();
+renderDashboard();
+renderTemplates();
+</script>
+</body>
+</html>
