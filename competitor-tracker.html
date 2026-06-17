@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Competitor Analysis Tracker for Freelancers | FreelanceOS</title>
+<meta name="description" content="Track, analyze, and outsmart your freelance competition. Compare pricing, find market gaps, build your SWOT, and discover your competitive advantage — free tool by FreelanceOS.">
+<meta property="og:title" content="Free Competitor Analysis Tracker for Freelancers | FreelanceOS">
+<meta property="og:description" content="Track competitors, compare pricing, map your market position, and discover differentiation opportunities. 100% free, works in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.com/competitor-tracker">
+<meta property="og:image" content="https://freelanceos.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Competitor Analysis Tracker for Freelancers | FreelanceOS">
+<meta name="twitter:description" content="Track competitors, compare pricing, map your market position, and discover differentiation opportunities.">
+<meta name="twitter:image" content="https://freelanceos.com/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Competitor Analysis Tracker",
+  "description": "Track, analyze, and outsmart your freelance competition. Compare pricing, find market gaps, build your SWOT, and discover your competitive advantage.",
+  "url": "https://freelanceos.com/competitor-tracker",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#020617;--card:#0f172a;--card2:#1e293b;
+--accent1:#a855f7;--accent2:#ec4899;
+--grad:linear-gradient(135deg,#a855f7,#ec4899);
+--text:#e2e8f0;--muted:#94a3b8;--border:rgba(168,85,247,0.2);
+--border2:rgba(168,85,247,0.4);--radius:16px;--radius2:12px;
+--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;--blue:#3b82f6;
+}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+a{color:var(--accent1);text-decoration:none}
+a:hover{color:var(--accent2)}
+button{cursor:pointer;font-family:inherit;font-size:14px}
+input,select,textarea{font-family:inherit;font-size:14px}
+
+/* CTA Banner */
+.cta-banner{background:var(--grad);padding:14px 20px;text-align:center;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.cta-banner span{font-weight:600;font-size:14px;color:#fff}
+.cta-banner a{background:rgba(255,255,255,0.2);color:#fff;padding:7px 18px;border-radius:20px;font-weight:700;font-size:13px;border:1px solid rgba(255,255,255,0.4);transition:all .2s;white-space:nowrap}
+.cta-banner a:hover{background:rgba(255,255,255,0.35);color:#fff}
+
+/* Header */
+header{padding:48px 20px 32px;text-align:center;max-width:900px;margin:0 auto}
+header h1{font-size:clamp(24px,4vw,40px);font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+header p{color:var(--muted);font-size:16px;max-width:600px;margin:0 auto}
+
+/* Nav Tabs */
+.nav-tabs{display:flex;gap:6px;overflow-x:auto;padding:0 20px 0;max-width:1200px;margin:0 auto 32px;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.tab-btn{padding:10px 18px;border-radius:var(--radius2);border:1px solid var(--border);background:var(--card);color:var(--muted);font-weight:500;white-space:nowrap;transition:all .2s;font-size:13px}
+.tab-btn:hover{border-color:var(--border2);color:var(--text)}
+.tab-btn.active{background:var(--grad);border-color:transparent;color:#fff}
+
+/* Main container */
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+.section{display:none}
+.section.active{display:block}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.card-sm{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:16px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.card-title{font-size:18px;font-weight:700;color:var(--text)}
+.card-subtitle{color:var(--muted);font-size:13px;margin-top:2px}
+
+/* Grid */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+
+/* Forms */
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:500}
+.form-control{width:100%;padding:10px 14px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);outline:none;transition:border-color .2s}
+.form-control:focus{border-color:var(--accent1)}
+.form-control::placeholder{color:#475569}
+textarea.form-control{resize:vertical;min-height:80px}
+select.form-control option{background:var(--card2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* Buttons */
+.btn{padding:10px 20px;border-radius:var(--radius2);border:none;font-weight:600;transition:all .2s;font-size:14px;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--grad);color:#fff}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-secondary{background:var(--card2);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--border2);background:#1e293b}
+.btn-danger{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.btn-danger:hover{background:rgba(239,68,68,.25)}
+.btn-sm{padding:6px 14px;font-size:12px;border-radius:8px}
+.btn-icon{width:36px;height:36px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--muted);transition:all .2s}
+.btn-icon:hover{border-color:var(--accent1);color:var(--accent1)}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-high{background:rgba(239,68,68,.15);color:#fca5a5}
+.badge-mid{background:rgba(245,158,11,.15);color:#fcd34d}
+.badge-low{background:rgba(34,197,94,.15);color:#86efac}
+.badge-premium{background:rgba(168,85,247,.15);color:#d8b4fe}
+.badge-budget{background:rgba(59,130,246,.15);color:#93c5fd}
+
+/* Search */
+.search-bar{position:relative;margin-bottom:20px}
+.search-bar input{padding-left:40px}
+.search-bar svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted)}
+
+/* Competitor card */
+.comp-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color .2s;position:relative}
+.comp-card:hover{border-color:var(--border2)}
+.comp-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.comp-name{font-size:16px;font-weight:700;color:var(--text)}
+.comp-website{font-size:12px;color:var(--accent1)}
+.comp-section{margin-bottom:10px}
+.comp-label{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.comp-value{font-size:13px;color:var(--text)}
+.comp-actions{display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+
+/* Matrix table */
+.matrix-wrap{overflow-x:auto}
+.matrix-table{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
+.matrix-table th{background:var(--card2);padding:12px 16px;text-align:left;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+.matrix-table th:first-child{border-radius:8px 0 0 0}
+.matrix-table th:last-child{border-radius:0 8px 0 0}
+.matrix-table td{padding:12px 16px;border-bottom:1px solid rgba(168,85,247,.08);color:var(--text);vertical-align:top}
+.matrix-table tr:last-child td{border-bottom:none}
+.matrix-table .you-col{background:rgba(168,85,247,.06);font-weight:600}
+.matrix-table td.highlight{color:var(--green)}
+.rating-stars{color:var(--yellow);font-size:12px}
+
+/* Pricing table */
+.pricing-row{display:grid;grid-template-columns:1fr 1fr 1fr 100px 120px;gap:0;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(168,85,247,.08);font-size:13px}
+.pricing-row:last-child{border-bottom:none}
+.pricing-header{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.diff-pos{color:var(--green)}
+.diff-neg{color:var(--red)}
+.pos-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+
+/* SWOT */
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.swot-quad{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius2);padding:20px;min-height:200px}
+.swot-quad h3{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.swot-s{border-top:3px solid var(--green)}
+.swot-w{border-top:3px solid var(--red)}
+.swot-o{border-top:3px solid var(--blue)}
+.swot-t{border-top:3px solid var(--yellow)}
+.swot-item{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:8px;background:var(--card);margin-bottom:8px;font-size:13px}
+.swot-item button{margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;line-height:1;flex-shrink:0;padding:0 2px}
+.swot-item button:hover{color:var(--red)}
+.swot-add{display:flex;gap:8px;margin-top:12px}
+.swot-add input{flex:1;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;outline:none}
+.swot-add input:focus{border-color:var(--accent1)}
+.swot-add button{padding:8px 14px;border-radius:8px;border:none;background:var(--grad);color:#fff;font-size:13px;font-weight:600}
+
+/* Positioning map */
+#posMap{width:100%;border-radius:var(--radius2);display:block}
+.map-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px}
+
+/* Monitoring log */
+.log-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(168,85,247,.08)}
+.log-item:last-child{border-bottom:none}
+.log-dot{width:10px;height:10px;border-radius:50%;background:var(--accent1);flex-shrink:0;margin-top:5px}
+.log-date{font-size:11px;color:var(--muted);margin-bottom:4px}
+.log-text{font-size:13px;color:var(--text)}
+.log-competitor{font-size:11px;color:var(--accent1);font-weight:600;margin-top:4px}
+.log-type{display:inline-flex;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-left:6px}
+.type-pricing{background:rgba(245,158,11,.15);color:#fcd34d}
+.type-service{background:rgba(59,130,246,.15);color:#93c5fd}
+.type-portfolio{background:rgba(34,197,94,.15);color:#86efac}
+.type-marketing{background:rgba(168,85,247,.15);color:#d8b4fe}
+.type-other{background:rgba(148,163,184,.15);color:#94a3b8}
+
+/* Diff finder */
+.diff-item{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius2);padding:18px;margin-bottom:12px}
+.diff-item h4{font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.diff-item p{font-size:13px;color:var(--muted)}
+.opportunity-tag{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(168,85,247,.15);color:#d8b4fe;margin-bottom:8px}
+
+/* Wizard */
+.wizard-step{display:none}
+.wizard-step.active{display:block}
+.wizard-nav{display:flex;gap:4px;margin-bottom:24px}
+.wizard-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);transition:background .2s}
+.wizard-dot.active{background:var(--accent1)}
+.wizard-dot.done{background:var(--green)}
+.uvp-result{background:var(--grad);border-radius:var(--radius2);padding:20px;margin-top:16px;color:#fff;font-size:15px;line-height:1.7;font-weight:500}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(2,6,23,.85);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:24px;line-height:1;cursor:pointer}
+.modal-close:hover{color:var(--red)}
+.modal h2{font-size:20px;font-weight:700;margin-bottom:20px;padding-right:32px}
+
+/* Empty state */
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty svg{margin-bottom:16px;opacity:.4}
+.empty h3{font-size:18px;font-weight:600;color:var(--text);margin-bottom:8px}
+.empty p{font-size:14px;margin-bottom:20px}
+
+/* Select competitor */
+.comp-select-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.comp-select-row select{max-width:200px}
+
+/* Progress bar */
+.progress-bar{height:6px;background:var(--card2);border-radius:3px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:3px;background:var(--grad);transition:width .3s}
+
+/* Tooltip */
+.tooltip{position:relative;display:inline-block}
+.tooltip .tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:11px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;color:var(--text);z-index:50}
+.tooltip:hover .tip{opacity:1}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:32px 20px;margin-top:60px;text-align:center}
+footer p{color:var(--muted);font-size:13px;margin-bottom:8px}
+footer a{color:var(--accent1)}
+.disclaimer{font-size:11px;color:#475569;max-width:700px;margin:16px auto 0;line-height:1.6}
+
+/* Mobile */
+@media(max-width:640px){
+.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+.form-row{grid-template-columns:1fr}
+.swot-grid{grid-template-columns:1fr}
+.pricing-row{grid-template-columns:1fr 1fr;gap:8px}
+.pricing-row .pricing-pos,.pricing-row.pricing-header .h-pos{display:none}
+header h1{font-size:26px}
+.modal{padding:20px}
+}
+@media(max-width:480px){
+.pricing-row{grid-template-columns:1fr;font-size:12px}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.section.active{animation:fadeIn .25s ease}
+
+/* Export button group */
+.export-group{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Stats bar */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius2);padding:16px}
+.stat-val{font-size:24px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px}
+</style>
+</head>
+<body>
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+  <span>🔥 FreelanceOS Pro — 280+ templates to run your freelance business</span>
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get 40% Off with FLASH40 →</a>
+</div>
+
+<!-- Header -->
+<header>
+  <h1>Freelance Competitor Analysis Tracker</h1>
+  <p>Research your market, track competitor moves, find your edge, and build an unbeatable position — all in one place.</p>
+</header>
+
+<!-- Nav -->
+<nav class="nav-tabs" role="tablist" aria-label="Tool sections">
+  <button class="tab-btn active" onclick="showTab('directory')" role="tab">📋 Directory</button>
+  <button class="tab-btn" onclick="showTab('matrix')" role="tab">📊 Matrix</button>
+  <button class="tab-btn" onclick="showTab('pricing')" role="tab">💰 Pricing Intel</button>
+  <button class="tab-btn" onclick="showTab('swot')" role="tab">🔷 SWOT</button>
+  <button class="tab-btn" onclick="showTab('differentiation')" role="tab">🎯 Differentiation</button>
+  <button class="tab-btn" onclick="showTab('map')" role="tab">🗺️ Position Map</button>
+  <button class="tab-btn" onclick="showTab('wizard')" role="tab">✨ UVP Wizard</button>
+  <button class="tab-btn" onclick="showTab('monitoring')" role="tab">📡 Monitoring</button>
+  <button class="tab-btn" onclick="showTab('export')" role="tab">📤 Export</button>
+</nav>
+
+<main class="container">
+
+<!-- ==================== DIRECTORY ==================== -->
+<section id="section-directory" class="section active">
+  <div class="stats-bar" id="statsBar"></div>
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Competitor Directory</div>
+        <div class="card-subtitle">Add and track all your competitors</div>
+      </div>
+      <button class="btn btn-primary" onclick="openModal('addComp')">+ Add Competitor</button>
+    </div>
+    <div class="search-bar">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" class="form-control" id="searchComp" placeholder="Search competitors..." oninput="renderDirectory()" style="padding-left:40px">
+    </div>
+    <div id="compGrid" class="grid-2"></div>
+  </div>
+</section>
+
+<!-- ==================== MATRIX ==================== -->
+<section id="section-matrix" class="section">
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Comparison Matrix</div>
+        <div class="card-subtitle">You vs up to 4 competitors side-by-side</div>
+      </div>
+    </div>
+    <div class="comp-select-row" id="matrixSelects"></div>
+    <div class="matrix-wrap">
+      <table class="matrix-table" id="matrixTable"></table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRICING ==================== -->
+<section id="section-pricing" class="section">
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Pricing Intelligence</div>
+        <div class="card-subtitle">Track and compare competitor pricing</div>
+      </div>
+      <button class="btn btn-primary" onclick="openModal('addPrice')">+ Add Pricing Entry</button>
+    </div>
+    <div style="overflow-x:auto">
+      <div class="pricing-row pricing-header">
+        <div>Service</div>
+        <div>Their Price</div>
+        <div>Your Price</div>
+        <div>Difference</div>
+        <div class="h-pos">Position</div>
+      </div>
+      <div id="pricingList"></div>
+    </div>
+    <div id="pricingEmpty" class="empty" style="display:none">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <h3>No pricing data yet</h3>
+      <p>Add pricing entries to compare yourself to competitors</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SWOT ==================== -->
+<section id="section-swot" class="section">
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">SWOT Analysis</div>
+        <div class="card-subtitle">Your business strengths, weaknesses, opportunities, threats</div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="autoFillSwot()">✨ Auto-suggest from competitor data</button>
+    </div>
+    <div class="swot-grid">
+      <div class="swot-quad swot-s">
+        <h3><span style="color:var(--green)">●</span> Strengths</h3>
+        <div id="swot-S"></div>
+        <div class="swot-add">
+          <input type="text" id="swot-S-input" placeholder="Add strength..." onkeydown="if(event.key==='Enter')addSwotItem('S')">
+          <button onclick="addSwotItem('S')">+</button>
+        </div>
+      </div>
+      <div class="swot-quad swot-w">
+        <h3><span style="color:var(--red)">●</span> Weaknesses</h3>
+        <div id="swot-W"></div>
+        <div class="swot-add">
+          <input type="text" id="swot-W-input" placeholder="Add weakness..." onkeydown="if(event.key==='Enter')addSwotItem('W')">
+          <button onclick="addSwotItem('W')">+</button>
+        </div>
+      </div>
+      <div class="swot-quad swot-o">
+        <h3><span style="color:var(--blue)">●</span> Opportunities</h3>
+        <div id="swot-O"></div>
+        <div class="swot-add">
+          <input type="text" id="swot-O-input" placeholder="Add opportunity..." onkeydown="if(event.key==='Enter')addSwotItem('O')">
+          <button onclick="addSwotItem('O')">+</button>
+        </div>
+      </div>
+      <div class="swot-quad swot-t">
+        <h3><span style="color:var(--yellow)">●</span> Threats</h3>
+        <div id="swot-T"></div>
+        <div class="swot-add">
+          <input type="text" id="swot-T-input" placeholder="Add threat..." onkeydown="if(event.key==='Enter')addSwotItem('T')">
+          <button onclick="addSwotItem('T')">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== DIFFERENTIATION ==================== -->
+<section id="section-differentiation" class="section">
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Differentiation Finder</div>
+        <div class="card-subtitle">Gaps and opportunities identified from your competitor data</div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="renderDifferentiation()">🔄 Refresh Analysis</button>
+    </div>
+    <div id="diffContent"></div>
+  </div>
+</section>
+
+<!-- ==================== MAP ==================== -->
+<section id="section-map" class="section">
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Market Positioning Map</div>
+        <div class="card-subtitle">Price vs. quality/specialization — where you and competitors stand</div>
+      </div>
+    </div>
+    <div class="card-sm" style="margin-bottom:16px">
+      <div class="form-row">
+        <div class="form-group" style="margin:0">
+          <label>Your Price Position (1=budget, 5=premium)</label>
+          <input type="range" min="1" max="5" step="0.5" id="myPrice" value="3" class="form-control" style="padding:4px 0;border:none;background:none" oninput="updateMap()">
+          <div style="font-size:12px;color:var(--muted)">Current: <span id="myPriceVal">3</span>/5</div>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>Your Quality/Specialization (1=generalist, 5=specialist)</label>
+          <input type="range" min="1" max="5" step="0.5" id="myQuality" value="3" class="form-control" style="padding:4px 0;border:none;background:none" oninput="updateMap()">
+          <div style="font-size:12px;color:var(--muted)">Current: <span id="myQualityVal">3</span>/5</div>
+        </div>
+      </div>
+    </div>
+    <canvas id="posMap" height="420"></canvas>
+    <div class="map-legend" id="mapLegend"></div>
+  </div>
+</section>
+
+<!-- ==================== WIZARD ==================== -->
+<section id="section-wizard" class="section">
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Competitive Advantage Builder</div>
+        <div class="card-subtitle">Build your unique value proposition from competitor gaps</div>
+      </div>
+    </div>
+    <div class="wizard-nav" id="wizardNav"></div>
+    <div id="wizardSteps"></div>
+  </div>
+</section>
+
+<!-- ==================== MONITORING ==================== -->
+<section id="section-monitoring" class="section">
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Monitoring Log</div>
+        <div class="card-subtitle">Track competitor moves over time</div>
+      </div>
+      <button class="btn btn-primary" onclick="openModal('addLog')">+ Log Activity</button>
+    </div>
+    <div id="logList"></div>
+    <div id="logEmpty" class="empty" style="display:none">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <h3>No activity logged yet</h3>
+      <p>Log competitor pricing changes, new services, and marketing moves</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== EXPORT ==================== -->
+<section id="section-export" class="section">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Export Your Data</div>
+    </div>
+    <div class="grid-3">
+      <div class="card-sm">
+        <div style="font-size:28px;margin-bottom:12px">📄</div>
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:8px">Full HTML Report</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Export a complete competitor comparison report with all data formatted for sharing with clients or team.</p>
+        <button class="btn btn-primary btn-sm" onclick="exportHTML()">Export HTML Report</button>
+      </div>
+      <div class="card-sm">
+        <div style="font-size:28px;margin-bottom:12px">🖨️</div>
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:8px">SWOT Print Sheet</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Export your SWOT analysis as a clean printable page, perfect for strategy sessions or client presentations.</p>
+        <button class="btn btn-secondary btn-sm" onclick="exportSWOT()">Export SWOT PDF</button>
+      </div>
+      <div class="card-sm">
+        <div style="font-size:28px;margin-bottom:12px">📊</div>
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:8px">CSV Data Export</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Download all competitor data as a CSV spreadsheet for use in Excel, Google Sheets, or other tools.</p>
+        <button class="btn btn-secondary btn-sm" onclick="exportCSV()">Download CSV</button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:16px">Data Management</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn btn-secondary" onclick="clearAllData()">🗑️ Clear All Data</button>
+      <button class="btn btn-secondary" onclick="loadSampleData()">📥 Load Sample Data</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ==================== MODALS ==================== -->
+
+<!-- Add Competitor Modal -->
+<div class="modal-overlay" id="modal-addComp" role="dialog" aria-modal="true" aria-label="Add Competitor">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addComp')" aria-label="Close">×</button>
+    <h2 id="compModalTitle">Add Competitor</h2>
+    <input type="hidden" id="editCompId">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Competitor Name *</label>
+        <input type="text" class="form-control" id="cName" placeholder="e.g. Jane Design Co.">
+      </div>
+      <div class="form-group">
+        <label>Website</label>
+        <input type="text" class="form-control" id="cWebsite" placeholder="https://example.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Services Offered</label>
+        <input type="text" class="form-control" id="cServices" placeholder="e.g. Logo, Branding, Web Design">
+      </div>
+      <div class="form-group">
+        <label>Pricing Range</label>
+        <select class="form-control" id="cPricing">
+          <option value="">Select...</option>
+          <option value="budget">Budget ($)</option>
+          <option value="mid">Mid-range ($$)</option>
+          <option value="high">High-end ($$$)</option>
+          <option value="premium">Premium ($$$$)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Target Market</label>
+        <input type="text" class="form-control" id="cTarget" placeholder="e.g. SaaS startups, Small businesses">
+      </div>
+      <div class="form-group">
+        <label>Est. Years Experience</label>
+        <input type="number" class="form-control" id="cExperience" placeholder="e.g. 5" min="0" max="40">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Est. Turnaround Time</label>
+        <input type="text" class="form-control" id="cTurnaround" placeholder="e.g. 2-4 weeks">
+      </div>
+      <div class="form-group">
+        <label>Avg. Rating (1-5)</label>
+        <input type="number" class="form-control" id="cRating" placeholder="e.g. 4.5" min="1" max="5" step="0.1">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Unique Selling Proposition</label>
+      <input type="text" class="form-control" id="cUSP" placeholder="What makes them stand out?">
+    </div>
+    <div class="form-group">
+      <label>Strengths</label>
+      <textarea class="form-control" id="cStrengths" placeholder="e.g. Fast delivery, strong portfolio, great testimonials"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Weaknesses</label>
+      <textarea class="form-control" id="cWeaknesses" placeholder="e.g. Expensive, slow communication, limited services"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Specializations</label>
+      <input type="text" class="form-control" id="cSpec" placeholder="e.g. SaaS, fintech, healthcare">
+    </div>
+    <div class="form-group">
+      <label>Portfolio Quality (1-5)</label>
+      <input type="range" class="form-control" id="cPortfolio" min="1" max="5" step="1" value="3" style="padding:4px 0;border:none;background:none" oninput="document.getElementById('cPortfolioVal').textContent=this.value">
+      <span id="cPortfolioVal" style="font-size:13px;color:var(--muted)">3</span>/5
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea class="form-control" id="cNotes" placeholder="Any additional observations..."></textarea>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('addComp')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCompetitor()">Save Competitor</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Pricing Modal -->
+<div class="modal-overlay" id="modal-addPrice" role="dialog" aria-modal="true" aria-label="Add Pricing Entry">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addPrice')" aria-label="Close">×</button>
+    <h2>Add Pricing Entry</h2>
+    <div class="form-group">
+      <label>Competitor</label>
+      <select class="form-control" id="pCompetitor"></select>
+    </div>
+    <div class="form-group">
+      <label>Service Type *</label>
+      <input type="text" class="form-control" id="pService" placeholder="e.g. Logo Design, Website Build, Monthly Retainer">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Their Price ($)</label>
+        <input type="number" class="form-control" id="pTheirPrice" placeholder="0" min="0">
+      </div>
+      <div class="form-group">
+        <label>Your Price ($)</label>
+        <input type="number" class="form-control" id="pYourPrice" placeholder="0" min="0">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Market Position</label>
+      <select class="form-control" id="pPosition">
+        <option value="budget">Budget</option>
+        <option value="mid" selected>Mid-range</option>
+        <option value="premium">Premium</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea class="form-control" id="pNotes" placeholder="Source, context, caveats..."></textarea>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('addPrice')">Cancel</button>
+      <button class="btn btn-primary" onclick="savePricing()">Save Entry</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Log Modal -->
+<div class="modal-overlay" id="modal-addLog" role="dialog" aria-modal="true" aria-label="Log Activity">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addLog')" aria-label="Close">×</button>
+    <h2>Log Competitor Activity</h2>
+    <div class="form-group">
+      <label>Competitor</label>
+      <select class="form-control" id="lCompetitor"></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Activity Type</label>
+        <select class="form-control" id="lType">
+          <option value="pricing">Pricing Change</option>
+          <option value="service">New Service</option>
+          <option value="portfolio">Portfolio Update</option>
+          <option value="marketing">Marketing Move</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" class="form-control" id="lDate">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description *</label>
+      <textarea class="form-control" id="lDesc" placeholder="What did you observe? Include specifics like old/new pricing, new service names, etc."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Impact on You</label>
+      <select class="form-control" id="lImpact">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('addLog')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLog()">Log Activity</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p style="font-weight:600;font-size:15px">Tool #74 — <a href="/freelanceos-storefront/free-templates.html">FreelanceOS Free Templates →</a></p>
+  <p>Part of the <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40">FreelanceOS Pro system</a> — 280+ templates to run, grow, and scale your freelance business.</p>
+  <div class="disclaimer">
+    <strong>Disclaimer:</strong> This tool is for informational and planning purposes only. Competitor data entered is based on your own research and observations. FreelanceOS does not collect or transmit any data — all information is stored locally in your browser via localStorage. Pricing comparisons are estimates and should not be taken as financial advice. Always verify competitor information directly before making business decisions.
+  </div>
+</footer>
+
+<script>
+// ==================== STATE ====================
+let state = {
+  competitors: [],
+  pricing: [],
+  swot: { S: [], W: [], O: [], T: [] },
+  logs: [],
+  wizard: { step: 0, answers: {} },
+  myPos: { price: 3, quality: 3 }
+};
+
+const STORAGE_KEY = 'freelance_competitor_tracker_v1';
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function load() {
+  try {
+    const d = localStorage.getItem(STORAGE_KEY);
+    if (d) state = { ...state, ...JSON.parse(d) };
+  } catch(e) {}
+}
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+// ==================== TABS ====================
+function showTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  const btns = document.querySelectorAll('.tab-btn');
+  const labels = ['directory','matrix','pricing','swot','differentiation','map','wizard','monitoring','export'];
+  const idx = labels.indexOf(name);
+  if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
+
+  if (name === 'matrix') renderMatrix();
+  if (name === 'pricing') renderPricing();
+  if (name === 'swot') renderSwot();
+  if (name === 'differentiation') renderDifferentiation();
+  if (name === 'map') { updateMap(); renderMapLegend(); }
+  if (name === 'wizard') renderWizard();
+  if (name === 'monitoring') renderLogs();
+}
+
+// ==================== MODALS ====================
+function openModal(name) {
+  if (name === 'addComp') {
+    document.getElementById('compModalTitle').textContent = 'Add Competitor';
+    document.getElementById('editCompId').value = '';
+    clearCompForm();
+  }
+  if (name === 'addPrice') {
+    populateCompSelect('pCompetitor');
+    document.getElementById('pService').value = '';
+    document.getElementById('pTheirPrice').value = '';
+    document.getElementById('pYourPrice').value = '';
+    document.getElementById('pNotes').value = '';
+  }
+  if (name === 'addLog') {
+    populateCompSelect('lCompetitor');
+    document.getElementById('lDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('lDesc').value = '';
+  }
+  document.getElementById('modal-' + name).classList.add('open');
+  setTimeout(() => {
+    const first = document.querySelector('#modal-' + name + ' input, #modal-' + name + ' select');
+    if (first) first.focus();
+  }, 50);
+}
+
+function closeModal(name) {
+  document.getElementById('modal-' + name).classList.remove('open');
+}
+
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(el => el.classList.remove('open'));
+});
+
+function populateCompSelect(id) {
+  const sel = document.getElementById(id);
+  sel.innerHTML = '<option value="">-- Select competitor --</option>' +
+    state.competitors.map(c => `<option value="${c.id}">${escHtml(c.name)}</option>`).join('');
+}
+
+// ==================== COMPETITORS ====================
+function clearCompForm() {
+  ['cName','cWebsite','cServices','cTarget','cExperience','cTurnaround','cRating','cUSP','cStrengths','cWeaknesses','cSpec','cNotes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('cPricing').value = '';
+  document.getElementById('cPortfolio').value = 3;
+  document.getElementById('cPortfolioVal').textContent = '3';
+}
+
+function saveCompetitor() {
+  const name = document.getElementById('cName').value.trim();
+  if (!name) { alert('Please enter a competitor name.'); return; }
+  const editId = document.getElementById('editCompId').value;
+  const comp = {
+    id: editId || uid(),
+    name,
+    website: document.getElementById('cWebsite').value.trim(),
+    services: document.getElementById('cServices').value.trim(),
+    pricing: document.getElementById('cPricing').value,
+    target: document.getElementById('cTarget').value.trim(),
+    experience: document.getElementById('cExperience').value,
+    turnaround: document.getElementById('cTurnaround').value.trim(),
+    rating: document.getElementById('cRating').value,
+    usp: document.getElementById('cUSP').value.trim(),
+    strengths: document.getElementById('cStrengths').value.trim(),
+    weaknesses: document.getElementById('cWeaknesses').value.trim(),
+    spec: document.getElementById('cSpec').value.trim(),
+    portfolio: document.getElementById('cPortfolio').value,
+    notes: document.getElementById('cNotes').value.trim(),
+    added: editId ? (state.competitors.find(c=>c.id===editId)||{}).added : new Date().toISOString()
+  };
+  if (editId) {
+    const idx = state.competitors.findIndex(c => c.id === editId);
+    if (idx >= 0) state.competitors[idx] = comp;
+  } else {
+    state.competitors.push(comp);
+  }
+  save();
+  closeModal('addComp');
+  renderDirectory();
+  renderStats();
+}
+
+function editCompetitor(id) {
+  const c = state.competitors.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('compModalTitle').textContent = 'Edit Competitor';
+  document.getElementById('editCompId').value = id;
+  document.getElementById('cName').value = c.name || '';
+  document.getElementById('cWebsite').value = c.website || '';
+  document.getElementById('cServices').value = c.services || '';
+  document.getElementById('cPricing').value = c.pricing || '';
+  document.getElementById('cTarget').value = c.target || '';
+  document.getElementById('cExperience').value = c.experience || '';
+  document.getElementById('cTurnaround').value = c.turnaround || '';
+  document.getElementById('cRating').value = c.rating || '';
+  document.getElementById('cUSP').value = c.usp || '';
+  document.getElementById('cStrengths').value = c.strengths || '';
+  document.getElementById('cWeaknesses').value = c.weaknesses || '';
+  document.getElementById('cSpec').value = c.spec || '';
+  document.getElementById('cPortfolio').value = c.portfolio || 3;
+  document.getElementById('cPortfolioVal').textContent = c.portfolio || 3;
+  document.getElementById('cNotes').value = c.notes || '';
+  document.getElementById('modal-addComp').classList.add('open');
+}
+
+function deleteCompetitor(id) {
+  if (!confirm('Delete this competitor? This also removes their pricing entries and log entries.')) return;
+  state.competitors = state.competitors.filter(c => c.id !== id);
+  state.pricing = state.pricing.filter(p => p.competitorId !== id);
+  state.logs = state.logs.filter(l => l.competitorId !== id);
+  save();
+  renderDirectory();
+  renderStats();
+}
+
+function renderStats() {
+  const c = state.competitors;
+  const pricingCount = state.pricing.length;
+  const logsCount = state.logs.length;
+  const pricingMap = { budget:1, mid:2, high:3, premium:4 };
+  const bar = document.getElementById('statsBar');
+  bar.innerHTML = `
+    <div class="stat-card"><div class="stat-val">${c.length}</div><div class="stat-label">Competitors Tracked</div></div>
+    <div class="stat-card"><div class="stat-val">${pricingCount}</div><div class="stat-label">Pricing Entries</div></div>
+    <div class="stat-card"><div class="stat-val">${logsCount}</div><div class="stat-label">Monitored Activities</div></div>
+    <div class="stat-card"><div class="stat-val">${state.swot.S.length + state.swot.W.length + state.swot.O.length + state.swot.T.length}</div><div class="stat-label">SWOT Items</div></div>
+  `;
+}
+
+function pricingBadge(p) {
+  if (!p) return '';
+  const map = { budget:'badge-low', mid:'badge-mid', high:'badge-high', premium:'badge-premium' };
+  const labels = { budget:'Budget', mid:'Mid-range', high:'High-end', premium:'Premium' };
+  return `<span class="badge ${map[p]||''}">${labels[p]||p}</span>`;
+}
+
+function renderDirectory() {
+  const q = (document.getElementById('searchComp').value||'').toLowerCase();
+  const comps = state.competitors.filter(c =>
+    !q || c.name.toLowerCase().includes(q) || (c.services||'').toLowerCase().includes(q) || (c.target||'').toLowerCase().includes(q)
+  );
+  const grid = document.getElementById('compGrid');
+  if (!comps.length) {
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <h3>${state.competitors.length ? 'No results found' : 'No competitors yet'}</h3>
+      <p>${state.competitors.length ? 'Try a different search term' : 'Add your first competitor to start your analysis'}</p>
+      ${!state.competitors.length ? '<button class="btn btn-primary" onclick="openModal(\'addComp\')">+ Add First Competitor</button>' : ''}
+    </div>`;
+    return;
+  }
+  grid.innerHTML = comps.map(c => `
+    <div class="comp-card">
+      <div class="comp-card-header">
+        <div>
+          <div class="comp-name">${escHtml(c.name)}</div>
+          ${c.website ? `<a href="${escHtml(c.website)}" target="_blank" rel="noopener" class="comp-website">${escHtml(c.website.replace(/^https?:\/\//,''))}</a>` : ''}
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          ${pricingBadge(c.pricing)}
+        </div>
+      </div>
+      ${c.services ? `<div class="comp-section"><div class="comp-label">Services</div><div class="comp-value">${escHtml(c.services)}</div></div>` : ''}
+      ${c.target ? `<div class="comp-section"><div class="comp-label">Target Market</div><div class="comp-value">${escHtml(c.target)}</div></div>` : ''}
+      ${c.usp ? `<div class="comp-section"><div class="comp-label">USP</div><div class="comp-value">${escHtml(c.usp)}</div></div>` : ''}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px">
+        ${c.experience ? `<div class="comp-section"><div class="comp-label">Experience</div><div class="comp-value">${escHtml(c.experience)} yrs</div></div>` : ''}
+        ${c.rating ? `<div class="comp-section"><div class="comp-label">Rating</div><div class="comp-value">${ratingStars(parseFloat(c.rating))} ${c.rating}/5</div></div>` : ''}
+        ${c.turnaround ? `<div class="comp-section"><div class="comp-label">Turnaround</div><div class="comp-value">${escHtml(c.turnaround)}</div></div>` : ''}
+        ${c.portfolio ? `<div class="comp-section"><div class="comp-label">Portfolio Quality</div><div class="comp-value">${c.portfolio}/5</div></div>` : ''}
+      </div>
+      ${c.strengths ? `<div class="comp-section"><div class="comp-label">Strengths</div><div class="comp-value" style="color:var(--green);font-size:12px">${escHtml(c.strengths.slice(0,80))}${c.strengths.length>80?'...':''}</div></div>` : ''}
+      ${c.weaknesses ? `<div class="comp-section"><div class="comp-label">Weaknesses</div><div class="comp-value" style="color:var(--red);font-size:12px">${escHtml(c.weaknesses.slice(0,80))}${c.weaknesses.length>80?'...':''}</div></div>` : ''}
+      <div class="comp-actions">
+        <button class="btn btn-secondary btn-sm" onclick="editCompetitor('${c.id}')">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCompetitor('${c.id}')">🗑️ Delete</button>
+        ${c.notes ? `<div class="tooltip" style="margin-left:auto"><button class="btn btn-secondary btn-sm">📝 Notes</button><div class="tip">${escHtml(c.notes.slice(0,120))}</div></div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function ratingStars(n) {
+  const full = Math.floor(n), half = n % 1 >= 0.5 ? 1 : 0;
+  return '<span class="rating-stars">' + '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(5-full-half) + '</span>';
+}
+
+// ==================== MATRIX ====================
+function renderMatrix() {
+  const container = document.getElementById('matrixSelects');
+  if (!state.competitors.length) {
+    container.innerHTML = '';
+    document.getElementById('matrixTable').innerHTML = '<tr><td style="padding:40px;text-align:center;color:var(--muted)">Add competitors in the Directory tab to compare them here.</td></tr>';
+    return;
+  }
+
+  // Build up to 4 selects
+  if (!container.dataset.init) {
+    container.dataset.init = '1';
+    container.innerHTML = Array.from({length:4}).map((_,i) => `
+      <select class="form-control" id="matrixSel${i}" onchange="buildMatrixTable()" style="max-width:180px">
+        <option value="">-- Competitor ${i+1} --</option>
+        ${state.competitors.map(c=>`<option value="${c.id}">${escHtml(c.name)}</option>`).join('')}
+      </select>
+    `).join('');
+    // Auto-fill first 4
+    state.competitors.slice(0,4).forEach((c,i) => {
+      const s = document.getElementById(`matrixSel${i}`);
+      if (s) s.value = c.id;
+    });
+  } else {
+    // Refresh options without resetting values
+    for (let i=0;i<4;i++){
+      const s=document.getElementById(`matrixSel${i}`);
+      if(!s)continue;
+      const val=s.value;
+      s.innerHTML=`<option value="">-- Competitor ${i+1} --</option>`+
+        state.competitors.map(c=>`<option value="${c.id}">${escHtml(c.name)}</option>`).join('');
+      s.value=val;
+    }
+  }
+  buildMatrixTable();
+}
+
+function buildMatrixTable() {
+  const ids = [0,1,2,3].map(i => {
+    const s = document.getElementById('matrixSel'+i);
+    return s ? s.value : '';
+  }).filter(Boolean);
+  const comps = ids.map(id => state.competitors.find(c=>c.id===id)).filter(Boolean);
+  const rows = [
+    ['Pricing Range','pricing', c => pricingBadge(c.pricing)||'—'],
+    ['Services','services', c => escHtml(c.services)||'—'],
+    ['Target Market','target', c => escHtml(c.target)||'—'],
+    ['Turnaround','turnaround', c => escHtml(c.turnaround)||'—'],
+    ['Experience','experience', c => c.experience ? c.experience+' yrs' : '—'],
+    ['Specializations','spec', c => escHtml(c.spec)||'—'],
+    ['Rating','rating', c => c.rating ? ratingStars(parseFloat(c.rating))+' '+c.rating+'/5' : '—'],
+    ['Portfolio Quality','portfolio', c => c.portfolio ? buildPortfolioBar(c.portfolio) : '—'],
+    ['USP','usp', c => escHtml(c.usp)||'—'],
+    ['Strengths','strengths', c => `<span style="color:var(--green);font-size:12px">${escHtml((c.strengths||'').slice(0,80))}</span>`],
+    ['Weaknesses','weaknesses', c => `<span style="color:var(--red);font-size:12px">${escHtml((c.weaknesses||'').slice(0,80))}</span>`],
+  ];
+  const t = document.getElementById('matrixTable');
+  if (!comps.length) {
+    t.innerHTML = '<tr><td style="padding:24px;text-align:center;color:var(--muted)">Select competitors above to compare.</td></tr>';
+    return;
+  }
+  t.innerHTML = `
+    <thead><tr>
+      <th style="min-width:140px">Attribute</th>
+      <th class="you-col">You</th>
+      ${comps.map(c=>`<th>${escHtml(c.name)}</th>`).join('')}
+    </tr></thead>
+    <tbody>
+      ${rows.map(([label,,fn]) => `
+        <tr>
+          <td style="font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px">${label}</td>
+          <td class="you-col">—</td>
+          ${comps.map(c=>`<td>${fn(c)}</td>`).join('')}
+        </tr>
+      `).join('')}
+    </tbody>
+  `;
+}
+
+function buildPortfolioBar(val) {
+  const pct = (parseInt(val)||0)*20;
+  return `<div style="display:flex;align-items:center;gap:8px"><div class="progress-bar" style="flex:1;max-width:80px"><div class="progress-fill" style="width:${pct}%"></div></div><span style="font-size:12px">${val}/5</span></div>`;
+}
+
+// ==================== PRICING ====================
+function savePricing() {
+  const service = document.getElementById('pService').value.trim();
+  if (!service) { alert('Please enter a service type.'); return; }
+  const entry = {
+    id: uid(),
+    competitorId: document.getElementById('pCompetitor').value,
+    competitorName: '',
+    service,
+    theirPrice: parseFloat(document.getElementById('pTheirPrice').value) || 0,
+    yourPrice: parseFloat(document.getElementById('pYourPrice').value) || 0,
+    position: document.getElementById('pPosition').value,
+    notes: document.getElementById('pNotes').value.trim(),
+    date: new Date().toISOString()
+  };
+  const comp = state.competitors.find(c=>c.id===entry.competitorId);
+  entry.competitorName = comp ? comp.name : 'Unknown';
+  state.pricing.push(entry);
+  save();
+  closeModal('addPrice');
+  renderPricing();
+  renderStats();
+}
+
+function renderPricing() {
+  const list = document.getElementById('pricingList');
+  const empty = document.getElementById('pricingEmpty');
+  if (!state.pricing.length) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  const posMap = { budget:'badge-low', mid:'badge-mid', premium:'badge-premium' };
+  const posLabels = { budget:'Budget', mid:'Mid-range', premium:'Premium' };
+  list.innerHTML = state.pricing.map(p => {
+    const diff = p.theirPrice > 0 ? ((p.yourPrice - p.theirPrice) / p.theirPrice * 100) : 0;
+    const diffStr = diff === 0 ? '—' : (diff > 0 ? `+${diff.toFixed(0)}%` : `${diff.toFixed(0)}%`);
+    const diffClass = diff > 0 ? 'diff-pos' : diff < 0 ? 'diff-neg' : '';
+    return `<div class="pricing-row">
+      <div>
+        <div style="font-weight:600">${escHtml(p.service)}</div>
+        <div style="font-size:11px;color:var(--accent1)">${escHtml(p.competitorName||'Unknown')}</div>
+      </div>
+      <div>$${p.theirPrice.toLocaleString()}</div>
+      <div>$${p.yourPrice.toLocaleString()}</div>
+      <div class="${diffClass}" style="font-weight:600">${diffStr}</div>
+      <div class="pricing-pos"><span class="badge ${posMap[p.position]||'badge-mid'}">${posLabels[p.position]||p.position}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// ==================== SWOT ====================
+function addSwotItem(quad) {
+  const input = document.getElementById('swot-' + quad + '-input');
+  const val = input.value.trim();
+  if (!val) return;
+  state.swot[quad].push({ id: uid(), text: val });
+  input.value = '';
+  save();
+  renderSwot();
+  renderStats();
+}
+
+function removeSwotItem(quad, id) {
+  state.swot[quad] = state.swot[quad].filter(x => x.id !== id);
+  save();
+  renderSwot();
+  renderStats();
+}
+
+function renderSwot() {
+  ['S','W','O','T'].forEach(q => {
+    const container = document.getElementById('swot-' + q);
+    container.innerHTML = state.swot[q].map(item => `
+      <div class="swot-item">
+        <span>${escHtml(item.text)}</span>
+        <button onclick="removeSwotItem('${q}','${item.id}')" title="Remove">×</button>
+      </div>
+    `).join('');
+  });
+}
+
+function autoFillSwot() {
+  if (!state.competitors.length) {
+    alert('Add some competitors first — the auto-suggest uses their data to generate SWOT items.');
+    return;
+  }
+  const allStrengths = state.competitors.flatMap(c => (c.strengths||'').split(',').map(s=>s.trim())).filter(Boolean);
+  const allWeaknesses = state.competitors.flatMap(c => (c.weaknesses||'').split(',').map(s=>s.trim())).filter(Boolean);
+  const services = [...new Set(state.competitors.flatMap(c => (c.services||'').split(',').map(s=>s.trim())).filter(Boolean))];
+  const targets = [...new Set(state.competitors.flatMap(c => (c.target||'').split(',').map(s=>s.trim())).filter(Boolean))];
+
+  // Opportunities based on gaps
+  const suggestions = {
+    S: ['Direct client relationships', 'Flexible pricing model', 'Personalized service', 'Quick communication turnaround', 'Niche expertise'],
+    W: ['Smaller portfolio vs established players', 'Limited team capacity', 'Less brand recognition', 'Narrower service range'],
+    O: allWeaknesses.slice(0,3).map(w => `Capitalize on competitor weakness: ${w}`).concat([
+      targets.length ? `Underserved segment: ${targets.slice(-1)[0]}` : 'Emerging market niche',
+      'Content marketing to attract inbound leads',
+      'Productized services for scalability'
+    ]),
+    T: allStrengths.slice(0,2).map(s => `Competitor advantage: ${s}`).concat([
+      'Price undercutting by budget competitors',
+      'Platform commoditization of services',
+      'Client budget constraints in economic downturns'
+    ])
+  };
+
+  let added = 0;
+  ['S','W','O','T'].forEach(q => {
+    suggestions[q].slice(0,2).forEach(text => {
+      if (!state.swot[q].find(x=>x.text===text)) {
+        state.swot[q].push({ id: uid(), text });
+        added++;
+      }
+    });
+  });
+  save();
+  renderSwot();
+  renderStats();
+  if (added > 0) alert(`Added ${added} auto-suggested SWOT items based on your competitor data. Review and edit them to match your situation.`);
+  else alert('All suggestions already added. Add more competitors with detailed data to get more suggestions.');
+}
+
+// ==================== DIFFERENTIATION ====================
+function renderDifferentiation() {
+  const el = document.getElementById('diffContent');
+  if (!state.competitors.length) {
+    el.innerHTML = `<div class="empty"><svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><h3>Add competitors to discover gaps</h3><p>Once you've added competitors, we'll analyze their data to find opportunities for you.</p></div>`;
+    return;
+  }
+
+  const allServices = state.competitors.flatMap(c => (c.services||'').split(',').map(s=>s.trim().toLowerCase())).filter(Boolean);
+  const allTargets = state.competitors.flatMap(c => (c.target||'').split(',').map(s=>s.trim())).filter(Boolean);
+  const pricingLevels = state.competitors.map(c=>c.pricing).filter(Boolean);
+  const hasBudget = pricingLevels.includes('budget');
+  const hasPremium = pricingLevels.includes('premium');
+  const hasHigh = pricingLevels.includes('high');
+  const avgRating = state.competitors.filter(c=>c.rating).reduce((a,c,_,arr)=>a+parseFloat(c.rating)/arr.length,0);
+
+  const opportunities = [];
+
+  // Pricing gaps
+  if (!hasBudget) opportunities.push({ tag:'Pricing Opportunity', icon:'💰', title:'Budget pricing tier is unclaimed', desc:`None of your ${state.competitors.length} tracked competitors position in the budget tier. A strategic entry-level offering could capture price-sensitive clients and create an upsell funnel.` });
+  if (!hasPremium && !hasHigh) opportunities.push({ tag:'Pricing Opportunity', icon:'💎', title:'Premium/high-end tier has no competition', desc:'No competitor is positioned as premium. If your work quality supports it, commanding premium rates could set you apart from the crowded mid-range.' });
+
+  // Service gaps
+  const serviceFreq = {};
+  allServices.forEach(s => { serviceFreq[s] = (serviceFreq[s]||0)+1; });
+  const rareServices = Object.entries(serviceFreq).filter(([,n])=>n===1).map(([s])=>s);
+  if (rareServices.length) opportunities.push({ tag:'Service Gap', icon:'🔧', title:`${rareServices.length} service(s) only one competitor offers`, desc:`Services offered by only one competitor: ${rareServices.slice(0,5).join(', ')}. Adding these creates broader appeal and reduces client churn.` });
+
+  // Rating opportunity
+  if (avgRating > 0 && avgRating < 4.5) opportunities.push({ tag:'Quality Gap', icon:'⭐', title:`Average competitor rating is ${avgRating.toFixed(1)}/5 — beat it`, desc:'Your competitors average below 4.5 stars. A relentless focus on delivery quality and getting 5-star testimonials is a defensible moat.' });
+
+  // Turnaround
+  const slowComp = state.competitors.find(c => c.turnaround && (c.turnaround.includes('month') || c.turnaround.includes('6') || c.turnaround.includes('8')));
+  if (slowComp) opportunities.push({ tag:'Speed Advantage', icon:'⚡', title:'Faster turnaround is a clear differentiator', desc:`${escHtml(slowComp.name)} has slow delivery (${escHtml(slowComp.turnaround)}). Marketing your speed as a core benefit targets clients who've been burned by delays.` });
+
+  // Niche gap
+  const nicheTargets = allTargets.filter(t => !['small business','freelancers','startups','businesses'].some(common => t.toLowerCase().includes(common)));
+  if (!nicheTargets.length) opportunities.push({ tag:'Niche Opportunity', icon:'🎯', title:'No competitor is deeply niched', desc:'All your competitors target broad markets. Niching down to a specific industry (e.g., SaaS, legal, healthcare) makes you the obvious expert choice and commands premium rates.' });
+
+  // No USP competitors
+  const noUsp = state.competitors.filter(c=>!c.usp);
+  if (noUsp.length >= 2) opportunities.push({ tag:'Positioning Gap', icon:'📢', title:`${noUsp.length} competitors have no clear USP`, desc:`${noUsp.map(c=>escHtml(c.name)).join(', ')} lack a compelling unique selling proposition. A sharp, memorable USP makes you instantly more memorable than the undifferentiated competition.` });
+
+  // Specialization gap
+  const noSpec = state.competitors.filter(c=>!c.spec);
+  if (noSpec.length >= 2) opportunities.push({ tag:'Specialization Gap', icon:'🏆', title:'Lack of industry specialization among competitors', desc:`${noSpec.length} competitors don't list specific specializations. Claiming ownership of a specific industry vertical positions you as the expert and reduces price competition.` });
+
+  if (!opportunities.length) opportunities.push({ tag:'Keep Digging', icon:'🔍', title:'Add more competitor details for deeper insights', desc:'Fill in more fields (services, pricing, USP, target market) for each competitor to unlock more specific differentiation recommendations.' });
+
+  el.innerHTML = opportunities.map(o => `
+    <div class="diff-item">
+      <div style="margin-bottom:6px"><span class="opportunity-tag">${o.tag}</span></div>
+      <h4>${o.icon} ${o.title}</h4>
+      <p>${o.desc}</p>
+    </div>
+  `).join('');
+}
+
+// ==================== MAP ====================
+function updateMap() {
+  const px = document.getElementById('myPrice');
+  const pq = document.getElementById('myQuality');
+  document.getElementById('myPriceVal').textContent = px.value;
+  document.getElementById('myQualityVal').textContent = pq.value;
+  state.myPos = { price: parseFloat(px.value), quality: parseFloat(pq.value) };
+  save();
+  drawMap();
+}
+
+function drawMap() {
+  const canvas = document.getElementById('posMap');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth || 700;
+  const H = 420;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad = { left:60, right:30, top:30, bottom:60 };
+  const plotW = W - pad.left - pad.right;
+  const plotH = H - pad.top - pad.bottom;
+
+  // Background
+  ctx.fillStyle = '#0f172a';
+  ctx.beginPath();
+  roundRect(ctx, 0, 0, W, H, 12);
+  ctx.fill();
+
+  // Grid
+  ctx.strokeStyle = 'rgba(168,85,247,0.1)';
+  ctx.lineWidth = 1;
+  for (let i=0;i<=4;i++){
+    const x = pad.left + (i/4)*plotW;
+    const y = pad.top + (i/4)*plotH;
+    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top+plotH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left+plotW, y); ctx.stroke();
+  }
+
+  // Quadrant labels
+  ctx.font = '11px system-ui';
+  ctx.fillStyle = 'rgba(148,163,184,0.4)';
+  ctx.textAlign = 'center';
+  const ql = ['Budget\nGeneralist','Budget\nSpecialist','Premium\nGeneralist','Premium\nSpecialist'];
+  [[0.25,0.75],[0.25,0.25],[0.75,0.75],[0.75,0.25]].forEach(([fx,fy],i)=>{
+    const parts = ql[i].split('\n');
+    parts.forEach((p,j)=>{
+      ctx.fillText(p, pad.left+fx*plotW, pad.top+fy*plotH+(j*14)-7);
+    });
+  });
+
+  // Axes
+  ctx.strokeStyle = 'rgba(168,85,247,0.5)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(pad.left,pad.top); ctx.lineTo(pad.left,pad.top+plotH); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(pad.left,pad.top+plotH); ctx.lineTo(pad.left+plotW,pad.top+plotH); ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '12px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText('← Budget | Price | Premium →', pad.left+plotW/2, H-12);
+  ctx.save(); ctx.translate(14, pad.top+plotH/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText('← Generalist | Specialization | Expert →', 0, 0);
+  ctx.restore();
+
+  // Axis ticks
+  ctx.font = '10px system-ui';
+  ctx.fillStyle = '#475569';
+  for(let i=1;i<=5;i++){
+    const x = pad.left+(i-1)/4*plotW;
+    ctx.textAlign='center';
+    ctx.fillText(i, x, pad.top+plotH+18);
+  }
+
+  // Helper: plot point
+  function plotDot(priceVal, qualVal, color, label, isYou) {
+    const xPct = (priceVal-1)/4;
+    const yPct = 1-(qualVal-1)/4;
+    const x = pad.left + xPct*plotW;
+    const y = pad.top + yPct*plotH;
+    const r = isYou ? 12 : 9;
+
+    // Glow
+    if (isYou) {
+      const grad = ctx.createRadialGradient(x,y,0,x,y,22);
+      grad.addColorStop(0, 'rgba(168,85,247,0.4)');
+      grad.addColorStop(1, 'rgba(168,85,247,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(x,y,22,0,Math.PI*2); ctx.fill();
+    }
+
+    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.strokeStyle = isYou ? '#fff' : 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = isYou ? 2 : 1;
+    ctx.stroke();
+
+    // Label
+    ctx.font = isYou ? '700 12px system-ui' : '11px system-ui';
+    ctx.fillStyle = '#e2e8f0';
+    ctx.textAlign = x < pad.left+plotW/2 ? 'left' : 'right';
+    const lx = x < pad.left+plotW/2 ? x+r+5 : x-r-5;
+    ctx.fillText(label, lx, y+4);
+  }
+
+  // Pricing level to number
+  const pMap = { budget:1.5, mid:2.5, high:3.5, premium:4.5 };
+  const colors = ['#ec4899','#3b82f6','#22c55e','#f59e0b','#06b6d4','#f97316','#8b5cf6','#14b8a6'];
+
+  // Plot competitors
+  state.competitors.forEach((c,i) => {
+    const px = pMap[c.pricing] || 2.5;
+    const qy = parseFloat(c.portfolio) || 2.5;
+    plotDot(px, qy, colors[i%colors.length], c.name.split(' ')[0], false);
+  });
+
+  // Plot self last (on top)
+  plotDot(state.myPos.price, state.myPos.quality, '#a855f7', 'You', true);
+}
+
+function renderMapLegend() {
+  const legend = document.getElementById('mapLegend');
+  const colors = ['#ec4899','#3b82f6','#22c55e','#f59e0b','#06b6d4','#f97316','#8b5cf6','#14b8a6'];
+  legend.innerHTML = `<div><span class="legend-dot" style="background:#a855f7;display:inline-block"></span> You</div>` +
+    state.competitors.map((c,i)=>`<div><span class="legend-dot" style="background:${colors[i%colors.length]};display:inline-block"></span> ${escHtml(c.name)}</div>`).join('');
+}
+
+function roundRect(ctx,x,y,w,h,r){ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);}
+
+// ==================== WIZARD ====================
+const WIZARD_STEPS = [
+  { q:'What is your primary freelance service or skill?', ph:'e.g. Brand identity design, SEO copywriting, React development', key:'service' },
+  { q:'Who is your ideal client? (industry, company size, role)', ph:'e.g. B2B SaaS startups, 10-50 employees, marketing team', key:'client' },
+  { q:'What result do your clients get? (be specific)', ph:'e.g. 3x more leads from their website, launch in 4 weeks', key:'result' },
+  { q:"What's one thing competitors consistently fail to deliver?", ph:'e.g. Clear communication, on-time delivery, strategic thinking', key:'gap' },
+  { q:'What makes your process or approach different?', ph:'e.g. Strategy-first, collaborative workshops, data-driven decisions', key:'approach' },
+];
+
+function renderWizard() {
+  const nav = document.getElementById('wizardNav');
+  const steps = document.getElementById('wizardSteps');
+  const current = state.wizard.step || 0;
+
+  nav.innerHTML = WIZARD_STEPS.map((_,i)=>`<div class="wizard-dot${i===current?' active':i<current?' done':''}"></div>`).join('');
+
+  if (current >= WIZARD_STEPS.length) {
+    steps.innerHTML = buildUVP();
+    return;
+  }
+
+  const step = WIZARD_STEPS[current];
+  steps.innerHTML = `
+    <div class="wizard-step active">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Step ${current+1} of ${WIZARD_STEPS.length}</div>
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">${step.q}</h3>
+      <textarea class="form-control" id="wizardInput" placeholder="${step.ph}" rows="3" style="font-size:15px">${state.wizard.answers[step.key]||''}</textarea>
+      <div style="display:flex;gap:12px;margin-top:16px;justify-content:space-between">
+        <button class="btn btn-secondary" onclick="wizardBack()" ${current===0?'disabled':''}>← Back</button>
+        <button class="btn btn-primary" onclick="wizardNext()">
+          ${current===WIZARD_STEPS.length-1?'Build My UVP ✨':'Next →'}
+        </button>
+      </div>
+    </div>
+  `;
+  setTimeout(()=>{const el=document.getElementById('wizardInput');if(el)el.focus();},50);
+}
+
+function wizardNext() {
+  const val = document.getElementById('wizardInput').value.trim();
+  if (!val) { alert('Please answer this question before continuing.'); return; }
+  state.wizard.answers[WIZARD_STEPS[state.wizard.step].key] = val;
+  state.wizard.step = (state.wizard.step||0) + 1;
+  save();
+  renderWizard();
+}
+
+function wizardBack() {
+  if (state.wizard.step > 0) { state.wizard.step--; save(); renderWizard(); }
+}
+
+function buildUVP() {
+  const a = state.wizard.answers;
+  const gap = a.gap ? `Unlike competitors who struggle with ${a.gap.toLowerCase()}, ` : '';
+  const uvp = `I help ${a.client||'businesses'} ${a.result||'achieve their goals'} through ${a.service||'my services'}. ${gap}my ${a.approach||'unique approach'} delivers results that typical ${a.service||'service providers'} can't.`;
+
+  const headline = `${a.service||'Expert Freelancer'} for ${a.client||'Growing Businesses'}`;
+  const sub = `Get ${a.result||'real results'} without the hassle of ${a.gap||'poor communication and missed deadlines'}.`;
+
+  return `
+    <div style="margin-bottom:24px">
+      <div style="font-size:13px;color:var(--green);font-weight:600;margin-bottom:16px">✅ Your Competitive Advantage is ready!</div>
+      <h3 style="font-size:15px;color:var(--muted);margin-bottom:8px">Full UVP Statement</h3>
+      <div class="uvp-result">${escHtml(uvp)}</div>
+    </div>
+    <div class="grid-2" style="margin-bottom:24px">
+      <div class="card-sm">
+        <div class="comp-label">Headline</div>
+        <div style="font-size:16px;font-weight:700;margin-top:4px">${escHtml(headline)}</div>
+      </div>
+      <div class="card-sm">
+        <div class="comp-label">Sub-headline</div>
+        <div style="font-size:14px;margin-top:4px">${escHtml(sub)}</div>
+      </div>
+    </div>
+    <div class="card-sm" style="margin-bottom:20px">
+      <div class="comp-label" style="margin-bottom:10px">Your Answers</div>
+      ${WIZARD_STEPS.map(s=>`<div style="margin-bottom:8px"><span style="font-size:11px;color:var(--accent1);font-weight:600">${s.q.split('?')[0]}?</span><div style="font-size:13px;margin-top:2px">${escHtml(a[s.key]||'—')}</div></div>`).join('')}
+    </div>
+    <button class="btn btn-secondary" onclick="state.wizard={step:0,answers:{}};save();renderWizard()">🔄 Start Over</button>
+  `;
+}
+
+// ==================== MONITORING ====================
+function saveLog() {
+  const desc = document.getElementById('lDesc').value.trim();
+  if (!desc) { alert('Please describe the activity you observed.'); return; }
+  const compId = document.getElementById('lCompetitor').value;
+  const comp = state.competitors.find(c=>c.id===compId);
+  const entry = {
+    id: uid(),
+    competitorId: compId,
+    competitorName: comp ? comp.name : 'Unknown',
+    type: document.getElementById('lType').value,
+    date: document.getElementById('lDate').value || new Date().toISOString().split('T')[0],
+    desc,
+    impact: document.getElementById('lImpact').value
+  };
+  state.logs.unshift(entry);
+  save();
+  closeModal('addLog');
+  renderLogs();
+  renderStats();
+}
+
+function deleteLog(id) {
+  state.logs = state.logs.filter(l=>l.id!==id);
+  save();
+  renderLogs();
+  renderStats();
+}
+
+function renderLogs() {
+  const el = document.getElementById('logList');
+  const empty = document.getElementById('logEmpty');
+  const sorted = [...state.logs].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if (!sorted.length) { el.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+  const typeClass = { pricing:'type-pricing', service:'type-service', portfolio:'type-portfolio', marketing:'type-marketing', other:'type-other' };
+  const typeLabel = { pricing:'Pricing', service:'New Service', portfolio:'Portfolio', marketing:'Marketing', other:'Other' };
+  const impactColor = { low:'var(--muted)', medium:'var(--yellow)', high:'var(--red)' };
+  el.innerHTML = sorted.map(l=>`
+    <div class="log-item">
+      <div class="log-dot" style="background:${impactColor[l.impact]||'var(--accent1)'}"></div>
+      <div style="flex:1">
+        <div class="log-date">${formatDate(l.date)} <span class="log-type ${typeClass[l.type]||'type-other'}">${typeLabel[l.type]||l.type}</span></div>
+        <div class="log-text">${escHtml(l.desc)}</div>
+        <div class="log-competitor">${escHtml(l.competitorName||'Unknown')} · Impact: ${l.impact||'medium'}</div>
+      </div>
+      <button class="btn btn-icon" onclick="deleteLog('${l.id}')" title="Delete entry" style="flex-shrink:0">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M19 6l-1 14H6L5 6M9 6V4h6v2"/></svg>
+      </button>
+    </div>
+  `).join('');
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  try {
+    return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  } catch(e){ return d; }
+}
+
+// ==================== EXPORT ====================
+function exportCSV() {
+  if (!state.competitors.length) { alert('No competitor data to export.'); return; }
+  const headers = ['Name','Website','Services','Pricing','Target Market','Experience (yrs)','Turnaround','Rating','USP','Strengths','Weaknesses','Specializations','Portfolio Quality','Notes'];
+  const rows = state.competitors.map(c => [
+    c.name,c.website,c.services,c.pricing,c.target,c.experience,c.turnaround,c.rating,c.usp,c.strengths,c.weaknesses,c.spec,c.portfolio,c.notes
+  ].map(v => `"${(v||'').replace(/"/g,'""')}"`));
+  const csv = [headers.join(','), ...rows.map(r=>r.join(','))].join('\n');
+  download('competitor-data.csv', csv, 'text/csv');
+}
+
+function exportHTML() {
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Competitor Analysis Report — ${new Date().toLocaleDateString()}</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:900px;margin:40px auto;padding:20px;color:#1e293b}
+h1{color:#7c3aed;border-bottom:3px solid #7c3aed;padding-bottom:12px}
+h2{color:#4c1d95;margin-top:32px}
+table{width:100%;border-collapse:collapse;margin-bottom:24px}
+th{background:#f3f0ff;padding:10px 14px;text-align:left;font-weight:600;color:#4c1d95;border-bottom:2px solid #c4b5fd}
+td{padding:10px 14px;border-bottom:1px solid #e9d5ff;font-size:13px}
+tr:nth-child(even) td{background:#faf5ff}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600}
+.budget{background:#dcfce7;color:#166534}.mid{background:#fef9c3;color:#854d0e}
+.high{background:#fee2e2;color:#991b1b}.premium{background:#f3e8ff;color:#6b21a8}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid #e9d5ff;font-size:12px;color:#6b7280}
+</style></head><body>
+<h1>Freelance Competitor Analysis Report</h1>
+<p>Generated: ${new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</p>
+<h2>Competitor Overview (${state.competitors.length} tracked)</h2>
+<table><thead><tr><th>Name</th><th>Services</th><th>Pricing</th><th>Target Market</th><th>USP</th><th>Rating</th></tr></thead>
+<tbody>${state.competitors.map(c=>`<tr><td><strong>${escHtml(c.name)}</strong>${c.website?`<br><a href="${escHtml(c.website)}">${escHtml(c.website)}</a>`:''}</td><td>${escHtml(c.services||'—')}</td><td><span class="badge ${c.pricing||''}">${c.pricing||'—'}</span></td><td>${escHtml(c.target||'—')}</td><td>${escHtml(c.usp||'—')}</td><td>${c.rating?c.rating+'/5':'—'}</td></tr>`).join('')}</tbody></table>
+<h2>Pricing Intelligence (${state.pricing.length} entries)</h2>
+${state.pricing.length?`<table><thead><tr><th>Service</th><th>Competitor</th><th>Their Price</th><th>Your Price</th><th>Difference</th></tr></thead><tbody>${state.pricing.map(p=>{const d=p.theirPrice>0?((p.yourPrice-p.theirPrice)/p.theirPrice*100):0;return`<tr><td>${escHtml(p.service)}</td><td>${escHtml(p.competitorName||'Unknown')}</td><td>$${p.theirPrice.toLocaleString()}</td><td>$${p.yourPrice.toLocaleString()}</td><td style="color:${d>0?'green':d<0?'red':'inherit'}">${d!==0?(d>0?'+':'')+d.toFixed(0)+'%':'—'}</td></tr>`}).join('')}</tbody></table>`:'<p>No pricing data entered.</p>'}
+<h2>SWOT Analysis</h2>
+<table><tr><th>Strengths (${state.swot.S.length})</th><th>Weaknesses (${state.swot.W.length})</th></tr>
+<tr><td style="vertical-align:top;color:#166534">${state.swot.S.map(s=>`• ${escHtml(s.text)}`).join('<br>')||'None added'}</td>
+<td style="vertical-align:top;color:#991b1b">${state.swot.W.map(s=>`• ${escHtml(s.text)}`).join('<br>')||'None added'}</td></tr>
+<tr><th>Opportunities (${state.swot.O.length})</th><th>Threats (${state.swot.T.length})</th></tr>
+<tr><td style="vertical-align:top;color:#1d4ed8">${state.swot.O.map(s=>`• ${escHtml(s.text)}`).join('<br>')||'None added'}</td>
+<td style="vertical-align:top;color:#b45309">${state.swot.T.map(s=>`• ${escHtml(s.text)}`).join('<br>')||'None added'}</td></tr></table>
+<h2>Activity Log (${state.logs.length} entries)</h2>
+${state.logs.length?`<table><thead><tr><th>Date</th><th>Competitor</th><th>Type</th><th>Activity</th><th>Impact</th></tr></thead><tbody>${state.logs.map(l=>`<tr><td>${l.date}</td><td>${escHtml(l.competitorName||'Unknown')}</td><td>${l.type}</td><td>${escHtml(l.desc)}</td><td>${l.impact||'medium'}</td></tr>`).join('')}</tbody></table>`:'<p>No activity logged.</p>'}
+<footer>Generated by FreelanceOS Competitor Analysis Tracker — <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40">Get FreelanceOS Pro</a> | Tool #74</footer>
+</body></html>`;
+  download('competitor-analysis-report.html', html, 'text/html');
+}
+
+function exportSWOT() {
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>SWOT Analysis — FreelanceOS</title>
+<style>
+@media print{body{margin:0}}
+body{font-family:system-ui,sans-serif;margin:0;padding:0;background:#fff}
+.page{max-width:800px;margin:0 auto;padding:32px}
+h1{font-size:24px;font-weight:800;color:#7c3aed;margin-bottom:4px}
+.subtitle{color:#6b7280;font-size:14px;margin-bottom:32px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.quad{border-radius:12px;padding:20px;min-height:200px}
+.s{background:#f0fdf4;border-top:4px solid #22c55e}.w{background:#fef2f2;border-top:4px solid #ef4444}
+.o{background:#eff6ff;border-top:4px solid #3b82f6}.t{background:#fffbeb;border-top:4px solid #f59e0b}
+h2{font-size:14px;font-weight:700;margin-bottom:12px}
+.s h2{color:#166534}.w h2{color:#991b1b}.o h2{color:#1d4ed8}.t h2{color:#92400e}
+li{font-size:13px;margin-bottom:6px;color:#374151}
+footer{margin-top:32px;text-align:center;font-size:11px;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:16px}
+</style></head><body><div class="page">
+<h1>SWOT Analysis</h1>
+<div class="subtitle">Generated ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} · FreelanceOS Competitor Tracker</div>
+<div class="grid">
+<div class="quad s"><h2>● Strengths</h2><ul>${state.swot.S.map(s=>`<li>${escHtml(s.text)}</li>`).join('')||'<li style="color:#9ca3af">None added</li>'}</ul></div>
+<div class="quad w"><h2>● Weaknesses</h2><ul>${state.swot.W.map(s=>`<li>${escHtml(s.text)}</li>`).join('')||'<li style="color:#9ca3af">None added</li>'}</ul></div>
+<div class="quad o"><h2>● Opportunities</h2><ul>${state.swot.O.map(s=>`<li>${escHtml(s.text)}</li>`).join('')||'<li style="color:#9ca3af">None added</li>'}</ul></div>
+<div class="quad t"><h2>● Threats</h2><ul>${state.swot.T.map(s=>`<li>${escHtml(s.text)}</li>`).join('')||'<li style="color:#9ca3af">None added</li>'}</ul></div>
+</div>
+<footer>FreelanceOS Competitor Tracker · Tool #74 · Use Ctrl+P / Cmd+P to print</footer>
+</div></body></html>`;
+  const w = window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+  setTimeout(()=>w.print(), 500);
+}
+
+function download(filename, content, type) {
+  const blob = new Blob([content], { type });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function clearAllData() {
+  if (!confirm('Clear ALL data? This cannot be undone.')) return;
+  state = { competitors:[], pricing:[], swot:{S:[],W:[],O:[],T:[]}, logs:[], wizard:{step:0,answers:{}}, myPos:{price:3,quality:3} };
+  save();
+  renderDirectory();
+  renderStats();
+  alert('All data cleared.');
+}
+
+function loadSampleData() {
+  if (state.competitors.length && !confirm('Loading sample data will add to existing data. Continue?')) return;
+  const samples = [
+    { id:uid(), name:'DesignByAlex', website:'https://designbyalex.com', services:'Logo Design, Brand Identity, Business Cards', pricing:'mid', target:'Small businesses, Restaurants', experience:'4', turnaround:'2-3 weeks', rating:'4.2', usp:'Unlimited revisions', strengths:'Fast turnaround, friendly', weaknesses:'No strategy, cookie-cutter work', spec:'Food & beverage', portfolio:'3', notes:'Active on Instagram, posts daily' },
+    { id:uid(), name:'StudioMaestro', website:'https://studiomaestro.co', services:'Brand Strategy, Visual Identity, Web Design', pricing:'premium', target:'Tech startups, VC-backed companies', experience:'9', turnaround:'6-8 weeks', rating:'4.8', usp:'Strategy-led brand design', strengths:'Premium positioning, deep portfolio, thought leadership', weaknesses:'Expensive, slow, hard to reach', spec:'SaaS, B2B Tech', portfolio:'5', notes:'Featured in Design Weekly, strong case studies' },
+    { id:uid(), name:'QuickLogos.io', website:'https://quicklogos.io', services:'Logo Design, Simple Branding', pricing:'budget', target:'Solopreneurs, early startups', experience:'2', turnaround:'48 hours', rating:'3.6', usp:'Logos in 48 hours starting at $99', strengths:'Extremely fast, affordable', weaknesses:'Low quality, no strategy, high churn', spec:'', portfolio:'2', notes:'High volume, low quality model. Uses templates.' },
+    { id:uid(), name:'The Brand Collective', website:'https://thebrandcollective.agency', services:'Branding, Packaging, Digital Marketing, Social Media', pricing:'high', target:'Consumer brands, e-commerce, CPG', experience:'7', turnaround:'4-6 weeks', rating:'4.5', usp:'Full-service brand agency experience at freelancer prices', strengths:'Full-service, strong client list, great case studies', weaknesses:'Inconsistent quality, too many services, slow comms', spec:'Consumer goods, lifestyle brands', portfolio:'4', notes:'Team of 3-4 people masquerading as solo freelancers' },
+  ];
+  samples.forEach(s => { s.added = new Date().toISOString(); state.competitors.push(s); });
+  state.pricing.push(
+    { id:uid(), competitorId:samples[0].id, competitorName:samples[0].name, service:'Logo Design Package', theirPrice:850, yourPrice:1200, position:'mid', notes:'Includes 3 concepts, unlimited revisions', date:new Date().toISOString() },
+    { id:uid(), competitorId:samples[1].id, competitorName:samples[1].name, service:'Brand Identity System', theirPrice:8500, yourPrice:4500, position:'premium', notes:'Full system inc. strategy, guidelines, assets', date:new Date().toISOString() },
+    { id:uid(), competitorId:samples[2].id, competitorName:samples[2].name, service:'Logo Design', theirPrice:149, yourPrice:1200, position:'budget', notes:'Template-based, 2 revisions', date:new Date().toISOString() },
+  );
+  state.logs.push(
+    { id:uid(), competitorId:samples[0].id, competitorName:samples[0].name, type:'pricing', date:'2026-06-10', desc:'Raised logo package price from $650 to $850. Added new social media kit upsell at $250.', impact:'medium' },
+    { id:uid(), competitorId:samples[1].id, competitorName:samples[1].name, type:'service', date:'2026-06-05', desc:'Launched new "Brand Sprint" 5-day intensive package for $3,500. Targeting early-stage startups.', impact:'high' },
+    { id:uid(), competitorId:samples[3].id, competitorName:samples[3].name, type:'marketing', date:'2026-06-01', desc:'Started posting daily case study threads on LinkedIn. Growing fast — 200 followers in 2 weeks.', impact:'medium' },
+  );
+  state.swot.S = [{id:uid(),text:'Deep specialization in SaaS brands'},{id:uid(),text:'10+ years of strategic brand experience'},{id:uid(),text:'Rapid 2-week delivery process'}];
+  state.swot.W = [{id:uid(),text:'Limited consumer brand portfolio'},{id:uid(),text:'No packaging design capability yet'}];
+  state.swot.O = [{id:uid(),text:'Studio Maestro too expensive for seed-stage startups — gap to fill'},{id:uid(),text:'Quick turnaround demand from bootstrapped founders'}];
+  state.swot.T = [{id:uid(),text:'AI logo tools commoditizing entry-level design'},{id:uid(),text:'QuickLogos.io undercutting on price'}];
+  save();
+  renderDirectory();
+  renderStats();
+  alert(`Sample data loaded! ${samples.length} competitors, ${state.pricing.length} pricing entries, and more added.`);
+}
+
+// ==================== UTILS ====================
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ==================== INIT ====================
+function init() {
+  load();
+  renderDirectory();
+  renderStats();
+  renderSwot();
+
+  // Set map sliders to saved values
+  const px = document.getElementById('myPrice');
+  const pq = document.getElementById('myQuality');
+  if (px) { px.value = state.myPos.price; document.getElementById('myPriceVal').textContent = state.myPos.price; }
+  if (pq) { pq.value = state.myPos.quality; document.getElementById('myQualityVal').textContent = state.myPos.quality; }
+
+  // Set today's date in log modal default
+  const lDate = document.getElementById('lDate');
+  if (lDate) lDate.value = new Date().toISOString().split('T')[0];
+
+  // Redraw map on resize
+  window.addEventListener('resize', () => {
+    if (document.getElementById('section-map').classList.contains('active')) {
+      drawMap(); renderMapLegend();
+    }
+  });
+}
+
+init();
+</script>
+</body>
+</html>

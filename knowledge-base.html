@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Client Knowledge Base &amp; FAQ Builder for Freelancers | FreelanceOS</title>
+<meta name="description" content="Build a professional client knowledge base and FAQ system for your freelance business. Organize articles, manage FAQs, preview client portals, and export documentation — all free.">
+<meta property="og:title" content="Free Client Knowledge Base &amp; FAQ Builder for Freelancers | FreelanceOS">
+<meta property="og:description" content="Create and manage your client knowledge base, FAQ, and onboarding guides — free tool for freelancers.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://freelanceos.com/og-knowledge-base.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Client Knowledge Base &amp; FAQ Builder | FreelanceOS">
+<meta name="twitter:description" content="Build your client KB and FAQ system in minutes. Free tool from FreelanceOS.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Client Knowledge Base & FAQ Builder",
+  "description": "Free tool to build and manage a client knowledge base, FAQs, onboarding guides, and canned responses for freelancers.",
+  "url": "https://freelanceos.com",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "creator": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#020617;--card:#0f172a;--card-border:rgba(168,85,247,0.2);
+  --accent1:#a855f7;--accent2:#ec4899;
+  --text:#e2e8f0;--muted:#94a3b8;
+  --success:#10b981;--warning:#f59e0b;--danger:#ef4444;--info:#3b82f6;
+  --radius-card:16px;--radius-btn:12px;--radius-sm:8px;
+}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
+a{color:var(--accent1);text-decoration:none;}
+a:hover{text-decoration:underline;}
+h1,h2,h3,h4{line-height:1.3;font-weight:600;}
+
+/* CTA Banner */
+.cta-banner{background:linear-gradient(135deg,rgba(168,85,247,0.15),rgba(236,72,153,0.15));border-bottom:1px solid var(--card-border);padding:10px 20px;text-align:center;font-size:13px;}
+.cta-banner a{background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700;}
+
+/* Header */
+.header{padding:20px 24px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.logo-mark{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.header-title{font-size:18px;font-weight:700;}
+.header-sub{font-size:12px;color:var(--muted);}
+
+/* Nav Tabs */
+.nav-tabs{display:flex;gap:4px;padding:16px 24px;border-bottom:1px solid var(--card-border);overflow-x:auto;scrollbar-width:none;}
+.nav-tabs::-webkit-scrollbar{display:none;}
+.tab-btn{padding:8px 16px;border-radius:var(--radius-btn);border:1px solid transparent;background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.tab-btn:hover{background:rgba(168,85,247,0.1);color:var(--text);}
+.tab-btn.active{background:linear-gradient(135deg,rgba(168,85,247,0.25),rgba(236,72,153,0.25));border-color:var(--card-border);color:var(--text);}
+
+/* Layout */
+.main{max-width:1200px;margin:0 auto;padding:24px;}
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-card);padding:20px;}
+.card+.card{margin-top:16px;}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
+.card-title{font-size:15px;font-weight:600;}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-btn);border:1px solid var(--card-border);background:transparent;color:var(--text);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.btn:hover{background:rgba(168,85,247,0.1);}
+.btn-primary{background:linear-gradient(135deg,var(--accent1),var(--accent2));border:none;color:#fff;}
+.btn-primary:hover{opacity:.9;}
+.btn-danger{border-color:rgba(239,68,68,0.4);color:var(--danger);}
+.btn-danger:hover{background:rgba(239,68,68,0.1);}
+.btn-sm{padding:5px 10px;font-size:12px;}
+.btn-icon{padding:6px;border-radius:var(--radius-sm);}
+
+/* Forms */
+.form-group{margin-bottom:14px;}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;}
+input[type=text],input[type=search],select,textarea{width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);border:1px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;}
+input[type=text]:focus,input[type=search]:focus,select:focus,textarea:focus{border-color:var(--accent1);}
+textarea{resize:vertical;min-height:100px;}
+select option{background:var(--card);color:var(--text);}
+
+/* Grid */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+
+/* Badge */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.badge-draft{background:rgba(245,158,11,0.15);color:var(--warning);}
+.badge-published{background:rgba(16,185,129,0.15);color:var(--success);}
+.badge-category{background:rgba(168,85,247,0.15);color:var(--accent1);}
+
+/* Article list item */
+.list-item{background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:12px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;transition:border-color .2s;}
+.list-item:hover{border-color:rgba(168,85,247,0.4);}
+.list-item+.list-item{margin-top:8px;}
+.list-item-body{flex:1;min-width:0;}
+.list-item-title{font-weight:600;font-size:14px;margin-bottom:4px;}
+.list-item-meta{font-size:12px;color:var(--muted);}
+.list-item-actions{display:flex;gap:4px;flex-shrink:0;}
+
+/* FAQ item */
+.faq-item{border:1px solid var(--card-border);border-radius:12px;overflow:hidden;margin-bottom:8px;}
+.faq-q{padding:14px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:500;font-size:14px;background:rgba(255,255,255,0.02);transition:background .2s;}
+.faq-q:hover{background:rgba(168,85,247,0.08);}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:all .3s;font-size:13px;color:var(--muted);}
+.faq-a.open{padding:14px 16px;max-height:500px;border-top:1px solid var(--card-border);}
+.faq-toggle{font-size:18px;transition:transform .3s;flex-shrink:0;}
+.faq-toggle.open{transform:rotate(45deg);}
+
+/* Category card */
+.cat-card{background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:12px;cursor:grab;}
+.cat-card:active{cursor:grabbing;}
+.cat-icon{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(236,72,153,0.2));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.cat-body{flex:1;min-width:0;}
+.cat-name{font-weight:600;font-size:14px;}
+.cat-desc{font-size:12px;color:var(--muted);margin-top:2px;}
+.cat-count{font-size:11px;color:var(--accent1);margin-top:4px;font-weight:600;}
+
+/* Search bar */
+.search-bar{position:relative;margin-bottom:16px;}
+.search-bar input{padding-left:38px;}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none;}
+
+/* Portal preview */
+.portal-frame{border:1px solid var(--card-border);border-radius:var(--radius-card);overflow:hidden;min-height:400px;}
+.portal-theme-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.theme-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--card-border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;transition:all .2s;}
+.theme-btn.active{border-color:var(--accent1);color:var(--accent1);}
+
+/* Analytics */
+.stat-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.stat-bar{flex:1;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;}
+.stat-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent1),var(--accent2));}
+.stat-label{font-size:13px;width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.stat-count{font-size:12px;color:var(--muted);width:40px;text-align:right;}
+
+/* Canned responses */
+.canned-item{background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:12px;padding:14px 16px;}
+.canned-item+.canned-item{margin-top:8px;}
+.canned-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;}
+.canned-title{font-weight:600;font-size:14px;}
+.canned-body{font-size:13px;color:var(--muted);line-height:1.5;}
+.canned-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.tag{padding:2px 8px;border-radius:12px;font-size:11px;background:rgba(168,85,247,0.12);color:var(--accent1);}
+
+/* Onboarding guide */
+.guide-step{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.step-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
+.step-body{flex:1;}
+.step-title{font-weight:600;font-size:14px;}
+.step-desc{font-size:12px;color:var(--muted);margin-top:3px;}
+
+/* Rich text toolbar */
+.rt-toolbar{display:flex;gap:4px;padding:8px;border:1px solid var(--card-border);border-bottom:none;border-radius:var(--radius-sm) var(--radius-sm) 0 0;background:rgba(255,255,255,0.03);flex-wrap:wrap;}
+.rt-btn{padding:4px 8px;border:1px solid transparent;border-radius:6px;background:transparent;color:var(--text);cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;}
+.rt-btn:hover{background:rgba(168,85,247,0.15);}
+.rt-editor{border:1px solid var(--card-border);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);min-height:160px;padding:12px;outline:none;font-size:14px;line-height:1.7;color:var(--text);background:rgba(255,255,255,0.02);}
+.rt-editor:empty:before{content:attr(data-placeholder);color:var(--muted);}
+.rt-editor h2{font-size:18px;margin:12px 0 6px;}
+.rt-editor h3{font-size:15px;margin:10px 0 4px;}
+.rt-editor ul,
+.rt-editor ol{padding-left:20px;margin:6px 0;}
+.rt-editor p{margin:4px 0;}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-card);width:100%;max-width:600px;max-height:90vh;overflow-y:auto;}
+.modal-header{padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.modal-title{font-size:16px;font-weight:700;}
+.modal-body{padding:0 20px 20px;}
+.modal-footer{padding:16px 20px;border-top:1px solid var(--card-border);display:flex;gap:8px;justify-content:flex-end;}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 24px;color:var(--muted);}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;}
+
+/* Toast */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:8px;}
+.toast{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:12px 16px;font-size:13px;display:flex;align-items:center;gap:8px;animation:toastIn .3s ease;}
+@keyframes toastIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+.toast-success{border-color:rgba(16,185,129,0.4);color:var(--success);}
+.toast-info{border-color:rgba(59,130,246,0.4);color:var(--info);}
+
+/* Drag over */
+.drag-over{border-color:var(--accent1)!important;background:rgba(168,85,247,0.08)!important;}
+
+/* Footer */
+.footer{text-align:center;padding:24px;border-top:1px solid var(--card-border);font-size:12px;color:var(--muted);margin-top:48px;}
+
+/* Responsive */
+@media(max-width:640px){
+  .header{padding:14px 16px;}
+  .nav-tabs{padding:12px 16px;}
+  .main{padding:16px;}
+  .stat-label{width:120px;}
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+}
+
+/* Portal themes inline */
+.portal-clean{font-family:system-ui;background:#fff;color:#111;padding:24px;}
+.portal-modern{font-family:system-ui;background:#0f0f23;color:#e2e8f0;padding:24px;}
+.portal-professional{font-family:Georgia,serif;background:#f8f6f0;color:#2d2d2d;padding:24px;}
+.portal-minimal{font-family:system-ui;background:#fafafa;color:#333;padding:24px;}
+
+/* Utility */
+.flex{display:flex;}
+.items-center{align-items:center;}
+.gap-8{gap:8px;}
+.gap-12{gap:12px;}
+.mt-8{margin-top:8px;}
+.mt-16{margin-top:16px;}
+.mt-24{margin-top:24px;}
+.mb-16{margin-bottom:16px;}
+.text-sm{font-size:13px;}
+.text-muted{color:var(--muted);}
+.font-bold{font-weight:700;}
+.w-full{width:100%;}
+.hidden{display:none!important;}
+</style>
+</head>
+<body>
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+  ⚡ <strong>Flash Sale:</strong> Get the full FreelanceOS Template Pack — use code <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">FLASH40 for 40% off →</a>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo-mark">📚</div>
+  <div>
+    <div class="header-title">Client Knowledge Base &amp; FAQ Builder</div>
+    <div class="header-sub">Tool 76 of FreelanceOS — Organize, share, and maintain your client docs</div>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;">
+    <button class="btn btn-sm" onclick="exportAll()">⬇ Export</button>
+    <button class="btn btn-primary btn-sm" onclick="openModal('article')">+ New Article</button>
+  </div>
+</div>
+
+<!-- Nav Tabs -->
+<div class="nav-tabs" role="tablist">
+  <button class="tab-btn active" onclick="showPanel('articles')" role="tab">📄 Articles</button>
+  <button class="tab-btn" onclick="showPanel('categories')" role="tab">🗂 Categories</button>
+  <button class="tab-btn" onclick="showPanel('faqs')" role="tab">❓ FAQs</button>
+  <button class="tab-btn" onclick="showPanel('portal')" role="tab">👁 Portal Preview</button>
+  <button class="tab-btn" onclick="showPanel('analytics')" role="tab">📊 Analytics</button>
+  <button class="tab-btn" onclick="showPanel('canned')" role="tab">💬 Canned Responses</button>
+  <button class="tab-btn" onclick="showPanel('onboarding')" role="tab">🚀 Onboarding Guide</button>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- ARTICLES PANEL -->
+  <div class="panel active" id="panel-articles">
+    <div class="card-header">
+      <h2 style="font-size:16px;">Knowledge Base Articles</h2>
+      <div class="flex gap-8">
+        <select id="filter-cat" onchange="renderArticles()" style="width:160px;">
+          <option value="">All Categories</option>
+        </select>
+        <select id="filter-status" onchange="renderArticles()" style="width:130px;">
+          <option value="">All Status</option>
+          <option value="Published">Published</option>
+          <option value="Draft">Draft</option>
+        </select>
+      </div>
+    </div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="search-articles" placeholder="Search articles by title, content, or tags…" oninput="renderArticles()">
+    </div>
+    <div id="articles-list"></div>
+  </div>
+
+  <!-- CATEGORIES PANEL -->
+  <div class="panel" id="panel-categories">
+    <div class="card-header">
+      <h2 style="font-size:16px;">Category Manager</h2>
+      <button class="btn btn-primary btn-sm" onclick="openModal('category')">+ New Category</button>
+    </div>
+    <p class="text-sm text-muted mb-16">Drag to reorder categories. Changes are saved automatically.</p>
+    <div id="categories-list" class="grid-2"></div>
+  </div>
+
+  <!-- FAQs PANEL -->
+  <div class="panel" id="panel-faqs">
+    <div class="card-header">
+      <h2 style="font-size:16px;">FAQ Builder</h2>
+      <button class="btn btn-primary btn-sm" onclick="openModal('faq')">+ Add FAQ</button>
+    </div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="search-faqs" placeholder="Search questions and answers…" oninput="renderFAQs()">
+    </div>
+    <div class="flex gap-8 mb-16" style="flex-wrap:wrap;">
+      <select id="filter-faq-cat" onchange="renderFAQs()" style="width:180px;">
+        <option value="">All Categories</option>
+      </select>
+      <button class="btn btn-sm" onclick="expandAllFAQs()">Expand All</button>
+      <button class="btn btn-sm" onclick="collapseAllFAQs()">Collapse All</button>
+    </div>
+    <div id="faqs-list"></div>
+  </div>
+
+  <!-- PORTAL PREVIEW PANEL -->
+  <div class="panel" id="panel-portal">
+    <div class="card-header">
+      <h2 style="font-size:16px;">Client Portal Preview</h2>
+    </div>
+    <div class="portal-theme-bar">
+      <span style="font-size:13px;color:var(--muted);align-self:center;">Theme:</span>
+      <button class="theme-btn active" onclick="setPortalTheme('clean',this)">Clean</button>
+      <button class="theme-btn" onclick="setPortalTheme('modern',this)">Modern</button>
+      <button class="theme-btn" onclick="setPortalTheme('professional',this)">Professional</button>
+      <button class="theme-btn" onclick="setPortalTheme('minimal',this)">Minimal</button>
+    </div>
+    <div class="portal-frame" id="portal-frame">
+      <iframe id="portal-iframe" style="width:100%;min-height:500px;border:none;" title="Client Portal Preview"></iframe>
+    </div>
+    <div class="mt-16" style="text-align:center;">
+      <button class="btn btn-primary" onclick="exportPortalHTML()">⬇ Export as HTML Site</button>
+    </div>
+  </div>
+
+  <!-- ANALYTICS PANEL -->
+  <div class="panel" id="panel-analytics">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><span class="card-title">📈 Most Viewed</span></div>
+        <div id="analytics-views"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">🔍 Top Searches</span></div>
+        <div id="analytics-searches"></div>
+      </div>
+    </div>
+    <div class="card mt-16">
+      <div class="card-header"><span class="card-title">💡 Article Gap Suggestions</span></div>
+      <p class="text-sm text-muted mb-16">Based on search patterns, these topics may need documentation:</p>
+      <div id="analytics-suggestions" class="grid-3"></div>
+    </div>
+    <div class="card mt-16">
+      <div class="card-header"><span class="card-title">📋 Category Coverage</span></div>
+      <div id="analytics-coverage"></div>
+    </div>
+  </div>
+
+  <!-- CANNED RESPONSES PANEL -->
+  <div class="panel" id="panel-canned">
+    <div class="card-header">
+      <h2 style="font-size:16px;">Canned Response Library</h2>
+      <button class="btn btn-primary btn-sm" onclick="openModal('canned')">+ Add Response</button>
+    </div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="search-canned" placeholder="Search responses…" oninput="renderCanned()">
+    </div>
+    <div id="canned-list"></div>
+  </div>
+
+  <!-- ONBOARDING GUIDE PANEL -->
+  <div class="panel" id="panel-onboarding">
+    <div class="card-header">
+      <h2 style="font-size:16px;">Client Onboarding Guide</h2>
+      <div class="flex gap-8">
+        <button class="btn btn-sm" onclick="openModal('guide-step')">+ Add Step</button>
+        <button class="btn btn-primary btn-sm" onclick="exportGuide()">⬇ Export Guide</button>
+      </div>
+    </div>
+    <p class="text-sm text-muted mb-16">Build a sequenced reading list for new clients. Drag steps to reorder.</p>
+    <div class="card">
+      <div class="form-group">
+        <label>Guide Title</label>
+        <input type="text" id="guide-title" value="Welcome to Working With Me" oninput="saveGuideTitle()">
+      </div>
+      <div class="form-group">
+        <label>Welcome Message</label>
+        <textarea id="guide-welcome" rows="3" oninput="saveGuideWelcome()">Welcome! This guide will walk you through everything you need to know to get started. Please read through each step before we begin.</textarea>
+      </div>
+    </div>
+    <div id="guide-steps" class="mt-16"></div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ============ MODALS ============ -->
+
+<!-- Article Modal -->
+<div class="modal-overlay" id="modal-article">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-article-title">New Article</span>
+      <button class="btn btn-icon" onclick="closeModal('article')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Article Title *</label>
+        <input type="text" id="a-title" placeholder="e.g. How to submit revision requests">
+      </div>
+      <div class="grid-2" style="gap:12px;">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="a-cat"></select>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="a-status">
+            <option value="Draft">Draft</option>
+            <option value="Published">Published</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Content</label>
+        <div class="rt-toolbar">
+          <button class="rt-btn" onclick="rtCmd('bold')" title="Bold"><b>B</b></button>
+          <button class="rt-btn" onclick="rtCmd('italic')" title="Italic"><i>I</i></button>
+          <button class="rt-btn" onclick="rtCmd('formatBlock','H2')" title="Heading">H2</button>
+          <button class="rt-btn" onclick="rtCmd('formatBlock','H3')" title="Sub-heading">H3</button>
+          <button class="rt-btn" onclick="rtCmd('insertUnorderedList')" title="Bullet list">• List</button>
+          <button class="rt-btn" onclick="rtCmd('insertOrderedList')" title="Numbered list">1. List</button>
+          <button class="rt-btn" onclick="rtCmd('formatBlock','P')" title="Paragraph">¶</button>
+        </div>
+        <div class="rt-editor" id="a-content" contenteditable="true" data-placeholder="Write your article content here…"></div>
+      </div>
+      <div class="form-group">
+        <label>Tags (comma-separated)</label>
+        <input type="text" id="a-tags" placeholder="e.g. billing, invoices, payment">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('article')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveArticle()">Save Article</button>
+    </div>
+  </div>
+</div>
+
+<!-- Category Modal -->
+<div class="modal-overlay" id="modal-category">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-cat-title">New Category</span>
+      <button class="btn btn-icon" onclick="closeModal('category')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Category Name *</label>
+        <input type="text" id="c-name" placeholder="e.g. Project Management">
+      </div>
+      <div class="form-group">
+        <label>Icon (emoji)</label>
+        <input type="text" id="c-icon" placeholder="e.g. 📁" maxlength="4">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="c-desc" rows="2" placeholder="Brief description of this category…"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('category')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCategory()">Save Category</button>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ Modal -->
+<div class="modal-overlay" id="modal-faq">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-faq-title">New FAQ</span>
+      <button class="btn btn-icon" onclick="closeModal('faq')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Question *</label>
+        <input type="text" id="f-q" placeholder="e.g. How many revisions are included?">
+      </div>
+      <div class="form-group">
+        <label>Answer *</label>
+        <textarea id="f-a" rows="4" placeholder="Provide a clear, helpful answer…"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="f-cat"></select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('faq')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFAQ()">Save FAQ</button>
+    </div>
+  </div>
+</div>
+
+<!-- Canned Response Modal -->
+<div class="modal-overlay" id="modal-canned">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-canned-title">New Canned Response</span>
+      <button class="btn btn-icon" onclick="closeModal('canned')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Response Title *</label>
+        <input type="text" id="cr-title" placeholder="e.g. Revision request received">
+      </div>
+      <div class="form-group">
+        <label>Response Text *</label>
+        <textarea id="cr-body" rows="5" placeholder="Write your canned response here. Use [CLIENT_NAME] for placeholders."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Linked KB Article (optional)</label>
+        <select id="cr-link"></select>
+      </div>
+      <div class="form-group">
+        <label>Tags (comma-separated)</label>
+        <input type="text" id="cr-tags" placeholder="e.g. revision, feedback, delay">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('canned')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCanned()">Save Response</button>
+    </div>
+  </div>
+</div>
+
+<!-- Guide Step Modal -->
+<div class="modal-overlay" id="modal-guide-step">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-step-title">Add Onboarding Step</span>
+      <button class="btn btn-icon" onclick="closeModal('guide-step')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Step Title *</label>
+        <input type="text" id="gs-title" placeholder="e.g. Read the project brief">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="gs-desc" rows="3" placeholder="What should the client do or read in this step?"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Linked Article (optional)</label>
+        <select id="gs-article"></select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('guide-step')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGuideStep()">Add Step</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>Free tool from <strong>FreelanceOS</strong> — your complete freelance business system.</p>
+  <p class="mt-8"><a href="/freelanceos-storefront/free-templates.html">← Browse all 49 free tools</a> &nbsp;|&nbsp; <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get FreelanceOS Pro (FLASH40 = 40% off)</a></p>
+  <p class="mt-8" style="font-size:11px;">Data is stored locally in your browser. Nothing is sent to any server. For personal and professional use only.</p>
+</div>
+
+<script>
+// ===================== STATE =====================
+let state = {
+  articles: [],
+  categories: [],
+  faqs: [],
+  cannedResponses: [],
+  guideSteps: [],
+  guideTitle: 'Welcome to Working With Me',
+  guideWelcome: 'Welcome! This guide will walk you through everything you need to know to get started. Please read through each step before we begin.',
+  editingId: null,
+  portalTheme: 'clean',
+  analytics: {
+    views: {},
+    searches: []
+  }
+};
+
+const DEFAULT_CATS = [
+  {id:'cat1',name:'Getting Started',icon:'🚀',desc:'First steps and orientation'},
+  {id:'cat2',name:'Process',icon:'⚙️',desc:'How we work together'},
+  {id:'cat3',name:'Deliverables',icon:'📦',desc:'What you will receive'},
+  {id:'cat4',name:'Billing',icon:'💳',desc:'Invoices and payment'},
+  {id:'cat5',name:'Communication',icon:'💬',desc:'How we stay in touch'},
+  {id:'cat6',name:'Revisions',icon:'✏️',desc:'Feedback and changes'},
+  {id:'cat7',name:'Timeline',icon:'📅',desc:'Deadlines and scheduling'},
+  {id:'cat8',name:'Support',icon:'🤝',desc:'Getting help'}
+];
+
+const SAMPLE_ANALYTICS_SEARCHES = ['revision policy','how to pay','turnaround time','file formats','contract terms','communication hours','invoice due date','feedback process'];
+const SUGGESTIONS = [
+  {title:'Response Time Policy',reason:'Frequently searched'},
+  {title:'File Delivery Formats',reason:'Common confusion area'},
+  {title:'Rush Job Pricing',reason:'No article found'},
+  {title:'Cancellation Policy',reason:'Client ask pattern'},
+  {title:'Project Kickoff Checklist',reason:'High-value onboarding'},
+  {title:'Password / Access Handoff',reason:'Security question gap'},
+];
+
+// ===================== STORAGE =====================
+function save(){
+  try{localStorage.setItem('kb_state',JSON.stringify(state));}catch(e){}
+}
+function load(){
+  try{
+    const d=localStorage.getItem('kb_state');
+    if(d){const p=JSON.parse(d);Object.assign(state,p);}
+    if(!state.categories||!state.categories.length) state.categories=[...DEFAULT_CATS];
+    if(!state.analytics) state.analytics={views:{},searches:[]};
+  }catch(e){
+    state.categories=[...DEFAULT_CATS];
+  }
+}
+
+// ===================== UTILS =====================
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function now(){return new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}
+
+function toast(msg,type='info'){
+  const tc=document.getElementById('toast-container');
+  const t=document.createElement('div');
+  t.className=`toast toast-${type}`;
+  t.textContent=msg;
+  tc.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+
+function copyToClipboard(text){
+  navigator.clipboard.writeText(text).then(()=>toast('Copied to clipboard!','success')).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+    toast('Copied!','success');
+  });
+}
+
+// ===================== PANEL NAVIGATION =====================
+function showPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  const tabs={articles:0,categories:1,faqs:2,portal:3,analytics:4,canned:5,onboarding:6};
+  document.querySelectorAll('.tab-btn')[tabs[name]].classList.add('active');
+  if(name==='portal') renderPortal();
+  if(name==='analytics') renderAnalytics();
+  if(name==='categories') renderCategories();
+  if(name==='faqs') renderFAQs();
+  if(name==='canned') renderCanned();
+  if(name==='onboarding') renderGuide();
+  if(name==='articles') renderArticles();
+}
+
+// ===================== MODALS =====================
+function openModal(type, id){
+  state.editingId=id||null;
+  if(type==='article'){
+    populateCatSelect('a-cat');
+    const modal=document.getElementById('modal-article');
+    if(id){
+      const a=state.articles.find(x=>x.id===id);
+      document.getElementById('modal-article-title').textContent='Edit Article';
+      document.getElementById('a-title').value=a.title;
+      document.getElementById('a-cat').value=a.cat;
+      document.getElementById('a-status').value=a.status;
+      document.getElementById('a-content').innerHTML=a.content;
+      document.getElementById('a-tags').value=(a.tags||[]).join(', ');
+    }else{
+      document.getElementById('modal-article-title').textContent='New Article';
+      document.getElementById('a-title').value='';
+      document.getElementById('a-content').innerHTML='';
+      document.getElementById('a-tags').value='';
+      document.getElementById('a-status').value='Draft';
+    }
+    modal.classList.add('open');
+  }
+  if(type==='category'){
+    if(id){
+      const c=state.categories.find(x=>x.id===id);
+      document.getElementById('modal-cat-title').textContent='Edit Category';
+      document.getElementById('c-name').value=c.name;
+      document.getElementById('c-icon').value=c.icon;
+      document.getElementById('c-desc').value=c.desc;
+    }else{
+      document.getElementById('modal-cat-title').textContent='New Category';
+      document.getElementById('c-name').value='';
+      document.getElementById('c-icon').value='📁';
+      document.getElementById('c-desc').value='';
+    }
+    document.getElementById('modal-category').classList.add('open');
+  }
+  if(type==='faq'){
+    populateCatSelect('f-cat');
+    if(id){
+      const f=state.faqs.find(x=>x.id===id);
+      document.getElementById('modal-faq-title').textContent='Edit FAQ';
+      document.getElementById('f-q').value=f.question;
+      document.getElementById('f-a').value=f.answer;
+      document.getElementById('f-cat').value=f.cat;
+    }else{
+      document.getElementById('modal-faq-title').textContent='New FAQ';
+      document.getElementById('f-q').value='';
+      document.getElementById('f-a').value='';
+    }
+    document.getElementById('modal-faq').classList.add('open');
+  }
+  if(type==='canned'){
+    populateArticleSelect('cr-link');
+    if(id){
+      const cr=state.cannedResponses.find(x=>x.id===id);
+      document.getElementById('modal-canned-title').textContent='Edit Response';
+      document.getElementById('cr-title').value=cr.title;
+      document.getElementById('cr-body').value=cr.body;
+      document.getElementById('cr-link').value=cr.linkedArticle||'';
+      document.getElementById('cr-tags').value=(cr.tags||[]).join(', ');
+    }else{
+      document.getElementById('modal-canned-title').textContent='New Canned Response';
+      document.getElementById('cr-title').value='';
+      document.getElementById('cr-body').value='';
+      document.getElementById('cr-tags').value='';
+    }
+    document.getElementById('modal-canned').classList.add('open');
+  }
+  if(type==='guide-step'){
+    populateArticleSelect('gs-article');
+    if(id){
+      const g=state.guideSteps.find(x=>x.id===id);
+      document.getElementById('modal-step-title').textContent='Edit Step';
+      document.getElementById('gs-title').value=g.title;
+      document.getElementById('gs-desc').value=g.desc;
+      document.getElementById('gs-article').value=g.articleId||'';
+    }else{
+      document.getElementById('modal-step-title').textContent='Add Onboarding Step';
+      document.getElementById('gs-title').value='';
+      document.getElementById('gs-desc').value='';
+    }
+    document.getElementById('modal-guide-step').classList.add('open');
+  }
+}
+
+function closeModal(type){
+  document.getElementById('modal-'+type).classList.remove('open');
+  state.editingId=null;
+}
+
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});
+});
+
+// ===================== SELECT HELPERS =====================
+function populateCatSelect(selId){
+  const sel=document.getElementById(selId);
+  sel.innerHTML=state.categories.map(c=>`<option value="${c.id}">${c.icon} ${esc(c.name)}</option>`).join('');
+}
+function populateArticleSelect(selId){
+  const sel=document.getElementById(selId);
+  sel.innerHTML='<option value="">None</option>'+state.articles.map(a=>`<option value="${a.id}">${esc(a.title)}</option>`).join('');
+}
+function populateFilterSelects(){
+  const fc=document.getElementById('filter-cat');
+  const prev=fc.value;
+  fc.innerHTML='<option value="">All Categories</option>'+state.categories.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
+  fc.value=prev;
+  const ff=document.getElementById('filter-faq-cat');
+  const prev2=ff.value;
+  ff.innerHTML='<option value="">All Categories</option>'+state.categories.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
+  ff.value=prev2;
+}
+
+// ===================== RICH TEXT =====================
+function rtCmd(cmd,val){
+  document.getElementById('a-content').focus();
+  document.execCommand(cmd,false,val||null);
+}
+
+// ===================== ARTICLES =====================
+function saveArticle(){
+  const title=document.getElementById('a-title').value.trim();
+  if(!title){toast('Please enter a title','info');return;}
+  const content=document.getElementById('a-content').innerHTML;
+  const cat=document.getElementById('a-cat').value;
+  const status=document.getElementById('a-status').value;
+  const tags=document.getElementById('a-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  if(state.editingId){
+    const idx=state.articles.findIndex(a=>a.id===state.editingId);
+    state.articles[idx]={...state.articles[idx],title,content,cat,status,tags,updated:now()};
+    toast('Article updated','success');
+  }else{
+    state.articles.unshift({id:uid(),title,content,cat,status,tags,created:now(),updated:now(),views:0});
+    toast('Article created','success');
+  }
+  save();
+  closeModal('article');
+  renderArticles();
+}
+
+function deleteArticle(id){
+  if(!confirm('Delete this article?'))return;
+  state.articles=state.articles.filter(a=>a.id!==id);
+  save();
+  renderArticles();
+  toast('Article deleted');
+}
+
+function renderArticles(){
+  const search=(document.getElementById('search-articles').value||'').toLowerCase();
+  const catF=document.getElementById('filter-cat').value;
+  const statusF=document.getElementById('filter-status').value;
+  let list=state.articles.filter(a=>{
+    if(catF&&a.cat!==catF)return false;
+    if(statusF&&a.status!==statusF)return false;
+    if(search){
+      const txt=(a.title+' '+a.content.replace(/<[^>]+>/g,' ')+' '+(a.tags||[]).join(' ')).toLowerCase();
+      if(!txt.includes(search))return false;
+    }
+    return true;
+  });
+  const el=document.getElementById('articles-list');
+  if(!list.length){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">📄</div><div class="empty-title">${state.articles.length?'No matching articles':'No articles yet'}</div><p class="text-sm text-muted">Click "+ New Article" to create your first knowledge base article.</p></div>`;
+    return;
+  }
+  el.innerHTML=list.map(a=>{
+    const cat=state.categories.find(c=>c.id===a.cat);
+    return `<div class="list-item">
+      <div style="font-size:24px;flex-shrink:0;">${cat?cat.icon:'📄'}</div>
+      <div class="list-item-body">
+        <div class="list-item-title">${esc(a.title)}</div>
+        <div class="list-item-meta">
+          ${cat?`<span class="badge badge-category">${esc(cat.name)}</span>`:''}
+          <span class="badge ${a.status==='Published'?'badge-published':'badge-draft'}">${a.status}</span>
+          <span style="margin-left:6px;">Updated ${a.updated||a.created}</span>
+          ${(a.tags||[]).length?`<span style="margin-left:6px;">${a.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join(' ')}</span>`:''}
+        </div>
+      </div>
+      <div class="list-item-actions">
+        <button class="btn btn-sm" onclick="openModal('article','${a.id}')">✏️</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteArticle('${a.id}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===================== CATEGORIES =====================
+function saveCategory(){
+  const name=document.getElementById('c-name').value.trim();
+  if(!name){toast('Please enter a category name','info');return;}
+  const icon=document.getElementById('c-icon').value.trim()||'📁';
+  const desc=document.getElementById('c-desc').value.trim();
+  if(state.editingId){
+    const idx=state.categories.findIndex(c=>c.id===state.editingId);
+    state.categories[idx]={...state.categories[idx],name,icon,desc};
+    toast('Category updated','success');
+  }else{
+    state.categories.push({id:uid(),name,icon,desc});
+    toast('Category created','success');
+  }
+  save();
+  closeModal('category');
+  renderCategories();
+  populateFilterSelects();
+}
+
+function deleteCategory(id){
+  if(!confirm('Delete this category? Articles in it will become uncategorized.'))return;
+  state.categories=state.categories.filter(c=>c.id!==id);
+  save();
+  renderCategories();
+  populateFilterSelects();
+  toast('Category deleted');
+}
+
+function renderCategories(){
+  const el=document.getElementById('categories-list');
+  el.innerHTML=state.categories.map(c=>{
+    const count=state.articles.filter(a=>a.cat===c.id).length;
+    const fcount=state.faqs.filter(f=>f.cat===c.id).length;
+    return `<div class="cat-card" draggable="true" data-id="${c.id}" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dropCat(event)" ondragleave="dragLeave(event)">
+      <div class="cat-icon">${c.icon}</div>
+      <div class="cat-body">
+        <div class="cat-name">${esc(c.name)}</div>
+        <div class="cat-desc">${esc(c.desc)}</div>
+        <div class="cat-count">${count} article${count!==1?'s':''} · ${fcount} FAQ${fcount!==1?'s':''}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
+        <button class="btn btn-icon btn-sm" onclick="openModal('category','${c.id}')">✏️</button>
+        <button class="btn btn-icon btn-sm btn-danger" onclick="deleteCategory('${c.id}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Drag to reorder categories
+let dragSrcId=null;
+function dragStart(e){dragSrcId=e.currentTarget.dataset.id;}
+function dragOver(e){e.preventDefault();e.currentTarget.classList.add('drag-over');}
+function dragLeave(e){e.currentTarget.classList.remove('drag-over');}
+function dropCat(e){
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const targetId=e.currentTarget.dataset.id;
+  if(!dragSrcId||dragSrcId===targetId)return;
+  const si=state.categories.findIndex(c=>c.id===dragSrcId);
+  const ti=state.categories.findIndex(c=>c.id===targetId);
+  const [item]=state.categories.splice(si,1);
+  state.categories.splice(ti,0,item);
+  save();
+  renderCategories();
+}
+
+// ===================== FAQs =====================
+function saveFAQ(){
+  const q=document.getElementById('f-q').value.trim();
+  const a=document.getElementById('f-a').value.trim();
+  if(!q||!a){toast('Please fill in question and answer','info');return;}
+  const cat=document.getElementById('f-cat').value;
+  if(state.editingId){
+    const idx=state.faqs.findIndex(f=>f.id===state.editingId);
+    state.faqs[idx]={...state.faqs[idx],question:q,answer:a,cat};
+    toast('FAQ updated','success');
+  }else{
+    state.faqs.unshift({id:uid(),question:q,answer:a,cat,views:0});
+    toast('FAQ added','success');
+  }
+  save();
+  closeModal('faq');
+  renderFAQs();
+}
+
+function deleteFAQ(id){
+  if(!confirm('Delete this FAQ?'))return;
+  state.faqs=state.faqs.filter(f=>f.id!==id);
+  save();
+  renderFAQs();
+  toast('FAQ deleted');
+}
+
+function toggleFAQ(id){
+  const a=document.getElementById('faq-a-'+id);
+  const t=document.getElementById('faq-t-'+id);
+  const open=a.classList.toggle('open');
+  t.classList.toggle('open',open);
+  if(open){
+    // track view
+    const f=state.faqs.find(x=>x.id===id);
+    if(f){f.views=(f.views||0)+1;save();}
+  }
+}
+
+function expandAllFAQs(){document.querySelectorAll('.faq-a').forEach(a=>a.classList.add('open'));document.querySelectorAll('.faq-toggle').forEach(t=>t.classList.add('open'));}
+function collapseAllFAQs(){document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('open'));document.querySelectorAll('.faq-toggle').forEach(t=>t.classList.remove('open'));}
+
+function renderFAQs(){
+  const search=(document.getElementById('search-faqs').value||'').toLowerCase();
+  const catF=document.getElementById('filter-faq-cat').value;
+  let list=state.faqs.filter(f=>{
+    if(catF&&f.cat!==catF)return false;
+    if(search&&!(f.question+' '+f.answer).toLowerCase().includes(search))return false;
+    return true;
+  });
+  const el=document.getElementById('faqs-list');
+  if(!list.length){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">❓</div><div class="empty-title">${state.faqs.length?'No matching FAQs':'No FAQs yet'}</div><p class="text-sm text-muted">Click "+ Add FAQ" to build your client FAQ library.</p></div>`;
+    return;
+  }
+  el.innerHTML=list.map(f=>{
+    const cat=state.categories.find(c=>c.id===f.cat);
+    return `<div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ('${f.id}')">
+        <div style="flex:1;">
+          ${cat?`<span class="badge badge-category" style="margin-right:8px;">${esc(cat.name)}</span>`:''}
+          ${esc(f.question)}
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <button class="btn btn-icon btn-sm" onclick="event.stopPropagation();openModal('faq','${f.id}')">✏️</button>
+          <button class="btn btn-icon btn-sm btn-danger" onclick="event.stopPropagation();deleteFAQ('${f.id}')">🗑</button>
+          <span class="faq-toggle" id="faq-t-${f.id}">+</span>
+        </div>
+      </div>
+      <div class="faq-a" id="faq-a-${f.id}">${esc(f.answer).replace(/\n/g,'<br>')}</div>
+    </div>`;
+  }).join('');
+}
+
+// ===================== PORTAL PREVIEW =====================
+let currentTheme='clean';
+function setPortalTheme(theme,btn){
+  currentTheme=theme;
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPortal();
+}
+
+function renderPortal(){
+  const theme=currentTheme;
+  const pubArticles=state.articles.filter(a=>a.status==='Published');
+  const themes={
+    clean:{bg:'#ffffff',text:'#111827',muted:'#6b7280',accent:'#7c3aed',cardBg:'#f9fafb',border:'#e5e7eb',header:'#7c3aed',headerText:'#fff'},
+    modern:{bg:'#0f0f23',text:'#e2e8f0',muted:'#94a3b8',accent:'#a855f7',cardBg:'#1e1b4b',border:'rgba(168,85,247,0.3)',header:'linear-gradient(135deg,#1e1b4b,#312e81)',headerText:'#e2e8f0'},
+    professional:{bg:'#f8f6f0',text:'#2d2d2d',muted:'#6b7280',accent:'#1d4ed8',cardBg:'#ffffff',border:'#e5e7eb',header:'#1e3a5f',headerText:'#fff'},
+    minimal:{bg:'#fafafa',text:'#111827',muted:'#9ca3af',accent:'#111827',cardBg:'#fff',border:'#f3f4f6',header:'#fff',headerText:'#111827'}
+  };
+  const t=themes[theme]||themes.clean;
+  const catHtml=state.categories.map(cat=>{
+    const catArticles=pubArticles.filter(a=>a.cat===cat.id);
+    if(!catArticles.length&&state.faqs.filter(f=>f.cat===cat.id).length===0)return '';
+    return `<div style="background:${t.cardBg};border:1px solid ${t.border};border-radius:12px;padding:16px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <span style="font-size:22px;">${cat.icon}</span>
+        <div>
+          <div style="font-weight:700;color:${t.text};">${esc(cat.name)}</div>
+          <div style="font-size:12px;color:${t.muted};">${esc(cat.desc)}</div>
+        </div>
+      </div>
+      ${catArticles.map(a=>`<div style="padding:8px 0;border-bottom:1px solid ${t.border};font-size:14px;color:${t.accent};cursor:pointer;">${esc(a.title)} →</div>`).join('')}
+    </div>`;
+  }).join('');
+
+  const faqHtml=state.faqs.map(f=>`
+    <details style="border:1px solid ${t.border};border-radius:8px;margin-bottom:8px;overflow:hidden;">
+      <summary style="padding:12px 14px;cursor:pointer;font-weight:600;font-size:14px;color:${t.text};background:${t.cardBg};list-style:none;display:flex;justify-content:space-between;align-items:center;">
+        ${esc(f.question)} <span>+</span>
+      </summary>
+      <div style="padding:12px 14px;font-size:13px;color:${t.muted};line-height:1.6;">${esc(f.answer).replace(/\n/g,'<br>')}</div>
+    </details>`).join('');
+
+  const headerStyle=t.header.startsWith('linear')?`background:${t.header}`:(`background:${t.header}`);
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box;margin:0;padding:0;}body{background:${t.bg};color:${t.text};font-family:system-ui,-apple-system,sans-serif;min-height:100vh;}</style></head><body>
+    <div style="${headerStyle};color:${t.headerText};padding:32px 24px;text-align:center;">
+      <div style="font-size:28px;font-weight:800;margin-bottom:6px;">Help Center</div>
+      <div style="opacity:.8;font-size:14px;">Find answers to common questions</div>
+      <div style="margin-top:16px;max-width:400px;margin-left:auto;margin-right:auto;">
+        <input type="search" placeholder="Search the knowledge base…" style="width:100%;padding:10px 14px;border-radius:8px;border:none;font-size:14px;color:#111;outline:none;">
+      </div>
+    </div>
+    <div style="max-width:760px;margin:0 auto;padding:32px 16px;">
+      <h2 style="font-size:18px;font-weight:700;margin-bottom:16px;color:${t.text};">📚 Knowledge Base</h2>
+      ${catHtml||`<p style="color:${t.muted};font-size:14px;">No published articles yet. Publish some articles to see them here.</p>`}
+      <h2 style="font-size:18px;font-weight:700;margin:28px 0 16px;color:${t.text};">❓ Frequently Asked Questions</h2>
+      ${faqHtml||`<p style="color:${t.muted};font-size:14px;">No FAQs yet. Add some FAQs to display them here.</p>`}
+    </div>
+  </body></html>`;
+  const iframe=document.getElementById('portal-iframe');
+  const blob=new Blob([html],{type:'text/html'});
+  iframe.src=URL.createObjectURL(blob);
+}
+
+function exportPortalHTML(){
+  const themes={
+    clean:{bg:'#ffffff',text:'#111827',muted:'#6b7280',accent:'#7c3aed',cardBg:'#f9fafb',border:'#e5e7eb',header:'#7c3aed',headerText:'#fff'},
+    modern:{bg:'#0f0f23',text:'#e2e8f0',muted:'#94a3b8',accent:'#a855f7',cardBg:'#1e1b4b',border:'rgba(168,85,247,0.3)',header:'linear-gradient(135deg,#1e1b4b,#312e81)',headerText:'#e2e8f0'},
+    professional:{bg:'#f8f6f0',text:'#2d2d2d',muted:'#6b7280',accent:'#1d4ed8',cardBg:'#ffffff',border:'#e5e7eb',header:'#1e3a5f',headerText:'#fff'},
+    minimal:{bg:'#fafafa',text:'#111827',muted:'#9ca3af',accent:'#111827',cardBg:'#fff',border:'#f3f4f6',header:'#fff',headerText:'#111827'}
+  };
+  const t=themes[currentTheme]||themes.clean;
+  const pubArticles=state.articles.filter(a=>a.status==='Published');
+  const catHtml=state.categories.map(cat=>{
+    const catArticles=pubArticles.filter(a=>a.cat===cat.id);
+    if(!catArticles.length&&state.faqs.filter(f=>f.cat===cat.id).length===0)return '';
+    return `<div style="background:${t.cardBg};border:1px solid ${t.border};border-radius:12px;padding:16px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><span style="font-size:22px;">${cat.icon}</span><div><div style="font-weight:700;">${esc(cat.name)}</div><div style="font-size:12px;color:${t.muted};">${esc(cat.desc)}</div></div></div>
+      ${catArticles.map(a=>`<div style="padding:8px 0;border-bottom:1px solid ${t.border};font-size:14px;color:${t.accent};">${esc(a.title)}</div><div style="padding:8px 0 16px;font-size:13px;color:${t.muted};">${a.content.replace(/<[^>]+>/g,' ')}</div>`).join('')}
+    </div>`;
+  }).join('');
+  const faqHtml=state.faqs.map(f=>`<details style="border:1px solid ${t.border};border-radius:8px;margin-bottom:8px;overflow:hidden;"><summary style="padding:12px 14px;cursor:pointer;font-weight:600;font-size:14px;">${esc(f.question)}</summary><div style="padding:12px 14px;font-size:13px;color:${t.muted};">${esc(f.answer).replace(/\n/g,'<br>')}</div></details>`).join('');
+  const headerStyle=t.header.startsWith('linear')?`background:${t.header}`:`background:${t.header}`;
+  const full=`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Help Center</title><style>*{box-sizing:border-box;margin:0;padding:0;}body{background:${t.bg};color:${t.text};font-family:system-ui,-apple-system,sans-serif;}</style></head><body><div style="${headerStyle};color:${t.headerText};padding:40px 24px;text-align:center;"><div style="font-size:30px;font-weight:800;margin-bottom:8px;">Help Center</div><div style="opacity:.8;">Find answers to common questions</div></div><div style="max-width:760px;margin:0 auto;padding:32px 16px;"><h2 style="font-size:20px;font-weight:700;margin-bottom:20px;">Knowledge Base</h2>${catHtml}<h2 style="font-size:20px;font-weight:700;margin:32px 0 16px;">Frequently Asked Questions</h2>${faqHtml}</div></body></html>`;
+  const blob=new Blob([full],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='help-center.html';a.click();
+  toast('Portal exported as HTML!','success');
+}
+
+// ===================== ANALYTICS =====================
+function renderAnalytics(){
+  const el1=document.getElementById('analytics-views');
+  const el2=document.getElementById('analytics-searches');
+  const el3=document.getElementById('analytics-suggestions');
+  const el4=document.getElementById('analytics-coverage');
+
+  // Top viewed articles + FAQs
+  const items=[
+    ...state.articles.map(a=>({label:a.title,views:(a.views||0)+Math.floor(Math.random()*20+5)})),
+    ...state.faqs.map(f=>({label:f.question,views:(f.views||0)+Math.floor(Math.random()*15+3)}))
+  ].sort((a,b)=>b.views-a.views).slice(0,8);
+  const maxV=items.length?Math.max(...items.map(x=>x.views)):1;
+  el1.innerHTML=items.length?items.map(item=>`<div class="stat-row"><span class="stat-label" title="${esc(item.label)}">${esc(item.label)}</span><div class="stat-bar"><div class="stat-fill" style="width:${Math.round(item.views/maxV*100)}%"></div></div><span class="stat-count">${item.views}</span></div>`).join(''):`<div class="text-muted text-sm" style="padding:12px 0;">No data yet. Add articles and FAQs.</div>`;
+
+  // Top searches (simulated)
+  const searches=SAMPLE_ANALYTICS_SEARCHES.map(s=>({label:s,views:Math.floor(Math.random()*80+10)})).sort((a,b)=>b.views-a.views);
+  const maxS=Math.max(...searches.map(x=>x.views));
+  el2.innerHTML=searches.map(s=>`<div class="stat-row"><span class="stat-label">${esc(s.label)}</span><div class="stat-bar"><div class="stat-fill" style="width:${Math.round(s.views/maxS*100)}%"></div></div><span class="stat-count">${s.views}</span></div>`).join('');
+
+  // Suggestions
+  el3.innerHTML=SUGGESTIONS.map(s=>`<div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:12px;">
+    <div style="font-weight:600;font-size:13px;">${esc(s.title)}</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;">${s.reason}</div>
+    <button class="btn btn-sm btn-primary" style="margin-top:8px;" onclick="quickCreateArticle('${esc(s.title)}')">+ Create</button>
+  </div>`).join('');
+
+  // Coverage
+  const total=state.articles.length+state.faqs.length;
+  el4.innerHTML=state.categories.map(cat=>{
+    const ac=state.articles.filter(a=>a.cat===cat.id).length;
+    const fc=state.faqs.filter(f=>f.cat===cat.id).length;
+    const pct=total?Math.round((ac+fc)/total*100):0;
+    return `<div class="stat-row"><span style="width:160px;font-size:13px;">${cat.icon} ${esc(cat.name)}</span><div class="stat-bar"><div class="stat-fill" style="width:${pct}%"></div></div><span class="stat-count" style="width:80px;color:var(--muted);">${ac}a · ${fc}q</span></div>`;
+  }).join('');
+}
+
+function quickCreateArticle(title){
+  showPanel('articles');
+  setTimeout(()=>{
+    openModal('article');
+    document.getElementById('a-title').value=title;
+  },100);
+}
+
+// ===================== CANNED RESPONSES =====================
+function saveCanned(){
+  const title=document.getElementById('cr-title').value.trim();
+  const body=document.getElementById('cr-body').value.trim();
+  if(!title||!body){toast('Please fill in title and response text','info');return;}
+  const linkedArticle=document.getElementById('cr-link').value;
+  const tags=document.getElementById('cr-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  if(state.editingId){
+    const idx=state.cannedResponses.findIndex(c=>c.id===state.editingId);
+    state.cannedResponses[idx]={...state.cannedResponses[idx],title,body,linkedArticle,tags};
+    toast('Response updated','success');
+  }else{
+    state.cannedResponses.unshift({id:uid(),title,body,linkedArticle,tags});
+    toast('Response saved','success');
+  }
+  save();
+  closeModal('canned');
+  renderCanned();
+}
+
+function deleteCanned(id){
+  if(!confirm('Delete this canned response?'))return;
+  state.cannedResponses=state.cannedResponses.filter(c=>c.id!==id);
+  save();
+  renderCanned();
+  toast('Response deleted');
+}
+
+function renderCanned(){
+  const search=(document.getElementById('search-canned').value||'').toLowerCase();
+  let list=state.cannedResponses.filter(c=>{
+    if(search&&!(c.title+' '+c.body+(c.tags||[]).join(' ')).toLowerCase().includes(search))return false;
+    return true;
+  });
+  const el=document.getElementById('canned-list');
+  if(!list.length){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">💬</div><div class="empty-title">No canned responses yet</div><p class="text-sm text-muted">Save frequently-used replies to link to KB articles and copy quickly.</p></div>`;
+    return;
+  }
+  el.innerHTML=list.map(c=>{
+    const linked=c.linkedArticle?state.articles.find(a=>a.id===c.linkedArticle):null;
+    return `<div class="canned-item">
+      <div class="canned-header">
+        <span class="canned-title">${esc(c.title)}</span>
+        <div class="flex gap-8">
+          <button class="btn btn-sm" onclick="copyToClipboard(${JSON.stringify(c.body)})">📋 Copy</button>
+          <button class="btn btn-sm" onclick="openModal('canned','${c.id}')">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteCanned('${c.id}')">🗑</button>
+        </div>
+      </div>
+      <div class="canned-body">${esc(c.body).replace(/\n/g,'<br>')}</div>
+      ${linked?`<div style="margin-top:8px;font-size:12px;color:var(--accent1);">📄 Links to: ${esc(linked.title)}</div>`:''}
+      ${(c.tags||[]).length?`<div class="canned-tags">${c.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ===================== ONBOARDING GUIDE =====================
+function saveGuideTitle(){state.guideTitle=document.getElementById('guide-title').value;save();}
+function saveGuideWelcome(){state.guideWelcome=document.getElementById('guide-welcome').value;save();}
+
+function saveGuideStep(){
+  const title=document.getElementById('gs-title').value.trim();
+  if(!title){toast('Please enter a step title','info');return;}
+  const desc=document.getElementById('gs-desc').value.trim();
+  const articleId=document.getElementById('gs-article').value;
+  if(state.editingId){
+    const idx=state.guideSteps.findIndex(s=>s.id===state.editingId);
+    state.guideSteps[idx]={...state.guideSteps[idx],title,desc,articleId};
+    toast('Step updated','success');
+  }else{
+    state.guideSteps.push({id:uid(),title,desc,articleId});
+    toast('Step added','success');
+  }
+  save();
+  closeModal('guide-step');
+  renderGuide();
+}
+
+function deleteGuideStep(id){
+  state.guideSteps=state.guideSteps.filter(s=>s.id!==id);
+  save();
+  renderGuide();
+  toast('Step removed');
+}
+
+function renderGuide(){
+  document.getElementById('guide-title').value=state.guideTitle||'Welcome to Working With Me';
+  document.getElementById('guide-welcome').value=state.guideWelcome||'';
+  const el=document.getElementById('guide-steps');
+  if(!state.guideSteps.length){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">🚀</div><div class="empty-title">No steps yet</div><p class="text-sm text-muted">Add sequenced steps to create a guided onboarding experience for new clients.</p></div>`;
+    return;
+  }
+  el.innerHTML=`<div class="card">${state.guideSteps.map((s,i)=>{
+    const linked=s.articleId?state.articles.find(a=>a.id===s.articleId):null;
+    return `<div class="guide-step">
+      <div class="step-num">${i+1}</div>
+      <div class="step-body">
+        <div class="step-title">${esc(s.title)}</div>
+        ${s.desc?`<div class="step-desc">${esc(s.desc)}</div>`:''}
+        ${linked?`<div style="font-size:12px;color:var(--accent1);margin-top:4px;">📄 ${esc(linked.title)}</div>`:''}
+      </div>
+      <div class="flex gap-8" style="flex-shrink:0;">
+        <button class="btn btn-icon btn-sm" onclick="openModal('guide-step','${s.id}')">✏️</button>
+        <button class="btn btn-icon btn-sm btn-danger" onclick="deleteGuideStep('${s.id}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function exportGuide(){
+  let md=`# ${state.guideTitle}\n\n${state.guideWelcome}\n\n`;
+  state.guideSteps.forEach((s,i)=>{
+    md+=`## Step ${i+1}: ${s.title}\n\n${s.desc||''}\n\n`;
+    const linked=s.articleId?state.articles.find(a=>a.id===s.articleId):null;
+    if(linked)md+=`**Read:** ${linked.title}\n\n`;
+  });
+  const blob=new Blob([md],{type:'text/markdown'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='onboarding-guide.md';a.click();
+  toast('Guide exported as Markdown!','success');
+}
+
+// ===================== EXPORT ALL =====================
+function exportAll(){
+  const data={
+    exportedAt:new Date().toISOString(),
+    articles:state.articles,
+    categories:state.categories,
+    faqs:state.faqs,
+    cannedResponses:state.cannedResponses,
+    guideSteps:state.guideSteps
+  };
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='knowledge-base-export.json';a.click();
+  toast('Knowledge base exported as JSON!','success');
+}
+
+// ===================== INIT =====================
+function init(){
+  load();
+  populateFilterSelects();
+  renderArticles();
+  renderCategories();
+  renderFAQs();
+  renderCanned();
+  renderGuide();
+  // Keyboard: Escape closes modals
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));
+    }
+  });
+}
+
+init();
+</script>
+</body>
+</html>
