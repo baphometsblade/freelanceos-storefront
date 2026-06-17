@@ -1,0 +1,2219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Invoice Batch Processor for Freelancers | FreelanceOS</title>
+<meta name="description" content="Free weekly invoice batch processor for freelancers. Manage clients, log hours, generate professional invoices, track payments, and send reminders — all in one tool.">
+<meta property="og:title" content="Free Invoice Batch Processor for Freelancers | FreelanceOS">
+<meta property="og:description" content="Generate all your weekly invoices in one click. Client manager, time tracking, payment reminders, and batch processing — free forever.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.com/tools/invoice-batch">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Invoice Batch Processor for Freelancers | FreelanceOS">
+<meta name="twitter:description" content="Generate all your weekly invoices in one click. Client manager, time tracking, payment reminders — free forever.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Weekly Invoice Batch Processor",
+  "description": "Free invoice batch processor for freelancers with client management, time logging, payment tracking, and reminder templates.",
+  "url": "https://freelanceos.com/tools/invoice-batch",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --card-border: rgba(168,85,247,0.2);
+  --accent1: #a855f7;
+  --accent2: #ec4899;
+  --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --radius-input: 8px;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+a { color: var(--accent1); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* CTA Banner */
+.cta-banner {
+  background: var(--gradient);
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cta-banner a { color: #fff; font-weight: 700; text-decoration: underline; }
+
+/* Layout */
+.app-shell { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: var(--card);
+  border-right: 1px solid var(--card-border);
+  padding: 24px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-logo {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--card-border);
+  margin-bottom: 12px;
+}
+.sidebar-logo h2 { font-size: 15px; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.sidebar-logo p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.nav-item:hover { color: var(--text); background: rgba(168,85,247,0.08); }
+.nav-item.active { color: var(--accent1); border-left-color: var(--accent1); background: rgba(168,85,247,0.1); }
+.nav-icon { width: 18px; text-align: center; font-size: 16px; }
+.main-content {
+  margin-left: 220px;
+  flex: 1;
+  padding: 28px 32px;
+  max-width: 1200px;
+}
+.page { display: none; }
+.page.active { display: block; }
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  backdrop-filter: blur(20px);
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Page Header */
+.page-header { margin-bottom: 24px; }
+.page-header h1 { font-size: 22px; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.page-header p { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+/* Grid */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* Stat cards */
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+}
+.stat-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+.stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.stat-up { color: var(--success); }
+.stat-down { color: var(--danger); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-btn);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+.btn-primary {
+  background: var(--gradient);
+  color: #fff;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-secondary {
+  background: rgba(168,85,247,0.12);
+  color: var(--accent1);
+  border: 1px solid rgba(168,85,247,0.3);
+}
+.btn-secondary:hover { background: rgba(168,85,247,0.2); }
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.btn-ghost:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+.btn-danger {
+  background: rgba(239,68,68,0.12);
+  color: var(--danger);
+  border: 1px solid rgba(239,68,68,0.3);
+}
+.btn-danger:hover { background: rgba(239,68,68,0.2); }
+.btn-sm { padding: 5px 11px; font-size: 12px; }
+.btn-xs { padding: 3px 8px; font-size: 11px; border-radius: 6px; }
+.btn-block { width: 100%; justify-content: center; }
+
+/* Form elements */
+.form-group { margin-bottom: 14px; }
+.form-label { display: block; font-size: 12px; color: var(--muted); font-weight: 500; margin-bottom: 5px; }
+.form-control {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-input);
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  transition: border-color 0.15s;
+  outline: none;
+}
+.form-control:focus { border-color: var(--accent1); }
+.form-control::placeholder { color: var(--muted); }
+select.form-control option { background: #0f172a; color: var(--text); }
+textarea.form-control { resize: vertical; min-height: 80px; }
+
+/* Table */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { padding: 10px 12px; text-align: left; color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--card-border); }
+td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge-success { background: rgba(34,197,94,0.15); color: var(--success); }
+.badge-warning { background: rgba(245,158,11,0.15); color: var(--warning); }
+.badge-danger { background: rgba(239,68,68,0.15); color: var(--danger); }
+.badge-info { background: rgba(59,130,246,0.15); color: var(--info); }
+.badge-muted { background: rgba(148,163,184,0.15); color: var(--muted); }
+.badge-accent { background: rgba(168,85,247,0.15); color: var(--accent1); }
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 1px solid var(--card-border); padding-bottom: 0; }
+.tab {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.15s;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--accent1); border-bottom-color: var(--accent1); }
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(2,6,23,0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  width: 90%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.modal-title { font-size: 16px; font-weight: 700; }
+.modal-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; line-height: 1; padding: 4px; }
+.modal-close:hover { color: var(--text); }
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+/* Toast */
+.toast-container { position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
+.toast {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideIn 0.2s ease;
+  min-width: 260px;
+}
+.toast.success { border-color: rgba(34,197,94,0.4); }
+.toast.error { border-color: rgba(239,68,68,0.4); }
+@keyframes slideIn { from { transform: translateX(60px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* Client cards */
+.client-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.client-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 18px;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.client-card:hover { border-color: rgba(168,85,247,0.5); transform: translateY(-2px); }
+.client-card .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.client-card .client-name { font-weight: 700; font-size: 14px; }
+.client-card .client-company { color: var(--muted); font-size: 12px; }
+.client-card .client-meta { display: flex; gap: 12px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--card-border); }
+.client-card .meta-item { font-size: 11px; color: var(--muted); }
+.client-card .meta-val { font-size: 13px; font-weight: 600; color: var(--text); }
+
+/* Invoice Preview */
+.invoice-preview {
+  background: #fff;
+  color: #111;
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 680px;
+  margin: 0 auto;
+  font-family: system-ui, sans-serif;
+}
+.invoice-preview .inv-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+.invoice-preview .inv-logo { font-size: 22px; font-weight: 800; }
+.invoice-preview .inv-number { font-size: 13px; color: #666; text-align: right; }
+.invoice-preview .inv-number strong { display: block; font-size: 20px; color: #111; }
+.invoice-preview .inv-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+.invoice-preview .inv-party-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-bottom: 4px; }
+.invoice-preview .inv-party-name { font-weight: 700; font-size: 15px; }
+.invoice-preview .inv-party-detail { font-size: 12px; color: #555; line-height: 1.8; }
+.invoice-preview table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+.invoice-preview th { background: #f4f4f8; padding: 10px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #666; text-align: left; }
+.invoice-preview td { padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 13px; color: #222; }
+.invoice-preview .inv-totals { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; margin-top: 10px; }
+.invoice-preview .inv-total-row { display: flex; gap: 40px; font-size: 13px; }
+.invoice-preview .inv-total-row.grand { font-weight: 800; font-size: 16px; border-top: 2px solid #111; padding-top: 8px; }
+.invoice-preview .inv-footer { margin-top: 32px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #777; }
+.invoice-preview.style-modern .inv-header { background: linear-gradient(135deg, #a855f7, #ec4899); margin: -40px -40px 32px; padding: 32px 40px; border-radius: 12px 12px 0 0; }
+.invoice-preview.style-modern .inv-logo { color: #fff; }
+.invoice-preview.style-modern .inv-number { color: rgba(255,255,255,0.7); }
+.invoice-preview.style-modern .inv-number strong { color: #fff; }
+.invoice-preview.style-minimal table th { background: transparent; border-bottom: 2px solid #eee; }
+.invoice-preview.style-minimal .inv-header { border-bottom: 1px solid #eee; padding-bottom: 20px; }
+
+/* Chart */
+.chart-wrap { position: relative; }
+.bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 140px; padding-top: 10px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bar-fill {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  background: var(--gradient);
+  min-height: 4px;
+  transition: height 0.4s ease;
+}
+.bar-label { font-size: 10px; color: var(--muted); }
+.bar-val { font-size: 10px; color: var(--muted); }
+
+/* Aging report */
+.aging-bar { height: 8px; border-radius: 4px; margin-top: 6px; background: rgba(255,255,255,0.06); overflow: hidden; }
+.aging-fill { height: 100%; border-radius: 4px; }
+
+/* Search bar */
+.search-bar { position: relative; }
+.search-bar input { padding-left: 34px; }
+.search-bar .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 15px; }
+
+/* Toolbar */
+.toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 18px; flex-wrap: wrap; }
+.toolbar-right { margin-left: auto; }
+
+/* Batch queue */
+.batch-item {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.batch-item .batch-info { flex: 1; }
+.batch-item .batch-client { font-weight: 600; font-size: 14px; }
+.batch-item .batch-meta { color: var(--muted); font-size: 12px; }
+.batch-actions { display: flex; gap: 6px; }
+
+/* Reminder templates */
+.reminder-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.reminder-card .reminder-level { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+.reminder-card .reminder-subject { font-weight: 600; margin-bottom: 8px; }
+.reminder-card .reminder-body { font-size: 12px; color: var(--muted); white-space: pre-wrap; line-height: 1.7; }
+
+/* Export row */
+.export-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--card-border); }
+.export-item:last-child { border-bottom: none; }
+.export-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(168,85,247,0.12); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.export-info { flex: 1; }
+.export-info strong { display: block; font-size: 13px; }
+.export-info span { font-size: 12px; color: var(--muted); }
+
+/* Status dot */
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+.dot-success { background: var(--success); }
+.dot-warning { background: var(--warning); }
+.dot-danger { background: var(--danger); }
+.dot-info { background: var(--info); }
+.dot-muted { background: var(--muted); }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 48px 20px; }
+.empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty-state h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.empty-state p { color: var(--muted); font-size: 13px; }
+
+/* Footer */
+footer { margin-top: 48px; padding: 24px 0; border-top: 1px solid var(--card-border); color: var(--muted); font-size: 12px; }
+footer a { color: var(--accent1); }
+.footer-links { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--card-border); flex-direction: row; overflow-x: auto; padding: 0; }
+  .sidebar-logo { display: none; }
+  .nav-item { padding: 12px 14px; border-left: none; border-bottom: 3px solid transparent; flex-direction: column; gap: 2px; font-size: 10px; min-width: 70px; }
+  .nav-item.active { border-bottom-color: var(--accent1); border-left: none; }
+  .app-shell { flex-direction: column; }
+  .main-content { margin-left: 0; padding: 16px; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .client-grid { grid-template-columns: 1fr; }
+}
+@media print {
+  .sidebar, .cta-banner, footer, .no-print { display: none !important; }
+  .main-content { margin-left: 0; padding: 0; }
+  body { background: #fff; color: #000; }
+}
+</style>
+</head>
+<body>
+
+<div class="cta-banner">
+  🚀 FreelanceOS Full Template Pack — 280+ pages, 49 tools, 120+ guides
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank">Get 40% OFF with code FLASH40 →</a>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="app-shell">
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <h2>⚡ InvoiceBatch</h2>
+      <p>Tool 77 · FreelanceOS</p>
+    </div>
+    <div class="nav-item active" onclick="showPage('dashboard')" data-page="dashboard">
+      <span class="nav-icon">📊</span> Dashboard
+    </div>
+    <div class="nav-item" onclick="showPage('clients')" data-page="clients">
+      <span class="nav-icon">👥</span> Clients
+    </div>
+    <div class="nav-item" onclick="showPage('time')" data-page="time">
+      <span class="nav-icon">⏱️</span> Time Log
+    </div>
+    <div class="nav-item" onclick="showPage('invoices')" data-page="invoices">
+      <span class="nav-icon">📄</span> Invoices
+    </div>
+    <div class="nav-item" onclick="showPage('batch')" data-page="batch">
+      <span class="nav-icon">⚡</span> Batch Process
+    </div>
+    <div class="nav-item" onclick="showPage('payments')" data-page="payments">
+      <span class="nav-icon">💳</span> Payments
+    </div>
+    <div class="nav-item" onclick="showPage('reminders')" data-page="reminders">
+      <span class="nav-icon">🔔</span> Reminders
+    </div>
+    <div class="nav-item" onclick="showPage('export')" data-page="export">
+      <span class="nav-icon">📦</span> Export
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- DASHBOARD PAGE -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <h1>Invoice Dashboard</h1>
+        <p>Overview of your freelance billing at a glance</p>
+      </div>
+
+      <div class="grid-4" style="margin-bottom:20px">
+        <div class="stat-card">
+          <div class="stat-label">This Month</div>
+          <div class="stat-value" id="stat-month">$0</div>
+          <div class="stat-sub">Total invoiced</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Outstanding</div>
+          <div class="stat-value stat-warning" id="stat-outstanding">$0</div>
+          <div class="stat-sub">Awaiting payment</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Overdue</div>
+          <div class="stat-value stat-down" id="stat-overdue">$0</div>
+          <div class="stat-sub">Past due date</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg. Days to Pay</div>
+          <div class="stat-value" id="stat-avgdays">—</div>
+          <div class="stat-sub">Based on paid invoices</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-title">📈 Monthly Invoicing (Last 6 Months)</div>
+          <div class="chart-wrap">
+            <div class="bar-chart" id="barChart"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚡ Quick Actions</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <button class="btn btn-primary btn-block" onclick="showPage('batch')">⚡ Batch Process This Week</button>
+            <button class="btn btn-secondary btn-block" onclick="openNewInvoiceModal()">📄 Create Invoice</button>
+            <button class="btn btn-secondary btn-block" onclick="showPage('clients');setTimeout(()=>document.getElementById('addClientBtn').click(),100)">➕ Add Client</button>
+            <button class="btn btn-ghost btn-block" onclick="showPage('time');setTimeout(()=>document.getElementById('addTimeBtn').click(),100)">⏱️ Log Time</button>
+          </div>
+          <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--card-border)">
+            <div class="card-title" style="margin-bottom:10px;font-size:14px">📋 Recent Activity</div>
+            <div id="recentActivity" style="font-size:13px;color:var(--muted)">No activity yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📊 Invoice Status Overview</div>
+        <div class="grid-4">
+          <div style="text-align:center;padding:10px">
+            <div style="font-size:24px;font-weight:700;color:var(--muted)" id="dash-draft">0</div>
+            <div style="font-size:12px;color:var(--muted)">Draft</div>
+          </div>
+          <div style="text-align:center;padding:10px">
+            <div style="font-size:24px;font-weight:700;color:var(--info)" id="dash-sent">0</div>
+            <div style="font-size:12px;color:var(--muted)">Sent</div>
+          </div>
+          <div style="text-align:center;padding:10px">
+            <div style="font-size:24px;font-weight:700;color:var(--warning)" id="dash-pending">0</div>
+            <div style="font-size:12px;color:var(--muted)">Viewed / Pending</div>
+          </div>
+          <div style="text-align:center;padding:10px">
+            <div style="font-size:24px;font-weight:700;color:var(--success)" id="dash-paid">0</div>
+            <div style="font-size:12px;color:var(--muted)">Paid</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIENTS PAGE -->
+    <div class="page" id="page-clients">
+      <div class="page-header">
+        <h1>Client Manager</h1>
+        <p>Manage your clients, rates, and payment terms</p>
+      </div>
+      <div class="toolbar no-print">
+        <div class="search-bar" style="flex:1;max-width:300px">
+          <span class="search-icon">🔍</span>
+          <input class="form-control" id="clientSearch" placeholder="Search clients…" oninput="renderClients()">
+        </div>
+        <button class="btn btn-primary" id="addClientBtn" onclick="openClientModal()">➕ Add Client</button>
+      </div>
+      <div class="client-grid" id="clientGrid"></div>
+      <div id="clientEmpty" class="empty-state" style="display:none">
+        <div class="empty-icon">👥</div>
+        <h3>No clients yet</h3>
+        <p>Add your first client to start generating invoices</p>
+      </div>
+    </div>
+
+    <!-- TIME LOG PAGE -->
+    <div class="page" id="page-time">
+      <div class="page-header">
+        <h1>Time Entry Log</h1>
+        <p>Log billable hours by client and project</p>
+      </div>
+      <div class="toolbar no-print">
+        <div class="search-bar" style="flex:1;max-width:300px">
+          <span class="search-icon">🔍</span>
+          <input class="form-control" id="timeSearch" placeholder="Search entries…" oninput="renderTime()">
+        </div>
+        <select class="form-control" id="timeClientFilter" style="width:160px" onchange="renderTime()">
+          <option value="">All clients</option>
+        </select>
+        <button class="btn btn-primary" id="addTimeBtn" onclick="openTimeModal()">➕ Log Hours</button>
+        <button class="btn btn-secondary" onclick="openBulkTimeModal()">📅 Bulk Week Entry</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th><th>Client</th><th>Project</th><th>Description</th><th>Hours</th><th>Rate</th><th>Amount</th><th>Invoiced</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="timeTable"></tbody>
+          </table>
+        </div>
+        <div id="timeEmpty" class="empty-state" style="display:none">
+          <div class="empty-icon">⏱️</div>
+          <h3>No time entries yet</h3>
+          <p>Log your first hours to start building invoices</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVOICES PAGE -->
+    <div class="page" id="page-invoices">
+      <div class="page-header">
+        <h1>Invoices</h1>
+        <p>Create, manage, and track all your invoices</p>
+      </div>
+      <div class="toolbar no-print">
+        <div class="search-bar" style="flex:1;max-width:300px">
+          <span class="search-icon">🔍</span>
+          <input class="form-control" id="invoiceSearch" placeholder="Search invoices…" oninput="renderInvoices()">
+        </div>
+        <select class="form-control" id="invoiceStatusFilter" style="width:140px" onchange="renderInvoices()">
+          <option value="">All statuses</option>
+          <option value="Draft">Draft</option>
+          <option value="Sent">Sent</option>
+          <option value="Viewed">Viewed</option>
+          <option value="Paid">Paid</option>
+          <option value="Overdue">Overdue</option>
+        </select>
+        <button class="btn btn-primary" onclick="openNewInvoiceModal()">➕ New Invoice</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Invoice #</th><th>Client</th><th>Date</th><th>Due</th><th>Amount</th><th>Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="invoiceTable"></tbody>
+          </table>
+        </div>
+        <div id="invoiceEmpty" class="empty-state" style="display:none">
+          <div class="empty-icon">📄</div>
+          <h3>No invoices yet</h3>
+          <p>Create your first invoice or use Batch Process to generate them automatically</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BATCH PROCESS PAGE -->
+    <div class="page" id="page-batch">
+      <div class="page-header">
+        <h1>Batch Process</h1>
+        <p>Generate all pending invoices for the week in one click</p>
+      </div>
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-title">⚙️ Batch Settings</div>
+          <div class="form-group">
+            <label class="form-label">Week Start Date</label>
+            <input type="date" class="form-control" id="batchStart">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Week End Date</label>
+            <input type="date" class="form-control" id="batchEnd">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Invoice Style</label>
+            <select class="form-control" id="batchStyle">
+              <option value="modern">Modern (Gradient header)</option>
+              <option value="classic">Classic (Clean lines)</option>
+              <option value="minimal">Minimal (No borders)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tax Rate (%)</label>
+            <input type="number" class="form-control" id="batchTax" value="0" min="0" max="100" step="0.1">
+          </div>
+          <button class="btn btn-primary btn-block" onclick="runBatchScan()">⚡ Scan & Queue Invoices</button>
+        </div>
+        <div class="card">
+          <div class="card-title">📋 Business Info</div>
+          <div class="form-group">
+            <label class="form-label">Your Name / Business Name</label>
+            <input type="text" class="form-control" id="bizName" placeholder="Jane Doe Consulting">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="bizEmail" placeholder="jane@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <textarea class="form-control" id="bizAddress" placeholder="123 Main St&#10;City, ST 12345" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Instructions</label>
+            <input type="text" class="form-control" id="bizPayment" placeholder="Bank transfer, PayPal, etc.">
+          </div>
+          <button class="btn btn-secondary btn-block" onclick="saveBizInfo()">💾 Save Business Info</button>
+        </div>
+      </div>
+
+      <div id="batchQueue" style="display:none">
+        <div class="card">
+          <div class="card-title" style="display:flex;align-items:center;justify-content:space-between">
+            <span>⚡ Invoice Queue</span>
+            <button class="btn btn-primary btn-sm" onclick="approveAllBatch()">✅ Approve All & Generate</button>
+          </div>
+          <div id="batchItems"></div>
+          <div id="batchEmpty" class="empty-state" style="display:none">
+            <div class="empty-icon">✅</div>
+            <h3>All caught up!</h3>
+            <p>No uninvoiced time entries found for this date range</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENTS PAGE -->
+    <div class="page" id="page-payments">
+      <div class="page-header">
+        <h1>Payment Tracking</h1>
+        <p>Track payment status and generate aging reports</p>
+      </div>
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-title">📊 Accounts Receivable Aging</div>
+          <div id="agingReport"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">💳 Record Payment</div>
+          <div class="form-group">
+            <label class="form-label">Invoice</label>
+            <select class="form-control" id="payInvoice" onchange="prefillPayment()"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Date</label>
+            <input type="date" class="form-control" id="payDate">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Method</label>
+            <select class="form-control" id="payMethod">
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Stripe">Stripe</option>
+              <option value="Check">Check</option>
+              <option value="Cash">Cash</option>
+              <option value="Crypto">Crypto</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Amount Received</label>
+            <input type="number" class="form-control" id="payAmount" placeholder="0.00">
+          </div>
+          <button class="btn btn-primary btn-block" onclick="recordPayment()">✅ Mark as Paid</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 All Invoices — Payment Status</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Invoice #</th><th>Client</th><th>Amount</th><th>Issued</th><th>Due</th><th>Status</th><th>Paid Date</th><th>Method</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="paymentTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- REMINDERS PAGE -->
+    <div class="page" id="page-reminders">
+      <div class="page-header">
+        <h1>Reminder System</h1>
+        <p>Auto-generate payment reminder emails at 3 urgency levels</p>
+      </div>
+      <div class="tabs">
+        <div class="tab active" onclick="switchReminderTab('overdue')">🔴 Overdue Invoices</div>
+        <div class="tab" onclick="switchReminderTab('templates')">✉️ Email Templates</div>
+      </div>
+      <div id="reminderOverdue">
+        <div id="reminderList"></div>
+      </div>
+      <div id="reminderTemplates" style="display:none">
+        <div class="reminder-card">
+          <div class="reminder-level" style="color:var(--info)">Level 1 — Friendly Reminder</div>
+          <div class="reminder-subject">Friendly Reminder: Invoice #[INV] Due <span id="rt1-timing">Soon</span></div>
+          <div class="reminder-body" id="rt1-body"></div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn btn-secondary btn-sm" onclick="editReminderTemplate(1)">✏️ Edit</button>
+            <button class="btn btn-ghost btn-sm" onclick="copyReminderTemplate(1)">📋 Copy</button>
+          </div>
+        </div>
+        <div class="reminder-card">
+          <div class="reminder-level" style="color:var(--warning)">Level 2 — Firm Reminder</div>
+          <div class="reminder-subject">Invoice #[INV] is Past Due — Action Required</div>
+          <div class="reminder-body" id="rt2-body"></div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn btn-secondary btn-sm" onclick="editReminderTemplate(2)">✏️ Edit</button>
+            <button class="btn btn-ghost btn-sm" onclick="copyReminderTemplate(2)">📋 Copy</button>
+          </div>
+        </div>
+        <div class="reminder-card">
+          <div class="reminder-level" style="color:var(--danger)">Level 3 — Final Notice</div>
+          <div class="reminder-subject">FINAL NOTICE: Invoice #[INV] — [AMOUNT] Overdue</div>
+          <div class="reminder-body" id="rt3-body"></div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn btn-secondary btn-sm" onclick="editReminderTemplate(3)">✏️ Edit</button>
+            <button class="btn btn-ghost btn-sm" onclick="copyReminderTemplate(3)">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPORT PAGE -->
+    <div class="page" id="page-export">
+      <div class="page-header">
+        <h1>Export & Backup</h1>
+        <p>Download your data in multiple formats</p>
+      </div>
+      <div class="card">
+        <div class="export-item">
+          <div class="export-icon">📊</div>
+          <div class="export-info">
+            <strong>Export Invoices as CSV</strong>
+            <span>All invoices with amounts, dates, and status</span>
+          </div>
+          <button class="btn btn-secondary" onclick="exportCSV()">⬇️ Download CSV</button>
+        </div>
+        <div class="export-item">
+          <div class="export-icon">⏱️</div>
+          <div class="export-info">
+            <strong>Export Time Log as CSV</strong>
+            <span>All time entries with hours, rates, and amounts</span>
+          </div>
+          <button class="btn btn-secondary" onclick="exportTimeCSV()">⬇️ Download CSV</button>
+        </div>
+        <div class="export-item">
+          <div class="export-icon">💾</div>
+          <div class="export-info">
+            <strong>Full Backup (JSON)</strong>
+            <span>All data: clients, time entries, invoices, settings</span>
+          </div>
+          <button class="btn btn-secondary" onclick="exportJSON()">⬇️ Download JSON</button>
+        </div>
+        <div class="export-item">
+          <div class="export-icon">📤</div>
+          <div class="export-info">
+            <strong>Restore from Backup</strong>
+            <span>Import a previously exported JSON backup</span>
+          </div>
+          <div>
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(this)">
+            <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📂 Choose File</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-links">
+        <a href="/freelanceos-storefront/free-templates.html">🆓 Free Templates</a>
+        <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank">⚡ Get FreelanceOS Pro (FLASH40)</a>
+      </div>
+      <p>This tool stores all data locally in your browser. No accounts. No servers. No tracking. ©2025 FreelanceOS · Tool 77</p>
+      <p style="margin-top:6px;font-size:11px;color:#475569">Disclaimer: This tool is provided for organizational purposes only and does not constitute financial, tax, or legal advice. Verify all invoices and tax calculations with a qualified professional before sending to clients.</p>
+    </footer>
+  </main>
+</div>
+
+<!-- CLIENT MODAL -->
+<div class="modal-overlay" id="clientModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="clientModalTitle">Add Client</div>
+      <button class="modal-close" onclick="closeModal('clientModal')">✕</button>
+    </div>
+    <input type="hidden" id="clientId">
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Full Name *</label>
+        <input type="text" class="form-control" id="clientName" placeholder="Jane Smith">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Company</label>
+        <input type="text" class="form-control" id="clientCompany" placeholder="Acme Corp">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email *</label>
+      <input type="email" class="form-control" id="clientEmail" placeholder="jane@acme.com">
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Default Rate (per hr)</label>
+        <input type="number" class="form-control" id="clientRate" placeholder="100" min="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Currency</label>
+        <select class="form-control" id="clientCurrency">
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="CAD">CAD ($)</option>
+          <option value="AUD">AUD ($)</option>
+          <option value="JPY">JPY (¥)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Payment Terms</label>
+      <select class="form-control" id="clientTerms">
+        <option value="Net 15">Net 15</option>
+        <option value="Net 30" selected>Net 30</option>
+        <option value="Net 45">Net 45</option>
+        <option value="Net 60">Net 60</option>
+        <option value="Due on Receipt">Due on Receipt</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Address</label>
+      <textarea class="form-control" id="clientAddress" placeholder="Billing address…" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes</label>
+      <textarea class="form-control" id="clientNotes" placeholder="Any notes about this client…" rows="2"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('clientModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveClient()">Save Client</button>
+    </div>
+  </div>
+</div>
+
+<!-- TIME MODAL -->
+<div class="modal-overlay" id="timeModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="timeModalTitle">Log Hours</div>
+      <button class="modal-close" onclick="closeModal('timeModal')">✕</button>
+    </div>
+    <input type="hidden" id="timeEntryId">
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Date *</label>
+        <input type="date" class="form-control" id="entryDate">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Client *</label>
+        <select class="form-control" id="entryClient" onchange="prefillRate()">
+          <option value="">Select client…</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Project</label>
+      <input type="text" class="form-control" id="entryProject" placeholder="Website redesign, SEO audit…">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-control" id="entryDesc" placeholder="What did you work on?" rows="2"></textarea>
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Hours *</label>
+        <input type="number" class="form-control" id="entryHours" placeholder="2.5" min="0.1" step="0.25">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Rate Override (leave blank for default)</label>
+        <input type="number" class="form-control" id="entryRate" placeholder="Uses client default" min="0" step="0.01">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('timeModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTimeEntry()">Save Entry</button>
+    </div>
+  </div>
+</div>
+
+<!-- BULK TIME MODAL -->
+<div class="modal-overlay" id="bulkTimeModal">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-header">
+      <div class="modal-title">Bulk Week Entry</div>
+      <button class="modal-close" onclick="closeModal('bulkTimeModal')">✕</button>
+    </div>
+    <div class="grid-2" style="margin-bottom:14px">
+      <div class="form-group" style="margin:0">
+        <label class="form-label">Client</label>
+        <select class="form-control" id="bulkClient" onchange="prefillBulkRate()">
+          <option value="">Select client…</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin:0">
+        <label class="form-label">Project</label>
+        <input type="text" class="form-control" id="bulkProject" placeholder="Project name">
+      </div>
+    </div>
+    <div class="grid-2" style="margin-bottom:14px">
+      <div class="form-group" style="margin:0">
+        <label class="form-label">Default Rate</label>
+        <input type="number" class="form-control" id="bulkRate" placeholder="100">
+      </div>
+    </div>
+    <div id="bulkRows"></div>
+    <button class="btn btn-ghost btn-sm" onclick="addBulkRow()" style="margin-bottom:14px">➕ Add Day</button>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('bulkTimeModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveBulkEntries()">Save All Entries</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW INVOICE MODAL -->
+<div class="modal-overlay" id="newInvoiceModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Create Invoice</div>
+      <button class="modal-close" onclick="closeModal('newInvoiceModal')">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Client *</label>
+      <select class="form-control" id="invClient" onchange="loadTimeForInvoice()">
+        <option value="">Select client…</option>
+      </select>
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">From Date</label>
+        <input type="date" class="form-control" id="invFrom" onchange="loadTimeForInvoice()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">To Date</label>
+        <input type="date" class="form-control" id="invTo" onchange="loadTimeForInvoice()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Invoice Style</label>
+      <select class="form-control" id="invStyle">
+        <option value="modern">Modern</option>
+        <option value="classic">Classic</option>
+        <option value="minimal">Minimal</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tax Rate (%)</label>
+      <input type="number" class="form-control" id="invTax" value="0" min="0" max="100" step="0.1">
+    </div>
+    <div id="invTimePreview" style="margin-bottom:14px;font-size:13px;color:var(--muted)"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('newInvoiceModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="generateInvoice()">Generate Invoice</button>
+    </div>
+  </div>
+</div>
+
+<!-- INVOICE VIEW MODAL -->
+<div class="modal-overlay" id="invoiceViewModal">
+  <div class="modal" style="max-width:720px">
+    <div class="modal-header no-print">
+      <div class="modal-title" id="invViewTitle">Invoice Preview</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-secondary btn-sm" onclick="window.print()">🖨️ Print</button>
+        <button class="modal-close" onclick="closeModal('invoiceViewModal')">✕</button>
+      </div>
+    </div>
+    <div id="invoiceViewContent"></div>
+  </div>
+</div>
+
+<!-- REMINDER EDIT MODAL -->
+<div class="modal-overlay" id="reminderEditModal">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <div class="modal-title" id="reminderEditTitle">Edit Template</div>
+      <button class="modal-close" onclick="closeModal('reminderEditModal')">✕</button>
+    </div>
+    <input type="hidden" id="editingTemplateLevel">
+    <div class="form-group">
+      <label class="form-label">Email Body (use [CLIENT], [INV], [AMOUNT], [DUE], [DAYS_OVERDUE])</label>
+      <textarea class="form-control" id="reminderEditBody" rows="10"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('reminderEditModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveReminderTemplate()">Save Template</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  clients: [],
+  timeEntries: [],
+  invoices: [],
+  invoiceCounter: 1000,
+  bizInfo: { name: '', email: '', address: '', payment: '' },
+  reminderTemplates: {
+    1: `Hi [CLIENT],\n\nI hope you're doing well! This is a friendly reminder that Invoice #[INV] for [AMOUNT] is due on [DUE].\n\nPlease let me know if you have any questions or if there's anything I can help with.\n\nPayment can be made via [PAYMENT_METHOD].\n\nThank you for your business!\n\n[BIZ_NAME]`,
+    2: `Hi [CLIENT],\n\nI wanted to follow up regarding Invoice #[INV] for [AMOUNT], which was due on [DUE] and is now [DAYS_OVERDUE] days past due.\n\nCould you please arrange payment at your earliest convenience? If you've already sent payment, please disregard this message.\n\nIf you have any concerns or questions, I'm happy to discuss.\n\n[BIZ_NAME]`,
+    3: `Hi [CLIENT],\n\nThis is a final notice regarding Invoice #[INV] for [AMOUNT].\n\nDespite previous reminders, this invoice remains unpaid and is now [DAYS_OVERDUE] days overdue (due date: [DUE]).\n\nImmediate payment is required. Continued non-payment may result in late fees or referral to a collections agency.\n\nPlease contact me immediately to resolve this matter.\n\n[BIZ_NAME]`
+  }
+};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('invoiceBatchState');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = Object.assign(state, parsed);
+      if (!state.reminderTemplates) state.reminderTemplates = {};
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  localStorage.setItem('invoiceBatchState', JSON.stringify(state));
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + name);
+  if (page) page.classList.add('active');
+  const nav = document.querySelector('[data-page="' + name + '"]');
+  if (nav) nav.classList.add('active');
+
+  if (name === 'dashboard') renderDashboard();
+  if (name === 'clients') renderClients();
+  if (name === 'time') renderTime();
+  if (name === 'invoices') renderInvoices();
+  if (name === 'payments') renderPayments();
+  if (name === 'reminders') renderReminders();
+  if (name === 'batch') { loadBizInfo(); initBatchDates(); }
+}
+
+// ============================================================
+// MODALS
+// ============================================================
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ============================================================
+// TOAST
+// ============================================================
+function toast(msg, type = 'success') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.innerHTML = (type === 'success' ? '✅' : '❌') + ' ' + msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
+function fmtDate(d) { if (!d) return '—'; return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+function fmtCurrency(n, curr = 'USD') {
+  const symbols = { USD: '$', EUR: '€', GBP: '£', CAD: 'CA$', AUD: 'A$', JPY: '¥' };
+  const s = symbols[curr] || '$';
+  return s + parseFloat(n || 0).toFixed(2);
+}
+function getClient(id) { return state.clients.find(c => c.id === id); }
+function getInvoice(id) { return state.invoices.find(i => i.id === id); }
+function termsDays(terms) {
+  const map = { 'Net 15': 15, 'Net 30': 30, 'Net 45': 45, 'Net 60': 60, 'Due on Receipt': 0 };
+  return map[terms] || 30;
+}
+function addDays(dateStr, days) {
+  const d = new Date(dateStr + 'T12:00:00');
+  d.setDate(d.getDate() + days);
+  return d.toISOString().split('T')[0];
+}
+function daysDiff(a, b) {
+  const da = new Date(a), db = new Date(b);
+  return Math.round((db - da) / 86400000);
+}
+function today() { return new Date().toISOString().split('T')[0]; }
+function initials(name) { return (name || '').split(' ').map(w => w[0]).join('').substr(0,2).toUpperCase(); }
+
+// ============================================================
+// CLIENTS
+// ============================================================
+function openClientModal(id = null) {
+  const fields = ['clientId','clientName','clientCompany','clientEmail','clientRate','clientCurrency','clientTerms','clientAddress','clientNotes'];
+  fields.forEach(f => { const el = document.getElementById(f); if (el) el.value = ''; });
+  document.getElementById('clientCurrency').value = 'USD';
+  document.getElementById('clientTerms').value = 'Net 30';
+  if (id) {
+    const c = getClient(id);
+    if (!c) return;
+    document.getElementById('clientModalTitle').textContent = 'Edit Client';
+    document.getElementById('clientId').value = c.id;
+    document.getElementById('clientName').value = c.name || '';
+    document.getElementById('clientCompany').value = c.company || '';
+    document.getElementById('clientEmail').value = c.email || '';
+    document.getElementById('clientRate').value = c.rate || '';
+    document.getElementById('clientCurrency').value = c.currency || 'USD';
+    document.getElementById('clientTerms').value = c.terms || 'Net 30';
+    document.getElementById('clientAddress').value = c.address || '';
+    document.getElementById('clientNotes').value = c.notes || '';
+  } else {
+    document.getElementById('clientModalTitle').textContent = 'Add Client';
+  }
+  openModal('clientModal');
+}
+
+function saveClient() {
+  const name = document.getElementById('clientName').value.trim();
+  const email = document.getElementById('clientEmail').value.trim();
+  if (!name || !email) return toast('Name and email are required', 'error');
+  const id = document.getElementById('clientId').value || uid();
+  const existing = state.clients.findIndex(c => c.id === id);
+  const client = {
+    id, name, email,
+    company: document.getElementById('clientCompany').value.trim(),
+    rate: parseFloat(document.getElementById('clientRate').value) || 0,
+    currency: document.getElementById('clientCurrency').value,
+    terms: document.getElementById('clientTerms').value,
+    address: document.getElementById('clientAddress').value.trim(),
+    notes: document.getElementById('clientNotes').value.trim(),
+    created: existing === -1 ? today() : state.clients[existing].created
+  };
+  if (existing === -1) state.clients.push(client);
+  else state.clients[existing] = client;
+  saveState();
+  closeModal('clientModal');
+  renderClients();
+  updateClientSelects();
+  toast('Client saved!');
+}
+
+function deleteClient(id) {
+  if (!confirm('Delete this client? Their invoices and time entries will remain.')) return;
+  state.clients = state.clients.filter(c => c.id !== id);
+  saveState();
+  renderClients();
+  updateClientSelects();
+  toast('Client deleted');
+}
+
+function renderClients() {
+  const q = (document.getElementById('clientSearch')?.value || '').toLowerCase();
+  const filtered = state.clients.filter(c =>
+    c.name.toLowerCase().includes(q) ||
+    (c.company || '').toLowerCase().includes(q) ||
+    (c.email || '').toLowerCase().includes(q)
+  );
+  const grid = document.getElementById('clientGrid');
+  const empty = document.getElementById('clientEmpty');
+  if (!grid) return;
+  if (filtered.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  grid.innerHTML = filtered.map(c => {
+    const invoices = state.invoices.filter(i => i.clientId === c.id);
+    const totalInv = invoices.reduce((s, i) => s + (i.total || 0), 0);
+    const outstanding = invoices.filter(i => i.status !== 'Paid').reduce((s, i) => s + (i.total || 0), 0);
+    return `<div class="client-card" onclick="openClientModal('${c.id}')">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div class="avatar">${initials(c.name)}</div>
+        <div>
+          <div class="client-name">${c.name}</div>
+          <div class="client-company">${c.company || c.email}</div>
+        </div>
+      </div>
+      <div class="client-meta">
+        <div class="meta-item"><div class="meta-val">${fmtCurrency(c.rate, c.currency)}/hr</div><div>Default rate</div></div>
+        <div class="meta-item"><div class="meta-val">${c.terms}</div><div>Terms</div></div>
+        <div class="meta-item"><div class="meta-val">${fmtCurrency(outstanding, c.currency)}</div><div>Outstanding</div></div>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:12px" onclick="event.stopPropagation()">
+        <button class="btn btn-secondary btn-xs" onclick="openClientModal('${c.id}')">✏️ Edit</button>
+        <button class="btn btn-danger btn-xs" onclick="deleteClient('${c.id}')">🗑️ Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// TIME ENTRIES
+// ============================================================
+function openTimeModal(id = null) {
+  document.getElementById('timeEntryId').value = '';
+  document.getElementById('entryDate').value = today();
+  document.getElementById('entryClient').value = '';
+  document.getElementById('entryProject').value = '';
+  document.getElementById('entryDesc').value = '';
+  document.getElementById('entryHours').value = '';
+  document.getElementById('entryRate').value = '';
+  document.getElementById('timeModalTitle').textContent = 'Log Hours';
+  updateClientSelects();
+  if (id) {
+    const e = state.timeEntries.find(t => t.id === id);
+    if (!e) return;
+    document.getElementById('timeModalTitle').textContent = 'Edit Entry';
+    document.getElementById('timeEntryId').value = e.id;
+    document.getElementById('entryDate').value = e.date;
+    document.getElementById('entryClient').value = e.clientId;
+    document.getElementById('entryProject').value = e.project || '';
+    document.getElementById('entryDesc').value = e.desc || '';
+    document.getElementById('entryHours').value = e.hours;
+    document.getElementById('entryRate').value = e.rate || '';
+  }
+  openModal('timeModal');
+}
+
+function prefillRate() {
+  const clientId = document.getElementById('entryClient').value;
+  const c = getClient(clientId);
+  if (c && c.rate) document.getElementById('entryRate').placeholder = c.rate + ' (client default)';
+  else document.getElementById('entryRate').placeholder = 'Uses client default';
+}
+
+function saveTimeEntry() {
+  const clientId = document.getElementById('entryClient').value;
+  const hours = parseFloat(document.getElementById('entryHours').value);
+  const date = document.getElementById('entryDate').value;
+  if (!clientId || !hours || !date) return toast('Date, client, and hours are required', 'error');
+  const c = getClient(clientId);
+  const rateInput = parseFloat(document.getElementById('entryRate').value);
+  const rate = rateInput || (c ? c.rate : 0);
+  const id = document.getElementById('timeEntryId').value || uid();
+  const existing = state.timeEntries.findIndex(t => t.id === id);
+  const entry = {
+    id, date, clientId,
+    project: document.getElementById('entryProject').value.trim(),
+    desc: document.getElementById('entryDesc').value.trim(),
+    hours, rate,
+    amount: +(hours * rate).toFixed(2),
+    invoiced: existing !== -1 ? state.timeEntries[existing].invoiced : false,
+    invoiceId: existing !== -1 ? state.timeEntries[existing].invoiceId : null
+  };
+  if (existing === -1) state.timeEntries.push(entry);
+  else state.timeEntries[existing] = entry;
+  saveState();
+  closeModal('timeModal');
+  renderTime();
+  toast('Time entry saved!');
+}
+
+function deleteTimeEntry(id) {
+  if (!confirm('Delete this time entry?')) return;
+  state.timeEntries = state.timeEntries.filter(t => t.id !== id);
+  saveState();
+  renderTime();
+  toast('Entry deleted');
+}
+
+function renderTime() {
+  const q = (document.getElementById('timeSearch')?.value || '').toLowerCase();
+  const cFilter = document.getElementById('timeClientFilter')?.value || '';
+  let filtered = state.timeEntries.filter(t => {
+    const c = getClient(t.clientId);
+    const cName = c ? c.name : '';
+    return (!cFilter || t.clientId === cFilter) &&
+      (cName.toLowerCase().includes(q) || (t.project || '').toLowerCase().includes(q) || (t.desc || '').toLowerCase().includes(q));
+  }).sort((a, b) => b.date.localeCompare(a.date));
+
+  const tbody = document.getElementById('timeTable');
+  const empty = document.getElementById('timeEmpty');
+  if (!tbody) return;
+  if (filtered.length === 0) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  tbody.innerHTML = filtered.map(t => {
+    const c = getClient(t.clientId);
+    return `<tr>
+      <td>${fmtDate(t.date)}</td>
+      <td>${c ? c.name : '—'}</td>
+      <td>${t.project || '—'}</td>
+      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.desc || '—'}</td>
+      <td>${t.hours}h</td>
+      <td>${fmtCurrency(t.rate, c?.currency)}</td>
+      <td><strong>${fmtCurrency(t.amount, c?.currency)}</strong></td>
+      <td>${t.invoiced ? '<span class="badge badge-success">Invoiced</span>' : '<span class="badge badge-muted">Pending</span>'}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          ${!t.invoiced ? `<button class="btn btn-ghost btn-xs" onclick="openTimeModal('${t.id}')">✏️</button>` : ''}
+          <button class="btn btn-danger btn-xs" onclick="deleteTimeEntry('${t.id}')">🗑️</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ============================================================
+// BULK TIME
+// ============================================================
+function openBulkTimeModal() {
+  updateClientSelects();
+  document.getElementById('bulkClient').value = '';
+  document.getElementById('bulkProject').value = '';
+  document.getElementById('bulkRate').value = '';
+  const rows = document.getElementById('bulkRows');
+  rows.innerHTML = '';
+  const weekStart = getWeekStart(today());
+  for (let i = 0; i < 5; i++) {
+    addBulkRow(addDays(weekStart, i));
+  }
+  openModal('bulkTimeModal');
+}
+
+function getWeekStart(d) {
+  const dt = new Date(d + 'T12:00:00');
+  const day = dt.getDay();
+  const diff = dt.getDate() - day + (day === 0 ? -6 : 1);
+  dt.setDate(diff);
+  return dt.toISOString().split('T')[0];
+}
+
+let bulkRowCount = 0;
+function addBulkRow(date = '') {
+  bulkRowCount++;
+  const id = 'bulk-' + bulkRowCount;
+  const rows = document.getElementById('bulkRows');
+  const div = document.createElement('div');
+  div.id = id;
+  div.className = 'grid-2';
+  div.style.cssText = 'margin-bottom:10px;gap:10px';
+  div.innerHTML = `
+    <div class="form-group" style="margin:0">
+      <label class="form-label">Date</label>
+      <input type="date" class="form-control" id="${id}-date" value="${date}">
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-end">
+      <div class="form-group" style="margin:0;flex:1">
+        <label class="form-label">Hours</label>
+        <input type="number" class="form-control" id="${id}-hours" placeholder="0" min="0" step="0.25">
+      </div>
+      <div class="form-group" style="margin:0;flex:2">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" id="${id}-desc" placeholder="Work done…">
+      </div>
+      <button class="btn btn-danger btn-xs" style="margin-bottom:0;padding:8px" onclick="document.getElementById('${id}').remove()">✕</button>
+    </div>
+  `;
+  rows.appendChild(div);
+}
+
+function prefillBulkRate() {
+  const c = getClient(document.getElementById('bulkClient').value);
+  if (c) document.getElementById('bulkRate').value = c.rate || '';
+}
+
+function saveBulkEntries() {
+  const clientId = document.getElementById('bulkClient').value;
+  const project = document.getElementById('bulkProject').value.trim();
+  const rate = parseFloat(document.getElementById('bulkRate').value) || 0;
+  if (!clientId) return toast('Please select a client', 'error');
+  let added = 0;
+  document.querySelectorAll('[id^="bulk-"]').forEach(row => {
+    const dateEl = row.querySelector('[id$="-date"]');
+    const hoursEl = row.querySelector('[id$="-hours"]');
+    const descEl = row.querySelector('[id$="-desc"]');
+    if (!dateEl || !hoursEl) return;
+    const hours = parseFloat(hoursEl.value);
+    if (!hours || hours <= 0) return;
+    state.timeEntries.push({
+      id: uid(),
+      date: dateEl.value,
+      clientId, project,
+      desc: descEl ? descEl.value.trim() : '',
+      hours, rate,
+      amount: +(hours * rate).toFixed(2),
+      invoiced: false, invoiceId: null
+    });
+    added++;
+  });
+  if (added === 0) return toast('No valid entries to save', 'error');
+  saveState();
+  closeModal('bulkTimeModal');
+  renderTime();
+  toast(`${added} entries saved!`);
+}
+
+// ============================================================
+// INVOICES
+// ============================================================
+function openNewInvoiceModal() {
+  updateClientSelects();
+  document.getElementById('invClient').value = '';
+  const wStart = getWeekStart(today());
+  document.getElementById('invFrom').value = wStart;
+  document.getElementById('invTo').value = today();
+  document.getElementById('invStyle').value = 'modern';
+  document.getElementById('invTax').value = '0';
+  document.getElementById('invTimePreview').textContent = '';
+  openModal('newInvoiceModal');
+}
+
+function loadTimeForInvoice() {
+  const clientId = document.getElementById('invClient').value;
+  const from = document.getElementById('invFrom').value;
+  const to = document.getElementById('invTo').value;
+  const preview = document.getElementById('invTimePreview');
+  if (!clientId || !from || !to) { preview.textContent = ''; return; }
+  const entries = state.timeEntries.filter(t =>
+    t.clientId === clientId && !t.invoiced && t.date >= from && t.date <= to
+  );
+  if (entries.length === 0) {
+    preview.innerHTML = '<span style="color:var(--warning)">⚠️ No uninvoiced time entries found for this period</span>';
+  } else {
+    const total = entries.reduce((s, e) => s + e.amount, 0);
+    const c = getClient(clientId);
+    preview.innerHTML = `<span style="color:var(--success)">✅ ${entries.length} entries found — ${fmtCurrency(total, c?.currency)} total</span>`;
+  }
+}
+
+function generateInvoice(batchData = null) {
+  let clientId, from, to, style, taxRate;
+  if (batchData) {
+    ({ clientId, from, to, style, taxRate } = batchData);
+  } else {
+    clientId = document.getElementById('invClient').value;
+    from = document.getElementById('invFrom').value;
+    to = document.getElementById('invTo').value;
+    style = document.getElementById('invStyle').value;
+    taxRate = parseFloat(document.getElementById('invTax').value) || 0;
+  }
+  if (!clientId) return toast('Please select a client', 'error');
+  const c = getClient(clientId);
+  if (!c) return toast('Client not found', 'error');
+  const entries = state.timeEntries.filter(t =>
+    t.clientId === clientId && !t.invoiced && t.date >= from && t.date <= to
+  );
+  if (entries.length === 0) return toast('No uninvoiced entries for this period', 'error');
+
+  state.invoiceCounter++;
+  const invNum = 'INV-' + state.invoiceCounter;
+  const issueDate = today();
+  const dueDate = addDays(issueDate, termsDays(c.terms));
+  const subtotal = entries.reduce((s, e) => s + e.amount, 0);
+  const tax = +(subtotal * taxRate / 100).toFixed(2);
+  const total = +(subtotal + tax).toFixed(2);
+
+  const inv = {
+    id: uid(),
+    number: invNum,
+    clientId,
+    entries: entries.map(e => e.id),
+    issueDate,
+    dueDate,
+    from, to,
+    subtotal, tax, taxRate, total,
+    currency: c.currency || 'USD',
+    style: style || 'modern',
+    status: 'Draft',
+    paymentDate: null,
+    paymentMethod: null,
+    bizInfo: { ...state.bizInfo }
+  };
+
+  state.invoices.push(inv);
+  entries.forEach(e => {
+    const idx = state.timeEntries.findIndex(t => t.id === e.id);
+    if (idx !== -1) { state.timeEntries[idx].invoiced = true; state.timeEntries[idx].invoiceId = inv.id; }
+  });
+  saveState();
+  if (!batchData) {
+    closeModal('newInvoiceModal');
+    renderInvoices();
+    viewInvoice(inv.id);
+    toast('Invoice ' + invNum + ' generated!');
+  }
+  return inv;
+}
+
+function viewInvoice(id) {
+  const inv = getInvoice(id);
+  if (!inv) return;
+  const c = getClient(inv.clientId);
+  document.getElementById('invViewTitle').textContent = 'Invoice ' + inv.number;
+  const entries = state.timeEntries.filter(t => inv.entries.includes(t.id));
+  const biz = inv.bizInfo || state.bizInfo;
+  const styleClass = 'style-' + (inv.style || 'modern');
+  const curr = inv.currency || 'USD';
+
+  let html = `<div class="invoice-preview ${styleClass}">
+    <div class="inv-header">
+      <div class="inv-logo">${biz.name || 'Your Business'}</div>
+      <div class="inv-number">Invoice<strong>#${inv.number}</strong></div>
+    </div>
+    <div class="inv-parties">
+      <div>
+        <div class="inv-party-label">From</div>
+        <div class="inv-party-name">${biz.name || 'Your Business'}</div>
+        <div class="inv-party-detail">${(biz.address || '').replace(/\n/g,'<br>')}${biz.email ? '<br>' + biz.email : ''}</div>
+      </div>
+      <div>
+        <div class="inv-party-label">Bill To</div>
+        <div class="inv-party-name">${c ? c.name : 'Client'}</div>
+        <div class="inv-party-detail">${c ? c.company || '' : ''}<br>${c ? c.email || '' : ''}${c && c.address ? '<br>' + c.address.replace(/\n/g,'<br>') : ''}</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:24px;margin-bottom:24px;font-size:13px">
+      <div><span style="color:#888">Issue Date: </span>${fmtDate(inv.issueDate)}</div>
+      <div><span style="color:#888">Due Date: </span>${fmtDate(inv.dueDate)}</div>
+      <div><span style="color:#888">Terms: </span>${c ? c.terms : 'Net 30'}</div>
+    </div>
+    <table>
+      <thead><tr><th>Date</th><th>Description</th><th>Hours</th><th style="text-align:right">Rate</th><th style="text-align:right">Amount</th></tr></thead>
+      <tbody>`;
+  entries.forEach(e => {
+    html += `<tr>
+      <td>${fmtDate(e.date)}</td>
+      <td>${e.project ? '<strong>' + e.project + '</strong> — ' : ''}${e.desc || ''}</td>
+      <td>${e.hours}h</td>
+      <td style="text-align:right">${fmtCurrency(e.rate, curr)}</td>
+      <td style="text-align:right">${fmtCurrency(e.amount, curr)}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>
+    <div class="inv-totals">
+      <div class="inv-total-row"><span>Subtotal</span><span>${fmtCurrency(inv.subtotal, curr)}</span></div>`;
+  if (inv.tax > 0) html += `<div class="inv-total-row"><span>Tax (${inv.taxRate}%)</span><span>${fmtCurrency(inv.tax, curr)}</span></div>`;
+  html += `<div class="inv-total-row grand"><span>Total Due</span><span>${fmtCurrency(inv.total, curr)}</span></div>
+    </div>
+    <div class="inv-footer">
+      ${biz.payment ? '<p><strong>Payment:</strong> ' + biz.payment + '</p>' : ''}
+      <p>Thank you for your business!</p>
+    </div>
+  </div>`;
+  document.getElementById('invoiceViewContent').innerHTML = html;
+  openModal('invoiceViewModal');
+}
+
+function deleteInvoice(id) {
+  if (!confirm('Delete this invoice? Time entries will be marked as uninvoiced.')) return;
+  const inv = getInvoice(id);
+  if (inv) {
+    inv.entries.forEach(eid => {
+      const idx = state.timeEntries.findIndex(t => t.id === eid);
+      if (idx !== -1) { state.timeEntries[idx].invoiced = false; state.timeEntries[idx].invoiceId = null; }
+    });
+  }
+  state.invoices = state.invoices.filter(i => i.id !== id);
+  saveState();
+  renderInvoices();
+  toast('Invoice deleted');
+}
+
+function renderInvoices() {
+  const q = (document.getElementById('invoiceSearch')?.value || '').toLowerCase();
+  const sFilter = document.getElementById('invoiceStatusFilter')?.value || '';
+  let filtered = state.invoices.filter(i => {
+    const c = getClient(i.clientId);
+    return (!sFilter || i.status === sFilter) &&
+      ((i.number || '').toLowerCase().includes(q) || (c ? c.name.toLowerCase().includes(q) : false));
+  }).sort((a, b) => b.issueDate.localeCompare(a.issueDate));
+
+  const tbody = document.getElementById('invoiceTable');
+  const empty = document.getElementById('invoiceEmpty');
+  if (!tbody) return;
+  if (filtered.length === 0) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  tbody.innerHTML = filtered.map(i => {
+    const c = getClient(i.clientId);
+    const isOverdue = i.status !== 'Paid' && i.dueDate < today();
+    const displayStatus = isOverdue ? 'Overdue' : i.status;
+    const badgeClass = { Draft: 'badge-muted', Sent: 'badge-info', Viewed: 'badge-warning', Paid: 'badge-success', Overdue: 'badge-danger' }[displayStatus] || 'badge-muted';
+    return `<tr>
+      <td><strong>${i.number}</strong></td>
+      <td>${c ? c.name : '—'}</td>
+      <td>${fmtDate(i.issueDate)}</td>
+      <td style="${isOverdue ? 'color:var(--danger)' : ''}">${fmtDate(i.dueDate)}</td>
+      <td><strong>${fmtCurrency(i.total, i.currency)}</strong></td>
+      <td><span class="badge ${badgeClass}">${displayStatus}</span></td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-ghost btn-xs" onclick="viewInvoice('${i.id}')">👁️</button>
+          <button class="btn btn-secondary btn-xs" onclick="updateInvoiceStatus('${i.id}')">📋</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteInvoice('${i.id}')">🗑️</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function updateInvoiceStatus(id) {
+  const inv = getInvoice(id);
+  if (!inv) return;
+  const statuses = ['Draft', 'Sent', 'Viewed', 'Paid', 'Overdue'];
+  const next = statuses[(statuses.indexOf(inv.status) + 1) % statuses.length];
+  inv.status = next;
+  saveState();
+  renderInvoices();
+  renderPayments();
+  renderDashboard();
+  toast('Status updated to ' + next);
+}
+
+// ============================================================
+// BATCH PROCESSING
+// ============================================================
+function initBatchDates() {
+  const ws = getWeekStart(today());
+  document.getElementById('batchStart').value = ws;
+  document.getElementById('batchEnd').value = today();
+}
+
+function loadBizInfo() {
+  document.getElementById('bizName').value = state.bizInfo.name || '';
+  document.getElementById('bizEmail').value = state.bizInfo.email || '';
+  document.getElementById('bizAddress').value = state.bizInfo.address || '';
+  document.getElementById('bizPayment').value = state.bizInfo.payment || '';
+}
+
+function saveBizInfo() {
+  state.bizInfo = {
+    name: document.getElementById('bizName').value.trim(),
+    email: document.getElementById('bizEmail').value.trim(),
+    address: document.getElementById('bizAddress').value.trim(),
+    payment: document.getElementById('bizPayment').value.trim()
+  };
+  saveState();
+  toast('Business info saved!');
+}
+
+function runBatchScan() {
+  const from = document.getElementById('batchStart').value;
+  const to = document.getElementById('batchEnd').value;
+  if (!from || !to) return toast('Please set date range', 'error');
+
+  const clientsWithWork = {};
+  state.timeEntries.filter(t => !t.invoiced && t.date >= from && t.date <= to).forEach(t => {
+    if (!clientsWithWork[t.clientId]) clientsWithWork[t.clientId] = [];
+    clientsWithWork[t.clientId].push(t);
+  });
+
+  const batchQueue = document.getElementById('batchQueue');
+  const batchItems = document.getElementById('batchItems');
+  const batchEmpty = document.getElementById('batchEmpty');
+  batchQueue.style.display = 'block';
+
+  const clientIds = Object.keys(clientsWithWork);
+  if (clientIds.length === 0) {
+    batchItems.innerHTML = '';
+    batchEmpty.style.display = 'block';
+    return;
+  }
+  batchEmpty.style.display = 'none';
+
+  batchItems.innerHTML = clientIds.map(cid => {
+    const c = getClient(cid);
+    const entries = clientsWithWork[cid];
+    const total = entries.reduce((s, e) => s + e.amount, 0);
+    return `<div class="batch-item" id="batch-item-${cid}">
+      <div class="avatar">${initials(c ? c.name : '?')}</div>
+      <div class="batch-info">
+        <div class="batch-client">${c ? c.name : 'Unknown Client'}</div>
+        <div class="batch-meta">${entries.length} entries · ${fmtCurrency(total, c?.currency)} · ${c ? c.terms : ''}</div>
+      </div>
+      <div class="batch-actions">
+        <button class="btn btn-primary btn-sm" onclick="approveBatchItem('${cid}')">✅ Approve</button>
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('batch-item-${cid}').remove()">⏭️ Skip</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function approveBatchItem(clientId) {
+  const from = document.getElementById('batchStart').value;
+  const to = document.getElementById('batchEnd').value;
+  const style = document.getElementById('batchStyle').value;
+  const taxRate = parseFloat(document.getElementById('batchTax').value) || 0;
+  const inv = generateInvoice({ clientId, from, to, style, taxRate });
+  if (inv) {
+    const item = document.getElementById('batch-item-' + clientId);
+    if (item) item.innerHTML = `<div style="display:flex;align-items:center;gap:10px;color:var(--success)">✅ <strong>${inv.number}</strong> generated — ${fmtCurrency(inv.total, inv.currency)}</div>`;
+    toast('Invoice ' + inv.number + ' generated!');
+    renderInvoices();
+    renderDashboard();
+  }
+}
+
+function approveAllBatch() {
+  const items = document.querySelectorAll('.batch-item');
+  if (items.length === 0) return toast('No items in queue', 'error');
+  items.forEach(item => {
+    const id = item.id.replace('batch-item-', '');
+    approveBatchItem(id);
+  });
+}
+
+// ============================================================
+// PAYMENTS
+// ============================================================
+function renderPayments() {
+  // Populate invoice select
+  const payInv = document.getElementById('payInvoice');
+  if (payInv) {
+    const unpaid = state.invoices.filter(i => i.status !== 'Paid');
+    payInv.innerHTML = '<option value="">Select invoice…</option>' +
+      unpaid.map(i => {
+        const c = getClient(i.clientId);
+        return `<option value="${i.id}">${i.number} — ${c ? c.name : '?'} (${fmtCurrency(i.total, i.currency)})</option>`;
+      }).join('');
+  }
+  document.getElementById('payDate').value = today();
+
+  // Aging report
+  renderAging();
+
+  // Payment table
+  const tbody = document.getElementById('paymentTable');
+  if (!tbody) return;
+  const sorted = [...state.invoices].sort((a, b) => b.issueDate.localeCompare(a.issueDate));
+  tbody.innerHTML = sorted.map(i => {
+    const c = getClient(i.clientId);
+    const isOverdue = i.status !== 'Paid' && i.dueDate < today();
+    const displayStatus = isOverdue ? 'Overdue' : i.status;
+    const badgeClass = { Draft: 'badge-muted', Sent: 'badge-info', Viewed: 'badge-warning', Paid: 'badge-success', Overdue: 'badge-danger' }[displayStatus] || 'badge-muted';
+    return `<tr>
+      <td>${i.number}</td>
+      <td>${c ? c.name : '—'}</td>
+      <td>${fmtCurrency(i.total, i.currency)}</td>
+      <td>${fmtDate(i.issueDate)}</td>
+      <td>${fmtDate(i.dueDate)}</td>
+      <td><span class="badge ${badgeClass}">${displayStatus}</span></td>
+      <td>${i.paymentDate ? fmtDate(i.paymentDate) : '—'}</td>
+      <td>${i.paymentMethod || '—'}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-ghost btn-xs" onclick="viewInvoice('${i.id}')">👁️</button>
+          ${i.status !== 'Paid' ? `<button class="btn btn-success btn-xs" style="background:rgba(34,197,94,0.15);color:var(--success);border:1px solid rgba(34,197,94,0.3);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:600;cursor:pointer" onclick="quickMarkPaid('${i.id}')">✅ Paid</button>` : ''}
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function prefillPayment() {
+  const id = document.getElementById('payInvoice').value;
+  const inv = getInvoice(id);
+  if (inv) document.getElementById('payAmount').value = inv.total;
+}
+
+function recordPayment() {
+  const id = document.getElementById('payInvoice').value;
+  if (!id) return toast('Please select an invoice', 'error');
+  const inv = getInvoice(id);
+  if (!inv) return;
+  inv.status = 'Paid';
+  inv.paymentDate = document.getElementById('payDate').value;
+  inv.paymentMethod = document.getElementById('payMethod').value;
+  saveState();
+  renderPayments();
+  renderDashboard();
+  toast('Payment recorded for ' + inv.number);
+}
+
+function quickMarkPaid(id) {
+  const inv = getInvoice(id);
+  if (!inv) return;
+  inv.status = 'Paid';
+  inv.paymentDate = today();
+  saveState();
+  renderPayments();
+  renderDashboard();
+  toast('Invoice ' + inv.number + ' marked as paid!');
+}
+
+function renderAging() {
+  const el = document.getElementById('agingReport');
+  if (!el) return;
+  const unpaid = state.invoices.filter(i => i.status !== 'Paid' && i.status !== 'Draft');
+  const buckets = { '0-30': 0, '31-60': 0, '61-90': 0, '90+': 0 };
+  const totals = { '0-30': 0, '31-60': 0, '61-90': 0, '90+': 0 };
+  const t = today();
+  unpaid.forEach(i => {
+    const days = daysDiff(i.dueDate, t);
+    if (days <= 0) { buckets['0-30']++; totals['0-30'] += i.total; }
+    else if (days <= 30) { buckets['0-30']++; totals['0-30'] += i.total; }
+    else if (days <= 60) { buckets['31-60']++; totals['31-60'] += i.total; }
+    else if (days <= 90) { buckets['61-90']++; totals['61-90'] += i.total; }
+    else { buckets['90+']++; totals['90+'] += i.total; }
+  });
+  const grandTotal = Object.values(totals).reduce((s, v) => s + v, 0);
+  const colors = { '0-30': 'var(--success)', '31-60': 'var(--warning)', '61-90': 'var(--danger)', '90+': '#dc2626' };
+  el.innerHTML = Object.keys(buckets).map(k => {
+    const pct = grandTotal > 0 ? Math.round(totals[k] / grandTotal * 100) : 0;
+    return `<div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:13px;font-weight:600">${k} days</span>
+        <span style="font-size:13px">${fmtCurrency(totals[k])} <span style="color:var(--muted)">(${buckets[k]} inv.)</span></span>
+      </div>
+      <div class="aging-bar"><div class="aging-fill" style="width:${pct}%;background:${colors[k]}"></div></div>
+    </div>`;
+  }).join('') + `<div style="border-top:1px solid var(--card-border);padding-top:10px;margin-top:4px;display:flex;justify-content:space-between;font-weight:700">
+    <span>Total Outstanding</span><span>${fmtCurrency(grandTotal)}</span>
+  </div>`;
+}
+
+// ============================================================
+// REMINDERS
+// ============================================================
+function switchReminderTab(tab) {
+  document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('reminderOverdue').style.display = tab === 'overdue' ? 'block' : 'none';
+  document.getElementById('reminderTemplates').style.display = tab === 'templates' ? 'block' : 'none';
+}
+
+function renderReminders() {
+  const t = today();
+  const overdue = state.invoices.filter(i => i.status !== 'Paid' && i.dueDate < t);
+  const el = document.getElementById('reminderList');
+  if (!el) return;
+
+  // Render templates
+  const rt1 = document.getElementById('rt1-body');
+  const rt2 = document.getElementById('rt2-body');
+  const rt3 = document.getElementById('rt3-body');
+  if (rt1) rt1.textContent = state.reminderTemplates[1];
+  if (rt2) rt2.textContent = state.reminderTemplates[2];
+  if (rt3) rt3.textContent = state.reminderTemplates[3];
+
+  if (overdue.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">🎉</div><h3>All clear!</h3><p>No overdue invoices. Great work!</p></div>';
+    return;
+  }
+  el.innerHTML = overdue.sort((a, b) => a.dueDate.localeCompare(b.dueDate)).map(i => {
+    const c = getClient(i.clientId);
+    const daysOver = daysDiff(i.dueDate, t);
+    let level, levelLabel, levelColor;
+    if (daysOver <= 7) { level = 1; levelLabel = 'Friendly'; levelColor = 'var(--info)'; }
+    else if (daysOver <= 30) { level = 2; levelLabel = 'Firm'; levelColor = 'var(--warning)'; }
+    else { level = 3; levelLabel = 'Final Notice'; levelColor = 'var(--danger)'; }
+
+    const emailBody = (state.reminderTemplates[level] || '')
+      .replace('[CLIENT]', c ? c.name : 'Client')
+      .replace('[INV]', i.number)
+      .replace('[AMOUNT]', fmtCurrency(i.total, i.currency))
+      .replace('[DUE]', fmtDate(i.dueDate))
+      .replace('[DAYS_OVERDUE]', daysOver)
+      .replace('[PAYMENT_METHOD]', state.bizInfo.payment || 'bank transfer')
+      .replace('[BIZ_NAME]', state.bizInfo.name || 'Your Business');
+
+    return `<div class="reminder-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="badge" style="background:rgba(168,85,247,0.15);color:var(--accent1)">${i.number}</span>
+          <strong>${c ? c.name : 'Unknown'}</strong>
+          <span class="badge" style="background:rgba(0,0,0,0.2);color:${levelColor}">${levelLabel}</span>
+        </div>
+        <span style="font-size:13px;color:${levelColor};font-weight:600">${daysOver}d overdue</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">
+        Amount: ${fmtCurrency(i.total, i.currency)} · Due: ${fmtDate(i.dueDate)}
+      </div>
+      <details>
+        <summary style="cursor:pointer;font-size:13px;color:var(--accent1);margin-bottom:8px">✉️ View reminder email</summary>
+        <div class="reminder-body" style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;margin-top:8px">${emailBody}</div>
+      </details>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn btn-secondary btn-sm" onclick="copyReminder('${i.id}', ${level})">📋 Copy Email</button>
+        <button class="btn btn-ghost btn-sm" onclick="openMailClient('${c ? c.email : ''}','${i.number}','${level}')">✉️ Open Mail</button>
+        <button class="btn btn-primary btn-sm" onclick="quickMarkPaid('${i.id}')">✅ Mark Paid</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function copyReminder(invId, level) {
+  const i = getInvoice(invId);
+  const c = getClient(i?.clientId);
+  if (!i || !c) return;
+  const daysOver = daysDiff(i.dueDate, today());
+  const text = (state.reminderTemplates[level] || '')
+    .replace('[CLIENT]', c.name)
+    .replace('[INV]', i.number)
+    .replace('[AMOUNT]', fmtCurrency(i.total, i.currency))
+    .replace('[DUE]', fmtDate(i.dueDate))
+    .replace('[DAYS_OVERDUE]', daysOver)
+    .replace('[PAYMENT_METHOD]', state.bizInfo.payment || 'bank transfer')
+    .replace('[BIZ_NAME]', state.bizInfo.name || 'Your Business');
+  navigator.clipboard.writeText(text).then(() => toast('Email copied to clipboard!')).catch(() => toast('Copy failed', 'error'));
+}
+
+function copyReminderTemplate(level) {
+  navigator.clipboard.writeText(state.reminderTemplates[level] || '').then(() => toast('Template copied!')).catch(() => toast('Copy failed', 'error'));
+}
+
+function openMailClient(email, invNum, level) {
+  const subjects = { 1: `Friendly Reminder: Invoice #${invNum}`, 2: `Invoice #${invNum} is Past Due`, 3: `FINAL NOTICE: Invoice #${invNum}` };
+  window.open(`mailto:${email}?subject=${encodeURIComponent(subjects[level] || 'Invoice Reminder')}`);
+}
+
+function editReminderTemplate(level) {
+  document.getElementById('editingTemplateLevel').value = level;
+  document.getElementById('reminderEditTitle').textContent = 'Edit Level ' + level + ' Template';
+  document.getElementById('reminderEditBody').value = state.reminderTemplates[level] || '';
+  openModal('reminderEditModal');
+}
+
+function saveReminderTemplate() {
+  const level = parseInt(document.getElementById('editingTemplateLevel').value);
+  state.reminderTemplates[level] = document.getElementById('reminderEditBody').value;
+  saveState();
+  closeModal('reminderEditModal');
+  renderReminders();
+  toast('Template saved!');
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard() {
+  const t = today();
+  const thisMonth = t.substr(0, 7);
+  const monthInvoices = state.invoices.filter(i => i.issueDate.startsWith(thisMonth));
+  const monthTotal = monthInvoices.reduce((s, i) => s + i.total, 0);
+  const outstanding = state.invoices.filter(i => i.status !== 'Paid').reduce((s, i) => s + i.total, 0);
+  const overdue = state.invoices.filter(i => i.status !== 'Paid' && i.dueDate < t).reduce((s, i) => s + i.total, 0);
+
+  const paidInvoices = state.invoices.filter(i => i.status === 'Paid' && i.paymentDate);
+  const avgDays = paidInvoices.length > 0
+    ? Math.round(paidInvoices.reduce((s, i) => s + daysDiff(i.issueDate, i.paymentDate), 0) / paidInvoices.length)
+    : null;
+
+  document.getElementById('stat-month').textContent = fmtCurrency(monthTotal);
+  document.getElementById('stat-outstanding').textContent = fmtCurrency(outstanding);
+  document.getElementById('stat-overdue').textContent = fmtCurrency(overdue);
+  document.getElementById('stat-avgdays').textContent = avgDays !== null ? avgDays + 'd' : '—';
+
+  document.getElementById('dash-draft').textContent = state.invoices.filter(i => i.status === 'Draft').length;
+  document.getElementById('dash-sent').textContent = state.invoices.filter(i => i.status === 'Sent').length;
+  document.getElementById('dash-pending').textContent = state.invoices.filter(i => i.status === 'Viewed').length;
+  document.getElementById('dash-paid').textContent = state.invoices.filter(i => i.status === 'Paid').length;
+
+  renderBarChart();
+  renderRecentActivity();
+}
+
+function renderBarChart() {
+  const chart = document.getElementById('barChart');
+  if (!chart) return;
+  const months = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date();
+    d.setMonth(d.getMonth() - i);
+    months.push(d.toISOString().substr(0, 7));
+  }
+  const data = months.map(m => ({
+    label: new Date(m + '-01').toLocaleDateString('en-US', { month: 'short' }),
+    value: state.invoices.filter(i => i.issueDate.startsWith(m)).reduce((s, i) => s + i.total, 0)
+  }));
+  const max = Math.max(...data.map(d => d.value), 1);
+  chart.innerHTML = data.map(d => {
+    const pct = Math.round(d.value / max * 100);
+    return `<div class="bar-col">
+      <div class="bar-val">${d.value > 0 ? fmtCurrency(d.value).replace('.00','') : ''}</div>
+      <div class="bar-fill" style="height:${pct}%"></div>
+      <div class="bar-label">${d.label}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderRecentActivity() {
+  const el = document.getElementById('recentActivity');
+  if (!el) return;
+  const events = [];
+  state.invoices.slice(-5).reverse().forEach(i => {
+    const c = getClient(i.clientId);
+    events.push({ date: i.issueDate, text: `Invoice ${i.number} created for ${c ? c.name : '?'} — ${fmtCurrency(i.total)}` });
+  });
+  state.timeEntries.slice(-3).reverse().forEach(e => {
+    const c = getClient(e.clientId);
+    events.push({ date: e.date, text: `${e.hours}h logged for ${c ? c.name : '?'}` });
+  });
+  events.sort((a, b) => b.date.localeCompare(a.date));
+  if (events.length === 0) { el.textContent = 'No activity yet.'; return; }
+  el.innerHTML = events.slice(0, 6).map(e =>
+    `<div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--accent1);font-size:11px;white-space:nowrap">${fmtDate(e.date)}</span><span>${e.text}</span></div>`
+  ).join('');
+}
+
+// ============================================================
+// EXPORT
+// ============================================================
+function exportCSV() {
+  const headers = ['Invoice #','Client','Company','Issue Date','Due Date','Subtotal','Tax','Total','Status','Payment Date','Payment Method'];
+  const rows = state.invoices.map(i => {
+    const c = getClient(i.clientId);
+    return [i.number, c?.name || '', c?.company || '', i.issueDate, i.dueDate, i.subtotal, i.tax, i.total, i.status, i.paymentDate || '', i.paymentMethod || ''];
+  });
+  downloadCSV('invoices.csv', [headers, ...rows]);
+}
+
+function exportTimeCSV() {
+  const headers = ['Date','Client','Project','Description','Hours','Rate','Amount','Invoiced','Invoice #'];
+  const rows = state.timeEntries.map(t => {
+    const c = getClient(t.clientId);
+    const inv = t.invoiceId ? getInvoice(t.invoiceId) : null;
+    return [t.date, c?.name || '', t.project || '', t.desc || '', t.hours, t.rate, t.amount, t.invoiced ? 'Yes' : 'No', inv?.number || ''];
+  });
+  downloadCSV('time-log.csv', [headers, ...rows]);
+}
+
+function downloadCSV(filename, rows) {
+  const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV downloaded!');
+}
+
+function exportJSON() {
+  const data = JSON.stringify(state, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'invoice-batch-backup.json'; a.click();
+  URL.revokeObjectURL(url);
+  toast('Backup downloaded!');
+}
+
+function importJSON(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.clients || !data.invoices) return toast('Invalid backup file', 'error');
+      if (!confirm('This will replace all current data. Continue?')) return;
+      state = Object.assign(state, data);
+      saveState();
+      renderDashboard();
+      toast('Backup restored!');
+    } catch(err) { toast('Failed to parse backup file', 'error'); }
+  };
+  reader.readAsText(file);
+}
+
+// ============================================================
+// CLIENT SELECTS UPDATE
+// ============================================================
+function updateClientSelects() {
+  const selects = ['entryClient', 'bulkClient', 'invClient'];
+  selects.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const val = el.value;
+    el.innerHTML = '<option value="">Select client…</option>' +
+      state.clients.map(c => `<option value="${c.id}"${val === c.id ? ' selected' : ''}>${c.name}${c.company ? ' — ' + c.company : ''}</option>`).join('');
+  });
+  const filter = document.getElementById('timeClientFilter');
+  if (filter) {
+    const val = filter.value;
+    filter.innerHTML = '<option value="">All clients</option>' +
+      state.clients.map(c => `<option value="${c.id}"${val === c.id ? ' selected' : ''}>${c.name}</option>`).join('');
+  }
+  const bulkEl = document.getElementById('bulkClient');
+  if (bulkEl) {
+    bulkEl.innerHTML = '<option value="">Select client…</option>' +
+      state.clients.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  loadState();
+  updateClientSelects();
+  renderDashboard();
+  // Prefill today's date in time modal
+  document.getElementById('entryDate').value = today();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

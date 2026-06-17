@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Content Calendar &amp; Social Media Planner for Freelancers | FreelanceOS</title>
+<meta name="description" content="Plan, schedule, and track your social media content across all platforms. Free content calendar tool for freelancers with analytics, content pillars, and batch creator.">
+<meta property="og:title" content="Free Content Calendar &amp; Social Media Planner for Freelancers | FreelanceOS">
+<meta property="og:description" content="Plan, schedule, and track your social media content across all platforms. Free content calendar tool for freelancers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.com/tools/content-calendar">
+<meta property="og:image" content="https://freelanceos.com/og-content-calendar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Content Calendar &amp; Social Media Planner | FreelanceOS">
+<meta name="twitter:description" content="Plan, schedule, and track your social media content across all platforms. Free for freelancers.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Content Calendar & Social Media Planner","description":"Free content calendar and social media planner for freelancers. Schedule posts, track analytics, manage content pillars.","url":"https://freelanceos.com/tools/content-calendar","applicationCategory":"ProductivityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"FreelanceOS"}}</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#020617;--card:#0f172a;--border:rgba(168,85,247,0.2);--accent1:#a855f7;--accent2:#ec4899;
+--text:#e2e8f0;--muted:#94a3b8;--radius-card:16px;--radius-btn:12px;
+--tw:#3b82f6;--li:#1e40af;--ig:#ec4899;--blog:#22c55e;--yt:#ef4444;--tt:#000000;--nl:#a855f7;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+a{color:var(--accent1);text-decoration:none}
+a:hover{text-decoration:underline}
+button{cursor:pointer;font-family:inherit;font-size:14px;border:none;outline:none}
+input,select,textarea{font-family:inherit;font-size:14px;color:var(--text);background:#1e293b;border:1px solid var(--border);border-radius:8px;padding:8px 12px;width:100%;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent1)}
+select option{background:#1e293b}
+textarea{resize:vertical;min-height:80px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+h1{font-size:28px;font-weight:700}
+h2{font-size:20px;font-weight:600}
+h3{font-size:16px;font-weight:600}
+
+.grad{background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-card);padding:20px}
+.glass{background:rgba(15,23,42,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--radius-btn);font-weight:600;font-size:13px;transition:all .2s;cursor:pointer}
+.btn-primary{background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;border:none}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--accent1);color:var(--text)}
+.btn-sm{padding:6px 12px;font-size:12px;border-radius:8px}
+.btn-danger{background:#7f1d1d;color:#fca5a5;border:none}
+.btn-danger:hover{background:#991b1b}
+
+.cta-banner{background:linear-gradient(135deg,rgba(168,85,247,0.15),rgba(236,72,153,0.15));border:1px solid rgba(168,85,247,0.4);border-radius:var(--radius-card);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.cta-banner p{font-size:14px;color:var(--muted)}
+.cta-banner strong{color:var(--text)}
+
+#app{max-width:1400px;margin:0 auto;padding:16px}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.header-logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#a855f7,#ec4899);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+.nav-tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:4px;flex-wrap:wrap}
+.nav-tab{padding:8px 16px;border-radius:10px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
+.nav-tab.active{background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff}
+.nav-tab:hover:not(.active){color:var(--text);background:rgba(168,85,247,0.1)}
+
+.view{display:none}
+.view.active{display:block}
+
+/* Calendar */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-nav{display:flex;align-items:center;gap:12px}
+.cal-nav button{width:32px;height:32px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:18px;display:flex;align-items:center;justify-content:center}
+.cal-nav button:hover{border-color:var(--accent1)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day-header{text-align:center;font-size:12px;font-weight:600;color:var(--muted);padding:8px 0}
+.cal-cell{min-height:90px;background:rgba(15,23,42,0.6);border:1px solid rgba(168,85,247,0.1);border-radius:10px;padding:6px;cursor:pointer;transition:all .2s;position:relative}
+.cal-cell:hover{border-color:rgba(168,85,247,0.4)}
+.cal-cell.today{border-color:rgba(168,85,247,0.6);background:rgba(168,85,247,0.08)}
+.cal-cell.other-month{opacity:.4}
+.cal-cell.selected{border-color:#a855f7;background:rgba(168,85,247,0.12)}
+.cal-day-num{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px}
+.cal-cell.today .cal-day-num{color:var(--accent1)}
+.cal-post-badge{font-size:10px;padding:2px 5px;border-radius:4px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:500}
+.cal-more{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* Platform colors */
+.plat-twitter{background:rgba(59,130,246,0.2);color:#93c5fd}
+.plat-linkedin{background:rgba(30,64,175,0.3);color:#93c5fd}
+.plat-instagram{background:rgba(236,72,153,0.2);color:#f9a8d4}
+.plat-blog{background:rgba(34,197,94,0.2);color:#86efac}
+.plat-youtube{background:rgba(239,68,68,0.2);color:#fca5a5}
+.plat-tiktok{background:rgba(100,100,100,0.3);color:#d1d5db}
+.plat-newsletter{background:rgba(168,85,247,0.2);color:#d8b4fe}
+
+/* Status colors */
+.status-draft{background:rgba(100,116,139,0.2);color:#94a3b8}
+.status-scheduled{background:rgba(59,130,246,0.2);color:#93c5fd}
+.status-published{background:rgba(34,197,94,0.2);color:#86efac}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(2,6,23,0.85);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-card);width:100%;max-width:680px;max-height:90vh;overflow-y:auto;padding:24px;position:relative}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-close{width:32px;height:32px;border-radius:8px;background:rgba(148,163,184,0.1);border:none;color:var(--muted);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.modal-close:hover{color:var(--text)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid.single{grid-template-columns:1fr}
+.form-row{margin-bottom:12px}
+.char-count{font-size:11px;color:var(--muted);text-align:right;margin-top:3px}
+.char-count.over{color:#ef4444}
+.plat-checkboxes{display:flex;flex-wrap:wrap;gap:8px}
+.plat-check{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-size:12px;font-weight:500;transition:all .2s;user-select:none}
+.plat-check input{width:auto;display:none}
+.plat-check.checked-twitter{border-color:#3b82f6;background:rgba(59,130,246,0.15);color:#93c5fd}
+.plat-check.checked-linkedin{border-color:#1e40af;background:rgba(30,64,175,0.15);color:#93c5fd}
+.plat-check.checked-instagram{border-color:#ec4899;background:rgba(236,72,153,0.15);color:#f9a8d4}
+.plat-check.checked-blog{border-color:#22c55e;background:rgba(34,197,94,0.15);color:#86efac}
+.plat-check.checked-youtube{border-color:#ef4444;background:rgba(239,68,68,0.15);color:#fca5a5}
+.plat-check.checked-tiktok{border-color:#6b7280;background:rgba(100,100,100,0.15);color:#d1d5db}
+.plat-check.checked-newsletter{border-color:#a855f7;background:rgba(168,85,247,0.15);color:#d8b4fe}
+
+/* Weekly view */
+.week-grid{display:grid;grid-template-columns:60px repeat(7,1fr);gap:2px}
+.week-header{text-align:center;padding:10px 4px;font-size:12px;font-weight:600;color:var(--muted)}
+.week-header.today-col{color:var(--accent1)}
+.time-label{font-size:11px;color:var(--muted);text-align:right;padding-right:8px;padding-top:6px}
+.week-slot{min-height:44px;border:1px solid rgba(168,85,247,0.08);border-radius:6px;padding:3px;cursor:pointer;transition:background .2s}
+.week-slot:hover{background:rgba(168,85,247,0.06)}
+.week-slot.has-post{background:rgba(168,85,247,0.08)}
+.week-post-item{font-size:10px;padding:2px 4px;border-radius:4px;margin-bottom:2px;cursor:pointer}
+
+/* Pillars */
+.pillars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.pillar-card{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative}
+.pillar-color-dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px}
+.pillar-chart-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.pillar-bar{flex:1;height:8px;background:rgba(148,163,184,0.1);border-radius:4px;overflow:hidden}
+.pillar-bar-fill{height:100%;border-radius:4px;transition:width .5s}
+.pillar-pct{font-size:12px;color:var(--muted);min-width:32px;text-align:right}
+
+/* Library */
+.library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.lib-card{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative}
+.lib-tag{font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(168,85,247,0.15);color:#d8b4fe;display:inline-block;margin-right:4px;margin-bottom:4px}
+.lib-actions{display:flex;gap:6px;margin-top:10px}
+
+/* Analytics */
+.analytics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.metric-card{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.metric-val{font-size:26px;font-weight:700;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.metric-label{font-size:12px;color:var(--muted);margin-top:2px}
+.chart-bar-wrap{display:flex;align-items:flex-end;gap:6px;height:160px;padding:0 4px}
+.chart-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.chart-bar-fill{width:100%;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#a855f7,#7c3aed);min-width:12px;transition:height .5s}
+.chart-bar-label{font-size:10px;color:var(--muted);white-space:nowrap}
+.svg-chart{width:100%;height:180px}
+
+/* Best times */
+.times-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.time-card{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:14px;padding:16px}
+.time-slot-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(168,85,247,0.08)}
+.time-slot-row:last-child{border-bottom:none}
+.time-badge{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600}
+.time-best{background:rgba(34,197,94,0.15);color:#86efac}
+.time-good{background:rgba(168,85,247,0.15);color:#d8b4fe}
+
+/* Batch creator */
+.batch-results{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+.batch-item{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:12px;padding:14px}
+.batch-item-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.batch-day{font-size:12px;font-weight:700;color:var(--accent1)}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:#1e293b;border:1px solid var(--border);border-radius:12px;padding:12px 20px;color:var(--text);font-size:14px;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:#22c55e;background:rgba(22,101,52,0.3)}
+.toast.error{border-color:#ef4444;background:rgba(127,29,29,0.3)}
+
+/* Tables */
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:10px 12px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--border);font-weight:500}
+.data-table td{padding:10px 12px;border-bottom:1px solid rgba(168,85,247,0.08);vertical-align:middle}
+.data-table tr:hover td{background:rgba(168,85,247,0.04)}
+
+/* Search */
+.search-bar{display:flex;gap:8px;margin-bottom:16px}
+.search-bar input{flex:1}
+
+/* Responsive */
+@media(max-width:768px){
+  .form-grid{grid-template-columns:1fr}
+  .cal-grid{gap:2px}
+  .cal-cell{min-height:60px}
+  .cal-post-badge{display:none}
+  .cal-cell .cal-more{display:block!important}
+  h1{font-size:22px}
+  .nav-tab{padding:6px 10px;font-size:12px}
+  .week-grid{grid-template-columns:40px repeat(7,1fr)}
+  .analytics-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .times-grid{grid-template-columns:1fr}
+  .pillars-grid{grid-template-columns:1fr}
+  .library-grid{grid-template-columns:1fr}
+}
+
+footer{margin-top:48px;padding:24px;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+.disclaimer{background:rgba(148,163,184,0.05);border:1px solid rgba(148,163,184,0.1);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--muted);margin-top:16px;text-align:center}
+
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.badge{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600;display:inline-flex;align-items:center;gap:3px}
+.tag-pill{font-size:11px;padding:3px 8px;border-radius:20px;display:inline-block}
+
+/* Export controls */
+.export-row{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 24px;color:var(--muted)}
+.empty-state .icon{font-size:48px;margin-bottom:12px}
+.empty-state h3{color:var(--text);margin-bottom:8px}
+
+/* pillar pills */
+.pillar-pill{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:500}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+  <div>
+    <strong>🚀 FreelanceOS Pro — 280+ Notion templates for freelancers</strong>
+    <p>Use code <strong>FLASH40</strong> at checkout for 40% off today only</p>
+  </div>
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="btn btn-primary">Claim 40% Off →</a>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-logo">
+    <div class="logo-icon">📅</div>
+    <div>
+      <h1><span class="grad">Content Calendar</span></h1>
+      <p style="font-size:13px;color:var(--muted)">Social Media Planner for Freelancers</p>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="btn btn-primary" onclick="openAddPost()">+ Add Post</button>
+    <button class="btn btn-ghost btn-sm" onclick="showExportMenu()">Export</button>
+  </div>
+</div>
+
+<!-- Nav -->
+<div class="nav-tabs" style="margin-bottom:24px">
+  <button class="nav-tab active" onclick="switchView('calendar')">📅 Calendar</button>
+  <button class="nav-tab" onclick="switchView('weekly')">🗓 Weekly</button>
+  <button class="nav-tab" onclick="switchView('pillars')">🏛 Pillars</button>
+  <button class="nav-tab" onclick="switchView('library')">📚 Library</button>
+  <button class="nav-tab" onclick="switchView('analytics')">📊 Analytics</button>
+  <button class="nav-tab" onclick="switchView('besttimes')">⏰ Best Times</button>
+  <button class="nav-tab" onclick="switchView('batch')">⚡ Batch Creator</button>
+</div>
+
+<!-- CALENDAR VIEW -->
+<div id="view-calendar" class="view active">
+  <div class="card">
+    <div class="cal-header">
+      <div class="cal-nav">
+        <button onclick="calNav(-1)">‹</button>
+        <h2 id="cal-month-label" style="min-width:180px;text-align:center"></h2>
+        <button onclick="calNav(1)">›</button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="calNav(0,'today')">Today</button>
+        <div style="display:flex;gap:4px;flex-wrap:wrap" id="plat-filter-btns"></div>
+      </div>
+    </div>
+    <div class="cal-grid" id="cal-days-header"></div>
+    <div class="cal-grid" id="cal-grid" style="margin-top:4px"></div>
+  </div>
+  <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px" id="plat-legend"></div>
+</div>
+
+<!-- WEEKLY VIEW -->
+<div id="view-weekly" class="view">
+  <div class="card">
+    <div class="cal-header">
+      <div class="cal-nav">
+        <button onclick="weekNav(-1)">‹</button>
+        <h2 id="week-label" style="min-width:220px;text-align:center"></h2>
+        <button onclick="weekNav(1)">›</button>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="weekNav(0,'today')">This Week</button>
+    </div>
+    <div id="week-grid-wrap" style="overflow-x:auto">
+      <div id="week-grid" class="week-grid" style="min-width:600px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PILLARS VIEW -->
+<div id="view-pillars" class="view">
+  <div class="section-header">
+    <h2>Content Pillars</h2>
+    <button class="btn btn-primary btn-sm" onclick="openPillarModal()">+ Add Pillar</button>
+  </div>
+  <div class="pillars-grid" id="pillars-grid"></div>
+  <div class="card" style="margin-top:0">
+    <h3 style="margin-bottom:16px">Pillar Distribution</h3>
+    <div id="pillar-dist"></div>
+  </div>
+</div>
+
+<!-- LIBRARY VIEW -->
+<div id="view-library" class="view">
+  <div class="section-header">
+    <h2>Content Library</h2>
+    <button class="btn btn-primary btn-sm" onclick="openLibraryModal()">+ Add Template</button>
+  </div>
+  <div class="search-bar">
+    <input type="text" id="lib-search" placeholder="Search templates, hashtags, CTAs..." oninput="renderLibrary()">
+    <select id="lib-filter-type" onchange="renderLibrary()" style="width:auto">
+      <option value="">All Types</option>
+      <option value="post">Evergreen Post</option>
+      <option value="hashtag">Hashtag Set</option>
+      <option value="bio">Bio Template</option>
+      <option value="cta">CTA Variation</option>
+      <option value="caption">Caption</option>
+    </select>
+  </div>
+  <div class="library-grid" id="library-grid"></div>
+</div>
+
+<!-- ANALYTICS VIEW -->
+<div id="view-analytics" class="view">
+  <div class="section-header">
+    <h2>Analytics Tracker</h2>
+    <button class="btn btn-primary btn-sm" onclick="openAnalyticsModal()">+ Log Performance</button>
+  </div>
+  <div class="analytics-grid" id="analytics-summary"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px" id="analytics-charts-row">
+    <div class="card">
+      <h3 style="margin-bottom:14px">Impressions by Platform</h3>
+      <div id="chart-impressions"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:14px">Engagement Rate</h3>
+      <div id="chart-engagement"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:14px">Post Performance Log</h3>
+    <div style="overflow-x:auto">
+      <table class="data-table" id="analytics-table">
+        <thead><tr><th>Date</th><th>Platform</th><th>Title</th><th>Impressions</th><th>Engagement</th><th>Clicks</th><th>Saves</th><th>Rate</th><th></th></tr></thead>
+        <tbody id="analytics-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- BEST TIMES VIEW -->
+<div id="view-besttimes" class="view">
+  <div class="section-header">
+    <h2>Best Posting Times</h2>
+    <span style="font-size:13px;color:var(--muted)">Based on industry research data</span>
+  </div>
+  <div class="times-grid" id="times-grid"></div>
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin-bottom:12px">Weekly Heatmap — Optimal Posting Windows</h3>
+    <div id="heatmap-wrap"></div>
+  </div>
+</div>
+
+<!-- BATCH CREATOR VIEW -->
+<div id="view-batch" class="view">
+  <div class="section-header">
+    <h2>Batch Content Creator</h2>
+    <span style="font-size:13px;color:var(--muted)">Generate a week of post ideas from one topic</span>
+  </div>
+  <div class="card" style="margin-bottom:20px">
+    <div class="form-grid">
+      <div class="form-row">
+        <label>Main Topic / Theme</label>
+        <input type="text" id="batch-topic" placeholder="e.g. 'freelance pricing', 'web design trends'">
+      </div>
+      <div class="form-row">
+        <label>Primary Platform</label>
+        <select id="batch-platform">
+          <option value="twitter">Twitter/X</option>
+          <option value="linkedin">LinkedIn</option>
+          <option value="instagram">Instagram</option>
+          <option value="blog">Blog</option>
+          <option value="newsletter">Newsletter</option>
+          <option value="tiktok">TikTok</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Content Pillar</label>
+        <select id="batch-pillar" onchange=""></select>
+      </div>
+      <div class="form-row">
+        <label>Starting Date</label>
+        <input type="date" id="batch-start-date">
+      </div>
+    </div>
+    <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+      <button class="btn btn-primary" onclick="generateBatch()">⚡ Generate 7 Posts</button>
+      <span style="font-size:13px;color:var(--muted)">Creates drafts and adds to your calendar</span>
+    </div>
+  </div>
+  <div id="batch-results" class="batch-results"></div>
+</div>
+
+<!-- POST MODAL -->
+<div id="post-modal" class="modal-overlay" style="display:none" onclick="closeModalOnOverlay(event,'post-modal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="post-modal-title">Add New Post</h3>
+      <button class="modal-close" onclick="closeModal('post-modal')">×</button>
+    </div>
+    <div class="form-row">
+      <label>Date</label>
+      <input type="date" id="post-date">
+    </div>
+    <div class="form-row">
+      <label>Platforms</label>
+      <div class="plat-checkboxes" id="plat-checks">
+        <div class="plat-check" data-plat="twitter" onclick="togglePlatCheck(this)"><input type="checkbox"> 🐦 Twitter</div>
+        <div class="plat-check" data-plat="linkedin" onclick="togglePlatCheck(this)"><input type="checkbox"> 💼 LinkedIn</div>
+        <div class="plat-check" data-plat="instagram" onclick="togglePlatCheck(this)"><input type="checkbox"> 📸 Instagram</div>
+        <div class="plat-check" data-plat="blog" onclick="togglePlatCheck(this)"><input type="checkbox"> ✍️ Blog</div>
+        <div class="plat-check" data-plat="youtube" onclick="togglePlatCheck(this)"><input type="checkbox"> ▶️ YouTube</div>
+        <div class="plat-check" data-plat="tiktok" onclick="togglePlatCheck(this)"><input type="checkbox"> 🎵 TikTok</div>
+        <div class="plat-check" data-plat="newsletter" onclick="togglePlatCheck(this)"><input type="checkbox"> 📧 Newsletter</div>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label>Content Type</label>
+        <select id="post-type">
+          <option value="Post">Post</option>
+          <option value="Story">Story</option>
+          <option value="Reel">Reel</option>
+          <option value="Article">Article</option>
+          <option value="Newsletter">Newsletter</option>
+          <option value="Thread">Thread</option>
+          <option value="Video">Video</option>
+          <option value="Carousel">Carousel</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Pillar</label>
+        <select id="post-pillar"></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Title / Headline</label>
+      <input type="text" id="post-title" placeholder="Catchy headline for this post">
+    </div>
+    <div class="form-row">
+      <label>Body Text</label>
+      <textarea id="post-body" placeholder="Write your post content..." oninput="updateCharCount()"></textarea>
+      <div class="char-count" id="char-count-display">0 characters</div>
+    </div>
+    <div class="form-row">
+      <label>Hashtags</label>
+      <input type="text" id="post-hashtags" placeholder="#freelance #design #marketing">
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label>Status</label>
+        <select id="post-status">
+          <option value="Draft">Draft</option>
+          <option value="Scheduled">Scheduled</option>
+          <option value="Published">Published</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Scheduled Time</label>
+        <input type="time" id="post-time" value="09:00">
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Notes</label>
+      <textarea id="post-notes" placeholder="Any additional notes, links, or reminders..." style="min-height:60px"></textarea>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-primary" onclick="savePost()">Save Post</button>
+      <button class="btn btn-ghost" onclick="closeModal('post-modal')">Cancel</button>
+      <button class="btn btn-danger btn-sm" id="delete-post-btn" onclick="deletePost()" style="margin-left:auto;display:none">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- PILLAR MODAL -->
+<div id="pillar-modal" class="modal-overlay" style="display:none" onclick="closeModalOnOverlay(event,'pillar-modal')">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-header">
+      <h3 id="pillar-modal-title">Add Content Pillar</h3>
+      <button class="modal-close" onclick="closeModal('pillar-modal')">×</button>
+    </div>
+    <div class="form-row">
+      <label>Pillar Name</label>
+      <input type="text" id="pillar-name" placeholder="e.g. Educational, Behind-the-Scenes">
+    </div>
+    <div class="form-row">
+      <label>Description</label>
+      <input type="text" id="pillar-desc" placeholder="What kind of content belongs here?">
+    </div>
+    <div class="form-row">
+      <label>Color</label>
+      <input type="color" id="pillar-color" value="#a855f7" style="height:40px;padding:4px;cursor:pointer">
+    </div>
+    <div class="form-row">
+      <label>Target % of Content</label>
+      <input type="number" id="pillar-target" min="0" max="100" value="20" placeholder="20">
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-primary" onclick="savePillar()">Save Pillar</button>
+      <button class="btn btn-ghost" onclick="closeModal('pillar-modal')">Cancel</button>
+      <button class="btn btn-danger btn-sm" id="delete-pillar-btn" onclick="deletePillar()" style="margin-left:auto;display:none">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIBRARY MODAL -->
+<div id="library-modal" class="modal-overlay" style="display:none" onclick="closeModalOnOverlay(event,'library-modal')">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <h3 id="lib-modal-title">Add to Library</h3>
+      <button class="modal-close" onclick="closeModal('library-modal')">×</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label>Template Name</label>
+        <input type="text" id="lib-name" placeholder="Name this template">
+      </div>
+      <div class="form-row">
+        <label>Type</label>
+        <select id="lib-type">
+          <option value="post">Evergreen Post</option>
+          <option value="hashtag">Hashtag Set</option>
+          <option value="bio">Bio Template</option>
+          <option value="cta">CTA Variation</option>
+          <option value="caption">Caption</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Content</label>
+      <textarea id="lib-content" placeholder="Paste your template content here..."></textarea>
+    </div>
+    <div class="form-row">
+      <label>Tags (comma separated)</label>
+      <input type="text" id="lib-tags" placeholder="evergreen, value, tips">
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-primary" onclick="saveLibraryItem()">Save Template</button>
+      <button class="btn btn-ghost" onclick="closeModal('library-modal')">Cancel</button>
+      <button class="btn btn-danger btn-sm" id="delete-lib-btn" onclick="deleteLibraryItem()" style="margin-left:auto;display:none">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ANALYTICS MODAL -->
+<div id="analytics-modal" class="modal-overlay" style="display:none" onclick="closeModalOnOverlay(event,'analytics-modal')">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <h3>Log Post Performance</h3>
+      <button class="modal-close" onclick="closeModal('analytics-modal')">×</button>
+    </div>
+    <div class="form-row">
+      <label>Link to Post (optional)</label>
+      <select id="analytics-post-link" style="margin-bottom:0">
+        <option value="">— Enter manually —</option>
+      </select>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label>Date</label>
+        <input type="date" id="analytics-date">
+      </div>
+      <div class="form-row">
+        <label>Platform</label>
+        <select id="analytics-plat">
+          <option value="twitter">Twitter/X</option>
+          <option value="linkedin">LinkedIn</option>
+          <option value="instagram">Instagram</option>
+          <option value="blog">Blog</option>
+          <option value="youtube">YouTube</option>
+          <option value="tiktok">TikTok</option>
+          <option value="newsletter">Newsletter</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Post Title / Description</label>
+      <input type="text" id="analytics-title" placeholder="What was this post about?">
+    </div>
+    <div class="form-grid">
+      <div class="form-row"><label>Impressions</label><input type="number" id="analytics-impressions" min="0" placeholder="0"></div>
+      <div class="form-row"><label>Engagement (likes+comments+shares)</label><input type="number" id="analytics-engagement" min="0" placeholder="0"></div>
+      <div class="form-row"><label>Clicks / Link Taps</label><input type="number" id="analytics-clicks" min="0" placeholder="0"></div>
+      <div class="form-row"><label>Saves / Bookmarks</label><input type="number" id="analytics-saves" min="0" placeholder="0"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-primary" onclick="saveAnalytics()">Save Entry</button>
+      <button class="btn btn-ghost" onclick="closeModal('analytics-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div id="export-modal" class="modal-overlay" style="display:none" onclick="closeModalOnOverlay(event,'export-modal')">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <h3>Export Data</h3>
+      <button class="modal-close" onclick="closeModal('export-modal')">×</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button class="btn btn-primary" onclick="exportCalendarCSV()">📥 Export Calendar as CSV</button>
+      <button class="btn btn-ghost" onclick="exportWeeklyHTML()">🖨 Export Weekly Plan as HTML</button>
+      <button class="btn btn-ghost" onclick="exportLibraryJSON()">📦 Export Library as JSON</button>
+      <button class="btn btn-ghost" onclick="exportAllJSON()">💾 Export All Data as JSON</button>
+      <hr style="border-color:var(--border)">
+      <button class="btn btn-ghost" onclick="importAllJSON()">📤 Import JSON Backup</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<footer>
+  <p>Free tool by <a href="/freelanceos-storefront/free-templates.html">FreelanceOS</a> — 49 free tools for freelancers</p>
+  <p style="margin-top:6px"><a href="/freelanceos-storefront/free-templates.html">Browse All Free Templates →</a></p>
+  <div class="disclaimer">
+    <strong>Disclaimer:</strong> Best time recommendations are based on general industry research and averages. Your actual optimal posting times may vary based on your specific audience, niche, and content. Always test and analyze your own data.
+  </div>
+</footer>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'freelanceos_content_cal_v2';
+let state = {
+  posts: [],
+  pillars: [
+    {id:'p1',name:'Educational',desc:'How-tos, tips, tutorials',color:'#3b82f6',target:30},
+    {id:'p2',name:'Behind-the-Scenes',desc:'Your process, workspace, day-in-life',color:'#a855f7',target:20},
+    {id:'p3',name:'Portfolio',desc:'Showcase your work and case studies',color:'#ec4899',target:20},
+    {id:'p4',name:'Tips & Value',desc:'Quick actionable advice',color:'#22c55e',target:15},
+    {id:'p5',name:'Personal',desc:'Your story, journey, opinions',color:'#f59e0b',target:10},
+    {id:'p6',name:'Promotional',desc:'Your services, offers, testimonials',color:'#ef4444',target:5},
+  ],
+  library: [],
+  analytics: [],
+  calYear: new Date().getFullYear(),
+  calMonth: new Date().getMonth(),
+  weekStart: getWeekStart(new Date()),
+  activePlatFilter: null,
+  editPostId: null,
+  editPillarId: null,
+  editLibId: null,
+};
+
+function getWeekStart(d){
+  const dt=new Date(d);
+  const day=dt.getDay();
+  dt.setDate(dt.getDate()-day);
+  dt.setHours(0,0,0,0);
+  return dt.toISOString().slice(0,10);
+}
+
+function loadState(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const saved=JSON.parse(raw);
+      state={...state,...saved};
+      if(!state.pillars||state.pillars.length===0){
+        state.pillars=[
+          {id:'p1',name:'Educational',desc:'How-tos, tips, tutorials',color:'#3b82f6',target:30},
+          {id:'p2',name:'Behind-the-Scenes',desc:'Your process, workspace',color:'#a855f7',target:20},
+          {id:'p3',name:'Portfolio',desc:'Showcase your work',color:'#ec4899',target:20},
+          {id:'p4',name:'Tips & Value',desc:'Quick actionable advice',color:'#22c55e',target:15},
+          {id:'p5',name:'Personal',desc:'Your story and journey',color:'#f59e0b',target:10},
+          {id:'p6',name:'Promotional',desc:'Services and offers',color:'#ef4444',target:5},
+        ];
+      }
+      state.calYear=new Date().getFullYear();
+      state.calMonth=new Date().getMonth();
+      state.weekStart=getWeekStart(new Date());
+    }
+  }catch(e){}
+}
+
+function saveState(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}
+}
+
+function uid(){return 'id'+Date.now()+Math.random().toString(36).slice(2,7);}
+
+const PLATFORMS=['twitter','linkedin','instagram','blog','youtube','tiktok','newsletter'];
+const PLAT_LABELS={twitter:'🐦 Twitter',linkedin:'💼 LinkedIn',instagram:'📸 Instagram',blog:'✍️ Blog',youtube:'▶️ YouTube',tiktok:'🎵 TikTok',newsletter:'📧 Newsletter'};
+const CHAR_LIMITS={twitter:280,linkedin:3000,instagram:2200,blog:99999,youtube:5000,tiktok:2200,newsletter:99999};
+
+function platClass(p){return 'plat-'+p;}
+
+// VIEW SWITCHING
+function switchView(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  const tabs=document.querySelectorAll('.nav-tab');
+  const map={calendar:0,weekly:1,pillars:2,library:3,analytics:4,besttimes:5,batch:6};
+  if(map[v]!==undefined)tabs[map[v]].classList.add('active');
+  if(v==='calendar')renderCalendar();
+  if(v==='weekly')renderWeekly();
+  if(v==='pillars')renderPillars();
+  if(v==='library')renderLibrary();
+  if(v==='analytics')renderAnalytics();
+  if(v==='besttimes')renderBestTimes();
+  if(v==='batch')initBatch();
+}
+
+// CALENDAR
+function calNav(dir,mode){
+  if(mode==='today'){state.calYear=new Date().getFullYear();state.calMonth=new Date().getMonth();}
+  else{state.calMonth+=dir;if(state.calMonth>11){state.calMonth=0;state.calYear++;}if(state.calMonth<0){state.calMonth=11;state.calYear--;}}
+  renderCalendar();
+}
+
+function renderCalendar(){
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month-label').textContent=months[state.calMonth]+' '+state.calYear;
+  const daysH=document.getElementById('cal-days-header');
+  const daysOfWeek=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  daysH.innerHTML=daysOfWeek.map(d=>`<div class="cal-day-header">${d}</div>`).join('');
+
+  const firstDay=new Date(state.calYear,state.calMonth,1).getDay();
+  const daysInMonth=new Date(state.calYear,state.calMonth+1,0).getDate();
+  const daysInPrev=new Date(state.calYear,state.calMonth,0).getDate();
+  const today=new Date().toISOString().slice(0,10);
+
+  let cells=[];
+  for(let i=firstDay-1;i>=0;i--){
+    const d=new Date(state.calYear,state.calMonth-1,daysInPrev-i);
+    cells.push({date:d.toISOString().slice(0,10),otherMonth:true,num:daysInPrev-i});
+  }
+  for(let d=1;d<=daysInMonth;d++){
+    const dt=new Date(state.calYear,state.calMonth,d);
+    cells.push({date:dt.toISOString().slice(0,10),otherMonth:false,num:d});
+  }
+  while(cells.length%7!==0){
+    const last=cells[cells.length-1];
+    const d=new Date(last.date);d.setDate(d.getDate()+1);
+    cells.push({date:d.toISOString().slice(0,10),otherMonth:true,num:d.getDate()});
+  }
+
+  const grid=document.getElementById('cal-grid');
+  grid.innerHTML='';
+  cells.forEach(cell=>{
+    const div=document.createElement('div');
+    div.className='cal-cell'+(cell.otherMonth?' other-month':'')+(cell.date===today?' today':'');
+    div.onclick=()=>openAddPost(cell.date);
+
+    let postsOnDay=state.posts.filter(p=>p.date===cell.date);
+    if(state.activePlatFilter)postsOnDay=postsOnDay.filter(p=>(p.platforms||[]).includes(state.activePlatFilter));
+
+    let html=`<div class="cal-day-num">${cell.num}</div>`;
+    const visible=postsOnDay.slice(0,3);
+    visible.forEach(p=>{
+      const plat=(p.platforms||['blog'])[0];
+      html+=`<div class="cal-post-badge ${platClass(plat)}" title="${p.title||''}" onclick="event.stopPropagation();editPost('${p.id}')">${p.title||p.type||'Post'}</div>`;
+    });
+    if(postsOnDay.length>3){
+      html+=`<div class="cal-more">+${postsOnDay.length-3} more</div>`;
+    } else if(postsOnDay.length===0&&!cell.otherMonth){
+      html+=`<div style="font-size:10px;color:rgba(148,163,184,0.3);margin-top:4px;text-align:center">+</div>`;
+    }
+    div.innerHTML=html;
+    grid.appendChild(div);
+  });
+
+  renderPlatLegend();
+  renderPlatFilterBtns();
+}
+
+function renderPlatLegend(){
+  const leg=document.getElementById('plat-legend');
+  leg.innerHTML=PLATFORMS.map(p=>`<span class="badge ${platClass(p)}">${PLAT_LABELS[p]}</span>`).join('');
+}
+
+function renderPlatFilterBtns(){
+  const wrap=document.getElementById('plat-filter-btns');
+  const btns=PLATFORMS.map(p=>{
+    const active=state.activePlatFilter===p;
+    return `<button class="btn btn-sm ${platClass(p)}" style="opacity:${active?1:0.5}" onclick="togglePlatFilter('${p}')">${p}</button>`;
+  });
+  wrap.innerHTML=`<button class="btn btn-ghost btn-sm" onclick="togglePlatFilter(null)" style="opacity:${state.activePlatFilter===null?1:0.5}">All</button>`+btns.join('');
+}
+
+function togglePlatFilter(p){
+  state.activePlatFilter=(state.activePlatFilter===p)?null:p;
+  renderCalendar();
+}
+
+// WEEKLY VIEW
+function weekNav(dir,mode){
+  if(mode==='today'){state.weekStart=getWeekStart(new Date());}
+  else{const d=new Date(state.weekStart);d.setDate(d.getDate()+dir*7);state.weekStart=d.toISOString().slice(0,10);}
+  renderWeekly();
+}
+
+function renderWeekly(){
+  const ws=new Date(state.weekStart);
+  const we=new Date(ws);we.setDate(we.getDate()+6);
+  const fmt=d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  document.getElementById('week-label').textContent=fmt(ws)+' – '+fmt(we)+', '+we.getFullYear();
+
+  const days=[];
+  for(let i=0;i<7;i++){const d=new Date(ws);d.setDate(d.getDate()+i);days.push(d);}
+
+  const grid=document.getElementById('week-grid');
+  const today=new Date().toISOString().slice(0,10);
+  const dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const timeSlots=['6AM','7AM','8AM','9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM','6PM','7PM','8PM','9PM'];
+  const timeHours=[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+
+  let html=`<div></div>`;
+  days.forEach((d,i)=>{
+    const ds=d.toISOString().slice(0,10);
+    const isToday=ds===today;
+    html+=`<div class="week-header${isToday?' today-col':''}">${dayNames[i]}<br><span style="font-size:14px;font-weight:700;color:${isToday?'var(--accent1)':'var(--text)'}">${d.getDate()}</span></div>`;
+  });
+
+  timeSlots.forEach((ts,ti)=>{
+    const hour=timeHours[ti];
+    html+=`<div class="time-label">${ts}</div>`;
+    days.forEach(d=>{
+      const ds=d.toISOString().slice(0,10);
+      const postsHere=state.posts.filter(p=>{
+        if(p.date!==ds)return false;
+        const t=parseInt((p.time||'09:00').split(':')[0]);
+        return t===hour;
+      });
+      let slotHtml='';
+      postsHere.forEach(p=>{
+        const plat=(p.platforms||['blog'])[0];
+        slotHtml+=`<div class="week-post-item ${platClass(plat)}" onclick="editPost('${p.id}')" title="${p.title||''}">${p.title||p.type||'Post'}</div>`;
+      });
+      const addDate=ds;
+      const addHour=hour;
+      html+=`<div class="week-slot${postsHere.length?' has-post':''}" onclick="openAddPost('${addDate}','${addHour.toString().padStart(2,'0')}:00')">${slotHtml}</div>`;
+    });
+  });
+
+  grid.innerHTML=html;
+}
+
+// PILLARS
+function renderPillars(){
+  const grid=document.getElementById('pillars-grid');
+  if(state.pillars.length===0){
+    grid.innerHTML=`<div class="empty-state"><div class="icon">🏛</div><h3>No pillars yet</h3><p>Add content pillars to organize your strategy</p></div>`;
+    return;
+  }
+  grid.innerHTML=state.pillars.map(p=>{
+    const count=state.posts.filter(post=>post.pillar===p.id).length;
+    const total=state.posts.length||1;
+    const pct=Math.round((count/total)*100);
+    return `<div class="pillar-card" onclick="editPillar('${p.id}')">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span class="pillar-color-dot" style="background:${p.color}"></span>
+        <h3>${p.name}</h3>
+        <span class="badge" style="background:${p.color}22;color:${p.color};margin-left:auto">${pct}%</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:12px">${p.desc}</p>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px">
+        <span>${count} posts</span><span>Target: ${p.target}%</span>
+      </div>
+      <div class="pillar-bar"><div class="pillar-bar-fill" style="width:${pct}%;background:${p.color}"></div></div>
+    </div>`;
+  }).join('');
+
+  renderPillarDist();
+}
+
+function renderPillarDist(){
+  const wrap=document.getElementById('pillar-dist');
+  const total=state.posts.length||1;
+  wrap.innerHTML=state.pillars.map(p=>{
+    const count=state.posts.filter(post=>post.pillar===p.id).length;
+    const pct=Math.round((count/total)*100);
+    return `<div class="pillar-chart-row">
+      <span style="font-size:12px;color:var(--muted);min-width:150px">${p.name}</span>
+      <div class="pillar-bar"><div class="pillar-bar-fill" style="width:${pct}%;background:${p.color}"></div></div>
+      <span class="pillar-pct">${pct}%</span>
+      <span style="font-size:11px;color:var(--muted);min-width:60px">(${count} posts)</span>
+    </div>`;
+  }).join('');
+}
+
+// LIBRARY
+function renderLibrary(){
+  const q=(document.getElementById('lib-search')||{}).value||'';
+  const ft=(document.getElementById('lib-filter-type')||{}).value||'';
+  let items=state.library;
+  if(q)items=items.filter(i=>(i.name+i.content+i.tags.join('')).toLowerCase().includes(q.toLowerCase()));
+  if(ft)items=items.filter(i=>i.type===ft);
+
+  const grid=document.getElementById('library-grid');
+  if(items.length===0){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="icon">📚</div><h3>Library is empty</h3><p>Save reusable templates, hashtag sets, CTAs, and more</p><button class="btn btn-primary" style="margin-top:12px" onclick="openLibraryModal()">+ Add First Template</button></div>`;
+    return;
+  }
+  const typeLabels={post:'Evergreen Post',hashtag:'Hashtag Set',bio:'Bio Template',cta:'CTA',caption:'Caption'};
+  grid.innerHTML=items.map(item=>`<div class="lib-card">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px">
+      <h3 style="font-size:14px">${item.name}</h3>
+      <span class="badge" style="background:rgba(168,85,247,0.15);color:#d8b4fe;white-space:nowrap;flex-shrink:0">${typeLabels[item.type]||item.type}</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;white-space:pre-wrap;word-break:break-word">${item.content.slice(0,180)}${item.content.length>180?'…':''}</p>
+    <div>${item.tags.map(t=>`<span class="lib-tag">#${t}</span>`).join('')}</div>
+    <div class="lib-actions">
+      <button class="btn btn-ghost btn-sm" onclick="copyToClipboard(\`${item.content.replace(/`/g,'\\`')}\`)">Copy</button>
+      <button class="btn btn-ghost btn-sm" onclick="editLibItem('${item.id}')">Edit</button>
+      <button class="btn btn-ghost btn-sm" onclick="useTemplate('${item.id}')">Use in Post</button>
+    </div>
+  </div>`).join('');
+}
+
+function copyToClipboard(text){
+  navigator.clipboard.writeText(text).then(()=>showToast('Copied to clipboard!','success')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Copied!','success');
+  });
+}
+
+function useTemplate(id){
+  const item=state.library.find(i=>i.id===id);
+  if(!item)return;
+  openAddPost();
+  setTimeout(()=>{document.getElementById('post-body').value=item.content;updateCharCount();},100);
+}
+
+// ANALYTICS
+function renderAnalytics(){
+  const posts=state.analytics;
+  const totalImp=posts.reduce((a,p)=>a+(parseInt(p.impressions)||0),0);
+  const totalEng=posts.reduce((a,p)=>a+(parseInt(p.engagement)||0),0);
+  const totalClicks=posts.reduce((a,p)=>a+(parseInt(p.clicks)||0),0);
+  const totalSaves=posts.reduce((a,p)=>a+(parseInt(p.saves)||0),0);
+  const avgRate=totalImp>0?((totalEng/totalImp)*100).toFixed(2):0;
+
+  document.getElementById('analytics-summary').innerHTML=`
+    <div class="metric-card"><div class="metric-val">${totalImp.toLocaleString()}</div><div class="metric-label">Total Impressions</div></div>
+    <div class="metric-card"><div class="metric-val">${totalEng.toLocaleString()}</div><div class="metric-label">Total Engagement</div></div>
+    <div class="metric-card"><div class="metric-val">${totalClicks.toLocaleString()}</div><div class="metric-label">Total Clicks</div></div>
+    <div class="metric-card"><div class="metric-val">${totalSaves.toLocaleString()}</div><div class="metric-label">Total Saves</div></div>
+    <div class="metric-card"><div class="metric-val">${avgRate}%</div><div class="metric-label">Avg Engagement Rate</div></div>
+    <div class="metric-card"><div class="metric-val">${posts.length}</div><div class="metric-label">Posts Tracked</div></div>
+  `;
+
+  renderAnalyticsCharts();
+  renderAnalyticsTable();
+  populateAnalyticsPostLink();
+}
+
+function renderAnalyticsCharts(){
+  const byPlat={};
+  PLATFORMS.forEach(p=>{byPlat[p]={imp:0,eng:0,count:0};});
+  state.analytics.forEach(a=>{
+    const p=a.platform||'blog';
+    if(byPlat[p]){byPlat[p].imp+=parseInt(a.impressions)||0;byPlat[p].eng+=parseInt(a.engagement)||0;byPlat[p].count++;}
+  });
+
+  const platColors={twitter:'#3b82f6',linkedin:'#1e40af',instagram:'#ec4899',blog:'#22c55e',youtube:'#ef4444',tiktok:'#6b7280',newsletter:'#a855f7'};
+  const maxImp=Math.max(1,...PLATFORMS.map(p=>byPlat[p].imp));
+  const impHtml=`<div class="chart-bar-wrap">${PLATFORMS.map(p=>{
+    const h=Math.round((byPlat[p].imp/maxImp)*140);
+    return `<div class="chart-bar-col"><div class="chart-bar-fill" style="height:${h}px;background:${platColors[p]}"></div><div class="chart-bar-label">${p.slice(0,3)}</div><div class="chart-bar-label" style="color:var(--text)">${byPlat[p].imp>0?byPlat[p].imp.toLocaleString():''}</div></div>`;
+  }).join('')}</div>`;
+  document.getElementById('chart-impressions').innerHTML=impHtml;
+
+  const maxRate=1;
+  const engRates=PLATFORMS.map(p=>byPlat[p].imp>0?byPlat[p].eng/byPlat[p].imp:0);
+  const maxER=Math.max(0.001,...engRates);
+  const engHtml=`<div class="chart-bar-wrap">${PLATFORMS.map((p,i)=>{
+    const rate=engRates[i];
+    const h=Math.round((rate/maxER)*140);
+    return `<div class="chart-bar-col"><div class="chart-bar-fill" style="height:${h}px;background:${platColors[p]}"></div><div class="chart-bar-label">${p.slice(0,3)}</div><div class="chart-bar-label" style="color:var(--text)">${rate>0?((rate*100).toFixed(1)+'%'):''}</div></div>`;
+  }).join('')}</div>`;
+  document.getElementById('chart-engagement').innerHTML=engHtml;
+}
+
+function renderAnalyticsTable(){
+  const tbody=document.getElementById('analytics-tbody');
+  if(state.analytics.length===0){
+    tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:32px">No analytics logged yet. Click "+ Log Performance" to add.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML=[...state.analytics].reverse().map(a=>{
+    const imp=parseInt(a.impressions)||0;
+    const eng=parseInt(a.engagement)||0;
+    const rate=imp>0?((eng/imp)*100).toFixed(2)+'%':'—';
+    return `<tr>
+      <td>${a.date}</td>
+      <td><span class="badge ${platClass(a.platform)}">${a.platform}</span></td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.title||'—'}</td>
+      <td>${imp.toLocaleString()}</td>
+      <td>${eng.toLocaleString()}</td>
+      <td>${(parseInt(a.clicks)||0).toLocaleString()}</td>
+      <td>${(parseInt(a.saves)||0).toLocaleString()}</td>
+      <td style="color:${parseFloat(rate)>3?'#86efac':'var(--muted)'}">${rate}</td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteAnalyticsEntry('${a.id}')">×</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function populateAnalyticsPostLink(){
+  const sel=document.getElementById('analytics-post-link');
+  if(!sel)return;
+  sel.innerHTML=`<option value="">— Enter manually —</option>`+
+    state.posts.map(p=>`<option value="${p.id}">${p.date} — ${p.title||'Untitled'}</option>`).join('');
+}
+
+function deleteAnalyticsEntry(id){
+  state.analytics=state.analytics.filter(a=>a.id!==id);
+  saveState();renderAnalytics();showToast('Entry deleted');
+}
+
+// BEST TIMES
+const BEST_TIMES={
+  twitter:{label:'Twitter/X',color:'#3b82f6',slots:[
+    {day:'Mon–Fri',time:'8–10 AM',label:'Best'},
+    {day:'Mon–Fri',time:'12–1 PM',label:'Good'},
+    {day:'Wed',time:'9 AM',label:'Best'},
+    {day:'Sat',time:'9 AM',label:'Good'},
+  ],tips:'Post 1–3× daily. Threads perform best Tue–Thu mornings.'},
+  linkedin:{label:'LinkedIn',color:'#1e40af',slots:[
+    {day:'Tue–Thu',time:'8–10 AM',label:'Best'},
+    {day:'Tue–Thu',time:'12 PM',label:'Good'},
+    {day:'Tue',time:'10 AM',label:'Best'},
+    {day:'Sun',time:'10 AM',label:'Good'},
+  ],tips:'Post 3–5× per week. Long-form articles do well on Sundays.'},
+  instagram:{label:'Instagram',color:'#ec4899',slots:[
+    {day:'Mon–Fri',time:'11 AM–1 PM',label:'Best'},
+    {day:'Tue–Fri',time:'7–9 PM',label:'Good'},
+    {day:'Wed',time:'11 AM',label:'Best'},
+    {day:'Sat',time:'9–11 AM',label:'Good'},
+  ],tips:'Post 4–7× per week. Reels get 2× reach. Stories: 1–2× daily.'},
+  blog:{label:'Blog',color:'#22c55e',slots:[
+    {day:'Mon–Tue',time:'7–9 AM',label:'Best'},
+    {day:'Thu–Fri',time:'7–9 AM',label:'Good'},
+    {day:'Mon',time:'7 AM',label:'Best'},
+    {day:'Sat',time:'9 AM',label:'Good'},
+  ],tips:'Publish 1–4× per month. Monday morning is peak blog traffic.'},
+  youtube:{label:'YouTube',color:'#ef4444',slots:[
+    {day:'Thu–Fri',time:'3–4 PM',label:'Best'},
+    {day:'Sat–Sun',time:'9–11 AM',label:'Best'},
+    {day:'Wed',time:'3 PM',label:'Good'},
+  ],tips:'Post 1–3× per week. Fri–Sat afternoons get best initial views.'},
+  tiktok:{label:'TikTok',color:'#6b7280',slots:[
+    {day:'Tue–Fri',time:'9 AM',label:'Best'},
+    {day:'Tue–Fri',time:'12 PM',label:'Good'},
+    {day:'Tue',time:'9 AM',label:'Best'},
+    {day:'Sat',time:'11 AM',label:'Best'},
+  ],tips:'Post 1–3× daily. Consistency > frequency. Tue & Fri are peak.'},
+  newsletter:{label:'Newsletter',color:'#a855f7',slots:[
+    {day:'Tue–Thu',time:'10–11 AM',label:'Best'},
+    {day:'Tue',time:'10 AM',label:'Best'},
+    {day:'Sat',time:'9 AM',label:'Good'},
+  ],tips:'Send 1–4× per month. Tuesday 10 AM has highest open rates.'},
+};
+
+function renderBestTimes(){
+  const grid=document.getElementById('times-grid');
+  grid.innerHTML=Object.entries(BEST_TIMES).map(([key,plat])=>`
+    <div class="time-card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span style="width:10px;height:10px;border-radius:50%;background:${plat.color};display:inline-block"></span>
+        <h3 style="font-size:14px">${plat.label}</h3>
+      </div>
+      ${plat.slots.map(s=>`<div class="time-slot-row">
+        <span style="font-size:12px;color:var(--muted)">${s.day}</span>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:12px">${s.time}</span>
+          <span class="time-badge ${s.label==='Best'?'time-best':'time-good'}">${s.label}</span>
+        </div>
+      </div>`).join('')}
+      <p style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">${plat.tips}</p>
+    </div>
+  `).join('');
+
+  renderHeatmap();
+}
+
+function renderHeatmap(){
+  const wrap=document.getElementById('heatmap-wrap');
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const hours=['6AM','8AM','10AM','12PM','2PM','4PM','6PM','8PM','10PM'];
+  const heatData={
+    0:[0,1,2,2,2,1,1,2,1],
+    1:[0,2,3,3,3,2,2,3,1],
+    2:[0,2,3,4,3,3,2,3,1],
+    3:[0,2,3,4,4,3,2,3,1],
+    4:[0,2,3,4,3,3,2,3,1],
+    5:[0,2,3,4,3,2,3,3,2],
+    6:[1,2,3,3,2,2,2,2,1],
+  };
+  const colors=['transparent','rgba(168,85,247,0.1)','rgba(168,85,247,0.25)','rgba(168,85,247,0.5)','rgba(168,85,247,0.85)'];
+  let html=`<div style="display:grid;grid-template-columns:40px repeat(9,1fr);gap:3px;font-size:11px">`;
+  html+=`<div></div>${hours.map(h=>`<div style="text-align:center;color:var(--muted);padding:3px 0">${h}</div>`).join('')}`;
+  days.forEach((d,di)=>{
+    html+=`<div style="color:var(--muted);display:flex;align-items:center">${d}</div>`;
+    for(let h=0;h<9;h++){
+      const val=heatData[di][h];
+      html+=`<div style="height:28px;border-radius:4px;background:${colors[val]};border:1px solid rgba(168,85,247,0.1)" title="${days[di]} ${hours[h]}: ${['None','Low','Medium','Good','Best'][val]}"></div>`;
+    }
+  });
+  html+=`</div><div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--muted)">
+    <span>Less activity</span>
+    ${[1,2,3,4].map(i=>`<div style="width:20px;height:14px;border-radius:3px;background:${colors[i]}"></div>`).join('')}
+    <span>More activity</span>
+  </div>`;
+  wrap.innerHTML=html;
+}
+
+// BATCH CREATOR
+function initBatch(){
+  const psel=document.getElementById('batch-pillar');
+  psel.innerHTML='<option value="">— No Pillar —</option>'+state.pillars.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById('batch-start-date').value=today;
+}
+
+const BATCH_FORMATS=[
+  {type:'Thread',format:'thread'},
+  {type:'Post',format:'tips'},
+  {type:'Post',format:'story'},
+  {type:'Post',format:'question'},
+  {type:'Carousel',format:'listicle'},
+  {type:'Post',format:'stat'},
+  {type:'Article',format:'deepdive'},
+];
+
+const BATCH_TEMPLATES={
+  thread:(topic)=>`🧵 Thread: Everything you need to know about ${topic}\n\n1/ The basics that most people miss...\n2/ The common mistake beginners make with ${topic}\n3/ The advanced approach that changes everything\n4/ My personal experience with ${topic}\n5/ The key takeaway: [your insight]\n\nRT if this helped! 👇`,
+  tips:(topic)=>`5 quick tips for ${topic} that took me years to learn:\n\n✅ Tip 1: Start with the fundamentals — [specific advice]\n✅ Tip 2: Don't overlook [overlooked element]\n✅ Tip 3: The shortcut everyone misses is [shortcut]\n✅ Tip 4: When you're stuck, [actionable strategy]\n✅ Tip 5: The #1 thing that changed my results: [insight]\n\nSave this for later 🔖`,
+  story:(topic)=>`The story of how ${topic} changed my freelance business:\n\n6 months ago, I was struggling with [problem].\n\nThen I discovered [solution related to ${topic}].\n\nHere's what happened next:\n\n[Your transformation story — 3-4 sentences]\n\nThe lesson: [key takeaway]\n\nHave you experienced this too? Drop a comment 👇`,
+  question:(topic)=>`Hot take on ${topic}: [your controversial but honest opinion]\n\nMost freelancers think [common belief].\n\nBut I've found the opposite is true.\n\n[Your reasoning in 2-3 sentences]\n\nDo you agree or disagree? I want to hear your experience 👇`,
+  listicle:(topic)=>`[CAROUSEL IDEA] — ${topic}\n\nSlide 1: Hook — "The ${topic} guide nobody talks about"\nSlide 2: The problem — what most people get wrong\nSlide 3: The solution — your core framework\nSlide 4: Step-by-step breakdown\nSlide 5: Real example / case study\nSlide 6: Common mistakes to avoid\nSlide 7: Your key takeaway\nSlide 8: CTA — save this, share, or DM me`,
+  stat:(topic)=>`Did you know? [Stat or fact about ${topic}]\n\nThis is why [implication of the stat].\n\nFor freelancers specifically:\n→ [How it impacts freelancers]\n→ [What to do about it]\n→ [The opportunity this creates]\n\n[Source: research / your experience]\n\nWhat's your take on this? 🤔`,
+  deepdive:(topic)=>`[BLOG POST OUTLINE] — The Complete Guide to ${topic}\n\nIntro: Why ${topic} matters in 2025\n\nSection 1: Understanding the fundamentals\nSection 2: The most common mistakes\nSection 3: A step-by-step framework\nSection 4: Real-world examples and case studies\nSection 5: Advanced strategies\nSection 6: Tools and resources\n\nConclusion: Your action plan\n\nTarget word count: 1,500–2,500 words`,
+};
+
+function generateBatch(){
+  const topic=document.getElementById('batch-topic').value.trim();
+  if(!topic){showToast('Please enter a topic first','error');return;}
+  const platform=document.getElementById('batch-platform').value;
+  const pillar=document.getElementById('batch-pillar').value;
+  const startDate=document.getElementById('batch-start-date').value;
+
+  const dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const results=[];
+
+  BATCH_FORMATS.forEach((fmt,i)=>{
+    const d=new Date(startDate);
+    d.setDate(d.getDate()+i);
+    const dateStr=d.toISOString().slice(0,10);
+    const dayName=dayNames[d.getDay()];
+    const content=BATCH_TEMPLATES[fmt.format](topic);
+    const id=uid();
+
+    const post={
+      id,date:dateStr,platforms:[platform],type:fmt.type,pillar,
+      title:`Day ${i+1}: ${fmt.format.charAt(0).toUpperCase()+fmt.format.slice(1)} — ${topic}`,
+      body:content,hashtags:`#${topic.replace(/\s+/g,'')} #freelance #content`,
+      status:'Draft',time:'09:00',notes:'Generated by Batch Creator',
+    };
+    state.posts.push(post);
+    results.push({...post,dayName,dayNum:i+1});
+  });
+
+  saveState();
+
+  const wrap=document.getElementById('batch-results');
+  wrap.innerHTML=results.map(r=>`<div class="batch-item">
+    <div class="batch-item-header">
+      <span class="batch-day">Day ${r.dayNum} — ${r.dayName} (${r.date})</span>
+      <span class="badge ${platClass(r.platforms[0])}">${r.platforms[0]}</span>
+      <span class="badge status-draft" style="margin-left:4px">${r.type}</span>
+    </div>
+    <h3 style="font-size:13px;margin-bottom:6px">${r.title}</h3>
+    <pre style="font-size:12px;color:var(--muted);white-space:pre-wrap;word-break:break-word;font-family:inherit;max-height:120px;overflow-y:auto">${r.body}</pre>
+    <div style="display:flex;gap:6px;margin-top:8px">
+      <button class="btn btn-ghost btn-sm" onclick="editPost('${r.id}')">Edit</button>
+      <button class="btn btn-ghost btn-sm" onclick="copyToClipboard(\`${r.body.replace(/`/g,'\\`')}\`)">Copy</button>
+    </div>
+  </div>`).join('');
+
+  showToast('7 posts created and added to your calendar!','success');
+}
+
+// MODALS
+function openAddPost(date,time){
+  state.editPostId=null;
+  document.getElementById('post-modal-title').textContent='Add New Post';
+  document.getElementById('delete-post-btn').style.display='none';
+  document.getElementById('post-date').value=date||new Date().toISOString().slice(0,10);
+  document.getElementById('post-time').value=time||'09:00';
+  document.getElementById('post-title').value='';
+  document.getElementById('post-body').value='';
+  document.getElementById('post-hashtags').value='';
+  document.getElementById('post-notes').value='';
+  document.getElementById('post-type').value='Post';
+  document.getElementById('post-status').value='Draft';
+  updateCharCount();
+  document.querySelectorAll('.plat-check').forEach(el=>{
+    el.className='plat-check';el.querySelector('input').checked=false;
+  });
+  populatePillarSelect('post-pillar','');
+  document.getElementById('post-modal').style.display='flex';
+}
+
+function editPost(id){
+  const post=state.posts.find(p=>p.id===id);
+  if(!post)return;
+  state.editPostId=id;
+  document.getElementById('post-modal-title').textContent='Edit Post';
+  document.getElementById('delete-post-btn').style.display='block';
+  document.getElementById('post-date').value=post.date||'';
+  document.getElementById('post-time').value=post.time||'09:00';
+  document.getElementById('post-title').value=post.title||'';
+  document.getElementById('post-body').value=post.body||'';
+  document.getElementById('post-hashtags').value=post.hashtags||'';
+  document.getElementById('post-notes').value=post.notes||'';
+  document.getElementById('post-type').value=post.type||'Post';
+  document.getElementById('post-status').value=post.status||'Draft';
+  document.querySelectorAll('.plat-check').forEach(el=>{
+    const p=el.dataset.plat;
+    const checked=(post.platforms||[]).includes(p);
+    el.querySelector('input').checked=checked;
+    el.className='plat-check'+(checked?' checked-'+p:'');
+  });
+  populatePillarSelect('post-pillar',post.pillar||'');
+  updateCharCount();
+  document.getElementById('post-modal').style.display='flex';
+}
+
+function savePost(){
+  const platforms=[...document.querySelectorAll('.plat-check.checked-twitter,.plat-check.checked-linkedin,.plat-check.checked-instagram,.plat-check.checked-blog,.plat-check.checked-youtube,.plat-check.checked-tiktok,.plat-check.checked-newsletter')].map(el=>el.dataset.plat);
+  const post={
+    id:state.editPostId||uid(),
+    date:document.getElementById('post-date').value,
+    platforms:platforms.length?platforms:['blog'],
+    type:document.getElementById('post-type').value,
+    pillar:document.getElementById('post-pillar').value,
+    title:document.getElementById('post-title').value,
+    body:document.getElementById('post-body').value,
+    hashtags:document.getElementById('post-hashtags').value,
+    status:document.getElementById('post-status').value,
+    time:document.getElementById('post-time').value,
+    notes:document.getElementById('post-notes').value,
+  };
+  if(!post.date){showToast('Please select a date','error');return;}
+  if(!post.title&&!post.body){showToast('Please add a title or body text','error');return;}
+
+  if(state.editPostId){
+    state.posts=state.posts.map(p=>p.id===state.editPostId?post:p);
+    showToast('Post updated!','success');
+  } else {
+    state.posts.push(post);
+    showToast('Post added!','success');
+  }
+  saveState();
+  closeModal('post-modal');
+  renderCalendar();
+}
+
+function deletePost(){
+  if(!confirm('Delete this post?'))return;
+  state.posts=state.posts.filter(p=>p.id!==state.editPostId);
+  saveState();closeModal('post-modal');renderCalendar();
+  showToast('Post deleted');
+}
+
+function togglePlatCheck(el){
+  const p=el.dataset.plat;
+  const checked=!el.querySelector('input').checked;
+  el.querySelector('input').checked=checked;
+  el.className='plat-check'+(checked?' checked-'+p:'');
+}
+
+function populatePillarSelect(selId,val){
+  const sel=document.getElementById(selId);
+  sel.innerHTML='<option value="">— No Pillar —</option>'+state.pillars.map(p=>`<option value="${p.id}"${p.id===val?' selected':''}>${p.name}</option>`).join('');
+}
+
+function updateCharCount(){
+  const body=document.getElementById('post-body');
+  const count=body.value.length;
+  const display=document.getElementById('char-count-display');
+  const checkedPlats=[...document.querySelectorAll('.plat-check')].filter(el=>{
+    return [...el.classList].some(c=>c.startsWith('checked-'));
+  }).map(el=>el.dataset.plat);
+  const limit=checkedPlats.length?Math.min(...checkedPlats.map(p=>CHAR_LIMITS[p]||99999)):280;
+  display.textContent=`${count} / ${limit} characters`;
+  display.className='char-count'+(count>limit?' over':'');
+}
+
+function openPillarModal(){
+  state.editPillarId=null;
+  document.getElementById('pillar-modal-title').textContent='Add Content Pillar';
+  document.getElementById('delete-pillar-btn').style.display='none';
+  document.getElementById('pillar-name').value='';
+  document.getElementById('pillar-desc').value='';
+  document.getElementById('pillar-color').value='#a855f7';
+  document.getElementById('pillar-target').value='20';
+  document.getElementById('pillar-modal').style.display='flex';
+}
+
+function editPillar(id){
+  const p=state.pillars.find(x=>x.id===id);
+  if(!p)return;
+  state.editPillarId=id;
+  document.getElementById('pillar-modal-title').textContent='Edit Pillar';
+  document.getElementById('delete-pillar-btn').style.display='block';
+  document.getElementById('pillar-name').value=p.name;
+  document.getElementById('pillar-desc').value=p.desc;
+  document.getElementById('pillar-color').value=p.color;
+  document.getElementById('pillar-target').value=p.target;
+  document.getElementById('pillar-modal').style.display='flex';
+}
+
+function savePillar(){
+  const name=document.getElementById('pillar-name').value.trim();
+  if(!name){showToast('Please enter a pillar name','error');return;}
+  const pillar={
+    id:state.editPillarId||uid(),
+    name,desc:document.getElementById('pillar-desc').value,
+    color:document.getElementById('pillar-color').value,
+    target:parseInt(document.getElementById('pillar-target').value)||20,
+  };
+  if(state.editPillarId){
+    state.pillars=state.pillars.map(p=>p.id===state.editPillarId?pillar:p);
+  } else {
+    state.pillars.push(pillar);
+  }
+  saveState();closeModal('pillar-modal');renderPillars();
+  showToast(state.editPillarId?'Pillar updated!':'Pillar added!','success');
+}
+
+function deletePillar(){
+  if(!confirm('Delete this pillar? Posts using it will be unassigned.'))return;
+  state.pillars=state.pillars.filter(p=>p.id!==state.editPillarId);
+  state.posts=state.posts.map(p=>p.pillar===state.editPillarId?{...p,pillar:''}:p);
+  saveState();closeModal('pillar-modal');renderPillars();
+  showToast('Pillar deleted');
+}
+
+function openLibraryModal(){
+  state.editLibId=null;
+  document.getElementById('lib-modal-title').textContent='Add to Library';
+  document.getElementById('delete-lib-btn').style.display='none';
+  document.getElementById('lib-name').value='';
+  document.getElementById('lib-content').value='';
+  document.getElementById('lib-tags').value='';
+  document.getElementById('lib-type').value='post';
+  document.getElementById('library-modal').style.display='flex';
+}
+
+function editLibItem(id){
+  const item=state.library.find(i=>i.id===id);
+  if(!item)return;
+  state.editLibId=id;
+  document.getElementById('lib-modal-title').textContent='Edit Template';
+  document.getElementById('delete-lib-btn').style.display='block';
+  document.getElementById('lib-name').value=item.name;
+  document.getElementById('lib-content').value=item.content;
+  document.getElementById('lib-tags').value=item.tags.join(', ');
+  document.getElementById('lib-type').value=item.type;
+  document.getElementById('library-modal').style.display='flex';
+}
+
+function saveLibraryItem(){
+  const name=document.getElementById('lib-name').value.trim();
+  const content=document.getElementById('lib-content').value.trim();
+  if(!name||!content){showToast('Please fill in name and content','error');return;}
+  const item={
+    id:state.editLibId||uid(),
+    name,content,type:document.getElementById('lib-type').value,
+    tags:document.getElementById('lib-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+  };
+  if(state.editLibId){
+    state.library=state.library.map(i=>i.id===state.editLibId?item:i);
+    showToast('Template updated!','success');
+  } else {
+    state.library.push(item);
+    showToast('Template saved!','success');
+  }
+  saveState();closeModal('library-modal');renderLibrary();
+}
+
+function deleteLibraryItem(){
+  if(!confirm('Delete this template?'))return;
+  state.library=state.library.filter(i=>i.id!==state.editLibId);
+  saveState();closeModal('library-modal');renderLibrary();
+  showToast('Template deleted');
+}
+
+function openAnalyticsModal(){
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById('analytics-date').value=today;
+  document.getElementById('analytics-title').value='';
+  document.getElementById('analytics-impressions').value='';
+  document.getElementById('analytics-engagement').value='';
+  document.getElementById('analytics-clicks').value='';
+  document.getElementById('analytics-saves').value='';
+  populateAnalyticsPostLink();
+  document.getElementById('analytics-modal').style.display='flex';
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const postLink=document.getElementById('analytics-post-link');
+  if(postLink){
+    postLink.addEventListener('change',function(){
+      const id=this.value;
+      if(!id)return;
+      const post=state.posts.find(p=>p.id===id);
+      if(post){
+        document.getElementById('analytics-date').value=post.date||'';
+        document.getElementById('analytics-title').value=post.title||'';
+        if(post.platforms&&post.platforms[0])document.getElementById('analytics-plat').value=post.platforms[0];
+      }
+    });
+  }
+});
+
+function saveAnalytics(){
+  const entry={
+    id:uid(),
+    date:document.getElementById('analytics-date').value,
+    platform:document.getElementById('analytics-plat').value,
+    title:document.getElementById('analytics-title').value,
+    impressions:document.getElementById('analytics-impressions').value,
+    engagement:document.getElementById('analytics-engagement').value,
+    clicks:document.getElementById('analytics-clicks').value,
+    saves:document.getElementById('analytics-saves').value,
+  };
+  if(!entry.date){showToast('Please select a date','error');return;}
+  state.analytics.push(entry);
+  saveState();closeModal('analytics-modal');renderAnalytics();
+  showToast('Performance logged!','success');
+}
+
+// EXPORT
+function showExportMenu(){document.getElementById('export-modal').style.display='flex';}
+
+function exportCalendarCSV(){
+  const headers=['Date','Platform','Type','Pillar','Title','Body','Hashtags','Status','Time','Notes'];
+  const rows=state.posts.map(p=>{
+    const pillar=state.pillars.find(x=>x.id===p.pillar);
+    return [p.date,(p.platforms||[]).join('|'),p.type,pillar?pillar.name:'',p.title||'',p.body||'',p.hashtags||'',p.status||'',p.time||'',p.notes||''];
+  });
+  const csv=[headers,...rows].map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  downloadFile(csv,'content-calendar.csv','text/csv');
+  showToast('Calendar exported as CSV!','success');
+}
+
+function exportWeeklyHTML(){
+  const ws=new Date(state.weekStart);
+  const days=[];
+  for(let i=0;i<7;i++){const d=new Date(ws);d.setDate(d.getDate()+i);days.push(d);}
+  const dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Weekly Content Plan</title><style>
+    body{font-family:system-ui,sans-serif;max-width:900px;margin:0 auto;padding:20px;color:#1e293b}
+    h1{color:#7c3aed;margin-bottom:4px}
+    .day{margin-bottom:24px;border:1px solid #e2e8f0;border-radius:12px;padding:16px}
+    .day h2{font-size:16px;color:#475569;margin-bottom:12px}
+    .post{background:#f8fafc;border-radius:8px;padding:12px;margin-bottom:8px;border-left:3px solid #a855f7}
+    .plat{font-size:11px;background:#ede9fe;color:#7c3aed;padding:2px 8px;border-radius:6px;display:inline-block;margin-right:4px}
+    .body{font-size:13px;color:#475569;margin-top:6px;white-space:pre-wrap}
+    .hashtags{font-size:12px;color:#a855f7;margin-top:4px}
+    @media print{.day{break-inside:avoid}}
+  </style></head><body>
+    <h1>Weekly Content Plan</h1>
+    <p style="color:#64748b;margin-bottom:24px">${ws.toLocaleDateString('en-US',{month:'long',day:'numeric'})} — ${days[6].toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</p>`;
+
+  days.forEach((d,i)=>{
+    const ds=d.toISOString().slice(0,10);
+    const posts=state.posts.filter(p=>p.date===ds);
+    html+=`<div class="day"><h2>${dayNames[d.getDay()]}, ${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</h2>`;
+    if(posts.length===0){html+=`<p style="color:#94a3b8;font-size:13px">No posts scheduled</p>`;}
+    posts.forEach(p=>{
+      const pillar=state.pillars.find(x=>x.id===p.pillar);
+      html+=`<div class="post">
+        <strong>${p.title||'Untitled'}</strong> ${p.time?`<span style="color:#64748b;font-size:12px">@ ${p.time}</span>`:''}
+        <div style="margin:4px 0">${(p.platforms||[]).map(pl=>`<span class="plat">${pl}</span>`).join('')}${pillar?`<span style="font-size:11px;color:#64748b">· ${pillar.name}</span>`:''}</div>
+        ${p.body?`<div class="body">${p.body}</div>`:''}
+        ${p.hashtags?`<div class="hashtags">${p.hashtags}</div>`:''}
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+
+  html+=`<p style="font-size:12px;color:#94a3b8;margin-top:32px">Generated by FreelanceOS Content Calendar · <a href="/freelanceos-storefront/free-templates.html">Browse free tools</a></p></body></html>`;
+  downloadFile(html,'weekly-content-plan.html','text/html');
+  showToast('Weekly plan exported!','success');
+}
+
+function exportLibraryJSON(){
+  downloadFile(JSON.stringify(state.library,null,2),'content-library.json','application/json');
+  showToast('Library exported!','success');
+}
+
+function exportAllJSON(){
+  const backup={posts:state.posts,pillars:state.pillars,library:state.library,analytics:state.analytics,exported:new Date().toISOString()};
+  downloadFile(JSON.stringify(backup,null,2),'freelanceos-content-calendar-backup.json','application/json');
+  showToast('Full backup exported!','success');
+}
+
+function importAllJSON(){
+  document.getElementById('import-file').click();
+}
+
+function handleImport(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      if(data.posts)state.posts=[...state.posts,...data.posts];
+      if(data.pillars&&data.pillars.length)state.pillars=data.pillars;
+      if(data.library)state.library=[...state.library,...data.library];
+      if(data.analytics)state.analytics=[...state.analytics,...data.analytics];
+      saveState();renderCalendar();
+      showToast('Data imported successfully!','success');
+    }catch(err){showToast('Invalid JSON file','error');}
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
+
+function downloadFile(content,filename,type){
+  const blob=new Blob([content],{type});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=filename;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// MODAL UTILS
+function closeModal(id){document.getElementById(id).style.display='none';}
+function closeModalOnOverlay(e,id){if(e.target.id===id)closeModal(id);}
+
+// TOAST
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast'+(type?' '+type:'');
+  t.classList.add('show');
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// INIT
+loadState();
+renderCalendar();
+
+// add sample data if empty for better first-run experience
+if(state.posts.length===0&&state.library.length===0){
+  const today=new Date();
+  const fmt=d=>d.toISOString().slice(0,10);
+  const d0=new Date(today);
+  const d1=new Date(today);d1.setDate(d1.getDate()+2);
+  const d2=new Date(today);d2.setDate(d2.getDate()+4);
+  state.posts=[
+    {id:uid(),date:fmt(d0),platforms:['linkedin'],type:'Post',pillar:'p1',title:'5 Ways to Raise Your Rates',body:'Ready to raise your freelance rates? Here\'s what I learned from doing it 3 times...',hashtags:'#freelance #pricing #consulting',status:'Draft',time:'09:00',notes:''},
+    {id:uid(),date:fmt(d1),platforms:['instagram','twitter'],type:'Story',pillar:'p2',title:'Behind the Scenes: Client Onboarding',body:'Here\'s what my client onboarding process looks like this week 👀',hashtags:'#freelancelife #behindthescenes',status:'Scheduled',time:'11:00',notes:''},
+    {id:uid(),date:fmt(d2),platforms:['newsletter'],type:'Newsletter',pillar:'p4',title:'Weekly Freelance Tips Newsletter',body:'This week\'s edition: The exact email template I use to close clients without feeling pushy.',hashtags:'',status:'Draft',time:'10:00',notes:''},
+  ];
+  state.library=[
+    {id:uid(),name:'Value-Led CTA',type:'cta',content:'Found this helpful? Save it for later and follow for weekly freelance tips that actually work.',tags:['engagement','cta','evergreen']},
+    {id:uid(),name:'Freelance Hashtag Set — LinkedIn',type:'hashtag',content:'#freelance #freelancer #remotework #solopreneur #consulting #workwithme #b2b #smallbusiness',tags:['linkedin','hashtags']},
+    {id:uid(),name:'Bio Template — Results-Focused',type:'bio',content:'I help [target client] achieve [result] through [your service]. [Social proof or credibility marker]. DM to discuss your project.',tags:['bio','profile']},
+  ];
+  saveState();
+  renderCalendar();
+}
+</script>
+</body>
+</html>
