@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Freelance Financial Dashboard | FreelanceOS</title>
+    <meta name="description" content="Free comprehensive financial dashboard for freelancers. Track revenue, expenses, profit margins, tax obligations, cash runway, and client concentration — all in one view.">
+    <meta name="keywords" content="freelance financial dashboard, freelance accounting, profit loss freelancer, tax estimator freelance, cash runway calculator, freelance revenue tracker, invoice aging, freelance expenses">
+    <meta name="author" content="FreelanceOS">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://freelanceos.pro/financial-dashboard">
+    <meta property="og:title" content="Free Freelance Financial Dashboard | FreelanceOS">
+    <meta property="og:description" content="Track revenue, expenses, profit margins, tax obligations, and cash runway in one view. Free financial dashboard for freelancers, no signup required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freelanceos.pro/financial-dashboard">
+    <meta property="og:image" content="https://freelanceos.pro/og-image.png">
+    <meta property="og:site_name" content="FreelanceOS">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Freelance Financial Dashboard | FreelanceOS">
+    <meta name="twitter:description" content="Track revenue, expenses, profit margins, taxes, and cash runway in one view. Free tool for freelancers.">
+    <meta name="twitter:image" content="https://freelanceos.pro/og-image.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Freelance Financial Dashboard",
+        "url": "https://freelanceos.pro/financial-dashboard",
+        "description": "Free comprehensive financial dashboard for freelancers. Track revenue, expenses, profit margins, tax obligations, cash runway, and client concentration in one view.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "FreelanceOS",
+            "url": "https://freelanceos.pro"
+        }
+    }
+    </script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #020617;
+            --bg-card: #0f172a;
+            --bg-input: #1e293b;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --accent-gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --text-body: #e2e8f0;
+            --text-heading: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-card: rgba(168, 85, 247, 0.2);
+            --border-input: rgba(168, 85, 247, 0.3);
+            --border-focus: rgba(168, 85, 247, 0.6);
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #22c55e;
+            --info: #3b82f6;
+            --radius-card: 16px;
+            --radius-btn: 12px;
+            --radius-input: 12px;
+            --glass-blur: blur(20px);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 8px 32px rgba(168, 85, 247, 0.2);
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-body);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(168, 85, 247, 0.08), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: var(--accent-gradient);
+            padding: 12px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .cta-banner a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-banner a:hover { opacity: 0.9; }
+
+        .cta-badge {
+            background: rgba(255,255,255,0.25);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid var(--border-card);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .header h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-card);
+            padding: 6px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 14px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: var(--radius-btn);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+
+        .tab-btn:hover { color: var(--text-body); background: rgba(168, 85, 247, 0.1); }
+        .tab-btn.active { background: var(--accent-gradient); color: #fff; }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fadeUp 0.3s ease; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-card);
+            padding: 24px;
+            margin-bottom: 20px;
+            backdrop-filter: var(--glass-blur);
+            box-shadow: var(--shadow-card);
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(168, 85, 247, 0.35);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        /* Grid */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+        /* KPI Cards */
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-card);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .kpi-card:hover { border-color: rgba(168, 85, 247, 0.4); transform: translateY(-2px); }
+
+        .kpi-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .kpi-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-heading);
+        }
+
+        .kpi-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .kpi-positive { color: var(--success); }
+        .kpi-negative { color: var(--danger); }
+        .kpi-warning { color: var(--warning); }
+
+        /* Forms */
+        .form-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            background: var(--bg-input);
+            border: 1px solid var(--border-input);
+            border-radius: var(--radius-input);
+            padding: 10px 14px;
+            color: var(--text-body);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+        }
+
+        select { cursor: pointer; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius-btn);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #fff;
+        }
+
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .btn-secondary {
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent-purple);
+            border: 1px solid var(--border-card);
+        }
+
+        .btn-secondary:hover { background: rgba(168, 85, 247, 0.25); }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.25); }
+
+        .btn-sm { padding: 6px 14px; font-size: 0.8rem; }
+
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        /* Table */
+        .table-wrap { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-card);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.08);
+            color: var(--text-body);
+        }
+
+        tr:hover td { background: rgba(168, 85, 247, 0.05); }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: rgba(34,197,94,0.15); color: var(--success); }
+        .badge-warning { background: rgba(245,158,11,0.15); color: var(--warning); }
+        .badge-danger { background: rgba(239,68,68,0.15); color: var(--danger); }
+        .badge-info { background: rgba(59,130,246,0.15); color: var(--info); }
+        .badge-purple { background: rgba(168,85,247,0.15); color: var(--accent-purple); }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 10px;
+            background: var(--bg-input);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--accent-gradient);
+            transition: width 0.6s ease;
+        }
+
+        .progress-fill.green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+        .progress-fill.red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .progress-fill.yellow { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        /* SVG Charts */
+        .chart-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-container svg { width: 100%; height: auto; display: block; }
+
+        /* Status indicators */
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .status-dot.green { background: var(--success); }
+        .status-dot.yellow { background: var(--warning); }
+        .status-dot.red { background: var(--danger); }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+        .empty-state-text { font-size: 0.95rem; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-card);
+            padding: 28px;
+            max-width: 520px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 20px;
+        }
+
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-btn);
+            padding: 12px 20px;
+            color: var(--text-body);
+            font-size: 0.9rem;
+            z-index: 300;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        .toast.active { transform: translateY(0); opacity: 1; }
+
+        /* Period toggle */
+        .period-toggle {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-input);
+            border-radius: var(--radius-btn);
+            padding: 3px;
+        }
+
+        .period-btn {
+            padding: 6px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .period-btn.active { background: var(--accent-gradient); color: #fff; }
+
+        /* Info row */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(168,85,247,0.08);
+        }
+
+        .info-row:last-child { border-bottom: none; }
+
+        .info-label { color: var(--text-muted); font-size: 0.88rem; }
+        .info-value { font-weight: 700; color: var(--text-heading); font-size: 0.95rem; }
+
+        /* Deadline card */
+        .deadline-card {
+            background: rgba(245,158,11,0.08);
+            border: 1px solid rgba(245,158,11,0.2);
+            border-radius: var(--radius-btn);
+            padding: 14px 18px;
+            margin-bottom: 10px;
+        }
+
+        .deadline-card.urgent {
+            background: rgba(239,68,68,0.08);
+            border-color: rgba(239,68,68,0.2);
+        }
+
+        .deadline-date { font-weight: 700; color: var(--text-heading); font-size: 0.95rem; }
+        .deadline-label { color: var(--text-muted); font-size: 0.82rem; }
+        .deadline-amount { font-weight: 700; color: var(--warning); }
+
+        /* Danger zone warning */
+        .danger-zone {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            border-radius: var(--radius-btn);
+            padding: 12px 16px;
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 12px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-card);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--accent-purple); }
+
+        .footer-disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 12px;
+            opacity: 0.7;
+        }
+
+        .footer-brand {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .footer-brand a { color: var(--accent-purple); text-decoration: none; }
+
+        /* Delete button in rows */
+        .row-delete {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .row-delete:hover { color: var(--danger); background: rgba(239,68,68,0.1); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .tabs { gap: 2px; }
+            .tab-btn { min-width: 80px; font-size: 0.78rem; padding: 8px 10px; }
+        }
+
+        @media (max-width: 600px) {
+            .form-row { flex-direction: column; }
+            .header { padding: 40px 16px 24px; }
+            .card { padding: 18px; }
+            .kpi-value { font-size: 1.3rem; }
+        }
+
+        @media print {
+            .cta-banner, .tabs, .btn, .modal-overlay, .toast, .footer, .row-delete { display: none !important; }
+            body { background: #fff; color: #1a1a2e; }
+            .card { border: 1px solid #ddd; box-shadow: none; background: #fff; break-inside: avoid; }
+            .kpi-card { background: #f9f9f9; border: 1px solid #ddd; }
+            .kpi-value { color: #1a1a2e; }
+            .kpi-label { color: #555; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">
+        <span class="cta-badge">FLASH40</span>
+        Get the complete FreelanceOS Pro system &mdash; 40% OFF with code FLASH40 &rarr;
+    </a>
+</div>
+
+<!-- Header -->
+<div class="header">
+    <div class="header-badge">
+        <span>&#128200;</span> Free Tool #84
+    </div>
+    <h1>Freelance <span>Financial Dashboard</span></h1>
+    <p>Revenue, expenses, profit margins, taxes, cash runway, and client concentration &mdash; your complete financial picture in one premium view.</p>
+</div>
+
+<div class="container">
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="overview" role="tab">Overview</button>
+        <button class="tab-btn" data-tab="revenue" role="tab">Revenue</button>
+        <button class="tab-btn" data-tab="expenses" role="tab">Expenses</button>
+        <button class="tab-btn" data-tab="pnl" role="tab">P&amp;L</button>
+        <button class="tab-btn" data-tab="taxes" role="tab">Taxes</button>
+        <button class="tab-btn" data-tab="runway" role="tab">Runway</button>
+        <button class="tab-btn" data-tab="clients" role="tab">Clients</button>
+        <button class="tab-btn" data-tab="goals" role="tab">Goals</button>
+        <button class="tab-btn" data-tab="invoices" role="tab">Invoices</button>
+        <button class="tab-btn" data-tab="export" role="tab">Export</button>
+    </div>
+
+    <!-- ============ OVERVIEW ============ -->
+    <div class="tab-panel active" id="panel-overview">
+        <div class="grid-4" id="kpi-grid"></div>
+        <div class="grid-2" style="margin-top:20px;">
+            <div class="card">
+                <div class="card-title"><div class="card-icon">&#128202;</div> Revenue vs Expenses (This Year)</div>
+                <div class="chart-container" id="overview-bar-chart"></div>
+            </div>
+            <div class="card">
+                <div class="card-title"><div class="card-icon">&#127919;</div> Client Revenue Breakdown</div>
+                <div class="chart-container" id="overview-pie-chart"></div>
+            </div>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-title"><div class="card-icon">&#128176;</div> Cash Runway</div>
+                <div id="overview-runway"></div>
+            </div>
+            <div class="card">
+                <div class="card-title"><div class="card-icon">&#9203;</div> Upcoming Tax Deadlines</div>
+                <div id="overview-deadlines"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ REVENUE ============ -->
+    <div class="tab-panel" id="panel-revenue">
+        <div class="card">
+            <div class="card-title">
+                <div class="card-icon">&#128181;</div> Log Income
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Date</label><input type="date" id="rev-date"></div>
+                <div class="form-group"><label>Client</label><input type="text" id="rev-client" placeholder="Client name"></div>
+                <div class="form-group"><label>Project</label><input type="text" id="rev-project" placeholder="Project name"></div>
+                <div class="form-group"><label>Amount ($)</label><input type="number" id="rev-amount" placeholder="0.00" min="0" step="0.01"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select id="rev-method">
+                        <option value="bank_transfer">Bank Transfer</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="stripe">Stripe</option>
+                        <option value="check">Check</option>
+                        <option value="cash">Cash</option>
+                        <option value="crypto">Crypto</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Notes</label><input type="text" id="rev-notes" placeholder="Optional notes"></div>
+                <div class="form-group" style="justify-content:flex-end;">
+                    <button class="btn btn-primary" onclick="addRevenue()">+ Add Income</button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+                <div class="card-title" style="margin-bottom:0;"><div class="card-icon">&#128203;</div> Revenue Log</div>
+                <div class="period-toggle" id="rev-period-toggle">
+                    <button class="period-btn active" data-period="month" onclick="setRevPeriod('month')">Monthly</button>
+                    <button class="period-btn" data-period="quarter" onclick="setRevPeriod('quarter')">Quarterly</button>
+                    <button class="period-btn" data-period="year" onclick="setRevPeriod('year')">Annual</button>
+                </div>
+            </div>
+            <div id="rev-summary" style="margin-bottom:16px;"></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Date</th><th>Client</th><th>Project</th><th>Amount</th><th>Method</th><th>Notes</th><th></th></tr></thead>
+                    <tbody id="rev-table-body"></tbody>
+                </table>
+            </div>
+            <div id="rev-empty" class="empty-state" style="display:none;">
+                <div class="empty-state-icon">&#128181;</div>
+                <div class="empty-state-text">No income logged yet. Add your first payment above.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ EXPENSES ============ -->
+    <div class="tab-panel" id="panel-expenses">
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#128184;</div> Log Expense</div>
+            <div class="form-row">
+                <div class="form-group"><label>Date</label><input type="date" id="exp-date"></div>
+                <div class="form-group"><label>Description</label><input type="text" id="exp-desc" placeholder="Expense description"></div>
+                <div class="form-group"><label>Amount ($)</label><input type="number" id="exp-amount" placeholder="0.00" min="0" step="0.01"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="exp-category">
+                        <option value="software">Software & Tools</option>
+                        <option value="marketing">Marketing & Advertising</option>
+                        <option value="office">Office & Workspace</option>
+                        <option value="equipment">Equipment & Hardware</option>
+                        <option value="travel">Travel & Transportation</option>
+                        <option value="insurance">Insurance & Benefits</option>
+                        <option value="education">Education & Training</option>
+                        <option value="professional">Professional Services</option>
+                        <option value="communication">Communication & Internet</option>
+                        <option value="misc">Miscellaneous</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="exp-type">
+                        <option value="one-time">One-time</option>
+                        <option value="recurring">Recurring</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Split</label>
+                    <select id="exp-split">
+                        <option value="business">100% Business</option>
+                        <option value="mixed-75">75% Business / 25% Personal</option>
+                        <option value="mixed-50">50% Business / 50% Personal</option>
+                        <option value="mixed-25">25% Business / 75% Personal</option>
+                    </select>
+                </div>
+                <div class="form-group" style="justify-content:flex-end;">
+                    <button class="btn btn-primary" onclick="addExpense()">+ Add Expense</button>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#128203;</div> Expense Log</div>
+            <div id="exp-summary" style="margin-bottom:16px;"></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th>Biz %</th><th>Type</th><th></th></tr></thead>
+                    <tbody id="exp-table-body"></tbody>
+                </table>
+            </div>
+            <div id="exp-empty" class="empty-state" style="display:none;">
+                <div class="empty-state-icon">&#128184;</div>
+                <div class="empty-state-text">No expenses logged yet. Add your first expense above.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ P&L ============ -->
+    <div class="tab-panel" id="panel-pnl">
+        <div class="grid-3" id="pnl-kpis"></div>
+        <div class="card" style="margin-top:20px;">
+            <div class="card-title"><div class="card-icon">&#128202;</div> Monthly Revenue vs Expenses</div>
+            <div class="chart-container" id="pnl-bar-chart"></div>
+        </div>
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#128203;</div> Profit &amp; Loss Statement</div>
+            <div id="pnl-statement"></div>
+        </div>
+    </div>
+
+    <!-- ============ TAXES ============ -->
+    <div class="tab-panel" id="panel-taxes">
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#127970;</div> Tax Settings</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Filing Status</label>
+                    <select id="tax-status" onchange="saveTaxSettings()">
+                        <option value="single">Single</option>
+                        <option value="married_joint">Married Filing Jointly</option>
+                        <option value="married_separate">Married Filing Separately</option>
+                        <option value="head_household">Head of Household</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>State Tax Rate (%)</label>
+                    <input type="number" id="tax-state-rate" value="5" min="0" max="15" step="0.1" onchange="saveTaxSettings()">
+                </div>
+                <div class="form-group">
+                    <label>Self-Employment Tax Rate (%)</label>
+                    <input type="number" id="tax-se-rate" value="15.3" min="0" max="20" step="0.1" onchange="saveTaxSettings()">
+                </div>
+            </div>
+        </div>
+        <div class="grid-3" id="tax-kpis"></div>
+        <div class="card" style="margin-top:20px;">
+            <div class="card-title"><div class="card-icon">&#128197;</div> Quarterly Payment Schedule</div>
+            <div id="tax-deadlines"></div>
+        </div>
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#128203;</div> Tax Breakdown</div>
+            <div id="tax-breakdown"></div>
+        </div>
+    </div>
+
+    <!-- ============ RUNWAY ============ -->
+    <div class="tab-panel" id="panel-runway">
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#128176;</div> Cash Runway Settings</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Current Cash Balance ($)</label>
+                    <input type="number" id="runway-balance" placeholder="e.g. 25000" min="0" step="100" onchange="saveRunwaySettings()">
+                </div>
+                <div class="form-group">
+                    <label>Savings Buffer ($)</label>
+                    <input type="number" id="runway-savings" placeholder="e.g. 5000" min="0" step="100" onchange="saveRunwaySettings()">
+                </div>
+            </div>
+        </div>
+        <div class="grid-3" id="runway-kpis"></div>
+        <div class="card" style="margin-top:20px;">
+            <div class="card-title"><div class="card-icon">&#128202;</div> Runway Projection</div>
+            <div id="runway-details"></div>
+        </div>
+    </div>
+
+    <!-- ============ CLIENTS ============ -->
+    <div class="tab-panel" id="panel-clients">
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#127919;</div> Client Revenue Breakdown</div>
+            <div class="chart-container" id="client-pie-chart"></div>
+        </div>
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#128203;</div> Client Revenue Table</div>
+            <div id="client-table-wrap"></div>
+            <div id="client-warnings"></div>
+        </div>
+    </div>
+
+    <!-- ============ GOALS ============ -->
+    <div class="tab-panel" id="panel-goals">
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#127919;</div> Set Financial Goals</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Annual Revenue Target ($)</label>
+                    <input type="number" id="goal-revenue" placeholder="e.g. 100000" min="0" step="1000" onchange="saveGoals()">
+                </div>
+                <div class="form-group">
+                    <label>Annual Savings Target ($)</label>
+                    <input type="number" id="goal-savings" placeholder="e.g. 20000" min="0" step="1000" onchange="saveGoals()">
+                </div>
+                <div class="form-group">
+                    <label>Max Monthly Expenses ($)</label>
+                    <input type="number" id="goal-max-expenses" placeholder="e.g. 5000" min="0" step="100" onchange="saveGoals()">
+                </div>
+            </div>
+        </div>
+        <div id="goal-cards"></div>
+    </div>
+
+    <!-- ============ INVOICES ============ -->
+    <div class="tab-panel" id="panel-invoices">
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#128196;</div> Add Outstanding Invoice</div>
+            <div class="form-row">
+                <div class="form-group"><label>Invoice #</label><input type="text" id="inv-number" placeholder="INV-001"></div>
+                <div class="form-group"><label>Client</label><input type="text" id="inv-client" placeholder="Client name"></div>
+                <div class="form-group"><label>Amount ($)</label><input type="number" id="inv-amount" placeholder="0.00" min="0" step="0.01"></div>
+                <div class="form-group"><label>Issue Date</label><input type="date" id="inv-date"></div>
+                <div class="form-group" style="justify-content:flex-end;">
+                    <button class="btn btn-primary" onclick="addInvoice()">+ Add Invoice</button>
+                </div>
+            </div>
+        </div>
+        <div class="grid-4" id="inv-buckets"></div>
+        <div class="card" style="margin-top:20px;">
+            <div class="card-title"><div class="card-icon">&#128203;</div> Outstanding Invoices</div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Invoice #</th><th>Client</th><th>Amount</th><th>Issue Date</th><th>Age</th><th>Status</th><th></th></tr></thead>
+                    <tbody id="inv-table-body"></tbody>
+                </table>
+            </div>
+            <div id="inv-empty" class="empty-state" style="display:none;">
+                <div class="empty-state-icon">&#128196;</div>
+                <div class="empty-state-text">No outstanding invoices. Add one above to track aging.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ EXPORT ============ -->
+    <div class="tab-panel" id="panel-export">
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#128230;</div> Export Your Data</div>
+            <p style="color:var(--text-muted);margin-bottom:20px;">Download your financial data as CSV files or print a summary report. All data stays in your browser &mdash; nothing is sent to any server.</p>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="exportRevenueCSV()">&#128196; Revenue CSV</button>
+                <button class="btn btn-primary" onclick="exportExpenseCSV()">&#128196; Expense CSV</button>
+                <button class="btn btn-primary" onclick="exportInvoiceCSV()">&#128196; Invoice CSV</button>
+                <button class="btn btn-secondary" onclick="exportAllCSV()">&#128230; Export All Data</button>
+                <button class="btn btn-secondary" onclick="printSummary()">&#128424; Print Summary</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#128202;</div> Financial Summary</div>
+            <div id="export-summary"></div>
+        </div>
+        <div class="card">
+            <div class="card-title"><div class="card-icon">&#9888;</div> Data Management</div>
+            <p style="color:var(--text-muted);margin-bottom:16px;">Your data is stored locally in this browser. Clearing browser data will erase everything. Export regularly as a backup.</p>
+            <button class="btn btn-danger" onclick="confirmClearAll()">&#128465; Clear All Data</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+        <div class="modal-title" id="modal-title"></div>
+        <div id="modal-body"></div>
+        <div class="modal-actions" id="modal-actions"></div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-links">
+        <a href="/freelanceos-storefront/" target="_blank" rel="noopener">FreelanceOS Home</a>
+        <a href="/freelanceos-storefront/free-templates.html" target="_blank" rel="noopener">Free Tools</a>
+        <a href="https://freelanceos.pro/bundle-all.html" target="_blank" rel="noopener">All Templates</a>
+        <a href="https://freelanceos.pro/compare.html" target="_blank" rel="noopener">Compare Plans</a>
+        <a href="https://freelanceos.pro/trust-page.html" target="_blank" rel="noopener">Trust &amp; Reviews</a>
+    </div>
+    <div class="footer-disclaimer">
+        Disclaimer: This tool is for informational and educational purposes only. It does not constitute financial, tax, or legal advice. All calculations are estimates based on user-provided inputs and may not reflect actual results. Consult a qualified financial professional before making business decisions. FreelanceOS is not responsible for decisions made based on this tool's output.
+    </div>
+    <div class="footer-brand">
+        &copy; 2026 <a href="https://freelanceos.pro" target="_blank" rel="noopener">FreelanceOS</a>. All rights reserved. Tool #84 of 84.
+    </div>
+</div>
+
+<script>
+/* =============================================================
+   FREELANCE FINANCIAL DASHBOARD - Tool #84
+   FreelanceOS - Pure Vanilla JS, Zero Dependencies
+   ============================================================= */
+
+// ==================== STATE ====================
+const STORAGE_KEY = 'freelanceos_financial_dashboard';
+let state = {
+    revenue: [],
+    expenses: [],
+    invoices: [],
+    taxSettings: { status: 'single', stateRate: 5, seRate: 15.3 },
+    runwaySettings: { balance: 0, savings: 0 },
+    goals: { revenue: 0, savings: 0, maxExpenses: 0 },
+    revPeriod: 'month'
+};
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            state = { ...state, ...parsed };
+        }
+    } catch (e) { console.warn('Failed to load state:', e); }
+}
+
+function saveState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    catch (e) { console.warn('Failed to save state:', e); }
+}
+
+// ==================== UTILS ====================
+function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
+
+function fmt(n) {
+    if (n === undefined || n === null || isNaN(n)) return '$0.00';
+    return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtShort(n) {
+    if (Math.abs(n) >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+    if (Math.abs(n) >= 1000) return '$' + (n / 1000).toFixed(1) + 'K';
+    return '$' + n.toFixed(0);
+}
+
+function pct(n, d) { return d === 0 ? 0 : ((n / d) * 100); }
+
+function today() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+function monthName(m) {
+    return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m];
+}
+
+function daysBetween(d1, d2) {
+    return Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
+}
+
+function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('active');
+    setTimeout(() => el.classList.remove('active'), 2500);
+}
+
+function showModal(title, bodyHtml, actions) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-body').innerHTML = bodyHtml;
+    document.getElementById('modal-actions').innerHTML = actions;
+    document.getElementById('modal-overlay').classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('active');
+}
+
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+function escapeHtml(s) {
+    if (!s) return '';
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function getCategoryLabel(cat) {
+    const labels = {
+        software: 'Software & Tools', marketing: 'Marketing & Ads', office: 'Office & Workspace',
+        equipment: 'Equipment & Hardware', travel: 'Travel & Transport', insurance: 'Insurance & Benefits',
+        education: 'Education & Training', professional: 'Professional Services',
+        communication: 'Communication & Internet', misc: 'Miscellaneous'
+    };
+    return labels[cat] || cat;
+}
+
+function getMethodLabel(m) {
+    const labels = {
+        bank_transfer: 'Bank Transfer', paypal: 'PayPal', stripe: 'Stripe',
+        check: 'Check', cash: 'Cash', crypto: 'Crypto', other: 'Other'
+    };
+    return labels[m] || m;
+}
+
+function getBizPct(split) {
+    const map = { 'business': 100, 'mixed-75': 75, 'mixed-50': 50, 'mixed-25': 25 };
+    return map[split] || 100;
+}
+
+function getCurrentYear() { return new Date().getFullYear(); }
+function getCurrentMonth() { return new Date().getMonth(); }
+function getCurrentQuarter() { return Math.floor(getCurrentMonth() / 3); }
+
+function filterByYear(items, year) {
+    return items.filter(i => new Date(i.date).getFullYear() === year);
+}
+
+function filterByMonth(items, year, month) {
+    return items.filter(i => {
+        const d = new Date(i.date);
+        return d.getFullYear() === year && d.getMonth() === month;
+    });
+}
+
+function sumAmount(items) { return items.reduce((s, i) => s + (parseFloat(i.amount) || 0), 0); }
+
+function sumBizExpenses(items) {
+    return items.reduce((s, i) => s + ((parseFloat(i.amount) || 0) * (getBizPct(i.split) / 100)), 0);
+}
+
+// ==================== TABS ====================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.tab).classList.add('active');
+        refreshCurrentTab(this.dataset.tab);
+    });
+});
+
+function refreshCurrentTab(tab) {
+    switch(tab) {
+        case 'overview': renderOverview(); break;
+        case 'revenue': renderRevenue(); break;
+        case 'expenses': renderExpenses(); break;
+        case 'pnl': renderPnL(); break;
+        case 'taxes': renderTaxes(); break;
+        case 'runway': renderRunway(); break;
+        case 'clients': renderClients(); break;
+        case 'goals': renderGoals(); break;
+        case 'invoices': renderInvoices(); break;
+        case 'export': renderExport(); break;
+    }
+}
+
+// ==================== REVENUE ====================
+function addRevenue() {
+    const date = document.getElementById('rev-date').value || today();
+    const client = document.getElementById('rev-client').value.trim();
+    const project = document.getElementById('rev-project').value.trim();
+    const amount = parseFloat(document.getElementById('rev-amount').value);
+    const method = document.getElementById('rev-method').value;
+    const notes = document.getElementById('rev-notes').value.trim();
+
+    if (!client) { toast('Please enter a client name'); return; }
+    if (!amount || amount <= 0) { toast('Please enter a valid amount'); return; }
+
+    state.revenue.push({ id: uid(), date, client, project, amount, method, notes });
+    state.revenue.sort((a, b) => b.date.localeCompare(a.date));
+    saveState();
+
+    document.getElementById('rev-client').value = '';
+    document.getElementById('rev-project').value = '';
+    document.getElementById('rev-amount').value = '';
+    document.getElementById('rev-notes').value = '';
+    toast('Income logged: ' + fmt(amount));
+    renderRevenue();
+}
+
+function deleteRevenue(id) {
+    state.revenue = state.revenue.filter(r => r.id !== id);
+    saveState();
+    renderRevenue();
+    toast('Income entry removed');
+}
+
+let revPeriod = 'month';
+function setRevPeriod(p) {
+    revPeriod = p;
+    document.querySelectorAll('#rev-period-toggle .period-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.period === p);
+    });
+    renderRevenue();
+}
+
+function renderRevenue() {
+    const year = getCurrentYear();
+    const month = getCurrentMonth();
+    const tbody = document.getElementById('rev-table-body');
+    const empty = document.getElementById('rev-empty');
+    const summary = document.getElementById('rev-summary');
+
+    let filtered;
+    let periodLabel;
+    if (revPeriod === 'month') {
+        filtered = filterByMonth(state.revenue, year, month);
+        periodLabel = monthName(month) + ' ' + year;
+    } else if (revPeriod === 'quarter') {
+        const q = getCurrentQuarter();
+        filtered = state.revenue.filter(r => {
+            const d = new Date(r.date);
+            return d.getFullYear() === year && Math.floor(d.getMonth() / 3) === q;
+        });
+        periodLabel = 'Q' + (q + 1) + ' ' + year;
+    } else {
+        filtered = filterByYear(state.revenue, year);
+        periodLabel = year;
+    }
+
+    const total = sumAmount(filtered);
+    summary.innerHTML = `<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+        <div><span style="color:var(--text-muted);font-size:0.85rem;">Period:</span> <strong>${periodLabel}</strong></div>
+        <div><span style="color:var(--text-muted);font-size:0.85rem;">Total:</span> <strong style="color:var(--success);">${fmt(total)}</strong></div>
+        <div><span style="color:var(--text-muted);font-size:0.85rem;">Entries:</span> <strong>${filtered.length}</strong></div>
+    </div>`;
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    tbody.innerHTML = filtered.map(r => `<tr>
+        <td>${r.date}</td>
+        <td>${escapeHtml(r.client)}</td>
+        <td>${escapeHtml(r.project) || '<span style="color:var(--text-muted);">-</span>'}</td>
+        <td style="color:var(--success);font-weight:700;">${fmt(r.amount)}</td>
+        <td><span class="badge badge-purple">${getMethodLabel(r.method)}</span></td>
+        <td style="color:var(--text-muted);font-size:0.82rem;">${escapeHtml(r.notes) || '-'}</td>
+        <td><button class="row-delete" onclick="deleteRevenue('${r.id}')" title="Delete">&times;</button></td>
+    </tr>`).join('');
+}
+
+// ==================== EXPENSES ====================
+function addExpense() {
+    const date = document.getElementById('exp-date').value || today();
+    const desc = document.getElementById('exp-desc').value.trim();
+    const amount = parseFloat(document.getElementById('exp-amount').value);
+    const category = document.getElementById('exp-category').value;
+    const type = document.getElementById('exp-type').value;
+    const split = document.getElementById('exp-split').value;
+
+    if (!desc) { toast('Please enter a description'); return; }
+    if (!amount || amount <= 0) { toast('Please enter a valid amount'); return; }
+
+    state.expenses.push({ id: uid(), date, desc, amount, category, type, split });
+    state.expenses.sort((a, b) => b.date.localeCompare(a.date));
+    saveState();
+
+    document.getElementById('exp-desc').value = '';
+    document.getElementById('exp-amount').value = '';
+    toast('Expense logged: ' + fmt(amount));
+    renderExpenses();
+}
+
+function deleteExpense(id) {
+    state.expenses = state.expenses.filter(e => e.id !== id);
+    saveState();
+    renderExpenses();
+    toast('Expense removed');
+}
+
+function renderExpenses() {
+    const year = getCurrentYear();
+    const yearExpenses = filterByYear(state.expenses, year);
+    const tbody = document.getElementById('exp-table-body');
+    const empty = document.getElementById('exp-empty');
+    const summary = document.getElementById('exp-summary');
+
+    const totalAll = sumAmount(yearExpenses);
+    const totalBiz = sumBizExpenses(yearExpenses);
+    const recurring = yearExpenses.filter(e => e.type === 'recurring');
+    const recurringTotal = sumAmount(recurring);
+
+    summary.innerHTML = `<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+        <div><span style="color:var(--text-muted);font-size:0.85rem;">Year:</span> <strong>${year}</strong></div>
+        <div><span style="color:var(--text-muted);font-size:0.85rem;">Total:</span> <strong style="color:var(--danger);">${fmt(totalAll)}</strong></div>
+        <div><span style="color:var(--text-muted);font-size:0.85rem;">Business:</span> <strong>${fmt(totalBiz)}</strong></div>
+        <div><span style="color:var(--text-muted);font-size:0.85rem;">Recurring:</span> <strong>${fmt(recurringTotal)}</strong></div>
+    </div>`;
+
+    if (yearExpenses.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    tbody.innerHTML = yearExpenses.map(e => `<tr>
+        <td>${e.date}</td>
+        <td>${escapeHtml(e.desc)}</td>
+        <td><span class="badge badge-info">${getCategoryLabel(e.category)}</span></td>
+        <td style="color:var(--danger);font-weight:700;">${fmt(e.amount)}</td>
+        <td>${getBizPct(e.split)}%</td>
+        <td><span class="badge ${e.type === 'recurring' ? 'badge-warning' : 'badge-purple'}">${e.type}</span></td>
+        <td><button class="row-delete" onclick="deleteExpense('${e.id}')" title="Delete">&times;</button></td>
+    </tr>`).join('');
+}
+
+// ==================== P&L ====================
+function renderPnL() {
+    const year = getCurrentYear();
+    const yearRev = filterByYear(state.revenue, year);
+    const yearExp = filterByYear(state.expenses, year);
+    const totalRev = sumAmount(yearRev);
+    const totalExp = sumBizExpenses(yearExp);
+    const profit = totalRev - totalExp;
+    const margin = totalRev > 0 ? (profit / totalRev * 100) : 0;
+
+    // KPIs
+    document.getElementById('pnl-kpis').innerHTML = `
+        <div class="kpi-card">
+            <div class="kpi-label">Total Revenue</div>
+            <div class="kpi-value kpi-positive">${fmt(totalRev)}</div>
+            <div class="kpi-sub">${year} year to date</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Total Expenses</div>
+            <div class="kpi-value kpi-negative">${fmt(totalExp)}</div>
+            <div class="kpi-sub">Business portion only</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Net Profit</div>
+            <div class="kpi-value ${profit >= 0 ? 'kpi-positive' : 'kpi-negative'}">${fmt(profit)}</div>
+            <div class="kpi-sub">Margin: ${margin.toFixed(1)}%</div>
+        </div>`;
+
+    // Bar chart
+    renderPnLBarChart(year);
+
+    // Statement
+    const categories = {};
+    yearExp.forEach(e => {
+        const cat = e.category;
+        if (!categories[cat]) categories[cat] = 0;
+        categories[cat] += (parseFloat(e.amount) || 0) * (getBizPct(e.split) / 100);
+    });
+
+    let stmtHtml = `
+        <div class="info-row" style="font-weight:700;color:var(--success);">
+            <span class="info-label" style="font-weight:700;">REVENUE</span>
+            <span class="info-value" style="color:var(--success);">${fmt(totalRev)}</span>
+        </div>
+        <div style="padding:4px 0 8px;font-size:0.82rem;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-top:12px;">EXPENSES</div>`;
+
+    const sortedCats = Object.entries(categories).sort((a, b) => b[1] - a[1]);
+    sortedCats.forEach(([cat, amt]) => {
+        stmtHtml += `<div class="info-row">
+            <span class="info-label">${getCategoryLabel(cat)}</span>
+            <span class="info-value" style="color:var(--danger);">${fmt(amt)}</span>
+        </div>`;
+    });
+
+    stmtHtml += `
+        <div class="info-row" style="font-weight:700;border-top:2px solid var(--border-card);margin-top:8px;padding-top:12px;">
+            <span class="info-label" style="font-weight:700;">Total Expenses</span>
+            <span class="info-value" style="color:var(--danger);">${fmt(totalExp)}</span>
+        </div>
+        <div class="info-row" style="font-weight:700;border-top:2px solid var(--accent-purple);margin-top:4px;padding-top:12px;">
+            <span class="info-label" style="font-weight:700;font-size:1rem;">NET PROFIT</span>
+            <span class="info-value" style="color:${profit >= 0 ? 'var(--success)' : 'var(--danger)'};font-size:1.1rem;">${fmt(profit)}</span>
+        </div>`;
+
+    document.getElementById('pnl-statement').innerHTML = stmtHtml;
+}
+
+function renderPnLBarChart(year) {
+    const months = [];
+    for (let m = 0; m < 12; m++) {
+        const rev = sumAmount(filterByMonth(state.revenue, year, m));
+        const exp = sumBizExpenses(filterByMonth(state.expenses, year, m));
+        months.push({ month: m, rev, exp });
+    }
+
+    const maxVal = Math.max(...months.map(m => Math.max(m.rev, m.exp)), 1);
+    const chartH = 260;
+    const chartW = 700;
+    const barW = 22;
+    const gap = 36;
+    const padL = 60;
+    const padB = 30;
+
+    let svg = `<svg viewBox="0 0 ${chartW} ${chartH + padB + 20}" xmlns="http://www.w3.org/2000/svg">`;
+
+    // Grid lines
+    for (let i = 0; i <= 4; i++) {
+        const y = 10 + (chartH / 4) * i;
+        const val = maxVal - (maxVal / 4) * i;
+        svg += `<line x1="${padL}" y1="${y}" x2="${chartW - 10}" y2="${y}" stroke="rgba(168,85,247,0.1)" stroke-width="1"/>`;
+        svg += `<text x="${padL - 8}" y="${y + 4}" fill="#94a3b8" font-size="10" text-anchor="end" font-family="system-ui">${fmtShort(val)}</text>`;
+    }
+
+    // Bars
+    months.forEach((m, i) => {
+        const x = padL + i * (gap + barW * 2 + 4);
+        const revH = maxVal > 0 ? (m.rev / maxVal) * chartH : 0;
+        const expH = maxVal > 0 ? (m.exp / maxVal) * chartH : 0;
+        const revY = 10 + chartH - revH;
+        const expY = 10 + chartH - expH;
+
+        // Revenue bar
+        svg += `<rect x="${x}" y="${revY}" width="${barW}" height="${revH}" rx="4" fill="url(#grad-rev)" opacity="0.9">
+            <title>${monthName(m.month)}: Revenue ${fmt(m.rev)}</title></rect>`;
+        // Expense bar
+        svg += `<rect x="${x + barW + 4}" y="${expY}" width="${barW}" height="${expH}" rx="4" fill="url(#grad-exp)" opacity="0.9">
+            <title>${monthName(m.month)}: Expenses ${fmt(m.exp)}</title></rect>`;
+        // Label
+        svg += `<text x="${x + barW + 2}" y="${chartH + 24}" fill="#94a3b8" font-size="10" text-anchor="middle" font-family="system-ui">${monthName(m.month)}</text>`;
+    });
+
+    // Gradients
+    svg += `<defs>
+        <linearGradient id="grad-rev" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#a855f7"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <linearGradient id="grad-exp" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ec4899"/>
+            <stop offset="100%" stop-color="#be185d"/>
+        </linearGradient>
+    </defs>`;
+
+    // Legend
+    svg += `<rect x="${padL}" y="${chartH + 36}" width="12" height="12" rx="3" fill="url(#grad-rev)"/>`;
+    svg += `<text x="${padL + 18}" y="${chartH + 46}" fill="#94a3b8" font-size="11" font-family="system-ui">Revenue</text>`;
+    svg += `<rect x="${padL + 90}" y="${chartH + 36}" width="12" height="12" rx="3" fill="url(#grad-exp)"/>`;
+    svg += `<text x="${padL + 108}" y="${chartH + 46}" fill="#94a3b8" font-size="11" font-family="system-ui">Expenses</text>`;
+
+    svg += '</svg>';
+    document.getElementById('pnl-bar-chart').innerHTML = svg;
+}
+
+// ==================== TAXES ====================
+function saveTaxSettings() {
+    state.taxSettings.status = document.getElementById('tax-status').value;
+    state.taxSettings.stateRate = parseFloat(document.getElementById('tax-state-rate').value) || 0;
+    state.taxSettings.seRate = parseFloat(document.getElementById('tax-se-rate').value) || 15.3;
+    saveState();
+    renderTaxes();
+}
+
+function loadTaxSettings() {
+    document.getElementById('tax-status').value = state.taxSettings.status || 'single';
+    document.getElementById('tax-state-rate').value = state.taxSettings.stateRate || 5;
+    document.getElementById('tax-se-rate').value = state.taxSettings.seRate || 15.3;
+}
+
+function estimateFederalTax(taxableIncome, status) {
+    // Simplified 2025 brackets
+    let brackets;
+    if (status === 'married_joint') {
+        brackets = [[23200,0.10],[94300,0.12],[201050,0.22],[383900,0.24],[487450,0.32],[731200,0.35],[Infinity,0.37]];
+    } else if (status === 'head_household') {
+        brackets = [[16550,0.10],[63100,0.12],[100500,0.22],[191950,0.24],[243725,0.32],[609350,0.35],[Infinity,0.37]];
+    } else {
+        brackets = [[11600,0.10],[47150,0.12],[100525,0.22],[191950,0.24],[243725,0.32],[609350,0.35],[Infinity,0.37]];
+    }
+    let tax = 0, prev = 0;
+    for (const [limit, rate] of brackets) {
+        if (taxableIncome <= prev) break;
+        const taxable = Math.min(taxableIncome, limit) - prev;
+        tax += taxable * rate;
+        prev = limit;
+    }
+    return tax;
+}
+
+function renderTaxes() {
+    const year = getCurrentYear();
+    const totalRev = sumAmount(filterByYear(state.revenue, year));
+    const totalBizExp = sumBizExpenses(filterByYear(state.expenses, year));
+    const netIncome = totalRev - totalBizExp;
+
+    const seRate = (state.taxSettings.seRate || 15.3) / 100;
+    const seTax = Math.max(0, netIncome * 0.9235 * seRate);
+    const seDeduction = seTax / 2;
+    const taxableIncome = Math.max(0, netIncome - seDeduction);
+    const federalTax = estimateFederalTax(taxableIncome, state.taxSettings.status);
+    const stateRate = (state.taxSettings.stateRate || 0) / 100;
+    const stateTax = taxableIncome * stateRate;
+    const totalTax = seTax + federalTax + stateTax;
+    const effectiveRate = netIncome > 0 ? (totalTax / netIncome * 100) : 0;
+    const quarterlyPayment = totalTax / 4;
+
+    // KPIs
+    document.getElementById('tax-kpis').innerHTML = `
+        <div class="kpi-card">
+            <div class="kpi-label">Estimated Annual Tax</div>
+            <div class="kpi-value kpi-negative">${fmt(totalTax)}</div>
+            <div class="kpi-sub">Effective rate: ${effectiveRate.toFixed(1)}%</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Quarterly Payment</div>
+            <div class="kpi-value kpi-warning">${fmt(quarterlyPayment)}</div>
+            <div class="kpi-sub">Due each quarter</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">After-Tax Income</div>
+            <div class="kpi-value kpi-positive">${fmt(netIncome - totalTax)}</div>
+            <div class="kpi-sub">Net after all taxes</div>
+        </div>`;
+
+    // Deadlines
+    const now = new Date();
+    const deadlines = [
+        { q: 'Q1', date: new Date(year, 3, 15), label: 'April 15, ' + year },
+        { q: 'Q2', date: new Date(year, 5, 15), label: 'June 15, ' + year },
+        { q: 'Q3', date: new Date(year, 8, 15), label: 'September 15, ' + year },
+        { q: 'Q4', date: new Date(year + 1, 0, 15), label: 'January 15, ' + (year + 1) }
+    ];
+
+    document.getElementById('tax-deadlines').innerHTML = deadlines.map(dl => {
+        const daysLeft = daysBetween(now, dl.date);
+        const isPast = daysLeft < 0;
+        const isUrgent = daysLeft >= 0 && daysLeft <= 30;
+        return `<div class="deadline-card ${isUrgent ? 'urgent' : ''}">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <div class="deadline-date">${dl.q} Payment &mdash; ${dl.label}</div>
+                    <div class="deadline-label">${isPast ? 'Past due' : daysLeft + ' days remaining'}</div>
+                </div>
+                <div class="deadline-amount">${fmt(quarterlyPayment)}</div>
+            </div>
+        </div>`;
+    }).join('');
+
+    // Breakdown
+    document.getElementById('tax-breakdown').innerHTML = `
+        <div class="info-row"><span class="info-label">Net Self-Employment Income</span><span class="info-value">${fmt(netIncome)}</span></div>
+        <div class="info-row"><span class="info-label">Self-Employment Tax (${(seRate * 100).toFixed(1)}%)</span><span class="info-value" style="color:var(--danger);">${fmt(seTax)}</span></div>
+        <div class="info-row"><span class="info-label">SE Tax Deduction (50%)</span><span class="info-value" style="color:var(--success);">-${fmt(seDeduction)}</span></div>
+        <div class="info-row"><span class="info-label">Taxable Income</span><span class="info-value">${fmt(taxableIncome)}</span></div>
+        <div class="info-row"><span class="info-label">Federal Income Tax</span><span class="info-value" style="color:var(--danger);">${fmt(federalTax)}</span></div>
+        <div class="info-row"><span class="info-label">State Tax (${(stateRate * 100).toFixed(1)}%)</span><span class="info-value" style="color:var(--danger);">${fmt(stateTax)}</span></div>
+        <div class="info-row" style="border-top:2px solid var(--accent-purple);margin-top:8px;padding-top:12px;font-weight:700;">
+            <span class="info-label" style="font-weight:700;">TOTAL ESTIMATED TAX</span>
+            <span class="info-value" style="color:var(--danger);font-size:1.1rem;">${fmt(totalTax)}</span>
+        </div>`;
+}
+
+// ==================== RUNWAY ====================
+function saveRunwaySettings() {
+    state.runwaySettings.balance = parseFloat(document.getElementById('runway-balance').value) || 0;
+    state.runwaySettings.savings = parseFloat(document.getElementById('runway-savings').value) || 0;
+    saveState();
+    renderRunway();
+}
+
+function loadRunwaySettings() {
+    document.getElementById('runway-balance').value = state.runwaySettings.balance || '';
+    document.getElementById('runway-savings').value = state.runwaySettings.savings || '';
+}
+
+function renderRunway() {
+    const year = getCurrentYear();
+    const yearExp = filterByYear(state.expenses, year);
+    const monthsWithData = new Set(yearExp.map(e => new Date(e.date).getMonth()));
+    const numMonths = Math.max(monthsWithData.size, 1);
+    const totalBizExp = sumBizExpenses(yearExp);
+    const avgMonthlyBurn = totalBizExp / numMonths;
+    const balance = state.runwaySettings.balance || 0;
+    const savings = state.runwaySettings.savings || 0;
+    const available = Math.max(0, balance - savings);
+    const runwayMonths = avgMonthlyBurn > 0 ? available / avgMonthlyBurn : (available > 0 ? 99 : 0);
+
+    let runwayStatus, runwayColor;
+    if (runwayMonths >= 6) { runwayStatus = 'Healthy'; runwayColor = 'green'; }
+    else if (runwayMonths >= 3) { runwayStatus = 'Caution'; runwayColor = 'yellow'; }
+    else { runwayStatus = 'Critical'; runwayColor = 'red'; }
+
+    document.getElementById('runway-kpis').innerHTML = `
+        <div class="kpi-card">
+            <div class="kpi-label">Cash Runway</div>
+            <div class="kpi-value" style="color:var(--${runwayColor === 'green' ? 'success' : runwayColor === 'yellow' ? 'warning' : 'danger'});">${runwayMonths >= 99 ? '99+' : runwayMonths.toFixed(1)} months</div>
+            <div class="kpi-sub"><span class="status-dot ${runwayColor}"></span>${runwayStatus}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Avg Monthly Burn</div>
+            <div class="kpi-value">${fmt(avgMonthlyBurn)}</div>
+            <div class="kpi-sub">Based on ${numMonths} month${numMonths !== 1 ? 's' : ''} of data</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Available Cash</div>
+            <div class="kpi-value">${fmt(available)}</div>
+            <div class="kpi-sub">After savings buffer</div>
+        </div>`;
+
+    // Projection
+    let projHtml = `<div class="info-row"><span class="info-label">Current Balance</span><span class="info-value">${fmt(balance)}</span></div>
+        <div class="info-row"><span class="info-label">Savings Buffer</span><span class="info-value">-${fmt(savings)}</span></div>
+        <div class="info-row"><span class="info-label">Available for Operations</span><span class="info-value">${fmt(available)}</span></div>
+        <div class="info-row"><span class="info-label">Avg Monthly Burn Rate</span><span class="info-value" style="color:var(--danger);">${fmt(avgMonthlyBurn)}</span></div>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-card);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <span style="font-weight:700;color:var(--text-heading);">Runway: ${runwayMonths >= 99 ? '99+' : runwayMonths.toFixed(1)} months</span>
+                <span class="badge badge-${runwayColor === 'green' ? 'success' : runwayColor === 'yellow' ? 'warning' : 'danger'}">${runwayStatus}</span>
+            </div>
+            <div class="progress-bar" style="height:14px;">
+                <div class="progress-fill ${runwayColor}" style="width:${Math.min(100, runwayMonths / 12 * 100)}%;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:0.75rem;color:var(--text-muted);">
+                <span>0 months</span><span>3 months</span><span>6 months</span><span>12 months</span>
+            </div>
+        </div>`;
+
+    if (runwayMonths < 3) {
+        projHtml += `<div class="danger-zone" style="margin-top:16px;">
+            <strong>Warning:</strong> Less than 3 months of runway. Consider reducing expenses or securing new income sources immediately.
+        </div>`;
+    }
+
+    document.getElementById('runway-details').innerHTML = projHtml;
+}
+
+// ==================== CLIENTS ====================
+function renderClients() {
+    const year = getCurrentYear();
+    const yearRev = filterByYear(state.revenue, year);
+    const totalRev = sumAmount(yearRev);
+
+    // Aggregate by client
+    const clients = {};
+    yearRev.forEach(r => {
+        if (!clients[r.client]) clients[r.client] = 0;
+        clients[r.client] += parseFloat(r.amount) || 0;
+    });
+
+    const sorted = Object.entries(clients).sort((a, b) => b[1] - a[1]);
+
+    // Pie chart
+    renderClientPieChart(sorted, totalRev, 'client-pie-chart');
+
+    // Table
+    if (sorted.length === 0) {
+        document.getElementById('client-table-wrap').innerHTML = `<div class="empty-state">
+            <div class="empty-state-icon">&#127919;</div>
+            <div class="empty-state-text">No revenue data yet. Log income in the Revenue tab.</div>
+        </div>`;
+        document.getElementById('client-warnings').innerHTML = '';
+        return;
+    }
+
+    let tableHtml = `<div class="table-wrap"><table>
+        <thead><tr><th>Client</th><th>Revenue</th><th>% of Total</th><th>Concentration</th></tr></thead><tbody>`;
+
+    sorted.forEach(([client, amount]) => {
+        const pctVal = pct(amount, totalRev);
+        let concBadge;
+        if (pctVal > 50) concBadge = '<span class="badge badge-danger">Danger</span>';
+        else if (pctVal > 30) concBadge = '<span class="badge badge-warning">High</span>';
+        else if (pctVal > 15) concBadge = '<span class="badge badge-info">Moderate</span>';
+        else concBadge = '<span class="badge badge-success">Healthy</span>';
+
+        tableHtml += `<tr>
+            <td>${escapeHtml(client)}</td>
+            <td style="font-weight:700;">${fmt(amount)}</td>
+            <td>${pctVal.toFixed(1)}%</td>
+            <td>${concBadge}</td>
+        </tr>`;
+    });
+
+    tableHtml += '</tbody></table></div>';
+    document.getElementById('client-table-wrap').innerHTML = tableHtml;
+
+    // Warnings
+    const dangerClients = sorted.filter(([_, amt]) => pct(amt, totalRev) > 50);
+    const highClients = sorted.filter(([_, amt]) => { const p = pct(amt, totalRev); return p > 30 && p <= 50; });
+
+    let warnings = '';
+    if (dangerClients.length > 0) {
+        warnings += `<div class="danger-zone" style="margin-top:16px;">
+            <strong>Danger Zone:</strong> ${dangerClients.map(c => escapeHtml(c[0])).join(', ')} account${dangerClients.length > 1 ? '' : 's'} for over 50% of your revenue. Losing this client would severely impact your income. Diversify your client base to reduce risk.
+        </div>`;
+    }
+    if (highClients.length > 0) {
+        warnings += `<div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:var(--radius-btn);padding:12px 16px;color:var(--warning);font-size:0.85rem;margin-top:12px;">
+            <strong>High Concentration:</strong> ${highClients.map(c => escapeHtml(c[0])).join(', ')} represent${highClients.length > 1 ? '' : 's'} 30-50% of revenue. Consider growing other client relationships.
+        </div>`;
+    }
+    document.getElementById('client-warnings').innerHTML = warnings;
+}
+
+function renderClientPieChart(sorted, total, containerId) {
+    if (sorted.length === 0) {
+        document.getElementById(containerId).innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#127919;</div><div class="empty-state-text">No client data yet</div></div>';
+        return;
+    }
+
+    const colors = ['#a855f7','#ec4899','#3b82f6','#22c55e','#f59e0b','#ef4444','#06b6d4','#8b5cf6','#f97316','#64748b'];
+    const cx = 150, cy = 150, r = 120;
+    let svg = `<svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">`;
+
+    let startAngle = -Math.PI / 2;
+    sorted.forEach(([client, amount], i) => {
+        const sliceAngle = total > 0 ? (amount / total) * 2 * Math.PI : 0;
+        if (sliceAngle <= 0) return;
+        const endAngle = startAngle + sliceAngle;
+        const largeArc = sliceAngle > Math.PI ? 1 : 0;
+
+        const x1 = cx + r * Math.cos(startAngle);
+        const y1 = cy + r * Math.sin(startAngle);
+        const x2 = cx + r * Math.cos(endAngle);
+        const y2 = cy + r * Math.sin(endAngle);
+
+        const color = colors[i % colors.length];
+
+        if (sorted.length === 1) {
+            svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}" opacity="0.85">
+                <title>${escapeHtml(client)}: ${fmt(amount)} (${pct(amount, total).toFixed(1)}%)</title></circle>`;
+        } else {
+            svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${color}" opacity="0.85" stroke="#020617" stroke-width="2">
+                <title>${escapeHtml(client)}: ${fmt(amount)} (${pct(amount, total).toFixed(1)}%)</title></path>`;
+        }
+        startAngle = endAngle;
+    });
+
+    // Center circle for donut effect
+    svg += `<circle cx="${cx}" cy="${cy}" r="60" fill="#0f172a"/>`;
+    svg += `<text x="${cx}" y="${cy - 6}" fill="#f8fafc" font-size="14" font-weight="700" text-anchor="middle" font-family="system-ui">${fmtShort(total)}</text>`;
+    svg += `<text x="${cx}" y="${cy + 12}" fill="#94a3b8" font-size="10" text-anchor="middle" font-family="system-ui">Total Revenue</text>`;
+
+    // Legend
+    const legendX = 320;
+    sorted.slice(0, 8).forEach(([client, amount], i) => {
+        const ly = 30 + i * 34;
+        svg += `<rect x="${legendX}" y="${ly}" width="14" height="14" rx="4" fill="${colors[i % colors.length]}"/>`;
+        svg += `<text x="${legendX + 22}" y="${ly + 8}" fill="#e2e8f0" font-size="11" font-family="system-ui" dominant-baseline="middle">${escapeHtml(client.length > 16 ? client.substring(0, 15) + '...' : client)}</text>`;
+        svg += `<text x="${legendX + 22}" y="${ly + 22}" fill="#94a3b8" font-size="9" font-family="system-ui">${fmt(amount)} (${pct(amount, total).toFixed(0)}%)</text>`;
+    });
+
+    if (sorted.length > 8) {
+        const ly = 30 + 8 * 34;
+        svg += `<text x="${legendX}" y="${ly + 8}" fill="#94a3b8" font-size="10" font-family="system-ui">+${sorted.length - 8} more clients</text>`;
+    }
+
+    svg += '</svg>';
+    document.getElementById(containerId).innerHTML = svg;
+}
+
+// ==================== GOALS ====================
+function saveGoals() {
+    state.goals.revenue = parseFloat(document.getElementById('goal-revenue').value) || 0;
+    state.goals.savings = parseFloat(document.getElementById('goal-savings').value) || 0;
+    state.goals.maxExpenses = parseFloat(document.getElementById('goal-max-expenses').value) || 0;
+    saveState();
+    renderGoals();
+}
+
+function loadGoals() {
+    document.getElementById('goal-revenue').value = state.goals.revenue || '';
+    document.getElementById('goal-savings').value = state.goals.savings || '';
+    document.getElementById('goal-max-expenses').value = state.goals.maxExpenses || '';
+}
+
+function renderGoals() {
+    const year = getCurrentYear();
+    const month = getCurrentMonth();
+    const totalRev = sumAmount(filterByYear(state.revenue, year));
+    const totalExp = sumBizExpenses(filterByYear(state.expenses, year));
+    const profit = totalRev - totalExp;
+    const monthExpThisMonth = sumBizExpenses(filterByMonth(state.expenses, year, month));
+
+    const monthsElapsed = month + 1;
+    const monthsTotal = 12;
+
+    let cardsHtml = '<div style="margin-top:20px;">';
+
+    // Revenue goal
+    if (state.goals.revenue > 0) {
+        const revPct = pct(totalRev, state.goals.revenue);
+        const expectedPct = (monthsElapsed / monthsTotal) * 100;
+        let pace, paceColor;
+        if (revPct >= expectedPct + 5) { pace = 'Ahead of pace'; paceColor = 'success'; }
+        else if (revPct >= expectedPct - 5) { pace = 'On track'; paceColor = 'success'; }
+        else { pace = 'Behind pace'; paceColor = 'danger'; }
+
+        const needed = state.goals.revenue - totalRev;
+        const monthlyNeeded = needed / Math.max(1, monthsTotal - monthsElapsed);
+
+        cardsHtml += `<div class="card">
+            <div class="card-title"><div class="card-icon">&#128176;</div> Revenue Target: ${fmt(state.goals.revenue)}</div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                <span style="font-weight:700;color:var(--text-heading);">${fmt(totalRev)} earned</span>
+                <span class="badge badge-${paceColor}">${pace}</span>
+            </div>
+            <div class="progress-bar" style="height:14px;margin-bottom:8px;">
+                <div class="progress-fill ${revPct >= expectedPct - 5 ? 'green' : 'red'}" style="width:${Math.min(100, revPct)}%;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.82rem;color:var(--text-muted);">
+                <span>${revPct.toFixed(1)}% of goal</span>
+                <span>Expected at month ${monthsElapsed}: ${expectedPct.toFixed(0)}%</span>
+            </div>
+            ${needed > 0 ? `<div style="margin-top:12px;font-size:0.85rem;color:var(--text-muted);">Need <strong style="color:var(--text-heading);">${fmt(monthlyNeeded)}/mo</strong> for remaining ${monthsTotal - monthsElapsed} months to hit target.</div>` : `<div style="margin-top:12px;color:var(--success);font-weight:600;">Target reached!</div>`}
+        </div>`;
+    }
+
+    // Savings goal
+    if (state.goals.savings > 0) {
+        const savPct = pct(Math.max(0, profit), state.goals.savings);
+        const expectedPct = (monthsElapsed / monthsTotal) * 100;
+        let pace, paceColor;
+        if (savPct >= expectedPct + 5) { pace = 'Ahead of pace'; paceColor = 'success'; }
+        else if (savPct >= expectedPct - 5) { pace = 'On track'; paceColor = 'success'; }
+        else { pace = 'Behind pace'; paceColor = 'danger'; }
+
+        cardsHtml += `<div class="card">
+            <div class="card-title"><div class="card-icon">&#128179;</div> Savings Target: ${fmt(state.goals.savings)}</div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                <span style="font-weight:700;color:var(--text-heading);">${fmt(Math.max(0, profit))} profit (potential savings)</span>
+                <span class="badge badge-${paceColor}">${pace}</span>
+            </div>
+            <div class="progress-bar" style="height:14px;margin-bottom:8px;">
+                <div class="progress-fill ${savPct >= expectedPct - 5 ? 'green' : 'red'}" style="width:${Math.min(100, savPct)}%;"></div>
+            </div>
+            <div style="font-size:0.82rem;color:var(--text-muted);">${savPct.toFixed(1)}% of savings goal</div>
+        </div>`;
+    }
+
+    // Expense cap
+    if (state.goals.maxExpenses > 0) {
+        const expPct = pct(monthExpThisMonth, state.goals.maxExpenses);
+        const overBudget = monthExpThisMonth > state.goals.maxExpenses;
+
+        cardsHtml += `<div class="card">
+            <div class="card-title"><div class="card-icon">&#128184;</div> Monthly Expense Cap: ${fmt(state.goals.maxExpenses)}</div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                <span style="font-weight:700;color:var(--text-heading);">${fmt(monthExpThisMonth)} spent this month</span>
+                <span class="badge badge-${overBudget ? 'danger' : 'success'}">${overBudget ? 'Over budget' : 'Under budget'}</span>
+            </div>
+            <div class="progress-bar" style="height:14px;margin-bottom:8px;">
+                <div class="progress-fill ${overBudget ? 'red' : 'green'}" style="width:${Math.min(100, expPct)}%;"></div>
+            </div>
+            <div style="font-size:0.82rem;color:var(--text-muted);">${fmt(Math.max(0, state.goals.maxExpenses - monthExpThisMonth))} remaining</div>
+        </div>`;
+    }
+
+    if (!state.goals.revenue && !state.goals.savings && !state.goals.maxExpenses) {
+        cardsHtml += `<div class="card"><div class="empty-state">
+            <div class="empty-state-icon">&#127919;</div>
+            <div class="empty-state-text">Set your financial goals above to track progress.</div>
+        </div></div>`;
+    }
+
+    cardsHtml += '</div>';
+    document.getElementById('goal-cards').innerHTML = cardsHtml;
+}
+
+// ==================== INVOICES ====================
+function addInvoice() {
+    const number = document.getElementById('inv-number').value.trim();
+    const client = document.getElementById('inv-client').value.trim();
+    const amount = parseFloat(document.getElementById('inv-amount').value);
+    const date = document.getElementById('inv-date').value || today();
+
+    if (!number) { toast('Please enter an invoice number'); return; }
+    if (!client) { toast('Please enter a client name'); return; }
+    if (!amount || amount <= 0) { toast('Please enter a valid amount'); return; }
+
+    state.invoices.push({ id: uid(), number, client, amount, date });
+    state.invoices.sort((a, b) => a.date.localeCompare(b.date));
+    saveState();
+
+    document.getElementById('inv-number').value = '';
+    document.getElementById('inv-client').value = '';
+    document.getElementById('inv-amount').value = '';
+    toast('Invoice added: ' + number);
+    renderInvoices();
+}
+
+function markInvoicePaid(id) {
+    const inv = state.invoices.find(i => i.id === id);
+    if (inv) {
+        // Add to revenue
+        state.revenue.push({
+            id: uid(),
+            date: today(),
+            client: inv.client,
+            project: 'Invoice ' + inv.number,
+            amount: inv.amount,
+            method: 'bank_transfer',
+            notes: 'Paid invoice ' + inv.number
+        });
+        state.revenue.sort((a, b) => b.date.localeCompare(a.date));
+        state.invoices = state.invoices.filter(i => i.id !== id);
+        saveState();
+        toast('Invoice ' + inv.number + ' marked as paid and added to revenue');
+        renderInvoices();
+    }
+}
+
+function deleteInvoice(id) {
+    state.invoices = state.invoices.filter(i => i.id !== id);
+    saveState();
+    renderInvoices();
+    toast('Invoice removed');
+}
+
+function renderInvoices() {
+    const now = new Date();
+    const tbody = document.getElementById('inv-table-body');
+    const empty = document.getElementById('inv-empty');
+
+    // Buckets
+    const buckets = { '0-30': [], '31-60': [], '61-90': [], '90+': [] };
+    state.invoices.forEach(inv => {
+        const age = daysBetween(new Date(inv.date), now);
+        if (age <= 30) buckets['0-30'].push(inv);
+        else if (age <= 60) buckets['31-60'].push(inv);
+        else if (age <= 90) buckets['61-90'].push(inv);
+        else buckets['90+'].push(inv);
+    });
+
+    const totalOutstanding = sumAmount(state.invoices);
+
+    document.getElementById('inv-buckets').innerHTML = `
+        <div class="kpi-card">
+            <div class="kpi-label">0-30 Days</div>
+            <div class="kpi-value kpi-positive">${fmt(sumAmount(buckets['0-30']))}</div>
+            <div class="kpi-sub">${buckets['0-30'].length} invoice${buckets['0-30'].length !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">31-60 Days</div>
+            <div class="kpi-value kpi-warning">${fmt(sumAmount(buckets['31-60']))}</div>
+            <div class="kpi-sub">${buckets['31-60'].length} invoice${buckets['31-60'].length !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">61-90 Days</div>
+            <div class="kpi-value" style="color:#f97316;">${fmt(sumAmount(buckets['61-90']))}</div>
+            <div class="kpi-sub">${buckets['61-90'].length} invoice${buckets['61-90'].length !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">90+ Days</div>
+            <div class="kpi-value kpi-negative">${fmt(sumAmount(buckets['90+']))}</div>
+            <div class="kpi-sub">${buckets['90+'].length} invoice${buckets['90+'].length !== 1 ? 's' : ''}</div>
+        </div>`;
+
+    if (state.invoices.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    tbody.innerHTML = state.invoices.map(inv => {
+        const age = daysBetween(new Date(inv.date), now);
+        let ageBadge;
+        if (age <= 30) ageBadge = '<span class="badge badge-success">Current</span>';
+        else if (age <= 60) ageBadge = '<span class="badge badge-warning">Overdue</span>';
+        else if (age <= 90) ageBadge = '<span class="badge badge-danger">Late</span>';
+        else ageBadge = '<span class="badge badge-danger">Critical</span>';
+
+        return `<tr>
+            <td style="font-weight:700;">${escapeHtml(inv.number)}</td>
+            <td>${escapeHtml(inv.client)}</td>
+            <td style="font-weight:700;">${fmt(inv.amount)}</td>
+            <td>${inv.date}</td>
+            <td>${age} days</td>
+            <td>${ageBadge}</td>
+            <td>
+                <button class="btn btn-sm btn-secondary" onclick="markInvoicePaid('${inv.id}')" style="margin-right:4px;">Paid</button>
+                <button class="row-delete" onclick="deleteInvoice('${inv.id}')" title="Delete">&times;</button>
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+// ==================== OVERVIEW ====================
+function renderOverview() {
+    const year = getCurrentYear();
+    const month = getCurrentMonth();
+    const yearRev = filterByYear(state.revenue, year);
+    const yearExp = filterByYear(state.expenses, year);
+    const totalRev = sumAmount(yearRev);
+    const totalExp = sumBizExpenses(yearExp);
+    const profit = totalRev - totalExp;
+    const margin = totalRev > 0 ? (profit / totalRev * 100) : 0;
+
+    const monthRev = sumAmount(filterByMonth(state.revenue, year, month));
+    const monthExp = sumBizExpenses(filterByMonth(state.expenses, year, month));
+
+    // Prev month comparison
+    const prevMonth = month === 0 ? 11 : month - 1;
+    const prevYear = month === 0 ? year - 1 : year;
+    const prevMonthRev = sumAmount(filterByMonth(state.revenue, prevYear, prevMonth));
+    const revChange = prevMonthRev > 0 ? ((monthRev - prevMonthRev) / prevMonthRev * 100) : 0;
+
+    const totalOutstanding = sumAmount(state.invoices);
+
+    document.getElementById('kpi-grid').innerHTML = `
+        <div class="kpi-card">
+            <div class="kpi-label">YTD Revenue</div>
+            <div class="kpi-value kpi-positive">${fmt(totalRev)}</div>
+            <div class="kpi-sub">${monthName(month)} ${year}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">YTD Expenses</div>
+            <div class="kpi-value kpi-negative">${fmt(totalExp)}</div>
+            <div class="kpi-sub">Business portion</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Net Profit</div>
+            <div class="kpi-value ${profit >= 0 ? 'kpi-positive' : 'kpi-negative'}">${fmt(profit)}</div>
+            <div class="kpi-sub">Margin: ${margin.toFixed(1)}%</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Outstanding</div>
+            <div class="kpi-value" style="color:var(--info);">${fmt(totalOutstanding)}</div>
+            <div class="kpi-sub">${state.invoices.length} invoice${state.invoices.length !== 1 ? 's' : ''}</div>
+        </div>`;
+
+    // Bar chart
+    const months = [];
+    for (let m = 0; m < 12; m++) {
+        months.push({
+            month: m,
+            rev: sumAmount(filterByMonth(state.revenue, year, m)),
+            exp: sumBizExpenses(filterByMonth(state.expenses, year, m))
+        });
+    }
+    const maxVal = Math.max(...months.map(m => Math.max(m.rev, m.exp)), 1);
+    const chartH = 200, chartW = 600, barW = 18, padL = 55, padB = 30;
+
+    let barSvg = `<svg viewBox="0 0 ${chartW} ${chartH + padB + 20}" xmlns="http://www.w3.org/2000/svg">`;
+    barSvg += `<defs>
+        <linearGradient id="grev" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient>
+        <linearGradient id="gexp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ec4899"/><stop offset="100%" stop-color="#be185d"/></linearGradient>
+    </defs>`;
+
+    for (let i = 0; i <= 3; i++) {
+        const y = 10 + (chartH / 3) * i;
+        const val = maxVal - (maxVal / 3) * i;
+        barSvg += `<line x1="${padL}" y1="${y}" x2="${chartW - 10}" y2="${y}" stroke="rgba(168,85,247,0.1)"/>`;
+        barSvg += `<text x="${padL - 6}" y="${y + 4}" fill="#94a3b8" font-size="9" text-anchor="end" font-family="system-ui">${fmtShort(val)}</text>`;
+    }
+
+    const gap = 32;
+    months.forEach((m, i) => {
+        const x = padL + i * (gap + barW * 2 + 2);
+        const rH = maxVal > 0 ? (m.rev / maxVal) * chartH : 0;
+        const eH = maxVal > 0 ? (m.exp / maxVal) * chartH : 0;
+        barSvg += `<rect x="${x}" y="${10 + chartH - rH}" width="${barW}" height="${rH}" rx="3" fill="url(#grev)" opacity="0.9"><title>${monthName(m.month)}: Rev ${fmt(m.rev)}</title></rect>`;
+        barSvg += `<rect x="${x + barW + 2}" y="${10 + chartH - eH}" width="${barW}" height="${eH}" rx="3" fill="url(#gexp)" opacity="0.9"><title>${monthName(m.month)}: Exp ${fmt(m.exp)}</title></rect>`;
+        barSvg += `<text x="${x + barW}" y="${chartH + 24}" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="system-ui">${monthName(m.month)}</text>`;
+    });
+
+    barSvg += '</svg>';
+    document.getElementById('overview-bar-chart').innerHTML = barSvg;
+
+    // Pie chart
+    const clients = {};
+    yearRev.forEach(r => {
+        if (!clients[r.client]) clients[r.client] = 0;
+        clients[r.client] += parseFloat(r.amount) || 0;
+    });
+    const sorted = Object.entries(clients).sort((a, b) => b[1] - a[1]);
+    renderClientPieChart(sorted, totalRev, 'overview-pie-chart');
+
+    // Runway summary
+    const numExpMonths = new Set(yearExp.map(e => new Date(e.date).getMonth())).size || 1;
+    const avgBurn = totalExp / numExpMonths;
+    const balance = state.runwaySettings.balance || 0;
+    const savings = state.runwaySettings.savings || 0;
+    const available = Math.max(0, balance - savings);
+    const runwayMonths = avgBurn > 0 ? available / avgBurn : (available > 0 ? 99 : 0);
+
+    let runwayColor;
+    if (runwayMonths >= 6) runwayColor = 'green';
+    else if (runwayMonths >= 3) runwayColor = 'yellow';
+    else runwayColor = 'red';
+
+    document.getElementById('overview-runway').innerHTML = balance > 0 ? `
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;">
+            <div style="font-size:2rem;font-weight:800;color:var(--${runwayColor === 'green' ? 'success' : runwayColor === 'yellow' ? 'warning' : 'danger'});">${runwayMonths >= 99 ? '99+' : runwayMonths.toFixed(1)}</div>
+            <div><div style="font-weight:700;color:var(--text-heading);">Months of Runway</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);">Avg burn: ${fmt(avgBurn)}/mo</div></div>
+        </div>
+        <div class="progress-bar" style="height:10px;">
+            <div class="progress-fill ${runwayColor}" style="width:${Math.min(100, runwayMonths / 12 * 100)}%;"></div>
+        </div>
+    ` : '<div style="color:var(--text-muted);font-size:0.9rem;">Set your cash balance in the Runway tab to calculate runway.</div>';
+
+    // Tax deadlines
+    const now = new Date();
+    const deadlines = [
+        { q: 'Q1', date: new Date(year, 3, 15), label: 'Apr 15' },
+        { q: 'Q2', date: new Date(year, 5, 15), label: 'Jun 15' },
+        { q: 'Q3', date: new Date(year, 8, 15), label: 'Sep 15' },
+        { q: 'Q4', date: new Date(year + 1, 0, 15), label: 'Jan 15' }
+    ];
+
+    const netIncome = totalRev - totalExp;
+    const quarterlyEst = netIncome > 0 ? (netIncome * 0.3 / 4) : 0;
+    const upcoming = deadlines.filter(d => d.date > now).slice(0, 2);
+
+    document.getElementById('overview-deadlines').innerHTML = upcoming.length > 0 ? upcoming.map(dl => {
+        const days = daysBetween(now, dl.date);
+        return `<div class="deadline-card ${days <= 30 ? 'urgent' : ''}">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div><strong>${dl.q}</strong> &mdash; ${dl.label}<br><span style="font-size:0.8rem;color:var(--text-muted);">${days} days</span></div>
+                <div class="deadline-amount">~${fmt(quarterlyEst)}</div>
+            </div>
+        </div>`;
+    }).join('') : '<div style="color:var(--text-muted);font-size:0.9rem;">No upcoming deadlines this year.</div>';
+}
+
+// ==================== MONTHLY COMPARISON (in P&L) ====================
+// This is integrated into the P&L bar chart already showing month-over-month
+
+// ==================== EXPORT ====================
+function renderExport() {
+    const year = getCurrentYear();
+    const totalRev = sumAmount(filterByYear(state.revenue, year));
+    const totalExp = sumBizExpenses(filterByYear(state.expenses, year));
+    const profit = totalRev - totalExp;
+    const totalOutstanding = sumAmount(state.invoices);
+
+    const month = getCurrentMonth();
+    let monthlyHtml = '<div style="margin-top:16px;"><strong style="color:var(--text-heading);">Monthly Summary (' + year + ')</strong></div>';
+    monthlyHtml += '<div class="table-wrap" style="margin-top:12px;"><table><thead><tr><th>Month</th><th>Revenue</th><th>Expenses</th><th>Profit</th><th>Margin</th></tr></thead><tbody>';
+
+    for (let m = 0; m <= month; m++) {
+        const mRev = sumAmount(filterByMonth(state.revenue, year, m));
+        const mExp = sumBizExpenses(filterByMonth(state.expenses, year, m));
+        const mProfit = mRev - mExp;
+        const mMargin = mRev > 0 ? (mProfit / mRev * 100) : 0;
+        monthlyHtml += `<tr>
+            <td>${monthName(m)} ${year}</td>
+            <td style="color:var(--success);">${fmt(mRev)}</td>
+            <td style="color:var(--danger);">${fmt(mExp)}</td>
+            <td style="color:${mProfit >= 0 ? 'var(--success)' : 'var(--danger)'};font-weight:700;">${fmt(mProfit)}</td>
+            <td>${mMargin.toFixed(1)}%</td>
+        </tr>`;
+    }
+
+    monthlyHtml += `</tbody><tfoot><tr style="font-weight:700;border-top:2px solid var(--border-card);">
+        <td>TOTAL</td>
+        <td style="color:var(--success);">${fmt(totalRev)}</td>
+        <td style="color:var(--danger);">${fmt(totalExp)}</td>
+        <td style="color:${profit >= 0 ? 'var(--success)' : 'var(--danger)'};">${fmt(profit)}</td>
+        <td>${totalRev > 0 ? (profit / totalRev * 100).toFixed(1) : '0.0'}%</td>
+    </tr></tfoot></table></div>`;
+
+    document.getElementById('export-summary').innerHTML = `
+        <div class="grid-4" style="margin-bottom:20px;">
+            <div class="kpi-card"><div class="kpi-label">Revenue</div><div class="kpi-value kpi-positive">${fmt(totalRev)}</div></div>
+            <div class="kpi-card"><div class="kpi-label">Expenses</div><div class="kpi-value kpi-negative">${fmt(totalExp)}</div></div>
+            <div class="kpi-card"><div class="kpi-label">Profit</div><div class="kpi-value ${profit >= 0 ? 'kpi-positive' : 'kpi-negative'}">${fmt(profit)}</div></div>
+            <div class="kpi-card"><div class="kpi-label">Outstanding</div><div class="kpi-value" style="color:var(--info);">${fmt(totalOutstanding)}</div></div>
+        </div>
+        ${monthlyHtml}`;
+}
+
+function downloadCSV(filename, csvContent) {
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast('Downloaded: ' + filename);
+}
+
+function exportRevenueCSV() {
+    if (state.revenue.length === 0) { toast('No revenue data to export'); return; }
+    let csv = 'Date,Client,Project,Amount,Payment Method,Notes\n';
+    state.revenue.forEach(r => {
+        csv += `"${r.date}","${(r.client||'').replace(/"/g,'""')}","${(r.project||'').replace(/"/g,'""')}",${r.amount},"${getMethodLabel(r.method)}","${(r.notes||'').replace(/"/g,'""')}"\n`;
+    });
+    downloadCSV('freelance-revenue-' + today() + '.csv', csv);
+}
+
+function exportExpenseCSV() {
+    if (state.expenses.length === 0) { toast('No expense data to export'); return; }
+    let csv = 'Date,Description,Category,Amount,Business%,Type\n';
+    state.expenses.forEach(e => {
+        csv += `"${e.date}","${(e.desc||'').replace(/"/g,'""')}","${getCategoryLabel(e.category)}",${e.amount},${getBizPct(e.split)}%,"${e.type}"\n`;
+    });
+    downloadCSV('freelance-expenses-' + today() + '.csv', csv);
+}
+
+function exportInvoiceCSV() {
+    if (state.invoices.length === 0) { toast('No invoice data to export'); return; }
+    let csv = 'Invoice #,Client,Amount,Issue Date,Age (Days)\n';
+    const now = new Date();
+    state.invoices.forEach(inv => {
+        const age = daysBetween(new Date(inv.date), now);
+        csv += `"${(inv.number||'').replace(/"/g,'""')}","${(inv.client||'').replace(/"/g,'""')}",${inv.amount},"${inv.date}",${age}\n`;
+    });
+    downloadCSV('freelance-invoices-' + today() + '.csv', csv);
+}
+
+function exportAllCSV() {
+    exportRevenueCSV();
+    setTimeout(() => exportExpenseCSV(), 300);
+    setTimeout(() => exportInvoiceCSV(), 600);
+}
+
+function printSummary() {
+    // Switch to export tab to show summary
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelector('[data-tab="export"]').classList.add('active');
+    document.getElementById('panel-export').classList.add('active');
+    renderExport();
+    setTimeout(() => window.print(), 300);
+}
+
+function confirmClearAll() {
+    showModal('Clear All Data', '<p style="color:var(--text-muted);">This will permanently delete all your financial data including revenue, expenses, invoices, and goals. This action cannot be undone.</p>',
+        `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+         <button class="btn btn-danger" onclick="clearAllData()">Delete Everything</button>`);
+}
+
+function clearAllData() {
+    state = {
+        revenue: [], expenses: [], invoices: [],
+        taxSettings: { status: 'single', stateRate: 5, seRate: 15.3 },
+        runwaySettings: { balance: 0, savings: 0 },
+        goals: { revenue: 0, savings: 0, maxExpenses: 0 },
+        revPeriod: 'month'
+    };
+    saveState();
+    closeModal();
+    loadTaxSettings();
+    loadRunwaySettings();
+    loadGoals();
+    renderOverview();
+    toast('All data cleared');
+}
+
+// ==================== INIT ====================
+function init() {
+    loadState();
+
+    // Set default dates
+    document.getElementById('rev-date').value = today();
+    document.getElementById('exp-date').value = today();
+    document.getElementById('inv-date').value = today();
+
+    // Load settings into forms
+    loadTaxSettings();
+    loadRunwaySettings();
+    loadGoals();
+
+    // Render initial tab
+    renderOverview();
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+});
+
+init();
+</script>
+</body>
+</html>

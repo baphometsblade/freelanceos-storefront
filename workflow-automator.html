@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Workflow Automator — Free Tool | FreelanceOS</title>
+<meta name="description" content="Build automated freelance workflows with triggers, conditions, and actions. Visual if-this-then-that builder for client onboarding, invoicing, follow-ups, and more. 100% free.">
+<meta name="keywords" content="freelance workflow automation, freelance business automation, client onboarding automation, invoice automation, freelance tools">
+<meta property="og:title" content="Freelance Workflow Automator — Free Tool | FreelanceOS">
+<meta property="og:description" content="Build automated freelance workflows with triggers, conditions, and actions. Visual if-this-then-that builder. 100% free.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.freelanceos.pro/freelanceos-storefront/workflow-automator.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Freelance Workflow Automator — Free Tool | FreelanceOS">
+<meta name="twitter:description" content="Visual workflow builder for freelancers. Automate client onboarding, invoicing, follow-ups and more.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Workflow Automator",
+  "description": "Build automated freelance workflows with triggers, conditions, and actions. Visual if-this-then-that builder for client onboarding, invoicing, follow-ups, and more.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --border: rgba(168,85,247,0.2);
+  --border-hover: rgba(168,85,247,0.5);
+  --accent: linear-gradient(135deg, #a855f7, #ec4899);
+  --accent-solid: #a855f7;
+  --pink: #ec4899;
+  --text: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+  --glass: rgba(15,23,42,0.8);
+  --glass-border: rgba(168,85,247,0.15);
+}
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(168,85,247,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(236,72,153,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* Header */
+.header { padding: 32px 0 16px; text-align: center; }
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(168,85,247,0.1);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--accent-solid);
+  margin-bottom: 16px;
+}
+.header h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  background: var(--accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+.header p {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 24px 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tab {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.tab:hover { color: var(--text); background: rgba(168,85,247,0.1); }
+.tab.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(168,85,247,0.3);
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  backdrop-filter: blur(20px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 0 30px rgba(168,85,247,0.08);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(168,85,247,0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(168,85,247,0.4); }
+.btn-secondary {
+  background: rgba(168,85,247,0.1);
+  color: var(--accent-solid);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: rgba(168,85,247,0.2); border-color: var(--border-hover); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid rgba(148,163,184,0.2);
+}
+.btn-ghost:hover { color: var(--text); border-color: rgba(148,163,184,0.4); }
+.btn-danger { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+.btn-danger:hover { background: rgba(239,68,68,0.25); }
+.btn-success { background: rgba(34,197,94,0.15); color: var(--success); border: 1px solid rgba(34,197,94,0.3); }
+.btn-success:hover { background: rgba(34,197,94,0.25); }
+.btn-sm { padding: 6px 14px; font-size: 13px; }
+
+/* Inputs */
+input[type="text"], input[type="number"], input[type="date"], select, textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(2,6,23,0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.25s ease;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-solid);
+  box-shadow: 0 0 0 3px rgba(168,85,247,0.15);
+}
+select { cursor: pointer; }
+select option { background: var(--card); color: var(--text); }
+textarea { resize: vertical; min-height: 60px; }
+label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+
+/* Panel */
+.panel { display: none; }
+.panel.active { display: block; animation: fadeUp 0.3s ease; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dashboard */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+}
+.stat-card .stat-value {
+  font-size: 32px;
+  font-weight: 800;
+  background: var(--accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-card .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+/* Workflow list */
+.workflow-list { display: flex; flex-direction: column; gap: 12px; }
+.workflow-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+.workflow-item:hover { border-color: var(--border-hover); transform: translateX(4px); }
+.wf-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.wf-info { flex: 1; min-width: 0; }
+.wf-name { font-weight: 700; font-size: 15px; }
+.wf-desc { font-size: 13px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wf-meta { display: flex; gap: 16px; align-items: center; flex-shrink: 0; }
+.wf-meta span { font-size: 12px; color: var(--text-secondary); white-space: nowrap; }
+.status-badge {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.status-active { background: rgba(34,197,94,0.15); color: var(--success); }
+.status-paused { background: rgba(245,158,11,0.15); color: var(--warning); }
+.status-draft { background: rgba(148,163,184,0.15); color: var(--text-secondary); }
+
+/* Builder */
+.builder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.builder-header input[type="text"] { max-width: 400px; font-size: 18px; font-weight: 700; padding: 12px 16px; }
+.builder-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.chain-container { display: flex; flex-direction: column; gap: 0; padding: 20px 0; }
+.chain-node {
+  position: relative;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+}
+.chain-node:hover { border-color: var(--border-hover); }
+.chain-node.trigger-node { border-left: 3px solid var(--info); }
+.chain-node.condition-node { border-left: 3px solid var(--warning); }
+.chain-node.action-node { border-left: 3px solid var(--success); }
+.node-type-badge {
+  display: inline-flex;
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+.badge-trigger { background: rgba(59,130,246,0.15); color: var(--info); }
+.badge-condition { background: rgba(245,158,11,0.15); color: var(--warning); }
+.badge-action { background: rgba(34,197,94,0.15); color: var(--success); }
+
+.node-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.node-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.node-subtitle { font-size: 13px; color: var(--text-secondary); }
+.node-remove {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.node-remove:hover { color: var(--danger); }
+
+.chain-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  position: relative;
+}
+.chain-connector::before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: var(--border);
+  left: 50%;
+  transform: translateX(-50%);
+}
+.chain-connector-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  z-index: 1;
+  color: var(--text-secondary);
+}
+
+.add-node-bar {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* Node config */
+.node-config { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.config-row { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.config-row > * { flex: 1; min-width: 140px; }
+
+/* Condition builder */
+.condition-group { display: flex; flex-direction: column; gap: 8px; }
+.condition-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.condition-row select, .condition-row input { flex: 1; min-width: 100px; }
+.condition-operator-badge {
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: rgba(245,158,11,0.1);
+  color: var(--warning);
+  transition: all 0.2s;
+}
+.condition-operator-badge:hover { background: rgba(245,158,11,0.2); }
+
+/* Templates */
+.templates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.template-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.template-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(168,85,247,0.12);
+}
+.template-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.template-card:hover::before { opacity: 1; }
+.template-icon { font-size: 28px; margin-bottom: 12px; }
+.template-name { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+.template-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.template-meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.template-meta span { font-size: 12px; color: var(--text-secondary); }
+
+/* Simulator */
+.sim-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.sim-log {
+  background: rgba(2,6,23,0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  max-height: 500px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.sim-log-entry { padding: 4px 0; border-bottom: 1px solid rgba(148,163,184,0.1); }
+.sim-log-entry:last-child { border-bottom: none; }
+.sim-log .log-trigger { color: var(--info); }
+.sim-log .log-condition { color: var(--warning); }
+.sim-log .log-action { color: var(--success); }
+.sim-log .log-fail { color: var(--danger); }
+.sim-log .log-time { color: var(--text-secondary); font-size: 11px; }
+
+/* Export */
+.export-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+.export-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.export-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+.export-card .export-icon { font-size: 32px; margin-bottom: 12px; }
+.export-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.export-card p { font-size: 13px; color: var(--text-secondary); }
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(2,6,23,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal h2 { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+/* CTA Banner */
+.cta-banner {
+  margin: 40px 0;
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.15));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(168,85,247,0.1), transparent 70%);
+  pointer-events: none;
+}
+.cta-banner h2 { font-size: 24px; font-weight: 800; margin-bottom: 8px; position: relative; }
+.cta-banner p { color: var(--text-secondary); margin-bottom: 20px; font-size: 15px; position: relative; }
+.cta-banner a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 4px 20px rgba(168,85,247,0.4);
+  transition: all 0.3s ease;
+  position: relative;
+}
+.cta-banner a:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(168,85,247,0.5); }
+
+/* Footer */
+.footer {
+  padding: 32px 0;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+}
+.footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+.footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+.footer-links a:hover { color: var(--accent-solid); }
+.footer p { font-size: 13px; color: var(--text-secondary); }
+
+/* Empty State */
+.empty-state { text-align: center; padding: 60px 20px; }
+.empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; }
+.empty-state h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.empty-state p { color: var(--text-secondary); margin-bottom: 20px; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(168,85,247,0.3); border-radius: 3px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container { padding: 0 16px; }
+  .sim-container { grid-template-columns: 1fr; }
+  .builder-header { flex-direction: column; }
+  .builder-header input[type="text"] { max-width: 100%; }
+  .wf-meta { flex-direction: column; gap: 6px; }
+  .workflow-item { flex-direction: column; align-items: flex-start; }
+  .config-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-badge">&#9889; Tool #83 &mdash; Free Forever</div>
+    <h1>Freelance Workflow Automator</h1>
+    <p>Build powerful if-this-then-that automations for your freelance business. Create triggers, set conditions, define actions &mdash; all visually.</p>
+  </header>
+
+  <!-- Tabs -->
+  <nav class="tabs" id="mainTabs">
+    <button class="tab active" data-tab="dashboard" onclick="switchTab('dashboard')">&#128202; Dashboard</button>
+    <button class="tab" data-tab="builder" onclick="switchTab('builder')">&#128295; Builder</button>
+    <button class="tab" data-tab="templates" onclick="switchTab('templates')">&#128218; Templates</button>
+    <button class="tab" data-tab="simulator" onclick="switchTab('simulator')">&#9654;&#65039; Simulator</button>
+    <button class="tab" data-tab="export" onclick="switchTab('export')">&#128229; Export</button>
+  </nav>
+
+  <!-- Dashboard Panel -->
+  <section class="panel active" id="panel-dashboard">
+    <div class="dashboard-stats" id="dashStats"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+      <h2 style="font-size:20px;font-weight:800;">Your Workflows</h2>
+      <button class="btn btn-primary" onclick="createNewWorkflow()">&#43; New Workflow</button>
+    </div>
+    <div id="workflowList"></div>
+  </section>
+
+  <!-- Builder Panel -->
+  <section class="panel" id="panel-builder">
+    <div id="builderContent">
+      <div class="empty-state">
+        <div class="empty-icon">&#128295;</div>
+        <h3>No Workflow Selected</h3>
+        <p>Create a new workflow or select one from the dashboard to start building.</p>
+        <button class="btn btn-primary" onclick="createNewWorkflow()">&#43; Create Workflow</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Templates Panel -->
+  <section class="panel" id="panel-templates">
+    <div style="margin-bottom:20px;">
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:6px;">Workflow Templates</h2>
+      <p style="color:var(--text-secondary);font-size:14px;">Start with a pre-built template and customize it for your business.</p>
+    </div>
+    <div class="templates-grid" id="templatesGrid"></div>
+  </section>
+
+  <!-- Simulator Panel -->
+  <section class="panel" id="panel-simulator">
+    <div style="margin-bottom:20px;">
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:6px;">Workflow Simulator</h2>
+      <p style="color:var(--text-secondary);font-size:14px;">Test a workflow with sample data to see what actions would fire.</p>
+    </div>
+    <div class="sim-container">
+      <div class="card">
+        <label>Select Workflow</label>
+        <select id="simWorkflowSelect" style="margin-bottom:14px;"></select>
+        <label>Sample Trigger Data (JSON)</label>
+        <textarea id="simData" rows="8" placeholder='{"clientName":"Acme Corp","invoiceAmount":2500,"daysSinceInvoice":14}'></textarea>
+        <div style="margin-top:14px;">
+          <button class="btn btn-primary" onclick="runSimulation()">&#9654; Run Simulation</button>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;">Simulation Log</h3>
+        <div class="sim-log" id="simLog">
+          <div style="color:var(--text-secondary);text-align:center;padding:40px 20px;">Run a simulation to see results here</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Export Panel -->
+  <section class="panel" id="panel-export">
+    <div style="margin-bottom:20px;">
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:6px;">Export Workflows</h2>
+      <p style="color:var(--text-secondary);font-size:14px;">Back up, share, or print your workflow configurations.</p>
+    </div>
+    <div class="export-options">
+      <div class="export-card" onclick="exportJSON()">
+        <div class="export-icon">&#128196;</div>
+        <h3>JSON Backup</h3>
+        <p>Export all workflows as a JSON file for backup or transfer.</p>
+      </div>
+      <div class="export-card" onclick="exportSingleJSON()">
+        <div class="export-icon">&#128203;</div>
+        <h3>Single Workflow</h3>
+        <p>Export a specific workflow to share with collaborators.</p>
+      </div>
+      <div class="export-card" onclick="exportChecklist()">
+        <div class="export-icon">&#9745;&#65039;</div>
+        <h3>Printable Checklist</h3>
+        <p>Generate a step-by-step checklist from a workflow.</p>
+      </div>
+      <div class="export-card" onclick="importJSON()">
+        <div class="export-icon">&#128228;</div>
+        <h3>Import Workflows</h3>
+        <p>Import workflows from a previously exported JSON file.</p>
+      </div>
+    </div>
+    <div id="exportPreview" style="margin-top:20px;display:none;">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <h3 style="font-size:16px;font-weight:700;">Preview</h3>
+          <button class="btn btn-ghost btn-sm" onclick="document.getElementById('exportPreview').style.display='none'">Close</button>
+        </div>
+        <pre id="exportPreviewContent" style="background:rgba(2,6,23,0.6);padding:16px;border-radius:var(--radius-sm);overflow:auto;max-height:400px;font-size:13px;line-height:1.6;color:var(--text-secondary);"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <h2>&#128640; Get the Complete FreelanceOS Pro System</h2>
+    <p>Manage clients, projects, invoices, contracts &mdash; everything in one Notion workspace. <strong>40% OFF</strong> with code <strong>FLASH40</strong>.</p>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Claim 40% OFF Now &#8594;</a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/freelanceos-storefront/free-templates.html">Free Templates</a>
+      <a href="/freelanceos-storefront/">FreelanceOS Storefront</a>
+    </div>
+    <p>&copy; 2026 FreelanceOS. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- Hidden file input for import -->
+<input type="file" id="fileImport" accept=".json" style="display:none" onchange="handleImport(event)">
+
+<script>
+/* =============================================
+   DATA: Triggers, Actions, Conditions, Templates
+   ============================================= */
+var TRIGGERS = [
+  {id:'new_client',name:'New Client Added',icon:'👤',category:'Clients',fields:[{key:'clientName',label:'Client Name',type:'text'},{key:'clientEmail',label:'Client Email',type:'text'}]},
+  {id:'invoice_sent',name:'Invoice Sent',icon:'📨',category:'Billing',fields:[{key:'invoiceAmount',label:'Amount ($)',type:'number'},{key:'clientName',label:'Client Name',type:'text'}]},
+  {id:'payment_received',name:'Payment Received',icon:'💰',category:'Billing',fields:[{key:'amount',label:'Amount ($)',type:'number'},{key:'clientName',label:'Client Name',type:'text'}]},
+  {id:'milestone_completed',name:'Milestone Completed',icon:'✅',category:'Projects',fields:[{key:'milestoneName',label:'Milestone',type:'text'},{key:'projectName',label:'Project',type:'text'}]},
+  {id:'contract_signed',name:'Contract Signed',icon:'📝',category:'Contracts',fields:[{key:'clientName',label:'Client Name',type:'text'},{key:'contractValue',label:'Contract Value ($)',type:'number'}]},
+  {id:'deadline_approaching',name:'Deadline Approaching',icon:'⏰',category:'Projects',fields:[{key:'projectName',label:'Project',type:'text'},{key:'daysUntil',label:'Days Until Deadline',type:'number'}]},
+  {id:'proposal_sent',name:'Proposal Sent',icon:'📄',category:'Sales',fields:[{key:'proposalName',label:'Proposal Title',type:'text'},{key:'clientName',label:'Client Name',type:'text'}]},
+  {id:'project_started',name:'Project Started',icon:'🚀',category:'Projects',fields:[{key:'projectName',label:'Project Name',type:'text'},{key:'clientName',label:'Client Name',type:'text'}]},
+  {id:'project_completed',name:'Project Completed',icon:'🏆',category:'Projects',fields:[{key:'projectName',label:'Project Name',type:'text'},{key:'clientName',label:'Client Name',type:'text'}]},
+  {id:'contract_expiring',name:'Contract Expiring Soon',icon:'📅',category:'Contracts',fields:[{key:'clientName',label:'Client Name',type:'text'},{key:'daysUntilExpiry',label:'Days Until Expiry',type:'number'}]},
+  {id:'scope_change',name:'Scope Change Detected',icon:'⚠️',category:'Projects',fields:[{key:'projectName',label:'Project Name',type:'text'},{key:'changeDescription',label:'Change Description',type:'text'}]},
+  {id:'time_trigger',name:'Scheduled Time',icon:'🕒',category:'Time',fields:[{key:'frequency',label:'Frequency',type:'select',options:['Daily','Weekly','Monthly','Quarterly']},{key:'dayOfWeek',label:'Day',type:'select',options:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']}]},
+  {id:'invoice_overdue',name:'Invoice Overdue',icon:'🚨',category:'Billing',fields:[{key:'daysPastDue',label:'Days Past Due',type:'number'},{key:'clientName',label:'Client Name',type:'text'}]},
+  {id:'feedback_received',name:'Feedback Received',icon:'⭐',category:'Clients',fields:[{key:'rating',label:'Rating (1-5)',type:'number'},{key:'clientName',label:'Client Name',type:'text'}]},
+  {id:'lead_captured',name:'New Lead Captured',icon:'🎯',category:'Sales',fields:[{key:'leadName',label:'Lead Name',type:'text'},{key:'source',label:'Source',type:'text'}]},
+  {id:'expense_logged',name:'Expense Logged',icon:'💸',category:'Billing',fields:[{key:'expenseAmount',label:'Amount ($)',type:'number'},{key:'category',label:'Category',type:'text'}]}
+];
+
+var ACTIONS = [
+  {id:'send_email',name:'Send Email',icon:'📧',category:'Communication',fields:[{key:'to',label:'To',type:'text'},{key:'subject',label:'Subject',type:'text'},{key:'body',label:'Body',type:'textarea'}]},
+  {id:'create_task',name:'Create Task',icon:'✅',category:'Tasks',fields:[{key:'taskName',label:'Task Name',type:'text'},{key:'dueIn',label:'Due In (days)',type:'number'},{key:'priority',label:'Priority',type:'select',options:['Low','Medium','High','Urgent']}]},
+  {id:'update_status',name:'Update Status',icon:'🔄',category:'Projects',fields:[{key:'entityType',label:'Entity',type:'select',options:['Project','Client','Invoice','Contract']},{key:'newStatus',label:'New Status',type:'text'}]},
+  {id:'generate_invoice',name:'Generate Invoice',icon:'📋',category:'Billing',fields:[{key:'amount',label:'Amount ($)',type:'number'},{key:'description',label:'Description',type:'text'}]},
+  {id:'schedule_meeting',name:'Schedule Meeting',icon:'📅',category:'Communication',fields:[{key:'meetingTitle',label:'Title',type:'text'},{key:'daysFromNow',label:'Days From Now',type:'number'},{key:'duration',label:'Duration (min)',type:'number'}]},
+  {id:'send_reminder',name:'Send Reminder',icon:'🔔',category:'Communication',fields:[{key:'message',label:'Message',type:'text'},{key:'channel',label:'Channel',type:'select',options:['Email','SMS','Slack','In-App']}]},
+  {id:'create_document',name:'Create Document',icon:'📄',category:'Documents',fields:[{key:'docType',label:'Type',type:'select',options:['Proposal','Contract','SOW','Report','Brief']},{key:'title',label:'Title',type:'text'}]},
+  {id:'update_crm',name:'Update CRM',icon:'📊',category:'CRM',fields:[{key:'field',label:'Field',type:'text'},{key:'value',label:'Value',type:'text'}]},
+  {id:'send_slack',name:'Send Slack Message',icon:'💬',category:'Communication',fields:[{key:'channel',label:'Channel',type:'text'},{key:'message',label:'Message',type:'text'}]},
+  {id:'create_project',name:'Create Project',icon:'📁',category:'Projects',fields:[{key:'projectName',label:'Project Name',type:'text'},{key:'template',label:'Template',type:'select',options:['Standard','Rush','Retainer','One-off']}]},
+  {id:'log_note',name:'Log Internal Note',icon:'📝',category:'Internal',fields:[{key:'note',label:'Note',type:'textarea'}]},
+  {id:'archive_record',name:'Archive Record',icon:'📦',category:'Internal',fields:[{key:'recordType',label:'Record Type',type:'select',options:['Project','Client','Invoice','Contract']},{key:'recordName',label:'Record Name',type:'text'}]},
+  {id:'send_survey',name:'Send Survey',icon:'📝',category:'Communication',fields:[{key:'surveyType',label:'Survey Type',type:'select',options:['Satisfaction','Feedback','NPS','Custom']},{key:'recipientEmail',label:'Recipient Email',type:'text'}]},
+  {id:'calculate_tax',name:'Calculate Tax Estimate',icon:'🧮',category:'Billing',fields:[{key:'quarter',label:'Quarter',type:'select',options:['Q1','Q2','Q3','Q4']},{key:'taxRate',label:'Tax Rate (%)',type:'number'}]},
+  {id:'generate_report',name:'Generate Report',icon:'📊',category:'Reports',fields:[{key:'reportType',label:'Report Type',type:'select',options:['Revenue','Time','Project','Client','Tax']},{key:'period',label:'Period',type:'select',options:['Weekly','Monthly','Quarterly','Yearly']}]},
+  {id:'transfer_files',name:'Transfer Files',icon:'📂',category:'Documents',fields:[{key:'source',label:'Source',type:'text'},{key:'destination',label:'Destination',type:'text'}]}
+];
+
+var CONDITIONS = {
+  operators: ['AND','OR'],
+  comparisons: [
+    {id:'equals',label:'Equals',symbol:'='},
+    {id:'not_equals',label:'Not Equals',symbol:'≠'},
+    {id:'greater_than',label:'Greater Than',symbol:'>'},
+    {id:'less_than',label:'Less Than',symbol:'<'},
+    {id:'gte',label:'Greater or Equal',symbol:'≥'},
+    {id:'lte',label:'Less or Equal',symbol:'≤'},
+    {id:'contains',label:'Contains',symbol:'⊃'},
+    {id:'not_contains',label:'Does Not Contain',symbol:'⊅'},
+    {id:'before_date',label:'Before Date',symbol:'<📅'},
+    {id:'after_date',label:'After Date',symbol:'>📅'},
+    {id:'is_empty',label:'Is Empty',symbol:'∅'},
+    {id:'is_not_empty',label:'Is Not Empty',symbol:'≠∅'}
+  ]
+};
+
+var TEMPLATES = [
+  {
+    id:'tpl_onboarding', name:'New Client Onboarding', icon:'👋',
+    desc:'Automatically set up everything when a new client is added.',
+    triggers:[{triggerId:'new_client',config:{}}],
+    conditions:[],
+    actions:[
+      {actionId:'send_email',config:{subject:'Welcome to {{clientName}} partnership!',body:'Welcome aboard! Here is what to expect next...'}},
+      {actionId:'create_project',config:{template:'Standard'}},
+      {actionId:'create_task',config:{taskName:'Send welcome packet',dueIn:1,priority:'High'}},
+      {actionId:'create_task',config:{taskName:'Schedule kickoff call',dueIn:2,priority:'High'}},
+      {actionId:'create_document',config:{docType:'Contract',title:'Service Agreement'}}
+    ]
+  },
+  {
+    id:'tpl_overdue', name:'Invoice Overdue Follow-up', icon:'🚨',
+    desc:'Send escalating reminders when invoices go past due.',
+    triggers:[{triggerId:'invoice_overdue',config:{daysPastDue:7}}],
+    conditions:[{field:'daysPastDue',comparison:'greater_than',value:'7',operator:'AND'}],
+    actions:[
+      {actionId:'send_email',config:{subject:'Friendly reminder: Invoice past due',body:'This is a friendly reminder that your invoice is overdue.'}},
+      {actionId:'create_task',config:{taskName:'Follow up on overdue invoice',dueIn:3,priority:'Urgent'}},
+      {actionId:'update_crm',config:{field:'paymentStatus',value:'Overdue'}}
+    ]
+  },
+  {
+    id:'tpl_milestone', name:'Project Milestone Reached', icon:'🏆',
+    desc:'Notify the client and team when a milestone is completed.',
+    triggers:[{triggerId:'milestone_completed',config:{}}],
+    conditions:[],
+    actions:[
+      {actionId:'send_email',config:{subject:'Milestone completed: {{milestoneName}}',body:'Great news! We have completed the {{milestoneName}} milestone.'}},
+      {actionId:'generate_invoice',config:{description:'Milestone payment'}},
+      {actionId:'update_status',config:{entityType:'Project',newStatus:'Next Phase'}}
+    ]
+  },
+  {
+    id:'tpl_contract_expiry', name:'Contract Expiring Soon', icon:'📅',
+    desc:'Get alerted and start renewal process before contracts expire.',
+    triggers:[{triggerId:'contract_expiring',config:{daysUntilExpiry:30}}],
+    conditions:[{field:'daysUntilExpiry',comparison:'lte',value:'30',operator:'AND'}],
+    actions:[
+      {actionId:'send_reminder',config:{message:'Contract expiring in {{daysUntilExpiry}} days',channel:'Email'}},
+      {actionId:'create_task',config:{taskName:'Prepare renewal proposal',dueIn:7,priority:'High'}},
+      {actionId:'create_document',config:{docType:'Proposal',title:'Contract Renewal Proposal'}}
+    ]
+  },
+  {
+    id:'tpl_revenue', name:'Monthly Revenue Report', icon:'💰',
+    desc:'Auto-generate a revenue report at the end of each month.',
+    triggers:[{triggerId:'time_trigger',config:{frequency:'Monthly'}}],
+    conditions:[],
+    actions:[
+      {actionId:'generate_report',config:{reportType:'Revenue',period:'Monthly'}},
+      {actionId:'send_email',config:{subject:'Monthly Revenue Report',body:'Your monthly revenue report is ready for review.'}},
+      {actionId:'log_note',config:{note:'Monthly revenue report generated'}}
+    ]
+  },
+  {
+    id:'tpl_tax', name:'Quarterly Tax Reminder', icon:'🧮',
+    desc:'Never miss a quarterly tax payment deadline again.',
+    triggers:[{triggerId:'time_trigger',config:{frequency:'Quarterly'}}],
+    conditions:[],
+    actions:[
+      {actionId:'calculate_tax',config:{taxRate:25}},
+      {actionId:'send_reminder',config:{message:'Quarterly estimated tax payment due soon!',channel:'Email'}},
+      {actionId:'create_task',config:{taskName:'Pay quarterly estimated taxes',dueIn:7,priority:'Urgent'}}
+    ]
+  },
+  {
+    id:'tpl_birthday', name:'Client Birthday/Anniversary', icon:'🎂',
+    desc:'Send personalized messages on client birthdays or work anniversaries.',
+    triggers:[{triggerId:'time_trigger',config:{frequency:'Daily'}}],
+    conditions:[{field:'isBirthday',comparison:'equals',value:'true',operator:'AND'}],
+    actions:[
+      {actionId:'send_email',config:{subject:'Happy Birthday from our team!',body:'Wishing you a wonderful birthday! Thank you for being an amazing client.'}},
+      {actionId:'log_note',config:{note:'Birthday greeting sent'}}
+    ]
+  },
+  {
+    id:'tpl_proposal_followup', name:'Proposal Follow-up', icon:'📄',
+    desc:'Automatically follow up on proposals that have not received a response.',
+    triggers:[{triggerId:'proposal_sent',config:{}}],
+    conditions:[{field:'daysSinceProposal',comparison:'greater_than',value:'3',operator:'AND'}],
+    actions:[
+      {actionId:'send_email',config:{subject:'Following up on our proposal',body:'Just checking in on the proposal we sent. Would love to discuss any questions.'}},
+      {actionId:'create_task',config:{taskName:'Call client about proposal',dueIn:2,priority:'Medium'}},
+      {actionId:'update_crm',config:{field:'proposalStatus',value:'Follow-up Sent'}}
+    ]
+  },
+  {
+    id:'tpl_feedback', name:'Feedback Request After Delivery', icon:'⭐',
+    desc:'Request feedback and testimonials after project delivery.',
+    triggers:[{triggerId:'project_completed',config:{}}],
+    conditions:[],
+    actions:[
+      {actionId:'send_survey',config:{surveyType:'Satisfaction'}},
+      {actionId:'create_task',config:{taskName:'Request testimonial',dueIn:7,priority:'Medium'}},
+      {actionId:'send_email',config:{subject:'How did we do?',body:'We just wrapped up your project and would love your feedback!'}}
+    ]
+  },
+  {
+    id:'tpl_scope_change', name:'Scope Change Detected', icon:'⚠️',
+    desc:'Alert and document when project scope changes are detected.',
+    triggers:[{triggerId:'scope_change',config:{}}],
+    conditions:[],
+    actions:[
+      {actionId:'send_email',config:{subject:'Scope Change Notice: {{projectName}}',body:'A scope change has been detected. Please review the updated requirements.'}},
+      {actionId:'create_document',config:{docType:'SOW',title:'Updated Scope of Work'}},
+      {actionId:'create_task',config:{taskName:'Review and approve scope change',dueIn:1,priority:'Urgent'}},
+      {actionId:'generate_invoice',config:{description:'Scope change fee estimate'}}
+    ]
+  },
+  {
+    id:'tpl_payment_confirm', name:'Payment Received Confirmation', icon:'💳',
+    desc:'Send thank-you confirmations when payments are received.',
+    triggers:[{triggerId:'payment_received',config:{}}],
+    conditions:[],
+    actions:[
+      {actionId:'send_email',config:{subject:'Payment Received - Thank You!',body:'We have received your payment of ${{amount}}. Thank you!'}},
+      {actionId:'update_status',config:{entityType:'Invoice',newStatus:'Paid'}},
+      {actionId:'update_crm',config:{field:'lastPaymentDate',value:'today'}},
+      {actionId:'log_note',config:{note:'Payment received and confirmed'}}
+    ]
+  },
+  {
+    id:'tpl_weekly_status', name:'Weekly Status Update', icon:'📋',
+    desc:'Automatically compile and send weekly project status updates.',
+    triggers:[{triggerId:'time_trigger',config:{frequency:'Weekly',dayOfWeek:'Friday'}}],
+    conditions:[],
+    actions:[
+      {actionId:'generate_report',config:{reportType:'Project',period:'Weekly'}},
+      {actionId:'send_email',config:{subject:'Weekly Status Update',body:'Here is your weekly project status update with progress across all active projects.'}},
+      {actionId:'create_task',config:{taskName:'Review weekly goals for next week',dueIn:2,priority:'Medium'}}
+    ]
+  }
+];
+
+/* =============================================
+   STATE
+   ============================================= */
+var state = {
+  workflows: [],
+  currentWorkflowId: null,
+  simResults: []
+};
+
+function loadState() {
+  try {
+    var saved = localStorage.getItem('fos_workflow_automator');
+    if (saved) { state = JSON.parse(saved); }
+  } catch(e) { console.error('Failed to load state', e); }
+}
+
+function saveState() {
+  try { localStorage.setItem('fos_workflow_automator', JSON.stringify(state)); } catch(e) { console.error('Failed to save state', e); }
+}
+
+function genId() { return 'wf_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+function nodeId() { return 'nd_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+
+/* =============================================
+   TAB SWITCHING
+   ============================================= */
+function switchTab(tabId) {
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  var tabBtn = document.querySelector('.tab[data-tab="'+tabId+'"]');
+  if (tabBtn) tabBtn.classList.add('active');
+  var panel = document.getElementById('panel-' + tabId);
+  if (panel) panel.classList.add('active');
+  if (tabId === 'dashboard') renderDashboard();
+  if (tabId === 'templates') renderTemplates();
+  if (tabId === 'simulator') populateSimSelect();
+  if (tabId === 'builder' && state.currentWorkflowId) renderBuilder();
+}
+
+/* =============================================
+   DASHBOARD
+   ============================================= */
+function renderDashboard() {
+  var wfs = state.workflows;
+  var active = wfs.filter(function(w){return w.status==='active'}).length;
+  var paused = wfs.filter(function(w){return w.status==='paused'}).length;
+  var drafts = wfs.filter(function(w){return w.status==='draft'}).length;
+  var totalRuns = wfs.reduce(function(s,w){return s + (w.runCount||0)},0);
+
+  document.getElementById('dashStats').innerHTML =
+    '<div class="stat-card"><div class="stat-value">'+wfs.length+'</div><div class="stat-label">Total Workflows</div></div>' +
+    '<div class="stat-card"><div class="stat-value">'+active+'</div><div class="stat-label">Active</div></div>' +
+    '<div class="stat-card"><div class="stat-value">'+paused+'</div><div class="stat-label">Paused</div></div>' +
+    '<div class="stat-card"><div class="stat-value">'+totalRuns+'</div><div class="stat-label">Total Runs</div></div>';
+
+  var listEl = document.getElementById('workflowList');
+  if (wfs.length === 0) {
+    listEl.innerHTML = '<div class="empty-state"><div class="empty-icon">📥</div><h3>No Workflows Yet</h3><p>Create your first workflow or start from a template.</p><div style="display:flex;gap:10px;justify-content:center;"><button class="btn btn-primary" onclick="createNewWorkflow()">&#43; New Workflow</button><button class="btn btn-secondary" onclick="switchTab(\'templates\')">Browse Templates</button></div></div>';
+    return;
+  }
+
+  var html = '<div class="workflow-list">';
+  wfs.forEach(function(wf) {
+    var statusClass = 'status-' + wf.status;
+    var triggerCount = (wf.nodes||[]).filter(function(n){return n.type==='trigger'}).length;
+    var actionCount = (wf.nodes||[]).filter(function(n){return n.type==='action'}).length;
+    var lastRun = wf.lastRun ? timeAgo(wf.lastRun) : 'Never';
+    html += '<div class="workflow-item" onclick="openWorkflow(\''+wf.id+'\')">' +
+      '<div class="wf-icon" style="background:rgba(168,85,247,0.15);">'+(wf.icon||'⚡')+'</div>' +
+      '<div class="wf-info"><div class="wf-name">'+esc(wf.name)+'</div>' +
+      '<div class="wf-desc">'+triggerCount+' trigger'+(triggerCount!==1?'s':'')+' → '+actionCount+' action'+(actionCount!==1?'s':'')+'</div></div>' +
+      '<div class="wf-meta">' +
+      '<span>🔄 '+((wf.runCount||0))+' runs</span>' +
+      '<span>🕒 '+lastRun+'</span>' +
+      '<span class="status-badge '+statusClass+'">'+wf.status.charAt(0).toUpperCase()+wf.status.slice(1)+'</span>' +
+      '</div></div>';
+  });
+  html += '</div>';
+  listEl.innerHTML = html;
+}
+
+function timeAgo(ts) {
+  var diff = Date.now() - ts;
+  var mins = Math.floor(diff/60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return mins + 'm ago';
+  var hrs = Math.floor(mins/60);
+  if (hrs < 24) return hrs + 'h ago';
+  var days = Math.floor(hrs/24);
+  return days + 'd ago';
+}
+
+function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+/* =============================================
+   CREATE / OPEN WORKFLOW
+   ============================================= */
+function createNewWorkflow() {
+  var wf = {
+    id: genId(),
+    name: 'Untitled Workflow',
+    icon: '⚡',
+    status: 'draft',
+    nodes: [],
+    runCount: 0,
+    lastRun: null,
+    createdAt: Date.now(),
+    updatedAt: Date.now()
+  };
+  state.workflows.push(wf);
+  state.currentWorkflowId = wf.id;
+  saveState();
+  switchTab('builder');
+  renderBuilder();
+}
+
+function openWorkflow(id) {
+  state.currentWorkflowId = id;
+  saveState();
+  switchTab('builder');
+  renderBuilder();
+}
+
+function getCurrentWorkflow() {
+  return state.workflows.find(function(w){return w.id === state.currentWorkflowId}) || null;
+}
+
+/* =============================================
+   BUILDER
+   ============================================= */
+function renderBuilder() {
+  var wf = getCurrentWorkflow();
+  if (!wf) {
+    document.getElementById('builderContent').innerHTML = '<div class="empty-state"><div class="empty-icon">🔧</div><h3>No Workflow Selected</h3><p>Create or select a workflow to start building.</p><button class="btn btn-primary" onclick="createNewWorkflow()">&#43; Create Workflow</button></div>';
+    return;
+  }
+
+  var statusOpts = '<option value="draft"'+(wf.status==='draft'?' selected':'')+'>Draft</option><option value="active"'+(wf.status==='active'?' selected':'')+'>Active</option><option value="paused"'+(wf.status==='paused'?' selected':'')+'>Paused</option>';
+
+  var html = '<div class="builder-header">' +
+    '<input type="text" id="wfNameInput" value="'+esc(wf.name)+'" onchange="updateWfName(this.value)" placeholder="Workflow Name">' +
+    '<div class="builder-actions">' +
+    '<select id="wfStatusSelect" onchange="updateWfStatus(this.value)" style="width:120px;">'+statusOpts+'</select>' +
+    '<button class="btn btn-secondary btn-sm" onclick="duplicateWorkflow()">&#128203; Duplicate</button>' +
+    '<button class="btn btn-danger btn-sm" onclick="deleteWorkflow()">&#128465; Delete</button>' +
+    '<button class="btn btn-ghost btn-sm" onclick="switchTab(\'dashboard\')">← Back</button>' +
+    '</div></div>';
+
+  html += '<div class="chain-container" id="chainContainer">';
+
+  if (wf.nodes.length === 0) {
+    html += '<div class="empty-state" style="padding:40px"><div class="empty-icon">👇</div><h3>Start Building Your Workflow</h3><p>Add a trigger to begin your automation chain.</p></div>';
+  } else {
+    wf.nodes.forEach(function(node, idx) {
+      if (idx > 0) {
+        html += '<div class="chain-connector"><div class="chain-connector-icon">↓</div></div>';
+      }
+      html += renderNode(node, idx);
+    });
+  }
+
+  html += '</div>';
+
+  html += '<div class="add-node-bar">' +
+    '<button class="btn btn-secondary btn-sm" onclick="showAddNodeModal(\'trigger\')">&#43; Trigger</button>' +
+    '<button class="btn btn-secondary btn-sm" onclick="showAddNodeModal(\'condition\')">&#43; Condition</button>' +
+    '<button class="btn btn-secondary btn-sm" onclick="showAddNodeModal(\'action\')">&#43; Action</button>' +
+    '</div>';
+
+  document.getElementById('builderContent').innerHTML = html;
+}
+
+function renderNode(node, idx) {
+  var badgeClass = 'badge-' + node.type;
+  var nodeClass = node.type + '-node';
+  var typeLabel = node.type.charAt(0).toUpperCase() + node.type.slice(1);
+
+  var html = '<div class="chain-node '+nodeClass+'" data-idx="'+idx+'">';
+  html += '<div class="node-header"><div>';
+  html += '<span class="node-type-badge '+badgeClass+'">'+typeLabel+'</span>';
+  html += '<div class="node-title">'+(node.icon||'')+' '+esc(node.name)+'</div>';
+  if (node.subtitle) html += '<div class="node-subtitle">'+esc(node.subtitle)+'</div>';
+  html += '</div>';
+  html += '<button class="node-remove" onclick="removeNode('+idx+')" title="Remove">×</button>';
+  html += '</div>';
+
+  // Config display
+  if (node.type === 'trigger' || node.type === 'action') {
+    var def = node.type === 'trigger' ? TRIGGERS.find(function(t){return t.id===node.defId}) : ACTIONS.find(function(a){return a.id===node.defId});
+    if (def && def.fields) {
+      html += '<div class="node-config">';
+      def.fields.forEach(function(f) {
+        var val = (node.config && node.config[f.key]) || '';
+        html += '<div style="margin-bottom:8px;"><label>'+esc(f.label)+'</label>';
+        if (f.type === 'select' && f.options) {
+          html += '<select onchange="updateNodeConfig('+idx+',\''+f.key+'\',this.value)">';
+          html += '<option value="">Select...</option>';
+          f.options.forEach(function(opt) {
+            html += '<option value="'+esc(opt)+'"'+(val===opt?' selected':'')+'>'+esc(opt)+'</option>';
+          });
+          html += '</select>';
+        } else if (f.type === 'textarea') {
+          html += '<textarea onchange="updateNodeConfig('+idx+',\''+f.key+'\',this.value)" rows="2">'+esc(val)+'</textarea>';
+        } else {
+          html += '<input type="'+(f.type==='number'?'number':'text')+'" value="'+esc(val)+'" onchange="updateNodeConfig('+idx+',\''+f.key+'\',this.value)" placeholder="'+esc(f.label)+'">';
+        }
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+  } else if (node.type === 'condition') {
+    html += renderConditionConfig(node, idx);
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function renderConditionConfig(node, idx) {
+  var rules = node.rules || [];
+  var html = '<div class="node-config"><div class="condition-group">';
+
+  rules.forEach(function(rule, ri) {
+    if (ri > 0) {
+      html += '<div style="text-align:center;margin:4px 0;"><button class="condition-operator-badge" onclick="toggleCondOperator('+idx+','+ri+')">'+esc(rule.operator || 'AND')+'</button></div>';
+    }
+    html += '<div class="condition-row">' +
+      '<input type="text" value="'+esc(rule.field||'')+'" placeholder="Field name" onchange="updateCondRule('+idx+','+ri+',\'field\',this.value)">' +
+      '<select onchange="updateCondRule('+idx+','+ri+',\'comparison\',this.value)">';
+    CONDITIONS.comparisons.forEach(function(c) {
+      html += '<option value="'+c.id+'"'+(rule.comparison===c.id?' selected':'')+'>'+esc(c.label)+'</option>';
+    });
+    html += '</select>' +
+      '<input type="text" value="'+esc(rule.value||'')+'" placeholder="Value" onchange="updateCondRule('+idx+','+ri+',\'value\',this.value)">' +
+      '<button class="btn btn-danger btn-sm" onclick="removeCondRule('+idx+','+ri+')" style="flex:0;padding:6px 10px;">×</button>' +
+      '</div>';
+  });
+
+  html += '<button class="btn btn-ghost btn-sm" onclick="addCondRule('+idx+')" style="margin-top:6px;">&#43; Add Condition</button>';
+  html += '</div></div>';
+  return html;
+}
+
+/* =============================================
+   NODE MANAGEMENT
+   ============================================= */
+function showAddNodeModal(type) {
+  var wf = getCurrentWorkflow();
+  if (!wf) return;
+
+  var items = type === 'trigger' ? TRIGGERS : type === 'action' ? ACTIONS : null;
+  var html = '<h2>Add ' + type.charAt(0).toUpperCase() + type.slice(1) + '</h2>';
+
+  if (type === 'condition') {
+    // Just add a condition node directly
+    var newNode = {
+      id: nodeId(),
+      type: 'condition',
+      name: 'Condition Check',
+      icon: '🔀',
+      rules: [{field:'',comparison:'equals',value:'',operator:'AND'}]
+    };
+    wf.nodes.push(newNode);
+    wf.updatedAt = Date.now();
+    saveState();
+    renderBuilder();
+    return;
+  }
+
+  // Group by category
+  var cats = {};
+  items.forEach(function(item) {
+    if (!cats[item.category]) cats[item.category] = [];
+    cats[item.category].push(item);
+  });
+
+  Object.keys(cats).forEach(function(cat) {
+    html += '<div style="margin-bottom:16px;"><div style="font-size:12px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">'+esc(cat)+'</div>';
+    cats[cat].forEach(function(item) {
+      html += '<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer;transition:all 0.2s;" onmouseenter="this.style.borderColor=\'rgba(168,85,247,0.5)\'" onmouseleave="this.style.borderColor=\'rgba(168,85,247,0.2)\'" onclick="addNodeFromModal(\''+type+'\',\''+item.id+'\')">' +
+        '<span style="font-size:20px;">'+item.icon+'</span>' +
+        '<div><div style="font-weight:600;font-size:14px;">'+esc(item.name)+'</div></div></div>';
+    });
+    html += '</div>';
+  });
+
+  html += '<div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button></div>';
+  showModal(html);
+}
+
+function addNodeFromModal(type, defId) {
+  var wf = getCurrentWorkflow();
+  if (!wf) return;
+
+  var def = type === 'trigger' ? TRIGGERS.find(function(t){return t.id===defId}) : ACTIONS.find(function(a){return a.id===defId});
+  if (!def) return;
+
+  var newNode = {
+    id: nodeId(),
+    type: type,
+    defId: defId,
+    name: def.name,
+    icon: def.icon,
+    config: {}
+  };
+
+  wf.nodes.push(newNode);
+  wf.updatedAt = Date.now();
+  saveState();
+  closeModal();
+  renderBuilder();
+}
+
+function removeNode(idx) {
+  var wf = getCurrentWorkflow();
+  if (!wf) return;
+  wf.nodes.splice(idx, 1);
+  wf.updatedAt = Date.now();
+  saveState();
+  renderBuilder();
+}
+
+function updateNodeConfig(idx, key, value) {
+  var wf = getCurrentWorkflow();
+  if (!wf || !wf.nodes[idx]) return;
+  if (!wf.nodes[idx].config) wf.nodes[idx].config = {};
+  wf.nodes[idx].config[key] = value;
+  wf.updatedAt = Date.now();
+  saveState();
+}
+
+function updateCondRule(nodeIdx, ruleIdx, key, value) {
+  var wf = getCurrentWorkflow();
+  if (!wf || !wf.nodes[nodeIdx]) return;
+  if (!wf.nodes[nodeIdx].rules[ruleIdx]) return;
+  wf.nodes[nodeIdx].rules[ruleIdx][key] = value;
+  wf.updatedAt = Date.now();
+  saveState();
+}
+
+function addCondRule(nodeIdx) {
+  var wf = getCurrentWorkflow();
+  if (!wf || !wf.nodes[nodeIdx]) return;
+  wf.nodes[nodeIdx].rules.push({field:'',comparison:'equals',value:'',operator:'AND'});
+  wf.updatedAt = Date.now();
+  saveState();
+  renderBuilder();
+}
+
+function removeCondRule(nodeIdx, ruleIdx) {
+  var wf = getCurrentWorkflow();
+  if (!wf || !wf.nodes[nodeIdx]) return;
+  wf.nodes[nodeIdx].rules.splice(ruleIdx, 1);
+  wf.updatedAt = Date.now();
+  saveState();
+  renderBuilder();
+}
+
+function toggleCondOperator(nodeIdx, ruleIdx) {
+  var wf = getCurrentWorkflow();
+  if (!wf || !wf.nodes[nodeIdx] || !wf.nodes[nodeIdx].rules[ruleIdx]) return;
+  wf.nodes[nodeIdx].rules[ruleIdx].operator = wf.nodes[nodeIdx].rules[ruleIdx].operator === 'AND' ? 'OR' : 'AND';
+  wf.updatedAt = Date.now();
+  saveState();
+  renderBuilder();
+}
+
+function updateWfName(name) {
+  var wf = getCurrentWorkflow();
+  if (!wf) return;
+  wf.name = name;
+  wf.updatedAt = Date.now();
+  saveState();
+}
+
+function updateWfStatus(status) {
+  var wf = getCurrentWorkflow();
+  if (!wf) return;
+  wf.status = status;
+  wf.updatedAt = Date.now();
+  saveState();
+}
+
+function duplicateWorkflow() {
+  var wf = getCurrentWorkflow();
+  if (!wf) return;
+  var dup = JSON.parse(JSON.stringify(wf));
+  dup.id = genId();
+  dup.name = wf.name + ' (Copy)';
+  dup.status = 'draft';
+  dup.runCount = 0;
+  dup.lastRun = null;
+  dup.createdAt = Date.now();
+  dup.updatedAt = Date.now();
+  // Regenerate node ids
+  dup.nodes.forEach(function(n) { n.id = nodeId(); });
+  state.workflows.push(dup);
+  state.currentWorkflowId = dup.id;
+  saveState();
+  renderBuilder();
+}
+
+function deleteWorkflow() {
+  var wf = getCurrentWorkflow();
+  if (!wf) return;
+  var html = '<h2>Delete Workflow</h2><p style="margin-bottom:16px;">Are you sure you want to delete <strong>'+esc(wf.name)+'</strong>? This cannot be undone.</p>' +
+    '<div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-danger" onclick="confirmDelete()">Delete</button></div>';
+  showModal(html);
+}
+
+function confirmDelete() {
+  state.workflows = state.workflows.filter(function(w){return w.id !== state.currentWorkflowId});
+  state.currentWorkflowId = null;
+  saveState();
+  closeModal();
+  switchTab('dashboard');
+}
+
+/* =============================================
+   TEMPLATES
+   ============================================= */
+function renderTemplates() {
+  var html = '';
+  TEMPLATES.forEach(function(tpl) {
+    var triggerCount = tpl.triggers.length;
+    var actionCount = tpl.actions.length;
+    var condCount = tpl.conditions ? tpl.conditions.length : 0;
+    html += '<div class="template-card" onclick="useTemplate(\''+tpl.id+'\')">' +
+      '<div class="template-icon">'+tpl.icon+'</div>' +
+      '<div class="template-name">'+esc(tpl.name)+'</div>' +
+      '<div class="template-desc">'+esc(tpl.desc)+'</div>' +
+      '<div class="template-meta">' +
+      '<span>'+triggerCount+' trigger'+(triggerCount!==1?'s':'')+'</span>' +
+      (condCount > 0 ? '<span>'+condCount+' condition'+(condCount!==1?'s':'')+'</span>' : '') +
+      '<span>'+actionCount+' action'+(actionCount!==1?'s':'')+'</span>' +
+      '</div></div>';
+  });
+  document.getElementById('templatesGrid').innerHTML = html;
+}
+
+function useTemplate(tplId) {
+  var tpl = TEMPLATES.find(function(t){return t.id===tplId});
+  if (!tpl) return;
+
+  var wf = {
+    id: genId(),
+    name: tpl.name,
+    icon: tpl.icon,
+    status: 'draft',
+    nodes: [],
+    runCount: 0,
+    lastRun: null,
+    createdAt: Date.now(),
+    updatedAt: Date.now()
+  };
+
+  // Add trigger nodes
+  tpl.triggers.forEach(function(t) {
+    var def = TRIGGERS.find(function(tr){return tr.id===t.triggerId});
+    if (def) {
+      wf.nodes.push({
+        id: nodeId(),
+        type: 'trigger',
+        defId: t.triggerId,
+        name: def.name,
+        icon: def.icon,
+        config: Object.assign({}, t.config || {})
+      });
+    }
+  });
+
+  // Add condition nodes
+  if (tpl.conditions && tpl.conditions.length > 0) {
+    wf.nodes.push({
+      id: nodeId(),
+      type: 'condition',
+      name: 'Condition Check',
+      icon: '🔀',
+      rules: tpl.conditions.map(function(c) { return Object.assign({}, c); })
+    });
+  }
+
+  // Add action nodes
+  tpl.actions.forEach(function(a) {
+    var def = ACTIONS.find(function(ac){return ac.id===a.actionId});
+    if (def) {
+      wf.nodes.push({
+        id: nodeId(),
+        type: 'action',
+        defId: a.actionId,
+        name: def.name,
+        icon: def.icon,
+        config: Object.assign({}, a.config || {})
+      });
+    }
+  });
+
+  state.workflows.push(wf);
+  state.currentWorkflowId = wf.id;
+  saveState();
+  switchTab('builder');
+  renderBuilder();
+}
+
+/* =============================================
+   SIMULATOR
+   ============================================= */
+function populateSimSelect() {
+  var sel = document.getElementById('simWorkflowSelect');
+  var html = '<option value="">Select a workflow...</option>';
+  state.workflows.forEach(function(wf) {
+    html += '<option value="'+wf.id+'">'+esc(wf.name)+'</option>';
+  });
+  sel.innerHTML = html;
+}
+
+function runSimulation() {
+  var wfId = document.getElementById('simWorkflowSelect').value;
+  var wf = state.workflows.find(function(w){return w.id===wfId});
+  if (!wf) {
+    alert('Please select a workflow first.');
+    return;
+  }
+
+  var dataStr = document.getElementById('simData').value.trim();
+  var data = {};
+  if (dataStr) {
+    try { data = JSON.parse(dataStr); }
+    catch(e) { alert('Invalid JSON data. Please check format.'); return; }
+  }
+
+  var log = [];
+  var now = new Date();
+  var timeStr = now.toLocaleTimeString();
+
+  log.push({type:'info',msg:'Simulation started at ' + timeStr});
+  log.push({type:'info',msg:'Workflow: ' + wf.name});
+  log.push({type:'info',msg:'---'});
+
+  var triggersFired = false;
+  var conditionsPassed = true;
+
+  // Process triggers
+  wf.nodes.filter(function(n){return n.type==='trigger'}).forEach(function(node) {
+    var trigDef = TRIGGERS.find(function(t){return t.id===node.defId});
+    log.push({type:'trigger',msg:'⚡ Trigger fired: ' + (trigDef?trigDef.name:node.name)});
+    if (trigDef && trigDef.fields) {
+      trigDef.fields.forEach(function(f) {
+        var val = data[f.key] || node.config[f.key] || '(not set)';
+        log.push({type:'trigger',msg:'   ' + f.label + ': ' + val});
+      });
+    }
+    triggersFired = true;
+  });
+
+  if (!triggersFired) {
+    log.push({type:'fail',msg:'❌ No triggers defined. Workflow cannot execute.'});
+  }
+
+  // Process conditions
+  wf.nodes.filter(function(n){return n.type==='condition'}).forEach(function(node) {
+    log.push({type:'condition',msg:'🔀 Evaluating conditions...'});
+    (node.rules || []).forEach(function(rule, ri) {
+      if (!rule.field) return;
+      var actualVal = data[rule.field];
+      var expected = rule.value;
+      var result = evaluateCondition(actualVal, rule.comparison, expected);
+      var symbol = CONDITIONS.comparisons.find(function(c){return c.id===rule.comparison});
+      var symStr = symbol ? symbol.symbol : rule.comparison;
+
+      if (ri > 0) {
+        log.push({type:'condition',msg:'   ' + (rule.operator||'AND')});
+      }
+      log.push({type: result?'condition':'fail', msg:'   ' + rule.field + ' ' + symStr + ' ' + expected + ' → ' + (actualVal!==undefined?actualVal:'undefined') + ' → ' + (result?'✅ PASS':'❌ FAIL')});
+
+      if (!result) conditionsPassed = false;
+    });
+  });
+
+  if (conditionsPassed && triggersFired) {
+    log.push({type:'info',msg:'---'});
+    log.push({type:'action',msg:'✅ All conditions passed. Executing actions...'});
+
+    wf.nodes.filter(function(n){return n.type==='action'}).forEach(function(node) {
+      var actDef = ACTIONS.find(function(a){return a.id===node.defId});
+      log.push({type:'action',msg:'▶ Action: ' + (actDef?actDef.name:node.name)});
+      if (node.config) {
+        Object.keys(node.config).forEach(function(k) {
+          var v = node.config[k] || '';
+          // Replace template vars
+          v = v.replace(/\{\{(\w+)\}\}/g, function(match, key) { return data[key] || match; });
+          log.push({type:'action',msg:'   ' + k + ': ' + v});
+        });
+      }
+    });
+
+    // Update run count
+    wf.runCount = (wf.runCount||0) + 1;
+    wf.lastRun = Date.now();
+    saveState();
+  } else if (!conditionsPassed) {
+    log.push({type:'info',msg:'---'});
+    log.push({type:'fail',msg:'⛔ Conditions not met. Actions skipped.'});
+  }
+
+  log.push({type:'info',msg:'---'});
+  log.push({type:'info',msg:'Simulation complete.'});
+
+  // Render log
+  var logHtml = '';
+  log.forEach(function(entry) {
+    var cls = 'log-' + (entry.type === 'info' ? 'time' : entry.type);
+    logHtml += '<div class="sim-log-entry"><span class="'+cls+'">'+esc(entry.msg)+'</span></div>';
+  });
+  document.getElementById('simLog').innerHTML = logHtml;
+}
+
+function evaluateCondition(actual, comparison, expected) {
+  if (actual === undefined || actual === null) actual = '';
+  var numActual = parseFloat(actual);
+  var numExpected = parseFloat(expected);
+
+  switch(comparison) {
+    case 'equals': return String(actual).toLowerCase() === String(expected).toLowerCase();
+    case 'not_equals': return String(actual).toLowerCase() !== String(expected).toLowerCase();
+    case 'greater_than': return !isNaN(numActual) && !isNaN(numExpected) && numActual > numExpected;
+    case 'less_than': return !isNaN(numActual) && !isNaN(numExpected) && numActual < numExpected;
+    case 'gte': return !isNaN(numActual) && !isNaN(numExpected) && numActual >= numExpected;
+    case 'lte': return !isNaN(numActual) && !isNaN(numExpected) && numActual <= numExpected;
+    case 'contains': return String(actual).toLowerCase().indexOf(String(expected).toLowerCase()) !== -1;
+    case 'not_contains': return String(actual).toLowerCase().indexOf(String(expected).toLowerCase()) === -1;
+    case 'before_date': return new Date(actual) < new Date(expected);
+    case 'after_date': return new Date(actual) > new Date(expected);
+    case 'is_empty': return !actual || String(actual).trim() === '';
+    case 'is_not_empty': return actual && String(actual).trim() !== '';
+    default: return false;
+  }
+}
+
+/* =============================================
+   EXPORT / IMPORT
+   ============================================= */
+function exportJSON() {
+  if (state.workflows.length === 0) { alert('No workflows to export.'); return; }
+  var data = JSON.stringify(state.workflows, null, 2);
+  downloadFile('freelanceos-workflows-backup.json', data, 'application/json');
+  showExportPreview(data);
+}
+
+function exportSingleJSON() {
+  if (state.workflows.length === 0) { alert('No workflows to export.'); return; }
+  var html = '<h2>Export Single Workflow</h2><label>Select Workflow</label><select id="exportSingleSelect" style="margin-bottom:16px;">';
+  state.workflows.forEach(function(wf) { html += '<option value="'+wf.id+'">'+esc(wf.name)+'</option>'; });
+  html += '</select><div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="doExportSingle()">Export</button></div>';
+  showModal(html);
+}
+
+function doExportSingle() {
+  var wfId = document.getElementById('exportSingleSelect').value;
+  var wf = state.workflows.find(function(w){return w.id===wfId});
+  if (!wf) return;
+  var data = JSON.stringify(wf, null, 2);
+  downloadFile('workflow-' + wf.name.replace(/[^a-z0-9]/gi,'_').toLowerCase() + '.json', data, 'application/json');
+  closeModal();
+  showExportPreview(data);
+}
+
+function exportChecklist() {
+  if (state.workflows.length === 0) { alert('No workflows to export.'); return; }
+  var html = '<h2>Print Workflow Checklist</h2><label>Select Workflow</label><select id="checklistSelect" style="margin-bottom:16px;">';
+  state.workflows.forEach(function(wf) { html += '<option value="'+wf.id+'">'+esc(wf.name)+'</option>'; });
+  html += '</select><div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="doExportChecklist()">Generate</button></div>';
+  showModal(html);
+}
+
+function doExportChecklist() {
+  var wfId = document.getElementById('checklistSelect').value;
+  var wf = state.workflows.find(function(w){return w.id===wfId});
+  if (!wf) return;
+  closeModal();
+
+  var lines = [];
+  lines.push('WORKFLOW CHECKLIST: ' + wf.name);
+  lines.push('Status: ' + wf.status.toUpperCase());
+  lines.push('Generated: ' + new Date().toLocaleDateString());
+  lines.push('=' .repeat(50));
+  lines.push('');
+
+  var step = 1;
+  wf.nodes.forEach(function(node) {
+    if (node.type === 'trigger') {
+      lines.push('TRIGGER: ' + node.name);
+      if (node.config) {
+        Object.keys(node.config).forEach(function(k) {
+          if (node.config[k]) lines.push('  - ' + k + ': ' + node.config[k]);
+        });
+      }
+      lines.push('');
+    } else if (node.type === 'condition') {
+      lines.push('CONDITIONS:');
+      (node.rules||[]).forEach(function(r, ri) {
+        if (ri > 0) lines.push('  ' + (r.operator||'AND'));
+        var comp = CONDITIONS.comparisons.find(function(c){return c.id===r.comparison});
+        lines.push('  [ ] Check: ' + (r.field||'?') + ' ' + (comp?comp.label:r.comparison) + ' ' + (r.value||'?'));
+      });
+      lines.push('');
+    } else if (node.type === 'action') {
+      lines.push('Step ' + step + ': ' + node.name);
+      if (node.config) {
+        Object.keys(node.config).forEach(function(k) {
+          if (node.config[k]) lines.push('  [ ] ' + k + ': ' + node.config[k]);
+        });
+      }
+      lines.push('');
+      step++;
+    }
+  });
+
+  var text = lines.join('\n');
+  downloadFile('checklist-' + wf.name.replace(/[^a-z0-9]/gi,'_').toLowerCase() + '.txt', text, 'text/plain');
+  showExportPreview(text);
+}
+
+function importJSON() {
+  document.getElementById('fileImport').click();
+}
+
+function handleImport(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      var imported = 0;
+      if (Array.isArray(data)) {
+        data.forEach(function(wf) {
+          wf.id = genId();
+          wf.nodes.forEach(function(n){n.id = nodeId();});
+          state.workflows.push(wf);
+          imported++;
+        });
+      } else if (data && data.id) {
+        data.id = genId();
+        if (data.nodes) data.nodes.forEach(function(n){n.id = nodeId();});
+        state.workflows.push(data);
+        imported = 1;
+      }
+      saveState();
+      alert('Successfully imported ' + imported + ' workflow(s).');
+      switchTab('dashboard');
+    } catch(err) {
+      alert('Failed to import. Invalid file format.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function downloadFile(filename, content, mimeType) {
+  var blob = new Blob([content], {type: mimeType});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function showExportPreview(content) {
+  document.getElementById('exportPreview').style.display = 'block';
+  document.getElementById('exportPreviewContent').textContent = content;
+}
+
+/* =============================================
+   MODAL
+   ============================================= */
+function showModal(html) {
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+/* =============================================
+   INIT
+   ============================================= */
+loadState();
+renderDashboard();
+renderTemplates();
+</script>
+</body>
+</html>
