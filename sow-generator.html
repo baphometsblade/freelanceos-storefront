@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Statement of Work Generator for Freelancers | FreelanceOS</title>
+<meta name="description" content="Generate professional Statements of Work in minutes. Free SOW builder with templates, deliverables table, timeline, budget breakdown, and PDF export. No signup required.">
+<meta property="og:title" content="Free Statement of Work Generator for Freelancers | FreelanceOS">
+<meta property="og:description" content="Create professional SOWs in minutes. Templates, deliverables, timeline, budget — all in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.vercel.app/sow-generator.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Statement of Work Generator | FreelanceOS">
+<meta name="twitter:description" content="Build professional Statements of Work fast. Free tool, no signup, runs in your browser.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Statement of Work Generator","description":"Free SOW generator for freelancers. Create professional Statements of Work with templates, deliverables, timeline, and budget tools.","url":"https://freelanceos.vercel.app/sow-generator.html","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"FreelanceOS"}}</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#020617;--card:#0f172a;--card-border:rgba(168,85,247,0.2);
+--accent1:#a855f7;--accent2:#ec4899;
+--text:#e2e8f0;--muted:#94a3b8;
+--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--info:#3b82f6;
+--r16:16px;--r12:12px;--r8:8px;
+}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh;font-size:15px;line-height:1.6}
+a{color:var(--accent1);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* CTA Banner */
+.cta-banner{background:linear-gradient(135deg,#a855f7,#ec4899);padding:12px 20px;text-align:center;font-size:14px;font-weight:600;color:#fff;position:sticky;top:0;z-index:1000}
+.cta-banner a{color:#fff;font-weight:700;text-decoration:underline}
+
+/* Header */
+.header{padding:32px 24px 16px;max-width:1100px;margin:0 auto}
+.header h1{font-size:28px;font-weight:700;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.header p{color:var(--muted);font-size:15px}
+.disclaimer{display:inline-block;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;font-size:12px;padding:4px 10px;border-radius:6px;margin-top:8px}
+
+/* Layout */
+.app{max-width:1100px;margin:0 auto;padding:0 24px 60px;display:grid;grid-template-columns:240px 1fr;gap:24px}
+@media(max-width:768px){.app{grid-template-columns:1fr}.sidebar{display:none}}
+
+/* Sidebar */
+.sidebar{position:sticky;top:56px;height:fit-content}
+.sidebar-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r16);padding:16px;margin-bottom:16px}
+.sidebar-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r8);cursor:pointer;font-size:13px;color:var(--muted);transition:all .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:rgba(168,85,247,0.1);color:var(--text)}
+.nav-item.active{background:rgba(168,85,247,0.15);color:var(--accent1);font-weight:600}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .15s}
+.nav-item.active .nav-dot{background:var(--accent1)}
+.nav-item.done .nav-dot{background:var(--success)}
+.sow-status{font-size:12px;color:var(--muted);padding:8px 0 4px}
+.sow-name{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Main panel */
+.main{min-width:0}
+.tab-bar{display:flex;gap:4px;background:var(--card);border:1px solid var(--card-border);border-radius:var(--r12);padding:4px;margin-bottom:20px;flex-wrap:wrap}
+.tab-btn{padding:7px 14px;border-radius:var(--r8);border:none;background:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;font-weight:600}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r16);padding:24px;margin-bottom:20px}
+.card-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.card-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+.section-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;margin-top:20px}
+.section-label:first-child{margin-top:0}
+
+/* Inputs */
+input[type=text],input[type=date],input[type=number],input[type=email],textarea,select{
+  width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(168,85,247,0.2);
+  border-radius:var(--r8);color:var(--text);padding:10px 12px;font-size:14px;font-family:inherit;
+  transition:border .15s;outline:none
+}
+input:focus,textarea:focus,select:focus{border-color:var(--accent1);background:rgba(168,85,247,0.07)}
+textarea{resize:vertical;min-height:90px}
+select option{background:#1e293b;color:var(--text)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:600px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--r12);border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,0.06);border:1px solid var(--card-border);color:var(--text)}
+.btn-ghost:hover{background:rgba(255,255,255,0.1)}
+.btn-danger{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#fca5a5}
+.btn-danger:hover{background:rgba(239,68,68,0.25)}
+.btn-sm{padding:6px 12px;font-size:12px;border-radius:8px}
+.btn-success{background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:#6ee7b7}
+
+/* Badge */
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600}
+.badge-draft{background:rgba(148,163,184,0.15);color:#94a3b8}
+.badge-active{background:rgba(16,185,129,0.15);color:#6ee7b7}
+.badge-completed{background:rgba(168,85,247,0.15);color:#c084fc}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{color:var(--muted);font-weight:600;text-align:left;padding:8px 10px;border-bottom:1px solid var(--card-border);white-space:nowrap}
+.tbl td{padding:9px 10px;border-bottom:1px solid rgba(168,85,247,0.08);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(168,85,247,0.04)}
+.tbl input{background:transparent;border:1px solid transparent;padding:4px 6px;border-radius:6px;width:100%}
+.tbl input:focus{border-color:var(--accent1);background:rgba(168,85,247,0.07)}
+
+/* Progress */
+.progress-bar{height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:20px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#a855f7,#ec4899);border-radius:2px;transition:width .3s}
+
+/* Template grid */
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:20px}
+.tpl-card{background:rgba(255,255,255,0.04);border:1px solid var(--card-border);border-radius:var(--r12);padding:14px;cursor:pointer;transition:all .15s;text-align:left}
+.tpl-card:hover,.tpl-card.selected{border-color:var(--accent1);background:rgba(168,85,247,0.1)}
+.tpl-icon{font-size:22px;margin-bottom:6px}
+.tpl-name{font-size:13px;font-weight:600;color:var(--text)}
+.tpl-desc{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Gantt */
+.gantt-wrap{overflow-x:auto;margin-top:16px}
+.gantt{min-width:600px}
+.gantt-row{display:flex;align-items:center;gap:0;margin-bottom:4px}
+.gantt-label{width:160px;flex-shrink:0;font-size:12px;color:var(--text);padding:0 8px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gantt-track{flex:1;height:28px;background:rgba(255,255,255,0.04);border-radius:4px;position:relative;overflow:visible}
+.gantt-bar{position:absolute;height:20px;top:4px;border-radius:4px;background:linear-gradient(90deg,#a855f7,#ec4899);display:flex;align-items:center;padding:0 6px;font-size:11px;color:#fff;white-space:nowrap;overflow:hidden;min-width:4px}
+.gantt-header{display:flex;margin-bottom:6px}
+.gantt-header-label{width:160px;flex-shrink:0}
+.gantt-header-track{flex:1;display:flex}
+.gantt-month{flex:1;font-size:11px;color:var(--muted);text-align:center;border-left:1px solid rgba(255,255,255,0.06)}
+
+/* Budget */
+.budget-total{font-size:26px;font-weight:700;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.budget-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.budget-row input{flex:1}
+
+/* Preview */
+.preview-doc{background:#fff;color:#1a1a2e;border-radius:var(--r12);padding:48px 52px;font-family:'Georgia',serif;line-height:1.7;font-size:14px;max-height:700px;overflow-y:auto}
+.preview-doc h1{font-size:22px;font-weight:700;color:#1a1a2e;border-bottom:3px solid #a855f7;padding-bottom:12px;margin-bottom:20px}
+.preview-doc h2{font-size:16px;font-weight:700;color:#1a1a2e;margin:24px 0 8px;padding-left:12px;border-left:3px solid #a855f7}
+.preview-doc h3{font-size:14px;font-weight:700;color:#374151;margin:16px 0 6px}
+.preview-doc p{color:#374151;margin-bottom:10px}
+.preview-doc table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+.preview-doc th{background:#f3f4f6;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #e5e7eb}
+.preview-doc td{padding:8px 10px;border:1px solid #e5e7eb}
+.preview-doc .toc{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin-bottom:24px;font-size:13px}
+.preview-doc .toc a{color:#7c3aed;text-decoration:none}
+.preview-doc .sig-block{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.preview-doc .sig-line{border-top:1px solid #374151;padding-top:6px;margin-top:40px;font-size:12px;color:#6b7280}
+.preview-doc .meta-row{display:flex;gap:24px;margin-bottom:16px;font-size:13px;color:#6b7280}
+
+/* Library */
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.lib-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r12);padding:16px;transition:border-color .15s;cursor:pointer}
+.lib-card:hover{border-color:var(--accent1)}
+.lib-card-title{font-size:15px;font-weight:600;margin-bottom:4px}
+.lib-card-meta{font-size:12px;color:var(--muted);margin-bottom:12px}
+.lib-actions{display:flex;gap:6px;flex-wrap:wrap}
+
+/* Change order */
+.co-item{background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:var(--r8);padding:14px;margin-bottom:10px}
+.co-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.co-num{font-size:11px;font-weight:700;color:var(--accent1)}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--accent1);border-radius:var(--r12);padding:12px 18px;font-size:13px;font-weight:600;color:var(--text);z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* Comparison */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.compare-grid{grid-template-columns:1fr}}
+.compare-panel{background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:var(--r12);padding:16px;font-size:13px}
+.compare-panel h3{font-size:13px;font-weight:700;margin-bottom:12px;color:var(--muted)}
+.diff-added{background:rgba(16,185,129,0.12);border-left:3px solid var(--success);padding:4px 8px;margin:3px 0;border-radius:0 4px 4px 0;color:#6ee7b7}
+.diff-removed{background:rgba(239,68,68,0.12);border-left:3px solid var(--danger);padding:4px 8px;margin:3px 0;border-radius:0 4px 4px 0;color:#fca5a5}
+.diff-same{padding:4px 8px;margin:3px 0;color:var(--text)}
+
+/* Misc */
+.flex{display:flex}.gap8{gap:8px}.gap12{gap:12px}.gap16{gap:16px}.flex-wrap{flex-wrap:wrap}
+.align-center{align-items:center}.justify-between{justify-content:space-between}
+.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mt20{margin-top:20px}
+.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}
+.text-sm{font-size:13px}.text-xs{font-size:11px}.text-muted{color:var(--muted)}
+.text-success{color:var(--success)}.text-danger{color:var(--danger)}.text-accent{color:var(--accent1)}
+.w100{width:100%}
+hr.divider{border:none;border-top:1px solid var(--card-border);margin:16px 0}
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-state .es-icon{font-size:40px;margin-bottom:12px;opacity:.4}
+.empty-state p{font-size:14px}
+.footer{text-align:center;padding:32px 24px;border-top:1px solid var(--card-border);color:var(--muted);font-size:13px;margin-top:20px}
+.footer a{color:var(--accent1)}
+.phase-badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;background:rgba(168,85,247,0.15);color:#c084fc;margin-right:6px}
+</style>
+</head>
+<body>
+
+<div class="cta-banner">
+  🚀 Get the full FreelanceOS toolkit — 120+ tools, templates &amp; systems.
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank">Use code FLASH40 for 40% off →</a>
+</div>
+
+<div class="header">
+  <h1>Statement of Work Generator</h1>
+  <p>Build professional SOWs in minutes — templates, deliverables, timeline, budget, and export included.</p>
+  <span class="disclaimer">🔒 This tool runs entirely in your browser. No data is sent to any server.</span>
+</div>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Current SOW</div>
+      <div class="sow-status">Editing:</div>
+      <div class="sow-name" id="sidebar-sow-name">Untitled SOW</div>
+      <div class="mt8 flex gap8 flex-wrap">
+        <span class="badge badge-draft" id="sidebar-status">Draft</span>
+        <span class="text-xs text-muted" id="sidebar-date"></span>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-title">Sections</div>
+      <button class="nav-item active" data-tab="wizard" onclick="switchTab('wizard')">
+        <span class="nav-dot"></span>SOW Builder
+      </button>
+      <button class="nav-item" data-tab="deliverables" onclick="switchTab('deliverables')">
+        <span class="nav-dot"></span>Deliverables
+      </button>
+      <button class="nav-item" data-tab="timeline" onclick="switchTab('timeline')">
+        <span class="nav-dot"></span>Timeline
+      </button>
+      <button class="nav-item" data-tab="budget" onclick="switchTab('budget')">
+        <span class="nav-dot"></span>Budget
+      </button>
+      <button class="nav-item" data-tab="changeorders" onclick="switchTab('changeorders')">
+        <span class="nav-dot"></span>Change Orders
+      </button>
+      <button class="nav-item" data-tab="preview" onclick="switchTab('preview')">
+        <span class="nav-dot"></span>Preview
+      </button>
+      <button class="nav-item" data-tab="compare" onclick="switchTab('compare')">
+        <span class="nav-dot"></span>Compare
+      </button>
+      <button class="nav-item" data-tab="library" onclick="switchTab('library')">
+        <span class="nav-dot"></span>SOW Library
+      </button>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-title">Actions</div>
+      <button class="btn btn-primary w100 mb8" onclick="saveCurrent()">💾 Save SOW</button>
+      <button class="btn btn-ghost w100 mb8" onclick="switchTab('preview')">👁 Preview</button>
+      <button class="btn btn-ghost w100" onclick="exportHTML()">⬇ Export HTML</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <!-- Tab bar (mobile) -->
+    <div class="tab-bar" id="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('wizard')">Builder</button>
+      <button class="tab-btn" onclick="switchTab('deliverables')">Deliverables</button>
+      <button class="tab-btn" onclick="switchTab('timeline')">Timeline</button>
+      <button class="tab-btn" onclick="switchTab('budget')">Budget</button>
+      <button class="tab-btn" onclick="switchTab('changeorders')">Changes</button>
+      <button class="tab-btn" onclick="switchTab('preview')">Preview</button>
+      <button class="tab-btn" onclick="switchTab('compare')">Compare</button>
+      <button class="tab-btn" onclick="switchTab('library')">Library</button>
+    </div>
+
+    <!-- WIZARD TAB -->
+    <div id="tab-wizard" class="tab-content">
+      <div class="card">
+        <div class="flex justify-between align-center mb8">
+          <div>
+            <div class="card-title">SOW Builder</div>
+            <div class="card-sub">Complete all 8 sections to build your Statement of Work</div>
+          </div>
+          <div class="flex gap8">
+            <button class="btn btn-ghost btn-sm" onclick="newSOW()">+ New</button>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:12%"></div></div>
+        <div id="wizard-steps">
+          <!-- Steps rendered by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- DELIVERABLES TAB -->
+    <div id="tab-deliverables" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="flex justify-between align-center mb8">
+          <div>
+            <div class="card-title">Deliverables Table</div>
+            <div class="card-sub">List all project deliverables with details and acceptance criteria</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addDeliverable()">+ Add Deliverable</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl" id="deliverables-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Phase</th>
+                <th>Deliverable Name</th>
+                <th>Description</th>
+                <th>Format</th>
+                <th>Due Date</th>
+                <th>Acceptance Criteria</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="deliverables-body"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="del-empty">
+          <div class="es-icon">📦</div>
+          <p>No deliverables yet. Click "+ Add Deliverable" to get started.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE TAB -->
+    <div id="tab-timeline" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="flex justify-between align-center mb8">
+          <div>
+            <div class="card-title">Timeline &amp; Milestones</div>
+            <div class="card-sub">Visual Gantt chart — add milestones and see the critical path</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addMilestone()">+ Milestone</button>
+        </div>
+        <div class="grid2 mb12">
+          <div>
+            <div class="section-label">Project Start</div>
+            <input type="date" id="tl-start" onchange="renderGantt()">
+          </div>
+          <div>
+            <div class="section-label">Project End (auto-calculated)</div>
+            <input type="text" id="tl-end" readonly placeholder="Set milestones to calculate">
+          </div>
+        </div>
+        <div id="milestone-list"></div>
+        <div class="gantt-wrap mt20">
+          <div id="gantt-chart"></div>
+        </div>
+        <div class="empty-state" id="tl-empty">
+          <div class="es-icon">📅</div>
+          <p>No milestones yet. Click "+ Milestone" to build your timeline.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUDGET TAB -->
+    <div id="tab-budget" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="flex justify-between align-center mb8">
+          <div>
+            <div class="card-title">Budget Breakdown</div>
+            <div class="card-sub">Line items, expenses, and payment schedule</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addBudgetLine()">+ Add Line</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl" id="budget-table">
+            <thead>
+              <tr>
+                <th>Task / Description</th>
+                <th>Hours</th>
+                <th>Rate ($/hr)</th>
+                <th>Subtotal</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="budget-body"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="budget-empty">
+          <div class="es-icon">💰</div>
+          <p>No budget lines yet. Click "+ Add Line" to start.</p>
+        </div>
+        <hr class="divider">
+        <div class="flex justify-between align-center mt12 mb8">
+          <div>
+            <div class="section-label">Expenses</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="addExpense()">+ Expense</button>
+        </div>
+        <div id="expense-list"></div>
+        <hr class="divider">
+        <div class="flex justify-between align-center" style="padding:8px 0">
+          <span class="text-muted">Labor Subtotal</span>
+          <span id="labor-subtotal" class="text-accent">$0.00</span>
+        </div>
+        <div class="flex justify-between align-center" style="padding:8px 0">
+          <span class="text-muted">Expenses Subtotal</span>
+          <span id="expense-subtotal" class="text-accent">$0.00</span>
+        </div>
+        <div class="flex justify-between align-center" style="padding:12px 0;border-top:1px solid var(--card-border);margin-top:8px">
+          <span style="font-size:16px;font-weight:700">Total Project Value</span>
+          <span class="budget-total" id="budget-total">$0.00</span>
+        </div>
+        <hr class="divider">
+        <div class="card-title text-sm mt16 mb8">Payment Schedule</div>
+        <div id="payment-schedule">
+          <div class="text-muted text-sm">Payment schedule is auto-generated from milestones. Add milestones in the Timeline tab.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANGE ORDERS TAB -->
+    <div id="tab-changeorders" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="flex justify-between align-center mb8">
+          <div>
+            <div class="card-title">Change Order System</div>
+            <div class="card-sub">Log and track all scope changes, timeline impacts, and budget adjustments</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addChangeOrder()">+ Change Order</button>
+        </div>
+        <div id="co-list"></div>
+        <div class="empty-state" id="co-empty">
+          <div class="es-icon">🔄</div>
+          <p>No change orders yet. Projects go smoother when scope changes are documented.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREVIEW TAB -->
+    <div id="tab-preview" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="flex justify-between align-center mb12">
+          <div>
+            <div class="card-title">Document Preview</div>
+            <div class="card-sub">Professional SOW ready for client review</div>
+          </div>
+          <div class="flex gap8 flex-wrap">
+            <button class="btn btn-ghost btn-sm" onclick="copyPlainText()">📋 Copy Text</button>
+            <button class="btn btn-ghost btn-sm" onclick="printSOW()">🖨 Print</button>
+            <button class="btn btn-primary btn-sm" onclick="exportHTML()">⬇ Export HTML</button>
+          </div>
+        </div>
+        <div class="preview-doc" id="preview-content">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARE TAB -->
+    <div id="tab-compare" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="card-title">Comparison View</div>
+        <div class="card-sub">Original SOW vs Change Orders — see exactly what changed</div>
+        <div class="compare-grid mt16" id="compare-content">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- LIBRARY TAB -->
+    <div id="tab-library" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="flex justify-between align-center mb8">
+          <div>
+            <div class="card-title">SOW Library</div>
+            <div class="card-sub">All saved Statements of Work</div>
+          </div>
+          <div class="flex gap8">
+            <select id="lib-filter-status" onchange="renderLibrary()" style="width:auto;padding:7px 10px;font-size:13px">
+              <option value="">All Statuses</option>
+              <option value="Draft">Draft</option>
+              <option value="Active">Active</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <button class="btn btn-primary btn-sm" onclick="newSOW()">+ New SOW</button>
+          </div>
+        </div>
+        <div id="lib-grid" class="lib-grid"></div>
+        <div class="empty-state" id="lib-empty" style="display:none">
+          <div class="es-icon">📁</div>
+          <p>No saved SOWs yet. Create your first SOW and save it.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="footer">
+  <p>
+    <a href="/freelanceos-storefront/free-templates.html">← Back to Free Templates</a>
+    &nbsp;·&nbsp;
+    Tool 73 of the FreelanceOS Toolkit
+    &nbsp;·&nbsp;
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank">Get FreelanceOS Pro (FLASH40)</a>
+  </p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let state = {
+  id: Date.now().toString(),
+  name: 'Untitled SOW',
+  status: 'Draft',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  currentStep: 0,
+  // Section data
+  overview: {
+    projectTitle:'', clientName:'', clientCompany:'', clientEmail:'',
+    freelancerName:'', freelancerEmail:'', freelancerCompany:'',
+    version:'1.0', effectiveDate:'', template:''
+  },
+  objectives: { summary:'', goals:[''], successMetrics:[''] },
+  scope: { inScope:'', outOfScope:'', assumptions:'' },
+  deliverablesList: [],
+  milestones: [],
+  budget: { lines:[], expenses:[], paymentTerms:'Net 30', depositPercent:50 },
+  constraints: { technical:'', resource:'', regulatory:'', dependencies:'' },
+  acceptance: { process:'', criteria:'', revisions:'2', approvalPeriod:'5' },
+  changeOrders: []
+};
+
+let library = [];
+let activeTab = 'wizard';
+
+// ─── TEMPLATES ───────────────────────────────────────────────────────────────
+const TEMPLATES = {
+  'website-redesign': {
+    name:'Website Redesign', icon:'🌐', desc:'Full site overhaul',
+    overview:{ projectTitle:'Website Redesign Project' },
+    objectives:{ summary:'Redesign the client website to improve user experience, increase conversions, and modernize visual identity.', goals:['Increase conversion rate by 25%','Reduce bounce rate by 20%','Improve mobile responsiveness','Modernize brand presentation'], successMetrics:['Conversion rate benchmark','Page load time under 2s','Mobile usability score above 90'] },
+    scope:{ inScope:'Homepage, About, Services, Contact pages. Responsive design. CMS integration. SEO optimization.', outOfScope:'Backend development, custom e-commerce, content writing, photography, social media management.', assumptions:'Client provides brand guidelines, logo files, and all content before design begins.' },
+    deliverables:[
+      {phase:'Discovery',name:'Discovery Report',desc:'Competitive analysis and UX audit',format:'PDF',criteria:'Approved by client within 5 business days'},
+      {phase:'Design',name:'Wireframes',desc:'Low-fidelity wireframes for all pages',format:'Figma',criteria:'All pages included, client sign-off required'},
+      {phase:'Design',name:'Visual Design Mockups',desc:'High-fidelity designs in brand colors',format:'Figma',criteria:'Brand guidelines applied, responsive variants included'},
+      {phase:'Development',name:'Developed Website',desc:'Fully coded, responsive website',format:'HTML/CSS/JS',criteria:'Passes W3C validation, loads under 2s, mobile score 90+'},
+      {phase:'Launch',name:'Launch Checklist',desc:'Pre-launch QA and deployment',format:'Document',criteria:'All items checked off, client approval on staging'}
+    ],
+    constraints:{ technical:'Site must work on Chrome, Firefox, Safari, Edge. CMS must be WordPress or Webflow.', resource:'Client feedback must be consolidated and provided within 3 business days.', regulatory:'GDPR cookie consent must be implemented.', dependencies:'Client to provide all content by end of Phase 1.' },
+    acceptance:{ process:'Client reviews each deliverable and provides written approval or consolidated feedback within 5 business days.', criteria:'All pages pass QA checklist, site meets performance benchmarks, client signs off on final design.', revisions:'2', approvalPeriod:'5' }
+  },
+  'mobile-app': {
+    name:'Mobile App', icon:'📱', desc:'iOS / Android build',
+    overview:{ projectTitle:'Mobile Application Development' },
+    objectives:{ summary:'Design and develop a mobile application for iOS and Android that solves [core user problem] and delivers measurable business value.', goals:['Launch on App Store and Google Play','Achieve 4.0+ star rating within 30 days','Onboard first 500 users in month one','Pass App Store review first submission'], successMetrics:['App Store approval','Crash rate below 0.1%','Session duration over 3 minutes'] },
+    scope:{ inScope:'iOS and Android native apps, user authentication, core feature set (up to 5 screens), push notifications, analytics integration.', outOfScope:'Backend API development, third-party integrations beyond specified, web version, QA automation, App Store marketing.', assumptions:'API/backend will be provided by client. Design assets will be supplied or designed in Phase 1.' },
+    deliverables:[
+      {phase:'Discovery',name:'Technical Specification',desc:'Architecture, API requirements, feature list',format:'PDF',criteria:'Signed off before development begins'},
+      {phase:'Design',name:'UI/UX Wireframes',desc:'All screens wireframed',format:'Figma',criteria:'All user flows covered'},
+      {phase:'Design',name:'High-Fidelity Mockups',desc:'Pixel-perfect app designs',format:'Figma',criteria:'Approved by client'},
+      {phase:'Development',name:'iOS Beta Build',desc:'TestFlight-ready build',format:'IPA',criteria:'All core features functional'},
+      {phase:'Development',name:'Android Beta Build',desc:'Play Store internal test build',format:'APK',criteria:'All core features functional'},
+      {phase:'Launch',name:'Production Release',desc:'App Store + Play Store submission',format:'App binary',criteria:'Passes store review'}
+    ],
+    constraints:{ technical:'iOS 15+ and Android 10+ support required. React Native or Swift/Kotlin.', resource:'Access to test devices required for QA phase.', regulatory:'App must comply with App Store and Google Play guidelines. Privacy policy required.', dependencies:'Client API must be stable before mobile development begins.' },
+    acceptance:{ process:'Each build is tested on physical devices. Client has 5 days to report bugs after each build delivery.', criteria:'All specified features work, no critical bugs, app passes store review.', revisions:'2', approvalPeriod:'5' }
+  },
+  'brand-identity': {
+    name:'Brand Identity', icon:'🎨', desc:'Logo & visual system',
+    overview:{ projectTitle:'Brand Identity Design' },
+    objectives:{ summary:'Create a cohesive brand identity system that communicates the company\'s values, differentiates from competitors, and scales across all touchpoints.', goals:['Develop primary and secondary logos','Create comprehensive brand guidelines','Design core brand collateral','Establish visual language and color palette'], successMetrics:['Client approval on brand direction','Brand guide covers all use cases','Deliverables production-ready'] },
+    scope:{ inScope:'Logo design (primary + variations), color palette, typography system, brand guidelines document, business card, letterhead, social media templates.', outOfScope:'Website design, advertising campaigns, video production, custom illustration, 3D assets.', assumptions:'Client provides brand brief, competitor reference, and mood board inspiration before kick-off.' },
+    deliverables:[
+      {phase:'Strategy',name:'Brand Strategy Brief',desc:'Positioning, personality, values',format:'PDF',criteria:'Approved by stakeholders'},
+      {phase:'Concept',name:'Logo Concepts (3)',desc:'Three distinct logo directions',format:'PDF presentation',criteria:'At least one direction approved for refinement'},
+      {phase:'Refinement',name:'Refined Logo',desc:'Final logo with all variations',format:'AI, EPS, SVG, PNG',criteria:'All file formats delivered, print-ready'},
+      {phase:'System',name:'Brand Guidelines',desc:'Complete brand usage manual',format:'PDF',criteria:'Covers color, type, logo, do/don\'t, examples'},
+      {phase:'Collateral',name:'Brand Collateral',desc:'Business card, letterhead, email signature',format:'Print-ready files',criteria:'Print specs verified'}
+    ],
+    constraints:{ technical:'Logo must work in black and white, at small sizes (16px favicon), and in both digital and print.', resource:'3 rounds of feedback maximum across all phases.', regulatory:'Trademark search responsibility lies with client.', dependencies:'Brand strategy approved before design begins.' },
+    acceptance:{ process:'Concepts presented in PDF with rationale. Client consolidates feedback from all stakeholders before submission.', criteria:'Final files in all required formats, brand guide is complete, print specs verified.', revisions:'2', approvalPeriod:'3' }
+  },
+  'content-strategy': {
+    name:'Content Strategy', icon:'✍️', desc:'Editorial & content plan',
+    overview:{ projectTitle:'Content Strategy Development' },
+    objectives:{ summary:'Develop a data-driven content strategy that increases organic traffic, builds authority, and supports the sales funnel with targeted content.', goals:['Increase organic search traffic by 40% in 6 months','Establish 3 content pillars','Create 3-month editorial calendar','Develop content production playbook'], successMetrics:['Organic traffic growth','Email list growth','Content engagement metrics'] },
+    scope:{ inScope:'Content audit, competitor analysis, keyword research, content pillars, editorial calendar (3 months), content brief templates, distribution strategy.', outOfScope:'Content creation, social media management, SEO implementation, paid amplification, video production.', assumptions:'Client provides access to Google Analytics, Search Console, and existing content.' },
+    deliverables:[
+      {phase:'Audit',name:'Content Audit Report',desc:'Inventory and performance analysis of existing content',format:'PDF + Spreadsheet',criteria:'All existing content catalogued'},
+      {phase:'Research',name:'Keyword Research Doc',desc:'Target keywords by pillar and intent',format:'Spreadsheet',criteria:'Minimum 100 keywords mapped'},
+      {phase:'Strategy',name:'Content Strategy Document',desc:'Pillars, audience, tone, framework',format:'PDF',criteria:'Approved by marketing lead'},
+      {phase:'Planning',name:'3-Month Editorial Calendar',desc:'Content topics, formats, owners, deadlines',format:'Notion/Spreadsheet',criteria:'All slots filled, approved'},
+      {phase:'Execution',name:'Content Brief Templates',desc:'Brief format for writers',format:'Google Doc templates',criteria:'5 templates covering main content types'}
+    ],
+    constraints:{ technical:'Content must be SEO-optimized for target keywords.', resource:'Client team member needed for one 1-hour strategy session per week.', regulatory:'Content must comply with industry guidelines and avoid unsubstantiated claims.', dependencies:'Google Analytics access required from day one.' },
+    acceptance:{ process:'Each deliverable reviewed by marketing lead with 5 business days for feedback.', criteria:'Strategy addresses all business objectives, calendar is actionable, briefs are usable by writers.', revisions:'2', approvalPeriod:'5' }
+  },
+  'seo-campaign': {
+    name:'SEO Campaign', icon:'🔍', desc:'Search optimization',
+    overview:{ projectTitle:'SEO Optimization Campaign' },
+    objectives:{ summary:'Improve the website\'s organic search visibility through technical SEO, on-page optimization, and content improvements.', goals:['Improve target keyword rankings by 20+ positions','Fix all critical technical SEO issues','Optimize top 20 pages for target keywords','Build 10+ quality backlinks'], successMetrics:['Keyword ranking improvements','Organic traffic growth','Domain authority increase'] },
+    scope:{ inScope:'Technical SEO audit, on-page optimization (20 pages), keyword research, content recommendations, schema markup, internal linking, monthly reporting.', outOfScope:'Content creation, link buying, social media, paid ads, website redesign, hosting changes.', assumptions:'Client has CMS access to implement changes. Site is on WordPress or similar editable platform.' },
+    deliverables:[
+      {phase:'Audit',name:'Technical SEO Audit',desc:'Full site crawl and issue report',format:'PDF + Spreadsheet',criteria:'All issues categorized by priority'},
+      {phase:'Research',name:'Keyword Research',desc:'Target keywords with difficulty and volume',format:'Spreadsheet',criteria:'Mapped to pages and funnel stages'},
+      {phase:'Optimization',name:'On-Page Optimization',desc:'Title tags, meta, headings for 20 pages',format:'Implementation + report',criteria:'All 20 pages optimized'},
+      {phase:'Content',name:'Content Gap Report',desc:'Missing content opportunities',format:'PDF',criteria:'10+ opportunities identified with briefs'},
+      {phase:'Reporting',name:'Monthly Reports (3)',desc:'Rankings, traffic, progress',format:'PDF dashboard',criteria:'Delivered by 5th of each month'}
+    ],
+    constraints:{ technical:'Client must implement technical fixes or provide dev access.', resource:'Content changes require client approval before implementation.', regulatory:'No black-hat tactics. All work must comply with Google Webmaster Guidelines.', dependencies:'Technical fixes must be implemented before on-page optimization begins.' },
+    acceptance:{ process:'Monthly review calls to assess progress against KPIs.', criteria:'Technical issues resolved, pages optimized, ranking improvements visible in Search Console within 90 days.', revisions:'1', approvalPeriod:'5' }
+  },
+  'social-media': {
+    name:'Social Media', icon:'📣', desc:'Social management',
+    overview:{ projectTitle:'Social Media Management' },
+    objectives:{ summary:'Grow and engage the brand\'s social media presence across target platforms through consistent content creation, community management, and performance optimization.', goals:['Grow followers by 30% in 90 days','Achieve 5%+ average engagement rate','Post 5x per week per platform','Build engaged community'], successMetrics:['Follower growth rate','Engagement rate','Reach and impressions'] },
+    scope:{ inScope:'Content creation (graphics + copy), scheduling, community management (replies within 24hrs), monthly analytics report for Instagram and LinkedIn.', outOfScope:'Paid advertising, influencer outreach, video production, customer service escalations, crisis management.', assumptions:'Client provides brand assets, product photos, and any campaign details 1 week in advance.' },
+    deliverables:[
+      {phase:'Setup',name:'Social Media Audit',desc:'Current performance baseline',format:'PDF',criteria:'Covers all target platforms'},
+      {phase:'Setup',name:'Content Strategy',desc:'Pillars, tone, content mix',format:'Document',criteria:'Approved by client'},
+      {phase:'Ongoing',name:'Monthly Content Calendar',desc:'30 days of planned posts',format:'Spreadsheet',criteria:'Submitted by 25th of prior month'},
+      {phase:'Ongoing',name:'Social Posts (20/month)',desc:'Graphics and copy for all posts',format:'Canva/PNG + copy doc',criteria:'Approved before scheduling'},
+      {phase:'Reporting',name:'Monthly Analytics Report',desc:'Performance vs KPIs',format:'PDF',criteria:'Delivered by 5th of month'}
+    ],
+    constraints:{ technical:'Client must provide Canva brand kit or brand assets for design.', resource:'Client review and approval required within 48 hours of content submission.', regulatory:'All content must comply with FTC disclosure guidelines for any promotional content.', dependencies:'Brand guidelines and assets required before content creation begins.' },
+    acceptance:{ process:'Monthly content calendar and posts submitted for batch approval. Changes within 24 hours.', criteria:'Content is on-brand, posted on schedule, community responses within 24 hours.', revisions:'1 round per batch', approvalPeriod:'2' }
+  },
+  'ecommerce': {
+    name:'E-commerce', icon:'🛒', desc:'Online store build',
+    overview:{ projectTitle:'E-commerce Store Development' },
+    objectives:{ summary:'Build and launch a fully functional e-commerce store with product management, payment processing, and order fulfillment capabilities.', goals:['Launch store within timeline','Enable secure payment processing','Optimize for mobile conversions','Set up inventory management'], successMetrics:['Successful checkout flow','Page load under 2 seconds','Mobile conversion rate','Order management working'] },
+    scope:{ inScope:'Shopify/WooCommerce setup, theme customization, product upload (up to 50 SKUs), payment gateway, shipping setup, basic SEO, staff training.', outOfScope:'Custom app development, marketplace integrations, accounting software, warehousing, returns portal, custom checkout.', assumptions:'Client provides product photos, descriptions, and pricing. Payment gateway account setup by client.' },
+    deliverables:[
+      {phase:'Setup',name:'Platform Setup',desc:'Store configured, theme installed',format:'Live URL',criteria:'All settings configured'},
+      {phase:'Design',name:'Storefront Design',desc:'Customized theme matching brand',format:'Live store',criteria:'Brand applied, mobile responsive'},
+      {phase:'Products',name:'Product Catalog',desc:'50 products uploaded with photos and descriptions',format:'Live store',criteria:'All products live and purchasable'},
+      {phase:'Launch',name:'Payment & Shipping Setup',desc:'Checkout, payment gateway, shipping zones',format:'Live store',criteria:'Test purchase completed successfully'},
+      {phase:'Launch',name:'Staff Training',desc:'Admin training session',format:'Video call + guide',criteria:'Client team can manage orders independently'}
+    ],
+    constraints:{ technical:'Platform must be Shopify or WooCommerce. Payment via Stripe or PayPal.', resource:'Product data (photos, descriptions) must be delivered by end of week 2.', regulatory:'Privacy policy, terms, GDPR compliance must be implemented.', dependencies:'Domain and hosting must be set up by client before development begins.' },
+    acceptance:{ process:'Testing phase includes full purchase flow QA. Client provides signoff before launch.', criteria:'Successful test purchase, all products live, mobile responsive, payment processing confirmed.', revisions:'2', approvalPeriod:'3' }
+  },
+  'marketing-campaign': {
+    name:'Marketing Campaign', icon:'🚀', desc:'Full campaign execution',
+    overview:{ projectTitle:'Marketing Campaign' },
+    objectives:{ summary:'Plan and execute a multi-channel marketing campaign to drive awareness, leads, and conversions for the client\'s product or service.', goals:['Generate 500 qualified leads','Achieve cost per lead under $50','Drive 10,000 campaign page visits','Convert 5% of leads to customers'], successMetrics:['Lead count and quality','CPL vs target','Conversion rate','ROI vs budget'] },
+    scope:{ inScope:'Campaign strategy, landing page copy, email sequence (5 emails), social ad creative (6 variants), Google Ad copy, campaign reporting dashboard.', outOfScope:'Media buying and budget management, website development, video production, PR outreach, customer service.', assumptions:'Client provides ad budget, brand assets, product details, and target audience data.' },
+    deliverables:[
+      {phase:'Strategy',name:'Campaign Strategy Brief',desc:'Goals, audience, channels, budget allocation',format:'PDF',criteria:'Approved before creative begins'},
+      {phase:'Creative',name:'Landing Page Copy',desc:'Conversion-optimized page copy',format:'Google Doc',criteria:'Submitted for design hand-off'},
+      {phase:'Creative',name:'Email Sequence',desc:'5-part nurture sequence',format:'Google Doc',criteria:'All emails approved'},
+      {phase:'Creative',name:'Ad Creative',desc:'6 social ad variants',format:'Canva/PNG + copy',criteria:'A/B test pairs included'},
+      {phase:'Reporting',name:'Campaign Performance Report',desc:'End-of-campaign analysis',format:'PDF',criteria:'All KPIs reported, recommendations included'}
+    ],
+    constraints:{ technical:'Ad creative must meet platform specs for Meta and Google.', resource:'Client must approve all creative within 48 hours to meet campaign launch date.', regulatory:'All ads must comply with platform advertising policies.', dependencies:'Ad accounts and landing page must be ready before launch date.' },
+    acceptance:{ process:'Creative reviewed in batches. Performance reviewed weekly with client.', criteria:'All creative approved, campaign launched on schedule, reporting delivered on time.', revisions:'2', approvalPeriod:'2' }
+  },
+  'software-dev': {
+    name:'Software Development', icon:'💻', desc:'Custom software build',
+    overview:{ projectTitle:'Custom Software Development' },
+    objectives:{ summary:'Design, develop, test, and deploy a custom software solution that automates [process] and delivers measurable efficiency gains.', goals:['Deliver working software on schedule','Achieve 99.9% uptime target','Pass user acceptance testing','Complete staff training and handoff'], successMetrics:['Feature completion rate','Bug rate post-launch','Performance benchmarks','User adoption rate'] },
+    scope:{ inScope:'Requirements documentation, system design, development (agreed feature list), unit testing, integration testing, UAT support, deployment, 30-day post-launch support.', outOfScope:'Ongoing maintenance after 30 days, hardware procurement, data migration from legacy system, training beyond initial session, mobile app.', assumptions:'Client provides access to existing systems for integration. Requirements are frozen after specification sign-off.' },
+    deliverables:[
+      {phase:'Discovery',name:'Requirements Specification',desc:'Full technical requirements document',format:'PDF',criteria:'Signed off by stakeholders before development'},
+      {phase:'Design',name:'System Architecture',desc:'Technical design and data model',format:'PDF + diagrams',criteria:'Reviewed by client technical lead'},
+      {phase:'Development',name:'Sprint Deliverables',desc:'Working software per sprint',format:'Deployed to staging',criteria:'Each sprint demo approved by product owner'},
+      {phase:'Testing',name:'QA Report',desc:'Test results and bug resolution log',format:'PDF + test plan',criteria:'Zero critical bugs at launch'},
+      {phase:'Launch',name:'Production Deployment',desc:'Go-live and monitoring setup',format:'Live system',criteria:'System live, monitoring active, documentation complete'}
+    ],
+    constraints:{ technical:'Must use agreed tech stack. Code must include unit tests. All code delivered in GitHub repo.', resource:'Weekly sprint reviews required with client product owner.', regulatory:'Data must comply with GDPR. Security audit to be conducted pre-launch.', dependencies:'Requirements must be signed off before sprint 1 begins.' },
+    acceptance:{ process:'User Acceptance Testing period of 10 business days. Written sign-off required before production deployment.', criteria:'All features deliver to spec, performance benchmarks met, security review passed, UAT signed off.', revisions:'Bug fixes within agreed SLA, feature changes handled via change order.', approvalPeriod:'10' }
+  },
+  'consulting': {
+    name:'Consulting Engagement', icon:'🧠', desc:'Advisory & consulting',
+    overview:{ projectTitle:'Consulting Engagement' },
+    objectives:{ summary:'Provide expert advisory and consulting services to help the client achieve [specific business objective] through structured analysis, recommendations, and implementation support.', goals:['Deliver actionable strategic recommendations','Transfer knowledge to internal team','Identify quick wins and long-term opportunities','Provide measurable ROI framework'], successMetrics:['Recommendations accepted and implemented','Client team capability improvement','Identified savings or revenue opportunities'] },
+    scope:{ inScope:'Stakeholder interviews, current state analysis, recommendations report, implementation roadmap, 4 advisory sessions, final presentation to leadership.', outOfScope:'Hands-on implementation, project management, staff hiring, software procurement, ongoing monthly retainer.', assumptions:'Client grants access to key stakeholders, data, and relevant documentation. Implementation is client\'s responsibility.' },
+    deliverables:[
+      {phase:'Discovery',name:'Current State Assessment',desc:'Interviews, data analysis, gap identification',format:'PDF',criteria:'Covers all agreed areas'},
+      {phase:'Analysis',name:'Findings Report',desc:'Key findings with supporting data',format:'PDF',criteria:'Approved by project sponsor'},
+      {phase:'Recommendations',name:'Strategic Recommendations',desc:'Prioritized action plan with ROI estimates',format:'PDF + slide deck',criteria:'Presented to leadership team'},
+      {phase:'Roadmap',name:'Implementation Roadmap',desc:'Phased plan with owners and timelines',format:'PDF',criteria:'Reviewed and accepted by client'},
+      {phase:'Close',name:'Knowledge Transfer Session',desc:'Final Q&A and handover',format:'Live session + recording',criteria:'Client team can execute independently'}
+    ],
+    constraints:{ technical:'All analysis based on data provided by client. Accuracy of recommendations depends on data quality.', resource:'Access to minimum 5 stakeholders for interviews required.', regulatory:'Confidentiality agreement covers all client data and findings.', dependencies:'Stakeholder availability must be confirmed in week 1.' },
+    acceptance:{ process:'Each deliverable reviewed within 5 business days. Feedback incorporated before next phase.', criteria:'Recommendations are actionable, roadmap is realistic, client team reports confidence in next steps.', revisions:'1', approvalPeriod:'5' }
+  }
+};
+
+// ─── WIZARD STEPS ─────────────────────────────────────────────────────────────
+const WIZARD_STEPS = [
+  { id:'overview', title:'Project Overview', desc:'Basic project and party information' },
+  { id:'template', title:'Choose Template', desc:'Start with a pre-built template (optional)' },
+  { id:'objectives', title:'Objectives & Goals', desc:'What success looks like' },
+  { id:'scope', title:'Scope of Work', desc:'What is and isn\'t included' },
+  { id:'deliverables-step', title:'Deliverables', desc:'Go to the Deliverables tab to add items' },
+  { id:'timeline-step', title:'Timeline', desc:'Go to the Timeline tab to set milestones' },
+  { id:'budget-step', title:'Budget & Payment', desc:'Go to the Budget tab for line items' },
+  { id:'constraints', title:'Assumptions & Constraints', desc:'Technical and resource constraints' },
+  { id:'acceptance', title:'Acceptance Criteria', desc:'How work is reviewed and approved' }
+];
+
+let currentStep = 0;
+
+function renderWizard() {
+  const wrap = document.getElementById('wizard-steps');
+  const step = WIZARD_STEPS[currentStep];
+  const pct = Math.round(((currentStep + 1) / WIZARD_STEPS.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  // Update sidebar nav
+  document.querySelectorAll('.nav-item[data-tab]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === 'wizard');
+  });
+
+  let html = `
+    <div class="flex justify-between align-center mb12">
+      <div>
+        <div class="text-xs text-muted mb8">Step ${currentStep+1} of ${WIZARD_STEPS.length}</div>
+        <div style="font-size:20px;font-weight:700">${step.title}</div>
+        <div class="text-muted text-sm">${step.desc}</div>
+      </div>
+      <div class="flex gap8">
+        ${currentStep > 0 ? `<button class="btn btn-ghost btn-sm" onclick="wizardPrev()">← Back</button>` : ''}
+        ${currentStep < WIZARD_STEPS.length - 1 ? `<button class="btn btn-primary btn-sm" onclick="wizardNext()">Next →</button>` : `<button class="btn btn-primary btn-sm" onclick="finishWizard()">Finish ✓</button>`}
+      </div>
+    </div>
+    <hr class="divider">
+  `;
+
+  if (step.id === 'overview') {
+    html += `
+      <div class="section-label">Project Information</div>
+      <div class="grid2">
+        <div>
+          <div class="section-label">Project Title</div>
+          <input type="text" id="ov-title" value="${esc(state.overview.projectTitle)}" placeholder="e.g. Website Redesign for Acme Corp" oninput="state.overview.projectTitle=this.value;updateSidebarName()">
+        </div>
+        <div>
+          <div class="section-label">Version</div>
+          <input type="text" id="ov-version" value="${esc(state.overview.version)}" placeholder="1.0" oninput="state.overview.version=this.value">
+        </div>
+      </div>
+      <div class="section-label">Effective Date</div>
+      <input type="date" id="ov-date" value="${state.overview.effectiveDate}" oninput="state.overview.effectiveDate=this.value">
+
+      <div class="section-label" style="margin-top:20px">Client Information</div>
+      <div class="grid3">
+        <div>
+          <div class="section-label">Client Name</div>
+          <input type="text" id="ov-cname" value="${esc(state.overview.clientName)}" placeholder="Jane Smith" oninput="state.overview.clientName=this.value">
+        </div>
+        <div>
+          <div class="section-label">Company</div>
+          <input type="text" id="ov-ccompany" value="${esc(state.overview.clientCompany)}" placeholder="Acme Corp" oninput="state.overview.clientCompany=this.value">
+        </div>
+        <div>
+          <div class="section-label">Email</div>
+          <input type="email" id="ov-cemail" value="${esc(state.overview.clientEmail)}" placeholder="jane@acme.com" oninput="state.overview.clientEmail=this.value">
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:16px">Your Information (Freelancer)</div>
+      <div class="grid3">
+        <div>
+          <div class="section-label">Your Name</div>
+          <input type="text" id="ov-fname" value="${esc(state.overview.freelancerName)}" placeholder="Your Name" oninput="state.overview.freelancerName=this.value">
+        </div>
+        <div>
+          <div class="section-label">Your Company</div>
+          <input type="text" id="ov-fcompany" value="${esc(state.overview.freelancerCompany)}" placeholder="Your Studio LLC" oninput="state.overview.freelancerCompany=this.value">
+        </div>
+        <div>
+          <div class="section-label">Your Email</div>
+          <input type="email" id="ov-femail" value="${esc(state.overview.freelancerEmail)}" placeholder="you@yourstudio.com" oninput="state.overview.freelancerEmail=this.value">
+        </div>
+      </div>
+      <div class="mt16">
+        <select onchange="state.status=this.value;updateSidebarBadge()" style="width:auto">
+          <option value="Draft" ${state.status==='Draft'?'selected':''}>Status: Draft</option>
+          <option value="Active" ${state.status==='Active'?'selected':''}>Status: Active</option>
+          <option value="Completed" ${state.status==='Completed'?'selected':''}>Status: Completed</option>
+        </select>
+      </div>
+    `;
+  } else if (step.id === 'template') {
+    html += `
+      <div class="section-label">Choose a starting template to pre-fill your SOW sections (optional)</div>
+      <div class="tpl-grid">
+    `;
+    Object.entries(TEMPLATES).forEach(([key, tpl]) => {
+      html += `<div class="tpl-card ${state.overview.template===key?'selected':''}" onclick="applyTemplate('${key}')">
+        <div class="tpl-icon">${tpl.icon}</div>
+        <div class="tpl-name">${tpl.name}</div>
+        <div class="tpl-desc">${tpl.desc}</div>
+      </div>`;
+    });
+    html += `</div>
+      ${state.overview.template ? `<div class="text-success text-sm">✓ Template applied: ${TEMPLATES[state.overview.template].name}. You can still edit all fields.</div>` : ''}
+      <button class="btn btn-ghost btn-sm mt12" onclick="clearTemplate()">Clear Template</button>
+    `;
+  } else if (step.id === 'objectives') {
+    html += `
+      <div class="section-label">Project Summary</div>
+      <textarea id="obj-summary" placeholder="Briefly describe the project and its business purpose..." oninput="state.objectives.summary=this.value">${esc(state.objectives.summary)}</textarea>
+
+      <div class="section-label" style="margin-top:16px">Goals <span class="text-xs text-muted">(one per line)</span></div>
+      <div id="goals-list">`;
+    state.objectives.goals.forEach((g, i) => {
+      html += `<div class="flex gap8 align-center mb8">
+        <input type="text" value="${esc(g)}" placeholder="Goal ${i+1}" oninput="state.objectives.goals[${i}]=this.value">
+        <button class="btn btn-danger btn-sm" onclick="removeGoal(${i})">✕</button>
+      </div>`;
+    });
+    html += `</div>
+      <button class="btn btn-ghost btn-sm mt8" onclick="addGoal()">+ Add Goal</button>
+
+      <div class="section-label" style="margin-top:16px">Success Metrics</div>
+      <div id="metrics-list">`;
+    state.objectives.successMetrics.forEach((m, i) => {
+      html += `<div class="flex gap8 align-center mb8">
+        <input type="text" value="${esc(m)}" placeholder="Metric ${i+1}" oninput="state.objectives.successMetrics[${i}]=this.value">
+        <button class="btn btn-danger btn-sm" onclick="removeMetric(${i})">✕</button>
+      </div>`;
+    });
+    html += `</div>
+      <button class="btn btn-ghost btn-sm mt8" onclick="addMetric()">+ Add Metric</button>
+    `;
+  } else if (step.id === 'scope') {
+    html += `
+      <div class="section-label">In Scope</div>
+      <textarea placeholder="List everything included in this project..." oninput="state.scope.inScope=this.value">${esc(state.scope.inScope)}</textarea>
+
+      <div class="section-label" style="margin-top:16px">Out of Scope</div>
+      <textarea placeholder="List what is explicitly NOT included..." oninput="state.scope.outOfScope=this.value">${esc(state.scope.outOfScope)}</textarea>
+
+      <div class="section-label" style="margin-top:16px">Assumptions</div>
+      <textarea placeholder="What must be true for this project to succeed as defined..." oninput="state.scope.assumptions=this.value">${esc(state.scope.assumptions)}</textarea>
+    `;
+  } else if (step.id === 'deliverables-step') {
+    html += `
+      <div style="text-align:center;padding:32px 0">
+        <div style="font-size:48px;margin-bottom:12px">📦</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:8px">Manage Deliverables in the Deliverables Tab</div>
+        <div class="text-muted text-sm mb16">Add deliverable items, assign phases, due dates, and acceptance criteria there.</div>
+        <button class="btn btn-primary" onclick="switchTab('deliverables')">Go to Deliverables →</button>
+        <div class="text-xs text-muted mt12">${state.deliverablesList.length} deliverable(s) added</div>
+      </div>
+    `;
+  } else if (step.id === 'timeline-step') {
+    html += `
+      <div style="text-align:center;padding:32px 0">
+        <div style="font-size:48px;margin-bottom:12px">📅</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:8px">Build Your Timeline in the Timeline Tab</div>
+        <div class="text-muted text-sm mb16">Set milestones, due dates, and view the visual Gantt chart there.</div>
+        <button class="btn btn-primary" onclick="switchTab('timeline')">Go to Timeline →</button>
+        <div class="text-xs text-muted mt12">${state.milestones.length} milestone(s) added</div>
+      </div>
+    `;
+  } else if (step.id === 'budget-step') {
+    html += `
+      <div style="text-align:center;padding:32px 0">
+        <div style="font-size:48px;margin-bottom:12px">💰</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:8px">Set Up Budget in the Budget Tab</div>
+        <div class="text-muted text-sm mb16">Add labor line items, expenses, and configure payment schedule there.</div>
+        <button class="btn btn-primary" onclick="switchTab('budget')">Go to Budget →</button>
+        <div class="text-xs text-muted mt12">${state.budget.lines.length} line item(s) added · Total: ${formatCurrency(calcBudgetTotal())}</div>
+      </div>
+    `;
+  } else if (step.id === 'constraints') {
+    html += `
+      <div class="section-label">Technical Constraints</div>
+      <textarea placeholder="Technology stack, platform requirements, browser support, integrations..." oninput="state.constraints.technical=this.value">${esc(state.constraints.technical)}</textarea>
+      <div class="section-label" style="margin-top:16px">Resource Constraints</div>
+      <textarea placeholder="Team availability, client response times, access requirements..." oninput="state.constraints.resource=this.value">${esc(state.constraints.resource)}</textarea>
+      <div class="section-label" style="margin-top:16px">Regulatory / Compliance</div>
+      <textarea placeholder="GDPR, accessibility, industry regulations, legal requirements..." oninput="state.constraints.regulatory=this.value">${esc(state.constraints.regulatory)}</textarea>
+      <div class="section-label" style="margin-top:16px">Dependencies</div>
+      <textarea placeholder="What must happen before work can begin? Third-party dependencies?" oninput="state.constraints.dependencies=this.value">${esc(state.constraints.dependencies)}</textarea>
+    `;
+  } else if (step.id === 'acceptance') {
+    html += `
+      <div class="section-label">Acceptance Process</div>
+      <textarea placeholder="How deliverables are reviewed and approved..." oninput="state.acceptance.process=this.value">${esc(state.acceptance.process)}</textarea>
+      <div class="section-label" style="margin-top:16px">Acceptance Criteria</div>
+      <textarea placeholder="What conditions must be met for final acceptance..." oninput="state.acceptance.criteria=this.value">${esc(state.acceptance.criteria)}</textarea>
+      <div class="grid2 mt16">
+        <div>
+          <div class="section-label">Revision Rounds Included</div>
+          <input type="number" value="${esc(state.acceptance.revisions)}" min="0" max="10" oninput="state.acceptance.revisions=this.value" placeholder="2">
+        </div>
+        <div>
+          <div class="section-label">Approval Period (Business Days)</div>
+          <input type="number" value="${esc(state.acceptance.approvalPeriod)}" min="1" max="30" oninput="state.acceptance.approvalPeriod=this.value" placeholder="5">
+        </div>
+      </div>
+      <div class="grid2 mt16">
+        <div>
+          <div class="section-label">Payment Terms</div>
+          <select onchange="state.budget.paymentTerms=this.value">
+            <option value="Net 15" ${state.budget.paymentTerms==='Net 15'?'selected':''}>Net 15</option>
+            <option value="Net 30" ${state.budget.paymentTerms==='Net 30'?'selected':''}>Net 30</option>
+            <option value="Net 45" ${state.budget.paymentTerms==='Net 45'?'selected':''}>Net 45</option>
+            <option value="Due on Receipt" ${state.budget.paymentTerms==='Due on Receipt'?'selected':''}>Due on Receipt</option>
+          </select>
+        </div>
+        <div>
+          <div class="section-label">Deposit Percentage</div>
+          <input type="number" value="${state.budget.depositPercent}" min="0" max="100" oninput="state.budget.depositPercent=parseInt(this.value)" placeholder="50">
+        </div>
+      </div>
+    `;
+  }
+
+  html += `
+    <hr class="divider">
+    <div class="flex gap8 justify-between align-center">
+      <div class="flex gap8">
+        ${WIZARD_STEPS.map((s,i) => `<div style="width:8px;height:8px;border-radius:50%;background:${i===currentStep?'var(--accent1)':i<currentStep?'var(--success)':'rgba(255,255,255,0.15)'}"></div>`).join('')}
+      </div>
+      <div class="flex gap8">
+        ${currentStep > 0 ? `<button class="btn btn-ghost" onclick="wizardPrev()">← Back</button>` : ''}
+        ${currentStep < WIZARD_STEPS.length - 1 ? `<button class="btn btn-primary" onclick="wizardNext()">Next →</button>` : `<button class="btn btn-primary" onclick="finishWizard()">Finish & Preview ✓</button>`}
+      </div>
+    </div>
+  `;
+
+  wrap.innerHTML = html;
+}
+
+function wizardNext() { if(currentStep < WIZARD_STEPS.length-1){ currentStep++; renderWizard(); } }
+function wizardPrev() { if(currentStep > 0){ currentStep--; renderWizard(); } }
+function finishWizard() { saveCurrent(); switchTab('preview'); }
+
+function applyTemplate(key) {
+  const tpl = TEMPLATES[key];
+  if (!tpl) return;
+  state.overview.template = key;
+  if (tpl.overview) Object.assign(state.overview, tpl.overview);
+  if (tpl.objectives) state.objectives = {...state.objectives, ...tpl.objectives};
+  if (tpl.scope) state.scope = {...state.scope, ...tpl.scope};
+  if (tpl.deliverables && tpl.deliverables.length) {
+    state.deliverablesList = tpl.deliverables.map((d,i)=>({
+      id: Date.now()+i, phase:d.phase||'', name:d.name||'',
+      desc:d.desc||'', format:d.format||'', dueDate:'', criteria:d.criteria||''
+    }));
+  }
+  if (tpl.constraints) state.constraints = {...state.constraints, ...tpl.constraints};
+  if (tpl.acceptance) state.acceptance = {...state.acceptance, ...tpl.acceptance};
+  updateSidebarName();
+  toast('Template applied: ' + tpl.name);
+  renderWizard();
+}
+
+function clearTemplate() {
+  state.overview.template = '';
+  renderWizard();
+}
+
+function addGoal() { state.objectives.goals.push(''); renderWizard(); }
+function removeGoal(i) { state.objectives.goals.splice(i,1); if(!state.objectives.goals.length) state.objectives.goals=[''];renderWizard(); }
+function addMetric() { state.objectives.successMetrics.push(''); renderWizard(); }
+function removeMetric(i) { state.objectives.successMetrics.splice(i,1); if(!state.objectives.successMetrics.length) state.objectives.successMetrics=[''];renderWizard(); }
+
+// ─── DELIVERABLES ──────────────────────────────────────────────────────────────
+function addDeliverable() {
+  state.deliverablesList.push({ id:Date.now(), phase:'', name:'', desc:'', format:'', dueDate:'', criteria:'' });
+  renderDeliverables();
+}
+
+function removeDeliverable(id) {
+  state.deliverablesList = state.deliverablesList.filter(d=>d.id!==id);
+  renderDeliverables();
+}
+
+function renderDeliverables() {
+  const body = document.getElementById('deliverables-body');
+  const empty = document.getElementById('del-empty');
+  const items = state.deliverablesList;
+  empty.style.display = items.length ? 'none' : 'block';
+  body.innerHTML = items.map((d,i) => `
+    <tr>
+      <td style="color:var(--accent1);font-weight:700">${i+1}</td>
+      <td><input type="text" value="${esc(d.phase)}" placeholder="Phase" oninput="state.deliverablesList[${i}].phase=this.value" style="min-width:90px"></td>
+      <td><input type="text" value="${esc(d.name)}" placeholder="Deliverable name" oninput="state.deliverablesList[${i}].name=this.value" style="min-width:140px"></td>
+      <td><input type="text" value="${esc(d.desc)}" placeholder="Brief description" oninput="state.deliverablesList[${i}].desc=this.value" style="min-width:160px"></td>
+      <td><input type="text" value="${esc(d.format)}" placeholder="PDF, Figma…" oninput="state.deliverablesList[${i}].format=this.value" style="min-width:90px"></td>
+      <td><input type="date" value="${d.dueDate||''}" oninput="state.deliverablesList[${i}].dueDate=this.value" style="min-width:130px"></td>
+      <td><input type="text" value="${esc(d.criteria)}" placeholder="Acceptance criteria" oninput="state.deliverablesList[${i}].criteria=this.value" style="min-width:160px"></td>
+      <td><button class="btn btn-danger btn-sm" onclick="removeDeliverable(${d.id})">✕</button></td>
+    </tr>
+  `).join('');
+}
+
+// ─── TIMELINE / GANTT ─────────────────────────────────────────────────────────
+function addMilestone() {
+  state.milestones.push({ id:Date.now(), name:'', dueDate:'', phase:'', critical:false, paymentLinked:false, paymentPct:0 });
+  renderMilestones();
+  renderGantt();
+}
+
+function removeMilestone(id) {
+  state.milestones = state.milestones.filter(m=>m.id!==id);
+  renderMilestones();
+  renderGantt();
+}
+
+function renderMilestones() {
+  const el = document.getElementById('milestone-list');
+  const empty = document.getElementById('tl-empty');
+  empty.style.display = state.milestones.length ? 'none' : 'block';
+  el.innerHTML = state.milestones.map((m,i) => `
+    <div class="budget-row align-center">
+      <span style="color:var(--accent1);font-weight:700;font-size:12px;min-width:20px">${i+1}</span>
+      <input type="text" value="${esc(m.name)}" placeholder="Milestone name" oninput="state.milestones[${i}].name=this.value;renderGantt()" style="flex:2">
+      <input type="text" value="${esc(m.phase)}" placeholder="Phase" oninput="state.milestones[${i}].phase=this.value;renderGantt()" style="flex:1">
+      <input type="date" value="${m.dueDate||''}" oninput="state.milestones[${i}].dueDate=this.value;updateTLEnd();renderGantt()" style="flex:1">
+      <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);white-space:nowrap">
+        <input type="checkbox" ${m.critical?'checked':''} onchange="state.milestones[${i}].critical=this.checked;renderGantt()"> Critical
+      </label>
+      <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);white-space:nowrap">
+        <input type="checkbox" ${m.paymentLinked?'checked':''} onchange="state.milestones[${i}].paymentLinked=this.checked;renderPaymentSchedule()"> Payment
+      </label>
+      <input type="number" value="${m.paymentPct||0}" placeholder="%" min="0" max="100" oninput="state.milestones[${i}].paymentPct=parseInt(this.value)||0;renderPaymentSchedule()" style="width:60px;flex:none">
+      <span class="text-xs text-muted">%</span>
+      <button class="btn btn-danger btn-sm" onclick="removeMilestone(${m.id})">✕</button>
+    </div>
+  `).join('');
+}
+
+function updateTLEnd() {
+  const dates = state.milestones.map(m=>m.dueDate).filter(Boolean).sort();
+  document.getElementById('tl-end').value = dates.length ? dates[dates.length-1] : '';
+}
+
+function renderGantt() {
+  const chart = document.getElementById('gantt-chart');
+  const start = document.getElementById('tl-start').value;
+  const ms = state.milestones.filter(m=>m.name && m.dueDate);
+  if (!ms.length || !start) { chart.innerHTML = ''; return; }
+
+  const startD = new Date(start);
+  const endD = new Date(Math.max(...ms.map(m=>new Date(m.dueDate))));
+  const totalDays = Math.max(1, (endD - startD) / 86400000);
+
+  // Build month headers
+  const months = [];
+  let cur = new Date(startD); cur.setDate(1);
+  while (cur <= endD) {
+    months.push(cur.toLocaleString('default',{month:'short',year:'2-digit'}));
+    cur = new Date(cur.getFullYear(), cur.getMonth()+1, 1);
+  }
+
+  let html = `<div class="gantt">
+    <div class="gantt-header">
+      <div class="gantt-header-label"></div>
+      <div class="gantt-header-track">
+        ${months.map(m=>`<div class="gantt-month">${m}</div>`).join('')}
+      </div>
+    </div>`;
+
+  ms.forEach(m => {
+    const mEnd = new Date(m.dueDate);
+    const msFromStart = (mEnd - startD) / 86400000;
+    const leftPct = Math.max(0, Math.min(98, (msFromStart / totalDays)*100));
+    const color = m.critical ? 'linear-gradient(90deg,#ef4444,#f59e0b)' : 'linear-gradient(90deg,#a855f7,#ec4899)';
+    html += `<div class="gantt-row">
+      <div class="gantt-label" title="${m.name}">${m.name}</div>
+      <div class="gantt-track">
+        <div class="gantt-bar" style="left:${leftPct}%;width:12px;background:${color}" title="${m.dueDate}">
+          ${m.critical ? '★' : '●'}
+        </div>
+      </div>
+    </div>`;
+  });
+
+  html += '</div>';
+  chart.innerHTML = html;
+  updateTLEnd();
+}
+
+// ─── BUDGET ───────────────────────────────────────────────────────────────────
+function addBudgetLine() {
+  state.budget.lines.push({ id:Date.now(), task:'', hours:0, rate:0 });
+  renderBudget();
+}
+
+function removeBudgetLine(id) {
+  state.budget.lines = state.budget.lines.filter(l=>l.id!==id);
+  renderBudget();
+}
+
+function addExpense() {
+  state.budget.expenses = state.budget.expenses || [];
+  state.budget.expenses.push({ id:Date.now(), desc:'', amount:0 });
+  renderBudget();
+}
+
+function removeExpense(id) {
+  state.budget.expenses = state.budget.expenses.filter(e=>e.id!==id);
+  renderBudget();
+}
+
+function calcBudgetTotal() {
+  const labor = state.budget.lines.reduce((s,l)=>s+(parseFloat(l.hours)||0)*(parseFloat(l.rate)||0), 0);
+  const expenses = (state.budget.expenses||[]).reduce((s,e)=>s+(parseFloat(e.amount)||0), 0);
+  return labor + expenses;
+}
+
+function renderBudget() {
+  const body = document.getElementById('budget-body');
+  const empty = document.getElementById('budget-empty');
+  const lines = state.budget.lines;
+  empty.style.display = lines.length ? 'none' : 'block';
+
+  body.innerHTML = lines.map((l,i) => {
+    const sub = (parseFloat(l.hours)||0)*(parseFloat(l.rate)||0);
+    return `<tr>
+      <td><input type="text" value="${esc(l.task)}" placeholder="Task description" oninput="state.budget.lines[${i}].task=this.value"></td>
+      <td><input type="number" value="${l.hours||''}" placeholder="0" oninput="state.budget.lines[${i}].hours=parseFloat(this.value)||0;updateBudgetTotals()" style="width:70px" min="0"></td>
+      <td><input type="number" value="${l.rate||''}" placeholder="0.00" oninput="state.budget.lines[${i}].rate=parseFloat(this.value)||0;updateBudgetTotals()" style="width:80px" min="0" step="0.01"></td>
+      <td style="color:var(--accent1);font-weight:600">${formatCurrency(sub)}</td>
+      <td><button class="btn btn-danger btn-sm" onclick="removeBudgetLine(${l.id})">✕</button></td>
+    </tr>`;
+  }).join('');
+
+  // Expenses
+  const expEl = document.getElementById('expense-list');
+  const exps = state.budget.expenses || [];
+  expEl.innerHTML = exps.map((e,i) => `
+    <div class="budget-row">
+      <input type="text" value="${esc(e.desc)}" placeholder="Expense description" oninput="state.budget.expenses[${i}].desc=this.value" style="flex:2">
+      <input type="number" value="${e.amount||''}" placeholder="0.00" oninput="state.budget.expenses[${i}].amount=parseFloat(this.value)||0;updateBudgetTotals()" style="flex:1" min="0" step="0.01">
+      <button class="btn btn-danger btn-sm" onclick="removeExpense(${e.id})">✕</button>
+    </div>
+  `).join('');
+
+  updateBudgetTotals();
+  renderPaymentSchedule();
+}
+
+function updateBudgetTotals() {
+  const labor = state.budget.lines.reduce((s,l)=>s+(parseFloat(l.hours)||0)*(parseFloat(l.rate)||0), 0);
+  const expenses = (state.budget.expenses||[]).reduce((s,e)=>s+(parseFloat(e.amount)||0), 0);
+  const total = labor + expenses;
+  document.getElementById('labor-subtotal').textContent = formatCurrency(labor);
+  document.getElementById('expense-subtotal').textContent = formatCurrency(expenses);
+  document.getElementById('budget-total').textContent = formatCurrency(total);
+  // re-render individual subtotals
+  const rows = document.querySelectorAll('#budget-body tr');
+  state.budget.lines.forEach((l,i) => {
+    const sub = (parseFloat(l.hours)||0)*(parseFloat(l.rate)||0);
+    if (rows[i]) rows[i].cells[3].textContent = formatCurrency(sub);
+  });
+}
+
+function renderPaymentSchedule() {
+  const el = document.getElementById('payment-schedule');
+  if (!el) return;
+  const total = calcBudgetTotal();
+  const linked = state.milestones.filter(m=>m.paymentLinked && m.name);
+  if (!linked.length) {
+    const deposit = total * (state.budget.depositPercent/100);
+    el.innerHTML = `
+      <div class="tbl" style="font-size:13px">
+        <div class="flex justify-between" style="padding:8px 0;border-bottom:1px solid var(--card-border)">
+          <span>Deposit (${state.budget.depositPercent}%) — Due on signing</span>
+          <span class="text-accent">${formatCurrency(deposit)}</span>
+        </div>
+        <div class="flex justify-between" style="padding:8px 0">
+          <span>Final payment — ${state.budget.paymentTerms} from project completion</span>
+          <span class="text-accent">${formatCurrency(total - deposit)}</span>
+        </div>
+      </div>
+      <div class="text-xs text-muted mt8">Tip: Link payments to milestones in the Timeline tab for a milestone-based schedule.</div>
+    `;
+    return;
+  }
+  let html = '<div style="font-size:13px">';
+  linked.forEach(m => {
+    const amt = total * ((m.paymentPct||0)/100);
+    html += `<div class="flex justify-between align-center" style="padding:8px 0;border-bottom:1px solid var(--card-border)">
+      <span>${m.name} (${m.paymentPct}%)</span>
+      <div class="flex gap12 align-center">
+        <span class="text-muted">${m.dueDate||'No date'}</span>
+        <span class="text-accent">${formatCurrency(amt)}</span>
+      </div>
+    </div>`;
+  });
+  const linkedTotal = linked.reduce((s,m)=>s+(m.paymentPct||0),0);
+  if (linkedTotal < 100) {
+    html += `<div class="text-xs text-warning mt8">⚠ ${100-linkedTotal}% of budget not allocated to milestones</div>`;
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+// ─── CHANGE ORDERS ────────────────────────────────────────────────────────────
+function addChangeOrder() {
+  state.changeOrders.push({
+    id: Date.now(),
+    num: state.changeOrders.length + 1,
+    date: new Date().toISOString().split('T')[0],
+    description:'', timelineImpact:'', budgetImpact:0, status:'Pending', requester:''
+  });
+  renderChangeOrders();
+}
+
+function removeChangeOrder(id) {
+  state.changeOrders = state.changeOrders.filter(c=>c.id!==id);
+  renderChangeOrders();
+}
+
+function renderChangeOrders() {
+  const el = document.getElementById('co-list');
+  const empty = document.getElementById('co-empty');
+  empty.style.display = state.changeOrders.length ? 'none' : 'block';
+  el.innerHTML = state.changeOrders.map((co,i) => `
+    <div class="co-item">
+      <div class="co-header">
+        <span class="co-num">Change Order #${co.num}</span>
+        <div class="flex gap8 align-center">
+          <select onchange="state.changeOrders[${i}].status=this.value" style="width:auto;padding:4px 8px;font-size:12px">
+            <option value="Pending" ${co.status==='Pending'?'selected':''}>Pending</option>
+            <option value="Approved" ${co.status==='Approved'?'selected':''}>Approved</option>
+            <option value="Rejected" ${co.status==='Rejected'?'selected':''}>Rejected</option>
+          </select>
+          <button class="btn btn-danger btn-sm" onclick="removeChangeOrder(${co.id})">✕</button>
+        </div>
+      </div>
+      <div class="grid2 mb8">
+        <div>
+          <div class="section-label">Date</div>
+          <input type="date" value="${co.date}" oninput="state.changeOrders[${i}].date=this.value">
+        </div>
+        <div>
+          <div class="section-label">Requested By</div>
+          <input type="text" value="${esc(co.requester)}" placeholder="Client name" oninput="state.changeOrders[${i}].requester=this.value">
+        </div>
+      </div>
+      <div class="section-label">Description of Change</div>
+      <textarea placeholder="Describe the scope change in detail..." oninput="state.changeOrders[${i}].description=this.value" style="min-height:70px">${esc(co.description)}</textarea>
+      <div class="grid2 mt8">
+        <div>
+          <div class="section-label">Timeline Impact</div>
+          <input type="text" value="${esc(co.timelineImpact)}" placeholder="e.g. +5 business days" oninput="state.changeOrders[${i}].timelineImpact=this.value">
+        </div>
+        <div>
+          <div class="section-label">Budget Impact ($)</div>
+          <input type="number" value="${co.budgetImpact||0}" placeholder="0" oninput="state.changeOrders[${i}].budgetImpact=parseFloat(this.value)||0">
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── PREVIEW ──────────────────────────────────────────────────────────────────
+function generatePreviewHTML() {
+  const s = state;
+  const totalBudget = calcBudgetTotal();
+  const today = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+  const sections = [
+    '1. Project Overview', '2. Objectives & Goals', '3. Scope of Work',
+    '4. Deliverables', '5. Timeline & Milestones', '6. Budget & Payment',
+    '7. Assumptions & Constraints', '8. Acceptance Criteria', '9. Signatures'
+  ];
+
+  let html = `
+    <h1>Statement of Work</h1>
+    <div class="meta-row">
+      <span><strong>Project:</strong> ${s.overview.projectTitle||'Untitled Project'}</span>
+      <span><strong>Date:</strong> ${s.overview.effectiveDate||today}</span>
+      <span><strong>Version:</strong> ${s.overview.version||'1.0'}</span>
+    </div>
+    <div class="toc">
+      <strong>Table of Contents</strong><br>
+      ${sections.map(sec=>`<div style="padding:2px 0"><a href="#">${sec}</a></div>`).join('')}
+    </div>
+
+    <h2>1. Project Overview</h2>
+    <table>
+      <tr><th>Field</th><th>Details</th></tr>
+      <tr><td><strong>Project Title</strong></td><td>${s.overview.projectTitle||'—'}</td></tr>
+      <tr><td><strong>Client</strong></td><td>${s.overview.clientName||'—'}${s.overview.clientCompany?' / '+s.overview.clientCompany:''}</td></tr>
+      <tr><td><strong>Client Email</strong></td><td>${s.overview.clientEmail||'—'}</td></tr>
+      <tr><td><strong>Service Provider</strong></td><td>${s.overview.freelancerName||'—'}${s.overview.freelancerCompany?' / '+s.overview.freelancerCompany:''}</td></tr>
+      <tr><td><strong>Provider Email</strong></td><td>${s.overview.freelancerEmail||'—'}</td></tr>
+      <tr><td><strong>Effective Date</strong></td><td>${s.overview.effectiveDate||today}</td></tr>
+      <tr><td><strong>Version</strong></td><td>${s.overview.version||'1.0'}</td></tr>
+      <tr><td><strong>Status</strong></td><td>${s.status}</td></tr>
+    </table>
+
+    <h2>2. Objectives &amp; Goals</h2>
+    ${s.objectives.summary ? `<p>${s.objectives.summary}</p>` : ''}
+    ${s.objectives.goals.filter(Boolean).length ? `<h3>Goals</h3><ul>${s.objectives.goals.filter(Boolean).map(g=>`<li>${g}</li>`).join('')}</ul>` : ''}
+    ${s.objectives.successMetrics.filter(Boolean).length ? `<h3>Success Metrics</h3><ul>${s.objectives.successMetrics.filter(Boolean).map(m=>`<li>${m}</li>`).join('')}</ul>` : ''}
+
+    <h2>3. Scope of Work</h2>
+    ${s.scope.inScope ? `<h3>In Scope</h3><p>${s.scope.inScope.replace(/\n/g,'<br>')}</p>` : ''}
+    ${s.scope.outOfScope ? `<h3>Out of Scope</h3><p>${s.scope.outOfScope.replace(/\n/g,'<br>')}</p>` : ''}
+    ${s.scope.assumptions ? `<h3>Assumptions</h3><p>${s.scope.assumptions.replace(/\n/g,'<br>')}</p>` : ''}
+
+    <h2>4. Deliverables</h2>
+    ${s.deliverablesList.length ? `
+      <table>
+        <tr><th>#</th><th>Phase</th><th>Deliverable</th><th>Description</th><th>Format</th><th>Due Date</th><th>Acceptance Criteria</th></tr>
+        ${s.deliverablesList.map((d,i)=>`<tr>
+          <td>${i+1}</td><td>${d.phase||'—'}</td><td><strong>${d.name||'—'}</strong></td>
+          <td>${d.desc||'—'}</td><td>${d.format||'—'}</td>
+          <td>${d.dueDate||'TBD'}</td><td>${d.criteria||'—'}</td>
+        </tr>`).join('')}
+      </table>` : '<p style="color:#6b7280">No deliverables defined.</p>'}
+
+    <h2>5. Timeline &amp; Milestones</h2>
+    ${s.milestones.length ? `
+      <table>
+        <tr><th>#</th><th>Milestone</th><th>Phase</th><th>Due Date</th><th>Critical</th></tr>
+        ${s.milestones.map((m,i)=>`<tr>
+          <td>${i+1}</td><td><strong>${m.name||'—'}</strong></td>
+          <td>${m.phase||'—'}</td><td>${m.dueDate||'TBD'}</td>
+          <td>${m.critical?'★ Yes':'No'}</td>
+        </tr>`).join('')}
+      </table>` : '<p style="color:#6b7280">No milestones defined.</p>'}
+
+    <h2>6. Budget &amp; Payment</h2>
+    ${s.budget.lines.length ? `
+      <table>
+        <tr><th>Task</th><th>Hours</th><th>Rate</th><th>Subtotal</th></tr>
+        ${s.budget.lines.map(l=>`<tr>
+          <td>${l.task||'—'}</td>
+          <td>${l.hours||0}</td>
+          <td>${formatCurrency(l.rate||0)}/hr</td>
+          <td><strong>${formatCurrency((l.hours||0)*(l.rate||0))}</strong></td>
+        </tr>`).join('')}
+      </table>` : ''}
+    ${(s.budget.expenses||[]).length ? `
+      <h3>Expenses</h3>
+      <table>
+        <tr><th>Description</th><th>Amount</th></tr>
+        ${s.budget.expenses.map(e=>`<tr><td>${e.desc||'—'}</td><td><strong>${formatCurrency(e.amount||0)}</strong></td></tr>`).join('')}
+      </table>` : ''}
+    <p style="font-size:15px"><strong>Total Project Value: ${formatCurrency(totalBudget)}</strong></p>
+    <p><strong>Payment Terms:</strong> ${s.budget.paymentTerms||'Net 30'} &nbsp;|&nbsp; <strong>Deposit:</strong> ${s.budget.depositPercent||50}% due on signing</p>
+
+    <h2>7. Assumptions &amp; Constraints</h2>
+    ${s.constraints.technical ? `<h3>Technical Constraints</h3><p>${s.constraints.technical.replace(/\n/g,'<br>')}</p>` : ''}
+    ${s.constraints.resource ? `<h3>Resource Constraints</h3><p>${s.constraints.resource.replace(/\n/g,'<br>')}</p>` : ''}
+    ${s.constraints.regulatory ? `<h3>Regulatory / Compliance</h3><p>${s.constraints.regulatory.replace(/\n/g,'<br>')}</p>` : ''}
+    ${s.constraints.dependencies ? `<h3>Dependencies</h3><p>${s.constraints.dependencies.replace(/\n/g,'<br>')}</p>` : ''}
+
+    <h2>8. Acceptance Criteria</h2>
+    ${s.acceptance.process ? `<h3>Acceptance Process</h3><p>${s.acceptance.process.replace(/\n/g,'<br>')}</p>` : ''}
+    ${s.acceptance.criteria ? `<h3>Criteria</h3><p>${s.acceptance.criteria.replace(/\n/g,'<br>')}</p>` : ''}
+    <p><strong>Revision Rounds Included:</strong> ${s.acceptance.revisions||'2'} &nbsp;|&nbsp; <strong>Approval Period:</strong> ${s.acceptance.approvalPeriod||'5'} business days</p>
+
+    <h2>9. Signatures</h2>
+    <p>By signing below, both parties agree to the terms of this Statement of Work.</p>
+    <div class="sig-block">
+      <div>
+        <div class="sig-line">&nbsp;</div>
+        <p><strong>${s.overview.freelancerName||'Service Provider'}</strong><br>
+        ${s.overview.freelancerCompany||''}<br>
+        ${s.overview.freelancerEmail||''}<br>
+        Date: _________________</p>
+      </div>
+      <div>
+        <div class="sig-line">&nbsp;</div>
+        <p><strong>${s.overview.clientName||'Client'}</strong><br>
+        ${s.overview.clientCompany||''}<br>
+        ${s.overview.clientEmail||''}<br>
+        Date: _________________</p>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#9ca3af;margin-top:32px;border-top:1px solid #e5e7eb;padding-top:12px">
+      Generated with FreelanceOS SOW Generator — Tool 73 | freelanceos.vercel.app
+    </p>
+  `;
+  return html;
+}
+
+function renderPreview() {
+  document.getElementById('preview-content').innerHTML = generatePreviewHTML();
+}
+
+// ─── COMPARE ──────────────────────────────────────────────────────────────────
+function renderCompare() {
+  const el = document.getElementById('compare-content');
+  const cos = state.changeOrders;
+  if (!cos.length) {
+    el.innerHTML = `<div style="grid-column:1/-1" class="empty-state"><div class="es-icon">🔄</div><p>No change orders to compare. Add change orders in the Change Orders tab.</p></div>`;
+    return;
+  }
+  const total = calcBudgetTotal();
+  const coTotal = cos.filter(c=>c.status==='Approved').reduce((s,c)=>s+(c.budgetImpact||0),0);
+  el.innerHTML = `
+    <div class="compare-panel">
+      <h3>Original SOW</h3>
+      <div class="diff-same"><strong>Project:</strong> ${state.overview.projectTitle||'Untitled'}</div>
+      <div class="diff-same"><strong>Client:</strong> ${state.overview.clientName||'—'}</div>
+      <div class="diff-same"><strong>Budget:</strong> ${formatCurrency(total)}</div>
+      <div class="diff-same"><strong>Deliverables:</strong> ${state.deliverablesList.length}</div>
+      <div class="diff-same"><strong>Milestones:</strong> ${state.milestones.length}</div>
+      ${state.scope.inScope ? `<div class="diff-same mt8"><strong>Scope:</strong><br>${state.scope.inScope.substring(0,200)}${state.scope.inScope.length>200?'…':''}</div>` : ''}
+    </div>
+    <div class="compare-panel">
+      <h3>After Change Orders</h3>
+      <div class="diff-same"><strong>Project:</strong> ${state.overview.projectTitle||'Untitled'}</div>
+      <div class="diff-same"><strong>Client:</strong> ${state.overview.clientName||'—'}</div>
+      <div class="${coTotal!==0?'diff-added':'diff-same'}"><strong>Budget:</strong> ${formatCurrency(total+coTotal)} ${coTotal>0?'(+'+formatCurrency(coTotal)+')':coTotal<0?'('+formatCurrency(coTotal)+')':''}</div>
+      <div class="diff-same"><strong>Deliverables:</strong> ${state.deliverablesList.length}</div>
+      <div class="diff-same"><strong>Milestones:</strong> ${state.milestones.length}</div>
+      ${cos.map(co=>`
+        <div class="${co.status==='Approved'?'diff-added':co.status==='Rejected'?'diff-removed':'diff-same'}" style="margin-top:8px">
+          <strong>CO #${co.num} — ${co.status}</strong><br>
+          ${co.description?co.description.substring(0,100)+(co.description.length>100?'…':''):'No description'}
+          ${co.timelineImpact?`<br>Timeline: ${co.timelineImpact}`:''}
+          ${co.budgetImpact?`<br>Budget: ${co.budgetImpact>0?'+':''}${formatCurrency(co.budgetImpact)}`:''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ─── LIBRARY ──────────────────────────────────────────────────────────────────
+function renderLibrary() {
+  const grid = document.getElementById('lib-grid');
+  const empty = document.getElementById('lib-empty');
+  const filter = document.getElementById('lib-filter-status').value;
+  let items = library;
+  if (filter) items = items.filter(s=>s.status===filter);
+  empty.style.display = items.length ? 'none' : 'block';
+  grid.innerHTML = items.map(sow => `
+    <div class="lib-card">
+      <div class="lib-card-title">${sow.overview.projectTitle||'Untitled SOW'}</div>
+      <div class="lib-card-meta">
+        ${sow.overview.clientCompany||sow.overview.clientName||'No client'} ·
+        <span class="badge badge-${sow.status.toLowerCase()}">${sow.status}</span>
+      </div>
+      <div class="text-xs text-muted mb12">${sow.deliverablesList.length} deliverables · ${sow.milestones.length} milestones · ${formatCurrency(sowTotal(sow))}</div>
+      <div class="lib-actions">
+        <button class="btn btn-primary btn-sm" onclick="loadSOW('${sow.id}')">Open</button>
+        <button class="btn btn-ghost btn-sm" onclick="duplicateSOW('${sow.id}')">Duplicate</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteSOW('${sow.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function sowTotal(sow) {
+  const labor = (sow.budget.lines||[]).reduce((s,l)=>s+(l.hours||0)*(l.rate||0),0);
+  const exp = (sow.budget.expenses||[]).reduce((s,e)=>s+(e.amount||0),0);
+  return labor+exp;
+}
+
+function loadSOW(id) {
+  const found = library.find(s=>s.id===id);
+  if (!found) return;
+  state = JSON.parse(JSON.stringify(found));
+  updateSidebarName();
+  updateSidebarBadge();
+  renderWizard();
+  renderDeliverables();
+  renderMilestones();
+  renderGantt();
+  renderBudget();
+  renderChangeOrders();
+  switchTab('wizard');
+  toast('SOW loaded: ' + (state.overview.projectTitle||'Untitled'));
+}
+
+function duplicateSOW(id) {
+  const found = library.find(s=>s.id===id);
+  if (!found) return;
+  const dup = JSON.parse(JSON.stringify(found));
+  dup.id = Date.now().toString();
+  dup.overview.projectTitle = (dup.overview.projectTitle||'Untitled') + ' (Copy)';
+  dup.status = 'Draft';
+  dup.createdAt = new Date().toISOString();
+  dup.updatedAt = new Date().toISOString();
+  library.unshift(dup);
+  saveLibrary();
+  renderLibrary();
+  toast('SOW duplicated');
+}
+
+function deleteSOW(id) {
+  if (!confirm('Delete this SOW? This cannot be undone.')) return;
+  library = library.filter(s=>s.id!==id);
+  saveLibrary();
+  renderLibrary();
+  toast('SOW deleted');
+}
+
+function newSOW() {
+  if (confirm('Start a new SOW? Unsaved changes to current SOW will be lost.')) {
+    state = {
+      id: Date.now().toString(), name:'Untitled SOW', status:'Draft',
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+      currentStep: 0,
+      overview:{ projectTitle:'',clientName:'',clientCompany:'',clientEmail:'',freelancerName:'',freelancerEmail:'',freelancerCompany:'',version:'1.0',effectiveDate:'',template:'' },
+      objectives:{ summary:'',goals:[''],successMetrics:[''] },
+      scope:{ inScope:'',outOfScope:'',assumptions:'' },
+      deliverablesList:[], milestones:[],
+      budget:{ lines:[],expenses:[],paymentTerms:'Net 30',depositPercent:50 },
+      constraints:{ technical:'',resource:'',regulatory:'',dependencies:'' },
+      acceptance:{ process:'',criteria:'',revisions:'2',approvalPeriod:'5' },
+      changeOrders:[]
+    };
+    currentStep = 0;
+    updateSidebarName();
+    updateSidebarBadge();
+    renderWizard();
+    renderDeliverables();
+    renderMilestones();
+    renderGantt();
+    renderBudget();
+    renderChangeOrders();
+    switchTab('wizard');
+  }
+}
+
+// ─── SAVE / LOAD ──────────────────────────────────────────────────────────────
+function saveCurrent() {
+  state.updatedAt = new Date().toISOString();
+  state.name = state.overview.projectTitle || 'Untitled SOW';
+  const idx = library.findIndex(s=>s.id===state.id);
+  if (idx >= 0) library[idx] = JSON.parse(JSON.stringify(state));
+  else library.unshift(JSON.parse(JSON.stringify(state)));
+  saveLibrary();
+  updateSidebarName();
+  toast('SOW saved ✓');
+}
+
+function saveLibrary() {
+  try { localStorage.setItem('sowgen_library', JSON.stringify(library)); } catch(e){}
+}
+
+function loadLibrary() {
+  try {
+    const raw = localStorage.getItem('sowgen_library');
+    if (raw) library = JSON.parse(raw);
+  } catch(e){ library=[]; }
+}
+
+// ─── EXPORT ───────────────────────────────────────────────────────────────────
+function exportHTML() {
+  const previewHTML = generatePreviewHTML();
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SOW — ${esc(state.overview.projectTitle||'Statement of Work')}</title>
+<style>
+body{font-family:Georgia,serif;max-width:800px;margin:40px auto;padding:0 32px;color:#1a1a2e;line-height:1.7;font-size:14px}
+h1{font-size:24px;border-bottom:3px solid #a855f7;padding-bottom:12px;margin-bottom:20px}
+h2{font-size:17px;font-weight:700;margin:28px 0 10px;padding-left:12px;border-left:4px solid #a855f7}
+h3{font-size:15px;font-weight:700;margin:16px 0 6px;color:#374151}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+th{background:#f3f4f6;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #e5e7eb}
+td{padding:8px 10px;border:1px solid #e5e7eb}
+.toc{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin-bottom:24px;font-size:13px}
+.meta-row{display:flex;gap:24px;margin-bottom:16px;font-size:13px;color:#6b7280;flex-wrap:wrap}
+.sig-block{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px}
+.sig-line{border-top:1px solid #374151;padding-top:6px;margin-top:40px;font-size:12px;color:#6b7280}
+@media print{body{margin:20px}h2{break-before:auto}}
+</style>
+</head>
+<body>
+${previewHTML}
+</body>
+</html>`;
+  const blob = new Blob([html], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `SOW-${(state.overview.projectTitle||'Statement-of-Work').replace(/\s+/g,'-')}.html`;
+  a.click();
+  toast('HTML exported ✓');
+}
+
+function copyPlainText() {
+  const s = state;
+  const lines = [
+    `STATEMENT OF WORK`,
+    `Project: ${s.overview.projectTitle||'Untitled'}`,
+    `Client: ${s.overview.clientName||''} ${s.overview.clientCompany?'/ '+s.overview.clientCompany:''}`,
+    `Provider: ${s.overview.freelancerName||''} ${s.overview.freelancerCompany?'/ '+s.overview.freelancerCompany:''}`,
+    `Date: ${s.overview.effectiveDate||new Date().toISOString().split('T')[0]}`,
+    `Version: ${s.overview.version||'1.0'}`,
+    '',
+    `OBJECTIVES`,
+    s.objectives.summary||'',
+    '',
+    `GOALS`,
+    ...s.objectives.goals.filter(Boolean).map(g=>'• '+g),
+    '',
+    `IN SCOPE`,
+    s.scope.inScope||'',
+    '',
+    `OUT OF SCOPE`,
+    s.scope.outOfScope||'',
+    '',
+    `DELIVERABLES`,
+    ...s.deliverablesList.map((d,i)=>`${i+1}. ${d.name} (${d.phase||'—'}) — Due: ${d.dueDate||'TBD'}`),
+    '',
+    `MILESTONES`,
+    ...s.milestones.map((m,i)=>`${i+1}. ${m.name} — ${m.dueDate||'TBD'}${m.critical?' ★ Critical':''}`),
+    '',
+    `BUDGET: ${formatCurrency(calcBudgetTotal())}`,
+    `Payment Terms: ${s.budget.paymentTerms||'Net 30'}`,
+    `Deposit: ${s.budget.depositPercent||50}%`,
+  ].join('\n');
+  navigator.clipboard.writeText(lines).then(()=>toast('Copied to clipboard ✓')).catch(()=>toast('Copy failed — try selecting the preview text'));
+}
+
+function printSOW() { window.print(); }
+
+// ─── TABS ─────────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab-content').forEach(el=>el.style.display='none');
+  document.getElementById('tab-'+tab).style.display='block';
+  document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    if(btn.textContent.toLowerCase().includes(tab.substring(0,4).toLowerCase())) btn.classList.add('active');
+  });
+  document.querySelectorAll('.nav-item[data-tab]').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.tab===tab);
+  });
+  if(tab==='preview') renderPreview();
+  if(tab==='compare') renderCompare();
+  if(tab==='library') renderLibrary();
+  if(tab==='deliverables') renderDeliverables();
+  if(tab==='timeline') { renderMilestones(); renderGantt(); }
+  if(tab==='budget') renderBudget();
+  if(tab==='changeorders') renderChangeOrders();
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function formatCurrency(n){ return '$'+(parseFloat(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2800);
+}
+function updateSidebarName(){
+  document.getElementById('sidebar-sow-name').textContent = state.overview.projectTitle||'Untitled SOW';
+}
+function updateSidebarBadge(){
+  const b=document.getElementById('sidebar-status');
+  b.textContent=state.status;
+  b.className='badge badge-'+state.status.toLowerCase();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+loadLibrary();
+document.getElementById('sidebar-date').textContent = new Date().toLocaleDateString();
+renderWizard();
+renderDeliverables();
+</script>
+</body>
+</html>
