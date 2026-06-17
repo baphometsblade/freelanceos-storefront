@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Blueprint Builder — Map Your Freelance Service Experience | FreelanceOS</title>
+<meta name="description" content="Free interactive service blueprint tool for freelancers. Map client touchpoints, identify pain points, optimize your service delivery across 5 lanes — from first contact to follow-up.">
+<meta name="keywords" content="service blueprint, service design, client experience, freelancer tools, touchpoint mapping, service optimization">
+<meta property="og:title" content="Service Blueprint Builder — Map Your Freelance Service Experience">
+<meta property="og:description" content="Visual service design tool to map every step of your client experience. Identify touchpoints, pain points, and improvement opportunities.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.pro/freelanceos-storefront/service-blueprint.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Service Blueprint Builder — FreelanceOS">
+<meta name="twitter:description" content="Map your freelance service experience across 5 lanes. Identify pain points and optimize delivery.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Service Blueprint Builder",
+  "description": "Visual service design tool for freelancers to map client touchpoints, identify pain points, and optimize service delivery.",
+  "url": "https://freelanceos.pro/freelanceos-storefront/service-blueprint.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#020617;--card:#0f172a;--accent-1:#a855f7;--accent-2:#ec4899;
+  --text:#e2e8f0;--text-secondary:#94a3b8;--border:rgba(168,85,247,0.2);
+  --gradient:linear-gradient(135deg,#a855f7,#ec4899);
+  --glass:rgba(15,23,42,0.7);--radius:16px;--radius-sm:12px;
+  --lane-client:#8b5cf6;--lane-front:#3b82f6;--lane-back:#f59e0b;
+  --lane-support:#10b981;--lane-evidence:#ef4444;
+}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--accent-1);text-decoration:none}a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer;border:none;font-size:0.9rem}
+input,select,textarea{font-family:inherit;background:rgba(15,23,42,0.8);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:10px 14px;font-size:0.9rem;width:100%;transition:border-color 0.3s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent-1)}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+textarea{resize:vertical;min-height:70px}
+.container{max-width:1400px;margin:0 auto;padding:0 20px}
+
+/* Header */
+.header{padding:30px 0 20px;text-align:center;position:relative}
+.header::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:200px;height:2px;background:var(--gradient);border-radius:2px}
+.header h1{font-size:2.2rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;letter-spacing:-0.5px}
+.header p{color:var(--text-secondary);font-size:1rem;max-width:600px;margin:0 auto}
+
+/* Navigation Tabs */
+.nav-tabs{display:flex;gap:6px;padding:20px 0 16px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:10px 18px;border-radius:var(--radius-sm);background:var(--card);border:1px solid var(--border);color:var(--text-secondary);font-size:0.85rem;font-weight:500;white-space:nowrap;transition:all 0.3s}
+.nav-tab:hover{border-color:var(--accent-1);color:var(--text)}
+.nav-tab.active{background:var(--gradient);color:#fff;border-color:transparent}
+
+/* Panels */
+.panel{display:none;animation:fadeIn 0.3s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px;backdrop-filter:blur(20px);transition:border-color 0.3s}
+.card:hover{border-color:rgba(168,85,247,0.4)}
+.card-title{font-size:1.1rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+
+/* Buttons */
+.btn{padding:10px 20px;border-radius:var(--radius-sm);font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--gradient);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(168,85,247,0.3)}
+.btn-secondary{background:rgba(168,85,247,0.15);color:var(--accent-1);border:1px solid var(--border)}
+.btn-secondary:hover{background:rgba(168,85,247,0.25)}
+.btn-danger{background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.2)}
+.btn-danger:hover{background:rgba(239,68,68,0.25)}
+.btn-sm{padding:6px 14px;font-size:0.8rem}
+
+/* Form Groups */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:0.8rem;color:var(--text-secondary);margin-bottom:4px;font-weight:500}
+
+/* Blueprint Canvas */
+.blueprint-canvas{overflow-x:auto;padding:20px 0}
+.lanes-container{display:flex;flex-direction:column;gap:2px;min-width:800px}
+.lane{display:flex;align-items:stretch;min-height:90px;position:relative}
+.lane-label{width:140px;min-width:140px;padding:12px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#fff;text-align:center;border-radius:8px 0 0 8px;writing-mode:horizontal-tb}
+.lane-label.client{background:var(--lane-client)}
+.lane-label.front{background:var(--lane-front)}
+.lane-label.back{background:var(--lane-back)}
+.lane-label.support{background:var(--lane-support)}
+.lane-label.evidence{background:var(--lane-evidence)}
+.lane-content{flex:1;display:flex;gap:8px;padding:8px;background:rgba(15,23,42,0.5);border:1px solid rgba(255,255,255,0.05);border-left:none;border-radius:0 8px 8px 0;overflow-x:auto;align-items:center;min-height:90px}
+.lane-content::-webkit-scrollbar{height:4px}
+.lane-content::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.step-card{min-width:180px;max-width:220px;padding:12px;background:var(--card);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.3s;position:relative;flex-shrink:0}
+.step-card:hover{transform:translateY(-3px);border-color:var(--accent-1);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.step-card .step-title{font-size:0.82rem;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.step-card .step-desc{font-size:0.72rem;color:var(--text-secondary);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.step-card .step-duration{font-size:0.7rem;color:var(--accent-1);margin-top:6px;font-weight:500}
+.step-card .step-badges{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.step-badge{font-size:0.6rem;padding:2px 6px;border-radius:4px;font-weight:600}
+.step-badge.pain{background:rgba(239,68,68,0.2);color:#ef4444}
+.step-badge.mot{background:rgba(168,85,247,0.2);color:#a855f7}
+.step-badge.touch{background:rgba(59,130,246,0.2);color:#3b82f6}
+.step-card .step-actions{position:absolute;top:6px;right:6px;display:none;gap:2px}
+.step-card:hover .step-actions{display:flex}
+.step-action-btn{width:22px;height:22px;border-radius:4px;background:rgba(0,0,0,0.5);color:var(--text-secondary);display:flex;align-items:center;justify-content:center;font-size:0.7rem;border:none;cursor:pointer;transition:all 0.2s}
+.step-action-btn:hover{color:#fff;background:rgba(168,85,247,0.4)}
+.add-step-btn{min-width:60px;height:60px;border:2px dashed var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--text-secondary);cursor:pointer;transition:all 0.3s;background:transparent;flex-shrink:0}
+.add-step-btn:hover{border-color:var(--accent-1);color:var(--accent-1)}
+
+/* Divider Lines */
+.lane-divider{height:2px;background:rgba(255,255,255,0.03);margin:0 0 0 140px}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:560px;width:90%;max-height:85vh;overflow-y:auto;animation:modalIn 0.3s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+.modal h3{font-size:1.2rem;font-weight:700;margin-bottom:16px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+
+/* Metrics */
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+.metric-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}
+.metric-value{font-size:2rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.metric-label{font-size:0.8rem;color:var(--text-secondary);margin-top:4px}
+
+/* Timeline */
+.timeline-bar{display:flex;height:50px;border-radius:8px;overflow:hidden;margin:12px 0;gap:2px}
+.timeline-segment{display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;color:#fff;padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all 0.3s}
+.timeline-segment:hover{filter:brightness(1.2)}
+
+/* Improvement Items */
+.improvement-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px}
+.improvement-item .imp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.improvement-item .imp-title{font-weight:600;font-size:0.9rem}
+.improvement-item .imp-scores{display:flex;gap:12px}
+.imp-score{font-size:0.75rem;color:var(--text-secondary)}
+.imp-score span{font-weight:700;color:var(--accent-1)}
+.severity-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.severity-low{background:#10b981}
+.severity-medium{background:#f59e0b}
+.severity-high{background:#ef4444}
+
+/* Touchpoint Rating */
+.rating-stars{display:flex;gap:2px}
+.rating-star{font-size:1.1rem;cursor:pointer;color:rgba(255,255,255,0.15);transition:color 0.2s}
+.rating-star.filled{color:#f59e0b}
+.rating-star:hover{color:#f59e0b}
+
+/* Template Grid */
+.template-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.template-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all 0.3s}
+.template-card:hover{transform:translateY(-4px);border-color:var(--accent-1);box-shadow:0 12px 30px rgba(168,85,247,0.15)}
+.template-card .tmpl-icon{font-size:2rem;margin-bottom:10px}
+.template-card .tmpl-name{font-weight:700;margin-bottom:4px}
+.template-card .tmpl-desc{font-size:0.82rem;color:var(--text-secondary)}
+.template-card .tmpl-steps{font-size:0.75rem;color:var(--accent-1);margin-top:8px}
+
+/* CTA Banner */
+.cta-banner{background:var(--gradient);border-radius:var(--radius);padding:28px;text-align:center;margin:30px 0}
+.cta-banner h3{font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:8px}
+.cta-banner p{color:rgba(255,255,255,0.9);margin-bottom:16px;font-size:0.95rem}
+.cta-banner .cta-btn{background:#fff;color:#7c3aed;padding:12px 28px;border-radius:var(--radius-sm);font-weight:700;font-size:1rem;transition:all 0.3s;display:inline-block}
+.cta-banner .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,0.2);text-decoration:none}
+
+/* Footer */
+.footer{padding:30px 0;text-align:center;border-top:1px solid var(--border);margin-top:30px}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.footer p{color:var(--text-secondary);font-size:0.82rem}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* Responsive */
+@media(max-width:768px){
+  .header h1{font-size:1.6rem}
+  .form-row{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .nav-tabs{gap:4px}
+  .nav-tab{padding:8px 14px;font-size:0.8rem}
+  .lane-label{width:80px;min-width:80px;font-size:0.6rem}
+  .template-grid{grid-template-columns:1fr}
+}
+
+/* Quality Score Gauge */
+.gauge-wrap{display:flex;align-items:center;justify-content:center;margin:16px 0}
+.gauge-ring{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--accent-1) calc(var(--score)*3.6deg),rgba(255,255,255,0.05) 0);display:flex;align-items:center;justify-content:center;position:relative}
+.gauge-inner{width:96px;height:96px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column}
+.gauge-number{font-size:1.8rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gauge-label{font-size:0.65rem;color:var(--text-secondary)}
+
+/* Empty state */
+.empty-state{text-align:center;padding:50px 20px;color:var(--text-secondary)}
+.empty-state .empty-icon{font-size:3rem;margin-bottom:12px;opacity:0.4}
+.empty-state p{font-size:0.95rem;margin-bottom:16px}
+
+/* Checklist export */
+.checklist-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.checklist-box{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <header class="header">
+    <h1>Service Blueprint Builder</h1>
+    <p>Map every step of your client service experience. Identify touchpoints, pain points, and moments of truth.</p>
+  </header>
+
+  <!-- Nav Tabs -->
+  <nav class="nav-tabs" id="navTabs">
+    <button class="nav-tab active" data-tab="blueprint">Blueprint Canvas</button>
+    <button class="nav-tab" data-tab="templates">Templates</button>
+    <button class="nav-tab" data-tab="steps">Step Builder</button>
+    <button class="nav-tab" data-tab="painpoints">Pain Points</button>
+    <button class="nav-tab" data-tab="touchpoints">Touchpoints</button>
+    <button class="nav-tab" data-tab="timeline">Time Map</button>
+    <button class="nav-tab" data-tab="moments">Moments of Truth</button>
+    <button class="nav-tab" data-tab="metrics">Metrics</button>
+    <button class="nav-tab" data-tab="improvements">Improvements</button>
+    <button class="nav-tab" data-tab="export">Export</button>
+  </nav>
+
+  <!-- BLUEPRINT CANVAS -->
+  <div class="panel active" id="panel-blueprint">
+    <div class="card" style="margin-bottom:12px;padding:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div>
+          <input type="text" id="blueprintName" placeholder="Blueprint Name" value="My Service Blueprint" style="background:transparent;border:none;font-size:1.2rem;font-weight:700;color:var(--text);width:320px;padding:4px 0">
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm" onclick="openTab('templates')">Load Template</button>
+          <button class="btn btn-danger btn-sm" onclick="clearBlueprint()">Clear All</button>
+        </div>
+      </div>
+    </div>
+    <div class="blueprint-canvas" id="blueprintCanvas">
+      <div class="lanes-container" id="lanesContainer"></div>
+    </div>
+  </div>
+
+  <!-- TEMPLATES -->
+  <div class="panel" id="panel-templates">
+    <div class="card">
+      <div class="card-title">&#128218; Service Templates</div>
+      <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:16px">Choose a pre-built blueprint to get started quickly. You can customize it after loading.</p>
+      <div class="template-grid" id="templateGrid"></div>
+    </div>
+  </div>
+
+  <!-- STEP BUILDER -->
+  <div class="panel" id="panel-steps">
+    <div class="card">
+      <div class="card-title">&#128295; Add New Step</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Step Title</label>
+          <input type="text" id="stepTitle" placeholder="e.g., Discovery Call">
+        </div>
+        <div class="form-group">
+          <label>Lane</label>
+          <select id="stepLane">
+            <option value="client">Client Actions</option>
+            <option value="front">Frontstage (Visible)</option>
+            <option value="back">Backstage (Internal)</option>
+            <option value="support">Support Processes</option>
+            <option value="evidence">Physical Evidence</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="stepDesc" placeholder="What happens at this step?"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Duration Estimate</label>
+          <input type="text" id="stepDuration" placeholder="e.g., 1 hour, 2 days">
+        </div>
+        <div class="form-group">
+          <label>Phase</label>
+          <select id="stepPhase">
+            <option value="discovery">Discovery</option>
+            <option value="proposal">Proposal</option>
+            <option value="onboarding">Onboarding</option>
+            <option value="execution">Execution</option>
+            <option value="delivery">Delivery</option>
+            <option value="followup">Follow-up</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tools Needed (comma-separated)</label>
+        <input type="text" id="stepTools" placeholder="e.g., Zoom, Notion, Figma">
+      </div>
+      <div class="form-group">
+        <label>Deliverables (comma-separated)</label>
+        <input type="text" id="stepDeliverables" placeholder="e.g., Meeting notes, Project brief">
+      </div>
+      <div class="form-group">
+        <label>Potential Failure Points</label>
+        <textarea id="stepFailures" placeholder="What could go wrong?"></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="addStep()">Add Step to Blueprint</button>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-title">&#128203; All Steps</div>
+      <div id="allStepsList"></div>
+    </div>
+  </div>
+
+  <!-- PAIN POINTS -->
+  <div class="panel" id="panel-painpoints">
+    <div class="card">
+      <div class="card-title">&#9888;&#65039; Pain Point Identifier</div>
+      <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:16px">Flag steps where clients commonly get frustrated. Click a step below to add or edit its pain point.</p>
+      <div id="painPointList"></div>
+    </div>
+  </div>
+
+  <!-- TOUCHPOINTS -->
+  <div class="panel" id="panel-touchpoints">
+    <div class="card">
+      <div class="card-title">&#128172; Touchpoint Analyzer</div>
+      <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:16px">Identify every client interaction point. Rate quality and spot gaps.</p>
+      <div id="touchpointList"></div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="panel" id="panel-timeline">
+    <div class="card">
+      <div class="card-title">&#9202; Time Map</div>
+      <div id="timelineContent"></div>
+    </div>
+  </div>
+
+  <!-- MOMENTS OF TRUTH -->
+  <div class="panel" id="panel-moments">
+    <div class="card">
+      <div class="card-title">&#11088; Moments of Truth</div>
+      <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:16px">Mark the 3-5 moments that most impact client satisfaction. Click a step to toggle it as a Moment of Truth.</p>
+      <div id="momentsList"></div>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="panel" id="panel-metrics">
+    <div class="card">
+      <div class="card-title">&#128202; Service Metrics</div>
+      <div class="metrics-grid" id="metricsGrid"></div>
+      <div class="gauge-wrap" id="gaugeWrap"></div>
+    </div>
+  </div>
+
+  <!-- IMPROVEMENTS -->
+  <div class="panel" id="panel-improvements">
+    <div class="card">
+      <div class="card-title">&#128161; Improvement Planner</div>
+      <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:16px">For each pain point, get actionable improvements with effort/impact scoring.</p>
+      <div id="improvementsList"></div>
+    </div>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="panel" id="panel-export">
+    <div class="card">
+      <div class="card-title">&#128229; Export Options</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="exportPrintable()">&#128424; Printable Blueprint</button>
+        <button class="btn btn-secondary" onclick="exportChecklist()">&#9989; Improvement Checklist</button>
+        <button class="btn btn-secondary" onclick="exportJSON()">&#128190; JSON Backup</button>
+        <button class="btn btn-secondary" onclick="importJSON()">&#128194; Import JSON</button>
+      </div>
+    </div>
+    <div id="exportPreview" style="margin-top:16px"></div>
+    <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImport(event)">
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <h3>Get the complete FreelanceOS Pro system</h3>
+    <p>40% OFF with code FLASH40 — Templates, workflows, and automation for your entire freelance business</p>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="cta-btn">Claim 40% OFF Now</a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/freelanceos-storefront/free-templates.html">Free Templates</a>
+      <a href="/freelanceos-storefront/">FreelanceOS Storefront</a>
+    </div>
+    <p>&copy; 2026 FreelanceOS. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- Step Edit Modal -->
+<div class="modal-overlay" id="stepModal">
+  <div class="modal">
+    <h3 id="modalTitle">Edit Step</h3>
+    <input type="hidden" id="editStepId">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Step Title</label>
+        <input type="text" id="editStepTitle">
+      </div>
+      <div class="form-group">
+        <label>Lane</label>
+        <select id="editStepLane">
+          <option value="client">Client Actions</option>
+          <option value="front">Frontstage (Visible)</option>
+          <option value="back">Backstage (Internal)</option>
+          <option value="support">Support Processes</option>
+          <option value="evidence">Physical Evidence</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="editStepDesc"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Duration</label>
+        <input type="text" id="editStepDuration">
+      </div>
+      <div class="form-group">
+        <label>Phase</label>
+        <select id="editStepPhase">
+          <option value="discovery">Discovery</option>
+          <option value="proposal">Proposal</option>
+          <option value="onboarding">Onboarding</option>
+          <option value="execution">Execution</option>
+          <option value="delivery">Delivery</option>
+          <option value="followup">Follow-up</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Tools Needed</label>
+      <input type="text" id="editStepTools">
+    </div>
+    <div class="form-group">
+      <label>Deliverables</label>
+      <input type="text" id="editStepDeliverables">
+    </div>
+    <div class="form-group">
+      <label>Potential Failure Points</label>
+      <textarea id="editStepFailures"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditedStep()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pain Point Modal -->
+<div class="modal-overlay" id="painModal">
+  <div class="modal">
+    <h3>Flag Pain Point</h3>
+    <input type="hidden" id="painStepId">
+    <div class="form-group">
+      <label>What frustrates the client here?</label>
+      <textarea id="painDescription" placeholder="Describe the friction or frustration..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Severity</label>
+      <select id="painSeverity">
+        <option value="low">Low — Minor inconvenience</option>
+        <option value="medium">Medium — Noticeable friction</option>
+        <option value="high">High — Deal-breaking frustration</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Improvement Suggestion</label>
+      <textarea id="painSuggestion" placeholder="How could this be improved?"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-danger btn-sm" onclick="removePainPoint()" id="removePainBtn" style="display:none;margin-right:auto">Remove</button>
+      <button class="btn btn-secondary" onclick="closePainModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePainPoint()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Touchpoint Modal -->
+<div class="modal-overlay" id="touchModal">
+  <div class="modal">
+    <h3>Rate Touchpoint</h3>
+    <input type="hidden" id="touchStepId">
+    <div class="form-group">
+      <label>Is this a client touchpoint?</label>
+      <select id="touchIsActive">
+        <option value="yes">Yes — Client interacts here</option>
+        <option value="no">No — No direct interaction</option>
+      </select>
+    </div>
+    <div class="form-group" id="touchDetailsGroup">
+      <label>Interaction Type</label>
+      <select id="touchType">
+        <option value="call">Phone/Video Call</option>
+        <option value="email">Email</option>
+        <option value="message">Chat/Message</option>
+        <option value="meeting">In-Person Meeting</option>
+        <option value="document">Document Shared</option>
+        <option value="portal">Portal/Dashboard</option>
+        <option value="delivery">Deliverable Sent</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-group" id="touchRatingGroup">
+      <label>Quality Rating</label>
+      <div class="rating-stars" id="touchRating">
+        <span class="rating-star" data-val="1">&#9733;</span>
+        <span class="rating-star" data-val="2">&#9733;</span>
+        <span class="rating-star" data-val="3">&#9733;</span>
+        <span class="rating-star" data-val="4">&#9733;</span>
+        <span class="rating-star" data-val="5">&#9733;</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea id="touchNotes" placeholder="Quality observations..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeTouchModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTouchpoint()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Moment of Truth Modal -->
+<div class="modal-overlay" id="motModal">
+  <div class="modal">
+    <h3>&#11088; Moment of Truth</h3>
+    <input type="hidden" id="motStepId">
+    <div class="form-group">
+      <label>Why is this moment critical?</label>
+      <textarea id="motWhy" placeholder="What makes this moment decisive for client satisfaction?"></textarea>
+    </div>
+    <div class="form-group">
+      <label>How to make it exceptional</label>
+      <textarea id="motHow" placeholder="Specific actions to wow the client..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-danger btn-sm" onclick="removeMoT()" id="removeMoTBtn" style="display:none;margin-right:auto">Remove</button>
+      <button class="btn btn-secondary" onclick="closeMoTModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveMoT()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   STATE
+   ============================================================ */
+const LANES = ['client','front','back','support','evidence'];
+const LANE_LABELS = {client:'Client Actions',front:'Frontstage',back:'Backstage',support:'Support Processes',evidence:'Physical Evidence'};
+const PHASE_COLORS = {discovery:'#8b5cf6',proposal:'#3b82f6',onboarding:'#06b6d4',execution:'#10b981',delivery:'#f59e0b',followup:'#ef4444'};
+const PHASE_LABELS = {discovery:'Discovery',proposal:'Proposal',onboarding:'Onboarding',execution:'Execution',delivery:'Delivery',followup:'Follow-up'};
+
+let state = loadState();
+
+function defaultState(){
+  return {name:'My Service Blueprint',steps:[],painPoints:{},touchpoints:{},momentsOfTruth:{},improvements:{}};
+}
+function loadState(){
+  try{const s=localStorage.getItem('sb_state');return s?JSON.parse(s):defaultState();}catch(e){return defaultState();}
+}
+function saveState(){
+  localStorage.setItem('sb_state',JSON.stringify(state));
+}
+function uid(){return 's'+Date.now()+'_'+Math.random().toString(36).slice(2,8);}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+document.querySelectorAll('.nav-tab').forEach(t=>{
+  t.addEventListener('click',()=>openTab(t.dataset.tab));
+});
+function openTab(tab){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
+  renderCurrentPanel(tab);
+}
+function renderCurrentPanel(tab){
+  switch(tab){
+    case 'blueprint':renderCanvas();break;
+    case 'templates':renderTemplates();break;
+    case 'steps':renderStepsList();break;
+    case 'painpoints':renderPainPoints();break;
+    case 'touchpoints':renderTouchpoints();break;
+    case 'timeline':renderTimeline();break;
+    case 'moments':renderMoments();break;
+    case 'metrics':renderMetrics();break;
+    case 'improvements':renderImprovements();break;
+  }
+}
+
+/* ============================================================
+   BLUEPRINT CANVAS
+   ============================================================ */
+function renderCanvas(){
+  document.getElementById('blueprintName').value=state.name;
+  const c=document.getElementById('lanesContainer');
+  c.innerHTML='';
+  const phases=['discovery','proposal','onboarding','execution','delivery','followup'];
+  LANES.forEach((lane,li)=>{
+    if(li>0){const d=document.createElement('div');d.className='lane-divider';c.appendChild(d);}
+    const row=document.createElement('div');row.className='lane';
+    const lbl=document.createElement('div');lbl.className='lane-label '+lane;
+    lbl.textContent=LANE_LABELS[lane];
+    row.appendChild(lbl);
+    const content=document.createElement('div');content.className='lane-content';
+    // Sort steps by phase order then by creation
+    const laneSteps=state.steps.filter(s=>s.lane===lane).sort((a,b)=>{
+      const pi=phases.indexOf(a.phase)-phases.indexOf(b.phase);
+      return pi!==0?pi:(a.order||0)-(b.order||0);
+    });
+    laneSteps.forEach(s=>{
+      const card=document.createElement('div');card.className='step-card';
+      card.style.borderLeftColor=PHASE_COLORS[s.phase]||'var(--accent-1)';
+      card.style.borderLeftWidth='3px';
+      let badges='';
+      if(state.painPoints[s.id])badges+=`<span class="step-badge pain">Pain</span>`;
+      if(state.momentsOfTruth[s.id])badges+=`<span class="step-badge mot">MoT</span>`;
+      if(state.touchpoints[s.id]&&state.touchpoints[s.id].active)badges+=`<span class="step-badge touch">Touch</span>`;
+      card.innerHTML=`
+        <div class="step-actions">
+          <button class="step-action-btn" onclick="event.stopPropagation();editStep('${s.id}')" title="Edit">&#9998;</button>
+          <button class="step-action-btn" onclick="event.stopPropagation();deleteStep('${s.id}')" title="Delete">&#10005;</button>
+        </div>
+        <div class="step-title">${esc(s.title)}</div>
+        <div class="step-desc">${esc(s.description||'')}</div>
+        ${s.duration?`<div class="step-duration">${esc(s.duration)}</div>`:''}
+        <div class="step-badges">${badges}</div>`;
+      card.onclick=()=>editStep(s.id);
+      content.appendChild(card);
+    });
+    const addBtn=document.createElement('button');addBtn.className='add-step-btn';addBtn.textContent='+';
+    addBtn.title='Add step to '+LANE_LABELS[lane];
+    addBtn.onclick=()=>{document.getElementById('stepLane').value=lane;openTab('steps');};
+    content.appendChild(addBtn);
+    row.appendChild(content);
+    c.appendChild(row);
+  });
+}
+document.getElementById('blueprintName').addEventListener('input',function(){state.name=this.value;saveState();});
+
+/* ============================================================
+   STEP BUILDER
+   ============================================================ */
+function addStep(){
+  const title=document.getElementById('stepTitle').value.trim();
+  if(!title){alert('Please enter a step title.');return;}
+  const step={
+    id:uid(),
+    title:title,
+    description:document.getElementById('stepDesc').value.trim(),
+    lane:document.getElementById('stepLane').value,
+    duration:document.getElementById('stepDuration').value.trim(),
+    phase:document.getElementById('stepPhase').value,
+    tools:document.getElementById('stepTools').value.trim(),
+    deliverables:document.getElementById('stepDeliverables').value.trim(),
+    failures:document.getElementById('stepFailures').value.trim(),
+    order:state.steps.length
+  };
+  state.steps.push(step);
+  saveState();
+  // Clear form
+  ['stepTitle','stepDesc','stepDuration','stepTools','stepDeliverables','stepFailures'].forEach(id=>document.getElementById(id).value='');
+  renderStepsList();
+  renderCanvas();
+}
+
+function renderStepsList(){
+  const el=document.getElementById('allStepsList');
+  if(!state.steps.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">&#128203;</div><p>No steps yet. Add your first step above or load a template.</p></div>';return;}
+  const phases=['discovery','proposal','onboarding','execution','delivery','followup'];
+  let html='';
+  phases.forEach(phase=>{
+    const phaseSteps=state.steps.filter(s=>s.phase===phase);
+    if(!phaseSteps.length)return;
+    html+=`<div style="margin-bottom:16px"><div style="font-size:0.8rem;font-weight:700;color:${PHASE_COLORS[phase]};text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-left:4px">${PHASE_LABELS[phase]}</div>`;
+    phaseSteps.forEach(s=>{
+      html+=`<div class="improvement-item" style="cursor:pointer" onclick="editStep('${s.id}')">
+        <div class="imp-header">
+          <span class="imp-title">${esc(s.title)}</span>
+          <span style="font-size:0.75rem;color:var(--text-secondary)">${LANE_LABELS[s.lane]}</span>
+        </div>
+        ${s.description?`<div style="font-size:0.82rem;color:var(--text-secondary)">${esc(s.description)}</div>`:''}
+        <div style="display:flex;gap:12px;margin-top:6px;flex-wrap:wrap">
+          ${s.duration?`<span style="font-size:0.75rem;color:var(--accent-1)">&#9202; ${esc(s.duration)}</span>`:''}
+          ${s.tools?`<span style="font-size:0.75rem;color:var(--text-secondary)">&#128295; ${esc(s.tools)}</span>`:''}
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+  el.innerHTML=html;
+}
+
+/* ============================================================
+   EDIT STEP MODAL
+   ============================================================ */
+function editStep(id){
+  const s=state.steps.find(x=>x.id===id);if(!s)return;
+  document.getElementById('editStepId').value=id;
+  document.getElementById('editStepTitle').value=s.title;
+  document.getElementById('editStepLane').value=s.lane;
+  document.getElementById('editStepDesc').value=s.description||'';
+  document.getElementById('editStepDuration').value=s.duration||'';
+  document.getElementById('editStepPhase').value=s.phase||'discovery';
+  document.getElementById('editStepTools').value=s.tools||'';
+  document.getElementById('editStepDeliverables').value=s.deliverables||'';
+  document.getElementById('editStepFailures').value=s.failures||'';
+  document.getElementById('modalTitle').textContent='Edit: '+s.title;
+  document.getElementById('stepModal').classList.add('open');
+}
+function closeModal(){document.getElementById('stepModal').classList.remove('open');}
+function saveEditedStep(){
+  const id=document.getElementById('editStepId').value;
+  const s=state.steps.find(x=>x.id===id);if(!s)return;
+  s.title=document.getElementById('editStepTitle').value.trim()||s.title;
+  s.lane=document.getElementById('editStepLane').value;
+  s.description=document.getElementById('editStepDesc').value.trim();
+  s.duration=document.getElementById('editStepDuration').value.trim();
+  s.phase=document.getElementById('editStepPhase').value;
+  s.tools=document.getElementById('editStepTools').value.trim();
+  s.deliverables=document.getElementById('editStepDeliverables').value.trim();
+  s.failures=document.getElementById('editStepFailures').value.trim();
+  saveState();closeModal();renderCanvas();renderStepsList();
+}
+function deleteStep(id){
+  if(!confirm('Delete this step?'))return;
+  state.steps=state.steps.filter(s=>s.id!==id);
+  delete state.painPoints[id];delete state.touchpoints[id];delete state.momentsOfTruth[id];delete state.improvements[id];
+  saveState();renderCanvas();renderStepsList();
+}
+function clearBlueprint(){
+  if(!confirm('Clear the entire blueprint? This cannot be undone.'))return;
+  state=defaultState();saveState();renderCanvas();
+}
+
+/* ============================================================
+   PAIN POINTS
+   ============================================================ */
+function renderPainPoints(){
+  const el=document.getElementById('painPointList');
+  if(!state.steps.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">&#128203;</div><p>Add steps to your blueprint first.</p></div>';return;}
+  let html='';
+  state.steps.forEach(s=>{
+    const pp=state.painPoints[s.id];
+    const sev=pp?pp.severity:'none';
+    const dotClass=sev==='high'?'severity-high':sev==='medium'?'severity-medium':sev==='low'?'severity-low':'';
+    html+=`<div class="improvement-item" style="cursor:pointer;border-left:3px solid ${pp?({high:'#ef4444',medium:'#f59e0b',low:'#10b981'}[sev]||'transparent'):'transparent'}" onclick="openPainModal('${s.id}')">
+      <div class="imp-header">
+        <span class="imp-title">${pp?'<span class="severity-dot '+dotClass+'"></span>':''}${esc(s.title)}</span>
+        <span style="font-size:0.75rem;color:var(--text-secondary)">${LANE_LABELS[s.lane]}</span>
+      </div>
+      ${pp?`<div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px">${esc(pp.description)}</div>
+        ${pp.suggestion?`<div style="font-size:0.78rem;color:var(--accent-1);margin-top:4px">Suggestion: ${esc(pp.suggestion)}</div>`:''}`
+        :`<div style="font-size:0.82rem;color:var(--text-secondary);opacity:0.5">Click to flag a pain point</div>`}
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+function openPainModal(id){
+  const pp=state.painPoints[id];
+  document.getElementById('painStepId').value=id;
+  document.getElementById('painDescription').value=pp?pp.description:'';
+  document.getElementById('painSeverity').value=pp?pp.severity:'medium';
+  document.getElementById('painSuggestion').value=pp?pp.suggestion:'';
+  document.getElementById('removePainBtn').style.display=pp?'inline-flex':'none';
+  document.getElementById('painModal').classList.add('open');
+}
+function closePainModal(){document.getElementById('painModal').classList.remove('open');}
+function savePainPoint(){
+  const id=document.getElementById('painStepId').value;
+  const desc=document.getElementById('painDescription').value.trim();
+  if(!desc){alert('Please describe the pain point.');return;}
+  state.painPoints[id]={description:desc,severity:document.getElementById('painSeverity').value,suggestion:document.getElementById('painSuggestion').value.trim()};
+  saveState();closePainModal();renderPainPoints();renderCanvas();
+}
+function removePainPoint(){
+  const id=document.getElementById('painStepId').value;
+  delete state.painPoints[id];delete state.improvements[id];
+  saveState();closePainModal();renderPainPoints();renderCanvas();
+}
+
+/* ============================================================
+   TOUCHPOINTS
+   ============================================================ */
+let touchRatingVal=3;
+function renderTouchpoints(){
+  const el=document.getElementById('touchpointList');
+  if(!state.steps.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">&#128172;</div><p>Add steps to your blueprint first.</p></div>';return;}
+  let html='';
+  // Show gaps
+  const clientSteps=state.steps.filter(s=>s.lane==='client'||s.lane==='front');
+  const allStepsSorted=[...state.steps].sort((a,b)=>{
+    const phases=['discovery','proposal','onboarding','execution','delivery','followup'];
+    return phases.indexOf(a.phase)-phases.indexOf(b.phase)||(a.order||0)-(b.order||0);
+  });
+  let gapCount=0;
+  allStepsSorted.forEach(s=>{
+    const tp=state.touchpoints[s.id];
+    if(tp&&!tp.active)gapCount++;
+  });
+  if(gapCount>0){
+    html+=`<div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px;font-size:0.85rem">
+      <strong style="color:#ef4444">&#9888; ${gapCount} communication gap${gapCount>1?'s':''} detected</strong> — steps where no client interaction happens. Consider adding a touchpoint or status update.
+    </div>`;
+  }
+  state.steps.forEach(s=>{
+    const tp=state.touchpoints[s.id];
+    const stars=tp?tp.rating:0;
+    html+=`<div class="improvement-item" style="cursor:pointer;border-left:3px solid ${tp?(tp.active?'#3b82f6':'rgba(239,68,68,0.4)'):'transparent'}" onclick="openTouchModal('${s.id}')">
+      <div class="imp-header">
+        <span class="imp-title">${esc(s.title)}</span>
+        <span style="font-size:0.75rem;color:var(--text-secondary)">${LANE_LABELS[s.lane]}</span>
+      </div>
+      ${tp?`<div style="display:flex;align-items:center;gap:12px;margin-top:4px">
+        <span style="font-size:0.8rem;color:${tp.active?'#3b82f6':'#ef4444'}">${tp.active?'&#128172; '+esc(tp.type||'Contact'):'&#10060; No interaction'}</span>
+        ${tp.active?`<span style="color:#f59e0b;font-size:0.9rem">${'&#9733;'.repeat(tp.rating)}${'&#9734;'.repeat(5-tp.rating)}</span>`:''}
+      </div>${tp.notes?`<div style="font-size:0.78rem;color:var(--text-secondary);margin-top:4px">${esc(tp.notes)}</div>`:''}`
+      :`<div style="font-size:0.82rem;color:var(--text-secondary);opacity:0.5">Click to analyze touchpoint</div>`}
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+function openTouchModal(id){
+  const tp=state.touchpoints[id];
+  document.getElementById('touchStepId').value=id;
+  document.getElementById('touchIsActive').value=tp?(tp.active?'yes':'no'):'yes';
+  document.getElementById('touchType').value=tp?tp.type||'email':'email';
+  touchRatingVal=tp?tp.rating||3:3;
+  document.getElementById('touchNotes').value=tp?tp.notes||'':'';
+  updateTouchRatingStars();
+  toggleTouchDetails();
+  document.getElementById('touchModal').classList.add('open');
+}
+function closeTouchModal(){document.getElementById('touchModal').classList.remove('open');}
+function toggleTouchDetails(){
+  const active=document.getElementById('touchIsActive').value==='yes';
+  document.getElementById('touchDetailsGroup').style.display=active?'block':'none';
+  document.getElementById('touchRatingGroup').style.display=active?'block':'none';
+}
+document.getElementById('touchIsActive').addEventListener('change',toggleTouchDetails);
+function updateTouchRatingStars(){
+  document.querySelectorAll('#touchRating .rating-star').forEach(s=>{
+    s.classList.toggle('filled',parseInt(s.dataset.val)<=touchRatingVal);
+  });
+}
+document.querySelectorAll('#touchRating .rating-star').forEach(s=>{
+  s.addEventListener('click',()=>{touchRatingVal=parseInt(s.dataset.val);updateTouchRatingStars();});
+});
+function saveTouchpoint(){
+  const id=document.getElementById('touchStepId').value;
+  const active=document.getElementById('touchIsActive').value==='yes';
+  state.touchpoints[id]={active:active,type:active?document.getElementById('touchType').value:'',rating:active?touchRatingVal:0,notes:document.getElementById('touchNotes').value.trim()};
+  saveState();closeTouchModal();renderTouchpoints();renderCanvas();
+}
+
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+function parseDuration(str){
+  if(!str)return 0;
+  str=str.toLowerCase().trim();
+  let total=0;
+  const patterns=[
+    {re:/(\d+\.?\d*)\s*(?:week|wk|w)/,mult:40},
+    {re:/(\d+\.?\d*)\s*(?:day|d)/,mult:8},
+    {re:/(\d+\.?\d*)\s*(?:hour|hr|h)/,mult:1},
+    {re:/(\d+\.?\d*)\s*(?:min|m)/,mult:1/60}
+  ];
+  let matched=false;
+  patterns.forEach(p=>{const m=str.match(p.re);if(m){total+=parseFloat(m[1])*p.mult;matched=true;}});
+  if(!matched){const n=parseFloat(str);if(!isNaN(n))total=n;}
+  return total;
+}
+function renderTimeline(){
+  const el=document.getElementById('timelineContent');
+  if(!state.steps.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">&#9202;</div><p>Add steps with duration estimates to see your timeline.</p></div>';return;}
+  const phases=['discovery','proposal','onboarding','execution','delivery','followup'];
+  let phaseData={};
+  phases.forEach(p=>{phaseData[p]={steps:[],totalHours:0};});
+  state.steps.forEach(s=>{
+    const h=parseDuration(s.duration);
+    phaseData[s.phase].steps.push({...s,hours:h});
+    phaseData[s.phase].totalHours+=h;
+  });
+  const totalHours=Object.values(phaseData).reduce((a,p)=>a+p.totalHours,0);
+  // Critical path = longest phase
+  let criticalPhase='';let maxH=0;
+  phases.forEach(p=>{if(phaseData[p].totalHours>maxH){maxH=phaseData[p].totalHours;criticalPhase=p;}});
+
+  let html=`<div style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap">
+    <div style="font-size:0.85rem;color:var(--text-secondary)">Total estimated: <strong style="color:var(--text)">${formatHours(totalHours)}</strong></div>
+    ${criticalPhase?`<div style="font-size:0.85rem;color:var(--text-secondary)">Critical path: <strong style="color:${PHASE_COLORS[criticalPhase]}">${PHASE_LABELS[criticalPhase]}</strong></div>`:''}
+  </div>`;
+
+  if(totalHours>0){
+    html+=`<div class="timeline-bar">`;
+    phases.forEach(p=>{
+      const pd=phaseData[p];
+      if(!pd.totalHours)return;
+      const pct=Math.max((pd.totalHours/totalHours)*100,8);
+      const isCritical=p===criticalPhase;
+      html+=`<div class="timeline-segment" style="width:${pct}%;background:${PHASE_COLORS[p]};${isCritical?'box-shadow:0 0 15px '+PHASE_COLORS[p]+';':''}" title="${PHASE_LABELS[p]}: ${formatHours(pd.totalHours)}">${PHASE_LABELS[p]}</div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Phase details
+  phases.forEach(p=>{
+    const pd=phaseData[p];
+    if(!pd.steps.length)return;
+    html+=`<div style="margin-top:16px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div style="width:12px;height:12px;border-radius:3px;background:${PHASE_COLORS[p]}"></div>
+        <span style="font-weight:700;font-size:0.9rem">${PHASE_LABELS[p]}</span>
+        <span style="font-size:0.8rem;color:var(--text-secondary)">${formatHours(pd.totalHours)}</span>
+        ${p===criticalPhase?'<span style="font-size:0.7rem;background:rgba(239,68,68,0.2);color:#ef4444;padding:2px 8px;border-radius:4px">CRITICAL PATH</span>':''}
+      </div>`;
+    pd.steps.forEach(s=>{
+      html+=`<div style="margin-left:20px;padding:6px 0;font-size:0.82rem;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;justify-content:space-between">
+        <span>${esc(s.title)} <span style="color:var(--text-secondary)">(${LANE_LABELS[s.lane]})</span></span>
+        <span style="color:var(--accent-1)">${s.duration||'No estimate'}</span>
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+  el.innerHTML=html;
+}
+function formatHours(h){
+  if(h===0)return '0h';
+  if(h<1)return Math.round(h*60)+'min';
+  if(h<8)return Math.round(h*10)/10+'h';
+  const d=Math.floor(h/8);const r=Math.round((h%8)*10)/10;
+  return d+'d'+(r>0?' '+r+'h':'');
+}
+
+/* ============================================================
+   MOMENTS OF TRUTH
+   ============================================================ */
+function renderMoments(){
+  const el=document.getElementById('momentsList');
+  if(!state.steps.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">&#11088;</div><p>Add steps to your blueprint first.</p></div>';return;}
+  const motCount=Object.keys(state.momentsOfTruth).length;
+  let html=`<div style="margin-bottom:14px;font-size:0.85rem;color:var(--text-secondary)">${motCount} of 3-5 moments marked. ${motCount<3?'Mark at least 3 critical moments.':motCount>5?'Consider narrowing to your top 5.':'Good range!'}</div>`;
+  state.steps.forEach(s=>{
+    const mot=state.momentsOfTruth[s.id];
+    html+=`<div class="improvement-item" style="cursor:pointer;border-left:3px solid ${mot?'#a855f7':'transparent'}" onclick="openMoTModal('${s.id}')">
+      <div class="imp-header">
+        <span class="imp-title">${mot?'&#11088; ':''}${esc(s.title)}</span>
+        <span style="font-size:0.75rem;color:var(--text-secondary)">${LANE_LABELS[s.lane]} &middot; ${PHASE_LABELS[s.phase]}</span>
+      </div>
+      ${mot?`<div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px"><strong>Why critical:</strong> ${esc(mot.why)}</div>
+        <div style="font-size:0.82rem;color:var(--accent-1);margin-top:4px"><strong>Make exceptional:</strong> ${esc(mot.how)}</div>`
+      :`<div style="font-size:0.82rem;color:var(--text-secondary);opacity:0.5">Click to mark as Moment of Truth</div>`}
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+function openMoTModal(id){
+  const mot=state.momentsOfTruth[id];
+  document.getElementById('motStepId').value=id;
+  document.getElementById('motWhy').value=mot?mot.why:'';
+  document.getElementById('motHow').value=mot?mot.how:'';
+  document.getElementById('removeMoTBtn').style.display=mot?'inline-flex':'none';
+  document.getElementById('motModal').classList.add('open');
+}
+function closeMoTModal(){document.getElementById('motModal').classList.remove('open');}
+function saveMoT(){
+  const id=document.getElementById('motStepId').value;
+  const why=document.getElementById('motWhy').value.trim();
+  const how=document.getElementById('motHow').value.trim();
+  if(!why){alert('Please explain why this moment is critical.');return;}
+  state.momentsOfTruth[id]={why:why,how:how};
+  saveState();closeMoTModal();renderMoments();renderCanvas();
+}
+function removeMoT(){
+  const id=document.getElementById('motStepId').value;
+  delete state.momentsOfTruth[id];
+  saveState();closeMoTModal();renderMoments();renderCanvas();
+}
+
+/* ============================================================
+   METRICS
+   ============================================================ */
+function renderMetrics(){
+  const totalSteps=state.steps.length;
+  const totalHours=state.steps.reduce((a,s)=>a+parseDuration(s.duration),0);
+  const touchCount=Object.values(state.touchpoints).filter(t=>t.active).length;
+  const painCount=Object.keys(state.painPoints).length;
+  const motCount=Object.keys(state.momentsOfTruth).length;
+  const avgRating=touchCount?Object.values(state.touchpoints).filter(t=>t.active).reduce((a,t)=>a+t.rating,0)/touchCount:0;
+  const highPain=Object.values(state.painPoints).filter(p=>p.severity==='high').length;
+
+  // Quality score: 0-100
+  let score=50;
+  if(totalSteps>0){
+    // Coverage: do all phases have steps?
+    const phasesUsed=new Set(state.steps.map(s=>s.phase)).size;
+    score+=phasesUsed*3; // up to +18
+    // Touchpoints identified
+    const touchPct=totalSteps>0?Object.keys(state.touchpoints).length/totalSteps:0;
+    score+=Math.round(touchPct*15);
+    // Avg rating
+    score+=Math.round(avgRating*3); // up to +15
+    // Pain points identified (good to find them)
+    score+=Math.min(painCount*2,10);
+    // Moments of truth
+    if(motCount>=3&&motCount<=5)score+=10;else if(motCount>0)score+=5;
+    // Penalties
+    score-=highPain*5;
+    // Improvements planned
+    const impCount=Object.keys(state.improvements).length;
+    score+=Math.min(impCount*3,12);
+  }
+  score=Math.max(0,Math.min(100,score));
+
+  const grid=document.getElementById('metricsGrid');
+  grid.innerHTML=`
+    <div class="metric-card"><div class="metric-value">${totalSteps}</div><div class="metric-label">Total Steps</div></div>
+    <div class="metric-card"><div class="metric-value">${formatHours(totalHours)}</div><div class="metric-label">Est. Duration</div></div>
+    <div class="metric-card"><div class="metric-value">${touchCount}</div><div class="metric-label">Touchpoints</div></div>
+    <div class="metric-card"><div class="metric-value">${painCount}</div><div class="metric-label">Pain Points</div></div>
+    <div class="metric-card"><div class="metric-value">${motCount}</div><div class="metric-label">Moments of Truth</div></div>
+    <div class="metric-card"><div class="metric-value">${avgRating?avgRating.toFixed(1):'—'}</div><div class="metric-label">Avg Touchpoint Rating</div></div>`;
+
+  const gw=document.getElementById('gaugeWrap');
+  gw.innerHTML=`<div class="gauge-ring" style="--score:${score}"><div class="gauge-inner"><div class="gauge-number">${score}</div><div class="gauge-label">Quality Score</div></div></div>`;
+}
+
+/* ============================================================
+   IMPROVEMENTS
+   ============================================================ */
+const IMPROVEMENT_SUGGESTIONS = {
+  high: [
+    'Automate this step to reduce client wait time',
+    'Add a proactive status update before this step',
+    'Create a video walkthrough to set expectations',
+    'Assign a dedicated point of contact for this phase',
+    'Add a feedback checkpoint before proceeding'
+  ],
+  medium: [
+    'Create a template to standardize this step',
+    'Add calendar reminders for follow-ups',
+    'Document the process for consistency',
+    'Send a brief summary email after this step',
+    'Create a FAQ document for common questions'
+  ],
+  low: [
+    'Add optional resources for client reference',
+    'Include a thank-you note or check-in',
+    'Create a simple progress tracker',
+    'Batch similar tasks for efficiency',
+    'Add a self-service option for this step'
+  ]
+};
+
+function renderImprovements(){
+  const el=document.getElementById('improvementsList');
+  const painKeys=Object.keys(state.painPoints);
+  if(!painKeys.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">&#128161;</div><p>Flag pain points first to get improvement suggestions.</p><button class="btn btn-primary btn-sm" onclick="openTab(\'painpoints\')">Go to Pain Points</button></div>';return;}
+
+  let html='';
+  painKeys.forEach(id=>{
+    const step=state.steps.find(s=>s.id===id);if(!step)return;
+    const pp=state.painPoints[id];
+    const imp=state.improvements[id]||{};
+    const suggestions=IMPROVEMENT_SUGGESTIONS[pp.severity]||IMPROVEMENT_SUGGESTIONS.medium;
+    const sev=pp.severity;
+    const sevColor=sev==='high'?'#ef4444':sev==='medium'?'#f59e0b':'#10b981';
+
+    html+=`<div class="card" style="border-left:3px solid ${sevColor}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div class="card-title" style="margin-bottom:0"><span class="severity-dot severity-${sev}"></span>${esc(step.title)}</div>
+        <span style="font-size:0.75rem;color:${sevColor};text-transform:uppercase;font-weight:700">${sev} severity</span>
+      </div>
+      <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px">${esc(pp.description)}</div>
+      ${pp.suggestion?`<div style="font-size:0.85rem;color:var(--accent-1);margin-bottom:12px"><strong>Your suggestion:</strong> ${esc(pp.suggestion)}</div>`:''}
+      <div style="font-size:0.8rem;font-weight:700;margin-bottom:8px;color:var(--text)">Suggested Improvements:</div>`;
+
+    suggestions.forEach((sug,i)=>{
+      const key=id+'_'+i;
+      const planned=imp[key];
+      const effort=planned?planned.effort:'medium';
+      const impact=planned?planned.impact:'medium';
+      html+=`<div class="improvement-item" style="display:flex;align-items:center;gap:12px">
+        <input type="checkbox" ${planned&&planned.checked?'checked':''} onchange="toggleImpCheck('${id}','${key}',this.checked)" style="width:18px;height:18px;accent-color:var(--accent-1);flex-shrink:0">
+        <div style="flex:1">
+          <div style="font-size:0.85rem">${esc(sug)}</div>
+          <div style="display:flex;gap:12px;margin-top:4px">
+            <div class="imp-score">Effort: <select onchange="setImpScore('${id}','${key}','effort',this.value)" style="padding:2px 6px;font-size:0.75rem;width:auto;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:4px;color:var(--text)">
+              <option value="low" ${effort==='low'?'selected':''}>Low</option>
+              <option value="medium" ${effort==='medium'?'selected':''}>Medium</option>
+              <option value="high" ${effort==='high'?'selected':''}>High</option>
+            </select></div>
+            <div class="imp-score">Impact: <select onchange="setImpScore('${id}','${key}','impact',this.value)" style="padding:2px 6px;font-size:0.75rem;width:auto;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:4px;color:var(--text)">
+              <option value="low" ${impact==='low'?'selected':''}>Low</option>
+              <option value="medium" ${impact==='medium'?'selected':''}>Medium</option>
+              <option value="high" ${impact==='high'?'selected':''}>High</option>
+            </select></div>
+          </div>
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+  el.innerHTML=html;
+}
+function toggleImpCheck(stepId,key,checked){
+  if(!state.improvements[stepId])state.improvements[stepId]={};
+  if(!state.improvements[stepId][key])state.improvements[stepId][key]={effort:'medium',impact:'medium',checked:false};
+  state.improvements[stepId][key].checked=checked;
+  saveState();
+}
+function setImpScore(stepId,key,field,val){
+  if(!state.improvements[stepId])state.improvements[stepId]={};
+  if(!state.improvements[stepId][key])state.improvements[stepId][key]={effort:'medium',impact:'medium',checked:false};
+  state.improvements[stepId][key][field]=val;
+  saveState();
+}
+
+/* ============================================================
+   TEMPLATES
+   ============================================================ */
+const TEMPLATES=[
+{name:'Web Design Project',icon:'&#127760;',desc:'Full web design workflow from discovery to launch and handoff.',steps:[
+  {title:'Initial Inquiry',lane:'client',phase:'discovery',duration:'1 day',description:'Client fills out contact form or sends email',tools:'Website form, Email',deliverables:'Inquiry details',failures:'Form too complex, slow response time'},
+  {title:'Discovery Call',lane:'front',phase:'discovery',duration:'1 hour',description:'Video call to understand goals, audience, and requirements',tools:'Zoom, Notion',deliverables:'Meeting notes, requirements doc',failures:'Poor preparation, unclear scope'},
+  {title:'Research & Audit',lane:'back',phase:'discovery',duration:'4 hours',description:'Review current site, competitor analysis, audience research',tools:'Ahrefs, SimilarWeb',deliverables:'Research report',failures:'Insufficient research depth'},
+  {title:'Proposal & Quote',lane:'front',phase:'proposal',duration:'3 hours',description:'Create detailed proposal with scope, timeline, and pricing',tools:'Notion, Google Docs',deliverables:'Proposal PDF',failures:'Vague scope, pricing mismatch'},
+  {title:'Contract Signing',lane:'client',phase:'proposal',duration:'1 day',description:'Client reviews and signs contract, pays deposit',tools:'HelloSign, Stripe',deliverables:'Signed contract, deposit receipt',failures:'Legal concerns, payment friction'},
+  {title:'Onboarding Questionnaire',lane:'evidence',phase:'onboarding',duration:'2 days',description:'Client completes brand questionnaire and provides assets',tools:'Typeform, Google Drive',deliverables:'Brand assets, content',failures:'Client delay, incomplete assets'},
+  {title:'Project Setup',lane:'support',phase:'onboarding',duration:'2 hours',description:'Set up project management, file structure, dev environment',tools:'Notion, GitHub, Figma',deliverables:'Project workspace',failures:'Tool access issues'},
+  {title:'Wireframes',lane:'front',phase:'execution',duration:'2 days',description:'Create low-fidelity wireframes for key pages',tools:'Figma',deliverables:'Wireframe links',failures:'Misunderstood requirements'},
+  {title:'Wireframe Review',lane:'client',phase:'execution',duration:'1 day',description:'Client reviews wireframes and provides feedback',tools:'Figma comments',deliverables:'Feedback notes',failures:'Delayed feedback, scope creep'},
+  {title:'Visual Design',lane:'back',phase:'execution',duration:'5 days',description:'Create high-fidelity mockups based on approved wireframes',tools:'Figma',deliverables:'Design mockups',failures:'Design revisions loop'},
+  {title:'Design Presentation',lane:'front',phase:'execution',duration:'1 hour',description:'Walk client through design decisions and get approval',tools:'Zoom, Figma',deliverables:'Approved designs',failures:'Misaligned expectations'},
+  {title:'Development',lane:'back',phase:'execution',duration:'2 weeks',description:'Build responsive website from approved designs',tools:'VS Code, GitHub',deliverables:'Staging site',failures:'Technical issues, scope creep'},
+  {title:'Content Entry',lane:'support',phase:'execution',duration:'3 days',description:'Enter and format all content, optimize images',tools:'CMS, Photoshop',deliverables:'Populated pages',failures:'Missing content from client'},
+  {title:'QA Testing',lane:'back',phase:'delivery',duration:'1 day',description:'Cross-browser testing, mobile testing, performance check',tools:'BrowserStack, Lighthouse',deliverables:'QA report',failures:'Missed bugs'},
+  {title:'Client Review',lane:'client',phase:'delivery',duration:'2 days',description:'Client tests staging site and provides final feedback',tools:'Staging URL',deliverables:'Approval',failures:'Last-minute changes'},
+  {title:'Launch',lane:'front',phase:'delivery',duration:'2 hours',description:'Deploy to production, DNS setup, SSL verification',tools:'Hosting, DNS',deliverables:'Live website',failures:'DNS propagation, downtime'},
+  {title:'Training Session',lane:'front',phase:'followup',duration:'1 hour',description:'Train client on CMS, content updates, and maintenance',tools:'Zoom, Loom',deliverables:'Training video',failures:'Client overwhelmed'},
+  {title:'30-Day Check-in',lane:'front',phase:'followup',duration:'30 min',description:'Follow up to ensure everything is working well',tools:'Email',deliverables:'Check-in email',failures:'Forgotten follow-up'}
+]},
+{name:'Brand Identity',icon:'&#127912;',desc:'Complete brand identity design from brief to brand guide.',steps:[
+  {title:'Brand Inquiry',lane:'client',phase:'discovery',duration:'1 day',description:'Client reaches out about brand design needs',tools:'Email, Contact form',deliverables:'Initial brief',failures:'Unclear needs'},
+  {title:'Brand Strategy Call',lane:'front',phase:'discovery',duration:'1.5 hours',description:'Deep dive into mission, values, audience, and positioning',tools:'Zoom, Miro',deliverables:'Strategy notes',failures:'Surface-level discussion'},
+  {title:'Competitor & Market Research',lane:'back',phase:'discovery',duration:'6 hours',description:'Analyze competitor brands, market trends, visual landscape',tools:'Pinterest, Dribbble',deliverables:'Mood boards, research deck',failures:'Insufficient research'},
+  {title:'Proposal & Pricing',lane:'front',phase:'proposal',duration:'3 hours',description:'Present brand package options with timeline',tools:'Notion',deliverables:'Proposal',failures:'Budget mismatch'},
+  {title:'Contract & Deposit',lane:'client',phase:'proposal',duration:'1 day',description:'Sign contract and pay 50% deposit',tools:'HelloSign, Stripe',deliverables:'Signed contract',failures:'Contract negotiations'},
+  {title:'Brand Questionnaire',lane:'evidence',phase:'onboarding',duration:'3 days',description:'Detailed questionnaire about values, personality, preferences',tools:'Typeform',deliverables:'Completed questionnaire',failures:'Vague answers'},
+  {title:'Concept Development',lane:'back',phase:'execution',duration:'5 days',description:'Create 3 distinct logo concepts with rationale',tools:'Illustrator, Figma',deliverables:'Concept presentations',failures:'Concepts miss the mark'},
+  {title:'Concept Presentation',lane:'front',phase:'execution',duration:'1 hour',description:'Present concepts, explain reasoning, gather feedback',tools:'Zoom, Figma',deliverables:'Selected direction',failures:'Indecisive client'},
+  {title:'Logo Refinement',lane:'back',phase:'execution',duration:'3 days',description:'Refine selected concept based on feedback',tools:'Illustrator',deliverables:'Refined logo options',failures:'Endless revision requests'},
+  {title:'Collateral Design',lane:'back',phase:'execution',duration:'1 week',description:'Design business cards, letterhead, social templates',tools:'Illustrator, Figma',deliverables:'Brand collateral',failures:'Scope expansion'},
+  {title:'Brand Guide Creation',lane:'back',phase:'delivery',duration:'3 days',description:'Compile comprehensive brand guidelines document',tools:'InDesign',deliverables:'Brand guide PDF',failures:'Incomplete guidelines'},
+  {title:'Final Presentation',lane:'front',phase:'delivery',duration:'1 hour',description:'Present complete brand package to client',tools:'Zoom',deliverables:'All brand files',failures:'Unexpected feedback'},
+  {title:'File Handoff',lane:'evidence',phase:'delivery',duration:'2 hours',description:'Package and deliver all files in required formats',tools:'Google Drive',deliverables:'File package',failures:'Missing file formats'},
+  {title:'Follow-up Support',lane:'front',phase:'followup',duration:'30 min',description:'Check in after 2 weeks, offer implementation support',tools:'Email',deliverables:'Support email',failures:'No follow-up'}
+]},
+{name:'Content Writing',icon:'&#9997;',desc:'Content creation workflow from brief to publication.',steps:[
+  {title:'Content Request',lane:'client',phase:'discovery',duration:'1 day',description:'Client submits content needs and goals',tools:'Email, Form',deliverables:'Content brief',failures:'Vague brief'},
+  {title:'Scope Call',lane:'front',phase:'discovery',duration:'45 min',description:'Discuss tone, audience, SEO goals, and content strategy',tools:'Zoom',deliverables:'Call notes',failures:'Misaligned expectations'},
+  {title:'Topic Research',lane:'back',phase:'discovery',duration:'3 hours',description:'Keyword research, competitor content analysis',tools:'Ahrefs, Google',deliverables:'Keyword list, outlines',failures:'Poor keyword selection'},
+  {title:'Proposal',lane:'front',phase:'proposal',duration:'2 hours',description:'Present content plan with topics, timeline, pricing',tools:'Notion',deliverables:'Content proposal',failures:'Budget constraints'},
+  {title:'Style Guide Review',lane:'support',phase:'onboarding',duration:'2 hours',description:'Review client brand voice, style guide, past content',tools:'Google Docs',deliverables:'Style notes',failures:'No existing guidelines'},
+  {title:'Outline Drafts',lane:'back',phase:'execution',duration:'1 day',description:'Create detailed outlines for each piece',tools:'Google Docs',deliverables:'Outlines',failures:'Structure issues'},
+  {title:'Outline Approval',lane:'client',phase:'execution',duration:'1 day',description:'Client reviews and approves outlines',tools:'Google Docs',deliverables:'Approved outlines',failures:'Major changes requested'},
+  {title:'First Draft',lane:'back',phase:'execution',duration:'3 days',description:'Write first drafts of all content pieces',tools:'Google Docs',deliverables:'First drafts',failures:'Tone mismatch'},
+  {title:'Internal Edit',lane:'support',phase:'execution',duration:'1 day',description:'Self-edit for grammar, flow, SEO optimization',tools:'Grammarly, Hemingway',deliverables:'Edited drafts',failures:'Missed errors'},
+  {title:'Client Review',lane:'client',phase:'delivery',duration:'2 days',description:'Client reviews drafts and provides feedback',tools:'Google Docs',deliverables:'Feedback',failures:'Delayed review'},
+  {title:'Revisions',lane:'back',phase:'delivery',duration:'1 day',description:'Incorporate feedback, polish final versions',tools:'Google Docs',deliverables:'Final versions',failures:'Scope creep on revisions'},
+  {title:'Final Delivery',lane:'front',phase:'delivery',duration:'1 hour',description:'Deliver formatted final content with SEO metadata',tools:'Email, Drive',deliverables:'Final content files',failures:'Format issues'},
+  {title:'Publication Support',lane:'front',phase:'followup',duration:'1 hour',description:'Assist with CMS upload or social media scheduling',tools:'WordPress, Buffer',deliverables:'Published content',failures:'CMS access issues'}
+]},
+{name:'Marketing Campaign',icon:'&#128226;',desc:'End-to-end marketing campaign from strategy to reporting.',steps:[
+  {title:'Campaign Brief',lane:'client',phase:'discovery',duration:'1 day',description:'Client shares goals, budget, target audience',tools:'Email',deliverables:'Brief document',failures:'Unclear objectives'},
+  {title:'Strategy Session',lane:'front',phase:'discovery',duration:'2 hours',description:'Develop campaign strategy, channels, messaging',tools:'Zoom, Miro',deliverables:'Strategy deck',failures:'Misaligned goals'},
+  {title:'Market Research',lane:'back',phase:'discovery',duration:'1 day',description:'Audience research, competitor campaign analysis',tools:'SEMrush, Meta Library',deliverables:'Research report',failures:'Insufficient data'},
+  {title:'Campaign Proposal',lane:'front',phase:'proposal',duration:'4 hours',description:'Present campaign plan with budget, timeline, KPIs',tools:'Google Slides',deliverables:'Campaign proposal',failures:'Budget mismatch'},
+  {title:'Asset Collection',lane:'client',phase:'onboarding',duration:'3 days',description:'Client provides brand assets, access credentials',tools:'Google Drive',deliverables:'Brand assets',failures:'Delayed assets'},
+  {title:'Creative Development',lane:'back',phase:'execution',duration:'1 week',description:'Design ads, write copy, create landing pages',tools:'Figma, Canva',deliverables:'Creative assets',failures:'Off-brand creatives'},
+  {title:'Creative Approval',lane:'client',phase:'execution',duration:'2 days',description:'Client reviews and approves all creative assets',tools:'Figma',deliverables:'Approvals',failures:'Excessive revisions'},
+  {title:'Campaign Setup',lane:'support',phase:'execution',duration:'1 day',description:'Set up ad accounts, tracking pixels, UTM parameters',tools:'Meta Ads, Google Ads',deliverables:'Live campaigns',failures:'Tracking errors'},
+  {title:'Launch',lane:'front',phase:'execution',duration:'2 hours',description:'Go live with all campaign elements',tools:'Ad platforms',deliverables:'Launch confirmation',failures:'Technical issues'},
+  {title:'Monitoring & Optimization',lane:'back',phase:'execution',duration:'ongoing',description:'Daily monitoring, A/B testing, budget optimization',tools:'Analytics, Ad platforms',deliverables:'Optimization notes',failures:'Underperformance'},
+  {title:'Weekly Reports',lane:'front',phase:'delivery',duration:'2 hours',description:'Share performance updates with key metrics',tools:'Google Sheets, Loom',deliverables:'Weekly report',failures:'Lack of context'},
+  {title:'Final Report',lane:'front',phase:'delivery',duration:'4 hours',description:'Comprehensive campaign report with ROI analysis',tools:'Google Slides',deliverables:'Final report',failures:'Attribution issues'},
+  {title:'Strategy Review',lane:'front',phase:'followup',duration:'1 hour',description:'Review results, discuss learnings, plan next campaign',tools:'Zoom',deliverables:'Next steps doc',failures:'No follow-up'}
+]},
+{name:'Consulting Engagement',icon:'&#128188;',desc:'Business consulting from assessment to implementation.',steps:[
+  {title:'Initial Contact',lane:'client',phase:'discovery',duration:'1 day',description:'Prospect reaches out about consulting needs',tools:'Email, LinkedIn',deliverables:'Inquiry details',failures:'Slow response'},
+  {title:'Discovery Meeting',lane:'front',phase:'discovery',duration:'1 hour',description:'Understand business challenges and goals',tools:'Zoom',deliverables:'Meeting notes',failures:'Surface-level discussion'},
+  {title:'Needs Assessment',lane:'back',phase:'discovery',duration:'2 days',description:'Deep analysis of current state and gaps',tools:'Notion, Spreadsheets',deliverables:'Assessment report',failures:'Incomplete data'},
+  {title:'Engagement Proposal',lane:'front',phase:'proposal',duration:'4 hours',description:'Detailed proposal with approach, timeline, deliverables',tools:'Notion',deliverables:'Proposal',failures:'Scope disagreement'},
+  {title:'SOW & Contract',lane:'evidence',phase:'proposal',duration:'1 day',description:'Statement of work and contract execution',tools:'HelloSign',deliverables:'Signed SOW',failures:'Legal review delays'},
+  {title:'Kickoff Workshop',lane:'front',phase:'onboarding',duration:'3 hours',description:'Align all stakeholders on goals and approach',tools:'Zoom, Miro',deliverables:'Workshop outputs',failures:'Key people absent'},
+  {title:'Data Gathering',lane:'client',phase:'onboarding',duration:'1 week',description:'Client provides requested data and documents',tools:'Google Drive',deliverables:'Data package',failures:'Delayed or missing data'},
+  {title:'Analysis Phase',lane:'back',phase:'execution',duration:'2 weeks',description:'Deep dive into data, processes, and benchmarks',tools:'Excel, Notion',deliverables:'Analysis findings',failures:'Data quality issues'},
+  {title:'Interim Check-in',lane:'front',phase:'execution',duration:'1 hour',description:'Share preliminary findings, validate direction',tools:'Zoom',deliverables:'Progress update',failures:'Misaligned findings'},
+  {title:'Recommendations',lane:'back',phase:'execution',duration:'1 week',description:'Develop strategic recommendations and action plan',tools:'Notion, Slides',deliverables:'Strategy doc',failures:'Impractical advice'},
+  {title:'Presentation',lane:'front',phase:'delivery',duration:'2 hours',description:'Present findings and recommendations to leadership',tools:'Zoom, Slides',deliverables:'Presentation deck',failures:'Pushback from leadership'},
+  {title:'Implementation Plan',lane:'evidence',phase:'delivery',duration:'3 days',description:'Detailed roadmap with milestones and owners',tools:'Notion',deliverables:'Implementation plan',failures:'Resource constraints'},
+  {title:'Handoff & Training',lane:'front',phase:'delivery',duration:'4 hours',description:'Transfer knowledge, train team on new processes',tools:'Zoom, Loom',deliverables:'Training materials',failures:'Low adoption'},
+  {title:'Follow-up Review',lane:'front',phase:'followup',duration:'1 hour',description:'30-day check-in on implementation progress',tools:'Zoom',deliverables:'Progress review',failures:'Lost momentum'}
+]},
+{name:'App Development',icon:'&#128241;',desc:'Mobile/web app development from concept to deployment.',steps:[
+  {title:'App Concept Discussion',lane:'client',phase:'discovery',duration:'1 day',description:'Client describes app idea, goals, and target users',tools:'Email',deliverables:'Concept brief',failures:'Unrealistic expectations'},
+  {title:'Requirements Workshop',lane:'front',phase:'discovery',duration:'3 hours',description:'Map features, user stories, and technical requirements',tools:'Zoom, Miro',deliverables:'Requirements doc',failures:'Feature bloat'},
+  {title:'Technical Assessment',lane:'back',phase:'discovery',duration:'1 day',description:'Evaluate tech stack, APIs, feasibility',tools:'Notion',deliverables:'Tech assessment',failures:'Underestimated complexity'},
+  {title:'Proposal & Estimate',lane:'front',phase:'proposal',duration:'4 hours',description:'Detailed proposal with phased approach and costs',tools:'Notion',deliverables:'Proposal',failures:'Budget shock'},
+  {title:'Contract & Milestones',lane:'evidence',phase:'proposal',duration:'1 day',description:'Sign contract with milestone-based payments',tools:'HelloSign',deliverables:'Contract',failures:'Payment structure disputes'},
+  {title:'Design Sprint',lane:'back',phase:'execution',duration:'1 week',description:'UI/UX design, user flows, interactive prototype',tools:'Figma',deliverables:'Prototype',failures:'UX issues discovered late'},
+  {title:'Design Review',lane:'client',phase:'execution',duration:'2 days',description:'Client tests prototype and provides feedback',tools:'Figma',deliverables:'Approved designs',failures:'Major design pivots'},
+  {title:'Sprint Planning',lane:'support',phase:'execution',duration:'2 hours',description:'Break development into 2-week sprints',tools:'Jira, Linear',deliverables:'Sprint backlog',failures:'Poor estimation'},
+  {title:'Development Sprints',lane:'back',phase:'execution',duration:'6 weeks',description:'Iterative development with bi-weekly demos',tools:'VS Code, GitHub',deliverables:'Working features',failures:'Technical debt, bugs'},
+  {title:'Sprint Demos',lane:'front',phase:'execution',duration:'1 hour',description:'Bi-weekly demo of completed features',tools:'Zoom',deliverables:'Demo recording',failures:'Features not ready'},
+  {title:'QA & Testing',lane:'support',phase:'delivery',duration:'1 week',description:'Automated testing, manual QA, performance testing',tools:'Jest, Cypress',deliverables:'QA report',failures:'Critical bugs found'},
+  {title:'Beta Launch',lane:'front',phase:'delivery',duration:'1 day',description:'Deploy to staging for client UAT testing',tools:'Vercel, TestFlight',deliverables:'Beta build',failures:'Deployment issues'},
+  {title:'Client UAT',lane:'client',phase:'delivery',duration:'1 week',description:'Client and select users test the app',tools:'App, Feedback form',deliverables:'UAT feedback',failures:'Unexpected use cases'},
+  {title:'Production Deploy',lane:'back',phase:'delivery',duration:'4 hours',description:'Deploy to production, configure monitoring',tools:'AWS, Datadog',deliverables:'Live app',failures:'Production issues'},
+  {title:'Launch Support',lane:'front',phase:'followup',duration:'2 weeks',description:'Monitor performance, fix issues, gather feedback',tools:'Datadog, Intercom',deliverables:'Support logs',failures:'Post-launch bugs'},
+  {title:'Retrospective',lane:'front',phase:'followup',duration:'1 hour',description:'Review project, discuss maintenance and next phases',tools:'Zoom',deliverables:'Retro notes',failures:'No maintenance plan'}
+]},
+{name:'Photography',icon:'&#128247;',desc:'Photography project from booking to final delivery.',steps:[
+  {title:'Booking Inquiry',lane:'client',phase:'discovery',duration:'1 day',description:'Client inquires about availability and services',tools:'Email, Instagram DM',deliverables:'Inquiry details',failures:'Slow response'},
+  {title:'Consultation Call',lane:'front',phase:'discovery',duration:'30 min',description:'Discuss vision, style, location, and logistics',tools:'Phone, Zoom',deliverables:'Shot list ideas',failures:'Mismatched style'},
+  {title:'Quote & Package',lane:'front',phase:'proposal',duration:'1 hour',description:'Send pricing with package options',tools:'Email',deliverables:'Quote',failures:'Price objections'},
+  {title:'Booking Confirmation',lane:'client',phase:'proposal',duration:'1 day',description:'Client signs contract and pays retainer',tools:'HoneyBook, Stripe',deliverables:'Signed contract',failures:'No-show risk'},
+  {title:'Pre-shoot Prep',lane:'back',phase:'onboarding',duration:'2 hours',description:'Scout location, prepare equipment, finalize shot list',tools:'Google Maps, Notion',deliverables:'Shot list',failures:'Weather, access issues'},
+  {title:'Styling Guidance',lane:'evidence',phase:'onboarding',duration:'1 hour',description:'Send client prep guide for wardrobe and styling',tools:'Email, Pinterest',deliverables:'Style guide',failures:'Client unprepared'},
+  {title:'Photo Shoot',lane:'front',phase:'execution',duration:'3 hours',description:'Conduct the photography session',tools:'Camera, Lighting',deliverables:'Raw photos',failures:'Technical issues, bad weather'},
+  {title:'Culling & Selection',lane:'back',phase:'execution',duration:'2 hours',description:'Review and select best images from shoot',tools:'Lightroom',deliverables:'Selected images',failures:'Too few good shots'},
+  {title:'Editing & Retouching',lane:'back',phase:'execution',duration:'1 day',description:'Edit selected photos to final quality',tools:'Lightroom, Photoshop',deliverables:'Edited photos',failures:'Style inconsistency'},
+  {title:'Gallery Preview',lane:'front',phase:'delivery',duration:'1 hour',description:'Share online gallery for client review',tools:'Pixieset',deliverables:'Online gallery',failures:'Disappointment'},
+  {title:'Revisions',lane:'back',phase:'delivery',duration:'3 hours',description:'Apply any requested minor adjustments',tools:'Lightroom',deliverables:'Final images',failures:'Excessive requests'},
+  {title:'Final Delivery',lane:'evidence',phase:'delivery',duration:'1 hour',description:'Deliver high-res files and prints',tools:'Google Drive, Pixieset',deliverables:'Final photos',failures:'Wrong formats'},
+  {title:'Testimonial Request',lane:'front',phase:'followup',duration:'15 min',description:'Request review and referral from happy client',tools:'Email',deliverables:'Testimonial',failures:'No response'}
+]},
+{name:'Social Media Management',icon:'&#128242;',desc:'Monthly social media management workflow.',steps:[
+  {title:'Social Media Audit',lane:'back',phase:'discovery',duration:'3 hours',description:'Review current social presence, competitors, and benchmarks',tools:'Sprout Social',deliverables:'Audit report',failures:'Incomplete audit'},
+  {title:'Strategy Call',lane:'front',phase:'discovery',duration:'1 hour',description:'Discuss goals, brand voice, content pillars, KPIs',tools:'Zoom',deliverables:'Strategy notes',failures:'Unclear direction'},
+  {title:'Proposal & Packages',lane:'front',phase:'proposal',duration:'2 hours',description:'Present management packages with deliverables and pricing',tools:'Notion',deliverables:'Proposal',failures:'Scope confusion'},
+  {title:'Onboarding',lane:'client',phase:'onboarding',duration:'2 days',description:'Client provides brand assets, account access, content calendar',tools:'Google Drive, LastPass',deliverables:'Access credentials',failures:'Delayed access'},
+  {title:'Content Strategy',lane:'back',phase:'onboarding',duration:'1 day',description:'Develop content calendar, themes, and posting schedule',tools:'Notion, Airtable',deliverables:'Content calendar',failures:'Strategy-content gap'},
+  {title:'Content Creation',lane:'back',phase:'execution',duration:'1 week',description:'Create graphics, write captions, prepare reels',tools:'Canva, CapCut',deliverables:'Content batch',failures:'Off-brand content'},
+  {title:'Content Approval',lane:'client',phase:'execution',duration:'2 days',description:'Client reviews and approves content batch',tools:'Notion, Slack',deliverables:'Approvals',failures:'Slow feedback'},
+  {title:'Scheduling & Publishing',lane:'support',phase:'execution',duration:'2 hours',description:'Schedule approved content across platforms',tools:'Buffer, Later',deliverables:'Scheduled posts',failures:'Wrong timing'},
+  {title:'Community Management',lane:'front',phase:'execution',duration:'daily',description:'Monitor comments, respond to DMs, engage with audience',tools:'Platform native, Sprout',deliverables:'Engagement logs',failures:'Missed messages'},
+  {title:'Weekly Check-in',lane:'front',phase:'delivery',duration:'30 min',description:'Quick update on performance and upcoming content',tools:'Slack',deliverables:'Weekly update',failures:'Communication gap'},
+  {title:'Monthly Report',lane:'front',phase:'delivery',duration:'3 hours',description:'Comprehensive analytics report with insights and recommendations',tools:'Google Slides, Sprout',deliverables:'Monthly report',failures:'Vanity metrics'},
+  {title:'Strategy Review',lane:'front',phase:'followup',duration:'1 hour',description:'Monthly strategy review and next month planning',tools:'Zoom',deliverables:'Updated strategy',failures:'No optimization'}
+]}
+];
+
+function renderTemplates(){
+  const grid=document.getElementById('templateGrid');
+  grid.innerHTML='';
+  TEMPLATES.forEach((t,i)=>{
+    const card=document.createElement('div');card.className='template-card';
+    card.innerHTML=`<div class="tmpl-icon">${t.icon}</div><div class="tmpl-name">${t.name}</div><div class="tmpl-desc">${t.desc}</div><div class="tmpl-steps">${t.steps.length} steps across all lanes</div>`;
+    card.onclick=()=>loadTemplate(i);
+    grid.appendChild(card);
+  });
+}
+
+function loadTemplate(idx){
+  const t=TEMPLATES[idx];
+  if(state.steps.length&&!confirm('Loading a template will replace your current blueprint. Continue?'))return;
+  state=defaultState();
+  state.name=t.name+' Blueprint';
+  t.steps.forEach((s,i)=>{
+    state.steps.push({id:uid(),title:s.title,description:s.description||'',lane:s.lane,duration:s.duration||'',phase:s.phase||'execution',tools:s.tools||'',deliverables:s.deliverables||'',failures:s.failures||'',order:i});
+  });
+  saveState();
+  document.getElementById('blueprintName').value=state.name;
+  openTab('blueprint');
+}
+
+/* ============================================================
+   EXPORT
+   ============================================================ */
+function exportPrintable(){
+  const phases=['discovery','proposal','onboarding','execution','delivery','followup'];
+  let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${esc(state.name)} — Service Blueprint</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#fff;color:#1a1a2e;padding:40px;max-width:1100px;margin:0 auto}
+h1{font-size:1.8rem;margin-bottom:8px;color:#7c3aed}h2{font-size:1.2rem;margin:24px 0 12px;color:#7c3aed;border-bottom:2px solid #f0e7ff;padding-bottom:6px}
+h3{font-size:1rem;margin:16px 0 8px;color:#374151}
+.lane-section{margin-bottom:16px;padding:12px;background:#f8f9fa;border-radius:8px;border-left:4px solid #7c3aed}
+.step{padding:8px 0;border-bottom:1px solid #e5e7eb}.step:last-child{border-bottom:none}
+.step-title{font-weight:700}.step-meta{font-size:0.85rem;color:#6b7280;margin-top:2px}
+.pain{color:#dc2626;font-weight:600}.mot{color:#7c3aed;font-weight:600}
+.metrics{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0}
+.metric{background:#f0e7ff;padding:12px 20px;border-radius:8px;text-align:center}
+.metric-val{font-size:1.4rem;font-weight:800;color:#7c3aed}.metric-lbl{font-size:0.75rem;color:#6b7280}
+@media print{body{padding:20px}}</style></head><body>
+<h1>${esc(state.name)}</h1><p style="color:#6b7280;margin-bottom:16px">Generated ${new Date().toLocaleDateString()}</p>`;
+
+  // Metrics summary
+  const totalSteps=state.steps.length;
+  const totalHours=state.steps.reduce((a,s)=>a+parseDuration(s.duration),0);
+  const touchCount=Object.values(state.touchpoints).filter(t=>t.active).length;
+  const painCount=Object.keys(state.painPoints).length;
+  html+=`<div class="metrics">
+    <div class="metric"><div class="metric-val">${totalSteps}</div><div class="metric-lbl">Steps</div></div>
+    <div class="metric"><div class="metric-val">${formatHours(totalHours)}</div><div class="metric-lbl">Duration</div></div>
+    <div class="metric"><div class="metric-val">${touchCount}</div><div class="metric-lbl">Touchpoints</div></div>
+    <div class="metric"><div class="metric-val">${painCount}</div><div class="metric-lbl">Pain Points</div></div>
+  </div>`;
+
+  // Blueprint by lane
+  LANES.forEach(lane=>{
+    const laneSteps=state.steps.filter(s=>s.lane===lane).sort((a,b)=>{
+      const pi=phases.indexOf(a.phase)-phases.indexOf(b.phase);return pi!==0?pi:(a.order||0)-(b.order||0);
+    });
+    if(!laneSteps.length)return;
+    html+=`<h2>${LANE_LABELS[lane]}</h2>`;
+    laneSteps.forEach(s=>{
+      const pp=state.painPoints[s.id];
+      const mot=state.momentsOfTruth[s.id];
+      html+=`<div class="step"><div class="step-title">${esc(s.title)} <span style="font-weight:400;font-size:0.85rem;color:#6b7280">(${PHASE_LABELS[s.phase]})</span></div>`;
+      if(s.description)html+=`<div class="step-meta">${esc(s.description)}</div>`;
+      if(s.duration)html+=`<div class="step-meta">Duration: ${esc(s.duration)}</div>`;
+      if(s.tools)html+=`<div class="step-meta">Tools: ${esc(s.tools)}</div>`;
+      if(s.deliverables)html+=`<div class="step-meta">Deliverables: ${esc(s.deliverables)}</div>`;
+      if(pp)html+=`<div class="pain">&#9888; Pain Point (${pp.severity}): ${esc(pp.description)}</div>`;
+      if(mot)html+=`<div class="mot">&#11088; Moment of Truth: ${esc(mot.why)}</div>`;
+      html+=`</div>`;
+    });
+  });
+
+  // Moments of Truth section
+  const mots=Object.entries(state.momentsOfTruth);
+  if(mots.length){
+    html+=`<h2>Moments of Truth</h2>`;
+    mots.forEach(([id,mot])=>{
+      const s=state.steps.find(x=>x.id===id);if(!s)return;
+      html+=`<div class="step"><div class="step-title">&#11088; ${esc(s.title)}</div>
+        <div class="step-meta"><strong>Why critical:</strong> ${esc(mot.why)}</div>
+        ${mot.how?`<div class="step-meta"><strong>How to excel:</strong> ${esc(mot.how)}</div>`:''}
+      </div>`;
+    });
+  }
+
+  html+=`<div style="margin-top:30px;padding-top:16px;border-top:2px solid #e5e7eb;font-size:0.8rem;color:#9ca3af;text-align:center">Created with Service Blueprint Builder — FreelanceOS</div></body></html>`;
+
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=state.name.replace(/[^a-zA-Z0-9]/g,'-')+'-blueprint.html';
+  a.click();URL.revokeObjectURL(url);
+}
+
+function exportChecklist(){
+  const painKeys=Object.keys(state.painPoints);
+  if(!painKeys.length){alert('No pain points flagged. Add pain points first.');return;}
+  let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Improvement Checklist — ${esc(state.name)}</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;padding:40px;max-width:800px;margin:0 auto}
+h1{font-size:1.5rem;color:#7c3aed;margin-bottom:4px}
+.item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #e5e7eb;align-items:flex-start}
+.box{width:18px;height:18px;border:2px solid #7c3aed;border-radius:4px;flex-shrink:0;margin-top:3px}
+.title{font-weight:700;margin-bottom:2px}.desc{font-size:0.85rem;color:#6b7280}
+.section{margin-top:20px;padding-top:12px;border-top:2px solid #f0e7ff}
+.section-title{font-weight:700;color:#7c3aed;margin-bottom:8px}
+.sev{font-size:0.75rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:8px}
+.sev-high{background:#fee2e2;color:#dc2626}.sev-medium{background:#fef3c7;color:#d97706}.sev-low{background:#d1fae5;color:#059669}
+@media print{body{padding:20px}}</style></head><body>
+<h1>Service Improvement Checklist</h1><p style="color:#6b7280;margin-bottom:20px">${esc(state.name)} — ${new Date().toLocaleDateString()}</p>`;
+
+  painKeys.forEach(id=>{
+    const step=state.steps.find(s=>s.id===id);if(!step)return;
+    const pp=state.painPoints[id];
+    const sevClass='sev-'+pp.severity;
+    html+=`<div class="section">
+      <div class="section-title">${esc(step.title)} <span class="sev ${sevClass}">${pp.severity}</span></div>
+      <div class="desc" style="margin-bottom:8px">${esc(pp.description)}</div>`;
+    const suggestions=IMPROVEMENT_SUGGESTIONS[pp.severity]||IMPROVEMENT_SUGGESTIONS.medium;
+    suggestions.forEach(sug=>{
+      html+=`<div class="item"><div class="box"></div><div><div class="desc">${esc(sug)}</div></div></div>`;
+    });
+    if(pp.suggestion){
+      html+=`<div class="item"><div class="box"></div><div><div class="title">Custom: ${esc(pp.suggestion)}</div></div></div>`;
+    }
+    html+=`</div>`;
+  });
+
+  html+=`<div style="margin-top:30px;font-size:0.8rem;color:#9ca3af;text-align:center">Created with Service Blueprint Builder — FreelanceOS</div></body></html>`;
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='improvement-checklist.html';
+  a.click();URL.revokeObjectURL(url);
+}
+
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=state.name.replace(/[^a-zA-Z0-9]/g,'-')+'.json';
+  a.click();URL.revokeObjectURL(url);
+}
+
+function importJSON(){document.getElementById('importFileInput').click();}
+function handleImport(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(!data.steps||!Array.isArray(data.steps)){alert('Invalid blueprint file.');return;}
+      state=data;saveState();
+      document.getElementById('blueprintName').value=state.name||'Imported Blueprint';
+      openTab('blueprint');
+      alert('Blueprint imported successfully!');
+    }catch(err){alert('Error reading file: '+err.message);}
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function esc(s){if(!s)return '';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderCanvas();
+</script>
+</body>
+</html>

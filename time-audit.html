@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Time Audit Tool | Track Billable Hours & Productivity | FreelanceOS</title>
+<meta name="description" content="Free interactive time audit tool for freelancers. Track billable vs non-billable hours, analyze productivity patterns, generate weekly reports, and optimize your time allocation.">
+<meta name="keywords" content="freelance time tracking, billable hours tracker, productivity audit, time management tool, freelancer time analysis">
+<meta property="og:title" content="Freelance Time Audit Tool | FreelanceOS">
+<meta property="og:description" content="Track where your freelance time actually goes. Analyze billable ratios, identify productivity patterns, and generate actionable time audit reports.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.pro/freelanceos-storefront/time-audit.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Freelance Time Audit Tool | FreelanceOS">
+<meta name="twitter:description" content="Free time tracking and analysis tool for freelancers. Understand your billable ratio, productivity patterns, and time allocation.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Time Audit Tool",
+  "description": "Comprehensive time tracking and analysis tool that helps freelancers understand where their time goes — billable vs non-billable, productive vs unproductive, and client vs admin work.",
+  "url": "https://freelanceos.pro/freelanceos-storefront/time-audit.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "creator": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#020617;--card:#0f172a;--accent-1:#a855f7;--accent-2:#ec4899;--text:#e2e8f0;--text-sec:#94a3b8;--border:rgba(168,85,247,0.2);--grad:linear-gradient(135deg,#a855f7,#ec4899);--radius:16px;--radius-sm:12px;--font:system-ui,-apple-system,sans-serif;--green:#22c55e;--yellow:#eab308;--red:#ef4444;--blue:#3b82f6;--orange:#f97316;--cyan:#06b6d4;--lime:#84cc16;--rose:#f43f5e}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;overflow-x:hidden}
+a{color:var(--accent-1);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;outline:none}
+input,select,textarea{font-family:var(--font);background:rgba(15,23,42,0.8);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;outline:none;transition:border-color 0.3s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent-1)}
+select option{background:var(--card);color:var(--text)}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+header{text-align:center;padding:48px 20px 32px}
+header h1{font-size:clamp(28px,5vw,42px);font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+header p{color:var(--text-sec);font-size:16px;max-width:600px;margin:0 auto}
+.card{background:rgba(15,23,42,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color 0.3s,transform 0.2s}
+.card:hover{border-color:rgba(168,85,247,0.4)}
+.card h2{font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.card h2 .icon{width:32px;height:32px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;padding:4px;background:rgba(15,23,42,0.5);border-radius:var(--radius-sm);border:1px solid var(--border)}
+.tab{padding:10px 18px;border-radius:10px;background:transparent;color:var(--text-sec);font-size:14px;font-weight:600;transition:all 0.3s}
+.tab:hover{color:var(--text);background:rgba(168,85,247,0.1)}
+.tab.active{background:var(--grad);color:#fff}
+.btn{padding:10px 20px;border-radius:var(--radius-sm);font-weight:600;font-size:14px;transition:all 0.3s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--grad);color:#fff}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-secondary{background:rgba(168,85,247,0.15);color:var(--accent-1);border:1px solid var(--border)}
+.btn-secondary:hover{background:rgba(168,85,247,0.25)}
+.btn-danger{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
+.btn-danger:hover{background:rgba(239,68,68,0.25)}
+.btn-sm{padding:6px 14px;font-size:12px;border-radius:8px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.stat-card{background:rgba(15,23,42,0.5);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .value{font-size:28px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-card .label{font-size:12px;color:var(--text-sec);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:13px;font-weight:600;color:var(--text-sec);margin-bottom:6px}
+.form-row{display:flex;gap:12px;flex-wrap:wrap}
+.form-row>*{flex:1;min-width:150px}
+.toggle{position:relative;width:44px;height:24px;display:inline-block}
+.toggle input{display:none}
+.toggle .slider{position:absolute;inset:0;background:rgba(100,116,139,0.3);border-radius:12px;cursor:pointer;transition:0.3s}
+.toggle .slider::before{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:0.3s}
+.toggle input:checked+.slider{background:var(--grad)}
+.toggle input:checked+.slider::before{transform:translateX(20px)}
+.entry-list{max-height:400px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--accent-1) transparent}
+.entry-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--radius-sm);background:rgba(15,23,42,0.4);margin-bottom:8px;border:1px solid transparent;transition:all 0.2s}
+.entry-item:hover{border-color:var(--border);background:rgba(15,23,42,0.6)}
+.entry-item .cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.entry-item .info{flex:1;min-width:0}
+.entry-item .info .task-name{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entry-item .info .meta{font-size:12px;color:var(--text-sec)}
+.entry-item .duration{font-weight:700;font-size:14px;white-space:nowrap}
+.entry-item .billable-badge{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:700;text-transform:uppercase}
+.entry-item .billable-badge.yes{background:rgba(34,197,94,0.15);color:var(--green)}
+.entry-item .billable-badge.no{background:rgba(100,116,139,0.15);color:var(--text-sec)}
+.entry-item .actions{display:flex;gap:4px}
+.entry-item .actions button{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(100,116,139,0.1);color:var(--text-sec);transition:all 0.2s}
+.entry-item .actions button:hover{background:rgba(239,68,68,0.2);color:var(--red)}
+.timer-display{font-size:clamp(36px,8vw,56px);font-weight:800;font-variant-numeric:tabular-nums;text-align:center;padding:16px 0;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px}
+.timer-controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.progress-bar{background:rgba(100,116,139,0.2);border-radius:8px;height:12px;overflow:hidden;position:relative}
+.progress-bar .fill{height:100%;border-radius:8px;background:var(--grad);transition:width 0.5s ease}
+.hidden{display:none !important}
+.section{display:none}
+.section.active{display:block}
+.cta-banner{background:linear-gradient(135deg,rgba(168,85,247,0.15),rgba(236,72,153,0.15));border:1px solid rgba(168,85,247,0.3);border-radius:var(--radius);padding:28px;text-align:center;margin:32px 0}
+.cta-banner h3{font-size:20px;font-weight:700;margin-bottom:8px}
+.cta-banner p{color:var(--text-sec);margin-bottom:16px;font-size:15px}
+.cta-banner .cta-btn{display:inline-block;padding:14px 32px;background:var(--grad);color:#fff;font-weight:700;border-radius:var(--radius-sm);font-size:16px;transition:all 0.3s;text-decoration:none}
+.cta-banner .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(168,85,247,0.3);text-decoration:none}
+footer{text-align:center;padding:32px 20px;color:var(--text-sec);font-size:14px;border-top:1px solid var(--border);margin-top:40px}
+footer a{color:var(--accent-1);margin:0 10px}
+.fade-in{animation:fadeIn 0.4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.recording-dot{width:10px;height:10px;border-radius:50%;background:var(--red);animation:pulse 1.2s infinite;display:inline-block}
+.tooltip{position:relative}
+.heatmap-cell{transition:opacity 0.2s}
+.heatmap-cell:hover{stroke:#fff;stroke-width:1}
+.report-section{margin-bottom:20px;padding:16px;background:rgba(15,23,42,0.4);border-radius:var(--radius-sm);border-left:3px solid var(--accent-1)}
+.report-section h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.report-section p{font-size:14px;color:var(--text-sec);line-height:1.7}
+.insight{padding:10px 14px;background:rgba(168,85,247,0.08);border-radius:8px;margin-bottom:8px;font-size:13px;border-left:3px solid var(--accent-1)}
+.goal-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:12px;background:rgba(15,23,42,0.4);border-radius:var(--radius-sm)}
+.goal-row .goal-label{width:160px;font-size:14px;font-weight:600;flex-shrink:0}
+.goal-row .goal-bar{flex:1}
+.goal-row .goal-val{font-size:14px;font-weight:700;width:80px;text-align:right;flex-shrink:0}
+.empty-state{text-align:center;padding:48px 20px;color:var(--text-sec)}
+.empty-state .empty-icon{font-size:48px;margin-bottom:12px;opacity:0.5}
+.empty-state p{font-size:15px}
+svg text{font-family:var(--font)}
+.modal-overlay{position:fixed;inset:0;background:rgba(2,6,23,0.8);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.modal-overlay.show{opacity:1;pointer-events:auto}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;transform:scale(0.95);transition:transform 0.3s}
+.modal-overlay.show .modal{transform:scale(1)}
+.modal h3{font-size:18px;font-weight:700;margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+<h1>Freelance Time Audit</h1>
+<p>Track where your time actually goes. Analyze billable ratios, productivity patterns, and generate actionable audit reports.</p>
+</header>
+<div class="container">
+<div class="tabs" id="mainTabs">
+<button class="tab active" data-tab="logger">Timer</button>
+<button class="tab" data-tab="timeline">Timeline</button>
+<button class="tab" data-tab="heatmap">Heatmap</button>
+<button class="tab" data-tab="billable">Billable</button>
+<button class="tab" data-tab="clients">Clients</button>
+<button class="tab" data-tab="categories">Categories</button>
+<button class="tab" data-tab="score">Score</button>
+<button class="tab" data-tab="report">Report</button>
+<button class="tab" data-tab="goals">Goals</button>
+<button class="tab" data-tab="export">Export</button>
+</div>
+
+<!-- TIMER / LOGGER -->
+<div class="section active" id="sec-logger">
+<div class="card fade-in">
+<h2><span class="icon">&#9201;</span> Time Logger</h2>
+<div class="timer-display" id="timerDisplay">00:00:00</div>
+<div class="timer-controls" style="margin-bottom:20px">
+<button class="btn btn-primary" id="btnStartStop" onclick="toggleTimer()">&#9654; Start</button>
+<button class="btn btn-secondary" id="btnManual" onclick="showManualEntry()">&#43; Manual Entry</button>
+</div>
+<div class="form-row">
+<div class="form-group"><label>Task Description</label><input type="text" id="taskDesc" placeholder="What are you working on?"></div>
+<div class="form-group"><label>Client</label><input type="text" id="taskClient" placeholder="Client name" list="clientList"><datalist id="clientList"></datalist></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>Project</label><input type="text" id="taskProject" placeholder="Project name" list="projectList"><datalist id="projectList"></datalist></div>
+<div class="form-group"><label>Category</label>
+<select id="taskCategory">
+<option value="Billable Work">Billable Work</option>
+<option value="Admin">Admin</option>
+<option value="Marketing">Marketing</option>
+<option value="Learning">Learning</option>
+<option value="Meetings">Meetings</option>
+<option value="Communication">Communication</option>
+<option value="Breaks">Breaks</option>
+<option value="Personal">Personal</option>
+</select>
+</div>
+</div>
+<div class="form-row" style="align-items:center">
+<div class="form-group" style="flex:0 0 auto">
+<label>Billable</label>
+<label class="toggle"><input type="checkbox" id="taskBillable" checked><span class="slider"></span></label>
+</div>
+<div class="form-group" style="flex:0 0 auto">
+<label>Hourly Rate ($)</label>
+<input type="number" id="taskRate" placeholder="0" style="width:100px" value="">
+</div>
+</div>
+</div>
+
+<div class="card fade-in">
+<h2><span class="icon">&#128203;</span> Today's Entries</h2>
+<div id="todayEntries" class="entry-list"></div>
+</div>
+</div>
+
+<!-- DAILY TIMELINE -->
+<div class="section" id="sec-timeline">
+<div class="card fade-in">
+<h2><span class="icon">&#128197;</span> Daily Timeline</h2>
+<div class="form-group" style="max-width:200px;margin-bottom:16px">
+<label>Date</label><input type="date" id="timelineDate">
+</div>
+<div id="timelineSvg" style="overflow-x:auto"></div>
+<div id="timelineLegend" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;font-size:13px"></div>
+</div>
+</div>
+
+<!-- WEEKLY HEATMAP -->
+<div class="section" id="sec-heatmap">
+<div class="card fade-in">
+<h2><span class="icon">&#128293;</span> Weekly Heatmap</h2>
+<p style="color:var(--text-sec);font-size:14px;margin-bottom:16px">Discover when you work most. Darker cells = more time logged.</p>
+<div class="form-group" style="max-width:200px;margin-bottom:16px">
+<label>Week Starting</label><input type="date" id="heatmapWeek">
+</div>
+<div id="heatmapSvg" style="overflow-x:auto"></div>
+</div>
+</div>
+
+<!-- BILLABLE RATIO -->
+<div class="section" id="sec-billable">
+<div class="card fade-in">
+<h2><span class="icon">&#128176;</span> Billable Ratio Dashboard</h2>
+<div class="form-row" style="margin-bottom:20px">
+<div class="form-group" style="max-width:200px"><label>Period</label>
+<select id="billablePeriod" onchange="renderBillable()"><option value="today">Today</option><option value="week" selected>This Week</option><option value="month">This Month</option></select>
+</div>
+<div class="form-group" style="max-width:150px"><label>Target Billable %</label><input type="number" id="billableTarget" value="65" min="0" max="100" onchange="renderBillable()"></div>
+</div>
+<div class="grid-3" id="billableStats"></div>
+<div style="display:flex;justify-content:center;margin-top:24px">
+<div id="billableDonut"></div>
+</div>
+</div>
+</div>
+
+<!-- CLIENT TIME ALLOCATION -->
+<div class="section" id="sec-clients">
+<div class="card fade-in">
+<h2><span class="icon">&#128101;</span> Client Time Allocation</h2>
+<div class="form-group" style="max-width:200px;margin-bottom:16px"><label>Period</label>
+<select id="clientPeriod" onchange="renderClients()"><option value="week" selected>This Week</option><option value="month">This Month</option><option value="all">All Time</option></select>
+</div>
+<div id="clientChart" style="margin-bottom:20px"></div>
+<div id="clientTable"></div>
+</div>
+</div>
+
+<!-- CATEGORY BREAKDOWN -->
+<div class="section" id="sec-categories">
+<div class="card fade-in">
+<h2><span class="icon">&#128202;</span> Category Breakdown</h2>
+<div class="form-group" style="max-width:200px;margin-bottom:16px"><label>Period</label>
+<select id="catPeriod" onchange="renderCategories()"><option value="week" selected>This Week</option><option value="month">This Month</option></select>
+</div>
+<div id="catChart"></div>
+<div id="catDetails" style="margin-top:20px"></div>
+</div>
+</div>
+
+<!-- PRODUCTIVITY SCORE -->
+<div class="section" id="sec-score">
+<div class="card fade-in">
+<h2><span class="icon">&#127942;</span> Productivity Score</h2>
+<div class="form-group" style="max-width:200px;margin-bottom:16px"><label>Date</label><input type="date" id="scoreDate"></div>
+<div style="text-align:center;margin:24px 0">
+<div id="scoreRing"></div>
+</div>
+<div class="grid-3" id="scoreBreakdown"></div>
+<div id="scoreTips" style="margin-top:20px"></div>
+</div>
+</div>
+
+<!-- TIME AUDIT REPORT -->
+<div class="section" id="sec-report">
+<div class="card fade-in">
+<h2><span class="icon">&#128221;</span> Time Audit Report</h2>
+<div class="form-row" style="margin-bottom:16px">
+<div class="form-group" style="max-width:200px"><label>Period</label>
+<select id="reportPeriod" onchange="renderReport()"><option value="week" selected>This Week</option><option value="month">This Month</option></select>
+</div>
+<div class="form-group" style="flex:0 0 auto;align-self:flex-end">
+<button class="btn btn-secondary" onclick="printReport()">&#128424; Print Report</button>
+</div>
+</div>
+<div id="reportContent"></div>
+</div>
+</div>
+
+<!-- GOAL TRACKER -->
+<div class="section" id="sec-goals">
+<div class="card fade-in">
+<h2><span class="icon">&#127919;</span> Weekly Goal Tracker</h2>
+<div style="margin-bottom:20px">
+<div class="form-row">
+<div class="form-group"><label>Billable Hours Target</label><input type="number" id="goalBillable" value="30" min="0" onchange="saveGoals();renderGoals()"></div>
+<div class="form-group"><label>Deep Work Blocks Target</label><input type="number" id="goalDeepWork" value="10" min="0" onchange="saveGoals();renderGoals()"></div>
+<div class="form-group"><label>Admin Hours Cap</label><input type="number" id="goalAdminCap" value="8" min="0" onchange="saveGoals();renderGoals()"></div>
+</div>
+</div>
+<div id="goalProgress"></div>
+</div>
+</div>
+
+<!-- EXPORT -->
+<div class="section" id="sec-export">
+<div class="card fade-in">
+<h2><span class="icon">&#128229;</span> Export Data</h2>
+<div class="grid-3">
+<div class="stat-card" style="cursor:pointer" onclick="exportCSV()">
+<div style="font-size:32px;margin-bottom:8px">&#128196;</div>
+<div class="label">Timesheet CSV</div>
+<p style="font-size:12px;color:var(--text-sec);margin-top:6px">All entries as spreadsheet</p>
+</div>
+<div class="stat-card" style="cursor:pointer" onclick="exportReport()">
+<div style="font-size:32px;margin-bottom:8px">&#128203;</div>
+<div class="label">Weekly Report HTML</div>
+<p style="font-size:12px;color:var(--text-sec);margin-top:6px">Printable audit report</p>
+</div>
+<div class="stat-card" style="cursor:pointer" onclick="exportJSON()">
+<div style="font-size:32px;margin-bottom:8px">&#128190;</div>
+<div class="label">JSON Backup</div>
+<p style="font-size:12px;color:var(--text-sec);margin-top:6px">Full data backup</p>
+</div>
+</div>
+<div style="margin-top:20px">
+<h3 style="font-size:15px;margin-bottom:10px">Import Backup</h3>
+<input type="file" id="importFile" accept=".json" style="font-size:14px">
+<button class="btn btn-secondary btn-sm" style="margin-left:8px" onclick="importJSON()">Import</button>
+</div>
+<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+<button class="btn btn-danger btn-sm" onclick="if(confirm('Delete ALL time entries? This cannot be undone.')){localStorage.removeItem('fta_entries');localStorage.removeItem('fta_goals');location.reload()}">&#128465; Clear All Data</button>
+</div>
+</div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+<h3>Get the complete FreelanceOS Pro system</h3>
+<p>40% OFF with code FLASH40 &mdash; CRM, invoicing, contracts, project management, and more.</p>
+<a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="cta-btn" target="_blank" rel="noopener">Claim 40% OFF Now</a>
+</div>
+
+<!-- MANUAL ENTRY MODAL -->
+<div class="modal-overlay" id="manualModal">
+<div class="modal">
+<h3>Manual Time Entry</h3>
+<div class="form-group"><label>Date</label><input type="date" id="manualDate"></div>
+<div class="form-row">
+<div class="form-group"><label>Start Time</label><input type="time" id="manualStart"></div>
+<div class="form-group"><label>End Time</label><input type="time" id="manualEnd"></div>
+</div>
+<div class="form-group"><label>Duration (minutes, alternative)</label><input type="number" id="manualDuration" placeholder="e.g. 45" min="1"></div>
+<div style="display:flex;gap:10px;margin-top:16px">
+<button class="btn btn-primary" onclick="saveManualEntry()">Save Entry</button>
+<button class="btn btn-secondary" onclick="hideManualEntry()">Cancel</button>
+</div>
+</div>
+</div>
+
+<footer>
+<p>&copy; 2025 FreelanceOS. All rights reserved.</p>
+<p style="margin-top:8px">
+<a href="/freelanceos-storefront/free-templates.html">Free Templates</a>
+<a href="/freelanceos-storefront/">FreelanceOS Storefront</a>
+</p>
+</footer>
+</div>
+
+<script>
+/* ============================================================
+   FREELANCE TIME AUDIT - CORE ENGINE
+   ============================================================ */
+
+const CAT_COLORS = {
+  'Billable Work': '#a855f7',
+  'Admin': '#f97316',
+  'Marketing': '#3b82f6',
+  'Learning': '#06b6d4',
+  'Meetings': '#eab308',
+  'Communication': '#ec4899',
+  'Breaks': '#64748b',
+  'Personal': '#84cc16'
+};
+const CATEGORIES = Object.keys(CAT_COLORS);
+
+// ---- DATA LAYER ----
+function getEntries() {
+  try { return JSON.parse(localStorage.getItem('fta_entries') || '[]'); }
+  catch(e) { return []; }
+}
+function saveEntries(entries) { localStorage.setItem('fta_entries', JSON.stringify(entries)); }
+function getGoals() {
+  try { return JSON.parse(localStorage.getItem('fta_goals') || '{}'); }
+  catch(e) { return {}; }
+}
+function saveGoals() {
+  var g = {
+    billable: parseFloat(document.getElementById('goalBillable').value) || 30,
+    deepWork: parseFloat(document.getElementById('goalDeepWork').value) || 10,
+    adminCap: parseFloat(document.getElementById('goalAdminCap').value) || 8
+  };
+  localStorage.setItem('fta_goals', JSON.stringify(g));
+}
+function loadGoals() {
+  var g = getGoals();
+  if (g.billable) document.getElementById('goalBillable').value = g.billable;
+  if (g.deepWork) document.getElementById('goalDeepWork').value = g.deepWork;
+  if (g.adminCap) document.getElementById('goalAdminCap').value = g.adminCap;
+}
+
+// ---- DATE HELPERS ----
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+function weekStart(d) {
+  var dt = new Date(d);
+  var day = dt.getDay();
+  var diff = day === 0 ? 6 : day - 1;
+  dt.setDate(dt.getDate() - diff);
+  return dt.toISOString().slice(0, 10);
+}
+function monthStart(d) { return d.slice(0, 7) + '-01'; }
+function dayNames() { return ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']; }
+function dateRange(start, days) {
+  var out = [];
+  var d = new Date(start);
+  for (var i = 0; i < days; i++) {
+    out.push(d.toISOString().slice(0, 10));
+    d.setDate(d.getDate() + 1);
+  }
+  return out;
+}
+function filterEntries(period) {
+  var entries = getEntries();
+  var today = todayStr();
+  if (period === 'today') return entries.filter(function(e) { return e.date === today; });
+  if (period === 'week') {
+    var ws = weekStart(today);
+    var dr = dateRange(ws, 7);
+    return entries.filter(function(e) { return dr.indexOf(e.date) !== -1; });
+  }
+  if (period === 'month') {
+    var ms = today.slice(0, 7);
+    return entries.filter(function(e) { return e.date.slice(0, 7) === ms; });
+  }
+  return entries;
+}
+function fmtDuration(ms) {
+  var s = Math.floor(ms / 1000);
+  var h = Math.floor(s / 3600);
+  var m = Math.floor((s % 3600) / 60);
+  var sec = s % 60;
+  return pad(h) + ':' + pad(m) + ':' + pad(sec);
+}
+function fmtHours(ms) { return (ms / 3600000).toFixed(1) + 'h'; }
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ---- TIMER ----
+var timerRunning = false;
+var timerStart = 0;
+var timerInterval = null;
+
+function toggleTimer() {
+  if (!timerRunning) {
+    timerRunning = true;
+    timerStart = Date.now();
+    document.getElementById('btnStartStop').innerHTML = '<span class="recording-dot"></span> Stop';
+    document.getElementById('btnStartStop').style.background = 'rgba(239,68,68,0.3)';
+    document.getElementById('btnStartStop').style.color = '#ef4444';
+    document.getElementById('btnStartStop').style.border = '1px solid rgba(239,68,68,0.5)';
+    timerInterval = setInterval(updateTimerDisplay, 1000);
+  } else {
+    timerRunning = false;
+    clearInterval(timerInterval);
+    var elapsed = Date.now() - timerStart;
+    document.getElementById('btnStartStop').innerHTML = '&#9654; Start';
+    document.getElementById('btnStartStop').style.background = '';
+    document.getElementById('btnStartStop').style.color = '';
+    document.getElementById('btnStartStop').style.border = '';
+    if (elapsed > 5000) {
+      addEntry(timerStart, elapsed);
+    }
+    document.getElementById('timerDisplay').textContent = '00:00:00';
+  }
+}
+function updateTimerDisplay() {
+  if (!timerRunning) return;
+  document.getElementById('timerDisplay').textContent = fmtDuration(Date.now() - timerStart);
+}
+function addEntry(startTs, durationMs) {
+  var d = new Date(startTs);
+  var entry = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    date: d.toISOString().slice(0, 10),
+    startTime: pad(d.getHours()) + ':' + pad(d.getMinutes()),
+    duration: durationMs,
+    task: document.getElementById('taskDesc').value.trim() || 'Untitled task',
+    client: document.getElementById('taskClient').value.trim(),
+    project: document.getElementById('taskProject').value.trim(),
+    category: document.getElementById('taskCategory').value,
+    billable: document.getElementById('taskBillable').checked,
+    rate: parseFloat(document.getElementById('taskRate').value) || 0
+  };
+  var endD = new Date(startTs + durationMs);
+  entry.endTime = pad(endD.getHours()) + ':' + pad(endD.getMinutes());
+  var entries = getEntries();
+  entries.push(entry);
+  saveEntries(entries);
+  document.getElementById('taskDesc').value = '';
+  renderTodayEntries();
+  updateDataLists();
+}
+
+// ---- MANUAL ENTRY ----
+function showManualEntry() {
+  document.getElementById('manualDate').value = todayStr();
+  document.getElementById('manualStart').value = '';
+  document.getElementById('manualEnd').value = '';
+  document.getElementById('manualDuration').value = '';
+  document.getElementById('manualModal').classList.add('show');
+}
+function hideManualEntry() { document.getElementById('manualModal').classList.remove('show'); }
+function saveManualEntry() {
+  var date = document.getElementById('manualDate').value;
+  var start = document.getElementById('manualStart').value;
+  var end = document.getElementById('manualEnd').value;
+  var durMin = parseInt(document.getElementById('manualDuration').value) || 0;
+  if (!date) { alert('Please select a date'); return; }
+  var durationMs, startTime, endTime;
+  if (start && end) {
+    var sp = start.split(':').map(Number);
+    var ep = end.split(':').map(Number);
+    var startMin = sp[0] * 60 + sp[1];
+    var endMin = ep[0] * 60 + ep[1];
+    if (endMin <= startMin) { alert('End time must be after start time'); return; }
+    durationMs = (endMin - startMin) * 60000;
+    startTime = start;
+    endTime = end;
+  } else if (durMin > 0) {
+    durationMs = durMin * 60000;
+    startTime = '09:00';
+    var em = 540 + durMin;
+    endTime = pad(Math.floor(em / 60)) + ':' + pad(em % 60);
+  } else {
+    alert('Enter start/end times or a duration'); return;
+  }
+  var entry = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    date: date,
+    startTime: startTime,
+    endTime: endTime,
+    duration: durationMs,
+    task: document.getElementById('taskDesc').value.trim() || 'Untitled task',
+    client: document.getElementById('taskClient').value.trim(),
+    project: document.getElementById('taskProject').value.trim(),
+    category: document.getElementById('taskCategory').value,
+    billable: document.getElementById('taskBillable').checked,
+    rate: parseFloat(document.getElementById('taskRate').value) || 0
+  };
+  var entries = getEntries();
+  entries.push(entry);
+  saveEntries(entries);
+  hideManualEntry();
+  document.getElementById('taskDesc').value = '';
+  renderTodayEntries();
+  updateDataLists();
+}
+function deleteEntry(id) {
+  var entries = getEntries().filter(function(e) { return e.id !== id; });
+  saveEntries(entries);
+  renderTodayEntries();
+}
+
+// ---- DATALISTS ----
+function updateDataLists() {
+  var entries = getEntries();
+  var clients = {};
+  var projects = {};
+  entries.forEach(function(e) {
+    if (e.client) clients[e.client] = 1;
+    if (e.project) projects[e.project] = 1;
+  });
+  var cl = document.getElementById('clientList');
+  cl.innerHTML = Object.keys(clients).map(function(c) { return '<option value="' + esc(c) + '">'; }).join('');
+  var pl = document.getElementById('projectList');
+  pl.innerHTML = Object.keys(projects).map(function(p) { return '<option value="' + esc(p) + '">'; }).join('');
+}
+
+// ---- RENDER TODAY ENTRIES ----
+function renderTodayEntries() {
+  var entries = getEntries().filter(function(e) { return e.date === todayStr(); });
+  var el = document.getElementById('todayEntries');
+  if (entries.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128337;</div><p>No entries today. Start the timer or add a manual entry.</p></div>';
+    return;
+  }
+  entries.sort(function(a, b) { return a.startTime < b.startTime ? -1 : 1; });
+  el.innerHTML = entries.map(function(e) {
+    return '<div class="entry-item">' +
+      '<div class="cat-dot" style="background:' + (CAT_COLORS[e.category] || '#a855f7') + '"></div>' +
+      '<div class="info"><div class="task-name">' + esc(e.task) + '</div>' +
+      '<div class="meta">' + (e.client ? esc(e.client) + ' &middot; ' : '') + e.category + ' &middot; ' + e.startTime + '-' + e.endTime + '</div></div>' +
+      '<span class="billable-badge ' + (e.billable ? 'yes' : 'no') + '">' + (e.billable ? '$' : '-') + '</span>' +
+      '<div class="duration">' + fmtHours(e.duration) + '</div>' +
+      '<div class="actions"><button onclick="deleteEntry(\'' + e.id + '\')" title="Delete">&#10005;</button></div></div>';
+  }).join('');
+}
+
+// ---- TAB NAVIGATION ----
+document.getElementById('mainTabs').addEventListener('click', function(ev) {
+  if (!ev.target.classList.contains('tab')) return;
+  var tab = ev.target.getAttribute('data-tab');
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  ev.target.classList.add('active');
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('sec-' + tab).classList.add('active');
+  renderSection(tab);
+});
+function renderSection(tab) {
+  if (tab === 'timeline') renderTimeline();
+  else if (tab === 'heatmap') renderHeatmap();
+  else if (tab === 'billable') renderBillable();
+  else if (tab === 'clients') renderClients();
+  else if (tab === 'categories') renderCategories();
+  else if (tab === 'score') renderScore();
+  else if (tab === 'report') renderReport();
+  else if (tab === 'goals') renderGoals();
+}
+
+// ---- DAILY TIMELINE ----
+function renderTimeline() {
+  var date = document.getElementById('timelineDate').value || todayStr();
+  var entries = getEntries().filter(function(e) { return e.date === date; });
+  var el = document.getElementById('timelineSvg');
+  var legend = document.getElementById('timelineLegend');
+  if (entries.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128197;</div><p>No entries for this date.</p></div>';
+    legend.innerHTML = '';
+    return;
+  }
+  var W = 900, H = 120, pad_l = 50, pad_r = 20;
+  var barW = W - pad_l - pad_r;
+  var minH = 24, maxH = 0;
+  entries.forEach(function(e) {
+    var sh = parseInt(e.startTime.split(':')[0]);
+    var eh = parseInt(e.endTime.split(':')[0]) + (parseInt(e.endTime.split(':')[1]) > 0 ? 1 : 0);
+    if (sh < minH) minH = sh;
+    if (eh > maxH) maxH = eh;
+  });
+  minH = Math.max(0, minH - 1);
+  maxH = Math.min(24, maxH + 1);
+  var span = maxH - minH;
+  if (span < 2) { minH = Math.max(0, minH - 1); maxH = Math.min(24, maxH + 1); span = maxH - minH; }
+  var pxPerMin = barW / (span * 60);
+
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:' + W + 'px">';
+  // hour labels and gridlines
+  for (var h = minH; h <= maxH; h++) {
+    var x = pad_l + (h - minH) * 60 * pxPerMin;
+    svg += '<line x1="' + x + '" y1="30" x2="' + x + '" y2="90" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>';
+    svg += '<text x="' + x + '" y="22" fill="#94a3b8" font-size="11" text-anchor="middle">' + pad(h) + ':00</text>';
+  }
+  // background track
+  svg += '<rect x="' + pad_l + '" y="40" width="' + barW + '" height="40" rx="6" fill="rgba(100,116,139,0.1)"/>';
+  // entries
+  entries.forEach(function(e) {
+    var sp = e.startTime.split(':').map(Number);
+    var ep = e.endTime.split(':').map(Number);
+    var sMin = sp[0] * 60 + sp[1] - minH * 60;
+    var eMin = ep[0] * 60 + ep[1] - minH * 60;
+    var x = pad_l + sMin * pxPerMin;
+    var w = Math.max(2, (eMin - sMin) * pxPerMin);
+    var col = CAT_COLORS[e.category] || '#a855f7';
+    svg += '<rect x="' + x + '" y="42" width="' + w + '" height="36" rx="4" fill="' + col + '" opacity="0.85">';
+    svg += '<title>' + esc(e.task) + ' (' + e.startTime + '-' + e.endTime + ')</title></rect>';
+  });
+  svg += '</svg>';
+  el.innerHTML = svg;
+
+  var usedCats = {};
+  entries.forEach(function(e) { usedCats[e.category] = 1; });
+  legend.innerHTML = Object.keys(usedCats).map(function(c) {
+    return '<span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:' + CAT_COLORS[c] + '"></span>' + c + '</span>';
+  }).join('');
+}
+document.getElementById('timelineDate').addEventListener('change', renderTimeline);
+
+// ---- WEEKLY HEATMAP ----
+function renderHeatmap() {
+  var ws = document.getElementById('heatmapWeek').value || weekStart(todayStr());
+  document.getElementById('heatmapWeek').value = ws;
+  var week = dateRange(ws, 7);
+  var entries = getEntries();
+
+  // build 7x24 grid of minutes
+  var grid = [];
+  for (var d = 0; d < 7; d++) {
+    grid[d] = [];
+    for (var h = 0; h < 24; h++) grid[d][h] = 0;
+  }
+  entries.forEach(function(e) {
+    var di = week.indexOf(e.date);
+    if (di === -1) return;
+    var sp = e.startTime.split(':').map(Number);
+    var ep = e.endTime.split(':').map(Number);
+    var sMin = sp[0] * 60 + sp[1];
+    var eMin = ep[0] * 60 + ep[1];
+    for (var m = sMin; m < eMin; m++) {
+      var hour = Math.floor(m / 60);
+      if (hour >= 0 && hour < 24) grid[di][hour] += 1;
+    }
+  });
+  var maxVal = 1;
+  grid.forEach(function(row) { row.forEach(function(v) { if (v > maxVal) maxVal = v; }); });
+
+  var cellW = 34, cellH = 22, padL = 46, padT = 28, gap = 3;
+  var W = padL + 24 * (cellW + gap) + 10;
+  var H = padT + 7 * (cellH + gap) + 30;
+  var days = dayNames();
+
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:' + W + 'px">';
+  // hour labels
+  for (var h = 0; h < 24; h++) {
+    var x = padL + h * (cellW + gap) + cellW / 2;
+    svg += '<text x="' + x + '" y="18" fill="#94a3b8" font-size="10" text-anchor="middle">' + pad(h) + '</text>';
+  }
+  // cells
+  for (var d = 0; d < 7; d++) {
+    var y = padT + d * (cellH + gap);
+    svg += '<text x="' + (padL - 8) + '" y="' + (y + cellH / 2 + 4) + '" fill="#94a3b8" font-size="11" text-anchor="end">' + days[d] + '</text>';
+    for (var h = 0; h < 24; h++) {
+      var x = padL + h * (cellW + gap);
+      var v = grid[d][h];
+      var intensity = v / maxVal;
+      var r = Math.round(168 * intensity);
+      var g = Math.round(85 * intensity);
+      var b = Math.round(247 * intensity);
+      var fill = v === 0 ? 'rgba(100,116,139,0.08)' : 'rgba(' + r + ',' + g + ',' + b + ',' + (0.3 + intensity * 0.7) + ')';
+      svg += '<rect class="heatmap-cell" x="' + x + '" y="' + y + '" width="' + cellW + '" height="' + cellH + '" rx="4" fill="' + fill + '">';
+      svg += '<title>' + days[d] + ' ' + pad(h) + ':00 - ' + Math.round(v) + ' min</title></rect>';
+    }
+  }
+  // legend
+  var ly = padT + 7 * (cellH + gap) + 8;
+  svg += '<text x="' + padL + '" y="' + (ly + 10) + '" fill="#64748b" font-size="10">Less</text>';
+  for (var i = 0; i < 5; i++) {
+    var lx = padL + 30 + i * 18;
+    var li = i / 4;
+    var lr = Math.round(168 * li);
+    var lg = Math.round(85 * li);
+    var lb = Math.round(247 * li);
+    var lf = i === 0 ? 'rgba(100,116,139,0.15)' : 'rgba(' + lr + ',' + lg + ',' + lb + ',' + (0.3 + li * 0.7) + ')';
+    svg += '<rect x="' + lx + '" y="' + ly + '" width="14" height="14" rx="3" fill="' + lf + '"/>';
+  }
+  svg += '<text x="' + (padL + 30 + 5 * 18) + '" y="' + (ly + 10) + '" fill="#64748b" font-size="10">More</text>';
+  svg += '</svg>';
+  document.getElementById('heatmapSvg').innerHTML = svg;
+}
+document.getElementById('heatmapWeek').addEventListener('change', renderHeatmap);
+
+// ---- BILLABLE RATIO ----
+function renderBillable() {
+  var period = document.getElementById('billablePeriod').value;
+  var target = parseInt(document.getElementById('billableTarget').value) || 65;
+  var entries = filterEntries(period);
+  var totalMs = 0, billMs = 0, revenue = 0;
+  entries.forEach(function(e) {
+    totalMs += e.duration;
+    if (e.billable) {
+      billMs += e.duration;
+      revenue += (e.duration / 3600000) * (e.rate || 0);
+    }
+  });
+  var totalH = totalMs / 3600000;
+  var billH = billMs / 3600000;
+  var ratio = totalMs > 0 ? Math.round((billMs / totalMs) * 100) : 0;
+  var rph = billH > 0 ? (revenue / billH).toFixed(0) : '0';
+
+  document.getElementById('billableStats').innerHTML =
+    '<div class="stat-card"><div class="value">' + ratio + '%</div><div class="label">Billable Ratio</div></div>' +
+    '<div class="stat-card"><div class="value">$' + revenue.toFixed(0) + '</div><div class="label">Revenue Earned</div></div>' +
+    '<div class="stat-card"><div class="value">$' + rph + '/h</div><div class="label">Effective Rate</div></div>';
+
+  // Donut
+  var size = 200, cx = 100, cy = 100, r = 75, sw = 20;
+  var circ = 2 * Math.PI * r;
+  var fill = circ * (ratio / 100);
+  var remaining = circ - fill;
+  var targetFill = circ * (target / 100);
+  var color = ratio >= target ? '#22c55e' : ratio >= target * 0.7 ? '#eab308' : '#ef4444';
+
+  var svg = '<svg viewBox="0 0 ' + size + ' ' + size + '" width="200" height="200" xmlns="http://www.w3.org/2000/svg">';
+  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="rgba(100,116,139,0.15)" stroke-width="' + sw + '"/>';
+  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + color + '" stroke-width="' + sw + '" stroke-dasharray="' + fill + ' ' + remaining + '" stroke-dashoffset="' + (circ * 0.25) + '" stroke-linecap="round" style="transition:stroke-dasharray 0.8s ease"/>';
+  // target marker
+  var tAngle = -Math.PI / 2 + (2 * Math.PI * target / 100);
+  var tx = cx + r * Math.cos(tAngle);
+  var ty = cy + r * Math.sin(tAngle);
+  svg += '<circle cx="' + tx + '" cy="' + ty + '" r="4" fill="#fff" opacity="0.7"/>';
+  svg += '<text x="' + cx + '" y="' + (cy - 8) + '" text-anchor="middle" fill="' + color + '" font-size="32" font-weight="800">' + ratio + '%</text>';
+  svg += '<text x="' + cx + '" y="' + (cy + 12) + '" text-anchor="middle" fill="#94a3b8" font-size="11">billable</text>';
+  svg += '<text x="' + cx + '" y="' + (cy + 28) + '" text-anchor="middle" fill="#64748b" font-size="10">Target: ' + target + '%</text>';
+  svg += '</svg>';
+  document.getElementById('billableDonut').innerHTML = svg;
+}
+
+// ---- CLIENT TIME ALLOCATION ----
+function renderClients() {
+  var period = document.getElementById('clientPeriod').value;
+  var entries = filterEntries(period);
+  var clients = {};
+  entries.forEach(function(e) {
+    var c = e.client || 'No Client';
+    if (!clients[c]) clients[c] = { total: 0, billable: 0, admin: 0, revenue: 0 };
+    clients[c].total += e.duration;
+    if (e.billable) {
+      clients[c].billable += e.duration;
+      clients[c].revenue += (e.duration / 3600000) * (e.rate || 0);
+    }
+    if (e.category === 'Admin' || e.category === 'Communication' || e.category === 'Meetings') {
+      clients[c].admin += e.duration;
+    }
+  });
+
+  var sorted = Object.keys(clients).sort(function(a, b) { return clients[b].total - clients[a].total; });
+  if (sorted.length === 0) {
+    document.getElementById('clientChart').innerHTML = '<div class="empty-state"><div class="empty-icon">&#128101;</div><p>No client data for this period.</p></div>';
+    document.getElementById('clientTable').innerHTML = '';
+    return;
+  }
+  var maxMs = clients[sorted[0]].total;
+  var colors = ['#a855f7','#ec4899','#3b82f6','#22c55e','#eab308','#f97316','#06b6d4','#84cc16'];
+
+  var barH = 32, gap = 10, padL = 120, W = 700;
+  var H = sorted.length * (barH + gap) + 10;
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:' + W + 'px">';
+  sorted.forEach(function(name, i) {
+    var y = i * (barH + gap);
+    var w = (clients[name].total / maxMs) * (W - padL - 80);
+    var col = colors[i % colors.length];
+    svg += '<text x="' + (padL - 8) + '" y="' + (y + barH / 2 + 4) + '" fill="#e2e8f0" font-size="12" text-anchor="end">' + esc(name.length > 14 ? name.slice(0, 14) + '..' : name) + '</text>';
+    svg += '<rect x="' + padL + '" y="' + y + '" width="' + Math.max(2, w) + '" height="' + barH + '" rx="6" fill="' + col + '" opacity="0.8"/>';
+    svg += '<text x="' + (padL + w + 8) + '" y="' + (y + barH / 2 + 4) + '" fill="#94a3b8" font-size="12">' + fmtHours(clients[name].total) + '</text>';
+  });
+  svg += '</svg>';
+  document.getElementById('clientChart').innerHTML = svg;
+
+  // Table
+  var html = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">';
+  html += '<tr style="border-bottom:1px solid rgba(148,163,184,0.15)"><th style="text-align:left;padding:8px;color:#94a3b8">Client</th><th style="padding:8px;color:#94a3b8">Total</th><th style="padding:8px;color:#94a3b8">Billable</th><th style="padding:8px;color:#94a3b8">Admin</th><th style="padding:8px;color:#94a3b8">Revenue</th><th style="padding:8px;color:#94a3b8">Eff. Rate</th></tr>';
+  sorted.forEach(function(name) {
+    var c = clients[name];
+    var bh = c.billable / 3600000;
+    var eff = bh > 0 ? '$' + (c.revenue / bh).toFixed(0) : '-';
+    html += '<tr style="border-bottom:1px solid rgba(148,163,184,0.08)"><td style="padding:8px;font-weight:600">' + esc(name) + '</td><td style="padding:8px;text-align:center">' + fmtHours(c.total) + '</td><td style="padding:8px;text-align:center">' + fmtHours(c.billable) + '</td><td style="padding:8px;text-align:center">' + fmtHours(c.admin) + '</td><td style="padding:8px;text-align:center">$' + c.revenue.toFixed(0) + '</td><td style="padding:8px;text-align:center">' + eff + '</td></tr>';
+  });
+  html += '</table></div>';
+  document.getElementById('clientTable').innerHTML = html;
+}
+
+// ---- CATEGORY BREAKDOWN ----
+function renderCategories() {
+  var period = document.getElementById('catPeriod').value;
+  var entries = filterEntries(period);
+  var cats = {};
+  var totalMs = 0;
+  entries.forEach(function(e) {
+    if (!cats[e.category]) cats[e.category] = 0;
+    cats[e.category] += e.duration;
+    totalMs += e.duration;
+  });
+  var sorted = Object.keys(cats).sort(function(a, b) { return cats[b] - cats[a]; });
+  if (sorted.length === 0) {
+    document.getElementById('catChart').innerHTML = '<div class="empty-state"><div class="empty-icon">&#128202;</div><p>No data for this period.</p></div>';
+    document.getElementById('catDetails').innerHTML = '';
+    return;
+  }
+  var maxMs2 = cats[sorted[0]];
+  var barH = 32, gap = 10, padL = 130, W = 700;
+  var H = sorted.length * (barH + gap) + 10;
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:' + W + 'px">';
+  sorted.forEach(function(name, i) {
+    var y = i * (barH + gap);
+    var w = (cats[name] / maxMs2) * (W - padL - 100);
+    var pct = totalMs > 0 ? Math.round((cats[name] / totalMs) * 100) : 0;
+    var col = CAT_COLORS[name] || '#a855f7';
+    svg += '<text x="' + (padL - 8) + '" y="' + (y + barH / 2 + 4) + '" fill="#e2e8f0" font-size="12" text-anchor="end">' + name + '</text>';
+    svg += '<rect x="' + padL + '" y="' + y + '" width="' + Math.max(2, w) + '" height="' + barH + '" rx="6" fill="' + col + '" opacity="0.8"/>';
+    svg += '<text x="' + (padL + w + 8) + '" y="' + (y + barH / 2 + 4) + '" fill="#94a3b8" font-size="12">' + fmtHours(cats[name]) + ' (' + pct + '%)</text>';
+  });
+  svg += '</svg>';
+  document.getElementById('catChart').innerHTML = svg;
+
+  // details
+  var html = '';
+  sorted.forEach(function(name) {
+    var pct = totalMs > 0 ? Math.round((cats[name] / totalMs) * 100) : 0;
+    var col = CAT_COLORS[name] || '#a855f7';
+    html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">';
+    html += '<span style="width:10px;height:10px;border-radius:50%;background:' + col + ';flex-shrink:0"></span>';
+    html += '<span style="width:130px;font-size:13px;font-weight:600">' + name + '</span>';
+    html += '<div style="flex:1"><div class="progress-bar"><div class="fill" style="width:' + pct + '%;background:' + col + '"></div></div></div>';
+    html += '<span style="width:50px;text-align:right;font-size:13px;font-weight:700">' + pct + '%</span>';
+    html += '</div>';
+  });
+  document.getElementById('catDetails').innerHTML = html;
+}
+
+// ---- PRODUCTIVITY SCORE ----
+function renderScore() {
+  var date = document.getElementById('scoreDate').value || todayStr();
+  var entries = getEntries().filter(function(e) { return e.date === date; });
+  var totalMs = 0, billMs = 0, adminMs = 0;
+  entries.forEach(function(e) {
+    totalMs += e.duration;
+    if (e.billable) billMs += e.duration;
+    if (e.category === 'Admin' || e.category === 'Communication') adminMs += e.duration;
+  });
+
+  // billable ratio score (0-40)
+  var billRatio = totalMs > 0 ? billMs / totalMs : 0;
+  var billScore = Math.min(40, Math.round(billRatio * 40 / 0.7));
+
+  // focus blocks: count sessions >= 90 min (0-35)
+  var focusBlocks = 0;
+  entries.forEach(function(e) {
+    if (e.duration >= 5400000 && e.billable) focusBlocks++;
+  });
+  var focusScore = Math.min(35, focusBlocks * 12);
+
+  // non-admin ratio (0-25)
+  var nonAdminRatio = totalMs > 0 ? 1 - (adminMs / totalMs) : 0;
+  var adminScore = Math.min(25, Math.round(nonAdminRatio * 25 / 0.85));
+
+  var total = totalMs > 0 ? billScore + focusScore + adminScore : 0;
+  var scoreColor = total >= 75 ? '#22c55e' : total >= 50 ? '#eab308' : total >= 25 ? '#f97316' : '#ef4444';
+
+  // Score ring
+  var size = 180, cx = 90, cy = 90, r = 70, sw = 14;
+  var circ = 2 * Math.PI * r;
+  var fill = circ * (total / 100);
+  var svg = '<svg viewBox="0 0 ' + size + ' ' + size + '" width="180" height="180" xmlns="http://www.w3.org/2000/svg">';
+  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="rgba(100,116,139,0.12)" stroke-width="' + sw + '"/>';
+  svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + scoreColor + '" stroke-width="' + sw + '" stroke-dasharray="' + fill + ' ' + (circ - fill) + '" stroke-dashoffset="' + (circ * 0.25) + '" stroke-linecap="round" style="transition:stroke-dasharray 0.8s ease"/>';
+  svg += '<text x="' + cx + '" y="' + (cy - 6) + '" text-anchor="middle" fill="' + scoreColor + '" font-size="36" font-weight="800">' + total + '</text>';
+  svg += '<text x="' + cx + '" y="' + (cy + 14) + '" text-anchor="middle" fill="#94a3b8" font-size="12">/ 100</text>';
+  svg += '</svg>';
+  document.getElementById('scoreRing').innerHTML = svg;
+
+  document.getElementById('scoreBreakdown').innerHTML =
+    '<div class="stat-card"><div class="value">' + billScore + '/40</div><div class="label">Billable Ratio</div></div>' +
+    '<div class="stat-card"><div class="value">' + focusScore + '/35</div><div class="label">Focus Blocks (' + focusBlocks + ')</div></div>' +
+    '<div class="stat-card"><div class="value">' + adminScore + '/25</div><div class="label">Non-Admin Ratio</div></div>';
+
+  // tips
+  var tips = [];
+  if (billScore < 25) tips.push('Try to increase billable work to at least 60% of your day.');
+  if (focusBlocks === 0) tips.push('Schedule at least one 90+ minute uninterrupted focus block.');
+  if (adminScore < 15) tips.push('Admin tasks are eating too much time. Batch them into one block.');
+  if (totalMs === 0) tips.push('No time logged for this date. Start tracking to see your score!');
+  if (total >= 80) tips.push('Excellent productivity day! Keep it up.');
+  document.getElementById('scoreTips').innerHTML = tips.map(function(t) { return '<div class="insight">' + t + '</div>'; }).join('');
+}
+document.getElementById('scoreDate').addEventListener('change', renderScore);
+
+// ---- TIME AUDIT REPORT ----
+function renderReport() {
+  var period = document.getElementById('reportPeriod').value;
+  var entries = filterEntries(period);
+  var el = document.getElementById('reportContent');
+  if (entries.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128221;</div><p>No data for this period to generate a report.</p></div>';
+    return;
+  }
+
+  var totalMs = 0, billMs = 0, revenue = 0;
+  var catTotals = {};
+  var clientTotals = {};
+  var dayTotals = {};
+  var hourBuckets = {};
+  entries.forEach(function(e) {
+    totalMs += e.duration;
+    if (e.billable) { billMs += e.duration; revenue += (e.duration / 3600000) * (e.rate || 0); }
+    catTotals[e.category] = (catTotals[e.category] || 0) + e.duration;
+    var cn = e.client || 'No Client';
+    if (!clientTotals[cn]) clientTotals[cn] = { total: 0, admin: 0 };
+    clientTotals[cn].total += e.duration;
+    if (e.category === 'Admin' || e.category === 'Communication' || e.category === 'Meetings') clientTotals[cn].admin += e.duration;
+    dayTotals[e.date] = (dayTotals[e.date] || 0) + e.duration;
+    var sh = parseInt(e.startTime.split(':')[0]);
+    hourBuckets[sh] = (hourBuckets[sh] || 0) + e.duration;
+  });
+
+  var totalH = (totalMs / 3600000).toFixed(1);
+  var billH = (billMs / 3600000).toFixed(1);
+  var billPct = totalMs > 0 ? Math.round((billMs / totalMs) * 100) : 0;
+
+  var html = '';
+  // summary
+  html += '<div class="report-section"><h4>Summary</h4>';
+  html += '<p>Total hours logged: <strong>' + totalH + 'h</strong> &middot; Billable: <strong>' + billH + 'h (' + billPct + '%)</strong> &middot; Revenue: <strong>$' + revenue.toFixed(0) + '</strong></p></div>';
+
+  // insights
+  html += '<div class="report-section"><h4>Key Insights</h4>';
+  var insights = [];
+
+  // busiest day
+  var busiestDay = '', busiestMs = 0;
+  Object.keys(dayTotals).forEach(function(d) { if (dayTotals[d] > busiestMs) { busiestMs = dayTotals[d]; busiestDay = d; } });
+  if (busiestDay) {
+    var bd = new Date(busiestDay);
+    var dayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][bd.getDay()];
+    insights.push('Your busiest day was <strong>' + dayName + '</strong> with ' + fmtHours(busiestMs) + ' logged.');
+  }
+
+  // top category
+  var topCat = '', topCatMs = 0;
+  Object.keys(catTotals).forEach(function(c) { if (catTotals[c] > topCatMs) { topCatMs = catTotals[c]; topCat = c; } });
+  if (topCat) {
+    var catPct = Math.round((topCatMs / totalMs) * 100);
+    insights.push('You spent <strong>' + catPct + '%</strong> of your time on <strong>' + topCat + '</strong>.');
+  }
+
+  // meetings insight
+  if (catTotals['Meetings']) {
+    var meetPct = Math.round((catTotals['Meetings'] / totalMs) * 100);
+    if (meetPct > 20) insights.push('Meetings consumed <strong>' + meetPct + '%</strong> of your time. Consider batching or declining non-essential ones.');
+  }
+
+  // client admin comparison
+  var clientNames = Object.keys(clientTotals);
+  if (clientNames.length >= 2) {
+    var maxAdmin = '', maxAdminR = 0;
+    clientNames.forEach(function(cn) {
+      var r = clientTotals[cn].total > 0 ? clientTotals[cn].admin / clientTotals[cn].total : 0;
+      if (r > maxAdminR) { maxAdminR = r; maxAdmin = cn; }
+    });
+    if (maxAdmin && maxAdminR > 0.3) {
+      insights.push('<strong>' + esc(maxAdmin) + '</strong> has a ' + Math.round(maxAdminR * 100) + '% admin-to-total ratio. Consider streamlining processes for this client.');
+    }
+  }
+
+  // peak hours
+  var peakHour = -1, peakMs = 0;
+  Object.keys(hourBuckets).forEach(function(h) { if (hourBuckets[h] > peakMs) { peakMs = hourBuckets[h]; peakHour = parseInt(h); } });
+  if (peakHour >= 0) {
+    insights.push('Your most productive hours are around <strong>' + pad(peakHour) + ':00-' + pad(peakHour + 1) + ':00</strong>. Protect this time for deep work.');
+  }
+
+  // admin time
+  var adminTotal = (catTotals['Admin'] || 0) + (catTotals['Communication'] || 0);
+  if (adminTotal > 0) {
+    var adminPct = Math.round((adminTotal / totalMs) * 100);
+    insights.push('Admin + communication took <strong>' + adminPct + '%</strong> of your time (' + fmtHours(adminTotal) + ').');
+  }
+
+  html += insights.map(function(i) { return '<div class="insight">' + i + '</div>'; }).join('');
+  html += '</div>';
+
+  // category breakdown
+  html += '<div class="report-section"><h4>Category Breakdown</h4>';
+  var sortedCats = Object.keys(catTotals).sort(function(a, b) { return catTotals[b] - catTotals[a]; });
+  sortedCats.forEach(function(c) {
+    var pct = Math.round((catTotals[c] / totalMs) * 100);
+    html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">';
+    html += '<span style="width:10px;height:10px;border-radius:50%;background:' + CAT_COLORS[c] + '"></span>';
+    html += '<span style="width:120px;font-size:13px">' + c + '</span>';
+    html += '<div style="flex:1"><div class="progress-bar" style="height:8px"><div class="fill" style="width:' + pct + '%;background:' + CAT_COLORS[c] + '"></div></div></div>';
+    html += '<span style="font-size:13px;width:70px;text-align:right">' + fmtHours(catTotals[c]) + ' (' + pct + '%)</span>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  el.innerHTML = html;
+}
+
+function printReport() {
+  var content = document.getElementById('reportContent').innerHTML;
+  var win = window.open('', '_blank');
+  win.document.write('<!DOCTYPE html><html><head><title>Time Audit Report</title><style>body{font-family:system-ui,-apple-system,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#1e293b;line-height:1.7}h1{font-size:24px;margin-bottom:20px}h4{margin-bottom:8px}.progress-bar{background:#e2e8f0;border-radius:4px;height:8px;overflow:hidden}.fill{height:100%;border-radius:4px}.insight{padding:8px 12px;background:#f1f5f9;border-radius:6px;margin-bottom:6px;border-left:3px solid #7c3aed;font-size:14px}.report-section{margin-bottom:24px;padding:16px;border-left:3px solid #7c3aed}strong{color:#0f172a}@media print{body{padding:20px}}</style></head><body><h1>Freelance Time Audit Report</h1><p style="color:#64748b;margin-bottom:24px">Generated ' + new Date().toLocaleDateString() + '</p>' + content + '<hr style="margin:32px 0;border:none;border-top:1px solid #e2e8f0"><p style="font-size:12px;color:#94a3b8">Generated by FreelanceOS Time Audit Tool</p></body></html>');
+  win.document.close();
+  win.print();
+}
+
+// ---- GOAL TRACKER ----
+function renderGoals() {
+  var goals = getGoals();
+  var gBillable = goals.billable || parseFloat(document.getElementById('goalBillable').value) || 30;
+  var gDeepWork = goals.deepWork || parseFloat(document.getElementById('goalDeepWork').value) || 10;
+  var gAdminCap = goals.adminCap || parseFloat(document.getElementById('goalAdminCap').value) || 8;
+
+  var ws = weekStart(todayStr());
+  var week = dateRange(ws, 7);
+  var entries = getEntries().filter(function(e) { return week.indexOf(e.date) !== -1; });
+
+  var billH = 0, adminH = 0, deepBlocks = 0;
+  entries.forEach(function(e) {
+    if (e.billable) billH += e.duration / 3600000;
+    if (e.category === 'Admin' || e.category === 'Communication') adminH += e.duration / 3600000;
+    if (e.duration >= 5400000 && e.billable) deepBlocks++;
+  });
+
+  var el = document.getElementById('goalProgress');
+  var html = '';
+
+  // Billable hours
+  var bp = Math.min(100, Math.round((billH / gBillable) * 100));
+  html += '<div class="goal-row"><div class="goal-label">Billable Hours</div><div class="goal-bar"><div class="progress-bar"><div class="fill" style="width:' + bp + '%;background:linear-gradient(90deg,#a855f7,#22c55e)"></div></div></div><div class="goal-val">' + billH.toFixed(1) + ' / ' + gBillable + 'h</div></div>';
+
+  // Deep work blocks
+  var dp = Math.min(100, Math.round((deepBlocks / gDeepWork) * 100));
+  html += '<div class="goal-row"><div class="goal-label">Deep Work Blocks</div><div class="goal-bar"><div class="progress-bar"><div class="fill" style="width:' + dp + '%;background:linear-gradient(90deg,#3b82f6,#06b6d4)"></div></div></div><div class="goal-val">' + deepBlocks + ' / ' + gDeepWork + '</div></div>';
+
+  // Admin cap (inverted - lower is better)
+  var ap = gAdminCap > 0 ? Math.min(100, Math.round((adminH / gAdminCap) * 100)) : 0;
+  var adminColor = ap > 100 ? '#ef4444' : ap > 80 ? '#eab308' : '#22c55e';
+  html += '<div class="goal-row"><div class="goal-label">Admin Time Cap</div><div class="goal-bar"><div class="progress-bar"><div class="fill" style="width:' + Math.min(100, ap) + '%;background:' + adminColor + '"></div></div></div><div class="goal-val" style="color:' + adminColor + '">' + adminH.toFixed(1) + ' / ' + gAdminCap + 'h</div></div>';
+
+  // Summary message
+  var allGood = bp >= 80 && dp >= 80 && ap <= 100;
+  var msg = allGood ? 'You\'re on track this week. Keep it up!' :
+    bp < 50 ? 'Billable hours are low. Try to front-load client work early in the week.' :
+    ap > 100 ? 'Admin time exceeded your cap. Look for tasks to batch or automate.' :
+    'Making progress. Focus on deep work blocks to hit your targets.';
+  html += '<div class="insight" style="margin-top:12px">' + msg + '</div>';
+
+  el.innerHTML = html;
+}
+
+// ---- EXPORTS ----
+function exportCSV() {
+  var entries = getEntries();
+  if (entries.length === 0) { alert('No entries to export'); return; }
+  var csv = 'Date,Start,End,Duration (h),Task,Client,Project,Category,Billable,Rate\n';
+  entries.forEach(function(e) {
+    csv += e.date + ',' + e.startTime + ',' + e.endTime + ',' + (e.duration / 3600000).toFixed(2) + ',"' + (e.task || '').replace(/"/g, '""') + '","' + (e.client || '').replace(/"/g, '""') + '","' + (e.project || '').replace(/"/g, '""') + '",' + e.category + ',' + (e.billable ? 'Yes' : 'No') + ',' + (e.rate || 0) + '\n';
+  });
+  download('freelance-timesheet.csv', csv, 'text/csv');
+}
+function exportJSON() {
+  var data = {
+    entries: getEntries(),
+    goals: getGoals(),
+    exportDate: new Date().toISOString()
+  };
+  download('freelance-time-backup.json', JSON.stringify(data, null, 2), 'application/json');
+}
+function exportReport() {
+  renderReport();
+  var content = document.getElementById('reportContent').innerHTML;
+  var html = '<!DOCTYPE html><html><head><title>Time Audit Report</title><style>body{font-family:system-ui,-apple-system,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#1e293b;line-height:1.7}h1{font-size:24px}h4{margin-bottom:8px}.progress-bar{background:#e2e8f0;border-radius:4px;height:8px;overflow:hidden}.fill{height:100%;border-radius:4px}.insight{padding:8px 12px;background:#f1f5f9;border-radius:6px;margin-bottom:6px;border-left:3px solid #7c3aed;font-size:14px}.report-section{margin-bottom:24px;padding:16px;border-left:3px solid #7c3aed}strong{color:#0f172a}</style></head><body><h1>Freelance Time Audit Report</h1><p style="color:#64748b">Generated ' + new Date().toLocaleDateString() + '</p>' + content + '<hr><p style="font-size:12px;color:#94a3b8">Generated by FreelanceOS Time Audit Tool</p></body></html>';
+  download('time-audit-report.html', html, 'text/html');
+}
+function importJSON() {
+  var file = document.getElementById('importFile').files[0];
+  if (!file) { alert('Select a JSON file first'); return; }
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      var data = JSON.parse(ev.target.result);
+      if (data.entries && Array.isArray(data.entries)) {
+        var existing = getEntries();
+        var ids = {};
+        existing.forEach(function(e) { ids[e.id] = 1; });
+        var added = 0;
+        data.entries.forEach(function(e) {
+          if (!ids[e.id]) { existing.push(e); added++; }
+        });
+        saveEntries(existing);
+        if (data.goals) localStorage.setItem('fta_goals', JSON.stringify(data.goals));
+        alert('Imported ' + added + ' new entries. (' + data.entries.length + ' total in file)');
+        location.reload();
+      } else {
+        alert('Invalid backup file format.');
+      }
+    } catch(e) { alert('Error reading file: ' + e.message); }
+  };
+  reader.readAsText(file);
+}
+function download(filename, content, type) {
+  var blob = new Blob([content], { type: type });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ---- INIT ----
+function init() {
+  document.getElementById('timelineDate').value = todayStr();
+  document.getElementById('heatmapWeek').value = weekStart(todayStr());
+  document.getElementById('scoreDate').value = todayStr();
+  loadGoals();
+  updateDataLists();
+  renderTodayEntries();
+}
+init();
+</script>
+</body>
+</html>
