@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Boundary Setter — Free Freelancer Tool | FreelanceOS</title>
+<meta name="description" content="Define, communicate, and enforce professional boundaries with clients. Includes boundary templates, communication scripts, violation tracking, and policy generator. Free tool for freelancers.">
+<meta name="keywords" content="freelance boundaries, client management, freelancer tools, boundary setting, scope creep, client communication, freelance business">
+<meta name="author" content="FreelanceOS">
+<meta property="og:title" content="Client Boundary Setter — Free Freelancer Tool | FreelanceOS">
+<meta property="og:description" content="Define, communicate, and enforce professional boundaries with clients. Includes boundary templates, communication scripts, violation tracking, and policy generator.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.co/freelanceos-storefront/free-tools/boundary-setter.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Client Boundary Setter — Free Freelancer Tool | FreelanceOS">
+<meta name="twitter:description" content="Define, communicate, and enforce professional boundaries with clients. Includes boundary templates, communication scripts, violation tracking, and policy generator.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Client Boundary Setter",
+  "description": "An interactive tool that helps freelancers define, communicate, and enforce professional boundaries with clients.",
+  "url": "https://freelanceos.co/freelanceos-storefront/free-tools/boundary-setter.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --border: rgba(168,85,247,0.2);
+  --accent-1: #a855f7;
+  --accent-2: #ec4899;
+  --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --text: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --radius-card: 16px;
+  --radius-input: 12px;
+  --glass-bg: rgba(15,23,42,0.7);
+  --glass-blur: blur(20px);
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --success: #22c55e;
+}
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+.bg-glow {
+  position: fixed; top: -200px; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 600px;
+  background: radial-gradient(ellipse, rgba(168,85,247,0.08) 0%, rgba(236,72,153,0.04) 40%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+header { text-align: center; padding: 48px 20px 32px; }
+header h1 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800;
+  background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 12px;
+}
+header p { color: var(--text-secondary); font-size: 1.1rem; max-width: 640px; margin: 0 auto; }
+.tabs {
+  display: flex; gap: 6px; overflow-x: auto; padding: 0 20px 24px;
+  max-width: 1100px; margin: 0 auto; scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 10px 18px; border: 1px solid var(--border); background: var(--glass-bg);
+  color: var(--text-secondary); border-radius: 30px; cursor: pointer;
+  font-size: 0.85rem; white-space: nowrap; transition: all 0.3s;
+  backdrop-filter: var(--glass-blur); font-weight: 500;
+}
+.tab-btn:hover { border-color: var(--accent-1); color: var(--text); }
+.tab-btn.active {
+  background: var(--gradient); color: #fff; border-color: transparent; font-weight: 600;
+}
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-card); padding: 28px;
+  margin-bottom: 20px; transition: all 0.3s;
+  backdrop-filter: var(--glass-blur);
+}
+.card:hover { border-color: rgba(168,85,247,0.4); }
+.card h2 {
+  font-size: 1.3rem; margin-bottom: 8px; font-weight: 700;
+  background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.card h3 { font-size: 1.05rem; margin-bottom: 12px; color: var(--text); font-weight: 600; }
+.card p.desc { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 20px; }
+.section { display: none; }
+.section.active { display: block; }
+input[type="text"], input[type="number"], input[type="email"], input[type="date"],
+textarea, select {
+  width: 100%; padding: 12px 16px; background: rgba(15,23,42,0.8);
+  border: 1px solid var(--border); border-radius: var(--radius-input);
+  color: var(--text); font-size: 0.95rem; font-family: inherit;
+  transition: border-color 0.3s; outline: none;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--accent-1); }
+textarea { resize: vertical; min-height: 80px; }
+select option { background: var(--card); color: var(--text); }
+label { display: block; margin-bottom: 6px; font-size: 0.88rem; color: var(--text-secondary); font-weight: 500; }
+.form-group { margin-bottom: 16px; }
+.btn {
+  padding: 12px 24px; border: none; border-radius: var(--radius-input);
+  font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  transition: all 0.3s; font-family: inherit; display: inline-flex;
+  align-items: center; gap: 8px;
+}
+.btn-primary { background: var(--gradient); color: #fff; }
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-secondary { background: rgba(168,85,247,0.15); color: var(--accent-1); border: 1px solid var(--border); }
+.btn-secondary:hover { background: rgba(168,85,247,0.25); }
+.btn-danger { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+.btn-danger:hover { background: rgba(239,68,68,0.25); }
+.btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+.btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.badge {
+  display: inline-block; padding: 4px 12px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 600;
+}
+.badge-success { background: rgba(34,197,94,0.15); color: var(--success); }
+.badge-warning { background: rgba(245,158,11,0.15); color: var(--warning); }
+.badge-danger { background: rgba(239,68,68,0.15); color: var(--danger); }
+.badge-purple { background: rgba(168,85,247,0.15); color: var(--accent-1); }
+.progress-bar {
+  width: 100%; height: 8px; background: rgba(148,163,184,0.15);
+  border-radius: 4px; overflow: hidden; margin: 8px 0;
+}
+.progress-fill {
+  height: 100%; border-radius: 4px; background: var(--gradient);
+  transition: width 0.6s ease;
+}
+.score-ring {
+  width: 120px; height: 120px; position: relative; margin: 0 auto 16px;
+}
+.score-ring svg { transform: rotate(-90deg); }
+.score-ring .ring-bg { stroke: rgba(148,163,184,0.15); }
+.score-ring .ring-fill { transition: stroke-dashoffset 1s ease; }
+.score-value {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-size: 1.8rem; font-weight: 800;
+}
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.quiz-option {
+  display: block; width: 100%; text-align: left; padding: 14px 18px;
+  background: rgba(15,23,42,0.6); border: 1px solid var(--border);
+  border-radius: var(--radius-input); color: var(--text);
+  cursor: pointer; transition: all 0.3s; font-size: 0.92rem;
+  margin-bottom: 8px; font-family: inherit;
+}
+.quiz-option:hover { border-color: var(--accent-1); background: rgba(168,85,247,0.08); }
+.quiz-option.selected { border-color: var(--accent-1); background: rgba(168,85,247,0.15); }
+.script-card {
+  background: rgba(15,23,42,0.6); border: 1px solid var(--border);
+  border-radius: var(--radius-input); padding: 18px; margin-bottom: 12px;
+  transition: all 0.3s;
+}
+.script-card:hover { border-color: rgba(168,85,247,0.4); }
+.script-tag {
+  display: inline-block; padding: 3px 10px; border-radius: 12px;
+  font-size: 0.72rem; font-weight: 600; margin-right: 6px; margin-bottom: 6px;
+  background: rgba(168,85,247,0.12); color: var(--accent-1);
+}
+.script-text {
+  background: rgba(2,6,23,0.6); border-radius: 8px; padding: 14px;
+  font-size: 0.9rem; line-height: 1.6; color: var(--text);
+  margin-top: 10px; border-left: 3px solid var(--accent-1);
+  white-space: pre-wrap;
+}
+.copy-btn {
+  background: none; border: 1px solid var(--border); color: var(--text-secondary);
+  padding: 4px 12px; border-radius: 8px; cursor: pointer; font-size: 0.78rem;
+  transition: all 0.3s; font-family: inherit;
+}
+.copy-btn:hover { border-color: var(--accent-1); color: var(--accent-1); }
+.violation-item {
+  display: flex; align-items: flex-start; gap: 14px; padding: 16px;
+  background: rgba(15,23,42,0.5); border: 1px solid var(--border);
+  border-radius: var(--radius-input); margin-bottom: 10px;
+}
+.violation-severity {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 6px;
+}
+.severity-low { background: var(--warning); }
+.severity-medium { background: #f97316; }
+.severity-high { background: var(--danger); }
+.stat-card {
+  text-align: center; padding: 20px;
+  background: rgba(15,23,42,0.5); border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+.stat-number {
+  font-size: 2rem; font-weight: 800;
+  background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-label { color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px; }
+.risk-meter {
+  width: 100%; height: 24px; background: rgba(148,163,184,0.1);
+  border-radius: 12px; overflow: hidden; position: relative;
+  margin: 16px 0;
+}
+.risk-fill {
+  height: 100%; border-radius: 12px; transition: width 0.8s ease;
+}
+.risk-low { background: linear-gradient(90deg, #22c55e, #4ade80); }
+.risk-medium { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.risk-high { background: linear-gradient(90deg, #ef4444, #f87171); }
+.cta-banner {
+  background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.15));
+  border: 1px solid rgba(168,85,247,0.3); border-radius: var(--radius-card);
+  padding: 32px; text-align: center; margin: 40px 0;
+}
+.cta-banner h3 {
+  font-size: 1.3rem; margin-bottom: 8px; color: var(--text);
+}
+.cta-banner p { color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem; }
+.cta-banner .btn-primary { padding: 14px 32px; font-size: 1rem; text-decoration: none; }
+.empty-state {
+  text-align: center; padding: 48px 20px; color: var(--text-secondary);
+}
+.empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0; border-bottom: 1px solid rgba(148,163,184,0.1);
+}
+.toggle-label { font-size: 0.92rem; }
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(2,6,23,0.85); z-index: 1000; display: flex;
+  align-items: center; justify-content: center; padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-card); padding: 32px;
+  max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto;
+  transform: translateY(20px); transition: transform 0.3s;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal h3 { font-size: 1.2rem; margin-bottom: 16px; }
+.modal-close {
+  float: right; background: none; border: none; color: var(--text-secondary);
+  font-size: 1.5rem; cursor: pointer; line-height: 1;
+}
+.filter-bar {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.filter-btn {
+  padding: 6px 14px; border: 1px solid var(--border); background: transparent;
+  color: var(--text-secondary); border-radius: 20px; cursor: pointer;
+  font-size: 0.8rem; transition: all 0.3s; font-family: inherit;
+}
+.filter-btn.active { background: rgba(168,85,247,0.15); color: var(--accent-1); border-color: var(--accent-1); }
+.policy-preview {
+  background: #fff; color: #1a1a2e; padding: 40px;
+  border-radius: var(--radius-card); font-family: Georgia, serif;
+  line-height: 1.8; max-height: 500px; overflow-y: auto;
+}
+.policy-preview h1 { font-size: 1.6rem; color: #1a1a2e; margin-bottom: 8px; }
+.policy-preview h2 { font-size: 1.15rem; color: #333; margin: 20px 0 8px; border-bottom: 2px solid #a855f7; padding-bottom: 4px; }
+.policy-preview p { margin-bottom: 10px; font-size: 0.95rem; }
+.policy-preview ul { margin: 8px 0 8px 20px; }
+.policy-preview li { margin-bottom: 4px; }
+.tooltip {
+  position: relative; display: inline-block; cursor: help;
+}
+.tooltip::after {
+  content: attr(data-tip); position: absolute; bottom: 120%; left: 50%;
+  transform: translateX(-50%); background: var(--card); color: var(--text);
+  padding: 8px 12px; border-radius: 8px; font-size: 0.8rem;
+  white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  border: 1px solid var(--border); z-index: 10;
+}
+.tooltip:hover::after { opacity: 1; }
+footer {
+  text-align: center; padding: 40px 20px; color: var(--text-secondary);
+  font-size: 0.88rem; border-top: 1px solid var(--border); margin-top: 40px;
+}
+footer a { color: var(--accent-1); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.4s ease forwards; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+.pulse { animation: pulse 2s ease infinite; }
+@media (max-width: 640px) {
+  .card { padding: 20px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .tabs { padding: 0 12px 20px; }
+  header { padding: 32px 16px 24px; }
+  .btn-group { flex-direction: column; }
+  .btn-group .btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<header>
+  <h1>Client Boundary Setter</h1>
+  <p>Define, communicate, and enforce professional boundaries with clients. Build stronger freelance relationships through clear expectations.</p>
+</header>
+
+<div class="container">
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="assessment">Assessment Quiz</button>
+    <button class="tab-btn" data-tab="builder">Boundary Builder</button>
+    <button class="tab-btn" data-tab="scripts">Communication Scripts</button>
+    <button class="tab-btn" data-tab="profiles">Client Profiles</button>
+    <button class="tab-btn" data-tab="violations">Violation Tracker</button>
+    <button class="tab-btn" data-tab="policy">Policy Generator</button>
+    <button class="tab-btn" data-tab="redflags">Red Flag Warning</button>
+    <button class="tab-btn" data-tab="export">Export</button>
+  </div>
+
+  <!-- ASSESSMENT QUIZ -->
+  <div class="section active" id="sec-assessment">
+    <div class="card">
+      <h2>Boundary Strength Assessment</h2>
+      <p class="desc">Answer 20 questions across 5 categories to discover where your boundaries are strong and where they need work.</p>
+      <div id="quiz-area"></div>
+    </div>
+  </div>
+
+  <!-- BOUNDARY BUILDER -->
+  <div class="section" id="sec-builder">
+    <div class="card">
+      <h2>Boundary Builder</h2>
+      <p class="desc">Define your professional boundaries across 8 key areas. These become the foundation for your client policies.</p>
+    </div>
+    <div id="builder-cards"></div>
+  </div>
+
+  <!-- COMMUNICATION SCRIPTS -->
+  <div class="section" id="sec-scripts">
+    <div class="card">
+      <h2>Communication Scripts</h2>
+      <p class="desc">30+ pre-written scripts for common boundary situations. Copy, customize, and send with confidence.</p>
+      <div class="filter-bar" id="script-filters"></div>
+    </div>
+    <div id="scripts-list"></div>
+  </div>
+
+  <!-- CLIENT PROFILES -->
+  <div class="section" id="sec-profiles">
+    <div class="card">
+      <h2>Client Boundary Profiles</h2>
+      <p class="desc">Create per-client boundary settings. Some clients earn more flexibility; others need firmer limits.</p>
+      <div class="btn-group" style="margin-top:0;margin-bottom:16px;">
+        <button class="btn btn-primary" onclick="openProfileModal()">+ New Client Profile</button>
+      </div>
+    </div>
+    <div id="profiles-list"></div>
+  </div>
+
+  <!-- VIOLATION TRACKER -->
+  <div class="section" id="sec-violations">
+    <div class="card">
+      <h2>Boundary Violation Tracker</h2>
+      <p class="desc">Log boundary violations, identify patterns, and track repeat offenders.</p>
+      <div class="btn-group" style="margin-top:0;margin-bottom:16px;">
+        <button class="btn btn-primary" onclick="openViolationModal()">+ Log Violation</button>
+      </div>
+    </div>
+    <div class="grid-3" id="violation-stats" style="margin-bottom:20px;"></div>
+    <div id="violations-list"></div>
+  </div>
+
+  <!-- POLICY GENERATOR -->
+  <div class="section" id="sec-policy">
+    <div class="card">
+      <h2>Boundary Policy Generator</h2>
+      <p class="desc">Generate a professional "Working Together" document to share with new clients before starting a project.</p>
+      <div class="form-group">
+        <label>Your Business Name</label>
+        <input type="text" id="policy-biz-name" placeholder="e.g. Jane Doe Design Studio">
+      </div>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="policy-your-name" placeholder="e.g. Jane Doe">
+      </div>
+      <div class="form-group">
+        <label>Service Description</label>
+        <input type="text" id="policy-service" placeholder="e.g. Brand Design & Web Development">
+      </div>
+      <button class="btn btn-primary" onclick="generatePolicy()">Generate Policy Document</button>
+    </div>
+    <div id="policy-output" style="margin-top:20px;"></div>
+  </div>
+
+  <!-- RED FLAG WARNING -->
+  <div class="section" id="sec-redflags">
+    <div class="card">
+      <h2>Red Flag Early Warning System</h2>
+      <p class="desc">Input client behaviors observed during discovery or early conversations. Get a risk score for potential boundary violations.</p>
+      <div id="redflag-checklist"></div>
+      <div id="redflag-result" style="margin-top:20px;"></div>
+    </div>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="section" id="sec-export">
+    <div class="card">
+      <h2>Export Your Data</h2>
+      <p class="desc">Download your boundary settings, scripts, and violation logs.</p>
+      <div class="grid-2">
+        <div class="stat-card">
+          <div style="font-size:1.8rem;margin-bottom:8px;">📄</div>
+          <h3 style="font-size:1rem;margin-bottom:8px;">Policy Document</h3>
+          <p class="desc" style="margin-bottom:12px;">Export your Working Together document as printable HTML</p>
+          <button class="btn btn-secondary btn-sm" onclick="exportPolicy()">Export Policy</button>
+        </div>
+        <div class="stat-card">
+          <div style="font-size:1.8rem;margin-bottom:8px;">💬</div>
+          <h3 style="font-size:1rem;margin-bottom:8px;">Communication Scripts</h3>
+          <p class="desc" style="margin-bottom:12px;">Export all scripts as a text file</p>
+          <button class="btn btn-secondary btn-sm" onclick="exportScripts()">Export Scripts</button>
+        </div>
+        <div class="stat-card">
+          <div style="font-size:1.8rem;margin-bottom:8px;">⚠️</div>
+          <h3 style="font-size:1rem;margin-bottom:8px;">Violation Log</h3>
+          <p class="desc" style="margin-bottom:12px;">Export violation history as CSV spreadsheet</p>
+          <button class="btn btn-secondary btn-sm" onclick="exportViolations()">Export CSV</button>
+        </div>
+        <div class="stat-card">
+          <div style="font-size:1.8rem;margin-bottom:8px;">📦</div>
+          <h3 style="font-size:1rem;margin-bottom:8px;">Full Backup</h3>
+          <p class="desc" style="margin-bottom:12px;">Export all data as JSON for backup or transfer</p>
+          <button class="btn btn-secondary btn-sm" onclick="exportFullBackup()">Export JSON</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <h3>Get the Complete FreelanceOS Pro System</h3>
+    <p>Templates, contracts, invoices, client management tools, and more — everything you need to run a profitable freelance business.</p>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="btn btn-primary" target="_blank" rel="noopener">40% OFF with code FLASH40</a>
+  </div>
+</div>
+
+<!-- Modals -->
+<div class="modal-overlay" id="profile-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('profile-modal')">&times;</button>
+    <h3>New Client Profile</h3>
+    <div class="form-group"><label>Client Name</label><input type="text" id="prof-name" placeholder="Client or company name"></div>
+    <div class="form-group"><label>Boundary Strictness</label>
+      <select id="prof-strictness"><option value="relaxed">Relaxed — trusted long-term client</option><option value="standard" selected>Standard — default boundaries</option><option value="strict">Strict — new or difficult client</option><option value="maximum">Maximum — high-risk client</option></select>
+    </div>
+    <div class="form-group"><label>Working Hours Override</label><input type="text" id="prof-hours" placeholder="e.g. Mon-Fri 10am-4pm (or leave blank for default)"></div>
+    <div class="form-group"><label>Response Time Override</label>
+      <select id="prof-response"><option value="">Use default</option><option value="2h">2 hours</option><option value="4h">4 hours</option><option value="8h">8 hours (same day)</option><option value="24h">24 hours</option><option value="48h">48 hours</option></select>
+    </div>
+    <div class="form-group"><label>Max Revisions</label><input type="number" id="prof-revisions" placeholder="e.g. 3" min="0" max="99"></div>
+    <div class="form-group"><label>Allowed Communication Channels</label><input type="text" id="prof-channels" placeholder="e.g. Email, Slack (comma separated)"></div>
+    <div class="form-group"><label>Notes</label><textarea id="prof-notes" placeholder="Any special boundary notes for this client..."></textarea></div>
+    <input type="hidden" id="prof-edit-id" value="">
+    <div class="btn-group"><button class="btn btn-primary" onclick="saveProfile()">Save Profile</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="violation-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('violation-modal')">&times;</button>
+    <h3>Log Boundary Violation</h3>
+    <div class="form-group"><label>Client Name</label><input type="text" id="vio-client" placeholder="Which client?" list="client-datalist"><datalist id="client-datalist"></datalist></div>
+    <div class="form-group"><label>Violation Type</label>
+      <select id="vio-type"><option value="after-hours">After-Hours Contact</option><option value="scope-creep">Scope Creep</option><option value="late-payment">Late Payment</option><option value="disrespectful">Disrespectful Communication</option><option value="unauthorized-channel">Unauthorized Channel</option><option value="rush-demand">Unreasonable Rush Demand</option><option value="revision-excess">Excessive Revisions</option><option value="meeting-no-show">Meeting No-Show</option><option value="other">Other</option></select>
+    </div>
+    <div class="form-group"><label>Severity</label>
+      <select id="vio-severity"><option value="low">Low — minor boundary push</option><option value="medium">Medium — clear violation</option><option value="high">High — serious disrespect</option></select>
+    </div>
+    <div class="form-group"><label>Date</label><input type="date" id="vio-date"></div>
+    <div class="form-group"><label>Description</label><textarea id="vio-desc" placeholder="What happened?"></textarea></div>
+    <div class="form-group"><label>Action Taken</label><textarea id="vio-action" placeholder="How did you respond?"></textarea></div>
+    <div class="btn-group"><button class="btn btn-primary" onclick="saveViolation()">Log Violation</button></div>
+  </div>
+</div>
+
+<footer>
+  <p>Client Boundary Setter — a free tool from <a href="/freelanceos-storefront/">FreelanceOS</a></p>
+  <p style="margin-top:8px;"><a href="/freelanceos-storefront/free-templates.html">Free Templates</a> &nbsp;|&nbsp; <a href="/freelanceos-storefront/">Storefront</a></p>
+</footer>
+
+<script>
+/* ============================
+   DATA & STATE
+   ============================ */
+const LS_KEY = 'freelanceos_boundary_setter';
+let state = loadState();
+
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem(LS_KEY));
+    if (d && d.version) return d;
+  } catch(e) {}
+  return {
+    version: 1,
+    quizAnswers: {},
+    quizCompleted: false,
+    boundaries: {},
+    profiles: [],
+    violations: [],
+    policyInfo: {}
+  };
+}
+function saveState() { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+
+/* ============================
+   TAB NAVIGATION
+   ============================ */
+document.getElementById('tabs').addEventListener('click', function(e) {
+  if (!e.target.classList.contains('tab-btn')) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById('sec-' + e.target.dataset.tab).classList.add('active');
+});
+
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+/* ============================
+   QUIZ
+   ============================ */
+const quizQuestions = [
+  // Communication (1-4)
+  { id:'c1', cat:'Communication', q:'A client sends you a non-urgent message at 11 PM. You:', options:[
+    {t:'Reply immediately to show responsiveness', s:1},
+    {t:'Reply first thing next morning during work hours', s:4},
+    {t:'Feel guilty but wait until morning', s:3},
+    {t:'Reply within an hour even though it\'s late', s:2}
+  ]},
+  { id:'c2', cat:'Communication', q:'A client starts texting your personal phone instead of using the agreed channel. You:', options:[
+    {t:'Redirect them back to the agreed channel immediately', s:4},
+    {t:'Reply on text but mention the preferred channel', s:3},
+    {t:'Answer on text to avoid conflict', s:1},
+    {t:'Ignore the text and reply on the agreed channel', s:3}
+  ]},
+  { id:'c3', cat:'Communication', q:'A client leaves a voicemail expecting an immediate callback. You:', options:[
+    {t:'Call back within your stated response time', s:4},
+    {t:'Drop everything and call back now', s:1},
+    {t:'Send a quick email acknowledging and schedule a call', s:3},
+    {t:'Feel anxious and call back within the hour', s:2}
+  ]},
+  { id:'c4', cat:'Communication', q:'How clearly have you communicated your preferred contact methods to clients?', options:[
+    {t:'It\'s in my contract and I remind clients regularly', s:4},
+    {t:'I mentioned it once at the start', s:3},
+    {t:'I\'ve hinted at preferences but never stated them clearly', s:2},
+    {t:'I respond on whatever channel they use', s:1}
+  ]},
+  // Availability (5-8)
+  { id:'a1', cat:'Availability', q:'A client asks you to join a meeting during your blocked-off personal time. You:', options:[
+    {t:'Offer alternative times that work for both of you', s:4},
+    {t:'Rearrange your personal time to accommodate', s:1},
+    {t:'Agree reluctantly and feel resentful', s:2},
+    {t:'Say you\'re unavailable and offer two alternative slots', s:4}
+  ]},
+  { id:'a2', cat:'Availability', q:'How do you handle weekend work requests?', options:[
+    {t:'I have a clear policy: weekends are off unless it\'s a true emergency with rush fees', s:4},
+    {t:'I sometimes work weekends if the client is important', s:2},
+    {t:'I usually end up working weekends to meet deadlines', s:1},
+    {t:'I decline weekends but feel guilty about it', s:3}
+  ]},
+  { id:'a3', cat:'Availability', q:'A client expects same-day turnaround on a request that normally takes 3 days. You:', options:[
+    {t:'Explain the timeline, offer rush pricing, or adjust scope', s:4},
+    {t:'Pull an all-nighter to deliver', s:1},
+    {t:'Agree but deliver lower quality work', s:1},
+    {t:'Push back but end up compromising on 2 days', s:3}
+  ]},
+  { id:'a4', cat:'Availability', q:'Do you have documented working hours that clients know about?', options:[
+    {t:'Yes, it\'s in my contract and email signature', s:4},
+    {t:'I\'ve told most clients verbally', s:3},
+    {t:'I have hours in mind but haven\'t shared them', s:2},
+    {t:'I\'m available whenever clients need me', s:1}
+  ]},
+  // Scope (9-12)
+  { id:'s1', cat:'Scope', q:'A client asks for "one more small thing" that\'s clearly outside the project scope. You:', options:[
+    {t:'Explain it\'s out of scope and provide a quote for the addition', s:4},
+    {t:'Do it to keep the client happy', s:1},
+    {t:'Do it but mention it next time it happens', s:2},
+    {t:'Agree but add it to the invoice later without discussing', s:2}
+  ]},
+  { id:'s2', cat:'Scope', q:'Halfway through a project, the client wants to change direction significantly. You:', options:[
+    {t:'Pause work, document the changes, present a revised scope and timeline', s:4},
+    {t:'Absorb the changes and hope to finish on time', s:1},
+    {t:'Push back but eventually agree to most changes', s:2},
+    {t:'Agree to changes but extend the timeline only', s:3}
+  ]},
+  { id:'s3', cat:'Scope', q:'How detailed are your project scopes and contracts?', options:[
+    {t:'Very detailed with specific deliverables, revision limits, and exclusions', s:4},
+    {t:'Moderately detailed with room for interpretation', s:3},
+    {t:'Basic outline — I figure things out as we go', s:2},
+    {t:'I don\'t use formal contracts', s:1}
+  ]},
+  { id:'s4', cat:'Scope', q:'A client asks for unlimited revisions. You:', options:[
+    {t:'Explain your revision policy and the included number', s:4},
+    {t:'Agree — the customer is always right', s:1},
+    {t:'Agree but start rushing revisions after the third one', s:2},
+    {t:'Say yes but set an informal limit in your head', s:2}
+  ]},
+  // Payment (13-16)
+  { id:'p1', cat:'Payment', q:'A client\'s payment is 7 days overdue. You:', options:[
+    {t:'Send a firm but professional overdue notice with late fee per contract', s:4},
+    {t:'Send a gentle reminder hoping they\'ll pay soon', s:3},
+    {t:'Keep working and hope the payment comes eventually', s:1},
+    {t:'Pause work and notify the client payment is required to continue', s:4}
+  ]},
+  { id:'p2', cat:'Payment', q:'A client asks for a significant discount on your rates. You:', options:[
+    {t:'Explain your value and hold firm on pricing', s:4},
+    {t:'Offer a small discount to compromise', s:3},
+    {t:'Agree to the discount to avoid losing the client', s:1},
+    {t:'Offer reduced scope to match their budget', s:4}
+  ]},
+  { id:'p3', cat:'Payment', q:'Do you require deposits or milestone payments before starting work?', options:[
+    {t:'Always — no deposit, no work begins', s:4},
+    {t:'Usually, but I make exceptions for trusted clients', s:3},
+    {t:'Sometimes, when the project is large enough', s:2},
+    {t:'No, I invoice after completion', s:1}
+  ]},
+  { id:'p4', cat:'Payment', q:'A client disputes a charge that was clearly in the contract. You:', options:[
+    {t:'Calmly reference the contract terms and hold firm', s:4},
+    {t:'Offer to split the difference', s:2},
+    {t:'Remove the charge to keep the relationship', s:1},
+    {t:'Explain the charge and offer a payment plan', s:3}
+  ]},
+  // Personal (17-20)
+  { id:'r1', cat:'Personal', q:'A client makes a comment that feels personally disrespectful. You:', options:[
+    {t:'Address it directly and professionally, setting a clear boundary', s:4},
+    {t:'Let it slide — they probably didn\'t mean it', s:1},
+    {t:'Feel upset but don\'t say anything', s:1},
+    {t:'Make a note and address it if it happens again', s:3}
+  ]},
+  { id:'r2', cat:'Personal', q:'A client expects you to be "on call" during your vacation. You:', options:[
+    {t:'Set clear out-of-office expectations in advance and hold firm', s:4},
+    {t:'Check in occasionally to make sure nothing is urgent', s:2},
+    {t:'Stay available but try to limit responses', s:2},
+    {t:'Cancel or cut short vacation if the client needs you', s:1}
+  ]},
+  { id:'r3', cat:'Personal', q:'How often do you feel resentful toward clients?', options:[
+    {t:'Rarely — my boundaries prevent most resentment', s:4},
+    {t:'Sometimes — certain clients push too far', s:3},
+    {t:'Often — I feel taken advantage of regularly', s:1},
+    {t:'Frequently — but I don\'t know how to fix it', s:2}
+  ]},
+  { id:'r4', cat:'Personal', q:'A client tries to establish a friendship that blurs professional lines. You:', options:[
+    {t:'Keep things friendly but maintain clear professional boundaries', s:4},
+    {t:'Lean into the friendship — it helps the working relationship', s:2},
+    {t:'Feel uncomfortable but go along with it', s:1},
+    {t:'Set gentle limits while staying warm and professional', s:3}
+  ]}
+];
+
+function renderQuiz() {
+  const area = document.getElementById('quiz-area');
+  if (state.quizCompleted) {
+    renderQuizResults(area);
+    return;
+  }
+  const qIdx = Object.keys(state.quizAnswers).length;
+  if (qIdx >= quizQuestions.length) {
+    state.quizCompleted = true;
+    saveState();
+    renderQuizResults(area);
+    return;
+  }
+  const q = quizQuestions[qIdx];
+  area.innerHTML = `
+    <div class="fade-in">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <span class="badge badge-purple">${q.cat}</span>
+        <span style="color:var(--text-secondary);font-size:0.85rem;">Question ${qIdx+1} of ${quizQuestions.length}</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${((qIdx)/quizQuestions.length)*100}%"></div></div>
+      <h3 style="margin:16px 0 20px;font-size:1.08rem;">${q.q}</h3>
+      <div id="quiz-options">
+        ${q.options.map((o,i) => `<button class="quiz-option" data-score="${o.s}" data-qid="${q.id}" onclick="answerQuiz(this)">${o.t}</button>`).join('')}
+      </div>
+    </div>`;
+}
+
+function answerQuiz(el) {
+  const qid = el.dataset.qid;
+  const score = parseInt(el.dataset.score);
+  document.querySelectorAll('#quiz-options .quiz-option').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  state.quizAnswers[qid] = score;
+  saveState();
+  setTimeout(() => renderQuiz(), 300);
+}
+
+function renderQuizResults(area) {
+  const cats = {Communication:[],Availability:[],Scope:[],Payment:[],Personal:[]};
+  quizQuestions.forEach(q => {
+    const ans = state.quizAnswers[q.id] || 0;
+    cats[q.cat].push(ans);
+  });
+  let totalScore = 0, maxScore = quizQuestions.length * 4;
+  Object.values(cats).forEach(arr => arr.forEach(s => totalScore += s));
+  const pct = Math.round((totalScore / maxScore) * 100);
+  const circ = 2 * Math.PI * 50;
+  const offset = circ - (circ * pct / 100);
+  let grade, gradeColor, gradeBadge;
+  if (pct >= 85) { grade='Fortress'; gradeColor='var(--success)'; gradeBadge='badge-success'; }
+  else if (pct >= 65) { grade='Solid'; gradeColor='var(--accent-1)'; gradeBadge='badge-purple'; }
+  else if (pct >= 45) { grade='Developing'; gradeColor='var(--warning)'; gradeBadge='badge-warning'; }
+  else { grade='Vulnerable'; gradeColor='var(--danger)'; gradeBadge='badge-danger'; }
+
+  let catHTML = '';
+  Object.entries(cats).forEach(([name, scores]) => {
+    const catTotal = scores.reduce((a,b)=>a+b,0);
+    const catMax = scores.length * 4;
+    const catPct = Math.round((catTotal/catMax)*100);
+    let catGrade;
+    if (catPct >= 85) catGrade = 'badge-success';
+    else if (catPct >= 65) catGrade = 'badge-purple';
+    else if (catPct >= 45) catGrade = 'badge-warning';
+    else catGrade = 'badge-danger';
+    catHTML += `
+      <div style="margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <span style="font-weight:600;font-size:0.92rem;">${name}</span>
+          <span class="badge ${catGrade}">${catPct}%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${catPct}%"></div></div>
+      </div>`;
+  });
+
+  // Find weakest category
+  let weakest = '', weakestPct = 101;
+  Object.entries(cats).forEach(([name, scores]) => {
+    const p = Math.round((scores.reduce((a,b)=>a+b,0) / (scores.length*4))*100);
+    if (p < weakestPct) { weakest = name; weakestPct = p; }
+  });
+
+  const tips = {
+    Communication: 'Set clear response time expectations in writing. Add your working hours to your email signature and contract.',
+    Availability: 'Block personal time in your calendar and treat it as non-negotiable. Implement rush fees for urgent requests.',
+    Scope: 'Write detailed scopes with explicit "what\'s NOT included" sections. Require written approval for any scope changes.',
+    Payment: 'Always require deposits before starting. Add late fees to contracts and enforce them consistently.',
+    Personal: 'Remember: boundaries protect the relationship, not damage it. Practice saying "no" as a complete sentence.'
+  };
+
+  area.innerHTML = `
+    <div class="fade-in" style="text-align:center;">
+      <div class="score-ring">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="50" fill="none" stroke-width="8"/>
+          <circle class="ring-fill" cx="60" cy="60" r="50" fill="none" stroke="${gradeColor}" stroke-width="8"
+            stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
+        </svg>
+        <div class="score-value" style="color:${gradeColor}">${pct}%</div>
+      </div>
+      <span class="badge ${gradeBadge}" style="font-size:0.9rem;padding:6px 16px;margin-bottom:16px;">${grade} Boundaries</span>
+      <p style="color:var(--text-secondary);margin:16px 0 24px;font-size:0.92rem;">
+        ${pct >= 85 ? 'Outstanding! Your boundaries are rock-solid. You clearly value your time and professionalism.' :
+          pct >= 65 ? 'Good foundation! A few areas need strengthening, but you\'re on the right track.' :
+          pct >= 45 ? 'Your boundaries need work. Clients are likely overstepping regularly, causing stress and resentment.' :
+          'Your boundaries need urgent attention. Without changes, you risk burnout and client exploitation.'}
+      </p>
+    </div>
+    <h3 style="margin-bottom:16px;">Category Breakdown</h3>
+    ${catHTML}
+    <div style="margin-top:24px;padding:18px;background:rgba(168,85,247,0.08);border-radius:var(--radius-input);border-left:3px solid var(--accent-1);">
+      <strong style="font-size:0.95rem;">Focus Area: ${weakest}</strong>
+      <p style="color:var(--text-secondary);font-size:0.9rem;margin-top:6px;">${tips[weakest]}</p>
+    </div>
+    <div class="btn-group" style="justify-content:center;">
+      <button class="btn btn-secondary" onclick="resetQuiz()">Retake Quiz</button>
+    </div>`;
+}
+
+function resetQuiz() {
+  state.quizAnswers = {};
+  state.quizCompleted = false;
+  saveState();
+  renderQuiz();
+}
+
+/* ============================
+   BOUNDARY BUILDER
+   ============================ */
+const boundaryAreas = [
+  { id:'working-hours', title:'Working Hours', icon:'🕐',
+    fields:[
+      {id:'days',label:'Working Days',type:'text',placeholder:'e.g. Monday - Friday'},
+      {id:'start',label:'Start Time',type:'text',placeholder:'e.g. 9:00 AM'},
+      {id:'end',label:'End Time',type:'text',placeholder:'e.g. 5:00 PM'},
+      {id:'timezone',label:'Timezone',type:'text',placeholder:'e.g. EST / UTC-5'}
+    ]},
+  { id:'response-times', title:'Response Times', icon:'⏱️',
+    fields:[
+      {id:'email',label:'Email Response Time',type:'text',placeholder:'e.g. Within 24 hours'},
+      {id:'message',label:'Message/Chat Response Time',type:'text',placeholder:'e.g. Within 4 business hours'},
+      {id:'urgent',label:'Urgent Requests',type:'text',placeholder:'e.g. Within 2 hours during work hours'}
+    ]},
+  { id:'revision-limits', title:'Revision Limits', icon:'🔄',
+    fields:[
+      {id:'included',label:'Revisions Included',type:'number',placeholder:'e.g. 3'},
+      {id:'additional-rate',label:'Additional Revision Rate',type:'text',placeholder:'e.g. $75/round'},
+      {id:'definition',label:'What Counts as a Revision',type:'textarea',placeholder:'e.g. Any change request after initial approval counts as one revision round...'}
+    ]},
+  { id:'payment-terms', title:'Payment Terms', icon:'💰',
+    fields:[
+      {id:'deposit',label:'Deposit Required',type:'text',placeholder:'e.g. 50% upfront'},
+      {id:'net-terms',label:'Payment Due',type:'text',placeholder:'e.g. Net 14 days'},
+      {id:'late-fee',label:'Late Payment Fee',type:'text',placeholder:'e.g. 1.5% per week overdue'},
+      {id:'methods',label:'Accepted Payment Methods',type:'text',placeholder:'e.g. Bank transfer, Stripe, PayPal'}
+    ]},
+  { id:'meeting-policies', title:'Meeting Policies', icon:'📅',
+    fields:[
+      {id:'scheduling',label:'Scheduling Requirements',type:'text',placeholder:'e.g. Book at least 24 hours in advance'},
+      {id:'duration',label:'Default Meeting Length',type:'text',placeholder:'e.g. 30 minutes'},
+      {id:'no-show',label:'No-Show Policy',type:'text',placeholder:'e.g. $50 fee after 15 min wait'},
+      {id:'frequency',label:'Meeting Frequency Limit',type:'text',placeholder:'e.g. Max 2 meetings per week per client'}
+    ]},
+  { id:'scope-changes', title:'Scope Changes', icon:'📋',
+    fields:[
+      {id:'process',label:'Change Request Process',type:'textarea',placeholder:'e.g. All scope changes must be submitted in writing. I\'ll provide a revised quote within 48 hours...'},
+      {id:'approval',label:'Approval Required',type:'text',placeholder:'e.g. Written approval before work begins'},
+      {id:'timeline-impact',label:'Timeline Impact',type:'text',placeholder:'e.g. Additional 3-5 days per significant change'}
+    ]},
+  { id:'communication-channels', title:'Communication Channels', icon:'📨',
+    fields:[
+      {id:'primary',label:'Primary Channel',type:'text',placeholder:'e.g. Email'},
+      {id:'secondary',label:'Secondary Channel',type:'text',placeholder:'e.g. Slack during business hours'},
+      {id:'prohibited',label:'Not Accepted',type:'text',placeholder:'e.g. Personal phone, social media DMs'},
+      {id:'emergency',label:'Emergency Contact',type:'text',placeholder:'e.g. Phone call for true emergencies only'}
+    ]},
+  { id:'emergency-protocols', title:'Emergency Protocols', icon:'🚨',
+    fields:[
+      {id:'definition',label:'What Qualifies as Emergency',type:'textarea',placeholder:'e.g. Website down, data breach, legal deadline within 24 hours'},
+      {id:'response',label:'Emergency Response Time',type:'text',placeholder:'e.g. Within 1 hour during waking hours'},
+      {id:'rate',label:'Emergency Rate',type:'text',placeholder:'e.g. 2x standard rate'},
+      {id:'contact',label:'Emergency Contact Method',type:'text',placeholder:'e.g. Call or text to business phone'}
+    ]}
+];
+
+function renderBuilder() {
+  const container = document.getElementById('builder-cards');
+  container.innerHTML = boundaryAreas.map(area => {
+    const saved = state.boundaries[area.id] || {};
+    return `
+      <div class="card fade-in">
+        <h3>${area.icon} ${area.title}</h3>
+        ${area.fields.map(f => `
+          <div class="form-group">
+            <label>${f.label}</label>
+            ${f.type === 'textarea'
+              ? `<textarea data-area="${area.id}" data-field="${f.id}" placeholder="${f.placeholder}" oninput="saveBoundaryField(this)">${saved[f.id]||''}</textarea>`
+              : `<input type="${f.type}" data-area="${area.id}" data-field="${f.id}" placeholder="${f.placeholder}" value="${saved[f.id]||''}" oninput="saveBoundaryField(this)">`
+            }
+          </div>`).join('')}
+      </div>`;
+  }).join('');
+}
+
+function saveBoundaryField(el) {
+  const area = el.dataset.area;
+  const field = el.dataset.field;
+  if (!state.boundaries[area]) state.boundaries[area] = {};
+  state.boundaries[area][field] = el.value;
+  saveState();
+}
+
+/* ============================
+   COMMUNICATION SCRIPTS
+   ============================ */
+const scripts = [
+  { cat:'After-Hours', title:'Client Texting at Midnight', script:`Hi [Client],
+
+Thanks for your message! I want to make sure I give this the attention it deserves. I'll review and respond during my next business hours window ([your hours]).
+
+For future reference, the best way to reach me for non-urgent items is via [preferred channel]. This ensures nothing falls through the cracks.
+
+Talk soon!` },
+  { cat:'After-Hours', title:'Weekend Work Request', script:`Hi [Client],
+
+I appreciate you thinking of me for this. My standard working hours are [days/times], and I keep weekends reserved for recharging so I can deliver my best work during the week.
+
+I can absolutely prioritize this first thing [next business day]. If it's truly urgent and can't wait, I do offer rush service at [rush rate] — just let me know and I'll get it handled.
+
+What works best for you?` },
+  { cat:'After-Hours', title:'Vacation Auto-Reply Template', script:`Thanks for reaching out! I'm currently out of office from [date] to [date] with limited access to email.
+
+I'll respond to your message when I return on [date]. If this is a true emergency (site down, security issue), please contact [backup contact/email].
+
+For all other matters, I appreciate your patience and will get back to you promptly upon my return.` },
+  { cat:'Scope Creep', title:'Out-of-Scope Request', script:`Hi [Client],
+
+Great idea! That falls outside our current project scope, but I'd love to help with it.
+
+Here's what I can do:
+- I can add this to our project for an additional [cost] and [timeline]
+- Or we can schedule it as a separate project after we wrap up the current deliverables
+
+Would you like me to put together a quick quote for the addition? In the meantime, I'll keep moving forward on our agreed deliverables.` },
+  { cat:'Scope Creep', title:'Creeping Feature Additions', script:`Hi [Client],
+
+I've noticed we've added several items beyond our original scope over the past few weeks. I want to be transparent about this so there are no surprises.
+
+Here's what's been added:
+- [Item 1]
+- [Item 2]
+- [Item 3]
+
+These additions will impact our timeline by approximately [X days/weeks] and represent an additional investment of [cost].
+
+I'd recommend we either:
+1. Formalize these additions with a scope amendment
+2. Move them to a Phase 2 project
+3. Swap them for existing deliverables of equal effort
+
+What feels right to you?` },
+  { cat:'Scope Creep', title:'"Just a Quick Change"', script:`Hi [Client],
+
+Thanks for sending this over! I took a look, and while it might seem small, this change actually involves [brief technical explanation of why it's not trivial].
+
+This would take approximately [time estimate] and fall outside our current scope. I can add it for [cost], or we can include it in the next revision round.
+
+Want me to go ahead with the addition?` },
+  { cat:'Scope Creep', title:'Direction Change Mid-Project', script:`Hi [Client],
+
+I appreciate the new direction — I can see why you're excited about it. Before we pivot, I want to make sure we're aligned on the implications:
+
+- Work completed so far: [describe completed work]
+- Impact of the change: approximately [X hours/days] of additional work
+- New timeline: [estimated completion date]
+- Investment: [additional cost or revised total]
+
+I want to make sure this new direction serves you well. Shall I prepare a revised scope document for your review?` },
+  { cat:'Payment', title:'Late Payment — First Reminder', script:`Hi [Client],
+
+I hope you're doing well! I wanted to follow up on invoice #[number] for [amount], which was due on [date].
+
+I understand things get busy — just wanted to make sure this didn't slip through the cracks. You can pay via [payment method].
+
+Please let me know if you have any questions about the invoice. I appreciate your prompt attention to this.` },
+  { cat:'Payment', title:'Late Payment — Second Notice', script:`Hi [Client],
+
+I'm following up regarding invoice #[number] for [amount], now [X days] overdue from the original due date of [date].
+
+Per our agreement, a late fee of [amount/percentage] has been applied, bringing the current balance to [new total].
+
+I'd appreciate if we could get this resolved within the next [3 business days]. If there's an issue with the invoice or you need to arrange a payment plan, I'm happy to discuss.
+
+Please note that per our contract, ongoing work will be paused until the outstanding balance is settled.` },
+  { cat:'Payment', title:'Late Payment — Final Notice', script:`Hi [Client],
+
+This is my final notice regarding invoice #[number] for [total with fees], now [X days] overdue.
+
+If payment is not received by [date], I will need to:
+- Cease all work on current projects
+- Pursue collection through [method]
+- Report the outstanding balance to relevant credit agencies
+
+I'd much prefer to resolve this amicably. If you're experiencing financial difficulties, please reach out so we can arrange a payment plan.
+
+I value our working relationship and hope we can settle this promptly.` },
+  { cat:'Payment', title:'Discount Request', script:`Hi [Client],
+
+I appreciate you being upfront about your budget. My rates reflect [X years] of experience, specialized skills in [area], and the value I deliver to my clients.
+
+That said, I want to find a way to work together. Here are some options:
+
+1. **Reduced scope**: We can adjust the deliverables to fit your budget at my standard rate
+2. **Phased approach**: Break the project into phases so you can spread the investment
+3. **Value exchange**: If you can offer [testimonial/referral/case study], I can offer a [X%] courtesy discount
+
+Which option interests you most?` },
+  { cat:'Payment', title:'Requesting a Deposit', script:`Hi [Client],
+
+I'm excited to get started! Before we kick off, I require a [X%] deposit to secure your spot on my schedule and begin work.
+
+Here's the breakdown:
+- Deposit due now: [amount]
+- Milestone payment at [midpoint]: [amount]
+- Final payment on delivery: [amount]
+
+I've attached the invoice for the deposit. Once received, I'll confirm your project start date of [date].
+
+This protects both of us and ensures we're fully committed to making this project a success!` },
+  { cat:'Rush Jobs', title:'Rush Job Request', script:`Hi [Client],
+
+I can absolutely prioritize this! For context, my standard timeline for this type of work is [X days/weeks].
+
+To deliver by [their requested date], I'd need to reorganize my schedule, which means:
+
+- **Rush fee**: [X% or flat amount] added to the standard rate
+- **Adjusted scope**: We may need to simplify [specific elements] to meet the deadline
+- **Limited revisions**: [1 round] of revisions within the rush timeline
+
+If that works for you, I can start immediately upon receiving the rush deposit of [amount].
+
+Alternatively, if the deadline is flexible, I can deliver by [standard timeline date] at the regular rate.` },
+  { cat:'Rush Jobs', title:'Unrealistic Deadline', script:`Hi [Client],
+
+Thank you for thinking of me for this project! I want to be honest with you — delivering quality work by [their date] isn't feasible given the scope of what you need.
+
+Here's what I can realistically offer:
+
+**Option A**: Full scope delivered by [realistic date]
+**Option B**: Reduced scope (Phase 1) by [their date], with remaining work in Phase 2
+**Option C**: Rush delivery by [slightly later date] with rush pricing of [rate]
+
+I'd rather set honest expectations than overpromise and underdeliver. Which option works best for your situation?` },
+  { cat:'Revisions', title:'Exceeded Revision Limit', script:`Hi [Client],
+
+Thanks for the feedback! I want to flag that we've now used all [X] revision rounds included in our project scope.
+
+I'm happy to continue making changes — additional revision rounds are billed at [rate per round].
+
+To make the most of each round, I'd suggest consolidating all feedback into a single document before submitting. This helps us be efficient and keeps costs manageable.
+
+Want me to proceed with this round as a paid revision?` },
+  { cat:'Revisions', title:'Vague Revision Request', script:`Hi [Client],
+
+Thanks for the feedback! To make sure I nail the revisions, could you help me with a bit more specificity?
+
+For example, when you say "[vague feedback like 'make it pop' or 'I'm not feeling it']," could you share:
+- What specifically isn't working?
+- Any examples of styles/approaches you do like?
+- Are there specific elements you want changed vs. kept?
+
+The more specific the direction, the closer I'll get on the first pass — which saves us both time and revision rounds.` },
+  { cat:'Revisions', title:'Contradictory Feedback', script:`Hi [Client],
+
+I noticed some of the feedback points might conflict with each other:
+- Point A: "[feedback 1]"
+- Point B: "[feedback 2]"
+
+These pull the design in different directions, so I want to make sure I prioritize correctly. Could you let me know which direction takes priority?
+
+I want to make the best use of our remaining revision rounds and avoid any back-and-forth.` },
+  { cat:'Meetings', title:'Meeting Without Agenda', script:`Hi [Client],
+
+Happy to meet! To make sure our time together is productive, could you share a brief agenda or the key topics you'd like to cover?
+
+I find that meetings with clear objectives tend to be shorter and more effective for everyone involved.
+
+Once I have the agenda, I'll come prepared with any relevant materials or updates.` },
+  { cat:'Meetings', title:'Too Many Meetings', script:`Hi [Client],
+
+I've noticed our meeting frequency has increased quite a bit. While I value our check-ins, I want to be mindful of both our time.
+
+I'd like to propose we:
+- Consolidate to [X meetings per week/month]
+- Use async updates via [email/Slack/project tool] for non-urgent items
+- Reserve meetings for decisions that need real-time discussion
+
+This will actually help the project move faster, as I'll have more heads-down time for the actual work.
+
+Does this approach work for you?` },
+  { cat:'Meetings', title:'Client No-Show', script:`Hi [Client],
+
+I held our scheduled meeting time today ([time]) but wasn't able to connect with you. I waited [15 minutes] before moving on to other work.
+
+As a reminder, per our agreement, missed meetings without [24-hour] notice are subject to a [fee/count toward meeting allocation].
+
+I'd love to reschedule — here are some available times: [offer 2-3 slots].
+
+In the future, if something comes up, just give me a heads up so I can adjust my schedule accordingly.` },
+  { cat:'Communication', title:'Client Using Wrong Channel', script:`Hi [Client],
+
+Got your message! Just a quick note — for project-related communications, [preferred channel] is the best way to reach me. It helps me keep everything organized and ensures nothing gets lost.
+
+I've moved this conversation there and will respond in full shortly.
+
+Thanks for understanding!` },
+  { cat:'Communication', title:'Client CC-ing Too Many People', script:`Hi [Client],
+
+I noticed our email thread has grown to include several team members. To keep communication efficient, could we:
+
+1. Keep our project discussions between [you and designated contact]
+2. Have one person consolidate feedback before sending
+3. Use [project tool] for team collaboration
+
+This streamlines decision-making and prevents conflicting direction. I'm happy to send summary updates to the wider team at [agreed intervals].` },
+  { cat:'Communication', title:'Setting Communication Expectations', script:`Hi [Client],
+
+Excited to get started! Before we dive in, I want to set us up for a smooth working relationship. Here's how I handle communications:
+
+**Response times**: I respond to emails within [24 hours] during business hours ([days, times, timezone]).
+**Preferred channel**: [Email/Slack] for all project matters.
+**Meetings**: Scheduled via [calendar link] with at least [24h] notice.
+**Urgent matters**: [Phone/text] for true emergencies only.
+
+I'll send weekly progress updates every [day] so you're always in the loop without needing to chase me.
+
+Let me know if you have any questions about this!` },
+  { cat:'Personal', title:'Maintaining Professional Distance', script:`Hi [Client],
+
+I appreciate the [invitation/personal gesture]! While I truly enjoy working with you, I find my best work comes from maintaining a professional dynamic.
+
+I'm fully committed to making your project a success and am always here during business hours for anything you need.
+
+Let's keep crushing it on [project name]!` },
+  { cat:'Personal', title:'Handling Disrespectful Communication', script:`Hi [Client],
+
+I want to address something from our recent interaction. When [specific behavior/comment], it [felt disrespectful / crossed a line / made it difficult to work effectively].
+
+I'm committed to delivering excellent work for you, and I know we can maintain a professional and respectful working relationship.
+
+Going forward, I'd appreciate if we could [specific boundary]. This ensures we both have a positive experience and I can focus on delivering my best work.
+
+I value our working relationship and look forward to continuing the project.` },
+  { cat:'Personal', title:'Firing a Client (Gracefully)', script:`Hi [Client],
+
+After careful consideration, I've decided that our working relationship isn't the best fit for either of us going forward.
+
+Here's my plan for a smooth transition:
+- I will complete [current deliverables] by [date]
+- I'll prepare all files and documentation for handoff
+- I'm happy to recommend [2-3 other freelancers] who may be a better fit
+
+I wish you all the best with [project/business], and I'm grateful for the opportunity to have worked together.
+
+Final invoice and deliverables will be sent by [date].` },
+  { cat:'Starting', title:'New Client Onboarding Boundaries', script:`Hi [Client],
+
+Welcome! I'm thrilled to work together. Before we kick off, I'd like to share my working guidelines to set us both up for success:
+
+**Availability**: [Days, hours, timezone]
+**Communication**: [Preferred channel] for all project items
+**Response time**: Within [X hours] during business hours
+**Revisions**: [X rounds] included, additional at [rate]
+**Meetings**: Scheduled via [link], [frequency]
+
+I've attached my Working Together document with full details. Please review and let me know if you have any questions.
+
+Looking forward to a great project!` },
+  { cat:'Starting', title:'Pushback on Contract Terms', script:`Hi [Client],
+
+I understand the contract might seem thorough — that's intentional! These terms protect both of us and ensure we have a smooth, professional experience.
+
+Specifically regarding [their concern]:
+- **Why it's there**: [Brief explanation of the protection it provides]
+- **How it helps you**: [Benefit to client]
+- **Industry standard**: This is common practice in [industry]
+
+I'm open to discussing specific terms, but the core protections need to stay in place for me to take on the project.
+
+Would you like to hop on a quick call to discuss?` },
+  { cat:'Starting', title:'Client Wants to Skip Contract', script:`Hi [Client],
+
+I appreciate the trust! However, I work exclusively with signed agreements in place — it's a non-negotiable part of my process.
+
+The contract protects you just as much as it protects me:
+- Clear deliverables so you get exactly what you expect
+- Defined timeline and milestones
+- IP transfer terms ensuring you own the work
+- Quality guarantees and revision provisions
+
+It takes just 10 minutes to review and sign. I've made it as straightforward as possible.
+
+Once the contract and deposit are in place, we can start immediately!` }
+];
+
+const scriptCategories = [...new Set(scripts.map(s => s.cat))];
+
+function renderScripts() {
+  const filterBar = document.getElementById('script-filters');
+  filterBar.innerHTML = `<button class="filter-btn active" onclick="filterScripts(this, 'all')">All</button>` +
+    scriptCategories.map(c => `<button class="filter-btn" onclick="filterScripts(this, '${c}')">${c}</button>`).join('');
+  renderScriptList('all');
+}
+
+function filterScripts(btn, cat) {
+  document.querySelectorAll('#script-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderScriptList(cat);
+}
+
+function renderScriptList(cat) {
+  const list = document.getElementById('scripts-list');
+  const filtered = cat === 'all' ? scripts : scripts.filter(s => s.cat === cat);
+  list.innerHTML = filtered.map((s, i) => `
+    <div class="script-card fade-in">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <span class="script-tag">${s.cat}</span>
+          <h3 style="font-size:1rem;margin-top:6px;">${s.title}</h3>
+        </div>
+        <button class="copy-btn" onclick="copyScript(${i}, this)">Copy</button>
+      </div>
+      <div class="script-text">${s.script}</div>
+    </div>`).join('');
+}
+
+function copyScript(idx, btn) {
+  const text = scripts[idx].script;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+/* ============================
+   CLIENT PROFILES
+   ============================ */
+function openProfileModal(editId) {
+  const m = document.getElementById('profile-modal');
+  if (editId !== undefined) {
+    const p = state.profiles[editId];
+    document.getElementById('prof-name').value = p.name || '';
+    document.getElementById('prof-strictness').value = p.strictness || 'standard';
+    document.getElementById('prof-hours').value = p.hours || '';
+    document.getElementById('prof-response').value = p.response || '';
+    document.getElementById('prof-revisions').value = p.revisions || '';
+    document.getElementById('prof-channels').value = p.channels || '';
+    document.getElementById('prof-notes').value = p.notes || '';
+    document.getElementById('prof-edit-id').value = editId;
+  } else {
+    document.getElementById('prof-name').value = '';
+    document.getElementById('prof-strictness').value = 'standard';
+    document.getElementById('prof-hours').value = '';
+    document.getElementById('prof-response').value = '';
+    document.getElementById('prof-revisions').value = '';
+    document.getElementById('prof-channels').value = '';
+    document.getElementById('prof-notes').value = '';
+    document.getElementById('prof-edit-id').value = '';
+  }
+  openModal('profile-modal');
+}
+
+function saveProfile() {
+  const name = document.getElementById('prof-name').value.trim();
+  if (!name) { alert('Please enter a client name.'); return; }
+  const profile = {
+    name,
+    strictness: document.getElementById('prof-strictness').value,
+    hours: document.getElementById('prof-hours').value.trim(),
+    response: document.getElementById('prof-response').value,
+    revisions: document.getElementById('prof-revisions').value,
+    channels: document.getElementById('prof-channels').value.trim(),
+    notes: document.getElementById('prof-notes').value.trim(),
+    created: new Date().toISOString()
+  };
+  const editId = document.getElementById('prof-edit-id').value;
+  if (editId !== '') {
+    state.profiles[parseInt(editId)] = { ...state.profiles[parseInt(editId)], ...profile };
+  } else {
+    state.profiles.push(profile);
+  }
+  saveState();
+  closeModal('profile-modal');
+  renderProfiles();
+}
+
+function deleteProfile(idx) {
+  if (!confirm('Delete this client profile?')) return;
+  state.profiles.splice(idx, 1);
+  saveState();
+  renderProfiles();
+}
+
+function renderProfiles() {
+  const list = document.getElementById('profiles-list');
+  if (state.profiles.length === 0) {
+    list.innerHTML = `<div class="card empty-state"><div class="icon">👤</div><p>No client profiles yet. Create one to set per-client boundaries.</p></div>`;
+    return;
+  }
+  const strictColors = { relaxed:'badge-success', standard:'badge-purple', strict:'badge-warning', maximum:'badge-danger' };
+  const strictLabels = { relaxed:'Relaxed', standard:'Standard', strict:'Strict', maximum:'Maximum' };
+  list.innerHTML = state.profiles.map((p, i) => `
+    <div class="card fade-in">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h3 style="font-size:1.05rem;margin-bottom:6px;">${p.name}</h3>
+          <span class="badge ${strictColors[p.strictness]}">${strictLabels[p.strictness]} Boundaries</span>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-secondary btn-sm" onclick="openProfileModal(${i})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteProfile(${i})">Delete</button>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+        ${p.hours ? `<div><span style="color:var(--text-secondary);font-size:0.82rem;">Working Hours</span><div style="font-size:0.92rem;">${p.hours}</div></div>` : ''}
+        ${p.response ? `<div><span style="color:var(--text-secondary);font-size:0.82rem;">Response Time</span><div style="font-size:0.92rem;">${p.response}</div></div>` : ''}
+        ${p.revisions ? `<div><span style="color:var(--text-secondary);font-size:0.82rem;">Max Revisions</span><div style="font-size:0.92rem;">${p.revisions}</div></div>` : ''}
+        ${p.channels ? `<div><span style="color:var(--text-secondary);font-size:0.82rem;">Channels</span><div style="font-size:0.92rem;">${p.channels}</div></div>` : ''}
+      </div>
+      ${p.notes ? `<div style="margin-top:12px;padding:12px;background:rgba(15,23,42,0.5);border-radius:8px;font-size:0.9rem;color:var(--text-secondary);">${p.notes}</div>` : ''}
+    </div>`).join('');
+  updateClientDatalist();
+}
+
+function updateClientDatalist() {
+  const dl = document.getElementById('client-datalist');
+  if (dl) dl.innerHTML = state.profiles.map(p => `<option value="${p.name}">`).join('');
+}
+
+/* ============================
+   VIOLATION TRACKER
+   ============================ */
+function openViolationModal() {
+  document.getElementById('vio-client').value = '';
+  document.getElementById('vio-type').value = 'after-hours';
+  document.getElementById('vio-severity').value = 'low';
+  document.getElementById('vio-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('vio-desc').value = '';
+  document.getElementById('vio-action').value = '';
+  updateClientDatalist();
+  openModal('violation-modal');
+}
+
+function saveViolation() {
+  const client = document.getElementById('vio-client').value.trim();
+  if (!client) { alert('Please enter a client name.'); return; }
+  state.violations.push({
+    client,
+    type: document.getElementById('vio-type').value,
+    severity: document.getElementById('vio-severity').value,
+    date: document.getElementById('vio-date').value,
+    description: document.getElementById('vio-desc').value.trim(),
+    action: document.getElementById('vio-action').value.trim(),
+    logged: new Date().toISOString()
+  });
+  saveState();
+  closeModal('violation-modal');
+  renderViolations();
+}
+
+function deleteViolation(idx) {
+  if (!confirm('Delete this violation record?')) return;
+  state.violations.splice(idx, 1);
+  saveState();
+  renderViolations();
+}
+
+function renderViolations() {
+  const stats = document.getElementById('violation-stats');
+  const list = document.getElementById('violations-list');
+  const total = state.violations.length;
+  const high = state.violations.filter(v => v.severity === 'high').length;
+  const clients = [...new Set(state.violations.map(v => v.client))];
+  let topOffender = 'None';
+  if (clients.length) {
+    const counts = {};
+    state.violations.forEach(v => counts[v.client] = (counts[v.client]||0)+1);
+    topOffender = Object.entries(counts).sort((a,b) => b[1]-a[1])[0][0];
+  }
+  stats.innerHTML = `
+    <div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Total Violations</div></div>
+    <div class="stat-card"><div class="stat-number" style="background:linear-gradient(135deg,#ef4444,#f87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${high}</div><div class="stat-label">High Severity</div></div>
+    <div class="stat-card"><div class="stat-number">${clients.length}</div><div class="stat-label">Clients Involved</div></div>`;
+  if (total === 0) {
+    list.innerHTML = `<div class="card empty-state"><div class="icon">✅</div><p>No violations logged yet. Hopefully it stays that way!</p></div>`;
+    return;
+  }
+  const typeLabels = { 'after-hours':'After-Hours Contact', 'scope-creep':'Scope Creep', 'late-payment':'Late Payment', 'disrespectful':'Disrespectful Communication', 'unauthorized-channel':'Unauthorized Channel', 'rush-demand':'Unreasonable Rush', 'revision-excess':'Excessive Revisions', 'meeting-no-show':'Meeting No-Show', 'other':'Other' };
+  const sorted = [...state.violations].sort((a,b) => new Date(b.date) - new Date(a.date));
+  list.innerHTML = `<div class="card">` + sorted.map((v, i) => {
+    const origIdx = state.violations.indexOf(v);
+    return `
+    <div class="violation-item">
+      <div class="violation-severity severity-${v.severity}"></div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <strong style="font-size:0.95rem;">${v.client}</strong>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="color:var(--text-secondary);font-size:0.82rem;">${v.date}</span>
+            <button class="copy-btn" onclick="deleteViolation(${origIdx})" style="color:var(--danger);border-color:rgba(239,68,68,0.3);">Delete</button>
+          </div>
+        </div>
+        <span class="badge ${v.severity==='high'?'badge-danger':v.severity==='medium'?'badge-warning':'badge-purple'}" style="margin-top:6px;">${typeLabels[v.type] || v.type}</span>
+        ${v.description ? `<p style="color:var(--text-secondary);font-size:0.88rem;margin-top:8px;">${v.description}</p>` : ''}
+        ${v.action ? `<p style="font-size:0.88rem;margin-top:6px;color:var(--success);"><strong>Action taken:</strong> ${v.action}</p>` : ''}
+      </div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+/* ============================
+   POLICY GENERATOR
+   ============================ */
+function generatePolicy() {
+  const biz = document.getElementById('policy-biz-name').value.trim() || 'Your Business Name';
+  const name = document.getElementById('policy-your-name').value.trim() || 'Your Name';
+  const service = document.getElementById('policy-service').value.trim() || 'Professional Services';
+  state.policyInfo = { biz, name, service };
+  saveState();
+
+  const b = state.boundaries;
+  const wh = b['working-hours'] || {};
+  const rt = b['response-times'] || {};
+  const rl = b['revision-limits'] || {};
+  const pt = b['payment-terms'] || {};
+  const mp = b['meeting-policies'] || {};
+  const sc = b['scope-changes'] || {};
+  const cc = b['communication-channels'] || {};
+  const ep = b['emergency-protocols'] || {};
+
+  const html = `
+    <div class="policy-preview" id="policy-content">
+      <h1 style="text-align:center;">Working Together Guide</h1>
+      <p style="text-align:center;color:#666;margin-bottom:24px;">${biz} | ${service}</p>
+
+      <p>Dear Client,</p>
+      <p>Thank you for choosing to work with ${biz}! This guide outlines how we work together to ensure a smooth, productive, and enjoyable experience for both of us.</p>
+
+      <h2>Working Hours & Availability</h2>
+      <ul>
+        <li><strong>Working Days:</strong> ${wh.days || 'Monday through Friday'}</li>
+        <li><strong>Hours:</strong> ${wh.start || '9:00 AM'} to ${wh.end || '5:00 PM'} ${wh.timezone || ''}</li>
+        <li>Messages received outside these hours will be addressed during the next business day.</li>
+      </ul>
+
+      <h2>Communication</h2>
+      <ul>
+        <li><strong>Primary Channel:</strong> ${cc.primary || 'Email'}</li>
+        ${cc.secondary ? `<li><strong>Secondary Channel:</strong> ${cc.secondary}</li>` : ''}
+        ${cc.prohibited ? `<li><strong>Not Accepted:</strong> ${cc.prohibited}</li>` : ''}
+        <li><strong>Email Response Time:</strong> ${rt.email || 'Within 24 business hours'}</li>
+        ${rt.message ? `<li><strong>Chat/Message Response:</strong> ${rt.message}</li>` : ''}
+      </ul>
+
+      <h2>Project Scope & Revisions</h2>
+      <ul>
+        <li><strong>Included Revisions:</strong> ${rl.included || '3'} rounds per project</li>
+        ${rl['additional-rate'] ? `<li><strong>Additional Revisions:</strong> ${rl['additional-rate']} per round</li>` : ''}
+        ${rl.definition ? `<li><strong>Revision Definition:</strong> ${rl.definition}</li>` : ''}
+      </ul>
+      ${sc.process ? `<p><strong>Scope Changes:</strong> ${sc.process}</p>` : '<p>All scope changes must be submitted in writing and approved before work begins. Changes may affect timeline and cost.</p>'}
+
+      <h2>Payment Terms</h2>
+      <ul>
+        <li><strong>Deposit:</strong> ${pt.deposit || '50% upfront before work begins'}</li>
+        <li><strong>Payment Due:</strong> ${pt['net-terms'] || 'Net 14 days from invoice date'}</li>
+        ${pt['late-fee'] ? `<li><strong>Late Fee:</strong> ${pt['late-fee']}</li>` : ''}
+        ${pt.methods ? `<li><strong>Accepted Methods:</strong> ${pt.methods}</li>` : ''}
+      </ul>
+
+      <h2>Meetings</h2>
+      <ul>
+        <li><strong>Scheduling:</strong> ${mp.scheduling || 'Book at least 24 hours in advance'}</li>
+        <li><strong>Duration:</strong> ${mp.duration || '30 minutes default'}</li>
+        ${mp['no-show'] ? `<li><strong>No-Show Policy:</strong> ${mp['no-show']}</li>` : ''}
+        ${mp.frequency ? `<li><strong>Frequency:</strong> ${mp.frequency}</li>` : ''}
+      </ul>
+
+      <h2>Emergency Protocol</h2>
+      <ul>
+        ${ep.definition ? `<li><strong>What Qualifies:</strong> ${ep.definition}</li>` : '<li><strong>What Qualifies:</strong> Site outage, security breach, legal deadlines only</li>'}
+        ${ep.response ? `<li><strong>Response Time:</strong> ${ep.response}</li>` : ''}
+        ${ep.rate ? `<li><strong>Emergency Rate:</strong> ${ep.rate}</li>` : ''}
+        ${ep.contact ? `<li><strong>Contact Method:</strong> ${ep.contact}</li>` : ''}
+      </ul>
+
+      <p style="margin-top:24px;">These guidelines are designed to create the best possible working relationship. If you have any questions or concerns, I'm happy to discuss them before we begin.</p>
+      <p style="margin-top:16px;">Looking forward to working together!</p>
+      <p><strong>${name}</strong><br>${biz}</p>
+    </div>`;
+
+  const output = document.getElementById('policy-output');
+  output.innerHTML = `
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+        <h3>Policy Preview</h3>
+        <button class="btn btn-primary btn-sm" onclick="exportPolicy()">Export as HTML</button>
+      </div>
+      ${html}
+    </div>`;
+}
+
+/* ============================
+   RED FLAG WARNING
+   ============================ */
+const redFlags = [
+  { id:'rf1', text:'Wants to start work before signing a contract', weight:3, cat:'Process' },
+  { id:'rf2', text:'Pushes back on deposit or upfront payment', weight:3, cat:'Payment' },
+  { id:'rf3', text:'Contacts you outside business hours during discovery', weight:2, cat:'Communication' },
+  { id:'rf4', text:'Says "it should be easy" or "it won\'t take long"', weight:2, cat:'Scope' },
+  { id:'rf5', text:'Asks for a discount before seeing your work', weight:2, cat:'Payment' },
+  { id:'rf6', text:'Had a bad experience with previous freelancers (multiple)', weight:2, cat:'History' },
+  { id:'rf7', text:'Wants unlimited revisions', weight:3, cat:'Scope' },
+  { id:'rf8', text:'Vague about project requirements or goals', weight:2, cat:'Scope' },
+  { id:'rf9', text:'Expects 24/7 availability', weight:3, cat:'Availability' },
+  { id:'rf10', text:'Compares your rates unfavorably to others', weight:2, cat:'Payment' },
+  { id:'rf11', text:'Urgent timeline with no flexibility', weight:2, cat:'Timeline' },
+  { id:'rf12', text:'Decision-maker is unclear or absent', weight:2, cat:'Process' },
+  { id:'rf13', text:'Uses personal channels (texts, social DMs) from the start', weight:1, cat:'Communication' },
+  { id:'rf14', text:'Mentions "exposure" or "future work" as payment', weight:3, cat:'Payment' },
+  { id:'rf15', text:'Resists putting things in writing', weight:3, cat:'Process' },
+  { id:'rf16', text:'Scope keeps changing during discovery conversations', weight:2, cat:'Scope' },
+  { id:'rf17', text:'Disrespectful to your time during initial meetings', weight:2, cat:'Respect' },
+  { id:'rf18', text:'Wants you to copy a competitor exactly', weight:1, cat:'Scope' },
+  { id:'rf19', text:'Multiple stakeholders with conflicting opinions', weight:2, cat:'Process' },
+  { id:'rf20', text:'Pressures you to lower your standards or cut corners', weight:3, cat:'Respect' },
+  { id:'rf21', text:'Poor online reviews from other freelancers', weight:3, cat:'History' },
+  { id:'rf22', text:'Asks for free test work or "paid trial"', weight:2, cat:'Payment' },
+  { id:'rf23', text:'Cannot articulate their budget range', weight:1, cat:'Payment' },
+  { id:'rf24', text:'Expects you to be their only priority', weight:2, cat:'Availability' },
+  { id:'rf25', text:'History of legal disputes with service providers', weight:3, cat:'History' }
+];
+
+function renderRedFlags() {
+  const container = document.getElementById('redflag-checklist');
+  const rfCats = [...new Set(redFlags.map(r => r.cat))];
+  container.innerHTML = rfCats.map(cat => `
+    <div style="margin-bottom:16px;">
+      <h3 style="font-size:0.95rem;color:var(--text-secondary);margin-bottom:8px;">${cat}</h3>
+      ${redFlags.filter(r => r.cat === cat).map(r => `
+        <div class="toggle-row">
+          <span class="toggle-label">${r.text}</span>
+          <input type="checkbox" id="${r.id}" data-weight="${r.weight}" onchange="calculateRisk()" style="width:20px;height:20px;accent-color:var(--accent-1);cursor:pointer;">
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function calculateRisk() {
+  const checked = redFlags.filter(r => document.getElementById(r.id).checked);
+  const totalWeight = checked.reduce((sum, r) => sum + r.weight, 0);
+  const maxWeight = redFlags.reduce((sum, r) => sum + r.weight, 0);
+  const pct = Math.round((totalWeight / maxWeight) * 100);
+
+  let level, levelClass, advice;
+  if (pct <= 15) {
+    level = 'Low Risk'; levelClass = 'risk-low';
+    advice = 'This client looks promising! Standard boundaries should work well. Proceed with your normal onboarding process.';
+  } else if (pct <= 40) {
+    level = 'Moderate Risk'; levelClass = 'risk-medium';
+    advice = 'Some yellow flags detected. Consider stricter boundaries, a more detailed contract, and a higher deposit requirement. Document everything carefully.';
+  } else {
+    level = 'High Risk'; levelClass = 'risk-high';
+    advice = 'Significant red flags detected. Strongly consider declining this client, or proceed only with maximum boundaries: full upfront payment, detailed contract with penalty clauses, strict revision limits, and documented communication only.';
+  }
+
+  const result = document.getElementById('redflag-result');
+  result.innerHTML = `
+    <div class="card fade-in" style="text-align:center;">
+      <h3 style="font-size:1.1rem;margin-bottom:4px;">${level}</h3>
+      <div class="risk-meter"><div class="risk-fill ${levelClass}" style="width:${Math.max(pct,3)}%"></div></div>
+      <p style="font-size:2rem;font-weight:800;margin:8px 0;">${pct}%</p>
+      <p style="color:var(--text-secondary);font-size:0.92rem;">${checked.length} of ${redFlags.length} flags checked</p>
+      <div style="margin-top:16px;padding:16px;background:rgba(15,23,42,0.5);border-radius:var(--radius-input);text-align:left;">
+        <strong style="font-size:0.92rem;">Recommendation:</strong>
+        <p style="color:var(--text-secondary);font-size:0.9rem;margin-top:6px;">${advice}</p>
+      </div>
+      ${checked.length > 0 ? `
+        <div style="margin-top:16px;text-align:left;">
+          <strong style="font-size:0.92rem;">Flagged Items:</strong>
+          <ul style="margin-top:8px;padding-left:20px;">
+            ${checked.map(r => `<li style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:4px;">${r.text} <span class="badge ${r.weight>=3?'badge-danger':'badge-warning'}" style="font-size:0.7rem;">${r.weight>=3?'High':'Med'}</span></li>`).join('')}
+          </ul>
+        </div>` : ''}
+    </div>`;
+}
+
+/* ============================
+   EXPORT FUNCTIONS
+   ============================ */
+function exportPolicy() {
+  const content = document.getElementById('policy-content');
+  if (!content) {
+    alert('Please generate a policy document first (Policy Generator tab).');
+    return;
+  }
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Working Together Guide</title>
+<style>body{font-family:Georgia,serif;max-width:700px;margin:40px auto;padding:20px;color:#1a1a2e;line-height:1.8;}
+h1{text-align:center;font-size:1.8rem;margin-bottom:4px;}h2{font-size:1.2rem;border-bottom:2px solid #a855f7;padding-bottom:4px;margin-top:28px;}
+ul{margin:8px 0 8px 20px;}li{margin-bottom:4px;}p{margin-bottom:10px;}
+@media print{body{margin:20px;}}</style></head><body>${content.innerHTML}</body></html>`;
+  downloadFile(html, 'working-together-policy.html', 'text/html');
+}
+
+function exportScripts() {
+  let text = 'CLIENT BOUNDARY COMMUNICATION SCRIPTS\n';
+  text += 'Generated by FreelanceOS Client Boundary Setter\n';
+  text += '='.repeat(60) + '\n\n';
+  scriptCategories.forEach(cat => {
+    text += `\n${'='.repeat(40)}\n${cat.toUpperCase()}\n${'='.repeat(40)}\n\n`;
+    scripts.filter(s => s.cat === cat).forEach(s => {
+      text += `--- ${s.title} ---\n\n${s.script}\n\n`;
+    });
+  });
+  downloadFile(text, 'boundary-scripts.txt', 'text/plain');
+}
+
+function exportViolations() {
+  if (state.violations.length === 0) {
+    alert('No violations to export.');
+    return;
+  }
+  let csv = 'Date,Client,Type,Severity,Description,Action Taken\n';
+  state.violations.forEach(v => {
+    csv += `"${v.date}","${v.client}","${v.type}","${v.severity}","${(v.description||'').replace(/"/g,'""')}","${(v.action||'').replace(/"/g,'""')}"\n`;
+  });
+  downloadFile(csv, 'boundary-violations.csv', 'text/csv');
+}
+
+function exportFullBackup() {
+  const data = JSON.stringify(state, null, 2);
+  downloadFile(data, 'boundary-setter-backup.json', 'application/json');
+}
+
+function downloadFile(content, filename, type) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ============================
+   INIT
+   ============================ */
+function init() {
+  renderQuiz();
+  renderBuilder();
+  renderScripts();
+  renderProfiles();
+  renderViolations();
+  renderRedFlags();
+  // Restore policy info
+  if (state.policyInfo.biz) {
+    document.getElementById('policy-biz-name').value = state.policyInfo.biz || '';
+    document.getElementById('policy-your-name').value = state.policyInfo.name || '';
+    document.getElementById('policy-service').value = state.policyInfo.service || '';
+  }
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+
+// Close modals on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+init();
+</script>
+</body>
+</html>
