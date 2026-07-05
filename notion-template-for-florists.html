@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notion Template for Florists — Manage Orders, Inventory & Invoices | FreelanceOS Pro</title>
+  <meta name="description" content="The best Notion template for florists. Manage event orders, flower inventory, supplier contacts, pricing templates, client consultations, and invoicing — all in one connected workspace. $29 one-time." />
+  <link rel="canonical" href="https://freelanceos-storefront.vercel.app/notion-template-for-florists" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Notion Template for Florists — FreelanceOS Pro" />
+  <meta property="og:description" content="Manage your entire floral business in Notion. Event orders, flower inventory, supplier contacts, pricing, client consultations, and invoicing — one workspace, $29." />
+  <meta property="og:image" content="https://freelanceos-storefront.vercel.app/og-florists.png" />
+  <meta property="og:url" content="https://freelanceos-storefront.vercel.app/notion-template-for-florists" />
+  <meta property="og:type" content="product" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Notion Template for Florists — FreelanceOS Pro" />
+  <meta name="twitter:description" content="Manage your entire floral business in Notion. Event orders, flower inventory, supplier contacts, pricing, and invoicing — $29 one-time." />
+  <meta name="twitter:image" content="https://freelanceos-storefront.vercel.app/og-florists.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- JSON-LD: Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "FreelanceOS Pro — Notion Template for Florists",
+    "description": "A complete Notion workspace for independent florists and floral designers. Manage event orders, flower inventory, supplier contacts, pricing templates, client consultations, and invoicing in one connected system.",
+    "url": "https://freelanceos-storefront.vercel.app/notion-template-for-florists",
+    "image": "https://freelanceos-storefront.vercel.app/og-florists.png",
+    "brand": {
+      "@type": "Brand",
+      "name": "FreelanceOS"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "29.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://buy.stripe.com/14k9Db5dy2Qg0PC144"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "500"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a Notion template for florists and why do I need one?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A pre-built Notion workspace for independent florists and floral designers — manages event orders, flower inventory, supplier contacts, pricing templates, client consultations, and invoicing in one connected system. Replaces scattered spreadsheets and paper order forms with a professional floral business OS."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this for both wedding florals and everyday orders?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — the event order manager handles any order type. Each entry includes an order type field (wedding, event, subscription, walk-in, corporate) so you can filter and manage all order categories from one dashboard."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it help with seasonal buying and planning?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — the seasonal planning calendar lets you plan supplier orders, staff needs, and revenue expectations by month. You can also track historical order volumes by season to improve buying decisions year over year."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get the template after purchasing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "$29 Stripe purchase → email with Notion link → click Duplicate → workspace copies in seconds. Setup takes about 20 minutes to customize with your current orders and supplier list."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --cyan: #06b6d4;
+      --purple: #7c3aed;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      border: none;
+    }
+
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      color: #fff;
+    }
+
+    .btn-lg {
+      padding: 16px 36px;
+      font-size: 1.05rem;
+      border-radius: 10px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 24px 72px;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      color: var(--cyan);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 60%, var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto 36px;
+      line-height: 1.75;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .price-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ── TRUST STRIP ── */
+    .trust-strip {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+    }
+
+    .trust-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 32px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .trust-item {
+      font-size: 0.88rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .trust-item span.icon { font-size: 1rem; }
+
+    /* ── SECTIONS ── */
+    section { padding: 80px 24px; }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 600px;
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .hiw-bg { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 8px;
+    }
+
+    .step-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+    }
+
+    .step-num {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .step-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .step-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── USE CASES ── */
+    .use-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .use-case-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color 0.25s;
+    }
+
+    .use-case-card:hover { border-color: var(--purple); }
+
+    .use-case-icon {
+      font-size: 2rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .use-case-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .use-case-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-bg { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .testimonial-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .stars {
+      color: #f59e0b;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+      letter-spacing: 2px;
+    }
+
+    .testimonial-card blockquote {
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .testimonial-role {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* ── FAQ ── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 760px;
+    }
+
+    .faq-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 20px 24px;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.2s;
+    }
+
+    .faq-question:hover { background: rgba(255,255,255,0.03); }
+
+    .faq-chevron {
+      font-size: 0.8rem;
+      color: var(--cyan);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-item.open .faq-answer { max-height: 400px; }
+
+    .faq-answer-inner {
+      padding: 0 24px 20px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── FINAL CTA ── */
+    .cta-section {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(124,58,237,0.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cta-section h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      max-width: 720px;
+      margin: 0 auto 20px;
+      line-height: 1.25;
+    }
+
+    .cta-section p {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 580px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .perks-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 24px;
+      justify-content: center;
+      margin-bottom: 40px;
+      list-style: none;
+    }
+
+    .perks-list li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .perks-list li::before {
+      content: "✓";
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 56px 24px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .nav-logo {
+      display: inline-block;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 260px;
+    }
+
+    .footer-nav h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .footer-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-nav a {
+      font-size: 0.88rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .footer-nav a:hover { color: var(--cyan); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/index.html" class="nav-logo">FreelanceOS Pro</a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="https://buy.stripe.com/14k9Db5dy2Qg0PC144" class="btn btn-primary" rel="noopener">Get It — $29</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">Notion Template for Florists</div>
+    <h1>The Notion Template for Florists That Manages Your Entire Floral Business</h1>
+    <p class="hero-sub">Stop juggling event orders, flower inventory, supplier contacts, and pricing across a dozen spreadsheets. FreelanceOS Pro gives every part of your floral business a home in one connected Notion workspace.</p>
+    <div class="hero-cta-group">
+      <a href="https://buy.stripe.com/14k9Db5dy2Qg0PC144" class="btn btn-primary btn-lg" rel="noopener">Get FreelanceOS Pro — $29</a>
+      <span class="price-note">One-time payment &nbsp;·&nbsp; Instant Notion access</span>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <span class="trust-item"><span class="icon">👥</span> 500+ freelancers and professionals</span>
+      <span class="trust-item"><span class="icon">⭐</span> 4.9 / 5 stars</span>
+      <span class="trust-item"><span class="icon">💳</span> $29 one-time payment</span>
+      <span class="trust-item"><span class="icon">⚡</span> Instant access after purchase</span>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-inner">
+      <p class="section-label">What's Inside</p>
+      <h2 class="section-title">7 Modules Built for Floral Business Operations</h2>
+      <p class="section-sub">From your first client consultation to the final invoice, every part of your floral business is tracked, linked, and organized in one Notion workspace.</p>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <span class="feature-icon">🌸</span>
+          <h3>Event Order Manager</h3>
+          <p>Track every wedding, event, and standing order from consultation to delivery. Log client details, event date, budget, florals requested, delivery logistics, and completion status — all in one linked entry.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🌺</span>
+          <h3>Flower &amp; Stem Inventory</h3>
+          <p>Log your current stock by variety, color, quantity, source, and price per stem. Know exactly what you have on hand before you build a quote or place an order.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📋</span>
+          <h3>Supplier &amp; Wholesale Contacts</h3>
+          <p>Store every wholesaler, local grower, and specialty supplier with contact info, lead times, minimums, and preferred order days. Order smarter and build supplier relationships.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">💐</span>
+          <h3>Pricing &amp; Arrangement Library</h3>
+          <p>Build a library of your standard arrangements with material costs, labor, and markup. Generate accurate quotes in minutes instead of starting from scratch every time.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">👤</span>
+          <h3>Client Consultation Tracker</h3>
+          <p>Log every prospective client consultation — event type, style preferences, budget range, inspiration images, and follow-up actions. Never lose a lead because you forgot to follow up.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">💰</span>
+          <h3>Invoice &amp; Payment Dashboard</h3>
+          <p>Track deposits, payment milestones, and final balances for every event order. See your entire AR at a glance so cash flow never catches you off guard.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📅</span>
+          <h3>Seasonal Planning Calendar</h3>
+          <p>Plan ahead for peak seasons — Valentine's Day, Mother's Day, wedding season. Log supplier orders needed, staff requirements, and revenue projections by month.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="hiw-bg">
+    <div class="section-inner">
+      <p class="section-label">How It Works</p>
+      <h2 class="section-title">Up and Running in Under an Hour</h2>
+      <p class="section-sub">Purchase, duplicate into your Notion, and start organizing your floral business the same day.</p>
+      <div class="steps-grid">
+
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Set Up Your Floral Workspace</h3>
+          <p>Purchase for $29, receive your Notion template link by email, and click Duplicate. Your full floral business workspace copies into your Notion account in seconds — ready to customize.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Add Your Orders and Inventory</h3>
+          <p>Enter your active event orders, current flower and stem inventory, supplier contacts, and standard arrangements. The setup guide walks you through each module in sequence — takes about 20 minutes.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Track Events and Get Paid</h3>
+          <p>Run your floral business from one dashboard. Manage consultations, build quotes from your arrangement library, track inventory before wholesale trips, and monitor payments across every active order.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="use-cases">
+    <div class="section-inner">
+      <p class="section-label">Who It's For</p>
+      <h2 class="section-title">Built for Every Type of Floral Professional</h2>
+      <p class="section-sub">Whether you focus on weddings, retail, corporate events, or subscriptions — FreelanceOS Pro fits the way you work.</p>
+      <div class="use-cases-grid">
+
+        <div class="use-case-card">
+          <span class="use-case-icon">💍</span>
+          <h3>Wedding &amp; Bridal Florist</h3>
+          <p>Manage complex multi-event orders, bridal party details, venue logistics, and payment milestones across every wedding in your calendar.</p>
+        </div>
+
+        <div class="use-case-card">
+          <span class="use-case-icon">🏪</span>
+          <h3>Studio &amp; Retail Florist</h3>
+          <p>Track daily walk-in orders alongside standing accounts, manage your live inventory, and keep your supplier relationships organized.</p>
+        </div>
+
+        <div class="use-case-card">
+          <span class="use-case-icon">🏢</span>
+          <h3>Event &amp; Corporate Floral</h3>
+          <p>Handle large-scale event contracts, multi-location deliveries, and corporate account billing with structured order and invoice tracking.</p>
+        </div>
+
+        <div class="use-case-card">
+          <span class="use-case-icon">📦</span>
+          <h3>Subscription &amp; Delivery Service</h3>
+          <p>Manage recurring orders, weekly buying schedules, subscriber rosters, and delivery routes — all in one connected workspace.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-bg">
+    <div class="section-inner">
+      <p class="section-label">Customer Reviews</p>
+      <h2 class="section-title">What Florists Say About FreelanceOS Pro</h2>
+      <p class="section-sub">Real results from floral professionals who replaced their scattered systems with one Notion workspace.</p>
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"I was managing 15 wedding orders in a combination of Google Sheets, my phone gallery, and memory. FreelanceOS Pro organized everything — every event has its own page linked to the client's consultation notes, their flower list, and their invoice. The week before a wedding used to feel chaotic. Now it just feels like execution."</blockquote>
+          <div class="testimonial-author">Emma S.</div>
+          <div class="testimonial-role">Wedding &amp; Event Florist</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"The flower inventory tracker changed how I buy. I used to over-order stems to avoid running short, which meant throwing away product every week. Now I check the inventory before every wholesale trip and buy only what I need. My waste has gone down significantly."</blockquote>
+          <div class="testimonial-author">Nadia K.</div>
+          <div class="testimonial-role">Studio Florist &amp; Subscription Box Creator</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"The pricing and arrangement library is the feature I didn't know I needed. I have 50+ standard arrangements I quote from regularly. Now each one is documented with exact stem counts, cost, and markup. Building quotes went from 30 minutes to 5 minutes. That time adds up fast when you're quoting 10 events a month."</blockquote>
+          <div class="testimonial-author">Andre M.</div>
+          <div class="testimonial-role">Corporate &amp; Event Floral Designer</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-inner">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title">Common Questions</h2>
+      <p class="section-sub">Everything you need to know before you purchase.</p>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            What is a Notion template for florists and why do I need one?
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">A pre-built Notion workspace for independent florists and floral designers — manages event orders, flower inventory, supplier contacts, pricing templates, client consultations, and invoicing in one connected system. Replaces scattered spreadsheets and paper order forms with a professional floral business OS.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Can I use this for both wedding florals and everyday orders?
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes — the event order manager handles any order type. Each entry includes an order type field (wedding, event, subscription, walk-in, corporate) so you can filter and manage all order categories from one dashboard.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Does it help with seasonal buying and planning?
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes — the seasonal planning calendar lets you plan supplier orders, staff needs, and revenue expectations by month. You can also track historical order volumes by season to improve buying decisions year over year.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            How do I get the template after purchasing?
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">$29 Stripe purchase → email with Notion link → click Duplicate → workspace copies in seconds. Setup takes about 20 minutes to customize with your current orders and supplier list.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-section">
+    <div class="section-inner">
+      <h2>Stop Managing Events, Inventory, and Invoices From Five Different Places</h2>
+      <p>FreelanceOS Pro gives your entire floral business one connected home in Notion — from the first client inquiry to the final payment.</p>
+      <ul class="perks-list">
+        <li>Event Order Manager</li>
+        <li>Flower &amp; Stem Inventory</li>
+        <li>Supplier &amp; Wholesale Contacts</li>
+        <li>Pricing &amp; Arrangement Library</li>
+        <li>Client Consultation Tracker</li>
+        <li>Invoice &amp; Payment Dashboard</li>
+        <li>Seasonal Planning Calendar</li>
+        <li>Setup guide included</li>
+        <li>Instant Notion download</li>
+      </ul>
+      <a href="https://buy.stripe.com/14k9Db5dy2Qg0PC144" class="btn btn-primary btn-lg" rel="noopener">Get FreelanceOS Pro — $29</a>
+      <p style="margin-top: 16px;" class="price-note">One-time payment &nbsp;·&nbsp; Instant Notion access &nbsp;·&nbsp; No subscription</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="/index.html" class="nav-logo">FreelanceOS Pro</a>
+          <p>The Notion workspace system for freelancers, solopreneurs, and independent professionals. One purchase, instant access.</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Templates">
+          <h4>Templates</h4>
+          <ul>
+            <li><a href="/index.html">Storefront Home</a></li>
+            <li><a href="/freelanceos.html">For Freelancers</a></li>
+            <li><a href="/notion-template-for-coaches.html">For Coaches</a></li>
+            <li><a href="/notion-template-for-consultants.html">For Consultants</a></li>
+            <li><a href="/client-tracker.html">Client Tracker</a></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-nav" aria-label="Resources">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/free-templates.html">Free Tools</a></li>
+            <li><a href="/freelance-rate-calculator.html">Rate Calculator</a></li>
+            <li><a href="/faq.html">FAQ</a></li>
+            <li><a href="/freelance-scope-of-work-template.html">SOW Template</a></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-nav" aria-label="Company">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="https://buy.stripe.com/14k9Db5dy2Qg0PC144" rel="noopener">Buy Now — $29</a></li>
+            <li><a href="mailto:markmma1985@gmail.com">Contact Support</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 FreelanceOS. All rights reserved.</p>
+        <p>Built for florists who want a professional system, not another spreadsheet.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FAQ ACCORDION -->
+  <script>
+    document.querySelectorAll('.faq-question').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = this.closest('.faq-item');
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(function(i) {
+          i.classList.remove('open');
+          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          this.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
