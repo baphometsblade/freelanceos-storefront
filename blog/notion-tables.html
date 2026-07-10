@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notion Database vs Table: The Complete Guide to Notion's Database System (2026)</title>
+<meta name="description" content="Learn everything about Notion databases — the difference between databases and tables, how to set up properties, create views, filter, sort, and build a powerful Notion database system in 2026.">
+<link rel="canonical" href="https://freelanceos-storefront.vercel.app/blog/notion-tables">
+<meta property="og:title" content="Notion Database vs Table: The Complete Guide to Notion's Database System (2026)">
+<meta property="og:description" content="Learn everything about Notion databases — the difference between databases and tables, how to set up properties, create views, filter, sort, and build a powerful Notion database system in 2026.">
+<meta property="og:url" content="https://freelanceos-storefront.vercel.app/blog/notion-tables">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Notion Database vs Table: The Complete Guide to Notion's Database System (2026)",
+      "datePublished": "2026-07-11",
+      "dateModified": "2026-07-11",
+      "author": {"@type": "Person", "name": "FreelanceOS Team"},
+      "publisher": {"@type": "Organization", "name": "FreelanceOS", "url": "https://freelanceos-storefront.vercel.app/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://freelanceos-storefront.vercel.app/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://freelanceos-storefront.vercel.app/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "Notion Databases Guide", "item": "https://freelanceos-storefront.vercel.app/blog/notion-tables"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "What is the difference between a Notion database and a simple table?", "acceptedAnswer": {"@type": "Answer", "text": "A simple Notion table is a basic visual grid with no structure — like a spreadsheet. A Notion database is a structured collection of pages with typed properties (date, select, relation, formula, etc.), multiple views, filtering, sorting, and the ability to link between databases. Every database page can contain rich content like notes, files, and sub-pages."}},
+        {"@type": "Question", "name": "How do I create a database in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "Type /database in any Notion page and choose 'Database - Full page' or 'Database - Inline'. You can also type /table to create a table-view database inline. From there, add properties using the + button in the column header, choose property types, and start adding rows (each row is a full Notion page)."}},
+        {"@type": "Question", "name": "What are Notion database views?", "acceptedAnswer": {"@type": "Answer", "text": "Notion database views let you display the same data in different formats. The six views are: Table (spreadsheet grid), Board (kanban columns), Calendar (monthly grid), Gallery (card grid), List (simple list), and Timeline (Gantt-style bars). You can have unlimited views per database, each with its own filters and sorts."}},
+        {"@type": "Question", "name": "What is a Notion Relation property?", "acceptedAnswer": {"@type": "Answer", "text": "A Relation property links one Notion database to another. For example, a Projects database can relate to a Tasks database so you can see which tasks belong to which project. When you add a Relation, you can also add a Rollup property to calculate aggregates (count, sum, average) across the linked items."}},
+        {"@type": "Question", "name": "How do I filter a Notion database?", "acceptedAnswer": {"@type": "Answer", "text": "Click the 'Filter' button at the top of any database view. Choose a property, select a condition (equals, contains, is not empty, etc.), and enter a value. You can add multiple filter conditions joined by AND or OR. Filters are saved per view, so different views of the same database can have different filters."}},
+        {"@type": "Question", "name": "What is a Notion formula property?", "acceptedAnswer": {"@type": "Answer", "text": "A Formula property lets you calculate a value using data from other properties in the same database row. It uses Notion's formula syntax (similar to Excel). Common uses: calculate profit (Revenue - Cost), format a full name from first + last name properties, compute days until a deadline, or create a conditional status label based on other fields."}}
+      ]
+    }
+  ]
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7}
+nav{background:#111827;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #374151}
+nav a{color:#e5e7eb;text-decoration:none}
+nav .logo{font-weight:700;color:#7c3aed}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{color:#9ca3af;font-size:0.9rem}
+.hero{background:linear-gradient(135deg,#1a0533 0%,#0f0f0f 100%);padding:4rem 2rem;text-align:center}
+.hero .category{color:#a78bfa;font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem}
+.hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;max-width:820px;margin:0 auto 1.5rem;line-height:1.2;color:#f9fafb}
+.hero .meta{color:#9ca3af;font-size:0.9rem}
+.article-container{max-width:760px;margin:3rem auto;padding:0 2rem}
+h2{font-size:1.6rem;font-weight:700;color:#a78bfa;margin:2.5rem 0 1rem}
+h3{font-size:1.2rem;font-weight:600;color:#e5e7eb;margin:2rem 0 0.75rem}
+p{margin-bottom:1.25rem;color:#d1d5db}
+ul,ol{margin:0 0 1.25rem 1.5rem;color:#d1d5db}
+li{margin-bottom:0.5rem}
+a{color:#a78bfa}
+strong{color:#f9fafb}
+.callout{background:#1a0533;border-left:4px solid #7c3aed;padding:1.25rem 1.5rem;border-radius:0 8px 8px 0;margin:2rem 0}
+.callout p{margin-bottom:0;color:#e5e7eb}
+.cta-box{background:linear-gradient(135deg,#1a0533,#111827);border:1px solid #7c3aed;border-radius:12px;padding:2rem;text-align:center;margin:3rem 0}
+.cta-box h3{color:#f9fafb;margin-top:0;margin-bottom:0.75rem}
+.cta-box p{color:#d1d5db;margin-bottom:1.25rem}
+.cta-btn{display:inline-block;background:#7c3aed;color:white;padding:0.875rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:1rem}
+.toc{background:#1f2937;border-radius:12px;padding:1.5rem;margin:2rem 0}
+.toc h4{color:#a78bfa;margin-bottom:1rem;font-size:0.9rem;text-transform:uppercase;letter-spacing:0.05em}
+.toc ol{margin-left:1.25rem}
+.toc li{margin-bottom:0.4rem}
+.toc a{color:#a78bfa;text-decoration:none;font-size:0.95rem}
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin:1.5rem 0}
+.prop-card{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.25rem}
+.prop-card .prop-name{color:#a78bfa;font-weight:700;font-size:0.95rem;margin-bottom:0.4rem}
+.prop-card .prop-type{color:#6ee7b7;font-size:0.78rem;font-weight:600;margin-bottom:0.5rem}
+.prop-card p{margin-bottom:0;font-size:0.88rem;color:#9ca3af}
+.view-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin:1.5rem 0}
+.view-card{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.25rem;display:flex;gap:1rem;align-items:flex-start}
+.view-icon{font-size:1.5rem;line-height:1}
+.view-card h3{color:#f9fafb;margin-top:0;margin-bottom:0.4rem;font-size:1rem}
+.view-card p{margin-bottom:0;font-size:0.88rem;color:#9ca3af}
+.step-box{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.25rem 1.5rem;margin:1.25rem 0}
+.step-box .step-num{color:#7c3aed;font-weight:700;font-size:0.85rem;text-transform:uppercase;margin-bottom:0.5rem}
+.step-box h3{margin-top:0;margin-bottom:0.5rem;font-size:1rem;color:#f9fafb}
+.step-box p{margin-bottom:0;color:#d1d5db;font-size:0.95rem}
+.faq{margin-top:2.5rem}
+.faq .faq-item{border-bottom:1px solid #374151;padding:1.25rem 0}
+.faq .faq-item:last-child{border-bottom:none}
+.faq h3{color:#f9fafb;font-size:1.05rem;margin-top:0;margin-bottom:0.5rem}
+.faq p{margin-bottom:0;font-size:0.95rem}
+footer{background:#111827;padding:2rem;text-align:center;color:#4b5563;font-size:0.85rem;margin-top:4rem;border-top:1px solid #374151}
+footer a{color:#9ca3af;text-decoration:none;margin:0 0.75rem}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="/">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/blog/">Blog</a>
+    <a href="/free-notion-templates.html">Free Tools</a>
+    <a href="/freelanceos.html">FreelanceOS Pro</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="category">Notion Guides · 14 min read</div>
+  <h1>Notion Databases: The Complete Guide to Tables, Views, and Database Features in Notion</h1>
+  <div class="meta">Updated July 2026 &nbsp;·&nbsp; By FreelanceOS Team</div>
+</div>
+
+<div class="article-container">
+
+  <div class="toc">
+    <h4>Table of Contents</h4>
+    <ol>
+      <li><a href="#what-is-database">What Is a Notion Database?</a></li>
+      <li><a href="#create-database">Creating Your First Database</a></li>
+      <li><a href="#properties">Database Properties Explained</a></li>
+      <li><a href="#views">The 6 Database Views</a></li>
+      <li><a href="#filtering">Filtering and Sorting</a></li>
+      <li><a href="#relations">Linked Databases and Relations</a></li>
+      <li><a href="#rollups">Rollup Properties</a></li>
+      <li><a href="#templates">Database Templates</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ol>
+  </div>
+
+  <section id="what-is-database">
+    <h2>What Is a Notion Database? (vs. a Simple Table)</h2>
+    <p>Notion has two table-like things and it is important to know the difference.</p>
+    <p>A <strong>simple table</strong> (/table in Notion) is a basic visual grid — rows and columns, similar to a Google Sheets table you embed in a document. It has no structured data types, no views, and no individual page per row. Think of it as a formatting tool, not a data system.</p>
+    <p>A <strong>Notion database</strong> (/database in Notion) is a structured collection of <em>pages</em>, where each row is actually a full Notion page with its own content. Databases have:</p>
+    <ul>
+      <li><strong>Typed properties</strong> — date pickers, checkboxes, select menus, people fields, formulas, and 14 more types</li>
+      <li><strong>Multiple views</strong> — see the same data as a table, board, calendar, gallery, list, or timeline</li>
+      <li><strong>Filtering and sorting</strong> — per view, saved automatically</li>
+      <li><strong>Relations and rollups</strong> — link databases to each other and calculate across them</li>
+      <li><strong>Templates</strong> — pre-fill new rows with standard content</li>
+      <li><strong>Automation</strong> — trigger actions when properties change</li>
+    </ul>
+    <div class="callout">
+      <p><strong>Rule of thumb:</strong> Use a simple table for quick reference data (a list of links, a comparison of two options). Use a database for anything you want to track, filter, sort, relate to other data, or look at in more than one way.</p>
+    </div>
+    <p>Everything in your Notion workspace — your task list, your client tracker, your content calendar, your reading list, your CRM — should be a database, not a simple table. Databases scale with you. Simple tables don't.</p>
+  </section>
+
+  <section id="create-database">
+    <h2>Creating Your First Database</h2>
+    <p>There are three ways to create a Notion database, each suited to a different situation.</p>
+
+    <div class="step-box">
+      <div class="step-num">Option 1</div>
+      <h3>Full-page database</h3>
+      <p>Type <strong>/database</strong> in any page and select "Database - Full page." This creates a standalone database page in your sidebar. Best for large systems (a CRM, a projects tracker) that deserve their own page.</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">Option 2</div>
+      <h3>Inline database (embedded in a page)</h3>
+      <p>Type <strong>/database</strong> and select "Database - Inline" — or type <strong>/table</strong> to jump straight to an inline table view. The database lives inside the current page. Best for dashboards where you want multiple databases visible on one page.</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">Option 3</div>
+      <h3>Linked database (view of an existing database)</h3>
+      <p>Type <strong>/linked</strong> or use "Create linked database" to embed a view of an existing database anywhere in your workspace. The data is shared — the same database, shown in a different context. This is how dashboards in Notion work: one master database, multiple linked views on your home page filtered by date, status, or project.</p>
+    </div>
+
+    <h3>Adding properties to your database</h3>
+    <p>After creating the database, click the <strong>+</strong> button at the right edge of the column headers (in Table view) to add a new property. Choose a property type from the list, name it, and configure its options. Every database starts with a Title property that cannot be removed — that is the name of each page. Add as many additional properties as you need.</p>
+  </section>
+
+  <section id="properties">
+    <h2>Database Properties Explained: All 18 Types</h2>
+    <p>Notion offers 18 property types. Here is every one of them with the best use case for each.</p>
+
+    <div class="prop-grid">
+      <div class="prop-card">
+        <div class="prop-name">Text</div>
+        <div class="prop-type">Basic Input</div>
+        <p>Free-form text. Use for short notes, descriptions, subtitles, or URL fields you want as plain text.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Number</div>
+        <div class="prop-type">Basic Input</div>
+        <p>Integers or decimals. Use for revenue, hours, price, quantity, word count. Supports formatting (currency, percent, etc.).</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Select</div>
+        <div class="prop-type">Single Choice</div>
+        <p>One option from a pre-defined list. Use for Status, Priority, Category, Stage. Each option gets its own color.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Multi-select</div>
+        <div class="prop-type">Multiple Choices</div>
+        <p>Multiple options from a list. Use for Tags, Skills, Content Types, or anything that can have more than one value.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Status</div>
+        <div class="prop-type">Workflow</div>
+        <p>Like Select but pre-set to a Not Started / In Progress / Done model. Integrates with Notion's status tracking features.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Date</div>
+        <div class="prop-type">Time</div>
+        <p>Date and optional time. Enable "End date" for date ranges (great for Timeline and Calendar views). Use for deadlines, publish dates, start dates.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Person</div>
+        <div class="prop-type">Team</div>
+        <p>Assigns workspace members to a row. Use for Assignee, Owner, Reviewer. Multiple people can be added.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Files & Media</div>
+        <div class="prop-type">Attachments</div>
+        <p>Upload files or images directly to a database property. Use for storing attachments, screenshots, or documents per row.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Checkbox</div>
+        <div class="prop-type">Boolean</div>
+        <p>True or false. Use for Done, Approved, Invoiced, Published — any binary yes/no field. Filterable and sortable.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">URL</div>
+        <div class="prop-type">Link</div>
+        <p>Stores a clickable link. Use for website URLs, Loom recordings, LinkedIn profiles, source links in a research database.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Email</div>
+        <div class="prop-type">Contact</div>
+        <p>Stores an email address as a clickable mailto: link. Use in CRM or contact databases.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Phone</div>
+        <div class="prop-type">Contact</div>
+        <p>Stores a phone number. Use in CRM or contact databases.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Formula</div>
+        <div class="prop-type">Calculated</div>
+        <p>Calculates a value from other properties using Notion's formula syntax. Use for profit (revenue minus cost), days until deadline, conditional labels, or full name from first + last name.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Relation</div>
+        <div class="prop-type">Linked Database</div>
+        <p>Links rows in this database to rows in another database. Use to connect Projects to Tasks, Clients to Projects, or Blog Posts to Authors. The foundation of Notion's relational database system.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Rollup</div>
+        <div class="prop-type">Calculated</div>
+        <p>Requires a Relation property. Calculates an aggregate across linked items: count, sum, average, earliest/latest date. Use to count tasks per project, total revenue per client, or average rating across linked items.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Created time</div>
+        <div class="prop-type">Automatic</div>
+        <p>Auto-populated with the date and time the row was created. Cannot be edited. Use for sorting by recency in a notes or ideas database.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Created by</div>
+        <div class="prop-type">Automatic</div>
+        <p>Auto-populated with the workspace member who created the row. Use in team databases to track who added each entry.</p>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Last edited time</div>
+        <div class="prop-type">Automatic</div>
+        <p>Auto-populated with the last time the row or its page content was modified. Use to sort a notes database by "most recently updated."</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="views">
+    <h2>The 6 Database Views (When to Use Each)</h2>
+    <p>Every Notion database can show the same data in up to six different formats. Add as many views as you need — each view is a separate tab at the top of the database, with its own filters, sorts, and visible properties.</p>
+
+    <div class="view-grid">
+      <div class="view-card">
+        <div class="view-icon">📋</div>
+        <div>
+          <h3>Table View</h3>
+          <p>A spreadsheet-style grid. The default view and the best one for data entry, bulk editing, and seeing many properties at once. Use as your primary editing view. Best for: CRMs, task trackers, any database where you regularly add or edit rows.</p>
+        </div>
+      </div>
+      <div class="view-card">
+        <div class="view-icon">📌</div>
+        <div>
+          <h3>Board View (Kanban)</h3>
+          <p>Cards organized in columns by a Select property (typically Status). Drag cards between columns to update the property. Best for: task management, content pipeline, sales CRM stages, editorial workflows.</p>
+        </div>
+      </div>
+      <div class="view-card">
+        <div class="view-icon">📅</div>
+        <div>
+          <h3>Calendar View</h3>
+          <p>Items shown on a monthly calendar grid by a date property. Best for: content publishing schedules, deadlines tracker, event planning, editorial calendar at a glance.</p>
+        </div>
+      </div>
+      <div class="view-card">
+        <div class="view-icon">🖼️</div>
+        <div>
+          <h3>Gallery View</h3>
+          <p>Items shown as image cards in a grid. Great when items have cover images or when visual scanning matters. Best for: design portfolio, product catalog, template library, inspiration board.</p>
+        </div>
+      </div>
+      <div class="view-card">
+        <div class="view-icon">📝</div>
+        <div>
+          <h3>List View</h3>
+          <p>A simple stacked list with minimal properties shown. The cleanest and fastest view to scroll. Best for: reading lists, reference notes, quick lookup databases, mobile-friendly views.</p>
+        </div>
+      </div>
+      <div class="view-card">
+        <div class="view-icon">📊</div>
+        <div>
+          <h3>Timeline View</h3>
+          <p>Gantt-style bars on a time axis. Items display as duration bars based on start and end date. Best for: project roadmaps, content calendars, sprint planning, event timelines. See our <a href="/blog/notion-timeline">complete Notion Timeline guide</a> for a full setup walkthrough.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="filtering">
+    <h2>Filtering and Sorting Your Notion Database</h2>
+    <h3>Filters</h3>
+    <p>Click <strong>Filter</strong> at the top of any database view and click "+ Add filter." Choose a property, select a condition, and enter a value. Common filter conditions:</p>
+    <ul>
+      <li><strong>Status is "In Progress"</strong> — shows only active tasks</li>
+      <li><strong>Assignee is Me</strong> — shows only your items</li>
+      <li><strong>Due Date is before Today</strong> — shows overdue items</li>
+      <li><strong>Tags contains "SEO"</strong> — shows tagged content</li>
+      <li><strong>Checkbox is unchecked</strong> — shows incomplete items</li>
+    </ul>
+    <p>Add multiple filters and join them with <strong>AND</strong> (item must match all) or <strong>OR</strong> (item must match any). Filter groups let you combine AND and OR logic. Filters are saved per view and do not affect other views of the same database.</p>
+
+    <h3>Sorting</h3>
+    <p>Click <strong>Sort</strong> at the top of the database and choose a property to sort by, then ascending or descending. Add multiple sorts — first sort by Priority (High first), then by Due Date (earliest first) for a triage-ready task list. Sorts stack: the second sort applies within groups created by the first sort.</p>
+
+    <div class="callout">
+      <p><strong>Pro tip: Use filtered views as your daily workspace.</strong> Create a "My Tasks" view (filter: Assignee = Me AND Status != Done) and a "Due This Week" view (filter: Due Date is this week). These become your daily entry points instead of seeing the full unfiltered database every time you open it.</p>
+    </div>
+  </section>
+
+  <section id="relations">
+    <h2>Linked Databases and Relation Properties</h2>
+    <p>Relation properties are one of Notion's most powerful and most underused features. They let you connect two databases so rows in one database reference rows in another.</p>
+    <p><strong>Classic example:</strong> A Projects database and a Tasks database. Add a Relation property to Tasks that links to Projects. Now every task can be assigned to a project. On the Project page, you can see all related tasks. This is a one-to-many relationship — one project, many tasks.</p>
+    <h3>How to set up a Relation</h3>
+    <ol>
+      <li>In your database, click "+ Add a property."</li>
+      <li>Choose "Relation" as the property type.</li>
+      <li>Select the database you want to link to.</li>
+      <li>Choose whether to show the relation on both databases (recommended — adds a back-relation property to the linked database).</li>
+      <li>Click "Create relation."</li>
+    </ol>
+    <p>Now when you open any row, you can click the Relation property field and search for items in the linked database to connect them.</p>
+    <h3>Common Relation setups for freelancers</h3>
+    <ul>
+      <li><strong>Projects → Tasks:</strong> See all tasks for a project on the project page</li>
+      <li><strong>Clients → Projects:</strong> See all projects per client</li>
+      <li><strong>Blog Posts → Authors:</strong> Attribute each post to a writer</li>
+      <li><strong>Resources → Projects:</strong> Link reference material to the project it supports</li>
+      <li><strong>Invoices → Clients:</strong> Track invoicing history per client</li>
+    </ul>
+  </section>
+
+  <div class="cta-box">
+    <h3>Pre-Built Notion Databases Ready to Use</h3>
+    <p>FreelanceOS Pro comes with 15+ pre-built Notion databases — Projects, Tasks, Clients, Invoices, Content Pipeline, and more — all connected with Relations and Rollups. Use code <strong>FLASH40</strong> for 40% off.</p>
+    <a class="cta-btn" href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get FreelanceOS Pro — 40% Off →</a>
+  </div>
+
+  <section id="rollups">
+    <h2>Rollup Properties</h2>
+    <p>A Rollup property calculates an aggregate value from the items linked via a Relation property. Think of it as a SUM or COUNT that reaches across databases.</p>
+    <p><strong>Example:</strong> Your Projects database has a Relation to Tasks. Add a Rollup property to Projects that: points to the Tasks relation, pulls the "Status" property from each task, and calculates "Count all." Now each project row shows the total number of linked tasks. Change the calculation to "Count values where Status = Done" and you get a completion count.</p>
+    <h3>Common Rollup calculations</h3>
+    <ul>
+      <li><strong>Count all</strong> — total linked items (tasks per project, invoices per client)</li>
+      <li><strong>Sum</strong> — total of a number property (total invoice value per client)</li>
+      <li><strong>Average</strong> — average of a number property (average task hours per project)</li>
+      <li><strong>Earliest date / Latest date</strong> — first or last date among linked items (first task start, last task due)</li>
+      <li><strong>Percent checked</strong> — if the property is a checkbox, percentage of linked items that are checked (project completion %)</li>
+      <li><strong>Show unique values</strong> — display all unique values from a text or select property in linked items (all tags used across linked posts)</li>
+    </ul>
+  </section>
+
+  <section id="templates">
+    <h2>Database Templates</h2>
+    <p>Database templates pre-fill new rows with content, properties, and even sub-pages so you don't have to start from scratch every time. They are one of the biggest time-savers in Notion for repetitive workflows.</p>
+    <p>To create a template: click the dropdown arrow next to the blue "New" button in your database, then click "+ New template." Edit the template page exactly as you want new rows to look — set default property values, add a standard content structure with headers and checklists, and even add linked database views inside the template.</p>
+    <h3>Template ideas for common databases</h3>
+    <ul>
+      <li><strong>Project database template:</strong> Pre-fill Status = "Not Started", add a Project Brief section, a Goals section, a Tasks linked view, and a Meetings section.</li>
+      <li><strong>Blog post template:</strong> Pre-fill Status = "Draft", add H2 outline sections for intro, body sections, CTA; add an SEO properties section for target keyword, meta description, and word count.</li>
+      <li><strong>Weekly review template:</strong> Pre-fill the current week's date, add standard review sections (What did I complete? What's next? What's blocking me? Weekly highlight).</li>
+      <li><strong>Client onboarding template:</strong> Pre-fill Status = "Onboarding", add a welcome email draft, a project kickoff checklist, and an intake form link.</li>
+      <li><strong>Meeting notes template:</strong> Add sections for Attendees, Agenda, Action Items, and Decisions Made — pre-linked to the Project relation.</li>
+    </ul>
+  </section>
+
+  <section id="faq" class="faq">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>What is the difference between a Notion database and a simple table?</h3>
+      <p>A simple Notion table is a basic visual grid with no structured data — like a spreadsheet embedded in a doc. A Notion database is a structured collection of pages with typed properties (date, select, relation, formula, etc.), multiple views, filtering, sorting, and the ability to link to other databases. Every database row is also a full Notion page you can write in.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I create a database in Notion?</h3>
+      <p>Type /database in any Notion page and choose "Database - Full page" or "Database - Inline." You can also type /table to create an inline table-view database. Add properties with the + button in the column header, choose property types, and start adding rows — each row is a full Notion page.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What are Notion database views?</h3>
+      <p>Database views let you display the same data in different formats. The six views are: Table (grid), Board (kanban), Calendar (monthly), Gallery (image cards), List (simple list), and Timeline (Gantt bars). You can have unlimited views per database, each with its own filters and sorts.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What is a Notion Relation property?</h3>
+      <p>A Relation property links one database to another. For example, a Projects database can relate to a Tasks database so you can see which tasks belong to which project. When you add a Relation, you can also add a Rollup property to calculate aggregates (count, sum, average) across the linked items.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I filter a Notion database?</h3>
+      <p>Click the "Filter" button at the top of any database view. Choose a property, select a condition (equals, contains, is not empty, etc.), and enter a value. You can add multiple filters joined by AND or OR. Filters are saved per view, so different views can have different filters on the same underlying data.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What is a Notion formula property?</h3>
+      <p>A Formula property calculates a value using data from other properties in the same row using Notion's formula syntax (similar to Excel). Common uses: calculate profit (Revenue minus Cost), format a full name from first and last name fields, compute days until a deadline, or create a conditional status label based on other fields.</p>
+    </div>
+  </section>
+
+  <div class="cta-box">
+    <h3>Get 15+ Pre-Built Notion Databases</h3>
+    <p>Stop building from scratch. FreelanceOS Pro includes a complete, connected database system — Projects, Tasks, Clients, Invoices, Content Pipeline, CRM, and more. Everything pre-wired with Relations and Rollups.</p>
+    <a class="cta-btn" href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get FreelanceOS Pro — FLASH40 for 40% Off →</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 FreelanceOS &nbsp;·&nbsp;
+    <a href="/">Home</a>
+    <a href="/blog/">Blog</a>
+    <a href="/free-notion-templates.html">Free Templates</a>
+    <a href="/freelanceos.html">FreelanceOS Pro</a>
+  </p>
+</footer>
+</body>
+</html>
