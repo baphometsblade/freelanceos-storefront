@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion API Tutorial: How to Use the Notion API in 2026</title>
+<meta name="description" content="Learn how to use the Notion API — getting started, authentication, reading and writing to Notion databases, creating pages, querying databases, and building integrations with the official Notion API in 2026.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-api">
+<meta property="og:title" content="Notion API Tutorial: How to Use the Notion API in 2026">
+<meta property="og:description" content="Learn how to use the Notion API — getting started, authentication, reading and writing to Notion databases, creating pages, and building integrations in 2026.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-api">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://baphometsblade.github.io/freelanceos-storefront/blog/notion-api#article",
+      "headline": "Notion API: The Complete Beginner's Guide to the Notion API (2026)",
+      "description": "Learn how to use the Notion API — getting started, authentication, reading and writing to Notion databases, creating pages, querying databases, and building integrations with the official Notion API in 2026.",
+      "datePublished": "2026-07-11",
+      "dateModified": "2026-07-11",
+      "author": {"@type": "Organization", "name": "FreelanceOS"},
+      "publisher": {"@type": "Organization", "name": "FreelanceOS", "url": "https://baphometsblade.github.io/freelanceos-storefront/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://baphometsblade.github.io/freelanceos-storefront/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "Notion API Tutorial", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/notion-api"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Notion API?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The Notion API is an official REST API from Notion that allows developers and automation tools to read from and write to Notion pages and databases programmatically. You can query databases, create pages, update properties, and build full integrations using HTTP requests or the official Notion SDK."}
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get a Notion API key?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Go to notion.com/my-integrations, click 'Create new integration', give it a name and select a workspace, then copy the 'Internal Integration Token' — that is your API key. Keep it secret and never expose it in client-side code."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Notion API free?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes, the Notion API is free for all Notion users including the free plan. There are rate limits (3 requests per second per integration) but no per-request cost. You only pay for Notion itself if you need team features."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use the Notion API to build a website?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. Many developers use Notion as a headless CMS — they store content (blog posts, product info, team profiles) in Notion databases, then query the API at build time or request time to render it on a website. Popular combinations include Notion API + Next.js, Notion API + Astro, and Notion API + Vercel."}
+        },
+        {
+          "@type": "Question",
+          "name": "What can I automate with the Notion API?",
+          "acceptedAnswer": {"@type": "Answer", "text": "You can automate almost any Notion action: log new Stripe payments to an income tracker, sync GitHub issues to a project database, create daily journal entries, push form submissions into a CRM, update task statuses when external events happen, and build Slack bots that create Notion tasks from slash commands."}
+        },
+        {
+          "@type": "Question",
+          "name": "How do I query a Notion database with the API?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Use POST /v1/databases/{database_id}/query with your integration token in the Authorization header. The database_id comes from the Notion URL. You can add a 'filter' object to filter by property values and a 'sorts' array to order results. The response returns a list of page objects with all their properties."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f0f0f; color: #e5e7eb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 17px; line-height: 1.75; }
+  a { color: #a78bfa; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  nav { background: #111827; border-bottom: 1px solid #374151; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  nav .logo { font-weight: 700; font-size: 1.2rem; color: #a78bfa; }
+  nav .nav-links a { color: #e5e7eb; margin-left: 24px; font-size: 0.95rem; }
+  .container { max-width: 820px; margin: 0 auto; padding: 48px 24px; }
+  .breadcrumb { font-size: 0.85rem; color: #9ca3af; margin-bottom: 32px; }
+  .breadcrumb a { color: #9ca3af; }
+  .meta { display: flex; gap: 16px; color: #9ca3af; font-size: 0.9rem; margin-bottom: 32px; flex-wrap: wrap; }
+  .tag { background: #1f2937; border: 1px solid #374151; border-radius: 4px; padding: 2px 10px; font-size: 0.8rem; color: #a78bfa; }
+  h1 { font-size: 2.2rem; line-height: 1.25; color: #a78bfa; margin-bottom: 24px; }
+  h2 { font-size: 1.5rem; color: #a78bfa; margin: 48px 0 16px; border-bottom: 1px solid #374151; padding-bottom: 8px; }
+  h3 { font-size: 1.15rem; color: #c4b5fd; margin: 32px 0 12px; }
+  p { margin-bottom: 18px; color: #e5e7eb; }
+  ul, ol { margin: 0 0 20px 28px; color: #e5e7eb; }
+  li { margin-bottom: 8px; }
+  code { background: #1f2937; border: 1px solid #374151; border-radius: 4px; padding: 2px 7px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 0.88em; color: #10b981; }
+  pre { background: #111827; border: 1px solid #374151; border-radius: 8px; padding: 20px 24px; overflow-x: auto; margin: 20px 0 24px; }
+  pre code { background: none; border: none; padding: 0; font-size: 0.87rem; color: #10b981; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 0.93rem; }
+  th { background: #1f2937; color: #a78bfa; text-align: left; padding: 10px 14px; border: 1px solid #374151; font-weight: 600; }
+  td { padding: 10px 14px; border: 1px solid #374151; color: #e5e7eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #111827; }
+  .cta-box { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); border: 1px solid #7c3aed; border-radius: 12px; padding: 36px; text-align: center; margin: 48px 0; }
+  .cta-box h3 { color: #a78bfa; font-size: 1.4rem; margin-bottom: 12px; margin-top: 0; }
+  .cta-box p { color: #d1d5db; margin-bottom: 8px; }
+  .cta-box .price-note { color: #10b981; font-size: 0.9rem; margin-bottom: 24px; }
+  .btn { display: inline-block; background: #7c3aed; color: #fff; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 1.05rem; text-decoration: none; transition: background 0.2s; }
+  .btn:hover { background: #6d28d9; text-decoration: none; }
+  .callout { background: #1f2937; border-left: 4px solid #a78bfa; border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 24px 0; }
+  .callout.green { border-left-color: #10b981; }
+  .callout.yellow { border-left-color: #f59e0b; }
+  .step-box { background: #1f2937; border: 1px solid #374151; border-radius: 10px; padding: 20px 24px; margin: 20px 0; }
+  .step-box .step-num { color: #a78bfa; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .faq-item { background: #1f2937; border: 1px solid #374151; border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+  .faq-item h3 { color: #a78bfa; margin: 0 0 10px; font-size: 1.05rem; }
+  .faq-item p { margin: 0; color: #d1d5db; }
+  .highlight-box { background: #1f2937; border: 1px solid #10b981; border-radius: 8px; padding: 20px 24px; margin: 24px 0; }
+  footer { background: #111827; border-top: 1px solid #374151; padding: 40px 24px; text-align: center; color: #6b7280; font-size: 0.9rem; margin-top: 80px; }
+  footer a { color: #9ca3af; }
+  @media (max-width: 640px) { h1 { font-size: 1.6rem; } h2 { font-size: 1.25rem; } .container { padding: 32px 16px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="/freelanceos.html">Templates</a>
+    <a href="/blog/">Blog</a>
+    <a href="/freelanceos.html#pricing">Pricing</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="breadcrumb">
+    <a href="/">Home</a> › <a href="/blog/">Blog</a> › Notion API Tutorial
+  </div>
+
+  <div class="meta">
+    <span>📅 July 2026</span>
+    <span>⏱ 16 min read</span>
+    <span class="tag">Notion API</span>
+    <span class="tag">Automation</span>
+  </div>
+
+  <h1>Notion API: The Complete Beginner's Guide to the Notion API (2026)</h1>
+
+  <p>The Notion API unlocks a completely different way to use Notion — not just as a note-taking app, but as a database you can read from and write to programmatically. Whether you want to push new Stripe payments into a Notion income tracker, sync GitHub issues to your project board, or build a public website powered by Notion data, the API makes it possible.</p>
+
+  <p>This guide walks you through everything: setting up your first integration, authenticating, querying databases, creating pages, and 8 practical things you can build. No prior API experience needed.</p>
+
+  <h2>1. What Is the Notion API?</h2>
+
+  <p>The Notion API is an official REST API published at <a href="https://developers.notion.com" target="_blank" rel="noopener">developers.notion.com</a>. It allows you — or any authorized tool — to interact with your Notion workspace over HTTP. Instead of clicking in the Notion UI, you send requests and receive responses in JSON.</p>
+
+  <p><strong>What the Notion API lets you do:</strong></p>
+  <ul>
+    <li>Query databases — pull all rows (pages) from a Notion database with filters and sorts</li>
+    <li>Create pages — add new entries to databases or new pages inside other pages</li>
+    <li>Update page properties — change the value of any property on an existing page</li>
+    <li>Append block content — add paragraphs, code blocks, bullet lists, images to a page</li>
+    <li>Search your workspace — find pages and databases by keyword</li>
+    <li>Retrieve users — get info about workspace members</li>
+  </ul>
+
+  <p><strong>Common use cases for the Notion API:</strong></p>
+  <ul>
+    <li><strong>Notion as a CMS:</strong> Store blog posts or product data in Notion, pull them via API to render on a website</li>
+    <li><strong>Automation hubs:</strong> When something happens in another app (new Stripe payment, new GitHub issue, new form submission), automatically create a record in Notion</li>
+    <li><strong>Data sync:</strong> Keep Notion databases in sync with external data sources like Google Sheets, Airtable, or SQL databases</li>
+    <li><strong>Custom dashboards:</strong> Read from multiple Notion databases and combine data in ways the Notion UI doesn't support</li>
+    <li><strong>Scheduled updates:</strong> Run a script every night to update properties like "Days Since Last Contact" or "Revenue This Month"</li>
+  </ul>
+
+  <div class="callout">
+    <strong>Who this guide is for:</strong> Freelancers, solopreneurs, and developers who use Notion and want to connect it to other tools or automate repetitive database updates. You need basic familiarity with Notion databases. Coding examples use Python — the concepts apply to any language.
+  </div>
+
+  <h2>2. Getting Started with the Notion API</h2>
+
+  <p>Before you can make any API call, you need to create a Notion integration and share your pages with it. Here's the exact process:</p>
+
+  <div class="step-box">
+    <div class="step-num">Step 1</div>
+    <strong>Create a Notion Integration</strong>
+    <p style="margin:8px 0 0">Go to <a href="https://www.notion.com/my-integrations" target="_blank" rel="noopener">notion.com/my-integrations</a>. Click <strong>"+ New integration"</strong>. Give it a name (e.g., "My Automation" or "Invoice Logger"). Select the workspace it should access. Leave capabilities at the default (Read content, Update content, Insert content). Click <strong>Submit</strong>.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Step 2</div>
+    <strong>Copy Your Integration Token</strong>
+    <p style="margin:8px 0 0">After creating the integration, you'll see an <strong>Internal Integration Secret</strong> (sometimes called the API key or token). It starts with <code>ntn_</code> or <code>secret_</code>. Click <strong>"Show"</strong> then copy it. Store it securely — treat it like a password. Never put it in client-side JavaScript or commit it to a public GitHub repo.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Step 3</div>
+    <strong>Share Pages/Databases with Your Integration</strong>
+    <p style="margin:8px 0 0">This is the most commonly missed step. By default, your integration cannot access anything. For each Notion page or database you want to access via API: open it in Notion → click the <strong>"..."</strong> (three dots) in the top right → click <strong>"Connections"</strong> → search for and select your integration. The integration now has access to that page and everything nested inside it.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Step 4</div>
+    <strong>Make Your First API Call</strong>
+    <p style="margin:8px 0 0">Test that everything is working by fetching your own user info. In a terminal, run this curl command (replace YOUR_TOKEN with your actual token):</p>
+  </div>
+
+  <pre><code>curl -X GET 'https://api.notion.com/v1/users/me' \
+  -H 'Authorization: Bearer YOUR_TOKEN' \
+  -H 'Notion-Version: 2022-06-28'</code></pre>
+
+  <p>If successful, you'll get back a JSON object with your Notion user information. If you see a 401 error, double-check your token. If you see a 403 error, the integration hasn't been shared with any pages yet.</p>
+
+  <h2>3. Notion API Authentication</h2>
+
+  <p>Every Notion API request requires two headers:</p>
+
+  <table>
+    <tr><th>Header</th><th>Value</th><th>Purpose</th></tr>
+    <tr><td><code>Authorization</code></td><td><code>Bearer YOUR_INTEGRATION_TOKEN</code></td><td>Authenticates your integration</td></tr>
+    <tr><td><code>Notion-Version</code></td><td><code>2022-06-28</code></td><td>Specifies which API version to use</td></tr>
+    <tr><td><code>Content-Type</code></td><td><code>application/json</code></td><td>Required for POST/PATCH requests with a body</td></tr>
+  </table>
+
+  <p>The Notion API uses <strong>Bearer token authentication</strong>. Your integration token is the bearer token. It grants the API the same access level as your integration — which is limited to only the pages you've explicitly shared with it.</p>
+
+  <div class="callout yellow">
+    <strong>Security note:</strong> Store your token in an environment variable, not hardcoded in your script. In Python: <code>import os; token = os.environ.get("NOTION_TOKEN")</code>. Set the variable in your shell with <code>export NOTION_TOKEN="your-token-here"</code> or use a <code>.env</code> file with the <code>python-dotenv</code> package.
+  </div>
+
+  <p>In Python, a reusable headers dictionary looks like this:</p>
+
+  <pre><code>import os
+
+NOTION_TOKEN = os.environ.get("NOTION_TOKEN")
+
+headers = {
+    "Authorization": f"Bearer {NOTION_TOKEN}",
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json"
+}</code></pre>
+
+  <h2>4. Reading a Notion Database</h2>
+
+  <p>The most common Notion API operation is querying a database — pulling all its rows so you can read or display them. The endpoint is <code>POST /v1/databases/{database_id}/query</code>.</p>
+
+  <h3>Finding Your Database ID</h3>
+
+  <p>Open your Notion database in a browser. The URL looks like:</p>
+  <pre><code>https://www.notion.so/yourworkspace/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX?v=YYYYYYYYYYYY</code></pre>
+  <p>The database ID is the 32-character string after the last slash and before the <code>?v=</code>. It often looks like <code>1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d</code> (though it may include hyphens in some URL formats).</p>
+
+  <h3>Basic Database Query in Python</h3>
+
+  <pre><code>import requests
+import os
+
+NOTION_TOKEN = os.environ.get("NOTION_TOKEN")
+DATABASE_ID = "your-database-id-here"
+
+url = f"https://api.notion.com/v1/databases/{DATABASE_ID}/query"
+headers = {
+    "Authorization": f"Bearer {NOTION_TOKEN}",
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+data = response.json()
+
+# Print the title of each page in the database
+for page in data["results"]:
+    # The title property is usually called "Name" or "Title"
+    title_prop = page["properties"].get("Name", {})
+    title_parts = title_prop.get("title", [])
+    title = title_parts[0]["text"]["content"] if title_parts else "(no title)"
+    print(f"- {title} (ID: {page['id']})")</code></pre>
+
+  <h3>Adding Filters to Your Query</h3>
+
+  <p>To filter results, add a <code>filter</code> object to your request body. Filters are powerful — you can filter by any property type with conditions specific to that type.</p>
+
+  <pre><code># Filter for pages where Status is "In Progress"
+body = {
+    "filter": {
+        "property": "Status",
+        "status": {
+            "equals": "In Progress"
+        }
+    }
+}
+
+response = requests.post(url, headers=headers, json=body)
+data = response.json()</code></pre>
+
+  <h3>Sorting Results</h3>
+
+  <pre><code># Sort by Due Date ascending
+body = {
+    "sorts": [
+        {
+            "property": "Due Date",
+            "direction": "ascending"
+        }
+    ]
+}
+
+# Combine filter + sort
+body = {
+    "filter": {
+        "property": "Status",
+        "status": {"equals": "In Progress"}
+    },
+    "sorts": [
+        {"property": "Due Date", "direction": "ascending"}
+    ]
+}</code></pre>
+
+  <h3>Filter Conditions by Property Type</h3>
+
+  <table>
+    <tr><th>Property Type</th><th>Filter Key</th><th>Available Conditions</th></tr>
+    <tr><td>Title / Rich Text</td><td><code>"rich_text"</code></td><td>equals, contains, starts_with, ends_with, is_empty, is_not_empty</td></tr>
+    <tr><td>Number</td><td><code>"number"</code></td><td>equals, does_not_equal, greater_than, less_than, greater_than_or_equal_to, less_than_or_equal_to, is_empty</td></tr>
+    <tr><td>Select</td><td><code>"select"</code></td><td>equals, does_not_equal, is_empty, is_not_empty</td></tr>
+    <tr><td>Multi-select</td><td><code>"multi_select"</code></td><td>contains, does_not_contain, is_empty</td></tr>
+    <tr><td>Date</td><td><code>"date"</code></td><td>equals, before, after, on_or_before, on_or_after, past_week, past_month, next_week, next_month, is_empty</td></tr>
+    <tr><td>Checkbox</td><td><code>"checkbox"</code></td><td>equals (true/false)</td></tr>
+    <tr><td>Status</td><td><code>"status"</code></td><td>equals, does_not_equal, is_empty</td></tr>
+    <tr><td>People</td><td><code>"people"</code></td><td>contains, does_not_contain, is_empty</td></tr>
+  </table>
+
+  <h2>5. Creating a Page in Notion via API</h2>
+
+  <p>To create a new row in a Notion database (or a new page nested inside another page), use <code>POST /v1/pages</code>. You specify the parent (the database) and the properties to set.</p>
+
+  <pre><code>import requests
+import os
+
+NOTION_TOKEN = os.environ.get("NOTION_TOKEN")
+DATABASE_ID = "your-database-id-here"
+
+url = "https://api.notion.com/v1/pages"
+headers = {
+    "Authorization": f"Bearer {NOTION_TOKEN}",
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json"
+}
+
+# Create a new task in a Tasks database with Name, Status, and Due Date
+new_page = {
+    "parent": {"database_id": DATABASE_ID},
+    "properties": {
+        "Name": {
+            "title": [
+                {
+                    "text": {"content": "Review Q3 invoices"}
+                }
+            ]
+        },
+        "Status": {
+            "status": {"name": "In Progress"}
+        },
+        "Due Date": {
+            "date": {"start": "2026-07-15"}
+        }
+    }
+}
+
+response = requests.post(url, headers=headers, json=new_page)
+result = response.json()
+print(f"Created page: {result['id']}")</code></pre>
+
+  <p><strong>Property value shapes by type:</strong></p>
+  <table>
+    <tr><th>Property Type</th><th>Value Shape in JSON</th></tr>
+    <tr><td>Title / Text</td><td><code>"title": [{"text": {"content": "Your text"}}]</code></td></tr>
+    <tr><td>Number</td><td><code>"number": 42</code></td></tr>
+    <tr><td>Select</td><td><code>"select": {"name": "Option Name"}</code></td></tr>
+    <tr><td>Multi-select</td><td><code>"multi_select": [{"name": "Tag 1"}, {"name": "Tag 2"}]</code></td></tr>
+    <tr><td>Date</td><td><code>"date": {"start": "2026-07-15"}</code></td></tr>
+    <tr><td>Checkbox</td><td><code>"checkbox": true</code></td></tr>
+    <tr><td>URL</td><td><code>"url": "https://example.com"</code></td></tr>
+    <tr><td>Email</td><td><code>"email": "hello@example.com"</code></td></tr>
+    <tr><td>Status</td><td><code>"status": {"name": "In Progress"}</code></td></tr>
+  </table>
+
+  <div class="cta-box">
+    <h3>Stop re-building Notion from scratch every project</h3>
+    <p>FreelanceOS Pro is a complete Notion system built for freelancers — CRM, project tracker, invoice log, client hub, and daily planner. API-ready structure with consistent property names so your automations work on day one.</p>
+    <p class="price-note">Use code FLASH40 for 40% off today</p>
+    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro →</a>
+  </div>
+
+  <h2>6. Updating and Deleting Pages via API</h2>
+
+  <p>To update an existing page's properties, use <code>PATCH /v1/pages/{page_id}</code>. You only need to include the properties you want to change — other properties are left untouched.</p>
+
+  <pre><code>import requests
+import os
+
+NOTION_TOKEN = os.environ.get("NOTION_TOKEN")
+PAGE_ID = "the-page-id-to-update"  # Get this from a query response
+
+url = f"https://api.notion.com/v1/pages/{PAGE_ID}"
+headers = {
+    "Authorization": f"Bearer {NOTION_TOKEN}",
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json"
+}
+
+# Mark a task as Done
+update = {
+    "properties": {
+        "Status": {
+            "status": {"name": "Done"}
+        },
+        "Done": {
+            "checkbox": True
+        }
+    }
+}
+
+response = requests.patch(url, headers=headers, json=update)
+print(f"Updated: {response.status_code}")</code></pre>
+
+  <h3>Archiving (Deleting) a Page</h3>
+
+  <p>The Notion API doesn't permanently delete pages — it archives them (moves them to Trash). To archive a page:</p>
+
+  <pre><code>update = {"archived": True}
+response = requests.patch(url, headers=headers, json=update)</code></pre>
+
+  <p>To restore an archived page, set <code>"archived": false</code>.</p>
+
+  <h3>Practical Automation: Mark Task Done When External Event Fires</h3>
+
+  <p>A common pattern is closing out a Notion task when something happens externally — for example, when a client pays an invoice in Stripe, automatically mark the corresponding Notion invoice row as "Paid":</p>
+
+  <ol>
+    <li>Stripe sends a webhook when a payment succeeds</li>
+    <li>Your webhook handler (Cloudflare Worker, AWS Lambda, or simple Python Flask) receives it</li>
+    <li>It queries your Notion Invoices database, filtering for the matching invoice number</li>
+    <li>It patches that page's Status to "Paid" and sets a "Paid Date" property to today</li>
+  </ol>
+
+  <h2>7. Using the Official Notion Python SDK</h2>
+
+  <p>The official Notion Python client (<code>notion-client</code>) wraps the raw HTTP API with a cleaner, more Pythonic interface. Install it:</p>
+
+  <pre><code>pip install notion-client</code></pre>
+
+  <p>Here's a complete working script that queries a database, prints all rows, creates a new row, and updates a property — all using the SDK:</p>
+
+  <pre><code>from notion_client import Client
+import os
+
+notion = Client(auth=os.environ.get("NOTION_TOKEN"))
+DATABASE_ID = "your-database-id"
+
+# 1. Query all pages in the database
+results = notion.databases.query(database_id=DATABASE_ID)
+pages = results["results"]
+
+print(f"Found {len(pages)} pages:")
+for page in pages:
+    title_parts = page["properties"]["Name"]["title"]
+    title = title_parts[0]["text"]["content"] if title_parts else "(no title)"
+    print(f"  - {title}")
+
+# 2. Create a new page (row)
+new_page = notion.pages.create(
+    parent={"database_id": DATABASE_ID},
+    properties={
+        "Name": {
+            "title": [{"text": {"content": "New task from Python"}}]
+        },
+        "Status": {
+            "status": {"name": "Not Started"}
+        }
+    }
+)
+print(f"Created: {new_page['id']}")
+
+# 3. Update a property on the new page
+notion.pages.update(
+    page_id=new_page["id"],
+    properties={
+        "Status": {"status": {"name": "In Progress"}}
+    }
+)
+print("Updated status to In Progress")</code></pre>
+
+  <div class="callout green">
+    <strong>SDK vs raw requests:</strong> For most projects, the SDK is cleaner and handles edge cases better. Use raw <code>requests</code> calls when you're working in a language without an official SDK, writing a quick one-liner, or deploying to an environment where you can't install packages.
+  </div>
+
+  <h3>Handling Pagination</h3>
+
+  <p>Notion API queries return at most 100 results per page. For larger databases, you need to paginate using the <code>start_cursor</code> parameter:</p>
+
+  <pre><code>all_pages = []
+cursor = None
+
+while True:
+    kwargs = {"database_id": DATABASE_ID}
+    if cursor:
+        kwargs["start_cursor"] = cursor
+    
+    response = notion.databases.query(**kwargs)
+    all_pages.extend(response["results"])
+    
+    if not response["has_more"]:
+        break
+    cursor = response["next_cursor"]
+
+print(f"Total pages: {len(all_pages)}")</code></pre>
+
+  <h2>8. Eight Things to Build with the Notion API</h2>
+
+  <p>Here are eight real, practical integrations worth building — ranging from simple to advanced:</p>
+
+  <div class="step-box">
+    <div class="step-num">Build 1</div>
+    <strong>Auto-log Stripe Payments to a Notion Income Tracker</strong>
+    <p style="margin:8px 0 0">When a Stripe <code>payment_intent.succeeded</code> webhook fires, parse the amount, customer email, and product name, then create a row in your Notion Income database. Pairs perfectly with a Cloudflare Worker that already handles your Stripe webhooks.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Build 2</div>
+    <strong>Sync GitHub Issues to a Notion Project Database</strong>
+    <p style="margin:8px 0 0">Use GitHub Actions or a GitHub webhook to push new issues into Notion. When an issue is opened, create a Notion page. When it's closed, update the Status. Keeps your Notion project board in sync with your codebase.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Build 3</div>
+    <strong>Create a Page When You Get an Email from a Specific Sender</strong>
+    <p style="margin:8px 0 0">Use Gmail API + Notion API (or a no-code tool like Zapier or Make.com): when Gmail receives an email with a specific label (like "Client Request"), automatically create a Notion task with the email subject, sender, and a link to the email. Never lose a client request again.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Build 4</div>
+    <strong>Build a Public Website Powered by Notion</strong>
+    <p style="margin:8px 0 0">Use Notion as a headless CMS: store blog posts in a Notion database with Title, Slug, Body (rich text), Published Date, and Status properties. At build time, query the API to fetch all Published posts and render them as HTML. Many freelancers use this pattern for their portfolio or blog — powered entirely by Notion, no WordPress needed.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Build 5</div>
+    <strong>Auto-Update a Notion Status When a Zapier Action Completes</strong>
+    <p style="margin:8px 0 0">Use Zapier's "Code by Zapier" step to call the Notion API at the end of a Zap. This means you can chain: form submission → email sent (Zapier) → Notion row updated to "Email Sent". The Notion API becomes a reporting destination for your entire automation stack.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Build 6</div>
+    <strong>Create Daily Journal Entries Automatically at Midnight</strong>
+    <p style="margin:8px 0 0">Schedule a script (using GitHub Actions cron, a Raspberry Pi cron job, or a free Replit Deployment) to run at midnight each night. It creates a new page in your Notion Daily Journal database with today's date, pre-filled with your reflection prompt template as page content using the blocks API.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Build 7</div>
+    <strong>Sync Google Sheets Data to Notion Weekly</strong>
+    <p style="margin:8px 0 0">Pull data from a Google Sheet using the Sheets API and push it to Notion via the Notion API. Useful when clients send you data in spreadsheets that you want to track in Notion. Run it weekly via a scheduled Python script.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Build 8</div>
+    <strong>Build a Slack Bot That Creates Notion Tasks</strong>
+    <p style="margin:8px 0 0">Deploy a Slack app that listens for a <code>/task</code> slash command. When a team member types <code>/task Review proposal for Client X by Friday</code>, the bot parses the text, creates a Notion task with the right properties, and responds with a link to the new task. The Notion API is the write endpoint; Slack's API is the trigger.</p>
+  </div>
+
+  <h2>9. Notion API Rate Limits and Common Errors</h2>
+
+  <h3>Rate Limits</h3>
+
+  <p>The Notion API limits you to <strong>3 requests per second per integration</strong>. This is plenty for most personal automations but can be hit when syncing large datasets.</p>
+
+  <p><strong>How to handle rate limiting in Python:</strong></p>
+
+  <pre><code">import time
+import requests
+
+def notion_request_with_retry(method, url, headers, json=None, max_retries=3):
+    for attempt in range(max_retries):
+        if method == "POST":
+            response = requests.post(url, headers=headers, json=json)
+        elif method == "PATCH":
+            response = requests.patch(url, headers=headers, json=json)
+        else:
+            response = requests.get(url, headers=headers)
+        
+        if response.status_code == 429:
+            wait = 2 ** attempt  # Exponential backoff: 1s, 2s, 4s
+            print(f"Rate limited. Waiting {wait}s...")
+            time.sleep(wait)
+            continue
+        
+        return response
+    
+    raise Exception("Max retries exceeded")</code></pre>
+
+  <h3>Common Errors and What They Mean</h3>
+
+  <table>
+    <tr><th>Status Code</th><th>Meaning</th><th>Fix</th></tr>
+    <tr><td><code>400</code></td><td>Bad request — invalid JSON body</td><td>Check your property names and value shapes. Print the response body to see exactly what Notion rejected.</td></tr>
+    <tr><td><code>401</code></td><td>Unauthorized — bad token</td><td>Verify your Integration Token is correct and complete. Make sure you're not accidentally adding extra spaces.</td></tr>
+    <tr><td><code>403</code></td><td>Forbidden — integration not shared</td><td>Go to the Notion page/database → "..." → "Connections" → add your integration.</td></tr>
+    <tr><td><code>404</code></td><td>Page not found</td><td>Check the database/page ID. The most common cause: you shared a parent page but not the database, or you're using the wrong ID from the URL.</td></tr>
+    <tr><td><code>409</code></td><td>Conflict — typically a stale cursor</td><td>Re-query from the beginning rather than resuming from a cached cursor.</td></tr>
+    <tr><td><code>429</code></td><td>Rate limited</td><td>Slow down requests. Add retry logic with exponential backoff (see above).</td></tr>
+    <tr><td><code>500</code></td><td>Internal Notion server error</td><td>Retry after a few seconds. If persistent, check Notion's status page at status.notion.so.</td></tr>
+  </table>
+
+  <h3>The Most Common Gotcha: Wrong Property Name Case</h3>
+
+  <p>Notion property names are case-sensitive and must match exactly. If your property is called "Due Date" and you write "due date" in your API call, you'll get a 400 error. Always copy-paste property names from Notion or from a test query response.</p>
+
+  <div class="callout">
+    <strong>Debugging tip:</strong> When your API call fails, first query the database with no filters and print the full JSON response. Look at the shape of one page's <code>properties</code> object — this shows you exactly what property names and value shapes Notion expects.
+  </div>
+
+  <h2>10. The Notion API Beyond Databases</h2>
+
+  <p>Everything above has focused on databases because that's the most common use case. But the Notion API also lets you work with page content (blocks) and search the workspace.</p>
+
+  <h3>Adding Content Blocks to a Page</h3>
+
+  <pre><code>notion.blocks.children.append(
+    block_id=PAGE_ID,
+    children=[
+        {
+            "object": "block",
+            "type": "paragraph",
+            "paragraph": {
+                "rich_text": [
+                    {"type": "text", "text": {"content": "This paragraph was added by the API."}}
+                ]
+            }
+        },
+        {
+            "object": "block",
+            "type": "heading_2",
+            "heading_2": {
+                "rich_text": [
+                    {"type": "text", "text": {"content": "A New Section"}}
+                ]
+            }
+        },
+        {
+            "object": "block",
+            "type": "bulleted_list_item",
+            "bulleted_list_item": {
+                "rich_text": [
+                    {"type": "text", "text": {"content": "First bullet point"}}
+                ]
+            }
+        }
+    ]
+)</code></pre>
+
+  <h3>Searching Your Workspace</h3>
+
+  <pre><code>results = notion.search(
+    query="invoice",
+    filter={"property": "object", "value": "page"}
+)
+
+for page in results["results"]:
+    print(page["url"])</code></pre>
+
+  <h2>FAQ: Notion API</h2>
+
+  <div class="faq-item">
+    <h3>What is the Notion API?</h3>
+    <p>The Notion API is an official REST API from Notion that allows developers and automation tools to read from and write to Notion pages and databases programmatically. You can query databases, create pages, update properties, and build full integrations using HTTP requests or the official Notion SDK.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>How do I get a Notion API key?</h3>
+    <p>Go to notion.com/my-integrations, click "Create new integration", give it a name and select a workspace, then copy the "Internal Integration Token" — that is your API key. Keep it secret and never expose it in client-side code or public repositories.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Is the Notion API free?</h3>
+    <p>Yes, the Notion API is free for all Notion users including the free plan. There are rate limits (3 requests per second per integration) but no per-request cost. You only pay for Notion itself if you need team or enterprise features beyond the free plan.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Can I use the Notion API to build a website?</h3>
+    <p>Yes. Many developers use Notion as a headless CMS — they store content (blog posts, product info, team profiles) in Notion databases, then query the API at build time or request time to render it on a website. Popular combinations include Notion API + Next.js, Notion API + Astro, and Notion API + Vercel Edge Functions.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>What can I automate with the Notion API?</h3>
+    <p>You can automate almost any Notion action: log new Stripe payments to an income tracker, sync GitHub issues to a project database, create daily journal entries, push form submissions into a CRM, update task statuses when external events happen, and build Slack bots that create Notion tasks from slash commands.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>How do I query a Notion database with the API?</h3>
+    <p>Use POST /v1/databases/{database_id}/query with your integration token in the Authorization header. The database_id comes from the Notion URL. You can add a "filter" object to filter by property values and a "sorts" array to order results. The response returns a list of page objects with all their properties.</p>
+  </div>
+
+  <div class="cta-box">
+    <h3>Build Your Freelance Notion System Faster</h3>
+    <p>FreelanceOS Pro gives you a fully structured Notion workspace — CRM, invoice tracker, project manager, client hub — with consistent property naming that makes API integrations and automations work immediately. Stop building from blank pages.</p>
+    <p class="price-note">Code FLASH40 saves 40% — limited time</p>
+    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro — 40% Off →</a>
+    <p style="margin-top:16px; font-size:0.85rem; color:#9ca3af;">Instant Notion template delivery. One-time payment. No subscription.</p>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 FreelanceOS. <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/freelanceos.html">Templates</a></p>
+</footer>
+
+</body>
+</html>
