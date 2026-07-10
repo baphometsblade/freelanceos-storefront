@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Network Mapper - Free Visual Networking Tool | FreelanceOS</title>
+<meta name="description" content="Map, manage, and grow your professional freelance network. Visual contact mapping, referral tracking, relationship strength dashboard, and networking activity log. Free tool from FreelanceOS.">
+<meta property="og:title" content="Freelance Network Mapper - Free Visual Networking Tool">
+<meta property="og:description" content="Map, manage, and grow your professional freelance network with this free visual networking tool. Track contacts, referrals, relationship strength, and networking goals.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.pro/freelanceos-storefront/network-mapper.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Freelance Network Mapper - Free Visual Networking Tool">
+<meta name="twitter:description" content="Map, manage, and grow your professional freelance network with visual contact mapping, referral tracking, and relationship insights.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Network Mapper",
+  "description": "A visual networking tool that helps freelancers map, manage, and grow their professional network with contact tracking, referral management, and relationship insights.",
+  "url": "https://freelanceos.pro/freelanceos-storefront/network-mapper.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "creator": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#020617;--card:#0f172a;--border:rgba(168,85,247,0.2);--accent:linear-gradient(135deg,#a855f7,#ec4899);--accent1:#a855f7;--accent2:#ec4899;--text:#e2e8f0;--text2:#94a3b8;--radius:16px;--radius-sm:12px;--green:#22c55e;--yellow:#eab308;--orange:#f97316;--red:#ef4444;--blue:#3b82f6}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--accent1);text-decoration:none}
+a:hover{text-decoration:underline}
+button{cursor:pointer;font-family:inherit}
+input,select,textarea{font-family:inherit;font-size:0.95rem}
+.container{max-width:1280px;margin:0 auto;padding:0 20px}
+
+/* Header */
+.header{padding:32px 0 24px;text-align:center;position:relative}
+.header::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:200px;height:2px;background:var(--accent);border-radius:2px}
+.header h1{font-size:2.4rem;font-weight:800;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.header p{color:var(--text2);font-size:1.05rem}
+.tool-badge{display:inline-block;background:rgba(168,85,247,0.15);border:1px solid var(--border);padding:4px 14px;border-radius:20px;font-size:0.8rem;color:var(--accent1);margin-bottom:12px;letter-spacing:0.5px}
+
+/* Navigation Tabs */
+.nav-tabs{display:flex;gap:4px;padding:20px 0 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.tab-btn{padding:10px 18px;border:1px solid var(--border);background:var(--card);color:var(--text2);border-radius:var(--radius-sm);font-size:0.85rem;font-weight:500;white-space:nowrap;transition:all 0.3s}
+.tab-btn:hover{border-color:var(--accent1);color:var(--text)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(236,72,153,0.2));border-color:var(--accent1);color:#fff}
+
+/* Panels */
+.panel{display:none;animation:fadeIn 0.3s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px;backdrop-filter:blur(20px);transition:border-color 0.3s}
+.card:hover{border-color:rgba(168,85,247,0.4)}
+.card-title{font-size:1.15rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.card-title .icon{font-size:1.3rem}
+
+/* Forms */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:0.82rem;color:var(--text2);font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
+.form-group input,.form-group select,.form-group textarea{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);outline:none;transition:border-color 0.3s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent1)}
+.form-group textarea{resize:vertical;min-height:70px}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+
+/* Buttons */
+.btn{padding:10px 22px;border:none;border-radius:var(--radius-sm);font-weight:600;font-size:0.9rem;transition:all 0.3s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-secondary{background:rgba(168,85,247,0.15);border:1px solid var(--border);color:var(--accent1)}
+.btn-secondary:hover{background:rgba(168,85,247,0.25)}
+.btn-danger{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:var(--red)}
+.btn-danger:hover{background:rgba(239,68,68,0.25)}
+.btn-sm{padding:6px 14px;font-size:0.8rem}
+.btn-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+/* Stars */
+.stars{display:flex;gap:4px}
+.star{width:22px;height:22px;cursor:pointer;fill:rgba(168,85,247,0.2);transition:fill 0.2s}
+.star.filled{fill:var(--accent1)}
+.star:hover{fill:var(--accent2)}
+
+/* Tags */
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:500;margin:2px}
+.tag-client{background:rgba(59,130,246,0.2);color:#60a5fa}
+.tag-prospect{background:rgba(234,179,8,0.2);color:#facc15}
+.tag-referral{background:rgba(34,197,94,0.2);color:#4ade80}
+.tag-mentor{background:rgba(168,85,247,0.2);color:#c084fc}
+.tag-peer{background:rgba(236,72,153,0.2);color:#f472b6}
+.tag-vendor{background:rgba(249,115,22,0.2);color:#fb923c}
+
+/* Stat cards */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center;transition:transform 0.3s,border-color 0.3s}
+.stat-card:hover{transform:translateY(-2px);border-color:rgba(168,85,247,0.4)}
+.stat-num{font-size:2rem;font-weight:800;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:0.8rem;color:var(--text2);margin-top:4px}
+
+/* Progress bars */
+.progress-bar{height:8px;background:rgba(168,85,247,0.1);border-radius:8px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:8px;background:var(--accent);transition:width 0.5s ease}
+
+/* Table */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{text-align:left;font-size:0.78rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;padding:10px 12px;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 12px;border-bottom:1px solid rgba(168,85,247,0.08);font-size:0.9rem;vertical-align:middle}
+.data-table tr:hover td{background:rgba(168,85,247,0.04)}
+
+/* Contact list items */
+.contact-item{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;background:var(--card);transition:all 0.3s;cursor:pointer}
+.contact-item:hover{border-color:rgba(168,85,247,0.4);transform:translateX(4px)}
+.contact-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#fff;flex-shrink:0}
+.contact-info{flex:1;min-width:0}
+.contact-name{font-weight:600;font-size:0.95rem}
+.contact-meta{font-size:0.8rem;color:var(--text2)}
+.contact-actions{display:flex;gap:6px;flex-shrink:0}
+
+/* SVG Network Map */
+.network-svg{width:100%;height:500px;background:rgba(15,23,42,0.5);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+
+/* Alerts */
+.alert{padding:14px 18px;border-radius:var(--radius-sm);margin-bottom:12px;font-size:0.9rem;display:flex;align-items:center;gap:10px}
+.alert-warning{background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);color:#facc15}
+.alert-danger{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#f87171}
+.alert-info{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:#60a5fa}
+
+/* CTA Banner */
+.cta-banner{background:linear-gradient(135deg,rgba(168,85,247,0.15),rgba(236,72,153,0.15));border:1px solid rgba(168,85,247,0.3);border-radius:var(--radius);padding:28px;text-align:center;margin:32px 0}
+.cta-banner h3{font-size:1.3rem;margin-bottom:8px;color:#fff}
+.cta-banner p{color:var(--text2);margin-bottom:16px;font-size:0.95rem}
+.cta-banner .btn-cta{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:var(--radius-sm);font-weight:700;font-size:1rem;text-decoration:none;transition:all 0.3s}
+.cta-banner .btn-cta:hover{opacity:0.9;transform:translateY(-2px);text-decoration:none}
+.flash-code{font-weight:800;color:var(--accent2);font-size:1.1rem}
+
+/* Footer */
+.footer{padding:28px 0;text-align:center;border-top:1px solid var(--border);margin-top:40px}
+.footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:10px}
+.footer-links a{color:var(--text2);font-size:0.85rem;transition:color 0.3s}
+.footer-links a:hover{color:var(--accent1)}
+.footer p{color:var(--text2);font-size:0.8rem}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(2,6,23,0.85);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;animation:fadeIn 0.3s}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-header h3{font-size:1.15rem;font-weight:700}
+.modal-close{background:none;border:none;color:var(--text2);font-size:1.5rem;padding:4px 8px;transition:color 0.3s}
+.modal-close:hover{color:var(--text)}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text2)}
+.empty-state .icon{font-size:3rem;margin-bottom:12px;opacity:0.5}
+.empty-state p{margin-bottom:16px}
+
+/* Leaderboard */
+.leaderboard-item{display:flex;align-items:center;gap:14px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px}
+.leaderboard-rank{font-size:1.4rem;font-weight:800;width:36px;text-align:center;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.leaderboard-info{flex:1}
+.leaderboard-value{font-weight:700;color:var(--green);font-size:1.1rem}
+
+/* Filter bar */
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.filter-bar input,.filter-bar select{background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;color:var(--text);outline:none;font-size:0.85rem;transition:border-color 0.3s}
+.filter-bar input:focus,.filter-bar select:focus{border-color:var(--accent1)}
+
+/* Intro template */
+.template-box{background:rgba(15,23,42,0.6);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px;font-size:0.92rem;line-height:1.7;white-space:pre-wrap;color:var(--text)}
+
+/* Responsive */
+@media(max-width:768px){
+  .header h1{font-size:1.8rem}
+  .form-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .network-svg{height:350px}
+  .nav-tabs{padding:12px 0}
+  .filter-bar{flex-direction:column}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr}
+  .contact-item{flex-direction:column;align-items:flex-start}
+  .contact-actions{width:100%;justify-content:flex-end}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <header class="header">
+    <div class="tool-badge">FREE TOOL #88</div>
+    <h1>Freelance Network Mapper</h1>
+    <p>Map, manage, and grow your professional network with visual insights</p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-tabs" id="navTabs">
+    <button class="tab-btn active" data-tab="network-map">Network Map</button>
+    <button class="tab-btn" data-tab="contacts">Contacts</button>
+    <button class="tab-btn" data-tab="dashboard">Dashboard</button>
+    <button class="tab-btn" data-tab="referrals">Referrals</button>
+    <button class="tab-btn" data-tab="activity">Activity Log</button>
+    <button class="tab-btn" data-tab="goals">Goals</button>
+    <button class="tab-btn" data-tab="intros">Intro Generator</button>
+    <button class="tab-btn" data-tab="stats">Stats</button>
+    <button class="tab-btn" data-tab="suggestions">Smart Suggestions</button>
+    <button class="tab-btn" data-tab="export">Export</button>
+  </nav>
+
+  <!-- Panel: Network Map -->
+  <div class="panel active" id="panel-network-map">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#127760;</span> Visual Network Map</div>
+      <div class="filter-bar">
+        <select id="mapFilter" onchange="renderNetworkMap()">
+          <option value="all">All Categories</option>
+          <option value="Client">Clients</option>
+          <option value="Prospect">Prospects</option>
+          <option value="Referral Partner">Referral Partners</option>
+          <option value="Mentor">Mentors</option>
+          <option value="Peer">Peers</option>
+          <option value="Vendor">Vendors</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" onclick="renderNetworkMap()">Refresh</button>
+      </div>
+      <svg id="networkSvg" class="network-svg" viewBox="0 0 900 500"></svg>
+      <p style="color:var(--text2);font-size:0.8rem;margin-top:10px">Node size reflects relationship strength. Line thickness shows connection strength. Drag nodes to rearrange. Click a node to view contact details.</p>
+    </div>
+  </div>
+
+  <!-- Panel: Contacts -->
+  <div class="panel" id="panel-contacts">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#128101;</span> Contact Manager</div>
+      <div class="filter-bar">
+        <input type="text" id="contactSearch" placeholder="Search contacts..." oninput="renderContactList()" style="flex:1;min-width:200px">
+        <select id="contactFilter" onchange="renderContactList()">
+          <option value="all">All Categories</option>
+          <option value="Client">Clients</option>
+          <option value="Prospect">Prospects</option>
+          <option value="Referral Partner">Referral Partners</option>
+          <option value="Mentor">Mentors</option>
+          <option value="Peer">Peers</option>
+          <option value="Vendor">Vendors</option>
+        </select>
+        <select id="contactSort" onchange="renderContactList()">
+          <option value="name">Sort by Name</option>
+          <option value="strength">Sort by Strength</option>
+          <option value="recent">Sort by Last Contact</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="openAddContact()">+ Add Contact</button>
+      </div>
+      <div id="contactList"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Dashboard -->
+  <div class="panel" id="panel-dashboard">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#128200;</span> Relationship Strength Dashboard</div>
+      <div class="stats-grid" id="strengthStats"></div>
+      <div id="coldAlerts" style="margin-top:16px"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Referrals -->
+  <div class="panel" id="panel-referrals">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#128176;</span> Referral Tracker</div>
+      <div class="btn-group" style="margin-top:0;margin-bottom:16px">
+        <button class="btn btn-primary btn-sm" onclick="openAddReferral()">+ Log Referral</button>
+      </div>
+      <div class="stats-grid" id="referralStats"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">&#127942;</span> Top Referral Partners</div>
+      <div id="referralLeaderboard"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Referral History</div>
+      <div style="overflow-x:auto">
+        <table class="data-table" id="referralTable">
+          <thead><tr><th>Date</th><th>From</th><th>Lead</th><th>Value</th><th>Status</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel: Activity Log -->
+  <div class="panel" id="panel-activity">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#128221;</span> Networking Activity Log</div>
+      <div class="btn-group" style="margin-top:0;margin-bottom:16px">
+        <button class="btn btn-primary btn-sm" onclick="openAddActivity()">+ Log Activity</button>
+      </div>
+      <div class="filter-bar">
+        <select id="activityFilter" onchange="renderActivityLog()">
+          <option value="all">All Types</option>
+          <option value="Coffee chat">Coffee Chat</option>
+          <option value="Email">Email</option>
+          <option value="Call">Call</option>
+          <option value="Event">Event</option>
+          <option value="Social media">Social Media</option>
+          <option value="Collaboration">Collaboration</option>
+        </select>
+      </div>
+      <div id="activityList"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Goals -->
+  <div class="panel" id="panel-goals">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#127919;</span> Monthly Networking Goals</div>
+      <p style="color:var(--text2);font-size:0.85rem;margin-bottom:16px">Set your targets for the current month and track progress automatically.</p>
+      <div id="goalsPanel"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Intro Generator -->
+  <div class="panel" id="panel-intros">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#129309;</span> Introduction Request Generator</div>
+      <p style="color:var(--text2);font-size:0.85rem;margin-bottom:16px">Generate a professional email template to request an introduction from a mutual connection.</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="introYourName" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Mutual Connection</label>
+          <select id="introMutual"><option value="">Select contact...</option></select>
+        </div>
+        <div class="form-group">
+          <label>Person You Want to Meet</label>
+          <input type="text" id="introTarget" placeholder="Name of the person">
+        </div>
+        <div class="form-group">
+          <label>Their Company / Role</label>
+          <input type="text" id="introTargetRole" placeholder="e.g. VP of Marketing at Acme">
+        </div>
+        <div class="form-group full">
+          <label>Why You Want to Connect</label>
+          <textarea id="introReason" placeholder="e.g. I'd love to discuss potential collaboration on their upcoming rebrand project..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Value You Can Offer Them</label>
+          <textarea id="introValue" placeholder="e.g. I have 5 years of experience in brand strategy and could share insights from my work with similar companies..."></textarea>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="generateIntro()">Generate Introduction Email</button>
+      </div>
+      <div id="introOutput" style="margin-top:20px"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Stats -->
+  <div class="panel" id="panel-stats">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#128202;</span> Network Statistics</div>
+      <div class="stats-grid" id="overviewStats"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="card">
+        <div class="card-title">Contacts by Category</div>
+        <svg id="categoryPie" viewBox="0 0 300 300" style="width:100%;max-height:280px"></svg>
+      </div>
+      <div class="card">
+        <div class="card-title">Strength Distribution</div>
+        <svg id="strengthBar" viewBox="0 0 300 220" style="width:100%;max-height:240px"></svg>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Monthly Activity Trends</div>
+      <svg id="activityTrend" viewBox="0 0 800 250" style="width:100%;max-height:260px"></svg>
+    </div>
+    <div class="card">
+      <div class="card-title">Referral Revenue Attribution</div>
+      <div id="revenueAttribution"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Suggestions -->
+  <div class="panel" id="panel-suggestions">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#128161;</span> Smart Suggestions</div>
+      <p style="color:var(--text2);font-size:0.85rem;margin-bottom:16px">AI-powered recommendations to strengthen your network.</p>
+      <div id="suggestionsList"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Export -->
+  <div class="panel" id="panel-export">
+    <div class="card">
+      <div class="card-title"><span class="icon">&#128229;</span> Export & Backup</div>
+      <p style="color:var(--text2);font-size:0.85rem;margin-bottom:20px">Export your network data in various formats.</p>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="exportCSV()">Export Contacts CSV</button>
+        <button class="btn btn-secondary" onclick="exportReport()">Print Network Report</button>
+        <button class="btn btn-secondary" onclick="exportJSON()">JSON Backup</button>
+        <button class="btn btn-secondary" onclick="importJSON()">Import JSON</button>
+      </div>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)">
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">&#9888;&#65039;</span> Data Management</div>
+      <p style="color:var(--text2);font-size:0.85rem;margin-bottom:16px">All data is stored locally in your browser. Export a backup regularly.</p>
+      <button class="btn btn-danger" onclick="if(confirm('This will delete ALL your network data permanently. Are you sure?')){localStorage.removeItem('fnm_contacts');localStorage.removeItem('fnm_referrals');localStorage.removeItem('fnm_activities');localStorage.removeItem('fnm_goals');location.reload()}">Reset All Data</button>
+    </div>
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <h3>Get the Complete FreelanceOS Pro System</h3>
+    <p>CRM, invoicing, contracts, project management, and 50+ premium tools in one Notion workspace.<br>
+    <span class="flash-code">40% OFF</span> with code <span class="flash-code">FLASH40</span></p>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="btn-cta">Get FreelanceOS Pro - 40% OFF</a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/freelanceos-storefront/free-templates.html">Free Templates</a>
+      <a href="/freelanceos-storefront/">FreelanceOS Storefront</a>
+    </div>
+    <p>Freelance Network Mapper &mdash; Free Tool #88 from FreelanceOS</p>
+  </footer>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="contactModalTitle">Add Contact</h3>
+      <button class="modal-close" onclick="closeModal('contactModal')">&times;</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Name *</label><input type="text" id="cName" placeholder="Full name"></div>
+      <div class="form-group"><label>Company</label><input type="text" id="cCompany" placeholder="Company name"></div>
+      <div class="form-group"><label>Role / Title</label><input type="text" id="cRole" placeholder="e.g. Marketing Director"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="cEmail" placeholder="email@example.com"></div>
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="cCategory">
+          <option value="Client">Client</option>
+          <option value="Prospect">Prospect</option>
+          <option value="Referral Partner">Referral Partner</option>
+          <option value="Mentor">Mentor</option>
+          <option value="Peer">Peer</option>
+          <option value="Vendor">Vendor</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Relationship Strength</label>
+        <div class="stars" id="cStars"></div>
+      </div>
+      <div class="form-group"><label>Last Contact Date</label><input type="date" id="cLastContact"></div>
+      <div class="form-group"><label>Referral Source</label><input type="text" id="cReferralSource" placeholder="Who referred them?"></div>
+      <div class="form-group full"><label>Tags (comma-separated)</label><input type="text" id="cTags" placeholder="e.g. design, agency, NYC"></div>
+      <div class="form-group full"><label>Notes</label><textarea id="cNotes" placeholder="Notes about this contact..."></textarea></div>
+    </div>
+    <input type="hidden" id="cEditId">
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="saveContact()">Save Contact</button>
+      <button class="btn btn-secondary" onclick="closeModal('contactModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Referral Modal -->
+<div class="modal-overlay" id="referralModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Log Referral</h3>
+      <button class="modal-close" onclick="closeModal('referralModal')">&times;</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Referred By</label><select id="rFrom"><option value="">Select contact...</option></select></div>
+      <div class="form-group"><label>Lead / Prospect Name</label><input type="text" id="rLead" placeholder="Who was referred"></div>
+      <div class="form-group"><label>Referral Value ($)</label><input type="number" id="rValue" placeholder="0" min="0" step="100"></div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="rStatus">
+          <option value="Pending">Pending</option>
+          <option value="Converted">Converted</option>
+          <option value="Lost">Lost</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Date</label><input type="date" id="rDate"></div>
+      <div class="form-group full"><label>Notes</label><textarea id="rNotes" placeholder="Details..."></textarea></div>
+    </div>
+    <input type="hidden" id="rEditId">
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="saveReferral()">Save Referral</button>
+      <button class="btn btn-secondary" onclick="closeModal('referralModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Activity Modal -->
+<div class="modal-overlay" id="activityModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Log Activity</h3>
+      <button class="modal-close" onclick="closeModal('activityModal')">&times;</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Contact</label>
+        <select id="aContact"><option value="">Select contact...</option></select>
+      </div>
+      <div class="form-group">
+        <label>Activity Type</label>
+        <select id="aType">
+          <option value="Coffee chat">Coffee Chat</option>
+          <option value="Email">Email</option>
+          <option value="Call">Call</option>
+          <option value="Event">Event</option>
+          <option value="Social media">Social Media</option>
+          <option value="Collaboration">Collaboration</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Date</label><input type="date" id="aDate"></div>
+      <div class="form-group"><label>Follow-up Date</label><input type="date" id="aFollowUp"></div>
+      <div class="form-group full"><label>Notes</label><textarea id="aNotes" placeholder="What did you discuss?"></textarea></div>
+    </div>
+    <input type="hidden" id="aEditId">
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="saveActivity()">Save Activity</button>
+      <button class="btn btn-secondary" onclick="closeModal('activityModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Detail Modal -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="detailTitle">Contact Details</h3>
+      <button class="modal-close" onclick="closeModal('detailModal')">&times;</button>
+    </div>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<script>
+/* ===== DATA LAYER ===== */
+const LS_CONTACTS = 'fnm_contacts';
+const LS_REFERRALS = 'fnm_referrals';
+const LS_ACTIVITIES = 'fnm_activities';
+const LS_GOALS = 'fnm_goals';
+
+function loadData(key) { try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; } }
+function saveData(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+function loadGoals() { try { return JSON.parse(localStorage.getItem(LS_GOALS)) || {}; } catch { return {}; } }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
+function today() { return new Date().toISOString().split('T')[0]; }
+function daysSince(dateStr) { if (!dateStr) return 999; return Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000); }
+
+const CATEGORY_COLORS = {
+  'Client': '#3b82f6',
+  'Prospect': '#eab308',
+  'Referral Partner': '#22c55e',
+  'Mentor': '#a855f7',
+  'Peer': '#ec4899',
+  'Vendor': '#f97316'
+};
+
+function catClass(cat) {
+  const map = {'Client':'client','Prospect':'prospect','Referral Partner':'referral','Mentor':'mentor','Peer':'peer','Vendor':'vendor'};
+  return map[cat] || 'client';
+}
+
+/* ===== TABS ===== */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    refreshCurrentPanel(btn.dataset.tab);
+  });
+});
+
+function refreshCurrentPanel(tab) {
+  switch(tab) {
+    case 'network-map': renderNetworkMap(); break;
+    case 'contacts': renderContactList(); break;
+    case 'dashboard': renderDashboard(); break;
+    case 'referrals': renderReferrals(); break;
+    case 'activity': renderActivityLog(); break;
+    case 'goals': renderGoals(); break;
+    case 'intros': populateIntroDropdowns(); break;
+    case 'stats': renderStats(); break;
+    case 'suggestions': renderSuggestions(); break;
+  }
+}
+
+/* ===== MODALS ===== */
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+/* ===== STARS ===== */
+let currentStars = 3;
+function renderStars(containerId, value) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = '';
+  for (let i = 1; i <= 5; i++) {
+    const s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    s.setAttribute('viewBox','0 0 24 24');
+    s.classList.add('star');
+    if (i <= value) s.classList.add('filled');
+    s.innerHTML = '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14 2 9.27l6.91-1.01L12 2z"/>';
+    s.onclick = () => { currentStars = i; renderStars(containerId, i); };
+    c.appendChild(s);
+  }
+}
+
+function starDisplay(val) {
+  let s = '';
+  for (let i = 0; i < 5; i++) s += i < val ? '★' : '☆';
+  return s;
+}
+
+/* ===== CONTACT CRUD ===== */
+function openAddContact() {
+  document.getElementById('contactModalTitle').textContent = 'Add Contact';
+  document.getElementById('cName').value = '';
+  document.getElementById('cCompany').value = '';
+  document.getElementById('cRole').value = '';
+  document.getElementById('cEmail').value = '';
+  document.getElementById('cCategory').value = 'Client';
+  document.getElementById('cLastContact').value = today();
+  document.getElementById('cReferralSource').value = '';
+  document.getElementById('cTags').value = '';
+  document.getElementById('cNotes').value = '';
+  document.getElementById('cEditId').value = '';
+  currentStars = 3;
+  renderStars('cStars', 3);
+  openModal('contactModal');
+}
+
+function editContact(id) {
+  const contacts = loadData(LS_CONTACTS);
+  const c = contacts.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('contactModalTitle').textContent = 'Edit Contact';
+  document.getElementById('cName').value = c.name || '';
+  document.getElementById('cCompany').value = c.company || '';
+  document.getElementById('cRole').value = c.role || '';
+  document.getElementById('cEmail').value = c.email || '';
+  document.getElementById('cCategory').value = c.category || 'Client';
+  document.getElementById('cLastContact').value = c.lastContact || '';
+  document.getElementById('cReferralSource').value = c.referralSource || '';
+  document.getElementById('cTags').value = (c.tags || []).join(', ');
+  document.getElementById('cNotes').value = c.notes || '';
+  document.getElementById('cEditId').value = id;
+  currentStars = c.strength || 3;
+  renderStars('cStars', currentStars);
+  openModal('contactModal');
+}
+
+function saveContact() {
+  const name = document.getElementById('cName').value.trim();
+  if (!name) { alert('Name is required'); return; }
+  const contacts = loadData(LS_CONTACTS);
+  const editId = document.getElementById('cEditId').value;
+  const data = {
+    id: editId || uid(),
+    name: name,
+    company: document.getElementById('cCompany').value.trim(),
+    role: document.getElementById('cRole').value.trim(),
+    email: document.getElementById('cEmail').value.trim(),
+    category: document.getElementById('cCategory').value,
+    strength: currentStars,
+    lastContact: document.getElementById('cLastContact').value,
+    referralSource: document.getElementById('cReferralSource').value.trim(),
+    tags: document.getElementById('cTags').value.split(',').map(t => t.trim()).filter(Boolean),
+    notes: document.getElementById('cNotes').value.trim(),
+    created: editId ? (contacts.find(x => x.id === editId) || {}).created || today() : today()
+  };
+  if (editId) {
+    const idx = contacts.findIndex(x => x.id === editId);
+    if (idx >= 0) contacts[idx] = data;
+  } else {
+    contacts.push(data);
+  }
+  saveData(LS_CONTACTS, contacts);
+  closeModal('contactModal');
+  renderContactList();
+  renderNetworkMap();
+}
+
+function deleteContact(id) {
+  if (!confirm('Delete this contact?')) return;
+  let contacts = loadData(LS_CONTACTS);
+  contacts = contacts.filter(x => x.id !== id);
+  saveData(LS_CONTACTS, contacts);
+  renderContactList();
+  renderNetworkMap();
+}
+
+function showContactDetail(id) {
+  const contacts = loadData(LS_CONTACTS);
+  const c = contacts.find(x => x.id === id);
+  if (!c) return;
+  const activities = loadData(LS_ACTIVITIES).filter(a => a.contactId === id).sort((a, b) => b.date > a.date ? 1 : -1);
+  const referrals = loadData(LS_REFERRALS).filter(r => r.fromId === id);
+  const days = daysSince(c.lastContact);
+  let statusLabel = 'Active', statusColor = 'var(--green)';
+  if (days > 90) { statusLabel = 'Dormant'; statusColor = 'var(--red)'; }
+  else if (days > 60) { statusLabel = 'Weak'; statusColor = 'var(--orange)'; }
+  else if (days > 30) { statusLabel = 'Moderate'; statusColor = 'var(--yellow)'; }
+
+  document.getElementById('detailTitle').textContent = c.name;
+  let html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">';
+  html += '<div><span style="color:var(--text2);font-size:0.8rem">Company</span><br>' + (c.company || '-') + '</div>';
+  html += '<div><span style="color:var(--text2);font-size:0.8rem">Role</span><br>' + (c.role || '-') + '</div>';
+  html += '<div><span style="color:var(--text2);font-size:0.8rem">Email</span><br>' + (c.email || '-') + '</div>';
+  html += '<div><span style="color:var(--text2);font-size:0.8rem">Category</span><br><span class="tag tag-' + catClass(c.category) + '">' + c.category + '</span></div>';
+  html += '<div><span style="color:var(--text2);font-size:0.8rem">Strength</span><br><span style="color:var(--accent1)">' + starDisplay(c.strength) + '</span></div>';
+  html += '<div><span style="color:var(--text2);font-size:0.8rem">Status</span><br><span style="color:' + statusColor + '">' + statusLabel + ' (' + days + ' days)</span></div>';
+  html += '<div><span style="color:var(--text2);font-size:0.8rem">Referral Source</span><br>' + (c.referralSource || '-') + '</div>';
+  html += '<div><span style="color:var(--text2);font-size:0.8rem">Tags</span><br>' + (c.tags || []).map(t => '<span class="tag tag-mentor">' + t + '</span>').join(' ') + '</div>';
+  html += '</div>';
+  if (c.notes) html += '<div style="margin-bottom:16px"><span style="color:var(--text2);font-size:0.8rem">Notes</span><br><span style="font-size:0.9rem">' + c.notes + '</span></div>';
+
+  if (activities.length) {
+    html += '<div style="margin-bottom:12px"><strong>Recent Activity</strong></div>';
+    activities.slice(0, 5).forEach(a => {
+      html += '<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border)">' + a.type + ' &mdash; ' + a.date + (a.notes ? ' &mdash; ' + a.notes : '') + '</div>';
+    });
+  }
+  if (referrals.length) {
+    html += '<div style="margin-top:12px;margin-bottom:8px"><strong>Referrals Given</strong></div>';
+    referrals.forEach(r => {
+      html += '<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border)">' + r.lead + ' &mdash; $' + (r.value || 0).toLocaleString() + ' &mdash; ' + r.status + '</div>';
+    });
+  }
+  html += '<div class="btn-group"><button class="btn btn-secondary btn-sm" onclick="closeModal(\'detailModal\');editContact(\'' + id + '\')">Edit</button>';
+  html += '<button class="btn btn-danger btn-sm" onclick="closeModal(\'detailModal\');deleteContact(\'' + id + '\')">Delete</button></div>';
+  document.getElementById('detailContent').innerHTML = html;
+  openModal('detailModal');
+}
+
+/* ===== CONTACT LIST ===== */
+function renderContactList() {
+  const contacts = loadData(LS_CONTACTS);
+  const search = (document.getElementById('contactSearch').value || '').toLowerCase();
+  const filter = document.getElementById('contactFilter').value;
+  const sort = document.getElementById('contactSort').value;
+  let list = contacts.filter(c => {
+    if (filter !== 'all' && c.category !== filter) return false;
+    if (search && !c.name.toLowerCase().includes(search) && !(c.company || '').toLowerCase().includes(search) && !(c.email || '').toLowerCase().includes(search) && !(c.tags || []).some(t => t.toLowerCase().includes(search))) return false;
+    return true;
+  });
+  if (sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
+  else if (sort === 'strength') list.sort((a, b) => b.strength - a.strength);
+  else if (sort === 'recent') list.sort((a, b) => (b.lastContact || '').localeCompare(a.lastContact || ''));
+
+  const container = document.getElementById('contactList');
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><div class="icon">&#128101;</div><p>No contacts yet. Add your first contact to start mapping your network.</p><button class="btn btn-primary" onclick="openAddContact()">+ Add Contact</button></div>';
+    return;
+  }
+  container.innerHTML = list.map(c => {
+    const color = CATEGORY_COLORS[c.category] || '#a855f7';
+    const initials = c.name.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2);
+    const days = daysSince(c.lastContact);
+    let badge = '';
+    if (days > 90) badge = '<span style="color:var(--red);font-size:0.75rem;margin-left:8px">Dormant</span>';
+    else if (days > 60) badge = '<span style="color:var(--orange);font-size:0.75rem;margin-left:8px">Going cold</span>';
+    return '<div class="contact-item" onclick="showContactDetail(\'' + c.id + '\')">' +
+      '<div class="contact-avatar" style="background:' + color + '">' + initials + '</div>' +
+      '<div class="contact-info"><div class="contact-name">' + c.name + badge + '</div>' +
+      '<div class="contact-meta">' + (c.company ? c.company + ' &bull; ' : '') + c.category + ' &bull; ' + starDisplay(c.strength) + '</div></div>' +
+      '<div class="contact-actions">' +
+      '<button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();editContact(\'' + c.id + '\')" title="Edit">&#9998;</button>' +
+      '<button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteContact(\'' + c.id + '\')" title="Delete">&#128465;</button>' +
+      '</div></div>';
+  }).join('');
+}
+
+/* ===== NETWORK MAP ===== */
+let mapNodes = [];
+let dragNode = null;
+let dragOffset = { x: 0, y: 0 };
+
+function renderNetworkMap() {
+  const svg = document.getElementById('networkSvg');
+  const contacts = loadData(LS_CONTACTS);
+  const filter = document.getElementById('mapFilter').value;
+  let filtered = filter === 'all' ? contacts : contacts.filter(c => c.category === filter);
+
+  if (!filtered.length) {
+    svg.innerHTML = '<text x="450" y="250" text-anchor="middle" fill="#94a3b8" font-size="16">Add contacts to see your network map</text>';
+    return;
+  }
+
+  const w = 900, h = 500;
+  const cx = w / 2, cy = h / 2;
+
+  // Group by category for layout
+  const groups = {};
+  filtered.forEach(c => {
+    if (!groups[c.category]) groups[c.category] = [];
+    groups[c.category].push(c);
+  });
+
+  // Position nodes in clustered groups
+  const catKeys = Object.keys(groups);
+  mapNodes = [];
+  catKeys.forEach((cat, gi) => {
+    const angle = (gi / catKeys.length) * Math.PI * 2 - Math.PI / 2;
+    const groupCx = cx + Math.cos(angle) * 160;
+    const groupCy = cy + Math.sin(angle) * 140;
+    groups[cat].forEach((c, ci) => {
+      const a2 = (ci / groups[cat].length) * Math.PI * 2;
+      const spread = Math.min(80, 30 + groups[cat].length * 8);
+      // Check if existing node pos
+      const existing = mapNodes.find(n => n.id === c.id);
+      mapNodes.push({
+        id: c.id,
+        x: existing ? existing.x : groupCx + Math.cos(a2) * spread + (Math.random() - 0.5) * 20,
+        y: existing ? existing.y : groupCy + Math.sin(a2) * spread + (Math.random() - 0.5) * 20,
+        r: 10 + (c.strength || 1) * 5,
+        color: CATEGORY_COLORS[c.category] || '#a855f7',
+        name: c.name,
+        category: c.category,
+        strength: c.strength || 1
+      });
+    });
+  });
+
+  // Build SVG
+  let svgContent = '<defs>';
+  // Glow filter
+  svgContent += '<filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  svgContent += '<radialGradient id="bgGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(168,85,247,0.06)"/><stop offset="100%" stop-color="rgba(2,6,23,0)"/></radialGradient>';
+  svgContent += '</defs>';
+  svgContent += '<rect width="100%" height="100%" fill="url(#bgGrad)"/>';
+
+  // Center node (You)
+  svgContent += '<circle cx="' + cx + '" cy="' + cy + '" r="24" fill="rgba(168,85,247,0.3)" stroke="#a855f7" stroke-width="2" filter="url(#glow)"/>';
+  svgContent += '<text x="' + cx + '" y="' + (cy + 5) + '" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">YOU</text>';
+
+  // Connection lines from center to each node
+  mapNodes.forEach(n => {
+    const opacity = 0.1 + (n.strength / 5) * 0.3;
+    const width = 0.5 + (n.strength / 5) * 2;
+    svgContent += '<line x1="' + cx + '" y1="' + cy + '" x2="' + n.x + '" y2="' + n.y + '" stroke="' + n.color + '" stroke-width="' + width + '" stroke-opacity="' + opacity + '"/>';
+  });
+
+  // Inter-contact connections (same category = weak line)
+  for (let i = 0; i < mapNodes.length; i++) {
+    for (let j = i + 1; j < mapNodes.length; j++) {
+      if (mapNodes[i].category === mapNodes[j].category) {
+        const dist = Math.hypot(mapNodes[i].x - mapNodes[j].x, mapNodes[i].y - mapNodes[j].y);
+        if (dist < 120) {
+          svgContent += '<line x1="' + mapNodes[i].x + '" y1="' + mapNodes[i].y + '" x2="' + mapNodes[j].x + '" y2="' + mapNodes[j].y + '" stroke="' + mapNodes[i].color + '" stroke-width="0.5" stroke-opacity="0.15"/>';
+        }
+      }
+    }
+  }
+
+  // Category labels
+  catKeys.forEach((cat, gi) => {
+    const angle = (gi / catKeys.length) * Math.PI * 2 - Math.PI / 2;
+    const lx = cx + Math.cos(angle) * 220;
+    const ly = cy + Math.sin(angle) * 190;
+    svgContent += '<text x="' + lx + '" y="' + ly + '" text-anchor="middle" fill="' + (CATEGORY_COLORS[cat] || '#94a3b8') + '" font-size="10" font-weight="600" opacity="0.7">' + cat.toUpperCase() + 'S</text>';
+  });
+
+  // Nodes
+  mapNodes.forEach(n => {
+    svgContent += '<g class="map-node" data-id="' + n.id + '" style="cursor:pointer">';
+    svgContent += '<circle cx="' + n.x + '" cy="' + n.y + '" r="' + n.r + '" fill="' + n.color + '" fill-opacity="0.3" stroke="' + n.color + '" stroke-width="1.5" filter="url(#glow)"/>';
+    svgContent += '<circle cx="' + n.x + '" cy="' + n.y + '" r="' + (n.r * 0.6) + '" fill="' + n.color + '" fill-opacity="0.6"/>';
+    const initials = n.name.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2);
+    svgContent += '<text x="' + n.x + '" y="' + (n.y + 3) + '" text-anchor="middle" fill="#fff" font-size="' + Math.max(8, n.r * 0.5) + '" font-weight="600">' + initials + '</text>';
+    // Name label below
+    const labelY = n.y + n.r + 12;
+    svgContent += '<text x="' + n.x + '" y="' + labelY + '" text-anchor="middle" fill="' + n.color + '" font-size="9" opacity="0.8">' + (n.name.length > 14 ? n.name.substring(0, 12) + '..' : n.name) + '</text>';
+    svgContent += '</g>';
+  });
+
+  svg.innerHTML = svgContent;
+
+  // Click handlers
+  svg.querySelectorAll('.map-node').forEach(g => {
+    g.addEventListener('click', () => showContactDetail(g.dataset.id));
+  });
+
+  // Drag support
+  let dragging = null, sx, sy;
+  svg.addEventListener('mousedown', e => {
+    const g = e.target.closest('.map-node');
+    if (!g) return;
+    dragging = g.dataset.id;
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX; pt.y = e.clientY;
+    const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const node = mapNodes.find(n => n.id === dragging);
+    sx = svgP.x - node.x;
+    sy = svgP.y - node.y;
+    e.preventDefault();
+  });
+  svg.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX; pt.y = e.clientY;
+    const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const node = mapNodes.find(n => n.id === dragging);
+    node.x = svgP.x - sx;
+    node.y = svgP.y - sy;
+    renderNetworkMap();
+  });
+  svg.addEventListener('mouseup', () => { dragging = null; });
+  svg.addEventListener('mouseleave', () => { dragging = null; });
+}
+
+/* ===== DASHBOARD ===== */
+function renderDashboard() {
+  const contacts = loadData(LS_CONTACTS);
+  const strong = contacts.filter(c => c.strength >= 4);
+  const moderate = contacts.filter(c => c.strength === 3);
+  const weak = contacts.filter(c => c.strength <= 2 && c.strength >= 1);
+  const dormant = contacts.filter(c => daysSince(c.lastContact) > 90);
+  const goingCold30 = contacts.filter(c => daysSince(c.lastContact) > 30 && daysSince(c.lastContact) <= 60);
+  const goingCold60 = contacts.filter(c => daysSince(c.lastContact) > 60 && daysSince(c.lastContact) <= 90);
+
+  document.getElementById('strengthStats').innerHTML =
+    '<div class="stat-card"><div class="stat-num" style="-webkit-text-fill-color:var(--green)">' + strong.length + '</div><div class="stat-label">Strong (4-5 stars)</div></div>' +
+    '<div class="stat-card"><div class="stat-num" style="-webkit-text-fill-color:var(--yellow)">' + moderate.length + '</div><div class="stat-label">Moderate (3 stars)</div></div>' +
+    '<div class="stat-card"><div class="stat-num" style="-webkit-text-fill-color:var(--orange)">' + weak.length + '</div><div class="stat-label">Weak (1-2 stars)</div></div>' +
+    '<div class="stat-card"><div class="stat-num" style="-webkit-text-fill-color:var(--red)">' + dormant.length + '</div><div class="stat-label">Dormant (90+ days)</div></div>';
+
+  let alerts = '';
+  if (dormant.length > 0) {
+    alerts += '<div class="alert alert-danger">&#9888; <strong>' + dormant.length + ' dormant contact' + (dormant.length > 1 ? 's' : '') + '</strong> &mdash; no contact in 90+ days: ' + dormant.slice(0, 5).map(c => c.name).join(', ') + (dormant.length > 5 ? '...' : '') + '</div>';
+  }
+  if (goingCold60.length > 0) {
+    alerts += '<div class="alert alert-warning">&#128293; <strong>' + goingCold60.length + ' contact' + (goingCold60.length > 1 ? 's' : '') + ' going cold</strong> &mdash; 60-90 days since last contact: ' + goingCold60.slice(0, 5).map(c => c.name).join(', ') + '</div>';
+  }
+  if (goingCold30.length > 0) {
+    alerts += '<div class="alert alert-info">&#128172; <strong>' + goingCold30.length + ' contact' + (goingCold30.length > 1 ? 's' : '') + ' need attention</strong> &mdash; 30-60 days since last contact: ' + goingCold30.slice(0, 5).map(c => c.name).join(', ') + '</div>';
+  }
+  if (!alerts && contacts.length === 0) {
+    alerts = '<div class="alert alert-info">Add contacts to see your relationship health dashboard.</div>';
+  } else if (!alerts) {
+    alerts = '<div class="alert alert-info" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:var(--green)">&#9989; All relationships are healthy! Great networking work.</div>';
+  }
+  document.getElementById('coldAlerts').innerHTML = alerts;
+}
+
+/* ===== REFERRALS ===== */
+function populateContactDropdown(selectId) {
+  const contacts = loadData(LS_CONTACTS);
+  const sel = document.getElementById(selectId);
+  const curVal = sel.value;
+  sel.innerHTML = '<option value="">Select contact...</option>';
+  contacts.sort((a, b) => a.name.localeCompare(b.name)).forEach(c => {
+    sel.innerHTML += '<option value="' + c.id + '">' + c.name + (c.company ? ' (' + c.company + ')' : '') + '</option>';
+  });
+  if (curVal) sel.value = curVal;
+}
+
+function openAddReferral() {
+  populateContactDropdown('rFrom');
+  document.getElementById('rLead').value = '';
+  document.getElementById('rValue').value = '';
+  document.getElementById('rStatus').value = 'Pending';
+  document.getElementById('rDate').value = today();
+  document.getElementById('rNotes').value = '';
+  document.getElementById('rEditId').value = '';
+  openModal('referralModal');
+}
+
+function saveReferral() {
+  const lead = document.getElementById('rLead').value.trim();
+  if (!lead) { alert('Lead name is required'); return; }
+  const referrals = loadData(LS_REFERRALS);
+  const editId = document.getElementById('rEditId').value;
+  const data = {
+    id: editId || uid(),
+    fromId: document.getElementById('rFrom').value,
+    lead: lead,
+    value: parseFloat(document.getElementById('rValue').value) || 0,
+    status: document.getElementById('rStatus').value,
+    date: document.getElementById('rDate').value || today(),
+    notes: document.getElementById('rNotes').value.trim()
+  };
+  if (editId) {
+    const idx = referrals.findIndex(x => x.id === editId);
+    if (idx >= 0) referrals[idx] = data;
+  } else {
+    referrals.push(data);
+  }
+  saveData(LS_REFERRALS, referrals);
+  closeModal('referralModal');
+  renderReferrals();
+}
+
+function deleteReferral(id) {
+  if (!confirm('Delete this referral?')) return;
+  let referrals = loadData(LS_REFERRALS);
+  referrals = referrals.filter(x => x.id !== id);
+  saveData(LS_REFERRALS, referrals);
+  renderReferrals();
+}
+
+function renderReferrals() {
+  const referrals = loadData(LS_REFERRALS);
+  const contacts = loadData(LS_CONTACTS);
+  const getContactName = id => { const c = contacts.find(x => x.id === id); return c ? c.name : 'Unknown'; };
+
+  // Stats
+  const total = referrals.length;
+  const converted = referrals.filter(r => r.status === 'Converted');
+  const totalValue = converted.reduce((s, r) => s + (r.value || 0), 0);
+  const convRate = total > 0 ? Math.round(converted.length / total * 100) : 0;
+
+  document.getElementById('referralStats').innerHTML =
+    '<div class="stat-card"><div class="stat-num">' + total + '</div><div class="stat-label">Total Referrals</div></div>' +
+    '<div class="stat-card"><div class="stat-num" style="-webkit-text-fill-color:var(--green)">' + converted.length + '</div><div class="stat-label">Converted</div></div>' +
+    '<div class="stat-card"><div class="stat-num">$' + totalValue.toLocaleString() + '</div><div class="stat-label">Referral Revenue</div></div>' +
+    '<div class="stat-card"><div class="stat-num">' + convRate + '%</div><div class="stat-label">Conversion Rate</div></div>';
+
+  // Leaderboard
+  const partnerMap = {};
+  referrals.forEach(r => {
+    if (!r.fromId) return;
+    if (!partnerMap[r.fromId]) partnerMap[r.fromId] = { count: 0, value: 0, converted: 0 };
+    partnerMap[r.fromId].count++;
+    if (r.status === 'Converted') {
+      partnerMap[r.fromId].value += r.value || 0;
+      partnerMap[r.fromId].converted++;
+    }
+  });
+  const leaders = Object.entries(partnerMap).sort((a, b) => b[1].value - a[1].value).slice(0, 5);
+  const lb = document.getElementById('referralLeaderboard');
+  if (!leaders.length) {
+    lb.innerHTML = '<div class="empty-state"><p>Log referrals to see your top referral partners.</p></div>';
+  } else {
+    lb.innerHTML = leaders.map((l, i) => {
+      const name = getContactName(l[0]);
+      return '<div class="leaderboard-item"><div class="leaderboard-rank">#' + (i + 1) + '</div><div class="leaderboard-info"><strong>' + name + '</strong><br><span style="font-size:0.8rem;color:var(--text2)">' + l[1].count + ' referrals &bull; ' + l[1].converted + ' converted</span></div><div class="leaderboard-value">$' + l[1].value.toLocaleString() + '</div></div>';
+    }).join('');
+  }
+
+  // Table
+  const tbody = document.querySelector('#referralTable tbody');
+  if (!referrals.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text2);padding:24px">No referrals logged yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = referrals.sort((a, b) => (b.date || '').localeCompare(a.date || '')).map(r => {
+    const statusColor = r.status === 'Converted' ? 'var(--green)' : r.status === 'Lost' ? 'var(--red)' : 'var(--yellow)';
+    return '<tr><td>' + (r.date || '-') + '</td><td>' + getContactName(r.fromId) + '</td><td>' + r.lead + '</td><td>$' + (r.value || 0).toLocaleString() + '</td><td style="color:' + statusColor + '">' + r.status + '</td><td><button class="btn btn-danger btn-sm" onclick="deleteReferral(\'' + r.id + '\')">&#128465;</button></td></tr>';
+  }).join('');
+}
+
+/* ===== ACTIVITY LOG ===== */
+function openAddActivity() {
+  populateContactDropdown('aContact');
+  document.getElementById('aType').value = 'Coffee chat';
+  document.getElementById('aDate').value = today();
+  document.getElementById('aFollowUp').value = '';
+  document.getElementById('aNotes').value = '';
+  document.getElementById('aEditId').value = '';
+  openModal('activityModal');
+}
+
+function saveActivity() {
+  const activities = loadData(LS_ACTIVITIES);
+  const editId = document.getElementById('aEditId').value;
+  const contactId = document.getElementById('aContact').value;
+  const data = {
+    id: editId || uid(),
+    contactId: contactId,
+    type: document.getElementById('aType').value,
+    date: document.getElementById('aDate').value || today(),
+    followUp: document.getElementById('aFollowUp').value,
+    notes: document.getElementById('aNotes').value.trim()
+  };
+  if (editId) {
+    const idx = activities.findIndex(x => x.id === editId);
+    if (idx >= 0) activities[idx] = data;
+  } else {
+    activities.push(data);
+  }
+  saveData(LS_ACTIVITIES, activities);
+
+  // Update last contact date for the contact
+  if (contactId) {
+    const contacts = loadData(LS_CONTACTS);
+    const ci = contacts.findIndex(c => c.id === contactId);
+    if (ci >= 0 && (!contacts[ci].lastContact || data.date > contacts[ci].lastContact)) {
+      contacts[ci].lastContact = data.date;
+      saveData(LS_CONTACTS, contacts);
+    }
+  }
+
+  closeModal('activityModal');
+  renderActivityLog();
+}
+
+function deleteActivity(id) {
+  if (!confirm('Delete this activity?')) return;
+  let activities = loadData(LS_ACTIVITIES);
+  activities = activities.filter(x => x.id !== id);
+  saveData(LS_ACTIVITIES, activities);
+  renderActivityLog();
+}
+
+function renderActivityLog() {
+  const activities = loadData(LS_ACTIVITIES);
+  const contacts = loadData(LS_CONTACTS);
+  const filter = document.getElementById('activityFilter').value;
+  const getContactName = id => { const c = contacts.find(x => x.id === id); return c ? c.name : 'Unknown'; };
+
+  let list = activities.filter(a => filter === 'all' || a.type === filter).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  const container = document.getElementById('activityList');
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-state"><div class="icon">&#128221;</div><p>No activities logged yet. Track your networking interactions.</p><button class="btn btn-primary" onclick="openAddActivity()">+ Log Activity</button></div>';
+    return;
+  }
+
+  const typeIcons = { 'Coffee chat': '&#9749;', 'Email': '&#9993;', 'Call': '&#128222;', 'Event': '&#127915;', 'Social media': '&#128241;', 'Collaboration': '&#129309;' };
+  container.innerHTML = list.map(a => {
+    const isOverdue = a.followUp && a.followUp < today();
+    const followBadge = a.followUp ? (isOverdue ? '<span style="color:var(--red);font-size:0.8rem;margin-left:8px">Follow-up overdue: ' + a.followUp + '</span>' : '<span style="color:var(--blue);font-size:0.8rem;margin-left:8px">Follow-up: ' + a.followUp + '</span>') : '';
+    return '<div class="contact-item"><div class="contact-avatar" style="background:rgba(168,85,247,0.3);font-size:1.2rem">' + (typeIcons[a.type] || '&#128172;') + '</div>' +
+      '<div class="contact-info"><div class="contact-name">' + a.type + ' with ' + getContactName(a.contactId) + followBadge + '</div><div class="contact-meta">' + a.date + (a.notes ? ' &mdash; ' + a.notes.substring(0, 80) : '') + '</div></div>' +
+      '<div class="contact-actions"><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteActivity(\'' + a.id + '\')">&#128465;</button></div></div>';
+  }).join('');
+}
+
+/* ===== GOALS ===== */
+function renderGoals() {
+  const goals = loadGoals();
+  const now = new Date();
+  const monthKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+  const monthGoals = goals[monthKey] || { newConnections: 5, followUps: 10, coffees: 3, events: 2, referralsGiven: 2 };
+
+  // Calculate actuals
+  const contacts = loadData(LS_CONTACTS);
+  const activities = loadData(LS_ACTIVITIES);
+  const referrals = loadData(LS_REFERRALS);
+  const monthStart = monthKey + '-01';
+  const monthEnd = monthKey + '-31';
+
+  const newConns = contacts.filter(c => c.created >= monthStart && c.created <= monthEnd).length;
+  const monthActivities = activities.filter(a => a.date >= monthStart && a.date <= monthEnd);
+  const followUps = monthActivities.length;
+  const coffees = monthActivities.filter(a => a.type === 'Coffee chat' || a.type === 'Call').length;
+  const events = monthActivities.filter(a => a.type === 'Event').length;
+  const refsGiven = referrals.filter(r => r.date >= monthStart && r.date <= monthEnd).length;
+
+  const goalItems = [
+    { label: 'New Connections', target: monthGoals.newConnections, actual: newConns, key: 'newConnections' },
+    { label: 'Follow-ups', target: monthGoals.followUps, actual: followUps, key: 'followUps' },
+    { label: 'Coffees / Calls', target: monthGoals.coffees, actual: coffees, key: 'coffees' },
+    { label: 'Events Attended', target: monthGoals.events, actual: events, key: 'events' },
+    { label: 'Referrals Given', target: monthGoals.referralsGiven, actual: refsGiven, key: 'referralsGiven' }
+  ];
+
+  const container = document.getElementById('goalsPanel');
+  container.innerHTML = '<div style="margin-bottom:16px;display:flex;align-items:center;gap:12px"><strong style="font-size:1rem">' + now.toLocaleString('default', { month: 'long', year: 'numeric' }) + '</strong></div>' +
+    goalItems.map(g => {
+      const pct = g.target > 0 ? Math.min(100, Math.round(g.actual / g.target * 100)) : 0;
+      const color = pct >= 100 ? 'var(--green)' : pct >= 60 ? 'var(--yellow)' : 'var(--red)';
+      return '<div style="margin-bottom:18px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><span style="font-weight:600;font-size:0.9rem">' + g.label + '</span><span style="font-size:0.85rem"><span style="color:' + color + ';font-weight:700">' + g.actual + '</span> / <input type="number" min="0" max="999" value="' + g.target + '" style="width:50px;background:rgba(15,23,42,0.8);border:1px solid var(--border);border-radius:6px;padding:3px 6px;color:var(--text);text-align:center;font-size:0.85rem" onchange="updateGoal(\'' + monthKey + '\',\'' + g.key + '\',this.value)"> <span style="color:var(--text2);font-size:0.8rem">(' + pct + '%)</span></span></div><div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%;background:' + (pct >= 100 ? 'linear-gradient(135deg,#22c55e,#16a34a)' : 'var(--accent)') + '"></div></div></div>';
+    }).join('');
+}
+
+function updateGoal(monthKey, key, value) {
+  const goals = loadGoals();
+  if (!goals[monthKey]) goals[monthKey] = { newConnections: 5, followUps: 10, coffees: 3, events: 2, referralsGiven: 2 };
+  goals[monthKey][key] = parseInt(value) || 0;
+  saveData(LS_GOALS, goals);
+}
+
+/* ===== INTRO GENERATOR ===== */
+function populateIntroDropdowns() {
+  const contacts = loadData(LS_CONTACTS);
+  const sel = document.getElementById('introMutual');
+  sel.innerHTML = '<option value="">Select contact...</option>';
+  contacts.sort((a, b) => a.name.localeCompare(b.name)).forEach(c => {
+    sel.innerHTML += '<option value="' + c.id + '">' + c.name + '</option>';
+  });
+}
+
+function generateIntro() {
+  const yourName = document.getElementById('introYourName').value.trim() || '[Your Name]';
+  const mutualId = document.getElementById('introMutual').value;
+  const contacts = loadData(LS_CONTACTS);
+  const mutual = contacts.find(c => c.id === mutualId);
+  const mutualName = mutual ? mutual.name : '[Mutual Connection]';
+  const target = document.getElementById('introTarget').value.trim() || '[Target Name]';
+  const targetRole = document.getElementById('introTargetRole').value.trim() || '[Their Role]';
+  const reason = document.getElementById('introReason').value.trim() || '[Your reason for wanting to connect]';
+  const value = document.getElementById('introValue').value.trim() || '[Value you can offer]';
+
+  const template = `Subject: Quick introduction request — ${target}
+
+Hi ${mutualName},
+
+Hope you're doing well! I'm reaching out because I noticed you're connected with ${target} (${targetRole}), and I'd love an introduction if you think it'd be a good fit.
+
+Here's why I'd like to connect:
+${reason}
+
+What I can bring to the conversation:
+${value}
+
+I completely understand if now isn't the right time, or if it doesn't feel like a natural fit. No pressure at all — just thought I'd ask since I respect your judgment.
+
+If you're open to it, here's a quick blurb you could forward:
+
+———
+"Hi ${target}, I'd like to introduce you to ${yourName}. ${reason.substring(0, 120)}${reason.length > 120 ? '...' : ''} I think you two could have a great conversation."
+———
+
+Thanks so much, ${mutualName}. Really appreciate it!
+
+Best,
+${yourName}`;
+
+  document.getElementById('introOutput').innerHTML = '<div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center"><strong>Generated Email Template</strong><button class="btn btn-secondary btn-sm" onclick="copyIntro()">Copy to Clipboard</button></div><div class="template-box" id="introText">' + template.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
+}
+
+function copyIntro() {
+  const text = document.getElementById('introText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('#introOutput .btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy to Clipboard'; }, 2000);
+  });
+}
+
+/* ===== STATS ===== */
+function renderStats() {
+  const contacts = loadData(LS_CONTACTS);
+  const activities = loadData(LS_ACTIVITIES);
+  const referrals = loadData(LS_REFERRALS);
+  const convertedRevenue = referrals.filter(r => r.status === 'Converted').reduce((s, r) => s + (r.value || 0), 0);
+  const avgStrength = contacts.length ? (contacts.reduce((s, c) => s + (c.strength || 0), 0) / contacts.length).toFixed(1) : '0';
+
+  // Overview stats
+  document.getElementById('overviewStats').innerHTML =
+    '<div class="stat-card"><div class="stat-num">' + contacts.length + '</div><div class="stat-label">Total Contacts</div></div>' +
+    '<div class="stat-card"><div class="stat-num">' + activities.length + '</div><div class="stat-label">Total Activities</div></div>' +
+    '<div class="stat-card"><div class="stat-num">' + referrals.length + '</div><div class="stat-label">Total Referrals</div></div>' +
+    '<div class="stat-card"><div class="stat-num">$' + convertedRevenue.toLocaleString() + '</div><div class="stat-label">Referral Revenue</div></div>' +
+    '<div class="stat-card"><div class="stat-num">' + avgStrength + '</div><div class="stat-label">Avg Strength</div></div>';
+
+  // Category pie chart
+  renderCategoryPie(contacts);
+
+  // Strength bar chart
+  renderStrengthBar(contacts);
+
+  // Activity trends
+  renderActivityTrend(activities);
+
+  // Revenue attribution
+  renderRevenueAttribution(referrals, contacts);
+}
+
+function renderCategoryPie(contacts) {
+  const svg = document.getElementById('categoryPie');
+  const counts = {};
+  contacts.forEach(c => { counts[c.category] = (counts[c.category] || 0) + 1; });
+  const cats = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const total = contacts.length;
+
+  if (!total) {
+    svg.innerHTML = '<text x="150" y="150" text-anchor="middle" fill="#94a3b8" font-size="14">No data yet</text>';
+    return;
+  }
+
+  let html = '';
+  let startAngle = -Math.PI / 2;
+  const cx = 130, cy = 130, r = 100;
+
+  cats.forEach(([cat, count]) => {
+    const sliceAngle = (count / total) * Math.PI * 2;
+    const endAngle = startAngle + sliceAngle;
+    const x1 = cx + r * Math.cos(startAngle);
+    const y1 = cy + r * Math.sin(startAngle);
+    const x2 = cx + r * Math.cos(endAngle);
+    const y2 = cy + r * Math.sin(endAngle);
+    const largeArc = sliceAngle > Math.PI ? 1 : 0;
+    const color = CATEGORY_COLORS[cat] || '#a855f7';
+
+    if (cats.length === 1) {
+      html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + color + '" fill-opacity="0.6" stroke="' + color + '" stroke-width="2"/>';
+    } else {
+      html += '<path d="M' + cx + ',' + cy + ' L' + x1 + ',' + y1 + ' A' + r + ',' + r + ' 0 ' + largeArc + ',1 ' + x2 + ',' + y2 + ' Z" fill="' + color + '" fill-opacity="0.6" stroke="var(--bg)" stroke-width="2"/>';
+    }
+
+    // Label
+    const midAngle = startAngle + sliceAngle / 2;
+    const lx = cx + (r + 20) * Math.cos(midAngle);
+    const ly = cy + (r + 20) * Math.sin(midAngle);
+    if (sliceAngle > 0.3) {
+      html += '<text x="' + lx + '" y="' + ly + '" text-anchor="middle" fill="' + color + '" font-size="9" font-weight="500">' + cat + ' (' + count + ')</text>';
+    }
+
+    startAngle = endAngle;
+  });
+
+  // Center hole for donut effect
+  html += '<circle cx="' + cx + '" cy="' + cy + '" r="50" fill="var(--card)"/>';
+  html += '<text x="' + cx + '" y="' + (cy + 5) + '" text-anchor="middle" fill="var(--text)" font-size="20" font-weight="700">' + total + '</text>';
+  html += '<text x="' + cx + '" y="' + (cy + 20) + '" text-anchor="middle" fill="var(--text2)" font-size="9">contacts</text>';
+
+  svg.innerHTML = html;
+}
+
+function renderStrengthBar(contacts) {
+  const svg = document.getElementById('strengthBar');
+  const counts = [0, 0, 0, 0, 0];
+  contacts.forEach(c => { if (c.strength >= 1 && c.strength <= 5) counts[c.strength - 1]++; });
+  const max = Math.max(...counts, 1);
+  const barW = 40, gap = 16, startX = 40, chartH = 160, baseY = 190;
+  const colors = ['#ef4444', '#f97316', '#eab308', '#a855f7', '#22c55e'];
+
+  let html = '';
+  // Y-axis
+  for (let i = 0; i <= 4; i++) {
+    const y = baseY - (i / 4) * chartH;
+    const val = Math.round(max * i / 4);
+    html += '<line x1="35" y1="' + y + '" x2="290" y2="' + y + '" stroke="rgba(168,85,247,0.1)" stroke-width="1"/>';
+    html += '<text x="30" y="' + (y + 4) + '" text-anchor="end" fill="var(--text2)" font-size="9">' + val + '</text>';
+  }
+
+  counts.forEach((count, i) => {
+    const barH = max > 0 ? (count / max) * chartH : 0;
+    const x = startX + i * (barW + gap);
+    html += '<rect x="' + x + '" y="' + (baseY - barH) + '" width="' + barW + '" height="' + barH + '" rx="4" fill="' + colors[i] + '" fill-opacity="0.6"/>';
+    html += '<text x="' + (x + barW / 2) + '" y="' + (baseY - barH - 6) + '" text-anchor="middle" fill="' + colors[i] + '" font-size="10" font-weight="600">' + count + '</text>';
+    html += '<text x="' + (x + barW / 2) + '" y="' + (baseY + 16) + '" text-anchor="middle" fill="var(--text2)" font-size="10">' + (i + 1) + ' ★</text>';
+  });
+
+  svg.innerHTML = html;
+}
+
+function renderActivityTrend(activities) {
+  const svg = document.getElementById('activityTrend');
+  // Last 6 months
+  const months = [];
+  const now = new Date();
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push({ key: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'), label: d.toLocaleString('default', { month: 'short' }) });
+  }
+
+  const counts = months.map(m => activities.filter(a => (a.date || '').startsWith(m.key)).length);
+  const max = Math.max(...counts, 1);
+  const w = 700, h = 180, padL = 50, padR = 30, padT = 20, padB = 40;
+  const plotW = w - padL - padR;
+  const plotH = h - padT - padB;
+
+  let html = '';
+  // Grid
+  for (let i = 0; i <= 4; i++) {
+    const y = padT + plotH - (i / 4) * plotH;
+    const val = Math.round(max * i / 4);
+    html += '<line x1="' + padL + '" y1="' + y + '" x2="' + (padL + plotW) + '" y2="' + y + '" stroke="rgba(168,85,247,0.1)"/>';
+    html += '<text x="' + (padL - 8) + '" y="' + (y + 4) + '" text-anchor="end" fill="var(--text2)" font-size="10">' + val + '</text>';
+  }
+
+  // Line + area
+  const points = counts.map((c, i) => {
+    const x = padL + (i / (months.length - 1)) * plotW;
+    const y = padT + plotH - (c / max) * plotH;
+    return { x, y };
+  });
+
+  if (points.length > 1) {
+    // Area
+    let area = 'M' + points[0].x + ',' + (padT + plotH);
+    points.forEach(p => { area += ' L' + p.x + ',' + p.y; });
+    area += ' L' + points[points.length - 1].x + ',' + (padT + plotH) + ' Z';
+    html += '<path d="' + area + '" fill="url(#areaGrad)" opacity="0.3"/>';
+    html += '<defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="transparent"/></linearGradient></defs>';
+
+    // Line
+    let line = 'M' + points[0].x + ',' + points[0].y;
+    for (let i = 1; i < points.length; i++) { line += ' L' + points[i].x + ',' + points[i].y; }
+    html += '<path d="' + line + '" stroke="#a855f7" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+  }
+
+  // Dots and labels
+  points.forEach((p, i) => {
+    html += '<circle cx="' + p.x + '" cy="' + p.y + '" r="5" fill="#a855f7" stroke="var(--card)" stroke-width="2"/>';
+    html += '<text x="' + p.x + '" y="' + (p.y - 10) + '" text-anchor="middle" fill="var(--accent1)" font-size="10" font-weight="600">' + counts[i] + '</text>';
+    html += '<text x="' + p.x + '" y="' + (padT + plotH + 20) + '" text-anchor="middle" fill="var(--text2)" font-size="10">' + months[i].label + '</text>';
+  });
+
+  svg.innerHTML = html;
+}
+
+function renderRevenueAttribution(referrals, contacts) {
+  const container = document.getElementById('revenueAttribution');
+  const getContactName = id => { const c = contacts.find(x => x.id === id); return c ? c.name : 'Direct'; };
+  const converted = referrals.filter(r => r.status === 'Converted');
+  if (!converted.length) {
+    container.innerHTML = '<div class="empty-state"><p>No converted referrals yet. Revenue attribution will appear here.</p></div>';
+    return;
+  }
+  const bySource = {};
+  converted.forEach(r => {
+    const name = getContactName(r.fromId);
+    bySource[name] = (bySource[name] || 0) + (r.value || 0);
+  });
+  const sorted = Object.entries(bySource).sort((a, b) => b[1] - a[1]);
+  const total = sorted.reduce((s, e) => s + e[1], 0);
+
+  container.innerHTML = sorted.map(([name, val]) => {
+    const pct = total > 0 ? Math.round(val / total * 100) : 0;
+    return '<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-weight:600;font-size:0.9rem">' + name + '</span><span style="color:var(--green);font-weight:700">$' + val.toLocaleString() + ' (' + pct + '%)</span></div><div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%;background:linear-gradient(135deg,#22c55e,#16a34a)"></div></div></div>';
+  }).join('');
+}
+
+/* ===== SUGGESTIONS ===== */
+function renderSuggestions() {
+  const contacts = loadData(LS_CONTACTS);
+  const activities = loadData(LS_ACTIVITIES);
+  const container = document.getElementById('suggestionsList');
+
+  if (!contacts.length) {
+    container.innerHTML = '<div class="empty-state"><div class="icon">&#128161;</div><p>Add contacts to get smart networking suggestions.</p></div>';
+    return;
+  }
+
+  let suggestions = [];
+
+  // Dormant high-value contacts
+  const dormantHighValue = contacts.filter(c => daysSince(c.lastContact) > 60 && c.strength >= 4);
+  dormantHighValue.forEach(c => {
+    suggestions.push({
+      priority: 1,
+      icon: '&#128293;',
+      title: 'Re-engage ' + c.name,
+      desc: 'Strong relationship going cold (' + daysSince(c.lastContact) + ' days since last contact). ' + c.category + ' at ' + (c.company || 'their company') + '. A quick check-in could strengthen this valuable connection.',
+      action: 'Log a follow-up',
+      contactId: c.id
+    });
+  });
+
+  // Weak relationships that could be strengthened
+  const weakWithPotential = contacts.filter(c => c.strength <= 2 && (c.category === 'Client' || c.category === 'Referral Partner'));
+  weakWithPotential.forEach(c => {
+    suggestions.push({
+      priority: 2,
+      icon: '&#128170;',
+      title: 'Strengthen relationship with ' + c.name,
+      desc: c.category + ' with only ' + c.strength + '-star strength. Consider scheduling a coffee chat or offering value to deepen this relationship.',
+      action: 'Schedule outreach',
+      contactId: c.id
+    });
+  });
+
+  // Contacts without recent activity
+  const noActivity = contacts.filter(c => {
+    const contactActivities = activities.filter(a => a.contactId === c.id);
+    return contactActivities.length === 0 && daysSince(c.created) > 7;
+  });
+  noActivity.slice(0, 5).forEach(c => {
+    suggestions.push({
+      priority: 3,
+      icon: '&#128172;',
+      title: 'No activity logged for ' + c.name,
+      desc: 'Added ' + daysSince(c.created) + ' days ago but no interactions logged. Start tracking your interactions to monitor relationship health.',
+      action: 'Log first activity',
+      contactId: c.id
+    });
+  });
+
+  // Follow-ups due
+  const overdue = activities.filter(a => a.followUp && a.followUp < today());
+  overdue.forEach(a => {
+    const contact = contacts.find(c => c.id === a.contactId);
+    if (contact) {
+      suggestions.push({
+        priority: 1,
+        icon: '&#9888;&#65039;',
+        title: 'Overdue follow-up with ' + contact.name,
+        desc: 'Follow-up was due on ' + a.followUp + ' after your ' + a.type.toLowerCase() + '. Don\'t let this fall through the cracks.',
+        action: 'Complete follow-up',
+        contactId: contact.id
+      });
+    }
+  });
+
+  // Network diversity check
+  const catCounts = {};
+  contacts.forEach(c => { catCounts[c.category] = (catCounts[c.category] || 0) + 1; });
+  const missingCats = ['Client', 'Prospect', 'Referral Partner', 'Mentor', 'Peer'].filter(c => !catCounts[c]);
+  if (missingCats.length && contacts.length >= 3) {
+    suggestions.push({
+      priority: 3,
+      icon: '&#127760;',
+      title: 'Diversify your network',
+      desc: 'Your network is missing ' + missingCats.join(', ') + ' connections. A diverse network leads to more opportunities and stronger resilience.',
+      action: 'Add new contacts'
+    });
+  }
+
+  // Sort by priority
+  suggestions.sort((a, b) => a.priority - b.priority);
+
+  if (!suggestions.length) {
+    container.innerHTML = '<div class="alert alert-info" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:var(--green)">&#9989; Your network looks healthy! Keep up the great work with consistent outreach.</div>';
+    return;
+  }
+
+  container.innerHTML = suggestions.slice(0, 10).map(s => {
+    const priorityColor = s.priority === 1 ? 'var(--red)' : s.priority === 2 ? 'var(--yellow)' : 'var(--blue)';
+    return '<div class="contact-item" style="border-left:3px solid ' + priorityColor + '">' +
+      '<div style="font-size:1.5rem;flex-shrink:0">' + s.icon + '</div>' +
+      '<div class="contact-info"><div class="contact-name">' + s.title + '</div><div class="contact-meta">' + s.desc + '</div></div>' +
+      (s.contactId ? '<button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();showContactDetail(\'' + s.contactId + '\')">' + s.action + '</button>' : '<button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openAddContact()">' + s.action + '</button>') +
+      '</div>';
+  }).join('');
+}
+
+/* ===== EXPORT ===== */
+function exportCSV() {
+  const contacts = loadData(LS_CONTACTS);
+  if (!contacts.length) { alert('No contacts to export.'); return; }
+  const headers = ['Name', 'Company', 'Role', 'Email', 'Category', 'Strength', 'Last Contact', 'Referral Source', 'Tags', 'Notes'];
+  const rows = contacts.map(c => [
+    '"' + (c.name || '').replace(/"/g, '""') + '"',
+    '"' + (c.company || '').replace(/"/g, '""') + '"',
+    '"' + (c.role || '').replace(/"/g, '""') + '"',
+    '"' + (c.email || '').replace(/"/g, '""') + '"',
+    '"' + (c.category || '') + '"',
+    c.strength || 0,
+    '"' + (c.lastContact || '') + '"',
+    '"' + (c.referralSource || '').replace(/"/g, '""') + '"',
+    '"' + (c.tags || []).join('; ') + '"',
+    '"' + (c.notes || '').replace(/"/g, '""') + '"'
+  ]);
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  downloadFile('network-contacts.csv', csv, 'text/csv');
+}
+
+function exportReport() {
+  const contacts = loadData(LS_CONTACTS);
+  const activities = loadData(LS_ACTIVITIES);
+  const referrals = loadData(LS_REFERRALS);
+  const strong = contacts.filter(c => c.strength >= 4).length;
+  const moderate = contacts.filter(c => c.strength === 3).length;
+  const weak = contacts.filter(c => c.strength <= 2).length;
+  const dormant = contacts.filter(c => daysSince(c.lastContact) > 90).length;
+  const revenue = referrals.filter(r => r.status === 'Converted').reduce((s, r) => s + (r.value || 0), 0);
+
+  let html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Network Report</title><style>body{font-family:system-ui;max-width:800px;margin:40px auto;padding:20px;color:#1e293b}h1{color:#7c3aed}h2{color:#a855f7;margin-top:30px;border-bottom:2px solid #e2e8f0;padding-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0}th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #e2e8f0}th{background:#f8fafc;font-weight:600}.stat{display:inline-block;text-align:center;padding:16px 24px;margin:8px;background:#f8fafc;border-radius:12px}.stat-num{font-size:28px;font-weight:800;color:#7c3aed}.stat-label{font-size:12px;color:#64748b}@media print{body{margin:20px}}</style></head><body>';
+  html += '<h1>Freelance Network Report</h1><p>Generated: ' + new Date().toLocaleDateString() + '</p>';
+  html += '<h2>Overview</h2><div>';
+  html += '<div class="stat"><div class="stat-num">' + contacts.length + '</div><div class="stat-label">Total Contacts</div></div>';
+  html += '<div class="stat"><div class="stat-num">' + activities.length + '</div><div class="stat-label">Activities</div></div>';
+  html += '<div class="stat"><div class="stat-num">' + referrals.length + '</div><div class="stat-label">Referrals</div></div>';
+  html += '<div class="stat"><div class="stat-num">$' + revenue.toLocaleString() + '</div><div class="stat-label">Referral Revenue</div></div>';
+  html += '</div>';
+  html += '<h2>Relationship Health</h2><div>';
+  html += '<div class="stat"><div class="stat-num" style="color:#22c55e">' + strong + '</div><div class="stat-label">Strong</div></div>';
+  html += '<div class="stat"><div class="stat-num" style="color:#eab308">' + moderate + '</div><div class="stat-label">Moderate</div></div>';
+  html += '<div class="stat"><div class="stat-num" style="color:#f97316">' + weak + '</div><div class="stat-label">Weak</div></div>';
+  html += '<div class="stat"><div class="stat-num" style="color:#ef4444">' + dormant + '</div><div class="stat-label">Dormant</div></div>';
+  html += '</div>';
+  html += '<h2>All Contacts</h2><table><tr><th>Name</th><th>Company</th><th>Category</th><th>Strength</th><th>Last Contact</th></tr>';
+  contacts.sort((a, b) => a.name.localeCompare(b.name)).forEach(c => {
+    html += '<tr><td>' + c.name + '</td><td>' + (c.company || '-') + '</td><td>' + c.category + '</td><td>' + starDisplay(c.strength) + '</td><td>' + (c.lastContact || '-') + '</td></tr>';
+  });
+  html += '</table><script src="/freelanceos-storefront/exit-intent.js"></script>
+</body></html>';
+
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
+  w.print();
+}
+
+function exportJSON() {
+  const data = {
+    contacts: loadData(LS_CONTACTS),
+    referrals: loadData(LS_REFERRALS),
+    activities: loadData(LS_ACTIVITIES),
+    goals: loadGoals(),
+    exportDate: new Date().toISOString()
+  };
+  downloadFile('network-backup.json', JSON.stringify(data, null, 2), 'application/json');
+}
+
+function importJSON() {
+  document.getElementById('importFile').click();
+}
+
+function handleImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (data.contacts) saveData(LS_CONTACTS, data.contacts);
+      if (data.referrals) saveData(LS_REFERRALS, data.referrals);
+      if (data.activities) saveData(LS_ACTIVITIES, data.activities);
+      if (data.goals) saveData(LS_GOALS, data.goals);
+      alert('Data imported successfully! ' + (data.contacts || []).length + ' contacts, ' + (data.referrals || []).length + ' referrals, ' + (data.activities || []).length + ' activities.');
+      location.reload();
+    } catch (err) {
+      alert('Error importing file: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function downloadFile(filename, content, type) {
+  const blob = new Blob([content], { type: type });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ===== INIT ===== */
+function init() {
+  renderStars('cStars', 3);
+  renderNetworkMap();
+  renderContactList();
+}
+
+init();
+</script>
+<script src="/freelanceos-storefront/exit-intent.js"></script>
+</body>
+</html>

@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Rate Negotiation Simulator — Free Tool | FreelanceOS</title>
+<meta name="description" content="Practice handling tough client objections and boost your freelance negotiation confidence. Free interactive simulator with personalized feedback and pro tips.">
+<meta name="keywords" content="freelance rate negotiation, client objections, freelance pricing, rate calculator, negotiation practice">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Freelance Rate Negotiation Simulator — Free Tool | FreelanceOS">
+<meta property="og:description" content="Practice handling tough client objections. Score your negotiation skills and learn pro strategies to earn what you're worth.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.com/freelanceos-storefront/rate-negotiation-simulator.html">
+<meta property="og:image" content="https://freelanceos.com/og-image.png">
+<meta property="og:site_name" content="FreelanceOS">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Freelance Rate Negotiation Simulator — Free Tool | FreelanceOS">
+<meta name="twitter:description" content="Practice handling tough client objections. Score your negotiation skills and learn pro strategies.">
+<meta name="twitter:image" content="https://freelanceos.com/og-image.png">
+
+<!-- Schema.org WebApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Rate Negotiation Simulator",
+  "description": "Practice handling tough client objections and boost your freelance negotiation confidence with this free interactive simulator.",
+  "url": "https://freelanceos.com/freelanceos-storefront/rate-negotiation-simulator.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #020617;
+    --card: #0f172a;
+    --accent: #a855f7;
+    --accent2: #ec4899;
+    --text: #f1f5f9;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+    --glass-bg: rgba(15, 23, 42, 0.8);
+    --glass-border: rgba(168, 85, 247, 0.1);
+    --glass-border-hover: rgba(168, 85, 247, 0.3);
+    --radius: 16px;
+    --radius-sm: 12px;
+    --radius-xs: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* Background grid pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 50% 80%, rgba(168, 85, 247, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-top: 16px;
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .header h1 {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .header p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* Glass Card */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+  }
+  .glass-card:hover { border-color: var(--glass-border-hover); }
+
+  /* Form Elements */
+  .form-group { margin-bottom: 20px; }
+  .form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .form-input, .form-select {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    appearance: none;
+  }
+  .form-input:focus, .form-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+  }
+  .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+  .form-input::placeholder { color: var(--text-muted); }
+
+  .rate-input-wrap {
+    position: relative;
+  }
+  .rate-input-wrap .currency {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .rate-input-wrap .form-input {
+    padding-left: 32px;
+  }
+  .rate-input-wrap .per-hour {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  /* Primary Button */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--gradient);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    font-family: inherit;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    color: var(--accent);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-secondary:hover {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: var(--accent);
+  }
+
+  /* Chat UI */
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .chat-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    margin-top: 12px;
+  }
+  .chat-meta .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: rgba(168, 85, 247, 0.12);
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  .chat-bubble {
+    max-width: 85%;
+    padding: 14px 18px;
+    border-radius: 18px;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    animation: bubbleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+  @keyframes bubbleIn {
+    0% { opacity: 0; transform: translateY(12px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .bubble-client {
+    align-self: flex-start;
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-bottom-left-radius: 6px;
+    color: var(--text);
+  }
+  .bubble-client .sender {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--warning);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .bubble-user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(236, 72, 153, 0.18));
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-bottom-right-radius: 6px;
+    color: var(--text);
+  }
+  .bubble-user .sender {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  /* Typing indicator */
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 14px 22px;
+    align-self: flex-start;
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 18px;
+    border-bottom-left-radius: 6px;
+    animation: bubbleIn 0.3s ease;
+  }
+  .typing-indicator .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite;
+  }
+  .typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* Response Options */
+  .response-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 14px;
+    animation: bubbleIn 0.4s ease;
+  }
+  .response-option {
+    position: relative;
+    padding: 14px 18px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: left;
+    color: var(--text);
+    font-family: inherit;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .response-option:hover {
+    border-color: var(--accent);
+    background: rgba(168, 85, 247, 0.08);
+    transform: translateX(4px);
+  }
+  .response-option .opt-label {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(168, 85, 247, 0.15);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+  .response-option.selected-good {
+    border-color: var(--success);
+    background: rgba(34, 197, 94, 0.08);
+    pointer-events: none;
+  }
+  .response-option.selected-ok {
+    border-color: var(--warning);
+    background: rgba(245, 158, 11, 0.08);
+    pointer-events: none;
+  }
+  .response-option.selected-bad {
+    border-color: var(--danger);
+    background: rgba(239, 68, 68, 0.08);
+    pointer-events: none;
+  }
+  .response-option.dimmed {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  /* Score feedback */
+  .score-feedback {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    animation: bubbleIn 0.4s ease;
+  }
+  .score-feedback.positive {
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    color: var(--success);
+  }
+  .score-feedback.neutral {
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    color: var(--warning);
+  }
+  .score-feedback.negative {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+  }
+  .score-change {
+    font-weight: 800;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  /* Score bar */
+  .score-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 16px;
+    position: sticky;
+    top: 8px;
+    z-index: 10;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .score-bar .label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .score-bar .score-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .score-bar .round-info {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Continue button */
+  .continue-btn-wrap {
+    margin-top: 16px;
+    animation: bubbleIn 0.4s ease;
+  }
+
+  /* Results Dashboard */
+  .results-section { display: none; }
+  .results-section.active { display: block; }
+
+  .result-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .result-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  /* Circular Gauge */
+  .gauge-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+  }
+  .gauge {
+    position: relative;
+    width: 180px;
+    height: 180px;
+  }
+  .gauge svg {
+    transform: rotate(-90deg);
+    width: 180px;
+    height: 180px;
+  }
+  .gauge-bg {
+    fill: none;
+    stroke: rgba(148, 163, 184, 0.1);
+    stroke-width: 10;
+  }
+  .gauge-fill {
+    fill: none;
+    stroke: url(#gaugeGrad);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 502;
+    stroke-dashoffset: 502;
+    transition: stroke-dashoffset 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .gauge-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .gauge-number {
+    font-size: 3rem;
+    font-weight: 900;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .gauge-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* Grade badge */
+  .grade-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .grade-badge.grade-a-plus { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+  .grade-badge.grade-a { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+  .grade-badge.grade-b-plus { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
+  .grade-badge.grade-b { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+  .grade-badge.grade-c { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+  .grade-badge.grade-d { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+  .grade-badge.grade-f { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+
+  .style-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0 4px;
+  }
+  .style-desc {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    max-width: 460px;
+    margin: 0 auto 20px;
+  }
+
+  /* Income impact */
+  .income-impact {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(168,85,247,0.06));
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: var(--radius);
+    margin: 20px 0;
+  }
+  .income-impact .label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .income-impact .amount {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--success);
+    line-height: 1.2;
+  }
+  .income-impact .sub {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* Breakdown list */
+  .breakdown-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .breakdown-item {
+    padding: 14px 16px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.08);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .breakdown-item .round-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(168, 85, 247, 0.12);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .breakdown-item .details {
+    flex: 1;
+    min-width: 0;
+  }
+  .breakdown-item .objection-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+  }
+  .breakdown-item .response-text {
+    font-size: 0.88rem;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .breakdown-item .score-delta {
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  .breakdown-item .score-delta.pos { color: var(--success); }
+  .breakdown-item .score-delta.neg { color: var(--danger); }
+  .breakdown-item .score-delta.neu { color: var(--warning); }
+
+  /* Improvement areas */
+  .improve-card {
+    padding: 16px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.08);
+    border-radius: var(--radius-sm);
+    margin-bottom: 10px;
+  }
+  .improve-card h4 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .improve-card p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* Share row */
+  .share-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .share-row button, .share-row a {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(236,72,153,0.08));
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    margin: 24px 0;
+  }
+  .cta-banner h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .cta-banner p {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .cta-banner .price {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .cta-banner .price .old {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .cta-banner .price .new {
+    font-size: 1.6rem;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cta-banner .code-pill {
+    display: inline-block;
+    background: rgba(168,85,247,0.15);
+    border: 1px dashed rgba(168,85,247,0.4);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin: 0 4px;
+  }
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: var(--gradient);
+    color: #fff;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(168,85,247,0.3);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 16px;
+    border-top: 1px solid rgba(148, 163, 184, 0.08);
+    margin-top: 24px;
+  }
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 20px;
+    margin-bottom: 16px;
+  }
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer .disclaimer {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+  }
+  .footer .brand {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  /* Utility */
+  .hidden { display: none !important; }
+  .mt-12 { margin-top: 12px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-20 { margin-top: 20px; }
+  .mb-12 { margin-bottom: 12px; }
+  .text-center { text-align: center; }
+
+  /* Progress dots */
+  .progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .progress-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(148,163,184,0.15);
+    transition: all 0.3s ease;
+  }
+  .progress-dot.active {
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(168,85,247,0.4);
+  }
+  .progress-dot.done {
+    background: var(--success);
+  }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .container { padding: 16px 12px; }
+    .glass-card { padding: 20px 16px; }
+    .chat-bubble { max-width: 92%; }
+    .gauge { width: 150px; height: 150px; }
+    .gauge svg { width: 150px; height: 150px; }
+    .gauge-number { font-size: 2.4rem; }
+    .income-impact .amount { font-size: 1.7rem; }
+    .share-row { flex-direction: column; }
+  }
+
+  /* Fade-in sections */
+  .fade-in {
+    animation: fadeIn 0.5s ease forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Counter animation class */
+  .count-up {
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2"/><path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2"/><path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2"/></svg>
+      FreelanceOS Free Tool
+    </div>
+    <h1>Rate Negotiation Simulator</h1>
+    <p>Practice handling tough client objections. Build unshakeable confidence in 5 minutes.</p>
+  </div>
+
+  <!-- SETUP SECTION -->
+  <div id="setup-section">
+    <div class="glass-card">
+      <div class="form-group">
+        <label>Your Desired Hourly Rate</label>
+        <div class="rate-input-wrap">
+          <span class="currency">$</span>
+          <input type="number" id="rate-input" class="form-input" placeholder="150" min="10" max="1000" value="">
+          <span class="per-hour">/hr</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Your Specialty</label>
+        <select id="specialty-select" class="form-select">
+          <option value="">Select your specialty</option>
+          <option value="Design">Design</option>
+          <option value="Development">Development</option>
+          <option value="Writing">Writing</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Consulting">Consulting</option>
+          <option value="Photography">Photography</option>
+          <option value="Video">Video</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Experience Level</label>
+        <select id="experience-select" class="form-select">
+          <option value="">Select experience</option>
+          <option value="1-3yr">1-3 years</option>
+          <option value="3-5yr">3-5 years</option>
+          <option value="5-10yr">5-10 years</option>
+          <option value="10+yr">10+ years</option>
+        </select>
+      </div>
+      <button class="btn-primary" id="start-btn" onclick="startSimulation()">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z" fill="currentColor"/></svg>
+        Start Negotiation Simulation
+      </button>
+    </div>
+  </div>
+
+  <!-- SIMULATION SECTION -->
+  <div id="sim-section" class="hidden">
+    <div class="score-bar" id="score-bar">
+      <div>
+        <div class="label">Confidence</div>
+        <div class="score-value" id="live-score">50</div>
+      </div>
+      <div class="round-info" id="round-info">Round 1 of 6</div>
+    </div>
+
+    <div class="progress-dots" id="progress-dots"></div>
+
+    <div class="glass-card">
+      <div class="chat-container" id="chat-container">
+        <!-- Chat bubbles injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS SECTION -->
+  <div id="results-section" class="results-section">
+    <!-- Filled by JS -->
+  </div>
+
+</div>
+
+<!-- SVG Gradient Definition for Gauge -->
+<svg style="position:absolute;width:0;height:0;">
+  <defs>
+    <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ============ DATA ============ */
+  const ALL_OBJECTIONS = [
+    {
+      id: 'budget_half',
+      text: "That's way over our budget. Can you do it for half the price?",
+      category: 'price',
+      responses: [
+        { text: "Sure, I can lower my rate to fit your budget. I want to make this work!", score: -12, type: 'passive', feedback: "Immediately halving your rate signals desperation and devalues your expertise. The client now knows you'll always cave under pressure." },
+        { text: "I understand budget constraints. Let's look at reducing the project scope to match your budget while keeping quality high.", score: 15, type: 'assertive', feedback: "Excellent. You acknowledged their concern without devaluing yourself. Adjusting scope instead of rate is the professional move." },
+        { text: "My rates aren't negotiable. Take it or leave it.", score: -5, type: 'aggressive', feedback: "While confidence is good, ultimatums close doors. You can be firm without being combative." },
+        { text: "I'd be happy to share a breakdown of where the investment goes. Which deliverables are highest priority for you?", score: 12, type: 'strategic', feedback: "Framing cost as investment and redirecting to priorities shows business maturity. Clients respect value-based conversations." }
+      ]
+    },
+    {
+      id: 'last_freelancer',
+      text: "Our last freelancer charged much less than you.",
+      category: 'comparison',
+      responses: [
+        { text: "Oh, I can match that price! Just tell me what they charged.", score: -14, type: 'passive', feedback: "You're racing to the bottom. Their previous freelancer's rate has nothing to do with your value." },
+        { text: "That's understandable. Different freelancers bring different levels of experience and results. My rate reflects the ROI I consistently deliver to clients.", score: 15, type: 'assertive', feedback: "Perfect framing. You shifted from cost comparison to value comparison without being defensive." },
+        { text: "Then why aren't you still working with them?", score: 3, type: 'aggressive', feedback: "Clever comeback, but it can feel confrontational. It does make a point, but you should follow up with your value proposition." },
+        { text: "I'd love to understand what didn't work with the previous arrangement so I can make sure we avoid those issues.", score: 10, type: 'strategic', feedback: "Smart redirect. You're implying the cheaper option failed while positioning yourself as the solution." }
+      ]
+    },
+    {
+      id: 'free_test',
+      text: "Can you do a small test project for free first? Just to see if we're a good fit.",
+      category: 'free_work',
+      responses: [
+        { text: "Of course! I'll do a free sample so you can see my work.", score: -15, type: 'passive', feedback: "Free work sets a terrible precedent. Clients who ask for free tests often become clients who chronically undervalue your work." },
+        { text: "I don't offer free work, but I do offer a paid trial project at my standard rate. That way we both have skin in the game and you see my real process.", score: 15, type: 'assertive', feedback: "Brilliant. A paid trial shows confidence and attracts serious clients. You're filtering for quality." },
+        { text: "Would you ask your doctor for a free checkup first? My time has value.", score: -3, type: 'aggressive', feedback: "The analogy is valid but the tone is too combative. It might make the client feel attacked rather than educated." },
+        { text: "I have a portfolio and references from past clients I'd be happy to share. For a trial project, my minimum engagement starts at a reduced scope.", score: 11, type: 'strategic', feedback: "Good alternative. You offered proof of quality without giving away free labor." }
+      ]
+    },
+    {
+      id: 'exposure',
+      text: "We can't pay much, but this project will give you amazing exposure and referrals!",
+      category: 'free_work',
+      responses: [
+        { text: "Exposure sounds great! I'm in.", score: -16, type: 'passive', feedback: "Exposure doesn't pay rent. This is one of the oldest tactics to get free or cheap work from freelancers." },
+        { text: "I appreciate the thought, but I run a business on revenue, not exposure. I'd love to work together at my standard rate. Shall I send a proposal?", score: 15, type: 'assertive', feedback: "Polite but unmovable. You treated it as a business conversation and redirected to a paid engagement." },
+        { text: "People die from exposure. My rate is my rate.", score: 2, type: 'aggressive', feedback: "Funny, but the humor might not land well. It does draw a firm line, though." },
+        { text: "I'd love to discuss a referral bonus structure. For every paying client you refer, I could offer you a discount on future work.", score: 10, type: 'strategic', feedback: "Creative. You turned a vague promise into a concrete, mutually beneficial arrangement." }
+      ]
+    },
+    {
+      id: 'few_hours',
+      text: "It should only take you a few hours, right? This is pretty simple stuff.",
+      category: 'scope',
+      responses: [
+        { text: "Yeah, you're probably right. I'll just charge for a couple hours.", score: -13, type: 'passive', feedback: "Never let the client estimate your hours. They don't understand the full process, and now you're locked into an unrealistic timeline." },
+        { text: "I understand it may look straightforward, but quality work includes research, execution, revisions, and testing. Let me scope it properly and give you an accurate estimate.", score: 15, type: 'assertive', feedback: "You educated the client on your process without being condescending. This builds respect and sets realistic expectations." },
+        { text: "If it's so simple, why don't you do it yourself?", score: -8, type: 'aggressive', feedback: "This burns bridges fast. Even if the client is being unreasonable, snark isn't a negotiation strategy." },
+        { text: "I'd love to walk you through what goes into this kind of project. Most clients are surprised at the invisible work that makes the final result look effortless.", score: 12, type: 'strategic', feedback: "Educating without belittling. You're positioning the complexity as a feature, not a complaint." }
+      ]
+    },
+    {
+      id: 'startup_later',
+      text: "We're a startup so we're tight on cash right now. We can pay more later when we grow!",
+      category: 'deferred',
+      responses: [
+        { text: "No problem! I believe in your vision. Let's start at a lower rate.", score: -14, type: 'passive', feedback: "Later never comes. Startups that can't pay now rarely prioritize paying more later. You're subsidizing their business." },
+        { text: "I love working with startups. I can offer a reduced scope package that fits your current budget, and we can scale up as you grow.", score: 15, type: 'assertive', feedback: "You showed flexibility on scope without discounting your rate. Smart way to build a long-term relationship." },
+        { text: "I've heard that before and 'later' never comes. I need to be paid my rate now.", score: 4, type: 'aggressive', feedback: "Honest but blunt. You're right, but this delivery could alienate an otherwise good client." },
+        { text: "What if we structured this as a smaller initial engagement? That way the investment is manageable, and you see results before committing further.", score: 12, type: 'strategic', feedback: "You reframed the limitation as a phased approach. Clients appreciate feeling guided rather than rejected." }
+      ]
+    },
+    {
+      id: 'template',
+      text: "Can't you just use a template for this? It shouldn't cost that much.",
+      category: 'scope',
+      responses: [
+        { text: "Sure, I can use a template to save time and lower the cost.", score: -10, type: 'passive', feedback: "While templates can be efficient, agreeing to use one just to lower price devalues the customization and expertise you bring." },
+        { text: "Templates are a starting point, but your brand deserves custom work that stands out. My rate covers the strategic thinking and customization that templates can't provide.", score: 15, type: 'assertive', feedback: "You elevated the conversation from production to strategy. The client now sees the difference between commodity and custom work." },
+        { text: "If you want template work, go to Fiverr. You came to me for a reason.", score: -4, type: 'aggressive', feedback: "Dismissive. Even if true, this response is more likely to lose you the gig than win respect." },
+        { text: "I can use templates as a foundation to keep costs efficient, but the real value is in tailoring everything to your specific audience and goals. Want me to show you the difference?", score: 11, type: 'strategic', feedback: "Smart compromise. You showed willingness to be efficient while emphasizing the unique value you add." }
+      ]
+    },
+    {
+      id: 'unlimited_revisions',
+      text: "We'll need unlimited revisions included in the price. We want to make sure it's perfect.",
+      category: 'scope',
+      responses: [
+        { text: "Sure, unlimited revisions are fine! I want you to be completely happy.", score: -15, type: 'passive', feedback: "Unlimited revisions is a recipe for scope creep and burnout. This single concession can turn a profitable project into a money pit." },
+        { text: "I include 2 rounds of revisions in my standard pricing, which covers most projects perfectly. Additional rounds are available at an hourly rate. This ensures we stay focused and efficient.", score: 15, type: 'assertive', feedback: "Clear boundaries protect both parties. You showed confidence while explaining how structure benefits the client too." },
+        { text: "Unlimited revisions aren't a thing. That's not how this works.", score: -2, type: 'aggressive', feedback: "Correct, but the delivery could be softer. Educate rather than lecture." },
+        { text: "In my experience, clear feedback rounds lead to better results than open-ended revisions. I'll make sure we nail the direction upfront so revisions are minimal.", score: 12, type: 'strategic', feedback: "You reframed the limitation as a quality advantage. The client feels they'll get better results, not fewer chances to change things." }
+      ]
+    },
+    {
+      id: 'best_price',
+      text: "What's your best price? Give me your lowest rate.",
+      category: 'price',
+      responses: [
+        { text: "Well, I could probably go down to... how about 30% less?", score: -13, type: 'passive', feedback: "Negotiating against yourself before they even made a counter-offer. Never bid against yourself." },
+        { text: "The rate I quoted is my best price for this scope of work. It reflects the quality and experience I bring. What specific deliverables are most important to you?", score: 15, type: 'assertive', feedback: "Firm, professional, and redirects to value. You didn't flinch, and you moved the conversation forward." },
+        { text: "You already have it. I don't do bargain-bin pricing.", score: 1, type: 'aggressive', feedback: "The confidence is good but the wording is slightly condescending. Same message can be delivered more diplomatically." },
+        { text: "My pricing is based on the value delivered, not the lowest number I can survive on. Want me to walk through the ROI you can expect from this project?", score: 13, type: 'strategic', feedback: "Value-based selling at its finest. You shifted from cost to return on investment." }
+      ]
+    },
+    {
+      id: 'other_freelancers',
+      text: "We have other freelancers who quoted lower. Why should we pay more for you?",
+      category: 'comparison',
+      responses: [
+        { text: "You're right, let me lower my price to be competitive.", score: -14, type: 'passive', feedback: "Matching unknown competitors' prices without knowing their quality or scope is a losing strategy." },
+        { text: "That's a fair question. You should absolutely compare options. What I offer is [specific differentiator] which typically saves clients time and money in the long run. Happy to share case studies.", score: 15, type: 'assertive', feedback: "Confident and specific. You welcomed the comparison because you know your value. Case studies add credibility." },
+        { text: "Then go with them. You'll get what you pay for.", score: -6, type: 'aggressive', feedback: "Walking away can be powerful, but doing it with attitude burns the bridge entirely." },
+        { text: "I'd encourage you to ask those freelancers about their revision policy, turnaround guarantees, and communication process. The total cost of a project is more than just the hourly rate.", score: 12, type: 'strategic', feedback: "Sophisticated response. You planted seeds of doubt about cheaper alternatives without directly criticizing them." }
+      ]
+    },
+    {
+      id: 'pay_later',
+      text: "Can you start now and we'll figure out payment terms later?",
+      category: 'deferred',
+      responses: [
+        { text: "Sure, I trust you. Let's get started right away!", score: -16, type: 'passive', feedback: "Starting work without a contract or payment terms is the #1 way freelancers get burned. Never start without clear terms." },
+        { text: "I'm excited to get started! My process includes a simple agreement and a deposit before kickoff. I'll send that over today so we can begin this week.", score: 15, type: 'assertive', feedback: "Enthusiastic but professional. You maintained momentum while protecting yourself with proper business practices." },
+        { text: "Absolutely not. No contract, no work. Period.", score: 2, type: 'aggressive', feedback: "The boundary is correct but the tone could scare off a client who may just be disorganized, not malicious." },
+        { text: "I'd love to! Let me send over my standard agreement and invoice for the first milestone. Most clients find it quick and painless, and it protects both of us.", score: 13, type: 'strategic', feedback: "You matched their energy while seamlessly introducing your process. The client feels guided, not lectured." }
+      ]
+    },
+    {
+      id: 'source_files',
+      text: "We want to own all the source files and full rights to everything. That's included, right?",
+      category: 'scope',
+      responses: [
+        { text: "Of course, everything is yours! I'll hand over all files.", score: -10, type: 'passive', feedback: "Source files and full IP transfer have real value. Giving them away for free undercuts a significant part of your leverage and potential recurring revenue." },
+        { text: "Full rights transfer and source files are absolutely available. I include deliverable files in my base rate, and offer a full source file and IP transfer package for an additional fee. Want me to outline both options?", score: 15, type: 'assertive', feedback: "You presented it as a structured offering rather than a fight. Both options make the client feel in control while protecting your interests." },
+        { text: "Source files cost extra. That's just how it works in this industry.", score: 4, type: 'aggressive', feedback: "Factually correct but the delivery feels dismissive. Explain why rather than just stating it as law." },
+        { text: "Let's make sure you get exactly what you need. I'll include all final deliverables, and we can discuss source file licensing based on how you plan to use them long-term.", score: 11, type: 'strategic', feedback: "Consultative approach. You're scoping the actual need rather than making assumptions, which often leads to a better deal for both sides." }
+      ]
+    }
+  ];
+
+  const NEGOTIATION_STYLES = [
+    { name: "The Pushover", range: [0, 25], desc: "You tend to cave under pressure. Clients will keep pushing because they know you'll say yes. Your biggest growth area is learning that 'no' is a complete sentence.", emoji: "😰" },
+    { name: "The People Pleaser", range: [26, 45], desc: "You prioritize the relationship over your business needs. While empathy is great, you're leaving money on the table by accommodating too much.", emoji: "😊" },
+    { name: "The Developing Pro", range: [46, 60], desc: "You have good instincts but sometimes waver under pressure. With a bit more confidence in your value, you'll be commanding premium rates.", emoji: "📈" },
+    { name: "The Balanced Negotiator", range: [61, 75], desc: "You strike a solid balance between being firm and flexible. You know when to hold and when to offer alternatives. Keep refining your approach.", emoji: "⚖️" },
+    { name: "The Confident Pro", range: [76, 88], desc: "You handle objections like a seasoned professional. You're firm on value while remaining approachable. Clients respect and trust you.", emoji: "💪" },
+    { name: "The Strategic Partner", range: [89, 100], desc: "You don't just negotiate rates, you reframe entire conversations. Clients see you as an invaluable partner, not a vendor. You command premium rates effortlessly.", emoji: "🏆" }
+  ];
+
+  const GRADES = [
+    { min: 95, grade: 'A+', label: 'A+ Negotiator', cls: 'grade-a-plus', desc: 'Masterful negotiation skills' },
+    { min: 85, grade: 'A', label: 'A Negotiator', cls: 'grade-a', desc: 'Excellent negotiation skills' },
+    { min: 75, grade: 'B+', label: 'B+ Negotiator', cls: 'grade-b-plus', desc: 'Strong negotiation skills' },
+    { min: 60, grade: 'B', label: 'B Negotiator', cls: 'grade-b', desc: 'Good negotiation skills' },
+    { min: 45, grade: 'C+', label: 'C+ Negotiator', cls: 'grade-c', desc: 'Developing negotiation skills' },
+    { min: 30, grade: 'C', label: 'C Negotiator', cls: 'grade-c', desc: 'Needs improvement' },
+    { min: 15, grade: 'D', label: 'D Negotiator', cls: 'grade-d', desc: 'Significant improvement needed' },
+    { min: 0, grade: 'F', label: 'F Negotiator', cls: 'grade-f', desc: 'Time to learn the fundamentals' }
+  ];
+
+  const IMPROVEMENT_TIPS = {
+    price: {
+      title: "Defending Your Rates",
+      icon: "💰",
+      tip: "Practice value-based pricing. Instead of defending your number, show the ROI. Prepare 2-3 case studies that demonstrate measurable results you've delivered."
+    },
+    comparison: {
+      title: "Handling Comparisons",
+      icon: "🔍",
+      tip: "Never compete on price alone. Build a unique value proposition that makes comparison irrelevant. Focus on what specifically you deliver that others don't."
+    },
+    free_work: {
+      title: "Protecting Against Free Work",
+      icon: "🛡️",
+      tip: "Create a firm but friendly boundary around free work requests. Always offer a paid alternative. Your portfolio and testimonials should do the 'proving' for you."
+    },
+    scope: {
+      title: "Managing Scope Expectations",
+      icon: "📋",
+      tip: "Always define deliverables, revisions, and timelines upfront in writing. Use a scope document or proposal that clearly outlines what's included and what costs extra."
+    },
+    deferred: {
+      title: "Avoiding Deferred Payment Traps",
+      icon: "⏰",
+      tip: "Never start work without a signed agreement and deposit. Use milestone-based payments. If a client can't afford a deposit, they can't afford you."
+    }
+  };
+
+  /* ============ STATE ============ */
+  let state = {
+    rate: 0,
+    specialty: '',
+    experience: '',
+    currentRound: 0,
+    totalRounds: 6,
+    score: 50,
+    rounds: [],
+    selectedObjections: [],
+    history: []
+  };
+
+  /* ============ HELPERS ============ */
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+  function animateCounter(el, start, end, duration) {
+    const startTime = performance.now();
+    const diff = end - start;
+    function tick(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(start + diff * eased);
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function formatMoney(n) {
+    return '$' + n.toLocaleString('en-US');
+  }
+
+  function scrollToBottom(el) {
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 100);
+  }
+
+  /* ============ SETUP ============ */
+  function startSimulation() {
+    const rate = parseInt(document.getElementById('rate-input').value);
+    const specialty = document.getElementById('specialty-select').value;
+    const experience = document.getElementById('experience-select').value;
+
+    if (!rate || rate < 10) { shakeEl(document.getElementById('rate-input')); return; }
+    if (!specialty) { shakeEl(document.getElementById('specialty-select')); return; }
+    if (!experience) { shakeEl(document.getElementById('experience-select')); return; }
+
+    state.rate = rate;
+    state.specialty = specialty;
+    state.experience = experience;
+    state.currentRound = 0;
+    state.score = 50;
+    state.history = [];
+
+    // Pick 6 random objections
+    state.selectedObjections = shuffle(ALL_OBJECTIONS).slice(0, 6);
+    state.totalRounds = state.selectedObjections.length;
+
+    document.getElementById('setup-section').classList.add('hidden');
+    document.getElementById('sim-section').classList.remove('hidden');
+    document.getElementById('results-section').classList.remove('active');
+    document.getElementById('results-section').innerHTML = '';
+
+    updateScoreBar();
+    buildProgressDots();
+    startRound();
+  }
+
+  function shakeEl(el) {
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = 'shake 0.4s ease';
+    el.style.borderColor = 'var(--danger)';
+    setTimeout(() => { el.style.borderColor = ''; el.style.animation = ''; }, 600);
+  }
+
+  // Add shake keyframes
+  const shakeStyle = document.createElement('style');
+  shakeStyle.textContent = `@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 50%{transform:translateX(6px)} 75%{transform:translateX(-4px)} }`;
+  document.head.appendChild(shakeStyle);
+
+  /* ============ PROGRESS ============ */
+  function buildProgressDots() {
+    const wrap = document.getElementById('progress-dots');
+    wrap.innerHTML = '';
+    for (let i = 0; i < state.totalRounds; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'progress-dot' + (i === 0 ? ' active' : '');
+      dot.id = 'dot-' + i;
+      wrap.appendChild(dot);
+    }
+  }
+
+  function updateProgressDots() {
+    for (let i = 0; i < state.totalRounds; i++) {
+      const dot = document.getElementById('dot-' + i);
+      if (!dot) continue;
+      dot.className = 'progress-dot';
+      if (i < state.currentRound) dot.classList.add('done');
+      else if (i === state.currentRound) dot.classList.add('active');
+    }
+  }
+
+  function updateScoreBar() {
+    document.getElementById('live-score').textContent = state.score;
+    document.getElementById('round-info').textContent = `Round ${state.currentRound + 1} of ${state.totalRounds}`;
+  }
+
+  /* ============ CHAT ROUNDS ============ */
+  function startRound() {
+    const chat = document.getElementById('chat-container');
+
+    if (state.currentRound >= state.totalRounds) {
+      showResults();
+      return;
+    }
+
+    const objection = state.selectedObjections[state.currentRound];
+
+    // Round label
+    const meta = document.createElement('div');
+    meta.className = 'chat-meta';
+    meta.innerHTML = `<span class="round-label">Round ${state.currentRound + 1}</span>`;
+    chat.appendChild(meta);
+
+    // Typing indicator
+    const typing = document.createElement('div');
+    typing.className = 'typing-indicator';
+    typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+    chat.appendChild(typing);
+    scrollToBottom(typing);
+
+    // After typing delay, show client message
+    const typingDelay = 1200 + Math.random() * 800;
+    setTimeout(() => {
+      chat.removeChild(typing);
+
+      const clientBubble = document.createElement('div');
+      clientBubble.className = 'chat-bubble bubble-client';
+      clientBubble.innerHTML = `
+        <div class="sender">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/></svg>
+          Client
+        </div>
+        ${objection.text}
+      `;
+      chat.appendChild(clientBubble);
+
+      // Show response options
+      const shuffledResponses = shuffle(objection.responses);
+      const optionsWrap = document.createElement('div');
+      optionsWrap.className = 'response-options';
+      optionsWrap.id = 'options-' + state.currentRound;
+
+      const labels = ['A', 'B', 'C', 'D'];
+      shuffledResponses.forEach((resp, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'response-option';
+        btn.innerHTML = `<span class="opt-label">${labels[idx]}</span><span>${resp.text}</span>`;
+        btn.addEventListener('click', () => handleResponse(objection, resp, idx, optionsWrap, shuffledResponses));
+        optionsWrap.appendChild(btn);
+      });
+
+      chat.appendChild(optionsWrap);
+      scrollToBottom(optionsWrap);
+    }, typingDelay);
+  }
+
+  function handleResponse(objection, chosen, chosenIdx, optionsWrap, allResponses) {
+    const chat = document.getElementById('chat-container');
+    const buttons = optionsWrap.querySelectorAll('.response-option');
+
+    // Determine best response type
+    const bestScore = Math.max(...allResponses.map(r => r.score));
+
+    // Style buttons
+    buttons.forEach((btn, i) => {
+      const resp = allResponses[i];
+      if (i === chosenIdx) {
+        if (resp.score >= bestScore - 2) btn.classList.add('selected-good');
+        else if (resp.score >= 0) btn.classList.add('selected-ok');
+        else btn.classList.add('selected-bad');
+      } else {
+        btn.classList.add('dimmed');
+      }
+    });
+
+    // Show user bubble
+    const userBubble = document.createElement('div');
+    userBubble.className = 'chat-bubble bubble-user';
+    userBubble.innerHTML = `
+      <div class="sender">You</div>
+      ${chosen.text}
+    `;
+    chat.appendChild(userBubble);
+
+    // Update score
+    const oldScore = state.score;
+    state.score = clamp(state.score + chosen.score, 0, 100);
+    animateCounter(document.getElementById('live-score'), oldScore, state.score, 600);
+
+    // Show feedback
+    const feedbackEl = document.createElement('div');
+    const feedbackClass = chosen.score > 5 ? 'positive' : chosen.score >= 0 ? 'neutral' : 'negative';
+    const sign = chosen.score > 0 ? '+' : '';
+    feedbackEl.className = `score-feedback ${feedbackClass}`;
+    feedbackEl.innerHTML = `
+      <span class="score-change">${sign}${chosen.score}</span>
+      <span>${chosen.feedback}</span>
+    `;
+    chat.appendChild(feedbackEl);
+
+    // Record history
+    state.history.push({
+      objection: objection.text,
+      category: objection.category,
+      response: chosen.text,
+      score: chosen.score,
+      type: chosen.type,
+      feedback: chosen.feedback,
+      bestScore: bestScore
+    });
+
+    // Continue button
+    state.currentRound++;
+    updateProgressDots();
+
+    const contWrap = document.createElement('div');
+    contWrap.className = 'continue-btn-wrap';
+
+    if (state.currentRound < state.totalRounds) {
+      contWrap.innerHTML = `<button class="btn-primary" style="font-size:0.95rem; padding:13px 20px;">Continue to Round ${state.currentRound + 1} →</button>`;
+      contWrap.querySelector('button').addEventListener('click', () => {
+        contWrap.classList.add('hidden');
+        updateScoreBar();
+        startRound();
+      });
+    } else {
+      contWrap.innerHTML = `<button class="btn-primary" style="font-size:0.95rem; padding:13px 20px;">See Your Results →</button>`;
+      contWrap.querySelector('button').addEventListener('click', () => {
+        showResults();
+      });
+    }
+
+    chat.appendChild(contWrap);
+    scrollToBottom(contWrap);
+  }
+
+  /* ============ RESULTS ============ */
+  function showResults() {
+    document.getElementById('sim-section').classList.add('hidden');
+    const results = document.getElementById('results-section');
+    results.classList.add('active');
+
+    const finalScore = state.score;
+
+    // Grade
+    let gradeInfo = GRADES[GRADES.length - 1];
+    for (const g of GRADES) {
+      if (finalScore >= g.min) { gradeInfo = g; break; }
+    }
+
+    // Style
+    let styleInfo = NEGOTIATION_STYLES[0];
+    for (const s of NEGOTIATION_STYLES) {
+      if (finalScore >= s.range[0] && finalScore <= s.range[1]) { styleInfo = s; break; }
+    }
+
+    // Weak categories
+    const catScores = {};
+    state.history.forEach(h => {
+      if (!catScores[h.category]) catScores[h.category] = [];
+      catScores[h.category].push(h.score);
+    });
+    const catAvgs = Object.entries(catScores).map(([cat, scores]) => ({
+      cat,
+      avg: scores.reduce((a, b) => a + b, 0) / scores.length
+    })).sort((a, b) => a.avg - b.avg);
+
+    const weakAreas = catAvgs.slice(0, 3).filter(c => c.avg < 12);
+
+    // Income impact calc
+    const expMultiplier = { '1-3yr': 1600, '3-5yr': 1800, '5-10yr': 1900, '10+yr': 2000 };
+    const billableHours = expMultiplier[state.experience] || 1700;
+    const idealRate = Math.round(state.rate * 1.2);
+    const weakRate = Math.round(state.rate * 0.65);
+    const annualDiff = (idealRate - weakRate) * billableHours;
+
+    // Build HTML
+    let roundsHTML = '';
+    state.history.forEach((h, i) => {
+      const deltaClass = h.score > 5 ? 'pos' : h.score >= 0 ? 'neu' : 'neg';
+      const sign = h.score > 0 ? '+' : '';
+      roundsHTML += `
+        <div class="breakdown-item">
+          <div class="round-num">${i + 1}</div>
+          <div class="details">
+            <div class="objection-text">"${h.objection}"</div>
+            <div class="response-text">${h.response}</div>
+            <div class="score-delta ${deltaClass}">${sign}${h.score} points — ${h.type}</div>
+          </div>
+        </div>
+      `;
+    });
+
+    let improvementsHTML = '';
+    weakAreas.forEach(w => {
+      const tip = IMPROVEMENT_TIPS[w.cat];
+      if (tip) {
+        improvementsHTML += `
+          <div class="improve-card">
+            <h4>${tip.icon} ${tip.title}</h4>
+            <p>${tip.tip}</p>
+          </div>
+        `;
+      }
+    });
+
+    if (!improvementsHTML) {
+      improvementsHTML = `
+        <div class="improve-card">
+          <h4>🎯 Keep Sharpening</h4>
+          <p>You're doing well across the board. Keep practicing with different scenarios to maintain your edge and try achieving a perfect score.</p>
+        </div>
+      `;
+    }
+
+    const shareText = encodeURIComponent(`I scored ${finalScore}/100 on the Freelance Rate Negotiation Simulator! Can you beat me?\n\nhttps://freelanceos.com/freelanceos-storefront/rate-negotiation-simulator.html`);
+
+    results.innerHTML = `
+      <div class="glass-card fade-in">
+        <div class="result-header">
+          <h2>Your Negotiation Results</h2>
+        </div>
+
+        <div class="gauge-wrap">
+          <div class="gauge">
+            <svg viewBox="0 0 180 180">
+              <circle class="gauge-bg" cx="90" cy="90" r="80"/>
+              <circle class="gauge-fill" id="gauge-arc" cx="90" cy="90" r="80"/>
+            </svg>
+            <div class="gauge-text">
+              <div class="gauge-number" id="gauge-number">0</div>
+              <div class="gauge-label">out of 100</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="grade-badge ${gradeInfo.cls}">${gradeInfo.grade} — ${gradeInfo.desc}</div>
+          <div class="style-name">${styleInfo.emoji} "${styleInfo.name}"</div>
+          <p class="style-desc">${styleInfo.desc}</p>
+        </div>
+
+        <div class="income-impact">
+          <div class="label">Potential Annual Income Impact</div>
+          <div class="amount" id="income-amount">$0</div>
+          <div class="sub">Difference between confident negotiation ($${idealRate}/hr) vs. caving to pressure ($${weakRate}/hr) over ${billableHours.toLocaleString()} billable hours.</div>
+        </div>
+      </div>
+
+      <div class="glass-card fade-in">
+        <div class="breakdown-title">Round-by-Round Breakdown</div>
+        ${roundsHTML}
+      </div>
+
+      <div class="glass-card fade-in">
+        <div class="breakdown-title">Areas to Improve</div>
+        ${improvementsHTML}
+      </div>
+
+      <div class="glass-card fade-in">
+        <div class="breakdown-title">Share Your Score</div>
+        <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:14px;">Challenge other freelancers to beat your score.</p>
+        <div class="share-row">
+          <a href="https://twitter.com/intent/tweet?text=${shareText}" target="_blank" rel="noopener" class="btn-secondary" style="text-decoration:none; text-align:center;">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Share on X
+          </a>
+          <button class="btn-secondary" onclick="copyShareText(${finalScore})">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copy Result
+          </button>
+        </div>
+      </div>
+
+      <div class="cta-banner fade-in">
+        <h3>Ready to Earn What You're Worth?</h3>
+        <p>FreelanceOS Pro includes rate calculators, proposal templates, contract generators, and negotiation scripts to help you close higher-paying clients.</p>
+        <div class="price">
+          <span class="old">$29</span>
+          <span class="new">$17.40</span>
+        </div>
+        <div style="margin-bottom:14px;">
+          Use code <span class="code-pill">FLASH40</span> for 40% off
+        </div>
+        <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="cta-link">
+          Get FreelanceOS Pro →
+        </a>
+      </div>
+
+      <div class="text-center fade-in" style="margin-top:20px;">
+        <button class="btn-primary" onclick="resetSimulator()" style="max-width:320px;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 105.64-12.23L1 10"/></svg>
+          Try Again (New Scenarios)
+        </button>
+      </div>
+
+      <footer class="footer">
+        <div class="brand">FreelanceOS</div>
+        <div class="footer-links mt-12">
+          <a href="/freelanceos-storefront/freelance-rate-calculator.html">Rate Calculator</a>
+          <a href="/freelanceos-storefront/income-projector.html">Income Projector</a>
+          <a href="/freelanceos-storefront/freelance-proposal-generator.html">Proposal Generator</a>
+          <a href="/freelanceos-storefront/client-red-flag-checker.html">Client Red Flag Checker</a>
+        </div>
+        <div class="disclaimer mt-12">This tool is for educational purposes only.</div>
+      </footer>
+    `;
+
+    // Animate gauge
+    requestAnimationFrame(() => {
+      const arc = document.getElementById('gauge-arc');
+      if (arc) {
+        const circumference = 2 * Math.PI * 80;
+        const offset = circumference - (finalScore / 100) * circumference;
+        arc.style.strokeDasharray = circumference;
+        arc.style.strokeDashoffset = circumference;
+        setTimeout(() => {
+          arc.style.strokeDashoffset = offset;
+        }, 200);
+      }
+
+      const gaugeNum = document.getElementById('gauge-number');
+      if (gaugeNum) {
+        setTimeout(() => animateCounter(gaugeNum, 0, finalScore, 2000), 300);
+      }
+
+      const incomeEl = document.getElementById('income-amount');
+      if (incomeEl) {
+        setTimeout(() => {
+          const startTime = performance.now();
+          const duration = 2000;
+          function tick(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            incomeEl.textContent = formatMoney(Math.round(annualDiff * eased));
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        }, 800);
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ============ SHARE / RESET ============ */
+  window.copyShareText = function(score) {
+    const text = `I scored ${score}/100 on the Freelance Rate Negotiation Simulator! Can you beat me?\n\nhttps://freelanceos.com/freelanceos-storefront/rate-negotiation-simulator.html`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target.closest('button');
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Copied!';
+        btn.style.borderColor = 'var(--success)';
+        btn.style.color = 'var(--success)';
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  };
+
+  window.resetSimulator = function() {
+    document.getElementById('results-section').classList.remove('active');
+    document.getElementById('results-section').innerHTML = '';
+    document.getElementById('sim-section').classList.add('hidden');
+    document.getElementById('setup-section').classList.remove('hidden');
+    document.getElementById('chat-container').innerHTML = '';
+    state.currentRound = 0;
+    state.score = 50;
+    state.history = [];
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Expose startSimulation to global scope
+  window.startSimulation = startSimulation;
+
+})();
+</script>
+
+</body>
+</html>

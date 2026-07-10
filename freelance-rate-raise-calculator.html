@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Rate Raise Calculator — Are You Undercharging? | FreelanceOS</title>
+<meta name="description" content="Find out if you're undercharging in 60 seconds. Compare your rate to 2026 market benchmarks by niche and skill level. Get your recommended new rate + a copy-paste raise announcement script.">
+<meta property="og:title" content="Freelance Rate Raise Calculator — Are You Undercharging?">
+<meta property="og:description" content="Compare your rate to 2026 market benchmarks. Find out your recommended rate, income impact, and get a copy-paste client announcement script.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos-storefront.vercel.app/freelance-rate-raise-calculator.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Freelance Rate Raise Calculator — Find Out in 60 Seconds">
+<meta name="twitter:description" content="Are you undercharging? Compare your freelance rate to 2026 market benchmarks and get a recommended new rate instantly.">
+<link rel="canonical" href="https://freelanceos-storefront.vercel.app/freelance-rate-raise-calculator.html">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f0f;--card:#111;--card2:#181818;
+  --accent:#7c3aed;--accent-light:#a78bfa;--accent-glow:rgba(124,58,237,.25);
+  --green:#10b981;--yellow:#f59e0b;--red:#ef4444;
+  --text:#e5e7eb;--text-muted:#9ca3af;--text-dim:#6b7280;
+  --border:rgba(255,255,255,.08);--border-accent:rgba(124,58,237,.35);
+  --radius:14px;--radius-sm:10px;--radius-xs:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-light);text-decoration:none}
+
+/* Nav */
+.nav{padding:14px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(15,15,15,.95);backdrop-filter:blur(12px);z-index:100}
+.nav-brand{font-weight:800;font-size:.95rem;background:linear-gradient(135deg,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-back{font-size:.8rem;color:var(--text-muted);display:flex;align-items:center;gap:5px;transition:color .2s}
+.nav-back:hover{color:var(--text)}
+
+/* Hero */
+.hero{padding:56px 24px 40px;text-align:center;max-width:760px;margin:0 auto}
+.viral-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:999px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);font-size:.72rem;font-weight:700;color:var(--accent-light);margin-bottom:20px;letter-spacing:.05em}
+.hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
+.grad-text{background:linear-gradient(135deg,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1rem;color:var(--text-muted);max-width:520px;margin:0 auto}
+
+/* Main layout */
+.main{max-width:1100px;margin:0 auto;padding:0 20px 80px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+@media(max-width:900px){.main{grid-template-columns:1fr}}
+
+/* Panels */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;position:relative}
+.panel-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-light);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.panel-label::before{content:'';width:16px;height:2px;background:var(--accent);border-radius:999px;display:inline-block}
+.panel h2{font-size:1.1rem;font-weight:700;margin-bottom:20px}
+
+/* Form inputs */
+.field{margin-bottom:20px}
+.field label{display:block;font-size:.82rem;font-weight:600;color:var(--text-muted);margin-bottom:7px}
+.field input,.field select{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-xs);padding:11px 14px;color:var(--text);font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.field select option{background:#1a1a1a;color:var(--text)}
+
+/* Rate type toggle */
+.toggle-row{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius-xs);overflow:hidden;margin-bottom:20px}
+.toggle-btn{flex:1;padding:10px;text-align:center;font-size:.83rem;font-weight:600;cursor:pointer;transition:all .2s;background:transparent;border:none;color:var(--text-muted);font-family:inherit}
+.toggle-btn.active{background:var(--accent);color:#fff}
+
+/* Market panel */
+.market-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;grid-column:1/-1}
+@media(max-width:900px){.market-panel{grid-column:1}}
+
+/* Rate badge */
+.rate-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;font-size:.85rem;font-weight:700;margin-bottom:16px}
+.badge-green{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:var(--green)}
+.badge-yellow{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:var(--yellow)}
+.badge-red{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:var(--red)}
+
+/* Bars */
+.bench-grid{display:grid;grid-template-columns:80px 1fr 60px;gap:8px 12px;align-items:center;margin-top:20px}
+.bench-label{font-size:.78rem;color:var(--text-muted);font-weight:600}
+.bench-bar-wrap{height:18px;background:rgba(255,255,255,.05);border-radius:999px;overflow:hidden;position:relative}
+.bench-bar{height:100%;border-radius:999px;transition:width .7s cubic-bezier(.4,0,.2,1);min-width:4px}
+.bench-val{font-size:.78rem;color:var(--text-muted);text-align:right;font-weight:600}
+.bench-bar.you{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.bench-bar.junior{background:rgba(107,114,128,.5)}
+.bench-bar.mid{background:rgba(59,130,246,.5)}
+.bench-bar.senior{background:rgba(16,185,129,.5)}
+.bench-bar.expert{background:rgba(245,158,11,.5)}
+.bench-you-label{font-size:.78rem;font-weight:700;color:#a78bfa}
+
+/* Inflation */
+.inflation-box{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:var(--radius-xs);padding:14px 16px;margin-top:20px;font-size:.85rem;color:var(--red);display:flex;align-items:center;gap:10px}
+.inflation-box span{color:var(--text-muted)}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+@media(max-width:600px){.stats-row{grid-template-columns:1fr 1fr}}
+.stat-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:1.5rem;font-weight:800;color:var(--accent-light);line-height:1.1}
+.stat-card .stat-label{font-size:.72rem;color:var(--text-dim);margin-top:4px}
+
+/* Confidence */
+.conf-wrap{margin-bottom:24px}
+.conf-label{font-size:.82rem;color:var(--text-muted);margin-bottom:8px;display:flex;justify-content:space-between}
+.conf-track{height:20px;background:rgba(255,255,255,.05);border-radius:999px;overflow:hidden}
+.conf-bar{height:100%;border-radius:999px;background:linear-gradient(90deg,#10b981,#a78bfa);transition:width .8s cubic-bezier(.4,0,.2,1)}
+.conf-score{font-weight:800;color:var(--accent-light)}
+
+/* Script box */
+.script-box{background:var(--card2);border:1px solid var(--border-accent);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;position:relative}
+.script-box pre{font-size:.82rem;color:var(--text-muted);white-space:pre-wrap;word-break:break-word;font-family:-apple-system,sans-serif;line-height:1.7}
+.copy-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--accent);border:none;border-radius:var(--radius-xs);color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;margin-top:12px}
+.copy-btn:hover{opacity:.88}
+.copy-btn.copied{background:var(--green)}
+
+/* Share card */
+.share-card{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(167,139,250,.06));border:1px solid rgba(124,58,237,.25);border-radius:var(--radius-sm);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.share-text{font-size:.85rem;font-weight:600;color:var(--text)}
+.share-btn{padding:8px 16px;border:1px solid rgba(124,58,237,.4);border-radius:var(--radius-xs);background:transparent;color:var(--accent-light);font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.share-btn:hover{background:rgba(124,58,237,.15)}
+.share-btn.copied{border-color:var(--green);color:var(--green)}
+
+/* Email capture */
+.email-capture{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(167,139,250,.05));border:1px solid rgba(124,58,237,.2);border-radius:var(--radius-sm);padding:24px;margin-top:0}
+.email-capture h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.email-capture p{font-size:.8rem;color:var(--text-muted);margin-bottom:16px}
+.email-row{display:flex;gap:8px;flex-wrap:wrap}
+.email-row input{flex:1;min-width:200px;background:rgba(255,255,255,.06);border:1px solid rgba(124,58,237,.25);border-radius:var(--radius-xs);padding:10px 14px;color:var(--text);font-size:.85rem;font-family:inherit;outline:none}
+.email-row input:focus{border-color:var(--accent)}
+.email-row button{padding:10px 18px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border:none;border-radius:var(--radius-xs);color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+.email-row button:hover{opacity:.9}
+.email-ok{font-size:.8rem;font-weight:700;color:var(--green);margin-top:8px;display:none}
+
+/* Pro CTA */
+.pro-cta{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(167,139,250,.05));border:1px solid rgba(124,58,237,.25);border-radius:var(--radius);padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:24px;grid-column:1/-1}
+@media(max-width:900px){.pro-cta{grid-column:1}}
+.pro-cta-body h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.pro-cta-body p{font-size:.82rem;color:var(--text-muted)}
+.pro-cta-btn{padding:12px 22px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:var(--radius-xs);color:#fff;font-weight:700;font-size:.85rem;white-space:nowrap;transition:all .2s;display:inline-block}
+.pro-cta-btn:hover{opacity:.88;transform:translateY(-1px);-webkit-text-fill-color:#fff}
+
+/* Result panel */
+.result-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;grid-column:1/-1}
+@media(max-width:900px){.result-panel{grid-column:1}}
+
+.section-sep{height:1px;background:var(--border);margin:20px 0}
+
+/* Placeholder state */
+.placeholder-text{color:var(--text-dim);font-size:.85rem;text-align:center;padding:30px 0;display:none}
+
+/* Market % */
+.market-pct{font-size:2rem;font-weight:800;margin-bottom:4px}
+.market-pct.up{color:var(--green)}
+.market-pct.down{color:var(--red)}
+.market-pct.at{color:var(--yellow)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/freelanceos-storefront/toolkit.html" class="nav-back">← All Free Tools</a>
+  <span class="nav-brand">FreelanceOS</span>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" style="font-size:.78rem;font-weight:700;background:linear-gradient(135deg,#7c3aed,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Get Pro — 40% off →</a>
+</nav>
+
+<div class="hero">
+  <div class="viral-badge">💰 FREE CALCULATOR</div>
+  <h1>Are You <span class="grad-text">Undercharging?</span><br>Find Out in 60 Seconds</h1>
+  <p>Compare your rate to 2026 market benchmarks for your niche and skill level. Get your recommended rate + a copy-paste announcement script.</p>
+</div>
+
+<div class="main">
+
+  <!-- Panel A: Your Situation -->
+  <div class="panel">
+    <div class="panel-label">Step 1</div>
+    <h2>Your Situation</h2>
+
+    <div class="field">
+      <label>Your current rate</label>
+      <input type="number" id="current-rate" placeholder="e.g. 75" min="1" max="2000" value="">
+      <div style="margin-top:6px;font-size:.72rem;color:var(--text-dim)" id="rate-unit-hint">Enter your hourly rate</div>
+    </div>
+
+    <div class="field">
+      <label>Rate type</label>
+      <div class="toggle-row">
+        <button class="toggle-btn active" id="btn-hourly" onclick="setRateType('hourly')">Hourly</button>
+        <button class="toggle-btn" id="btn-project" onclick="setRateType('project')">Per-project</button>
+      </div>
+    </div>
+
+    <div class="field" id="hrs-per-project-field" style="display:none">
+      <label>Avg hours per project</label>
+      <input type="number" id="hrs-per-project" placeholder="e.g. 20" min="1" max="2000" value="">
+    </div>
+
+    <div class="field">
+      <label>Years freelancing</label>
+      <select id="years">
+        <option value="">Select…</option>
+        <option value="0.5">Less than 1 year</option>
+        <option value="1.5">1–2 years</option>
+        <option value="4">3–5 years</option>
+        <option value="7">5–10 years</option>
+        <option value="12">10+ years</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Last rate increase</label>
+      <select id="last-raise">
+        <option value="">Select…</option>
+        <option value="0">Never raised my rate</option>
+        <option value="0.5">About 6 months ago</option>
+        <option value="1">About 1 year ago</option>
+        <option value="2">About 2 years ago</option>
+        <option value="3">3+ years ago</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Your niche</label>
+      <select id="niche">
+        <option value="">Select…</option>
+        <option value="webdev">Web Development</option>
+        <option value="design">Design</option>
+        <option value="copywriting">Copywriting</option>
+        <option value="marketing">Marketing</option>
+        <option value="photography">Photography</option>
+        <option value="video">Video</option>
+        <option value="consulting">Consulting</option>
+        <option value="va">Virtual Assistant</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Skill level</label>
+      <select id="skill">
+        <option value="">Select…</option>
+        <option value="junior">Junior</option>
+        <option value="mid">Mid-level</option>
+        <option value="senior">Senior</option>
+        <option value="expert">Expert</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Panel B: Market Intelligence -->
+  <div class="panel">
+    <div class="panel-label">Step 2</div>
+    <h2>Market Intelligence</h2>
+
+    <div id="market-placeholder" style="color:var(--text-dim);font-size:.85rem;text-align:center;padding:40px 0">
+      Fill in your details on the left to see how your rate compares to the 2026 market.
+    </div>
+
+    <div id="market-content" style="display:none">
+      <div style="margin-bottom:16px">
+        <div class="market-pct" id="mkt-pct">—</div>
+        <div style="font-size:.8rem;color:var(--text-muted)" id="mkt-pct-label">vs. market rate for your level</div>
+      </div>
+
+      <div id="rate-badge-wrap"></div>
+
+      <div class="bench-grid" id="bench-grid"></div>
+
+      <div class="inflation-box" id="inflation-box" style="display:none">
+        🔥 <span><b id="inflation-pct">—</b> effective rate drop</span> due to inflation since your last raise.
+        That's <b id="inflation-dollars">$—</b>/hr in lost purchasing power.
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel C: Recommendation (full width) -->
+  <div class="result-panel" id="result-panel" style="display:none">
+    <div class="panel-label">Step 3 — Your Recommendation</div>
+    <h2 id="result-headline">Your Recommended New Rate</h2>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val" id="rec-rate">$—</div>
+        <div class="stat-label">Recommended new rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="income-impact">$—</div>
+        <div class="stat-label">Extra income/year</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="conf-pct-display">—</div>
+        <div class="stat-label">Raise confidence score</div>
+      </div>
+    </div>
+
+    <div class="conf-wrap">
+      <div class="conf-label">
+        <span>Confidence to raise your rate</span>
+        <span class="conf-score" id="conf-label-val">0/100</span>
+      </div>
+      <div class="conf-track">
+        <div class="conf-bar" id="conf-bar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="section-sep"></div>
+
+    <div style="margin-bottom:16px">
+      <div style="font-size:.9rem;font-weight:700;margin-bottom:10px">📝 Your Rate Announcement Script</div>
+      <div style="font-size:.78rem;color:var(--text-dim);margin-bottom:12px">Copy this, replace [Client Name] and [Your Name], and send.</div>
+      <div class="script-box">
+        <pre id="script-text">Loading your script…</pre>
+      </div>
+      <button class="copy-btn" id="copy-script-btn" onclick="copyScript()">📋 Copy Script</button>
+    </div>
+
+    <div class="section-sep"></div>
+
+    <div class="share-card" style="margin-bottom:20px">
+      <div class="share-text" id="share-text">Find out how your freelance rate stacks up →</div>
+      <button class="share-btn" id="share-btn" onclick="copyShare()">📤 Copy Share Message</button>
+    </div>
+
+    <div class="email-capture">
+      <h3>📄 Get the Free Freelance Rate Negotiation Playbook PDF</h3>
+      <p>Scripts, strategies, and negotiation tactics to raise your rate without losing clients. Completely free.</p>
+      <div class="email-row">
+        <input type="email" id="email-cap" placeholder="your@email.com">
+        <button onclick="captureEmail()">Send Me the PDF →</button>
+      </div>
+      <div class="email-ok" id="email-ok">✓ Check your inbox! (tip: also check spam)</div>
+    </div>
+  </div>
+
+  <div class="pro-cta" id="pro-cta" style="display:none">
+    <div class="pro-cta-body">
+      <h3>FreelanceOS Pro — Client Rate Tracker Included</h3>
+      <p>Log every client's rate, raise history, and see your portfolio-wide average rate — all in one connected Notion workspace. Plus income tracker, CRM, proposal builder, and more.</p>
+    </div>
+    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="pro-cta-btn">Get FreelanceOS Pro — 40% off →</a>
+  </div>
+
+</div>
+
+<script>
+// Market rate benchmarks by niche × skill
+const BENCHMARKS = {
+  webdev:      {junior:45,  mid:75,  senior:110, expert:150},
+  design:      {junior:40,  mid:65,  senior:95,  expert:130},
+  copywriting: {junior:35,  mid:60,  senior:90,  expert:120},
+  marketing:   {junior:40,  mid:65,  senior:95,  expert:125},
+  photography: {junior:50,  mid:85,  senior:125, expert:175},
+  video:       {junior:55,  mid:90,  senior:135, expert:180},
+  consulting:  {junior:60,  mid:100, senior:150, expert:200},
+  va:          {junior:18,  mid:28,  senior:40,  expert:55},
+  other:       {junior:35,  mid:60,  senior:90,  expert:120},
+};
+
+const NICHE_LABELS = {
+  webdev:'Web Development', design:'Design', copywriting:'Copywriting',
+  marketing:'Marketing', photography:'Photography', video:'Video',
+  consulting:'Consulting', va:'Virtual Assistant', other:'Other'
+};
+
+let rateType = 'hourly';
+let animFrame = null;
+
+function setRateType(t) {
+  rateType = t;
+  document.getElementById('btn-hourly').classList.toggle('active', t==='hourly');
+  document.getElementById('btn-project').classList.toggle('active', t==='project');
+  document.getElementById('hrs-per-project-field').style.display = t==='project' ? 'block' : 'none';
+  document.getElementById('rate-unit-hint').textContent = t==='hourly'
+    ? 'Enter your hourly rate' : 'Enter your per-project rate';
+  recalc();
+}
+
+function getHourlyRate() {
+  const raw = parseFloat(document.getElementById('current-rate').value)||0;
+  if (rateType === 'project') {
+    const hrs = parseFloat(document.getElementById('hrs-per-project').value)||0;
+    return hrs > 0 ? raw/hrs : 0;
+  }
+  return raw;
+}
+
+function recalc() {
+  const hourlyRate = getHourlyRate();
+  const years = parseFloat(document.getElementById('years').value)||0;
+  const lastRaise = document.getElementById('last-raise').value;
+  const niche = document.getElementById('niche').value;
+  const skill = document.getElementById('skill').value;
+
+  const ready = hourlyRate > 0 && niche && skill;
+
+  // Market content
+  document.getElementById('market-placeholder').style.display = ready ? 'none' : 'block';
+  document.getElementById('market-content').style.display = ready ? 'block' : 'none';
+  document.getElementById('result-panel').style.display = ready ? 'block' : 'none';
+  document.getElementById('pro-cta').style.display = ready ? 'flex' : 'none';
+
+  if (!ready) return;
+
+  const bench = BENCHMARKS[niche];
+  const marketRate = bench[skill];
+  const pctDiff = ((hourlyRate - marketRate) / marketRate * 100);
+  const absDiff = Math.abs(pctDiff);
+
+  // Market pct display
+  const pctEl = document.getElementById('mkt-pct');
+  if (pctDiff > 5) {
+    pctEl.textContent = '+'+absDiff.toFixed(0)+'% above market';
+    pctEl.className = 'market-pct up';
+  } else if (pctDiff < -5) {
+    pctEl.textContent = '-'+absDiff.toFixed(0)+'% below market';
+    pctEl.className = 'market-pct down';
+  } else {
+    pctEl.textContent = 'At market rate';
+    pctEl.className = 'market-pct at';
+  }
+  document.getElementById('mkt-pct-label').textContent = `vs. $${marketRate}/hr market rate for ${NICHE_LABELS[niche]} (${skill})`;
+
+  // Badge
+  let badgeHTML;
+  if (pctDiff > 5) {
+    badgeHTML = '<div class="rate-badge badge-green">🟢 Above Market — You\'re doing well</div>';
+  } else if (pctDiff < -5) {
+    badgeHTML = '<div class="rate-badge badge-red">🔴 Below Market — Time to raise your rate</div>';
+  } else {
+    badgeHTML = '<div class="rate-badge badge-yellow">🟡 At Market — Consider a raise soon</div>';
+  }
+  document.getElementById('rate-badge-wrap').innerHTML = badgeHTML;
+
+  // Benchmarks bar chart
+  const allRates = [hourlyRate, bench.junior, bench.mid, bench.senior, bench.expert];
+  const maxRate = Math.max(...allRates) * 1.15;
+  const rows = [
+    {label:'You',    rate:hourlyRate,   cls:'you',    color:'#a78bfa'},
+    {label:'Junior', rate:bench.junior, cls:'junior', color:'#6b7280'},
+    {label:'Mid',    rate:bench.mid,    cls:'mid',    color:'#3b82f6'},
+    {label:'Senior', rate:bench.senior, cls:'senior', color:'#10b981'},
+    {label:'Expert', rate:bench.expert, cls:'expert', color:'#f59e0b'},
+  ];
+  let gridHTML = '<div style="font-size:.72rem;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:.06em">Level</div><div style="font-size:.72rem;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:.06em">Rate vs. Market</div><div style="font-size:.72rem;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-align:right">$/hr</div>';
+  rows.forEach(r => {
+    const w = Math.max(4, (r.rate/maxRate)*100);
+    const labelStyle = r.cls==='you' ? 'color:#a78bfa;font-weight:700' : '';
+    gridHTML += `
+      <div class="bench-label" style="${labelStyle}">${r.label}</div>
+      <div class="bench-bar-wrap"><div class="bench-bar ${r.cls}" style="width:${w}%;background:${r.cls==='you'?'linear-gradient(90deg,#7c3aed,#a78bfa)':r.color}"></div></div>
+      <div class="bench-val" style="${labelStyle}">$${r.rate.toFixed(0)}</div>`;
+  });
+  document.getElementById('bench-grid').innerHTML = gridHTML;
+
+  // Inflation erosion
+  const lastRaiseYrs = lastRaise !== '' ? parseFloat(lastRaise) : null;
+  const inflationEl = document.getElementById('inflation-box');
+  if (lastRaiseYrs !== null && lastRaiseYrs > 0) {
+    const erosion = (1 - (1/Math.pow(1.04, lastRaiseYrs))) * 100;
+    const dollarLoss = hourlyRate * (erosion/100);
+    document.getElementById('inflation-pct').textContent = erosion.toFixed(1)+'%';
+    document.getElementById('inflation-dollars').textContent = '$'+dollarLoss.toFixed(2);
+    inflationEl.style.display = 'flex';
+  } else {
+    inflationEl.style.display = 'none';
+  }
+
+  // Recommendation algorithm
+  let recRate;
+  if (pctDiff < -5) {
+    recRate = marketRate; // bring up to market
+  } else if (pctDiff >= -5 && pctDiff <= 5) {
+    recRate = hourlyRate * 1.10; // at market → +10%
+  } else {
+    recRate = hourlyRate * 1.05; // above market → +5%
+  }
+  // Override: if 2+ years since raise, always minimum +10%
+  if (lastRaiseYrs !== null && lastRaiseYrs >= 2 && recRate < hourlyRate * 1.10) {
+    recRate = hourlyRate * 1.10;
+  }
+  recRate = Math.ceil(recRate);
+
+  // Income impact (30 billable hrs/wk × 48 wks)
+  const extraPerHr = recRate - hourlyRate;
+  const extraYear = extraPerHr * 30 * 48;
+
+  // Confidence score
+  let conf = 0;
+  conf += Math.min(years * 15, 45); // up to 45 from experience
+  if (lastRaiseYrs !== null) conf += Math.min(lastRaiseYrs * 10, 30); // up to 30 for overdue
+  if (pctDiff < -5) conf += 30; // below market bonus
+  else if (pctDiff < 5) conf += 15;
+  conf = Math.min(100, Math.round(conf));
+
+  // Update stat cards with animated counter
+  animateCounter('rec-rate', recRate, '$', '/hr');
+  animateCounter('income-impact', extraYear, '$', '/yr', true);
+  document.getElementById('conf-pct-display').textContent = conf+'/100';
+  document.getElementById('conf-label-val').textContent = conf+'/100';
+  setTimeout(()=>{
+    document.getElementById('conf-bar').style.width = conf+'%';
+  }, 100);
+
+  // Script
+  const d = new Date();
+  d.setDate(d.getDate() + 90);
+  const dateStr = d.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+  const nicheLabel = NICHE_LABELS[niche] || 'freelance';
+  const yrsDisplay = years >= 10 ? '10+' : years >= 7 ? '7+' : years >= 4 ? '3+' : years >= 1.5 ? '1+' : '<1';
+  const script = `Hi [Client Name],
+
+I'm reaching out to let you know that starting ${dateStr},
+my rate will be moving to $${recRate}/hr. This reflects ${yrsDisplay} years
+of experience and current market rates for ${nicheLabel} work at my level.
+
+I'm committed to delivering the same excellent ${nicheLabel} work you've
+come to rely on. If you'd like to discuss any upcoming projects before
+the rate change, I'd love to schedule a call.
+
+[Your Name]`;
+  document.getElementById('script-text').textContent = script;
+  document.getElementById('result-headline').textContent = `Your Recommended Rate: $${recRate}/hr`;
+
+  // Share text
+  const diff = hourlyRate > marketRate ? 0 : Math.round(marketRate - hourlyRate);
+  const shareMsg = diff > 0
+    ? `I just discovered I've been undercharging by $${diff}/hr. The free Freelance Rate Raise Calculator shows exactly what you should be charging in 2026: https://freelanceos-storefront.vercel.app/freelance-rate-raise-calculator.html`
+    : `I used the free Freelance Rate Raise Calculator and found I'm ${absDiff.toFixed(0)}% above the 2026 market rate for my niche! Check yours: https://freelanceos-storefront.vercel.app/freelance-rate-raise-calculator.html`;
+  document.getElementById('share-text').textContent = diff > 0
+    ? `"I was undercharging by $${diff}/hr. Here's what I found →"`
+    : `"My rate is ${absDiff.toFixed(0)}% above market! Check yours →"`;
+  document.getElementById('share-btn').dataset.msg = shareMsg;
+
+  // URL hash state
+  const state = [
+    document.getElementById('current-rate').value,
+    rateType,
+    document.getElementById('hrs-per-project').value||'',
+    document.getElementById('years').value,
+    document.getElementById('last-raise').value,
+    niche,
+    skill
+  ].join('|');
+  history.replaceState(null,'','#'+btoa(state));
+}
+
+function animateCounter(id, target, prefix, suffix, isLarge) {
+  const el = document.getElementById(id);
+  const start = 0;
+  const dur = 800;
+  const startTime = performance.now();
+  function step(now) {
+    const progress = Math.min((now - startTime)/dur, 1);
+    const ease = 1 - Math.pow(1-progress, 3);
+    const val = Math.round(start + (target - start) * ease);
+    el.textContent = prefix + val.toLocaleString() + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function copyScript() {
+  const text = document.getElementById('script-text').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.getElementById('copy-script-btn');
+    btn.textContent = '✓ Script copied!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 Copy Script';btn.classList.remove('copied');},2500);
+  });
+}
+
+function copyShare() {
+  const btn = document.getElementById('share-btn');
+  const msg = btn.dataset.msg || 'Check out the Free Freelance Rate Raise Calculator: https://freelanceos-storefront.vercel.app/freelance-rate-raise-calculator.html';
+  navigator.clipboard.writeText(msg).then(()=>{
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📤 Copy Share Message';btn.classList.remove('copied');},2500);
+  });
+}
+
+function captureEmail() {
+  const email = document.getElementById('email-cap').value.trim();
+  if (!email || !email.includes('@')) return;
+  const leads = JSON.parse(localStorage.getItem('freelanceos_leads')||'[]');
+  leads.push({email, source:'rate-raise-calculator', date:new Date().toISOString()});
+  localStorage.setItem('freelanceos_leads', JSON.stringify(leads));
+  document.getElementById('email-ok').style.display = 'block';
+}
+
+// Load hash state
+function loadHash() {
+  if (!location.hash) return;
+  try {
+    const parts = atob(location.hash.slice(1)).split('|');
+    if (parts.length < 7) return;
+    document.getElementById('current-rate').value = parts[0];
+    setRateType(parts[1]);
+    document.getElementById('hrs-per-project').value = parts[2];
+    document.getElementById('years').value = parts[3];
+    document.getElementById('last-raise').value = parts[4];
+    document.getElementById('niche').value = parts[5];
+    document.getElementById('skill').value = parts[6];
+  } catch(e){}
+}
+
+// Event listeners
+['current-rate','hrs-per-project','years','last-raise','niche','skill'].forEach(id=>{
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', recalc);
+});
+
+loadHash();
+recalc();
+</script>
+</body>
+</html>

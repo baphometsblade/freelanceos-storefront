@@ -1,0 +1,2559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Weekly Planner Generator — Free Tool | FreelanceOS</title>
+    <meta name="description" content="Plan your freelance week like a pro. AI-powered scheduling that respects your energy levels, deadlines, and work style. Free interactive tool from FreelanceOS.">
+    <meta name="keywords" content="freelance planner, weekly planner, freelance schedule, time management, freelancer tools, project planning">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Freelance Weekly Planner Generator — Free Tool | FreelanceOS">
+    <meta property="og:description" content="Plan your freelance week like a pro. Smart scheduling that respects your energy, deadlines, and work style.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.freelanceos.com/freelanceos-storefront/weekly-planner.html">
+    <meta property="og:image" content="https://www.freelanceos.com/og-weekly-planner.png">
+    <meta property="og:site_name" content="FreelanceOS">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Freelance Weekly Planner Generator — Free Tool | FreelanceOS">
+    <meta name="twitter:description" content="Plan your freelance week like a pro. Smart scheduling that respects your energy, deadlines, and work style.">
+    <meta name="twitter:image" content="https://www.freelanceos.com/og-weekly-planner.png">
+
+    <!-- Schema.org WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Freelance Weekly Planner Generator",
+        "description": "AI-powered weekly planner that schedules your freelance projects based on energy levels, deadlines, and work preferences.",
+        "url": "https://www.freelanceos.com/freelanceos-storefront/weekly-planner.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "FreelanceOS"
+        }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #a855f7;
+            --accent2: #ec4899;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(168, 85, 247, 0.1);
+            --border-hover: rgba(168, 85, 247, 0.3);
+            --glass: rgba(15, 23, 42, 0.8);
+            --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius-card: 16px;
+            --radius-btn: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background decoration */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.04) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            padding: 32px 0 16px;
+            text-align: center;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: 13px;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: clamp(28px, 5vw, 44px);
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Progress Steps */
+        .progress-bar {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 32px auto;
+            max-width: 500px;
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 4px;
+            background: rgba(168, 85, 247, 0.15);
+            border-radius: 4px;
+            transition: background 0.4s ease;
+            cursor: pointer;
+        }
+
+        .progress-step.active {
+            background: var(--gradient);
+        }
+
+        .progress-step.completed {
+            background: var(--accent);
+        }
+
+        .step-labels {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            max-width: 500px;
+            margin: 0 auto 32px;
+        }
+
+        .step-label {
+            flex: 1;
+            font-size: 11px;
+            text-align: center;
+            color: var(--text-dim);
+            transition: color 0.3s;
+        }
+
+        .step-label.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        /* Slider */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: rgba(168, 85, 247, 0.15);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: var(--gradient);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+        }
+
+        .slider-value {
+            min-width: 40px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Checkbox Group */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-pill {
+            position: relative;
+        }
+
+        .checkbox-pill input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .checkbox-pill label {
+            display: block;
+            padding: 10px 20px;
+            background: rgba(168, 85, 247, 0.08);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            font-size: 14px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .checkbox-pill input:checked + label {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
+            color: var(--text);
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.15);
+        }
+
+        /* Radio Pills */
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .radio-pill {
+            position: relative;
+        }
+
+        .radio-pill input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .radio-pill label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(168, 85, 247, 0.08);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            font-size: 14px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .radio-pill input:checked + label {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
+            color: var(--text);
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.15);
+        }
+
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .project-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .project-card .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .project-input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.25s;
+        }
+
+        .project-input:focus {
+            border-color: var(--accent);
+        }
+
+        .project-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .mini-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .priority-select {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .priority-select option {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        /* Energy Battery */
+        .energy-selector {
+            display: flex;
+            gap: 12px;
+        }
+
+        .battery-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-btn);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 22px;
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .battery-icon:hover {
+            border-color: var(--border-hover);
+        }
+
+        .battery-icon.active {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.15);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+        }
+
+        .energy-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        /* Day Blocker */
+        .day-blocker {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .day-block {
+            text-align: center;
+            padding: 14px 8px;
+            background: rgba(168, 85, 247, 0.06);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .day-block .day-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .day-block .day-status {
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .day-block.blocked {
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .day-block.blocked .day-name {
+            color: var(--danger);
+        }
+
+        .day-block.blocked .day-status {
+            color: var(--danger);
+        }
+
+        /* Deadline Toggle */
+        .deadline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .deadline-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+        }
+
+        .deadline-item span {
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(168, 85, 247, 0.15);
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: var(--text-dim);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--gradient);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+            background: white;
+        }
+
+        /* Deep work preference */
+        .deep-work-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .deep-work-card {
+            padding: 20px;
+            background: rgba(168, 85, 247, 0.06);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-card);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .deep-work-card.selected {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.12);
+            box-shadow: 0 0 24px rgba(168, 85, 247, 0.15);
+        }
+
+        .deep-work-card .dw-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .deep-work-card .dw-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .deep-work-card .dw-desc {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: var(--radius-btn);
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 30px rgba(168, 85, 247, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(168, 85, 247, 0.18);
+            border-color: var(--border-hover);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 12px 20px;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text);
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+        }
+
+        /* Step visibility */
+        .step-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .step-panel.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== WEEKLY CALENDAR ===== */
+        .calendar-container {
+            margin-top: 8px;
+        }
+
+        .calendar-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .calendar-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .calendar-stats {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .cal-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 18px;
+            background: rgba(168, 85, 247, 0.08);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+        }
+
+        .cal-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cal-stat-label {
+            font-size: 11px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Calendar grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: 72px repeat(7, 1fr);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .cal-corner {
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            padding: 12px 8px;
+        }
+
+        .cal-day-header {
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .cal-day-header:last-child {
+            border-right: none;
+        }
+
+        .cal-day-header .day-hrs {
+            font-size: 11px;
+            color: var(--text-dim);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .cal-day-header .focus-score {
+            font-size: 10px;
+            margin-top: 3px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .focus-high {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .focus-mid {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .focus-low {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        .cal-day-header .overbooked-badge {
+            display: inline-block;
+            font-size: 10px;
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-top: 3px;
+        }
+
+        .cal-time-label {
+            background: rgba(15, 23, 42, 0.7);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.05);
+            padding: 4px 8px;
+            font-size: 11px;
+            color: var(--text-dim);
+            text-align: right;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            min-height: 52px;
+        }
+
+        .cal-cell {
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.05);
+            min-height: 52px;
+            position: relative;
+            padding: 2px;
+        }
+
+        .cal-cell:nth-child(8n) {
+            border-right: none;
+        }
+
+        .cal-block {
+            border-radius: 8px;
+            padding: 6px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+            position: relative;
+            cursor: grab;
+            transition: box-shadow 0.2s, transform 0.2s;
+            overflow: hidden;
+            line-height: 1.3;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cal-block:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .cal-block.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .cal-block .block-name {
+            font-weight: 700;
+            font-size: 11px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cal-block .block-time {
+            font-size: 9px;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        .cal-block.buffer-block {
+            background: rgba(100, 116, 139, 0.3) !important;
+            border: 1px dashed rgba(100, 116, 139, 0.4);
+            color: var(--text-dim);
+            font-style: italic;
+        }
+
+        .cal-block.admin-block {
+            background: rgba(100, 116, 139, 0.25) !important;
+            border: 1px solid rgba(100, 116, 139, 0.3);
+        }
+
+        .blocked-day-overlay {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 8px,
+                rgba(239, 68, 68, 0.05) 8px,
+                rgba(239, 68, 68, 0.05) 16px
+            );
+            pointer-events: none;
+        }
+
+        /* Project Legend */
+        .project-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .legend-swatch {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+
+        /* Week summary */
+        .week-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .summary-card {
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            text-align: center;
+        }
+
+        .summary-card .sc-value {
+            font-size: 28px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .summary-card .sc-label {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        /* Export buttons */
+        .export-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .export-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 20px;
+            background: rgba(168, 85, 247, 0.06);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            color: var(--text);
+        }
+
+        .export-btn:hover {
+            background: rgba(168, 85, 247, 0.12);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .export-btn .exp-icon {
+            font-size: 28px;
+        }
+
+        .export-btn .exp-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .export-btn .exp-desc {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: var(--gradient);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 60%);
+        }
+
+        .cta-banner h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .cta-banner p {
+            font-size: 15px;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .cta-banner .btn {
+            background: white;
+            color: #7c3aed;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .cta-banner .btn:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+        }
+
+        .cta-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .cta-price .old-price {
+            font-size: 18px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: line-through;
+        }
+
+        .cta-price .new-price {
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .cta-code {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 32px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-disclaimer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            padding: 14px 24px;
+            font-size: 14px;
+            color: var(--text);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 1000;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Share result */
+        .share-text {
+            width: 100%;
+            padding: 14px;
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            margin-top: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glass-card { padding: 20px; }
+            .day-blocker { grid-template-columns: repeat(4, 1fr); }
+            .deep-work-options { grid-template-columns: 1fr; }
+            .project-card { grid-template-columns: 1fr; }
+            .calendar-grid { grid-template-columns: 56px repeat(7, 1fr); font-size: 10px; }
+            .cal-time-label { font-size: 9px; padding: 2px 4px; }
+            .cal-block { padding: 3px 4px; font-size: 9px; }
+            .cal-day-header { padding: 8px 4px; font-size: 11px; }
+            .btn-row { flex-direction: column; gap: 12px; }
+            .calendar-header-bar { flex-direction: column; align-items: flex-start; }
+        }
+
+        /* Project color palette */
+        .proj-color-0 { background: linear-gradient(135deg, #a855f7, #8b5cf6); }
+        .proj-color-1 { background: linear-gradient(135deg, #ec4899, #d946ef); }
+        .proj-color-2 { background: linear-gradient(135deg, #3b82f6, #6366f1); }
+        .proj-color-3 { background: linear-gradient(135deg, #14b8a6, #06b6d4); }
+        .proj-color-4 { background: linear-gradient(135deg, #f59e0b, #f97316); }
+        .proj-color-5 { background: linear-gradient(135deg, #22c55e, #10b981); }
+        .proj-color-6 { background: linear-gradient(135deg, #ef4444, #f43f5e); }
+        .proj-color-7 { background: linear-gradient(135deg, #6366f1, #818cf8); }
+
+        .proj-solid-0 { background-color: #a855f7; }
+        .proj-solid-1 { background-color: #ec4899; }
+        .proj-solid-2 { background-color: #3b82f6; }
+        .proj-solid-3 { background-color: #14b8a6; }
+        .proj-solid-4 { background-color: #f59e0b; }
+        .proj-solid-5 { background-color: #22c55e; }
+        .proj-solid-6 { background-color: #ef4444; }
+        .proj-solid-7 { background-color: #6366f1; }
+
+        .project-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .remove-project-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: none;
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .project-card:hover .remove-project-btn {
+            opacity: 1;
+        }
+
+        .project-card {
+            position: relative;
+        }
+
+        .utilization-bar {
+            height: 6px;
+            background: rgba(168, 85, 247, 0.15);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .utilization-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Free Tool by FreelanceOS
+            </div>
+            <h1>Freelance Weekly Planner</h1>
+            <p>Build your optimized week in 3 steps. Smart scheduling that respects your energy, deadlines, and work style.</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1"></div>
+            <div class="progress-step" data-step="2"></div>
+            <div class="progress-step" data-step="3"></div>
+            <div class="progress-step" data-step="4"></div>
+        </div>
+        <div class="step-labels">
+            <div class="step-label active" data-step="1">Work Profile</div>
+            <div class="step-label" data-step="2">Priorities</div>
+            <div class="step-label" data-step="3">Your Week</div>
+            <div class="step-label" data-step="4">Export</div>
+        </div>
+
+        <!-- ===== STEP 1: Work Profile ===== -->
+        <div class="step-panel visible" id="step1">
+            <div class="glass-card">
+                <h2 class="card-title">Your Work Profile</h2>
+                <p class="card-subtitle">Tell us about your projects and preferences to generate your optimized week.</p>
+
+                <!-- Active projects slider -->
+                <div class="form-group">
+                    <label class="form-label">How many active projects?</label>
+                    <div class="slider-container">
+                        <input type="range" id="projectCount" min="1" max="8" value="3">
+                        <span class="slider-value" id="projectCountVal">3</span>
+                    </div>
+                </div>
+
+                <!-- Project cards -->
+                <div class="form-group">
+                    <label class="form-label">Project Details</label>
+                    <div class="projects-grid" id="projectsGrid"></div>
+                </div>
+
+                <!-- Working hours -->
+                <div class="form-group">
+                    <label class="form-label">Working hours per day</label>
+                    <div class="slider-container">
+                        <input type="range" id="workHours" min="4" max="12" value="8">
+                        <span class="slider-value" id="workHoursVal">8</span>
+                    </div>
+                    <p class="form-hint">Total available working hours on an active day</p>
+                </div>
+
+                <!-- Work days -->
+                <div class="form-group">
+                    <label class="form-label">Preferred work days</label>
+                    <div class="checkbox-group" id="workDays">
+                        <div class="checkbox-pill"><input type="checkbox" id="day-mon" value="Mon" checked><label for="day-mon">Mon</label></div>
+                        <div class="checkbox-pill"><input type="checkbox" id="day-tue" value="Tue" checked><label for="day-tue">Tue</label></div>
+                        <div class="checkbox-pill"><input type="checkbox" id="day-wed" value="Wed" checked><label for="day-wed">Wed</label></div>
+                        <div class="checkbox-pill"><input type="checkbox" id="day-thu" value="Thu" checked><label for="day-thu">Thu</label></div>
+                        <div class="checkbox-pill"><input type="checkbox" id="day-fri" value="Fri" checked><label for="day-fri">Fri</label></div>
+                        <div class="checkbox-pill"><input type="checkbox" id="day-sat" value="Sat"><label for="day-sat">Sat</label></div>
+                        <div class="checkbox-pill"><input type="checkbox" id="day-sun" value="Sun"><label for="day-sun">Sun</label></div>
+                    </div>
+                </div>
+
+                <!-- Peak energy time -->
+                <div class="form-group">
+                    <label class="form-label">Peak energy time</label>
+                    <div class="radio-group">
+                        <div class="radio-pill"><input type="radio" name="peakEnergy" id="peak-morning" value="morning"><label for="peak-morning">&#x1F305; Morning (6-10am)</label></div>
+                        <div class="radio-pill"><input type="radio" name="peakEnergy" id="peak-lateMorning" value="lateMorning" checked><label for="peak-lateMorning">&#x2600;&#xFE0F; Late Morning (10am-1pm)</label></div>
+                        <div class="radio-pill"><input type="radio" name="peakEnergy" id="peak-afternoon" value="afternoon"><label for="peak-afternoon">&#x1F324;&#xFE0F; Afternoon (1-5pm)</label></div>
+                        <div class="radio-pill"><input type="radio" name="peakEnergy" id="peak-evening" value="evening"><label for="peak-evening">&#x1F306; Evening (5-9pm)</label></div>
+                        <div class="radio-pill"><input type="radio" name="peakEnergy" id="peak-night" value="night"><label for="peak-night">&#x1F303; Night (9pm+)</label></div>
+                    </div>
+                </div>
+
+                <!-- Admin time -->
+                <div class="form-group">
+                    <label class="form-label">Admin time needed per week (invoicing, emails, marketing)</label>
+                    <div class="slider-container">
+                        <input type="range" id="adminHours" min="0" max="10" value="3">
+                        <span class="slider-value" id="adminHoursVal">3</span>
+                    </div>
+                    <p class="form-hint">hours/week for non-project tasks</p>
+                </div>
+
+                <div class="btn-row">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="goToStep(2)">Continue to Priorities &rarr;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== STEP 2: Priorities ===== -->
+        <div class="step-panel" id="step2">
+            <div class="glass-card">
+                <h2 class="card-title">Your Priorities This Week</h2>
+                <p class="card-subtitle">Fine-tune your schedule with deadlines, energy, and constraints.</p>
+
+                <!-- Hard deadlines -->
+                <div class="form-group">
+                    <label class="form-label">Hard deadlines this week?</label>
+                    <p class="form-hint" style="margin-bottom:12px">Toggle on for projects that absolutely must be delivered this week.</p>
+                    <div class="deadline-list" id="deadlineList"></div>
+                </div>
+
+                <!-- Energy level -->
+                <div class="form-group">
+                    <label class="form-label">Current energy level</label>
+                    <div class="energy-selector" id="energySelector">
+                        <div>
+                            <div class="battery-icon" data-level="1" onclick="setEnergy(1)">&#x1FAAB;</div>
+                            <div class="energy-label">Drained</div>
+                        </div>
+                        <div>
+                            <div class="battery-icon" data-level="2" onclick="setEnergy(2)">&#x1F50B;</div>
+                            <div class="energy-label">Low</div>
+                        </div>
+                        <div>
+                            <div class="battery-icon active" data-level="3" onclick="setEnergy(3)">&#x1F50B;</div>
+                            <div class="energy-label">Moderate</div>
+                        </div>
+                        <div>
+                            <div class="battery-icon" data-level="4" onclick="setEnergy(4)">&#x1F50B;</div>
+                            <div class="energy-label">Good</div>
+                        </div>
+                        <div>
+                            <div class="battery-icon" data-level="5" onclick="setEnergy(5)">&#x26A1;</div>
+                            <div class="energy-label">Peak</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blocked days -->
+                <div class="form-group">
+                    <label class="form-label">Any days blocked / unavailable?</label>
+                    <p class="form-hint" style="margin-bottom:12px">Click a day to block it off entirely.</p>
+                    <div class="day-blocker" id="dayBlocker"></div>
+                </div>
+
+                <!-- Deep work preference -->
+                <div class="form-group">
+                    <label class="form-label">Deep work preference</label>
+                    <div class="deep-work-options">
+                        <div class="deep-work-card selected" data-pref="long" onclick="setDeepWork('long')">
+                            <div class="dw-icon">&#x1F9D8;</div>
+                            <div class="dw-title">Long Blocks</div>
+                            <div class="dw-desc">3-4 hour focused sessions<br>Fewer context switches</div>
+                        </div>
+                        <div class="deep-work-card" data-pref="short" onclick="setDeepWork('short')">
+                            <div class="dw-icon">&#x26A1;</div>
+                            <div class="dw-title">Short Sprints</div>
+                            <div class="dw-desc">1-2 hour intense bursts<br>More variety in your day</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-ghost" onclick="goToStep(1)">&larr; Back</button>
+                    <button class="btn btn-primary" onclick="generateSchedule()">Generate My Week &rarr;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== STEP 3: Calendar ===== -->
+        <div class="step-panel" id="step3">
+            <div class="glass-card">
+                <h2 class="card-title">Your Optimized Week</h2>
+                <p class="card-subtitle">Drag and drop blocks to rearrange. High-priority work is scheduled during your peak energy.</p>
+
+                <div class="calendar-container">
+                    <div class="calendar-header-bar">
+                        <div class="calendar-title" id="calTitle">Week of May 29, 2026</div>
+                        <div class="calendar-stats" id="calStats"></div>
+                    </div>
+
+                    <div class="calendar-grid" id="calendarGrid"></div>
+
+                    <div class="project-legend" id="projectLegend"></div>
+
+                    <div class="week-summary" id="weekSummary"></div>
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-ghost" onclick="goToStep(2)">&larr; Adjust</button>
+                    <button class="btn btn-primary" onclick="goToStep(4)">Export & Share &rarr;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== STEP 4: Export ===== -->
+        <div class="step-panel" id="step4">
+            <div class="glass-card">
+                <h2 class="card-title">Export & Share</h2>
+                <p class="card-subtitle">Take your optimized week with you.</p>
+
+                <div class="export-grid">
+                    <button class="export-btn" onclick="copyAsText()">
+                        <span class="exp-icon">&#x1F4CB;</span>
+                        <span class="exp-label">Copy as Text</span>
+                        <span class="exp-desc">Formatted weekly schedule</span>
+                    </button>
+                    <button class="export-btn" onclick="copyAsMarkdown()">
+                        <span class="exp-icon">&#x1F4DD;</span>
+                        <span class="exp-label">Copy as Markdown</span>
+                        <span class="exp-desc">For Notion / Obsidian</span>
+                    </button>
+                    <button class="export-btn" onclick="downloadPDF()">
+                        <span class="exp-icon">&#x1F4C4;</span>
+                        <span class="exp-label">Download PDF</span>
+                        <span class="exp-desc">Print-ready schedule</span>
+                    </button>
+                    <button class="export-btn" onclick="copyShareText()">
+                        <span class="exp-icon">&#x1F4E3;</span>
+                        <span class="exp-label">Share Result</span>
+                        <span class="exp-desc">Copy a shareable summary</span>
+                    </button>
+                </div>
+
+                <textarea class="share-text" id="shareText" rows="4" readonly></textarea>
+
+                <div class="btn-row">
+                    <button class="btn btn-ghost" onclick="goToStep(3)">&larr; Back to Calendar</button>
+                    <button class="btn btn-secondary" onclick="goToStep(1)">Start Over</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-banner">
+            <h3>Level Up Your Freelance Business</h3>
+            <p>FreelanceOS Pro includes Notion project dashboards, client CRM, and time tracking templates.</p>
+            <div class="cta-price">
+                <span class="old-price">$29</span>
+                <span class="new-price">$17.40</span>
+            </div>
+            <div class="cta-code">Use code FLASH40 for 40% off</div>
+            <br>
+            <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="btn" target="_blank" rel="noopener">Get FreelanceOS Pro &rarr;</a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="/freelanceos-storefront/income-projector.html">Income Projector</a>
+                <a href="/freelanceos-storefront/burnout-risk-assessment.html">Burnout Risk Assessment</a>
+                <a href="/freelanceos-storefront/meeting-agenda.html">Meeting Agenda Builder</a>
+                <a href="/freelanceos-storefront/tax-estimator.html">Tax Estimator</a>
+            </div>
+            <p class="footer-disclaimer">This tool is for educational and planning purposes only. &copy; 2026 FreelanceOS. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+    /* ===================================================================
+       FREELANCE WEEKLY PLANNER GENERATOR
+       Pure vanilla JS, no dependencies
+       =================================================================== */
+
+    // ---- State ----
+    const state = {
+        projectCount: 3,
+        projects: [],
+        workHours: 8,
+        workDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        peakEnergy: 'lateMorning',
+        adminHours: 3,
+        hardDeadlines: {},
+        energyLevel: 3,
+        blockedDays: new Set(),
+        deepWorkPref: 'long',
+        schedule: null
+    };
+
+    const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    const PROJECT_COLORS = [
+        { gradient: 'linear-gradient(135deg, #a855f7, #8b5cf6)', solid: '#a855f7' },
+        { gradient: 'linear-gradient(135deg, #ec4899, #d946ef)', solid: '#ec4899' },
+        { gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)', solid: '#3b82f6' },
+        { gradient: 'linear-gradient(135deg, #14b8a6, #06b6d4)', solid: '#14b8a6' },
+        { gradient: 'linear-gradient(135deg, #f59e0b, #f97316)', solid: '#f59e0b' },
+        { gradient: 'linear-gradient(135deg, #22c55e, #10b981)', solid: '#22c55e' },
+        { gradient: 'linear-gradient(135deg, #ef4444, #f43f5e)', solid: '#ef4444' },
+        { gradient: 'linear-gradient(135deg, #6366f1, #818cf8)', solid: '#6366f1' }
+    ];
+
+    const PEAK_HOURS = {
+        morning:     { start: 6,  end: 10 },
+        lateMorning: { start: 10, end: 13 },
+        afternoon:   { start: 13, end: 17 },
+        evening:     { start: 17, end: 21 },
+        night:       { start: 21, end: 25 }
+    };
+
+    const DEFAULT_PROJECT_NAMES = [
+        'Website Redesign', 'Brand Identity', 'Content Strategy',
+        'Mobile App', 'SEO Audit', 'Email Campaign',
+        'Analytics Setup', 'Social Media'
+    ];
+
+    // ---- Initialization ----
+    function init() {
+        setupSliders();
+        renderProjects();
+        setupWorkDays();
+
+        // Set calendar title to current week
+        const now = new Date();
+        const options = { month: 'long', day: 'numeric', year: 'numeric' };
+        document.getElementById('calTitle').textContent = 'Week of ' + now.toLocaleDateString('en-US', options);
+    }
+
+    function setupSliders() {
+        const projectSlider = document.getElementById('projectCount');
+        const projectVal = document.getElementById('projectCountVal');
+        projectSlider.addEventListener('input', function() {
+            state.projectCount = parseInt(this.value);
+            projectVal.textContent = this.value;
+            renderProjects();
+        });
+
+        const hoursSlider = document.getElementById('workHours');
+        const hoursVal = document.getElementById('workHoursVal');
+        hoursSlider.addEventListener('input', function() {
+            state.workHours = parseInt(this.value);
+            hoursVal.textContent = this.value;
+        });
+
+        const adminSlider = document.getElementById('adminHours');
+        const adminVal = document.getElementById('adminHoursVal');
+        adminSlider.addEventListener('input', function() {
+            state.adminHours = parseInt(this.value);
+            adminVal.textContent = this.value;
+        });
+    }
+
+    function setupWorkDays() {
+        document.querySelectorAll('#workDays input[type="checkbox"]').forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                state.workDays = [];
+                document.querySelectorAll('#workDays input[type="checkbox"]:checked').forEach(function(c) {
+                    state.workDays.push(c.value);
+                });
+            });
+        });
+
+        document.querySelectorAll('input[name="peakEnergy"]').forEach(function(r) {
+            r.addEventListener('change', function() {
+                state.peakEnergy = this.value;
+            });
+        });
+    }
+
+    // ---- Project Rendering ----
+    function renderProjects() {
+        const grid = document.getElementById('projectsGrid');
+        grid.innerHTML = '';
+
+        // Ensure projects array matches count
+        while (state.projects.length < state.projectCount) {
+            var idx = state.projects.length;
+            state.projects.push({
+                name: DEFAULT_PROJECT_NAMES[idx] || 'Project ' + (idx + 1),
+                hours: 8,
+                priority: 'medium',
+                deadline: 'none'
+            });
+        }
+
+        for (var i = 0; i < state.projectCount; i++) {
+            var proj = state.projects[i];
+            var card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = buildProjectCardHTML(i, proj);
+            grid.appendChild(card);
+        }
+
+        attachProjectListeners();
+    }
+
+    function buildProjectCardHTML(index, proj) {
+        return '<div class="full-width" style="display:flex;align-items:center">' +
+            '<span class="project-number proj-solid-' + index + '">' + (index + 1) + '</span>' +
+            '<input type="text" class="project-input proj-name" data-idx="' + index + '" placeholder="Project name" value="' + escapeHtml(proj.name) + '">' +
+            '</div>' +
+            '<div>' +
+            '<span class="mini-label">Hours this week</span>' +
+            '<div class="slider-container">' +
+            '<input type="range" class="proj-hours" data-idx="' + index + '" min="1" max="40" value="' + proj.hours + '">' +
+            '<span class="slider-value proj-hours-val" data-idx="' + index + '">' + proj.hours + '</span>' +
+            '</div>' +
+            '</div>' +
+            '<div>' +
+            '<span class="mini-label">Priority</span>' +
+            '<select class="priority-select proj-priority" data-idx="' + index + '">' +
+            '<option value="high"' + (proj.priority === 'high' ? ' selected' : '') + '>&#x1F534; High</option>' +
+            '<option value="medium"' + (proj.priority === 'medium' ? ' selected' : '') + '>&#x1F7E1; Medium</option>' +
+            '<option value="low"' + (proj.priority === 'low' ? ' selected' : '') + '>&#x1F7E2; Low</option>' +
+            '</select>' +
+            '</div>' +
+            '<div>' +
+            '<span class="mini-label">Deadline proximity</span>' +
+            '<select class="priority-select proj-deadline" data-idx="' + index + '">' +
+            '<option value="thisWeek"' + (proj.deadline === 'thisWeek' ? ' selected' : '') + '>This week</option>' +
+            '<option value="nextWeek"' + (proj.deadline === 'nextWeek' ? ' selected' : '') + '>Next week</option>' +
+            '<option value="twoPlus"' + (proj.deadline === 'twoPlus' ? ' selected' : '') + '>2+ weeks</option>' +
+            '<option value="none"' + (proj.deadline === 'none' ? ' selected' : '') + '>No deadline</option>' +
+            '</select>' +
+            '</div>';
+    }
+
+    function attachProjectListeners() {
+        document.querySelectorAll('.proj-name').forEach(function(el) {
+            el.addEventListener('input', function() {
+                state.projects[parseInt(this.dataset.idx)].name = this.value;
+            });
+        });
+
+        document.querySelectorAll('.proj-hours').forEach(function(el) {
+            el.addEventListener('input', function() {
+                var idx = parseInt(this.dataset.idx);
+                state.projects[idx].hours = parseInt(this.value);
+                document.querySelector('.proj-hours-val[data-idx="' + idx + '"]').textContent = this.value;
+            });
+        });
+
+        document.querySelectorAll('.proj-priority').forEach(function(el) {
+            el.addEventListener('change', function() {
+                state.projects[parseInt(this.dataset.idx)].priority = this.value;
+            });
+        });
+
+        document.querySelectorAll('.proj-deadline').forEach(function(el) {
+            el.addEventListener('change', function() {
+                state.projects[parseInt(this.dataset.idx)].deadline = this.value;
+            });
+        });
+    }
+
+    // ---- Step 2 Rendering ----
+    function renderStep2() {
+        // Deadline list
+        var dl = document.getElementById('deadlineList');
+        dl.innerHTML = '';
+        for (var i = 0; i < state.projectCount; i++) {
+            var proj = state.projects[i];
+            var item = document.createElement('div');
+            item.className = 'deadline-item';
+            item.innerHTML = '<span><span class="project-number proj-solid-' + i + '" style="width:22px;height:22px;font-size:11px;border-radius:6px">' + (i + 1) + '</span> ' + escapeHtml(proj.name) + '</span>' +
+                '<label class="toggle-switch">' +
+                '<input type="checkbox" class="deadline-toggle" data-idx="' + i + '"' + (state.hardDeadlines[i] ? ' checked' : '') + '>' +
+                '<span class="toggle-slider"></span></label>';
+            dl.appendChild(item);
+        }
+
+        document.querySelectorAll('.deadline-toggle').forEach(function(t) {
+            t.addEventListener('change', function() {
+                state.hardDeadlines[parseInt(this.dataset.idx)] = this.checked;
+            });
+        });
+
+        // Day blocker
+        var db = document.getElementById('dayBlocker');
+        db.innerHTML = '';
+        DAY_NAMES.forEach(function(day) {
+            var isWorkDay = state.workDays.indexOf(day) !== -1;
+            var isBlocked = state.blockedDays.has(day);
+            var block = document.createElement('div');
+            block.className = 'day-block' + (isBlocked ? ' blocked' : '');
+            block.innerHTML = '<div class="day-name">' + day + '</div><div class="day-status">' + (isBlocked ? 'Blocked' : (isWorkDay ? 'Available' : 'Off')) + '</div>';
+            block.addEventListener('click', function() {
+                if (state.blockedDays.has(day)) {
+                    state.blockedDays.delete(day);
+                    this.classList.remove('blocked');
+                    this.querySelector('.day-status').textContent = isWorkDay ? 'Available' : 'Off';
+                } else {
+                    state.blockedDays.add(day);
+                    this.classList.add('blocked');
+                    this.querySelector('.day-status').textContent = 'Blocked';
+                }
+            });
+            db.appendChild(block);
+        });
+    }
+
+    function setEnergy(level) {
+        state.energyLevel = level;
+        document.querySelectorAll('.battery-icon').forEach(function(b) {
+            b.classList.toggle('active', parseInt(b.dataset.level) === level);
+        });
+    }
+
+    function setDeepWork(pref) {
+        state.deepWorkPref = pref;
+        document.querySelectorAll('.deep-work-card').forEach(function(c) {
+            c.classList.toggle('selected', c.dataset.pref === pref);
+        });
+    }
+
+    // ---- Navigation ----
+    function goToStep(step) {
+        if (step === 2) renderStep2();
+
+        document.querySelectorAll('.step-panel').forEach(function(p) { p.classList.remove('visible'); });
+        document.getElementById('step' + step).classList.add('visible');
+
+        document.querySelectorAll('.progress-step').forEach(function(s, i) {
+            s.classList.toggle('active', i + 1 === step);
+            s.classList.toggle('completed', i + 1 < step);
+        });
+
+        document.querySelectorAll('.step-label').forEach(function(l, i) {
+            l.classList.toggle('active', i + 1 === step);
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (step === 4) generateShareText();
+    }
+
+    // ---- Progress step click ----
+    document.querySelectorAll('.progress-step').forEach(function(s) {
+        s.addEventListener('click', function() {
+            var target = parseInt(this.dataset.step);
+            if (target === 3) {
+                generateSchedule();
+            } else {
+                goToStep(target);
+            }
+        });
+    });
+
+    // ---- SCHEDULE GENERATION ALGORITHM ----
+    function generateSchedule() {
+        // Gather active projects
+        var projects = [];
+        for (var i = 0; i < state.projectCount; i++) {
+            projects.push({
+                id: i,
+                name: state.projects[i].name || 'Project ' + (i + 1),
+                totalHours: state.projects[i].hours,
+                priority: state.projects[i].priority,
+                deadline: state.projects[i].deadline,
+                hardDeadline: !!state.hardDeadlines[i],
+                remainingHours: state.projects[i].hours,
+                color: PROJECT_COLORS[i]
+            });
+        }
+
+        // Sort projects by urgency score
+        projects.sort(function(a, b) {
+            return getUrgencyScore(b) - getUrgencyScore(a);
+        });
+
+        // Determine available days
+        var availableDays = [];
+        DAY_NAMES.forEach(function(day) {
+            var isWork = state.workDays.indexOf(day) !== -1;
+            var isBlocked = state.blockedDays.has(day);
+            availableDays.push({
+                name: day,
+                available: isWork && !isBlocked,
+                blocked: isBlocked
+            });
+        });
+
+        // Determine time slots based on peak energy
+        var peak = PEAK_HOURS[state.peakEnergy];
+        var blockDuration = state.deepWorkPref === 'long' ? 3 : 1.5;
+        var bufferTime = 0.25; // 15 min buffer between context switches
+
+        // Build schedule grid: for each available day, create time blocks
+        var schedule = {};
+        var dayStats = {};
+
+        DAY_NAMES.forEach(function(day) {
+            schedule[day] = [];
+            dayStats[day] = { totalHours: 0, contextSwitches: 0, projects: new Set(), isBlocked: false, isOff: false };
+        });
+
+        // Get working time range based on peak energy
+        var dayStart, dayEnd;
+        if (peak.start <= 10) {
+            dayStart = Math.max(6, peak.start);
+            dayEnd = dayStart + state.workHours;
+        } else {
+            dayStart = peak.start - 2;
+            dayEnd = dayStart + state.workHours;
+        }
+
+        // Ensure bounds
+        if (dayEnd > 24) dayEnd = 24;
+
+        // Energy multiplier based on current energy level
+        var energyMultiplier = 0.6 + (state.energyLevel * 0.1);
+
+        // Calculate total available project hours (excluding admin)
+        var totalAvailableDays = availableDays.filter(function(d) { return d.available; }).length;
+        var totalAvailableHours = totalAvailableDays * state.workHours;
+        var projectHours = totalAvailableHours - state.adminHours;
+        if (projectHours < 0) projectHours = 0;
+
+        // Distribute admin hours across days (low-energy slots)
+        var adminPerDay = totalAvailableDays > 0 ? state.adminHours / totalAvailableDays : 0;
+
+        // Schedule each available day
+        availableDays.forEach(function(dayInfo, dayIdx) {
+            var day = dayInfo.name;
+
+            if (dayInfo.blocked) {
+                dayStats[day].isBlocked = true;
+                return;
+            }
+
+            if (!dayInfo.available) {
+                dayStats[day].isOff = true;
+                return;
+            }
+
+            var currentTime = dayStart;
+            var hoursToday = 0;
+            var maxHoursToday = state.workHours;
+
+            // Identify peak hours for this day
+            var peakStart = peak.start;
+            var peakEnd = peak.end;
+
+            // Schedule admin at non-peak times (start of day or end)
+            var adminToday = Math.min(adminPerDay, 1.5); // cap at 1.5 hours admin per day
+            var adminRemaining = adminToday;
+
+            // Pre-peak admin block
+            if (adminRemaining > 0 && currentTime < peakStart) {
+                var adminDuration = Math.min(adminRemaining, peakStart - currentTime, 1);
+                if (adminDuration > 0.25) {
+                    schedule[day].push({
+                        type: 'admin',
+                        name: 'Admin & Emails',
+                        start: currentTime,
+                        end: currentTime + adminDuration,
+                        duration: adminDuration,
+                        color: { gradient: 'linear-gradient(135deg, #475569, #64748b)', solid: '#64748b' }
+                    });
+                    currentTime += adminDuration;
+                    hoursToday += adminDuration;
+                    adminRemaining -= adminDuration;
+                }
+            }
+
+            // Peak hours: schedule high-priority projects
+            var peakProjects = projects.filter(function(p) { return p.remainingHours > 0; });
+
+            for (var pi = 0; pi < peakProjects.length && currentTime < dayEnd && hoursToday < maxHoursToday; pi++) {
+                var proj = peakProjects[pi];
+                if (proj.remainingHours <= 0) continue;
+
+                var blockSize = Math.min(blockDuration, proj.remainingHours, dayEnd - currentTime, maxHoursToday - hoursToday);
+                if (blockSize < 0.5) continue;
+
+                // Snap to reasonable sizes
+                blockSize = Math.round(blockSize * 4) / 4;
+
+                schedule[day].push({
+                    type: 'project',
+                    projectId: proj.id,
+                    name: proj.name,
+                    start: currentTime,
+                    end: currentTime + blockSize,
+                    duration: blockSize,
+                    color: proj.color,
+                    priority: proj.priority
+                });
+
+                proj.remainingHours -= blockSize;
+                hoursToday += blockSize;
+                currentTime += blockSize;
+
+                dayStats[day].projects.add(proj.id);
+                dayStats[day].contextSwitches++;
+
+                // Add buffer between projects
+                if (currentTime < dayEnd && hoursToday < maxHoursToday && pi < peakProjects.length - 1) {
+                    var bufferDur = bufferTime;
+                    if (currentTime + bufferDur <= dayEnd) {
+                        schedule[day].push({
+                            type: 'buffer',
+                            name: 'Buffer',
+                            start: currentTime,
+                            end: currentTime + bufferDur,
+                            duration: bufferDur,
+                            color: { gradient: 'transparent', solid: '#475569' }
+                        });
+                        currentTime += bufferDur;
+                        hoursToday += bufferDur;
+                    }
+                }
+            }
+
+            // End-of-day admin
+            if (adminRemaining > 0 && currentTime < dayEnd && hoursToday < maxHoursToday) {
+                var endAdmin = Math.min(adminRemaining, dayEnd - currentTime, maxHoursToday - hoursToday);
+                if (endAdmin > 0.25) {
+                    schedule[day].push({
+                        type: 'admin',
+                        name: 'Admin Tasks',
+                        start: currentTime,
+                        end: currentTime + endAdmin,
+                        duration: endAdmin,
+                        color: { gradient: 'linear-gradient(135deg, #475569, #64748b)', solid: '#64748b' }
+                    });
+                    hoursToday += endAdmin;
+                    currentTime += endAdmin;
+                }
+            }
+
+            dayStats[day].totalHours = hoursToday;
+        });
+
+        state.schedule = { schedule: schedule, dayStats: dayStats, projects: projects, dayStart: dayStart, dayEnd: dayEnd };
+
+        renderCalendar();
+        goToStep(3);
+    }
+
+    function getUrgencyScore(project) {
+        var score = 0;
+
+        // Priority weight
+        if (project.priority === 'high') score += 30;
+        else if (project.priority === 'medium') score += 15;
+        else score += 5;
+
+        // Deadline weight
+        if (project.deadline === 'thisWeek') score += 40;
+        else if (project.deadline === 'nextWeek') score += 20;
+        else if (project.deadline === 'twoPlus') score += 10;
+
+        // Hard deadline bonus
+        if (project.hardDeadline) score += 25;
+
+        // More hours = needs more scheduling priority
+        score += project.totalHours * 0.5;
+
+        return score;
+    }
+
+    // ---- CALENDAR RENDERING ----
+    function renderCalendar() {
+        var data = state.schedule;
+        var grid = document.getElementById('calendarGrid');
+        grid.innerHTML = '';
+
+        var dayStart = Math.floor(data.dayStart);
+        var dayEnd = Math.ceil(data.dayEnd);
+        var totalSlots = dayEnd - dayStart;
+
+        // Calculate total hours and utilization
+        var totalScheduledHours = 0;
+        var totalAvailableHours = 0;
+        var totalProjects = new Set();
+
+        DAY_NAMES.forEach(function(day) {
+            totalScheduledHours += data.dayStats[day].totalHours;
+            if (!data.dayStats[day].isBlocked && !data.dayStats[day].isOff) {
+                totalAvailableHours += state.workHours;
+            }
+            data.dayStats[day].projects.forEach(function(pid) { totalProjects.add(pid); });
+        });
+
+        var utilization = totalAvailableHours > 0 ? Math.round((totalScheduledHours / totalAvailableHours) * 100) : 0;
+
+        // Stats bar
+        var statsDiv = document.getElementById('calStats');
+        statsDiv.innerHTML = '<div class="cal-stat"><span class="cal-stat-value">' + Math.round(totalScheduledHours * 10) / 10 + 'h</span><span class="cal-stat-label">Total Hours</span></div>' +
+            '<div class="cal-stat"><span class="cal-stat-value">' + totalProjects.size + '</span><span class="cal-stat-label">Projects</span></div>' +
+            '<div class="cal-stat"><span class="cal-stat-value">' + utilization + '%</span><span class="cal-stat-label">Utilization</span></div>';
+
+        // Header row
+        grid.appendChild(createEl('div', 'cal-corner', ''));
+
+        DAY_NAMES.forEach(function(day) {
+            var header = document.createElement('div');
+            header.className = 'cal-day-header';
+            var hrs = Math.round(data.dayStats[day].totalHours * 10) / 10;
+            var focusScore = calculateFocusScore(data.dayStats[day]);
+            var focusClass = focusScore >= 80 ? 'focus-high' : (focusScore >= 50 ? 'focus-mid' : 'focus-low');
+
+            var isOverbooked = hrs > state.workHours && !data.dayStats[day].isBlocked && !data.dayStats[day].isOff;
+
+            var headerContent = '<strong>' + day + '</strong><div class="day-hrs">' + hrs + 'h';
+
+            if (!data.dayStats[day].isBlocked && !data.dayStats[day].isOff) {
+                var dayUtil = state.workHours > 0 ? Math.round((hrs / state.workHours) * 100) : 0;
+                headerContent += ' / ' + dayUtil + '%';
+            }
+            headerContent += '</div>';
+
+            if (!data.dayStats[day].isBlocked && !data.dayStats[day].isOff && hrs > 0) {
+                headerContent += '<div class="focus-score ' + focusClass + '">Focus: ' + focusScore + '</div>';
+            }
+
+            if (data.dayStats[day].isBlocked) {
+                headerContent += '<div class="overbooked-badge">BLOCKED</div>';
+            }
+
+            if (isOverbooked) {
+                headerContent += '<div class="overbooked-badge">OVERBOOKED</div>';
+            }
+
+            header.innerHTML = headerContent;
+            grid.appendChild(header);
+        });
+
+        // Time rows
+        for (var t = dayStart; t < dayEnd; t++) {
+            // Time label
+            var timeLabel = document.createElement('div');
+            timeLabel.className = 'cal-time-label';
+            var displayHour = t > 12 ? (t - 12) : t;
+            var ampm = t >= 12 ? 'PM' : 'AM';
+            if (t === 0 || t === 24) { displayHour = 12; ampm = 'AM'; }
+            timeLabel.textContent = displayHour + ' ' + ampm;
+            grid.appendChild(timeLabel);
+
+            // Day cells
+            DAY_NAMES.forEach(function(day) {
+                var cell = document.createElement('div');
+                cell.className = 'cal-cell';
+                cell.dataset.day = day;
+                cell.dataset.hour = t;
+
+                if (data.dayStats[day].isBlocked) {
+                    var overlay = document.createElement('div');
+                    overlay.className = 'blocked-day-overlay';
+                    cell.appendChild(overlay);
+                }
+
+                // Find blocks that overlap this time slot
+                var blocks = data.schedule[day].filter(function(b) {
+                    return b.start <= t && b.end > t;
+                });
+
+                if (blocks.length > 0) {
+                    var block = blocks[0];
+                    // Only render on the starting slot
+                    if (Math.floor(block.start) === t || (block.start === t)) {
+                        var spanSlots = Math.ceil(block.end) - Math.floor(block.start);
+                        var blockEl = document.createElement('div');
+                        blockEl.className = 'cal-block' + (block.type === 'buffer' ? ' buffer-block' : '') + (block.type === 'admin' ? ' admin-block' : '');
+
+                        if (block.type !== 'buffer') {
+                            blockEl.style.background = block.color.gradient;
+                        }
+
+                        if (spanSlots > 1) {
+                            blockEl.style.height = (spanSlots * 52 - 4) + 'px';
+                            blockEl.style.position = 'absolute';
+                            blockEl.style.top = '2px';
+                            blockEl.style.left = '2px';
+                            blockEl.style.right = '2px';
+                            blockEl.style.zIndex = '5';
+                            cell.style.position = 'relative';
+                        }
+
+                        var startTime = formatTime(block.start);
+                        var endTime = formatTime(block.end);
+
+                        blockEl.innerHTML = '<div class="block-name">' + escapeHtml(block.name) + '</div>' +
+                            '<div class="block-time">' + startTime + '-' + endTime + ' (' + block.duration + 'h)</div>';
+
+                        // Drag and drop
+                        blockEl.draggable = true;
+                        blockEl.dataset.day = day;
+                        blockEl.dataset.blockIdx = data.schedule[day].indexOf(block);
+
+                        blockEl.addEventListener('dragstart', handleDragStart);
+                        blockEl.addEventListener('dragend', handleDragEnd);
+
+                        cell.appendChild(blockEl);
+                    }
+                }
+
+                // Drop target
+                cell.addEventListener('dragover', handleDragOver);
+                cell.addEventListener('drop', handleDrop);
+
+                grid.appendChild(cell);
+            });
+        }
+
+        // Legend
+        renderLegend();
+
+        // Summary cards
+        renderWeekSummary(data);
+    }
+
+    function calculateFocusScore(dayStat) {
+        if (dayStat.isBlocked || dayStat.isOff || dayStat.totalHours === 0) return 0;
+        var switches = Math.max(0, dayStat.contextSwitches - 1);
+        var score = 100 - (switches * 15);
+        if (dayStat.projects.size <= 2) score += 10;
+        return Math.max(0, Math.min(100, score));
+    }
+
+    function renderLegend() {
+        var legend = document.getElementById('projectLegend');
+        legend.innerHTML = '';
+
+        for (var i = 0; i < state.projectCount; i++) {
+            var item = document.createElement('div');
+            item.className = 'legend-item';
+            item.innerHTML = '<div class="legend-swatch" style="background:' + PROJECT_COLORS[i].solid + '"></div>' + escapeHtml(state.projects[i].name || 'Project ' + (i + 1));
+            legend.appendChild(item);
+        }
+
+        // Admin legend
+        var adminItem = document.createElement('div');
+        adminItem.className = 'legend-item';
+        adminItem.innerHTML = '<div class="legend-swatch" style="background:#64748b"></div>Admin & Emails';
+        legend.appendChild(adminItem);
+
+        // Buffer legend
+        var bufferItem = document.createElement('div');
+        bufferItem.className = 'legend-item';
+        bufferItem.innerHTML = '<div class="legend-swatch" style="background:rgba(100,116,139,0.3);border:1px dashed #64748b"></div>Buffer';
+        legend.appendChild(bufferItem);
+    }
+
+    function renderWeekSummary(data) {
+        var summary = document.getElementById('weekSummary');
+        summary.innerHTML = '';
+
+        // Compute per-project scheduled hours
+        var projectHoursScheduled = {};
+        var totalProjectHours = 0;
+        var totalAdminHours = 0;
+        var totalBufferHours = 0;
+
+        DAY_NAMES.forEach(function(day) {
+            data.schedule[day].forEach(function(block) {
+                if (block.type === 'project') {
+                    if (!projectHoursScheduled[block.projectId]) projectHoursScheduled[block.projectId] = 0;
+                    projectHoursScheduled[block.projectId] += block.duration;
+                    totalProjectHours += block.duration;
+                } else if (block.type === 'admin') {
+                    totalAdminHours += block.duration;
+                } else if (block.type === 'buffer') {
+                    totalBufferHours += block.duration;
+                }
+            });
+        });
+
+        var activeDays = 0;
+        DAY_NAMES.forEach(function(day) {
+            if (!data.dayStats[day].isBlocked && !data.dayStats[day].isOff && data.dayStats[day].totalHours > 0) activeDays++;
+        });
+
+        // Summary cards
+        var cards = [
+            { value: Math.round(totalProjectHours * 10) / 10 + 'h', label: 'Project Work' },
+            { value: Math.round(totalAdminHours * 10) / 10 + 'h', label: 'Admin Time' },
+            { value: activeDays, label: 'Active Days' },
+            { value: Math.round(totalBufferHours * 60) + 'min', label: 'Buffer Time' }
+        ];
+
+        cards.forEach(function(card) {
+            var el = document.createElement('div');
+            el.className = 'summary-card';
+            el.innerHTML = '<div class="sc-value">' + card.value + '</div><div class="sc-label">' + card.label + '</div>';
+
+            // Utilization bar for project cards
+            if (card.label === 'Project Work') {
+                var totalRequested = 0;
+                for (var i = 0; i < state.projectCount; i++) totalRequested += state.projects[i].hours;
+                var pct = totalRequested > 0 ? Math.min(100, Math.round((totalProjectHours / totalRequested) * 100)) : 0;
+                el.innerHTML += '<div class="utilization-bar"><div class="utilization-fill" style="width:' + pct + '%;background:var(--gradient)"></div></div>' +
+                    '<div style="font-size:11px;color:var(--text-dim);margin-top:4px">' + pct + '% of requested hours scheduled</div>';
+            }
+            summary.appendChild(el);
+        });
+
+        // Per-project breakdown
+        for (var i = 0; i < state.projectCount; i++) {
+            var requested = state.projects[i].hours;
+            var scheduled = projectHoursScheduled[i] || 0;
+            var pct = requested > 0 ? Math.min(100, Math.round((scheduled / requested) * 100)) : 0;
+
+            var el = document.createElement('div');
+            el.className = 'summary-card';
+            el.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px">' +
+                '<div class="legend-swatch" style="background:' + PROJECT_COLORS[i].solid + '"></div>' +
+                '<span style="font-size:13px;font-weight:600">' + escapeHtml(state.projects[i].name) + '</span></div>' +
+                '<div class="sc-value">' + Math.round(scheduled * 10) / 10 + 'h</div>' +
+                '<div class="sc-label">' + requested + 'h requested</div>' +
+                '<div class="utilization-bar"><div class="utilization-fill" style="width:' + pct + '%;background:' + PROJECT_COLORS[i].solid + '"></div></div>';
+            summary.appendChild(el);
+        }
+    }
+
+    // ---- DRAG AND DROP ----
+    var dragData = null;
+
+    function handleDragStart(e) {
+        this.classList.add('dragging');
+        dragData = {
+            day: this.dataset.day,
+            blockIdx: parseInt(this.dataset.blockIdx)
+        };
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', '');
+    }
+
+    function handleDragEnd(e) {
+        this.classList.remove('dragging');
+        dragData = null;
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        if (!dragData || !state.schedule) return;
+
+        var targetDay = this.dataset.day;
+        var targetHour = parseInt(this.dataset.hour);
+        var sourceDay = dragData.day;
+        var sourceBlockIdx = dragData.blockIdx;
+
+        if (!state.schedule.schedule[sourceDay] || !state.schedule.schedule[sourceDay][sourceBlockIdx]) return;
+
+        var block = state.schedule.schedule[sourceDay][sourceBlockIdx];
+
+        // Remove from source
+        state.schedule.schedule[sourceDay].splice(sourceBlockIdx, 1);
+
+        // Update block times
+        var duration = block.duration;
+        block.start = targetHour;
+        block.end = targetHour + duration;
+
+        // Add to target
+        state.schedule.schedule[targetDay].push(block);
+
+        // Sort target day by start time
+        state.schedule.schedule[targetDay].sort(function(a, b) { return a.start - b.start; });
+
+        // Recalculate day stats
+        recalcDayStats();
+
+        // Re-render
+        renderCalendar();
+        showToast('Block moved successfully');
+    }
+
+    function recalcDayStats() {
+        var data = state.schedule;
+        DAY_NAMES.forEach(function(day) {
+            var stat = data.dayStats[day];
+            if (stat.isBlocked) return;
+            stat.totalHours = 0;
+            stat.contextSwitches = 0;
+            stat.projects = new Set();
+
+            data.schedule[day].forEach(function(block) {
+                stat.totalHours += block.duration;
+                if (block.type === 'project') {
+                    stat.projects.add(block.projectId);
+                    stat.contextSwitches++;
+                }
+            });
+        });
+    }
+
+    // ---- EXPORT FUNCTIONS ----
+    function getScheduleAsText() {
+        if (!state.schedule) return '';
+        var lines = [];
+        lines.push('FREELANCE WEEKLY PLANNER');
+        lines.push('========================\n');
+
+        var totalHrs = 0;
+        var projectCount = new Set();
+
+        DAY_NAMES.forEach(function(day) {
+            var blocks = state.schedule.schedule[day];
+            var stat = state.schedule.dayStats[day];
+
+            if (stat.isBlocked) {
+                lines.push(day + ': BLOCKED');
+                lines.push('');
+                return;
+            }
+            if (stat.isOff) {
+                lines.push(day + ': Day Off');
+                lines.push('');
+                return;
+            }
+
+            lines.push(day + ' (' + Math.round(stat.totalHours * 10) / 10 + 'h):');
+            lines.push(new Array(30).join('-'));
+
+            blocks.forEach(function(block) {
+                var startStr = formatTime(block.start);
+                var endStr = formatTime(block.end);
+                var label = block.name;
+                if (block.type === 'buffer') label = '~ Buffer ~';
+                lines.push('  ' + startStr + ' - ' + endStr + '  ' + label + ' (' + block.duration + 'h)');
+                if (block.type === 'project') projectCount.add(block.projectId);
+            });
+
+            totalHrs += stat.totalHours;
+            lines.push('');
+        });
+
+        lines.push('========================');
+        lines.push('Total: ' + Math.round(totalHrs * 10) / 10 + ' hours across ' + projectCount.size + ' projects');
+        lines.push('\nGenerated by FreelanceOS Weekly Planner');
+
+        return lines.join('\n');
+    }
+
+    function getScheduleAsMarkdown() {
+        if (!state.schedule) return '';
+        var lines = [];
+        lines.push('# Freelance Weekly Planner\n');
+
+        var totalHrs = 0;
+        var projectCount = new Set();
+
+        DAY_NAMES.forEach(function(day) {
+            var blocks = state.schedule.schedule[day];
+            var stat = state.schedule.dayStats[day];
+
+            if (stat.isBlocked) {
+                lines.push('## ' + day + ' - BLOCKED\n');
+                return;
+            }
+            if (stat.isOff) {
+                lines.push('## ' + day + ' - Day Off\n');
+                return;
+            }
+
+            var focusScore = calculateFocusScore(stat);
+            lines.push('## ' + day + ' (' + Math.round(stat.totalHours * 10) / 10 + 'h | Focus: ' + focusScore + '/100)\n');
+
+            lines.push('| Time | Task | Duration |');
+            lines.push('|------|------|----------|');
+
+            blocks.forEach(function(block) {
+                var startStr = formatTime(block.start);
+                var endStr = formatTime(block.end);
+                var label = block.name;
+                if (block.type === 'buffer') label = '*Buffer*';
+                lines.push('| ' + startStr + ' - ' + endStr + ' | ' + label + ' | ' + block.duration + 'h |');
+                if (block.type === 'project') projectCount.add(block.projectId);
+            });
+
+            totalHrs += stat.totalHours;
+            lines.push('');
+        });
+
+        lines.push('---');
+        lines.push('**Total:** ' + Math.round(totalHrs * 10) / 10 + ' hours across ' + projectCount.size + ' projects\n');
+        lines.push('*Generated by [FreelanceOS Weekly Planner](https://www.freelanceos.com/freelanceos-storefront/weekly-planner.html)*');
+
+        return lines.join('\n');
+    }
+
+    function copyAsText() {
+        var text = getScheduleAsText();
+        copyToClipboard(text);
+        showToast('Copied as plain text');
+    }
+
+    function copyAsMarkdown() {
+        var md = getScheduleAsMarkdown();
+        copyToClipboard(md);
+        showToast('Copied as Markdown');
+    }
+
+    function downloadPDF() {
+        if (!state.schedule) return;
+
+        // Build a print-friendly HTML document
+        var html = buildPrintHTML();
+
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write(html);
+        printWindow.document.close();
+
+        setTimeout(function() {
+            printWindow.print();
+        }, 500);
+
+        showToast('PDF print dialog opened');
+    }
+
+    function buildPrintHTML() {
+        var data = state.schedule;
+        var totalHrs = 0;
+        var projectSet = new Set();
+
+        var rows = '';
+        DAY_NAMES.forEach(function(day) {
+            var stat = data.dayStats[day];
+            if (stat.isBlocked) {
+                rows += '<tr><td style="font-weight:bold;padding:8px;border:1px solid #ddd">' + day + '</td><td colspan="3" style="padding:8px;border:1px solid #ddd;color:#999;text-align:center">BLOCKED</td></tr>';
+                return;
+            }
+            if (stat.isOff) {
+                rows += '<tr><td style="font-weight:bold;padding:8px;border:1px solid #ddd">' + day + '</td><td colspan="3" style="padding:8px;border:1px solid #ddd;color:#999;text-align:center">Day Off</td></tr>';
+                return;
+            }
+
+            data.schedule[day].forEach(function(block, bi) {
+                var startStr = formatTime(block.start);
+                var endStr = formatTime(block.end);
+                rows += '<tr>' +
+                    (bi === 0 ? '<td rowspan="' + data.schedule[day].length + '" style="font-weight:bold;padding:8px;border:1px solid #ddd;vertical-align:top">' + day + '<br><small style="color:#888">' + Math.round(stat.totalHours * 10) / 10 + 'h</small></td>' : '') +
+                    '<td style="padding:8px;border:1px solid #ddd">' + startStr + ' - ' + endStr + '</td>' +
+                    '<td style="padding:8px;border:1px solid #ddd;font-weight:' + (block.type === 'project' ? 'bold' : 'normal') + '">' + escapeHtml(block.name) + '</td>' +
+                    '<td style="padding:8px;border:1px solid #ddd;text-align:center">' + block.duration + 'h</td>' +
+                    '</tr>';
+                if (block.type === 'project') projectSet.add(block.projectId);
+                totalHrs += block.duration;
+            });
+        });
+
+        return '<!DOCTYPE html><html><head><title>Freelance Weekly Planner</title>' +
+            '<style>body{font-family:system-ui,sans-serif;padding:40px;max-width:900px;margin:0 auto}' +
+            'h1{font-size:24px;margin-bottom:4px}h2{font-size:14px;color:#666;margin-bottom:24px}' +
+            'table{width:100%;border-collapse:collapse;margin-bottom:24px}' +
+            '.footer{font-size:12px;color:#999;text-align:center;margin-top:32px;border-top:1px solid #eee;padding-top:16px}' +
+            '@media print{body{padding:20px}}</style></head>' +
+            '<body><h1>Freelance Weekly Planner</h1>' +
+            '<h2>' + Math.round(totalHrs * 10) / 10 + ' hours across ' + projectSet.size + ' projects</h2>' +
+            '<table><thead><tr style="background:#f5f5f5">' +
+            '<th style="padding:10px;border:1px solid #ddd;text-align:left">Day</th>' +
+            '<th style="padding:10px;border:1px solid #ddd;text-align:left">Time</th>' +
+            '<th style="padding:10px;border:1px solid #ddd;text-align:left">Task</th>' +
+            '<th style="padding:10px;border:1px solid #ddd;text-align:center">Duration</th>' +
+            '</tr></thead><tbody>' + rows + '</tbody></table>' +
+            '<div class="footer">Generated by FreelanceOS Weekly Planner &mdash; freelanceos.com</div>' +
+            '</body></html>';
+    }
+
+    function generateShareText() {
+        if (!state.schedule) return;
+        var totalHrs = 0;
+        var projectSet = new Set();
+
+        DAY_NAMES.forEach(function(day) {
+            state.schedule.schedule[day].forEach(function(block) {
+                if (block.type === 'project') {
+                    totalHrs += block.duration;
+                    projectSet.add(block.projectId);
+                }
+            });
+        });
+
+        var shareStr = 'My optimized freelance week: ' + Math.round(totalHrs * 10) / 10 + ' hours across ' + projectSet.size + ' projects. Built with the FreelanceOS Weekly Planner → freelanceos.com/freelanceos-storefront/weekly-planner.html';
+        document.getElementById('shareText').value = shareStr;
+    }
+
+    function copyShareText() {
+        var textarea = document.getElementById('shareText');
+        copyToClipboard(textarea.value);
+        showToast('Share text copied');
+    }
+
+    // ---- Helpers ----
+    function formatTime(t) {
+        var hours = Math.floor(t);
+        var minutes = Math.round((t - hours) * 60);
+        var h = hours > 12 ? hours - 12 : hours;
+        if (h === 0) h = 12;
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        return h + ':' + (minutes < 10 ? '0' : '') + minutes + ampm;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function createEl(tag, className, content) {
+        var el = document.createElement(tag);
+        if (className) el.className = className;
+        if (content) el.innerHTML = content;
+        return el;
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text);
+        } else {
+            var textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+    }
+
+    function showToast(message) {
+        var toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(function() {
+            toast.classList.remove('show');
+        }, 2500);
+    }
+
+    // ---- Boot ----
+    init();
+    </script>
+</body>
+</html>

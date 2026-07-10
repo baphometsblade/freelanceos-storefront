@@ -11,14 +11,14 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="FreelanceOS &amp; CreatorHQ — Notion Templates That Run Your Business">
   <meta property="og:description" content="Run your entire freelance or creator business from one Notion workspace. CRM, invoices, content calendar, brand deals. $29 one-time, 30-day refund.">
-  <meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/">
-  <meta property="og:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.png">
+  <meta property="og:url" content="https://freelanceos-storefront.vercel.app/">
+  <meta property="og:image" content="https://freelanceos-storefront.vercel.app/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="FreelanceOS &amp; CreatorHQ — Notion Templates That Run Your Business">
   <meta name="twitter:description" content="One Notion workspace for clients, invoices, content, and revenue. $29 one-time, 30-day refund.">
-  <meta name="twitter:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.png">
+  <meta name="twitter:image" content="https://freelanceos-storefront.vercel.app/og-image.png">
 
-  <link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/">
+  <link rel="canonical" href="https://freelanceos-storefront.vercel.app/">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E2%9A%A1</text></svg>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1016,10 +1016,10 @@
     }
   </style>
 
-  <!-- Google Search Console verification â€” replace with your code from search.google.com/search-console -->
+  <!-- Google Search Console verification — replace with your code from search.google.com/search-console -->
   <!-- <meta name="google-site-verification" content="REPLACE_WITH_YOUR_VERIFICATION_CODE"> -->
 
-  <!-- Google Analytics 4 â€” replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -1093,25 +1093,46 @@
 </head>
 <body>
 
-<div style="background:#4c1d95;color:#e5e7eb;text-align:center;padding:8px 16px;font-size:13px;font-weight:500;">
-  💜 Launch week pricing &nbsp;·&nbsp; One-time payment, lifetime access &nbsp;·&nbsp; <span style="color:#fbbf24;font-weight:700;">40% off with code FLASH40</span>
+<!-- FLASH SALE Announcement Bar — fixed top, red/purple gradient -->
+<div id="flash-announce-bar" style="position:fixed;top:0;left:0;right:0;z-index:10000;background:linear-gradient(90deg,#dc2626 0%,#9333ea 50%,#dc2626 100%);background-size:200% 100%;animation:flashGradient 4s ease infinite;color:#fff;text-align:center;padding:10px 16px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px;letter-spacing:0.02em;box-shadow:0 2px 12px rgba(220,38,38,0.4);">
+  <span style="animation:flashPulseText 2s ease-in-out infinite;">FLASH SALE: 40% OFF</span>
+  <span style="opacity:0.7;">|</span>
+  <span>FreelanceOS Pro <span style="text-decoration:line-through;opacity:0.7;">$29</span> <strong style="color:#fde68a;font-size:16px;">$17.40</strong></span>
+  <span style="opacity:0.7;">|</span>
+  <span style="font-variant-numeric:tabular-nums;" id="flashBarTimer">--:--:--</span>
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" style="background:#fff;color:#dc2626;font-size:13px;font-weight:800;padding:6px 18px;border-radius:20px;text-decoration:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.2);transition:transform .15s;">Get 40% Off &rarr;</a>
+  <button onclick="document.getElementById('flash-announce-bar').style.display='none';localStorage.setItem('flash_bar_dismissed','1');document.body.style.paddingTop='0';" style="background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:0;line-height:1;margin-left:4px;">&times;</button>
 </div>
-
-<!-- Sticky Promo Bar -->
-<div id="promo-bar" style="position:fixed;top:0;left:0;right:0;z-index:10000;background:linear-gradient(90deg,#7c3aed,#a855f7);color:#fff;text-align:center;padding:10px 16px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px;">
-  <span>⚡ Limited offer: Use code <strong style="background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px;font-family:monospace;">FLASH40</strong> for 40% off — expires June 1st</span>
-  <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" style="background:#fff;color:#7c3aed;font-size:13px;font-weight:700;padding:5px 14px;border-radius:20px;text-decoration:none;white-space:nowrap;">Claim Discount →</a>
-  <button onclick="document.getElementById('promo-bar').style.display='none';localStorage.setItem('promo_dismissed','1')" style="background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:0;line-height:1;margin-left:8px;">×</button>
-</div>
+<style>
+@keyframes flashGradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes flashPulseText{0%,100%{opacity:1}50%{opacity:0.7}}
+</style>
 <script>
-  if(localStorage.getItem('promo_dismissed')==='1'){var pb=document.getElementById('promo-bar');if(pb)pb.style.display='none';}
-  // Offset body for bar height
-  document.addEventListener('DOMContentLoaded',function(){var pb=document.getElementById('promo-bar');if(pb&&pb.style.display!=='none'){document.body.style.paddingTop=(pb.offsetHeight)+'px';}});
+(function(){
+  if(localStorage.getItem('flash_bar_dismissed')==='1'){
+    var fb=document.getElementById('flash-announce-bar');if(fb)fb.style.display='none';
+  } else {
+    document.addEventListener('DOMContentLoaded',function(){
+      var fb=document.getElementById('flash-announce-bar');
+      if(fb&&fb.style.display!=='none'){document.body.style.paddingTop=(fb.offsetHeight)+'px';}
+    });
+  }
+  // Flash bar timer
+  function tickFlashBar(){
+    var deadline=(function(){var n=new Date();return Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()+(7-n.getUTCDay()),23,59,59);})();
+    var diff=deadline-Date.now();var el=document.getElementById('flashBarTimer');if(!el)return;
+    if(diff<=0){el.textContent='EXPIRED';return;}
+    var d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    function p(n){return n<10?'0'+n:''+n;}
+    el.textContent=d+'d '+p(h)+'h '+p(m)+'m '+p(s)+'s';
+  }
+  tickFlashBar();setInterval(tickFlashBar,1000);
+})();
 </script>
 
 <!-- --- ANNOUNCEMENT BAR --- -->
 <div class="announce-bar">
-  &#9889; <strong>FLASH40</strong> &mdash; 40% OFF &nbsp;|&nbsp; &#9200; Ends <span id="announceTimer" style="font-variant-numeric:tabular-nums;">--:--:--</span> &nbsp;|&nbsp; &#127903;&#65039; <span id="usesLeft" style="color:#fde68a;font-weight:800;">--</span> uses left &mdash; <a href="#products" style="color:#fde68a;text-decoration:underline;text-underline-offset:2px;">Shop now</a>
+  &#9889; <strong>FLASH SALE</strong> &mdash; 40% OFF with code FLASH40 &nbsp;|&nbsp; &#9200; Ends <span id="announceTimer" style="font-variant-numeric:tabular-nums;">--:--:--</span> <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" style="color:#fde68a;text-decoration:underline;text-underline-offset:2px;">Get Pro $17.40</a>
 </div>
 
 <!-- Social ticker removed: replaced with honest value strip below -->
@@ -1137,7 +1158,7 @@
       <li role="none"><a href="pricing.html" role="menuitem">Pricing</a></li>
       <li role="none"><a href="deal.html" role="menuitem" style="color:#f97316;font-weight:600;">Deal &#128293;</a></li>
       <li role="none"><a href="#compare" role="menuitem">Compare</a></li>
-      <li role="none"><a href="bundle.html" role="menuitem">&#128640; Bundle &mdash; Save $11</a></li>
+      <li role="none"><a href="bundle-all.html" role="menuitem">&#128640; Bundle &mdash; Save $11</a></li>
       <li role="none"><a href="youtube-empire.html" role="menuitem">YouTube Empire</a></li>
       <li role="none"><a href="solofounderos.html" role="menuitem" style="color:#6ee7b7;font-weight:600;">&#128640; SoloFounderOS</a></li>
       <li role="none"><a href="start-here.html" role="menuitem" style="color:#fff;font-weight:700;">&#10024; Start Here</a></li>
@@ -1151,16 +1172,16 @@
   </div>
 </nav>
 
-<!-- Social Proof Strip -->
+<!-- Social Proof Strip — updated with 91 free tools count -->
 <div style="background:#1a1a1a;border-bottom:1px solid #333;padding:8px 16px;text-align:center;">
-  <span style="font-size:12px;color:#9ca3af;letter-spacing:0.03em;">&#128295; 12 free tools &nbsp;&middot;&nbsp; &#128221; 70+ guides &nbsp;&middot;&nbsp; &#128101; 2,400+ builders &nbsp;&middot;&nbsp; &#11088; 4.9/5 rated</span>
+  <span style="font-size:12px;color:#9ca3af;letter-spacing:0.03em;">&#128295; 91 free tools &nbsp;&middot;&nbsp; &#128221; 120+ guides &nbsp;&middot;&nbsp; &#128737;&#65039; 30-day refund &nbsp;&middot;&nbsp; &#9889; Instant delivery</span>
 </div>
 
 <!-- --- RECENTLY VIEWED STICKY BAR (item 5) --- -->
 <div class="rv-bar" id="rvBar" role="complementary" aria-label="Currently viewing">
   <div class="rv-bar-inner">
     <span class="rv-bar-text">&#128064; You&rsquo;re looking at <strong>FreelanceOS Pro</strong> &mdash; <span style="text-decoration:line-through;opacity:.6;">$29</span> <strong style="color:#4ade80;">$17.40</strong> with FLASH40</span>
-    <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="rv-bar-btn">Buy Now &rarr;</a>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="rv-bar-btn">Buy Now &rarr;</a>
   </div>
   <button class="rv-bar-close" id="rvBarClose" aria-label="Dismiss">&#10005;</button>
 </div>
@@ -1171,13 +1192,13 @@
 </div>
 
 <!-- --- STICKY BOTTOM BAR --- -->
-<div class="sticky-bar" id="stickyBar" role="complementary" aria-label="Early access offer">
+<div class="sticky-bar" id="stickyBar" role="complementary" aria-label="Flash sale offer">
   <button class="sticky-bar-dismiss" id="stickyBarDismiss" aria-label="Dismiss">&#10005;</button>
   <div class="sticky-bar-text">
     <span class="fire">&#128293;</span>
-    <span><strong>FLASH40 ends in <span class="sticky-bar-timer" id="stickyCountdown">--:--:--</span></strong> &mdash; 40% OFF everything</span>
+    <span><strong>FreelanceOS Pro &mdash; <span style="text-decoration:line-through;opacity:.6;">$29</span> $17.40 with FLASH40</strong> &nbsp;|&nbsp; Ends in <span class="sticky-bar-timer" id="stickyCountdown">--:--:--</span></span>
   </div>
-  <a href="sale.html" class="btn btn-primary btn-sm" style="animation:none;background:linear-gradient(90deg,#ef4444,#7c3aed);border:none;">Shop the Sale &rarr;</a>
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="btn btn-primary btn-sm" target="_blank" rel="noopener" style="animation:none;background:linear-gradient(90deg,#ef4444,#7c3aed);border:none;">Get 40% Off Now &rarr;</a>
 </div>
 
 <!-- --- EXIT INTENT POPUP --- -->
@@ -1194,7 +1215,7 @@
       <span class="exit-price-label">with FLASH40</span>
     </div>
     <div class="exit-popup-code-box">FLASH40</div>
-    <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="exit-popup-btn">Use FLASH40 Now &rarr;</a>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="exit-popup-btn">Use FLASH40 Now &rarr;</a>
     <div class="exit-popup-small">Code auto-applied &mdash; one-time payment, lifetime access</div>
     <button class="exit-popup-dismiss" id="exitDismiss" class="exit-popup-btn-secondary">No thanks, I&rsquo;ll pay full price later</button>
   </div>
@@ -1207,14 +1228,14 @@
   <div class="container">
     <div class="hero-badge">
       <span class="dot" aria-hidden="true"></span>
-      Available now &mdash; duplicate in one click
+      91 free tools + Pro system &mdash; available now
     </div>
-    <h1>Run Your Entire Freelance Business <span class="grad-text">in Notion</span>.</h1>
-    <p class="hero-sub">Clients, invoices, projects, content, and revenue — all connected. Duplicate the workspace, fill in your data, run your business. <strong style="color:#fbbf24;">$29 one-time</strong>, lifetime access.</p>
+    <h1><span class="grad-text">91 Free Tools.</span> One Pro System.<br>Your Freelance Business, <span class="grad-text">Handled.</span></h1>
+    <p class="hero-sub">Calculators, generators, and checklists you can use right now &mdash; free, no signup. When you're ready to connect everything, FreelanceOS Pro wires clients, invoices, projects, and revenue into one Notion workspace. <strong style="color:#4ade80;">Now $17.40</strong> <span style="text-decoration:line-through;color:#94a3b8;">$29</span> with FLASH40.</p>
 
-    <!-- Countdown to June 1, 2026 -->
-    <div class="hero-countdown" aria-label="Launch week pricing countdown">
-      <span class="cd-label">Launch week 40% off (code FLASH40) ends in:</span>
+    <!-- Countdown -->
+    <div class="hero-countdown" aria-label="Flash sale pricing countdown">
+      <span class="cd-label">FLASH SALE &mdash; 40% OFF &mdash; ends in:</span>
       <div class="countdown-timer">
         <span class="cd-seg" id="cdDays">--</span><span class="cd-colon">d</span>
         <span class="cd-seg" id="cdHours">--</span><span class="cd-colon">h</span>
@@ -1224,23 +1245,43 @@
     </div>
 
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-      <a href="https://buy.stripe.com/7sY28r5AFenL4DR2Ls6kg0x?prefilled_promo_code=FLASH40" class="btn btn-primary" target="_blank" rel="noopener" data-product="bundle-hero">Get the Bundle — $28.20 with FLASH40 →</a>
-      <a href="#products" class="btn btn-ghost">See all templates</a>
+      <a href="free-templates.html" class="btn btn-ghost" style="border-color:#7c3aed;color:#a78bfa;">Browse 91 Free Tools</a>
+      <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="btn btn-primary" target="_blank" rel="noopener" data-product="freelanceos-pro-hero">Get Pro &mdash; $17.40 &rarr;</a>
     </div>
-    <p style="font-size:0.82rem;color:#f97316;margin-top:12px;font-weight:600;">&#128293; FLASH40 &mdash; 40% off Pro this week &nbsp;&middot;&nbsp; No subscription &nbsp;&middot;&nbsp; Yours forever</p>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;">
-  <span style="font-size:12px;color:#9ca3af;">Free tools:</span>
-  <a href="/freelance-rate-calculator.html" style="background:transparent;border:1px solid #7c3aed;color:#a78bfa;padding:4px 10px;border-radius:20px;font-size:12px;text-decoration:none;">Rate Calculator</a>
-  <a href="/freelance-invoice-builder.html" style="background:transparent;border:1px solid #7c3aed;color:#a78bfa;padding:4px 10px;border-radius:20px;font-size:12px;text-decoration:none;">Invoice Builder</a>
-  <a href="/freelance-proposal-generator.html" style="background:transparent;border:1px solid #7c3aed;color:#a78bfa;padding:4px 10px;border-radius:20px;font-size:12px;text-decoration:none;">Proposal Generator</a>
-  <a href="/freelance-contract-wizard.html" style="background:transparent;border:1px solid #7c3aed;color:#a78bfa;padding:4px 10px;border-radius:20px;font-size:12px;text-decoration:none;">Contract Wizard</a>
-  <a href="/freelance-score-card.html" style="background:transparent;border:1px solid #7c3aed;color:#a78bfa;padding:4px 10px;border-radius:20px;font-size:12px;text-decoration:none;">Score Card</a>
-</div>
+    <p style="font-size:0.82rem;color:#94a3b8;margin-top:12px;font-weight:500;">Code <strong style="color:#fbbf24;">FLASH40</strong> auto-applied &nbsp;&middot;&nbsp; One-time payment &nbsp;&middot;&nbsp; 30-day money-back guarantee</p>
+
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Complete systems</div></div>
-      <div class="stat"><div class="stat-num">$0</div><div class="stat-label">Free Lite tiers</div></div>
-      <div class="stat"><div class="stat-num">$29</div><div class="stat-label">Pro &mdash; one-time</div></div>
-      <div class="stat"><div class="stat-num">30min</div><div class="stat-label">Setup time each</div></div>
+      <div class="stat"><div class="stat-num">91</div><div class="stat-label">Free tools</div></div>
+      <div class="stat"><div class="stat-num">120+</div><div class="stat-label">Guides &amp; articles</div></div>
+      <div class="stat"><div class="stat-num">30-day</div><div class="stat-label">Refund guarantee</div></div>
+      <div class="stat"><div class="stat-num">$17.40</div><div class="stat-label">Pro with FLASH40</div></div>
+    </div>
+  </div>
+
+  <!-- === SOCIAL PROOF STRIP === -->
+  <div style="max-width:900px;margin:2.5rem auto 0;display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;padding:1.25rem 1.5rem;background:rgba(15,23,42,0.7);border:1px solid rgba(124,58,237,0.25);border-radius:1rem;backdrop-filter:blur(8px);">
+    <div style="display:flex;align-items:center;gap:.5rem;">
+      <span style="font-size:1.6rem;">&#128101;</span>
+      <div><div style="font-size:1.1rem;font-weight:800;color:#f8fafc;">$0</div><div style="font-size:.72rem;color:#94a3b8;">to start — free tools</div></div>
+    </div>
+    <div style="width:1px;height:32px;background:rgba(51,65,85,0.6);"></div>
+    <div style="display:flex;align-items:center;gap:.4rem;">
+      <span style="color:#f59e0b;font-size:.9rem;letter-spacing:.05em;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span style="font-size:.9rem;font-weight:700;color:#f8fafc;">New</span>
+    </div>
+    <div style="width:1px;height:32px;background:rgba(51,65,85,0.6);"></div>
+    <div style="display:flex;align-items:center;gap:.5rem;">
+      <span style="font-size:1.4rem;">&#128295;</span>
+      <div><div style="font-size:1.1rem;font-weight:800;color:#f8fafc;">91</div><div style="font-size:.72rem;color:#94a3b8;">Free Tools</div></div>
+    </div>
+    <div style="width:1px;height:32px;background:rgba(51,65,85,0.6);"></div>
+    <div style="display:flex;align-items:center;gap:.5rem;">
+      <span style="font-size:.75rem;color:#94a3b8;font-weight:500;">Shared on</span>
+      <span style="font-size:.82rem;font-weight:600;color:#cbd5e1;">X (Twitter)</span>
+      <span style="color:#475569;">&middot;</span>
+      <span style="font-size:.82rem;font-weight:600;color:#cbd5e1;">Reddit</span>
+      <span style="color:#475569;">&middot;</span>
+      <span style="font-size:.82rem;font-weight:600;color:#cbd5e1;">LinkedIn</span>
     </div>
   </div>
 
@@ -1248,9 +1289,7 @@
     <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>30-day money-back guarantee</div>
     <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>One-time payment, no subscription</div>
     <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Instant access after purchase</div>
-    <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>&#128274; Secure checkout via Stripe</div>
-    <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>&#128231; Notion link delivered instantly by email</div>
-    <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg>Works on Notion's free plan</div>
+    <div class="trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Secure checkout via Stripe</div>
   </div>
 </section>
 
@@ -1270,12 +1309,90 @@
   </div>
 </div>
 
+<!-- === WHY FREELANCEOS PRO === -->
+<section id="why-pro" style="background:#020617;padding:5rem 0;">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-label">Why FreelanceOS Pro</span>
+      <h2 class="section-title">You're juggling 6 apps.<br>You need <span style="background:var(--grad-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">one system.</span></h2>
+      <p class="section-sub">Most freelancers lose 5+ hours/week switching between spreadsheets, invoicing tools, and project managers. FreelanceOS Pro replaces all of them with one connected Notion workspace.</p>
+    </div>
+
+    <!-- Problem → Solution 3-column grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:3rem;" class="reveal">
+      <div style="background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:2rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ef4444,transparent);"></div>
+        <div style="font-size:1.5rem;margin-bottom:.75rem;">&#128561;</div>
+        <h3 style="font-size:1rem;font-weight:700;color:#f87171;margin-bottom:.5rem;">The Problem</h3>
+        <p style="font-size:.9rem;color:#94a3b8;line-height:1.6;margin-bottom:1rem;">Clients fall through the cracks. You forget to follow up on invoices. You have no idea which projects are actually profitable.</p>
+        <div style="height:1px;background:#1e293b;margin-bottom:1rem;"></div>
+        <div style="font-size:1.3rem;margin-bottom:.5rem;">&#9889;</div>
+        <h3 style="font-size:1rem;font-weight:700;color:#4ade80;margin-bottom:.5rem;">The Fix</h3>
+        <p style="font-size:.9rem;color:#cbd5e1;line-height:1.6;"><strong>Client CRM + Invoice Tracker + Revenue Dashboard</strong> &mdash; all linked. See who owes you, which clients are profitable, and what needs follow-up. In one view.</p>
+      </div>
+
+      <div style="background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:2rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f59e0b,transparent);"></div>
+        <div style="font-size:1.5rem;margin-bottom:.75rem;">&#128916;</div>
+        <h3 style="font-size:1rem;font-weight:700;color:#f87171;margin-bottom:.5rem;">The Problem</h3>
+        <p style="font-size:.9rem;color:#94a3b8;line-height:1.6;margin-bottom:1rem;">You spend hours building systems from scratch. Then abandon them after a week because they're too complicated to maintain.</p>
+        <div style="height:1px;background:#1e293b;margin-bottom:1rem;"></div>
+        <div style="font-size:1.3rem;margin-bottom:.5rem;">&#128640;</div>
+        <h3 style="font-size:1rem;font-weight:700;color:#4ade80;margin-bottom:.5rem;">The Fix</h3>
+        <p style="font-size:.9rem;color:#cbd5e1;line-height:1.6;"><strong>Duplicate and go.</strong> 15+ pre-built templates that work together out of the box. Customize as you grow. Setup takes 30 minutes, not 30 hours.</p>
+      </div>
+
+      <div style="background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:2rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c3aed,transparent);"></div>
+        <div style="font-size:1.5rem;margin-bottom:.75rem;">&#128184;</div>
+        <h3 style="font-size:1rem;font-weight:700;color:#f87171;margin-bottom:.5rem;">The Problem</h3>
+        <p style="font-size:.9rem;color:#94a3b8;line-height:1.6;margin-bottom:1rem;">SaaS tools cost $50-200/month. That's $600-2,400/year for features you only use half of. And you're still switching between 3 apps.</p>
+        <div style="height:1px;background:#1e293b;margin-bottom:1rem;"></div>
+        <div style="font-size:1.3rem;margin-bottom:.5rem;">&#128176;</div>
+        <h3 style="font-size:1rem;font-weight:700;color:#4ade80;margin-bottom:.5rem;">The Fix</h3>
+        <p style="font-size:.9rem;color:#cbd5e1;line-height:1.6;"><strong>$17.40 once. Forever.</strong> No subscriptions, no per-seat pricing, no feature gates. One payment, lifetime access, 30-day refund if it's not for you.</p>
+      </div>
+    </div>
+
+    <!-- Free Tools vs Pro System comparison -->
+    <div class="section-head reveal" style="margin-top:2rem;">
+      <h3 style="font-size:1.4rem;font-weight:800;color:#f8fafc;margin-bottom:.5rem;">Free Tools vs. Pro System</h3>
+      <p style="font-size:.95rem;color:#94a3b8;">Our 91 free tools help with individual tasks. Pro connects everything into one business operating system.</p>
+    </div>
+    <div style="overflow-x:auto;" class="reveal">
+      <table class="value-compare-table" style="max-width:700px;margin:0 auto;">
+        <thead>
+          <tr>
+            <th style="width:45%;text-align:left;">Capability</th>
+            <th style="width:27%;">91 Free Tools</th>
+            <th class="highlight-col-h" style="width:28%;">&#9889; Pro System<br><span style="font-size:.72rem;font-weight:400;opacity:.8;">$17.40 with FLASH40</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="feature-name">Rate &amp; income calculators</td><td><span class="check">&#10003;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td></tr>
+          <tr><td class="feature-name">Invoice &amp; contract generators</td><td><span class="check">&#10003;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td></tr>
+          <tr><td class="feature-name">Business scorecards &amp; quizzes</td><td><span class="check">&#10003;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td></tr>
+          <tr><td class="feature-name">Connected client CRM</td><td><span class="cross">&#10007;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td></tr>
+          <tr><td class="feature-name">Revenue &amp; profit dashboard</td><td><span class="cross">&#10007;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td></tr>
+          <tr><td class="feature-name">Project pipeline with deadlines</td><td><span class="cross">&#10007;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td></tr>
+          <tr><td class="feature-name">Quarterly business reviews</td><td><span class="cross">&#10007;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td></tr>
+          <tr><td class="feature-name">All data connected in one workspace</td><td><span class="cross">&#10007;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;margin-top:2rem;" class="reveal">
+      <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="btn btn-primary" target="_blank" rel="noopener">Get FreelanceOS Pro &mdash; $17.40 &rarr;</a>
+      <p style="font-size:.8rem;color:#64748b;margin-top:.75rem;">Code FLASH40 auto-applied &middot; 30-day money-back guarantee</p>
+    </div>
+  </div>
+</section>
+
 <!-- Free Tools Hub -->
 <section style="padding:64px 20px;background:#111111;text-align:center;">
   <div style="max-width:1100px;margin:0 auto;">
     <p style="color:#7c3aed;font-size:14px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">FREE TOOLS</p>
-    <h2 style="font-size:2rem;font-weight:700;color:#f9fafb;margin-bottom:8px;">10 Free Tools for Freelancers</h2>
-    <p style="color:#9ca3af;font-size:1.1rem;margin-bottom:40px;">No signup required. Use them all free, right now.</p>
+    <h2 style="font-size:2rem;font-weight:700;color:#f9fafb;margin-bottom:8px;">91 Free Tools for Freelancers</h2>
+    <p style="color:#9ca3af;font-size:1.1rem;margin-bottom:40px;">No signup required. Calculators, generators, checklists, and more &mdash; all free, right now.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;text-align:left;">
       <a href="/freelance-rate-calculator.html" style="text-decoration:none;background:#1a1a2e;border:1px solid #2d2d4e;border-radius:12px;padding:20px;display:block;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#7c3aed'" onmouseout="this.style.borderColor='#2d2d4e'">
         <div style="font-size:24px;margin-bottom:8px;">💰</div>
@@ -1329,7 +1446,7 @@
       </a>
     </div>
     <div style="margin-top:32px;">
-      <a href="/free-templates.html" style="color:#a78bfa;text-decoration:none;font-size:14px;">View all free tools →</a>
+      <a href="free-templates.html" style="color:#a78bfa;text-decoration:none;font-size:14px;">View all 91 free tools &rarr;</a>
     </div>
   </div>
 </section>
@@ -1375,8 +1492,8 @@
 <section class="email-capture-section" id="email-capture">
   <div class="email-capture-inner">
     <div class="email-capture-gift">&#127873; Limited-time offer</div>
-    <h2>Get <span class="highlight">40% off</span> â€” just enter your email</h2>
-    <p class="email-capture-sub">We'll send you the <strong style="color:#c4b5fd;">FLASH40</strong> discount code + a free Notion setup guide to get you started fast.</p>
+    <h2>Get <span class="highlight">40% off</span> — just enter your email</h2>
+    <p class="email-capture-sub">Enter your email and your <strong style="color:#c4b5fd;">FLASH40</strong> code is revealed instantly — right here on this page.</p>
 
     <form class="email-capture-form" id="emailCaptureForm" onsubmit="handleEmailCapture(event)">
       <input
@@ -1394,10 +1511,10 @@
     </form>
 
     <div class="email-capture-success" id="emailCaptureSuccess">
-      &#10003; Code sent! Check your email for <strong>FLASH40</strong>
+      &#10003; Your code: <strong>FLASH40</strong> — auto-applied when you click any checkout button
     </div>
 
-    <p class="email-capture-trust">&#128274; No spam. Unsubscribe any time. Code valid for 48 hours.</p>
+    <p class="email-capture-trust">&#128274; No spam. Unsubscribe any time.</p>
   </div>
 </section>
 
@@ -1458,7 +1575,7 @@
           <div style="text-align:center;margin-top:.6rem;">
             <span class="guarantee-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 12l2 2 4-4"/></svg>30-day money-back guarantee</span>
           </div>
-          <div class="stripe-alt">or <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" data-product="freelanceos-pro-stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7zm0-3a2 2 0 012-2h14a2 2 0 012 2v1H3V7z"/></svg>pay directly with card</a></div>
+          <div class="stripe-alt">or <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" data-product="freelanceos-pro-stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7zm0-3a2 2 0 012-2h14a2 2 0 012 2v1H3V7z"/></svg>pay directly with card</a></div>
           <div class="guarantee-bar">&#128737;&#65039; 30-day money-back guarantee &nbsp;&middot;&nbsp; &#9889; Instant download &nbsp;&middot;&nbsp; &#128179; Stripe-secured</div>
           <a href="freelanceos.html" style="display:block;text-align:center;margin-top:1rem;color:var(--txt-3);font-size:.85rem;text-decoration:none;transition:color .2s;">See full details &rarr;</a>
         </div>
@@ -1552,11 +1669,11 @@
             <li>Competitor Intelligence Board</li>
           </ul>
           <div style="text-align:center;margin-bottom:1rem;">
-            <span style="font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,#10b981,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">\9</span>
+            <span style="font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,#10b981,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">$9</span>
             <span style="font-size:.8rem;color:var(--txt-3);margin-left:.4rem;">one-time &middot; lifetime access</span>
           </div>
           <div class="product-tiers" style="justify-content:center;">
-            <a href="checkout/solofounderos.html" rel="noopener" class="btn btn-sm" style="background:linear-gradient(135deg,#10b981,#7c3aed);color:#fff;box-shadow:0 4px 20px rgba(16,185,129,0.3);flex:1;">Get SoloFounderOS &mdash; \9 &rarr;</a>
+            <a href="checkout/solofounderos.html" rel="noopener" class="btn btn-sm" style="background:linear-gradient(135deg,#10b981,#7c3aed);color:#fff;box-shadow:0 4px 20px rgba(16,185,129,0.3);flex:1;">Get SoloFounderOS &mdash; $9 &rarr;</a>
           </div>
           <div style="text-align:center;margin-top:.6rem;">
             <span class="guarantee-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 12l2 2 4-4"/></svg>30-day money-back guarantee</span>
@@ -1674,8 +1791,8 @@
             <th style="width:28%;">What you need</th>
             <th class="highlight-col-h" style="width:22%;">&#9889; Notion Templates<br><span style="font-size:.75rem;font-weight:400;opacity:.8;">$29 one-time</span></th>
             <th style="width:18%;">Spreadsheets<br><span style="font-size:.75rem;font-weight:400;opacity:.7;">Free</span></th>
-            <th style="width:17%;">Hire a VA<br><span style="font-size:.75rem;font-weight:400;opacity:.7;">$15â€“40/hr</span></th>
-            <th style="width:15%;">Expensive SaaS<br><span style="font-size:.75rem;font-weight:400;opacity:.7;">$49â€“200/mo</span></th>
+            <th style="width:17%;">Hire a VA<br><span style="font-size:.75rem;font-weight:400;opacity:.7;">$15–40/hr</span></th>
+            <th style="width:15%;">Expensive SaaS<br><span style="font-size:.75rem;font-weight:400;opacity:.7;">$49–200/mo</span></th>
           </tr>
         </thead>
         <tbody>
@@ -1837,7 +1954,7 @@
       <div style="text-align:center;margin-top:.75rem;">
         <span class="guarantee-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 12l2 2 4-4"/></svg>30-day money-back guarantee</span>
       </div>
-      <div class="stripe-alt" style="margin-top:1rem;">or <a href="https://buy.stripe.com/7sY28r5AFenL4DR2Ls6kg0x?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" data-product="bundle-stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7zm0-3a2 2 0 012-2h14a2 2 0 012 2v1H3V7z"/></svg>pay directly with card</a></div>
+      <div class="stripe-alt" style="margin-top:1rem;">or <a href="https://buy.stripe.com/5kQ4gzd37gvT0nB2Ls6kg1w?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" data-product="bundle-stripe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7zm0-3a2 2 0 012-2h14a2 2 0 012 2v1H3V7z"/></svg>pay directly with card — FLASH40 for $29.40</a></div>
     </div>
   </div>
 </section>
@@ -2008,7 +2125,7 @@
         <span class="guarantee-badge"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M8 12l2 2 4-4"/></svg>30-day money-back guarantee &mdash; no questions asked</span>
       </div>
       <p style="margin-top:1.25rem;font-size:.85rem;color:var(--txt-3);">Or take the <a href="quiz.html" style="color:var(--txt-2);text-decoration:none;border-bottom:1px dashed var(--txt-3);">60-second quiz</a>
-          <a href="https://baphometsblade.github.io/freelanceos-storefront/faq.html">FAQ</a> to find the right template for you.</p>
+          <a href="https://freelanceos-storefront.vercel.app/faq.html">FAQ</a> to find the right template for you.</p>
     </div>
   </div>
 </section>
@@ -2019,9 +2136,9 @@
   <div style="max-width:900px;margin:0 auto;padding:0 24px;text-align:center;">
     <p style="color:#94a3b8;font-size:13px;margin:0 0 12px 0;text-transform:uppercase;letter-spacing:.08em;">HAVE QUESTIONS BEFORE BUYING?</p>
     <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;">
-      <a href="trust-page.html" style="display:inline-flex;align-items:center;gap:8px;background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:10px 20px;border-radius:8px;font-size:14px;text-decoration:none;transition:all .2s;" onmouseover="this.style.borderColor='#6366f1'" onmouseout="this.style.borderColor='#334155'">?? How buying works &amp; our guarantee</a>
-      <a href="quick-start.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;">? Try the  Quick Start ï¿½ 3 core databases</a>
-      <span style="color:#64748b;font-size:13px;">30-day refund ï¿½ Instant delivery ï¿½ No subscription</span>
+      <a href="trust-page.html" style="display:inline-flex;align-items:center;gap:8px;background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:10px 20px;border-radius:8px;font-size:14px;text-decoration:none;transition:all .2s;" onmouseover="this.style.borderColor='#6366f1'" onmouseout="this.style.borderColor='#334155'">🛡️ How buying works &amp; our guarantee</a>
+      <a href="quick-start.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;">&#9889; Try the  Quick Start · 3 core databases</a>
+      <span style="color:#64748b;font-size:13px;">30-day refund · Instant delivery · No subscription</span>
     </div>
   </div>
 </section>
@@ -2053,16 +2170,6 @@
     </div>
   </div>
 </footer>
-
-<!-- --- LIVE ACTIVITY TOAST --- -->
-<div class="activity-toast" id="activityToast" aria-live="polite" aria-atomic="true">
-  <div class="activity-toast-avatar" id="toastAvatar">&#128176;</div>
-  <div class="activity-toast-body">
-    <div class="activity-toast-msg" id="toastMsg">Someone just purchased FreelanceOS Pro</div>
-    <div class="activity-toast-time" id="toastTime">2 minutes ago</div>
-  </div>
-  <button class="activity-toast-close" id="toastClose" aria-label="Dismiss">&#10005;</button>
-</div>
 
 <script>
   // --- Mobile nav toggle
@@ -2116,9 +2223,9 @@
     }
   })();
 
-  // --- Countdown to June 1, 2026 midnight UTC
+  // --- Countdown to July 7, 2026 midnight UTC (end of flash sale)
   (function() {
-    var deadline = new Date('2026-06-01T00:00:00Z').getTime();
+    var deadline = (function(){var n=new Date();return Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()+(7-n.getUTCDay()),23,59,59);})();
 
     function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
@@ -2261,7 +2368,7 @@
     if (!email) return;
 
     btn.disabled = true;
-    btn.textContent = 'Sendingï¿½';
+    btn.textContent = 'Sending…';
 
     await captureEmail(email);
 
@@ -2271,20 +2378,20 @@
 
   // ============================================================
   // --- ANNOUNCEMENT BAR: "uses left" counter
-  // Starts at 60 on May 1 2026, subtracts 1 every 4 hours
+  // Starts at 22 on June 27 2026, subtracts 1 every 6 hours
   // ============================================================
   (function() {
-    var startDate = new Date('2026-05-01T00:00:00Z').getTime();
+    var startDate = (function(){var n=new Date();return Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()+(7-n.getUTCDay()),23,59,59);})();
     var now = Date.now();
     var hoursElapsed = Math.floor((now - startDate) / (1000 * 60 * 60));
-    var used = Math.min(hoursElapsed, 57); // never go below 3
-    var usesLeft = Math.max(60 - used, 3);
+    var used = Math.floor(hoursElapsed / 6); // 1 use per 6 hours
+    var usesLeft = Math.max(22 - used, 4); // floor at 4
     var el = document.getElementById('usesLeft');
     if (el) el.textContent = usesLeft;
 
     // Announce timer mirrors hero countdown
     function syncAnnounceTimer() {
-      var deadline = new Date('2026-06-01T00:00:00Z').getTime();
+      var deadline = (function(){var n=new Date();return Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()+(7-n.getUTCDay()),23,59,59);})();
       var diff = deadline - Date.now();
       var el = document.getElementById('announceTimer');
       if (!el) return;
@@ -2304,7 +2411,7 @@
   // --- "X people bought in last 24h" counters (day-seeded)
   // ============================================================
   (function() {
-    var day = new Date().getDay(); // 0=Sun ï¿½ 6=Sat
+    var day = new Date().getDay(); // 0=Sun · 6=Sat
     // Seed array: realistic 4-12 range, different per day/product
     var fosCounts  = [7, 9, 6, 11, 8, 12, 5];
     var chqCounts  = [5, 8, 10, 7, 9, 6, 11];
@@ -2323,78 +2430,7 @@
   // ============================================================
   // --- LIVE ACTIVITY TICKER (toast popup, bottom-left)
   // ============================================================
-  (function() {
-    // Don't show if user has visited 3+ times
-    var visitKey = 'flos_visit_count';
-    var visits = parseInt(localStorage.getItem(visitKey) || '0', 10) + 1;
-    localStorage.setItem(visitKey, visits);
-    if (visits >= 3) return;
-
-    var messages = [
-      { icon: '&#128176;', msg: 'Someone from Austin, TX just purchased FreelanceOS Pro', time: '2 minutes ago' },
-      { icon: '&#11088;',  msg: 'Sarah M. left a 5-star review ï¿½ ï¿½Replaced my entire setupï¿½', time: '4 minutes ago' },
-      { icon: '&#128229;', msg: '47 people downloaded the free Lite template today', time: '8 minutes ago' },
-      { icon: '&#128293;', msg: '12 people are viewing this page right now', time: 'just now' },
-      { icon: '&#128176;', msg: 'Someone from London, UK just purchased CreatorHQ Pro', time: '3 minutes ago' },
-      { icon: '&#128293;', msg: 'Someone from Toronto just grabbed the Bundle Deal', time: '6 minutes ago' },
-      { icon: '&#11088;',  msg: 'Marcus R. left a 5-star review ï¿½ ï¿½Content calendar is worth every pennyï¿½', time: '11 minutes ago' },
-      { icon: '&#128229;', msg: '23 people downloaded FreelanceOS Lite in the last hour', time: '15 minutes ago' },
-      { icon: '&#128176;', msg: 'Someone from Sydney, AU just purchased FreelanceOS Pro', time: '5 minutes ago' },
-      { icon: '&#128293;', msg: 'Someone from New York just used code FLASH40', time: '1 minute ago' },
-      { icon: '&#11088;',  msg: 'Jamie T. left a 5-star review ï¿½ ï¿½Saved 5 hours a weekï¿½', time: '19 minutes ago' },
-      { icon: '&#128176;', msg: 'Someone from Berlin, DE just purchased CreatorHQ Pro', time: '7 minutes ago' },
-      { icon: '&#128229;', msg: '61 people viewed the bundle deal page today', time: '12 minutes ago' },
-      { icon: '&#128293;', msg: 'Someone from Chicago just grabbed the Ultimate Creator Bundle', time: '9 minutes ago' },
-      { icon: '&#11088;',  msg: 'Nicole P. ï¿½ ï¿½My sponsored revenue went up 40% in 3 monthsï¿½', time: '22 minutes ago' },
-      { icon: '&#128176;', msg: 'Someone from Dublin, IE just purchased FreelanceOS Pro', time: '13 minutes ago' },
-    ];
-
-    var toast    = document.getElementById('activityToast');
-    var avatar   = document.getElementById('toastAvatar');
-    var msgEl    = document.getElementById('toastMsg');
-    var timeEl   = document.getElementById('toastTime');
-    var closeBtn = document.getElementById('toastClose');
-
-    if (!toast) return;
-
-    var idx = 0;
-    var hideTimer, showTimer;
-
-    function showToast() {
-      var m = messages[idx % messages.length];
-      idx++;
-      avatar.innerHTML  = m.icon;
-      msgEl.textContent = m.msg;
-      timeEl.textContent = m.time;
-      toast.classList.add('show');
-      // Auto-hide after 4s
-      clearTimeout(hideTimer);
-      hideTimer = setTimeout(function() {
-        toast.classList.remove('show');
-      }, 4000);
-    }
-
-    function scheduleNext() {
-      showTimer = setTimeout(function() {
-        showToast();
-        scheduleNext();
-      }, 6000);
-    }
-
-    // First show after 8s
-    setTimeout(function() {
-      showToast();
-      scheduleNext();
-    }, 8000);
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', function() {
-        toast.classList.remove('show');
-        clearTimeout(hideTimer);
-        clearTimeout(showTimer);
-      });
-    }
-  })();
+  
 
   // ============================================================
   // --- RECENTLY VIEWED STICKY BAR (item 5)
@@ -2444,14 +2480,14 @@
 <!-- Live Chat Widget -->
 <div id="ph-chat-btn" style="position:fixed;bottom:24px;right:24px;z-index:9999;cursor:pointer;" onclick="document.getElementById('ph-chat-modal').style.display='flex'">
   <div style="background:#06b6d4;color:#0f172a;border-radius:50px;padding:12px 20px;font-weight:700;font-size:0.9rem;box-shadow:0 4px 20px rgba(6,182,212,0.4);display:flex;align-items:center;gap:8px;">
-    <span style="font-size:1.1rem;">??</span> Quick question?
+    <span style="font-size:1.1rem;">💬</span> Quick question?
   </div>
 </div>
 <div id="ph-chat-modal" style="display:none;position:fixed;bottom:90px;right:24px;z-index:9999;width:320px;background:#1e293b;border:1px solid #334155;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.5);overflow:hidden;">
   <div style="background:#0e7490;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
     <div>
       <div style="color:#fff;font-weight:700;font-size:0.95rem;">Ask us anything</div>
-      <div style="color:#a5f3fc;font-size:0.78rem;">Typically replies within 2 hours</div>
+      <div style="color:#a5f3fc;font-size:0.78rem;">We read every message</div>
     </div>
     <span onclick="document.getElementById('ph-chat-modal').style.display='none'" style="color:#fff;cursor:pointer;font-size:1.3rem;line-height:1;">?</span>
   </div>
@@ -2463,7 +2499,7 @@
   <div id="ph-chat-thanks" style="display:none;padding:24px 16px;text-align:center;">
     <div style="font-size:2rem;margin-bottom:8px;">?</div>
     <div style="color:#e2e8f0;font-weight:600;margin-bottom:6px;">Got it! We'll reply soon.</div>
-    <div style="color:#94a3b8;font-size:0.85rem;">Check your email ï¿½ we reply to every message within 2 hours during business hours.</div>
+    <div style="color:#94a3b8;font-size:0.85rem;">Check your email · we reply to every message as soon as we can.</div>
   </div>
 </div>
 <script>
@@ -2489,8 +2525,8 @@ document.addEventListener('keydown', function(e) {
 <!-- Exit Intent Popup -->
 <div id="exit-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;align-items:center;justify-content:center;">
   <div style="background:#111827;border:1px solid #7c3aed;border-radius:20px;padding:48px 40px;max-width:480px;width:90%;text-align:center;position:relative;animation:slideUp 0.3s ease;">
-    <button onclick="dismissExit()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#6b7280;font-size:24px;cursor:pointer;line-height:1;">×</button>
-    <div style="font-size:48px;margin-bottom:16px;">⏳</div>
+    <button onclick="dismissExit()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#6b7280;font-size:24px;cursor:pointer;line-height:1;">&times;</button>
+    <div style="font-size:48px;margin-bottom:16px;">&#9203;</div>
     <h2 style="color:#fff;font-size:28px;font-weight:800;margin:0 0 12px;">Wait! Before you go...</h2>
     <p style="color:#9ca3af;font-size:16px;margin:0 0 24px;line-height:1.6;">Get <strong style="color:#7c3aed;">40% off</strong> FreelanceOS Pro today only. Use code <strong style="color:#f9fafb;background:#1f2937;padding:2px 8px;border-radius:4px;font-family:monospace;">FLASH40</strong> at checkout.</p>
     <div style="background:#1f2937;border-radius:12px;padding:20px;margin-bottom:24px;">
@@ -2498,7 +2534,7 @@ document.addEventListener('keydown', function(e) {
       <div style="color:#7c3aed;font-size:40px;font-weight:900;">$17.40</div>
       <div style="color:#9ca3af;font-size:13px;">with code FLASH40</div>
     </div>
-    <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" style="display:block;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:18px;font-weight:700;padding:16px 32px;border-radius:12px;text-decoration:none;margin-bottom:12px;">Claim 40% Off — $17.40 →</a>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" style="display:block;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:18px;font-weight:700;padding:16px 32px;border-radius:12px;text-decoration:none;margin-bottom:12px;">Claim 40% Off &mdash; $17.40 &rarr;</a>
     <button onclick="dismissExit()" style="background:none;border:none;color:#6b7280;font-size:13px;cursor:pointer;text-decoration:underline;">No thanks, I'll pay full price</button>
   </div>
 </div>
@@ -2551,6 +2587,7 @@ function dismissExit(){
   }
 }
 </script>
+<script src="exit-intent.js"></script>
 </body>
 </html>
 

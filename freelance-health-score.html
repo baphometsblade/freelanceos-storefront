@@ -1,599 +1,869 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Freelance Business Health Score — How Strong Is Your Freelance Business?</title>
-<meta name="description" content="Take the free Freelance Business Health Score quiz. Answer 15 questions and get your score across 5 key areas: clients, money, systems, growth, and wellbeing.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Freelance Business Health Score — How Strong Is Your Business?">
-<meta property="og:description" content="Take this free 15-question quiz to score your freelance business across 5 areas: clients, money, systems, growth, and balance. Takes 2 minutes.">
-<meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/freelance-health-score.html">
-<meta property="og:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="What's Your Freelance Business Health Score?">
-<meta name="twitter:description" content="15 questions. 5 categories. Instant score 0–100. Find out if your freelance business is thriving or at risk.">
-<meta name="twitter:image" content="https://baphometsblade.github.io/freelanceos-storefront/og-image.jpg">
-<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/freelance-health-score.html">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;min-height:100vh}
-nav{background:#111;border-bottom:1px solid #222;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
-nav a{color:#e5e7eb;text-decoration:none;font-weight:600}
-.nav-links a{color:#9ca3af;font-size:14px;margin-left:20px;text-decoration:none}
-.nav-links a:hover{color:#e5e7eb}
-.container{max-width:680px;margin:0 auto;padding:40px 20px}
-/* Hero */
-.hero{text-align:center;padding:60px 20px 40px;background:linear-gradient(160deg,#0f0f0f,#1a0a2e)}
-.eyebrow{color:#7c3aed;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
-.hero h1{font-size:clamp(28px,5vw,48px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:16px}
-.hero p{color:#9ca3af;font-size:18px;max-width:500px;margin:0 auto 32px}
-.start-btn{background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font-size:18px;font-weight:700;padding:16px 40px;border-radius:12px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
-.start-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(124,58,237,.4)}
-.stats-row{display:flex;justify-content:center;gap:32px;margin-top:24px;flex-wrap:wrap}
-.stat{text-align:center}.stat-num{color:#7c3aed;font-size:22px;font-weight:800}.stat-label{color:#6b7280;font-size:12px}
-/* Quiz */
-#quiz-section{display:none}
-.progress-bar-wrap{background:#1f2937;border-radius:20px;height:6px;margin-bottom:8px}
-.progress-bar{background:linear-gradient(90deg,#7c3aed,#4f46e5);height:6px;border-radius:20px;transition:width .4s ease}
-.progress-text{color:#6b7280;font-size:13px;text-align:right;margin-bottom:24px}
-.question-card{background:#111827;border:1px solid #1f2937;border-radius:16px;padding:32px;margin-bottom:20px;animation:fadeInUp .3s ease}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.q-category{color:#7c3aed;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
-.q-text{color:#fff;font-size:20px;font-weight:700;margin-bottom:24px;line-height:1.4}
-.options{display:grid;gap:10px}
-.option{background:#0f172a;border:2px solid #1f2937;border-radius:10px;padding:14px 18px;cursor:pointer;color:#d1d5db;font-size:15px;text-align:left;transition:all .15s;display:flex;align-items:center;gap:12px}
-.option:hover{border-color:#7c3aed;background:#1a0a2e;color:#fff}
-.option.selected{border-color:#7c3aed;background:rgba(124,58,237,.15);color:#fff}
-.option .opt-icon{font-size:20px;flex-shrink:0}
-.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
-.back-btn{background:none;border:1px solid #374151;color:#9ca3af;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:14px}
-.back-btn:hover{border-color:#6b7280;color:#e5e7eb}
-.next-btn{background:#7c3aed;color:#fff;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-size:15px;font-weight:600;opacity:.4;pointer-events:none;transition:opacity .2s}
-.next-btn.active{opacity:1;pointer-events:all}
-.next-btn.active:hover{background:#6d28d9}
-/* Results */
-#results-section{display:none}
-.score-ring-wrap{text-align:center;padding:40px 0 20px}
-.score-circle{width:160px;height:160px;border-radius:50%;margin:0 auto 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;border:6px solid currentColor}
-.score-num{font-size:52px;font-weight:900;color:#fff;line-height:1}
-.score-label{font-size:13px;color:#9ca3af;margin-top:4px}
-.grade-badge{display:inline-block;font-size:28px;font-weight:900;padding:6px 20px;border-radius:8px;margin-bottom:8px}
-.result-title{font-size:24px;font-weight:800;color:#fff;margin-bottom:8px}
-.result-subtitle{color:#9ca3af;font-size:16px;margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto}
-/* Category breakdown */
-.breakdown{margin:32px 0}
-.breakdown h3{color:#fff;font-size:18px;font-weight:700;margin-bottom:20px}
-.cat-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.cat-name{color:#d1d5db;font-size:14px;width:130px;flex-shrink:0}
-.cat-bar-wrap{flex:1;background:#1f2937;border-radius:10px;height:10px;overflow:hidden}
-.cat-bar{height:10px;border-radius:10px;width:0;transition:width 1s ease}
-.cat-score{color:#fff;font-size:13px;font-weight:700;width:36px;text-align:right}
-/* Recommendations */
-.recs{background:#111827;border:1px solid #1f2937;border-radius:16px;padding:24px;margin:24px 0}
-.recs h3{color:#fff;font-size:17px;font-weight:700;margin-bottom:16px}
-.rec-item{display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #1f2937}
-.rec-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-.rec-icon{font-size:20px;flex-shrink:0;margin-top:2px}
-.rec-text{color:#d1d5db;font-size:14px;line-height:1.5}
-.rec-text strong{color:#fff}
-/* CTA */
-.result-cta{background:linear-gradient(135deg,#4c1d95,#1e1b4b);border:1px solid #6d28d9;border-radius:16px;padding:36px;text-align:center;margin:24px 0}
-.result-cta h3{color:#fff;font-size:22px;font-weight:800;margin-bottom:10px}
-.result-cta p{color:#c4b5fd;margin-bottom:20px;font-size:15px}
-.cta-btn{display:inline-block;background:#7c3aed;color:#fff;font-weight:700;font-size:16px;padding:14px 32px;border-radius:10px;text-decoration:none;margin-bottom:10px}
-.cta-btn:hover{background:#6d28d9}
-.cta-secondary{color:#9ca3af;font-size:13px}
-.cta-secondary a{color:#c4b5fd;text-decoration:none}
-/* Share */
-.share-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0}
-.share-btn{padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;border:none}
-.share-twitter{background:#1da1f2;color:#fff}
-.share-linkedin{background:#0077b5;color:#fff}
-.share-copy{background:#374151;color:#e5e7eb}
-.retake{display:block;text-align:center;color:#6b7280;font-size:14px;margin-top:16px;cursor:pointer;text-decoration:underline}
-footer{background:#111;border-top:1px solid #222;padding:24px;text-align:center;color:#6b7280;font-size:13px;margin-top:60px}
-footer a{color:#9ca3af;text-decoration:none;margin:0 8px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freelance Business Health Score — How Healthy Is Your Freelance Business?</title>
+  <meta name="description" content="Take our free 60-second Freelance Business Health Check. Get a score out of 100, see exactly where you're leaving money on the table, and get a custom action plan." />
+  <meta property="og:title" content="Freelance Business Health Score — How Healthy Is Your Freelance Business?" />
+  <meta property="og:description" content="Take our free 60-second Freelance Business Health Check. Get a score out of 100 and see your personalized action plan." />
+  <meta property="og:url" content="https://freelanceos-storefront.vercel.app/freelance-health-score.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://freelanceos-storefront.vercel.app/freelance-health-score.html" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f0f;
+      --bg2: #1a1a1a;
+      --bg3: #222;
+      --border: #2a2a2a;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --purple: #7c3aed;
+      --purple-light: #a78bfa;
+      --purple-dim: rgba(124,58,237,0.15);
+      --red: #ef4444;
+      --orange: #f59e0b;
+      --blue: #3b82f6;
+      --green: #10b981;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--purple-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* HEADER */
+    .site-header {
+      background: #111;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-logo { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+    .site-logo span { color: var(--purple-light); }
+    .header-cta {
+      background: var(--purple);
+      color: #fff;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .header-cta:hover { background: #6d28d9; text-decoration: none; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(160deg, #150d26 0%, #0f0f0f 55%);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 24px 48px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--purple-dim);
+      border: 1px solid var(--purple);
+      color: var(--purple-light);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 46px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--purple-light), #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 28px;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .hero-meta .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      display: inline-block;
+      margin-right: 6px;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+
+    /* QUIZ WRAPPER */
+    .quiz-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* PROGRESS */
+    .progress-section { margin-bottom: 28px; }
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .progress-top strong { color: var(--text); }
+    .progress-track {
+      height: 6px;
+      background: var(--bg3);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--purple), var(--purple-light));
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    /* QUESTION CARD */
+    .question-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      display: none;
+      animation: fadeUp 0.3s ease;
+    }
+    .question-card.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .q-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 10px;
+    }
+    .q-text {
+      font-size: 21px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 28px;
+    }
+    .options { display: flex; flex-direction: column; gap: 11px; }
+    .opt {
+      background: var(--bg3);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 15px 18px;
+      text-align: left;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    }
+    .opt:hover {
+      border-color: var(--purple);
+      background: var(--purple-dim);
+      transform: translateX(3px);
+    }
+    .opt.selected {
+      border-color: var(--purple);
+      background: var(--purple-dim);
+    }
+    .opt-letter {
+      min-width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--border);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .opt.selected .opt-letter,
+    .opt:hover .opt-letter {
+      background: var(--purple);
+      color: #fff;
+    }
+
+    /* RESULTS */
+    #results-page { display: none; animation: fadeUp 0.4s ease; }
+
+    .gauge-wrap { text-align: center; margin-bottom: 28px; }
+    .gauge-svg { display: block; margin: 0 auto; }
+
+    .score-badge {
+      display: inline-block;
+      padding: 5px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    .result-title {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 900;
+      color: #fff;
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .result-summary {
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 500px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    /* INSIGHTS GRID */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 560px) { .insights-grid { grid-template-columns: 1fr; } }
+    .insights-col h3 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .str-col h3 { color: var(--green); }
+    .imp-col h3 { color: var(--orange); }
+    .insight-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 15px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.5;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .i-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+
+    /* EMAIL GATE */
+    .email-gate {
+      background: linear-gradient(135deg, #1a1030, var(--bg2));
+      border: 2px solid var(--purple);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .email-gate h3 { font-size: 19px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .email-gate p  { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .email-row {
+      display: flex;
+      gap: 10px;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    @media (max-width: 480px) { .email-row { flex-direction: column; } }
+    .email-in {
+      flex: 1;
+      background: var(--bg3);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .email-in:focus { border-color: var(--purple); }
+    .email-in::placeholder { color: var(--muted); }
+    .email-btn {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .email-btn:hover { background: #6d28d9; }
+
+    /* FULL REPORT */
+    #full-report {
+      display: none;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.4s ease;
+    }
+    #full-report h3 { font-size: 17px; font-weight: 800; color: #fff; margin-bottom: 16px; }
+    .report-items { display: flex; flex-direction: column; gap: 14px; }
+    .report-item {
+      display: flex;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .ri-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+
+    /* SHARE CARD */
+    .share-card {
+      background: linear-gradient(135deg, #150d26, #1a1a2e);
+      border: 2px solid var(--purple);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .share-score { font-size: 44px; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 6px; }
+    .share-level { font-size: 14px; margin-bottom: 14px; }
+    .share-tagline { font-size: 14px; color: var(--muted); margin-bottom: 18px; }
+    .copy-btn {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 22px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: #6d28d9; }
+    .copy-btn.done  { background: var(--green); }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      background: linear-gradient(135deg, #1a1030, #0f0f1a);
+      border: 1px solid var(--purple);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .bottom-cta h3 { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .bottom-cta p  { color: var(--muted); font-size: 15px; margin-bottom: 20px; line-height: 1.6; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--purple);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .cta-btn:hover { background: #6d28d9; text-decoration: none; }
+    .dbadge {
+      display: inline-block;
+      background: var(--orange);
+      color: #000;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .retake-btn {
+      display: block;
+      margin: 16px auto 0;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .retake-btn:hover { border-color: var(--muted); color: var(--text); }
+
+    /* FOOTER */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .site-footer a { color: var(--purple-light); }
+  </style>
 </head>
 <body>
 
-<nav>
-  <a href="/">⚡ FreelanceOS</a>
-  <div class="nav-links">
-    <a href="/">Home</a>
-    <a href="/free-templates.html">Free Templates</a>
-    <a href="/freelance-rate-calculator.html">Rate Calculator</a>
-  </div>
-</nav>
+<header class="site-header">
+  <a href="https://freelanceos-storefront.vercel.app/" class="site-logo" style="text-decoration:none">
+    Freelance<span>OS</span>
+  </a>
+  <a href="https://freelanceos-storefront.vercel.app/#pricing" class="header-cta">Get FreelanceOS Pro →</a>
+</header>
 
-<!-- HERO -->
-<section class="hero" id="hero-section">
-  <div class="container">
-    <div class="eyebrow">Free Quiz · 2 Minutes · Instant Results</div>
-    <h1>What's Your Freelance<br>Business Health Score?</h1>
-    <p>Answer 15 questions and find out if your freelance business is thriving — or secretly broken.</p>
-    <button class="start-btn" onclick="startQuiz()">Take the Free Quiz →</button>
-    <div class="stats-row">
-      <div class="stat"><div class="stat-num">15</div><div class="stat-label">Questions</div></div>
-      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Key Areas</div></div>
-      <div class="stat"><div class="stat-num">100</div><div class="stat-label">Point Scale</div></div>
-      <div class="stat"><div class="stat-num">2 min</div><div class="stat-label">To Complete</div></div>
-    </div>
+<section class="hero">
+  <div class="hero-eyebrow">Free 60-Second Quiz</div>
+  <h1>Freelance Business <em>Health Score</em></h1>
+  <p class="hero-sub">Answer 10 quick questions and get an honest score out of 100. Discover exactly where you're leaving money on the table — and get your custom action plan.</p>
+  <div class="hero-meta">
+    <span><span class="dot"></span>Free, instant results</span>
+    <span>⏱ 60 seconds</span>
+    <span>📊 10 questions</span>
   </div>
 </section>
 
-<!-- QUIZ -->
-<section id="quiz-section">
-  <div class="container">
-    <div class="progress-bar-wrap">
-      <div class="progress-bar" id="progressBar" style="width:0%"></div>
+<div class="quiz-wrapper">
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-section" id="progress-section">
+    <div class="progress-top">
+      <span>Question <strong id="q-num">1</strong> of <strong>10</strong></span>
+      <span id="pts-display" style="color:var(--purple-light);font-weight:600"></span>
     </div>
-    <div class="progress-text" id="progressText">Question 1 of 15</div>
-    <div id="questionContainer"></div>
-    <div class="nav-btns">
-      <button class="back-btn" id="backBtn" onclick="prevQuestion()" style="visibility:hidden">← Back</button>
-      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next →</button>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill" style="width:0%"></div>
     </div>
   </div>
-</section>
 
-<!-- RESULTS -->
-<section id="results-section">
-  <div class="container">
-    <div class="score-ring-wrap">
-      <div class="score-circle" id="scoreCircle">
-        <div class="score-num" id="scoreNum">0</div>
-        <div class="score-label">/ 100</div>
-      </div>
-      <div class="grade-badge" id="gradeBadge"></div>
-      <div class="result-title" id="resultTitle"></div>
-      <div class="result-subtitle" id="resultSubtitle"></div>
-    </div>
+  <!-- QUESTIONS -->
+  <div id="quiz-body">
 
-    <div class="breakdown">
-      <h3>Your Score by Category</h3>
-      <div class="cat-row">
-        <div class="cat-name">👥 Client Systems</div>
-        <div class="cat-bar-wrap"><div class="cat-bar" id="bar-clients" style="background:#7c3aed"></div></div>
-        <div class="cat-score" id="score-clients">0</div>
-      </div>
-      <div class="cat-row">
-        <div class="cat-name">💸 Money</div>
-        <div class="cat-bar-wrap"><div class="cat-bar" id="bar-money" style="background:#4f46e5"></div></div>
-        <div class="cat-score" id="score-money">0</div>
-      </div>
-      <div class="cat-row">
-        <div class="cat-name">🗂️ Organisation</div>
-        <div class="cat-bar-wrap"><div class="cat-bar" id="bar-systems" style="background:#7c3aed"></div></div>
-        <div class="cat-score" id="score-systems">0</div>
-      </div>
-      <div class="cat-row">
-        <div class="cat-name">🚀 Growth</div>
-        <div class="cat-bar-wrap"><div class="cat-bar" id="bar-growth" style="background:#4f46e5"></div></div>
-        <div class="cat-score" id="score-growth">0</div>
-      </div>
-      <div class="cat-row">
-        <div class="cat-name">⚖️ Work-Life Balance</div>
-        <div class="cat-bar-wrap"><div class="cat-bar" id="bar-balance" style="background:#7c3aed"></div></div>
-        <div class="cat-score" id="score-balance">0</div>
+    <div class="question-card active" data-q="0">
+      <div class="q-number">Question 1 of 10</div>
+      <div class="q-text">How do you track your client pipeline?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,0)"><span class="opt-letter">A</span>I use a dedicated CRM or Notion database</button>
+        <button class="opt" data-pts="7"  onclick="pick(this,0)"><span class="opt-letter">B</span>I have a spreadsheet</button>
+        <button class="opt" data-pts="3"  onclick="pick(this,0)"><span class="opt-letter">C</span>I keep track in my head / email inbox</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,0)"><span class="opt-letter">D</span>I don't really track it</button>
       </div>
     </div>
 
-    <div class="recs" id="recsContainer">
-      <h3>Your Top Priorities</h3>
-      <div id="recsList"></div>
+    <div class="question-card" data-q="1">
+      <div class="q-number">Question 2 of 10</div>
+      <div class="q-text">How confident are you in your pricing?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,1)"><span class="opt-letter">A</span>I know my minimum rate and stick to it</button>
+        <button class="opt" data-pts="6"  onclick="pick(this,1)"><span class="opt-letter">B</span>I have rough rates but adjust often</button>
+        <button class="opt" data-pts="2"  onclick="pick(this,1)"><span class="opt-letter">C</span>I usually match what clients offer</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,1)"><span class="opt-letter">D</span>I charge what I think they'll accept</button>
+      </div>
     </div>
 
-    <div class="result-cta" id="ctaContainer">
-      <h3 id="ctaTitle"></h3>
-      <p id="ctaBody"></p>
-      <a href="/checkout/freelanceos-pro.html" class="cta-btn" id="ctaBtn"></a>
-      <div class="cta-secondary" id="ctaSecondary"></div>
+    <div class="question-card" data-q="2">
+      <div class="q-number">Question 3 of 10</div>
+      <div class="q-text">How do you invoice clients?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,2)"><span class="opt-letter">A</span>Professional invoices with clear payment terms and late fees</button>
+        <button class="opt" data-pts="6"  onclick="pick(this,2)"><span class="opt-letter">B</span>I send invoices but don't always follow up</button>
+        <button class="opt" data-pts="3"  onclick="pick(this,2)"><span class="opt-letter">C</span>I send informal invoices via email</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,2)"><span class="opt-letter">D</span>I wait for clients to ask or pay whenever</button>
+      </div>
     </div>
 
-    <div class="share-row">
-      <button class="share-btn share-twitter" id="twitterBtn" onclick="shareTwitter()">🐦 Share on Twitter</button>
-      <button class="share-btn share-linkedin" onclick="shareLinkedIn()">💼 Share on LinkedIn</button>
-      <button class="share-btn share-copy" onclick="copyLink()">🔗 Copy Link</button>
+    <div class="question-card" data-q="3">
+      <div class="q-number">Question 4 of 10</div>
+      <div class="q-text">Do you have a freelance contract for every project?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,3)"><span class="opt-letter">A</span>Yes, always — signed before I start work</button>
+        <button class="opt" data-pts="6"  onclick="pick(this,3)"><span class="opt-letter">B</span>For larger projects only</button>
+        <button class="opt" data-pts="2"  onclick="pick(this,3)"><span class="opt-letter">C</span>Occasionally</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,3)"><span class="opt-letter">D</span>Never</button>
+      </div>
     </div>
-    <span class="retake" onclick="retakeQuiz()">← Retake the quiz</span>
-  </div>
-</section>
 
-<footer>
-  <div>
-    <a href="/">FreelanceOS</a>
-    <a href="/free-templates.html">Free Templates</a>
-    <a href="/freelance-rate-calculator.html">Rate Calculator</a>
-    <a href="/client-profit-calculator.html">Profit Calculator</a>
-    <a href="/faq.html">FAQ</a>
-  </div>
-  <div style="margin-top:12px;color:#4b5563">© 2026 FreelanceOS. Free tools for freelancers.</div>
+    <div class="question-card" data-q="4">
+      <div class="q-number">Question 5 of 10</div>
+      <div class="q-text">How organized are your project files and deliverables?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,4)"><span class="opt-letter">A</span>Fully organized system — I can find anything in 30 seconds</button>
+        <button class="opt" data-pts="6"  onclick="pick(this,4)"><span class="opt-letter">B</span>Mostly organized</button>
+        <button class="opt" data-pts="3"  onclick="pick(this,4)"><span class="opt-letter">C</span>Scattered but manageable</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,4)"><span class="opt-letter">D</span>It's a mess</button>
+      </div>
+    </div>
+
+    <div class="question-card" data-q="5">
+      <div class="q-number">Question 6 of 10</div>
+      <div class="q-text">How often do you receive referrals from existing clients?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,5)"><span class="opt-letter">A</span>Regularly — referrals are a meaningful revenue source</button>
+        <button class="opt" data-pts="6"  onclick="pick(this,5)"><span class="opt-letter">B</span>Occasionally</button>
+        <button class="opt" data-pts="2"  onclick="pick(this,5)"><span class="opt-letter">C</span>Rarely</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,5)"><span class="opt-letter">D</span>Never</button>
+      </div>
+    </div>
+
+    <div class="question-card" data-q="6">
+      <div class="q-number">Question 7 of 10</div>
+      <div class="q-text">Do you track your income and expenses for taxes?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,6)"><span class="opt-letter">A</span>Yes, dedicated system updated monthly</button>
+        <button class="opt" data-pts="5"  onclick="pick(this,6)"><span class="opt-letter">B</span>I track it but not consistently</button>
+        <button class="opt" data-pts="2"  onclick="pick(this,6)"><span class="opt-letter">C</span>I figure it out at tax time</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,6)"><span class="opt-letter">D</span>I just hand my bank statements to an accountant</button>
+      </div>
+    </div>
+
+    <div class="question-card" data-q="7">
+      <div class="q-number">Question 8 of 10</div>
+      <div class="q-text">What's your client onboarding process like?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,7)"><span class="opt-letter">A</span>Professional welcome kit, kickoff call, shared project brief</button>
+        <button class="opt" data-pts="6"  onclick="pick(this,7)"><span class="opt-letter">B</span>I send a few emails to get started</button>
+        <button class="opt" data-pts="2"  onclick="pick(this,7)"><span class="opt-letter">C</span>I just start working</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,7)"><span class="opt-letter">D</span>What's an onboarding process?</button>
+      </div>
+    </div>
+
+    <div class="question-card" data-q="8">
+      <div class="q-number">Question 9 of 10</div>
+      <div class="q-text">Do you have a rate increase strategy?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,8)"><span class="opt-letter">A</span>Yes — I raise rates annually and for new clients</button>
+        <button class="opt" data-pts="6"  onclick="pick(this,8)"><span class="opt-letter">B</span>I've raised rates a few times</button>
+        <button class="opt" data-pts="2"  onclick="pick(this,8)"><span class="opt-letter">C</span>I've thought about it but haven't done it</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,8)"><span class="opt-letter">D</span>I've never raised my rates</button>
+      </div>
+    </div>
+
+    <div class="question-card" data-q="9">
+      <div class="q-number">Question 10 of 10</div>
+      <div class="q-text">How would you describe your work-life balance as a freelancer?</div>
+      <div class="options">
+        <button class="opt" data-pts="10" onclick="pick(this,9)"><span class="opt-letter">A</span>Great — I have clear boundaries and protected personal time</button>
+        <button class="opt" data-pts="6"  onclick="pick(this,9)"><span class="opt-letter">B</span>Decent most of the time</button>
+        <button class="opt" data-pts="3"  onclick="pick(this,9)"><span class="opt-letter">C</span>I work too much but it's okay</button>
+        <button class="opt" data-pts="0"  onclick="pick(this,9)"><span class="opt-letter">D</span>I'm always available and often burnt out</button>
+      </div>
+    </div>
+
+  </div><!-- /quiz-body -->
+
+  <!-- RESULTS PAGE -->
+  <div id="results-page">
+
+    <!-- SCORE GAUGE -->
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" width="200" height="145" viewBox="0 0 200 145">
+        <!-- Track arc (semicircle, r=80, center 100,120) -->
+        <path d="M20,120 A80,80 0 0,1 180,120" fill="none" stroke="#252525" stroke-width="14" stroke-linecap="round"/>
+        <!-- Filled arc -->
+        <path id="gauge-fill" d="M20,120 A80,80 0 0,1 180,120" fill="none" stroke="#7c3aed" stroke-width="14" stroke-linecap="round"
+              stroke-dasharray="0 251.2" style="transition:stroke-dasharray 1.2s cubic-bezier(.4,0,.2,1),stroke .5s;"/>
+        <!-- Score number -->
+        <text id="gauge-num" x="100" y="110" text-anchor="middle" fill="white" font-size="38" font-weight="900"
+              font-family="-apple-system,BlinkMacSystemFont,sans-serif">0</text>
+        <text x="100" y="130" text-anchor="middle" fill="#6b7280" font-size="12"
+              font-family="-apple-system,BlinkMacSystemFont,sans-serif">out of 100</text>
+      </svg>
+      <div id="score-badge" class="score-badge">—</div>
+    </div>
+
+    <div id="res-title" class="result-title"></div>
+    <div id="res-summary" class="result-summary"></div>
+
+    <div class="insights-grid">
+      <div class="insights-col str-col">
+        <h3>✅ Your Strengths</h3>
+        <div id="str-list"></div>
+      </div>
+      <div class="insights-col imp-col">
+        <h3>🔧 Areas to Improve</h3>
+        <div id="imp-list"></div>
+      </div>
+    </div>
+
+    <!-- EMAIL GATE -->
+    <div class="email-gate" id="email-gate">
+      <h3>📊 Get Your Complete Freelance Health Report</h3>
+      <p>Your personalized action plan for each area + recommended resources — generated instantly, 100% free.</p>
+      <div class="email-row">
+        <input type="email" class="email-in" id="email-in" placeholder="you@example.com" />
+        <button class="email-btn" onclick="unlockReport()">Send My Report →</button>
+      </div>
+    </div>
+
+    <!-- FULL REPORT -->
+    <div id="full-report">
+      <h3>📋 Your Personalized Action Plan</h3>
+      <div class="report-items" id="report-items"></div>
+    </div>
+
+    <!-- SHAREABLE CARD -->
+    <div class="share-card">
+      <div class="share-score" id="share-score-n">—</div>
+      <div class="share-level" id="share-level-n"></div>
+      <p class="share-tagline">Take yours at FreelanceOS →</p>
+      <button class="copy-btn" id="copy-share-btn" onclick="copyShare()">📋 Copy to Share</button>
+    </div>
+
+    <!-- BOTTOM CTA -->
+    <div class="bottom-cta">
+      <h3 id="cta-h"></h3>
+      <p id="cta-p"></p>
+      <a class="cta-btn" id="cta-a" href="https://freelanceos-storefront.vercel.app/#pricing">View FreelanceOS Pro →</a>
+    </div>
+
+    <button class="retake-btn" onclick="retake()">↩ Retake the Quiz</button>
+
+  </div><!-- /results-page -->
+
+</div><!-- /quiz-wrapper -->
+
+<footer class="site-footer">
+  <a href="https://freelanceos-storefront.vercel.app/">FreelanceOS</a> ·
+  Free tools for freelancers ·
+  <a href="https://freelanceos-storefront.vercel.app/free-tools.html">All Free Tools</a>
 </footer>
 
 <script>
-const questions = [
-  // CLIENT SYSTEMS
-  {
-    category: '👥 Client Systems',
-    catKey: 'clients',
-    text: 'Do you have a written contract for every client project?',
-    options: [
-      { icon: '✅', text: 'Always', pts: 3 },
-      { icon: '🔄', text: 'Usually', pts: 2 },
-      { icon: '🤷', text: 'Sometimes', pts: 1 },
-      { icon: '❌', text: 'Never', pts: 0 }
-    ]
-  },
-  {
-    category: '👥 Client Systems',
-    catKey: 'clients',
-    text: 'How do you track which clients owe you money?',
-    options: [
-      { icon: '🗂️', text: 'Notion / dedicated CRM', pts: 3 },
-      { icon: '📊', text: 'Spreadsheet', pts: 2 },
-      { icon: '🧠', text: 'Memory or email search', pts: 1 },
-      { icon: '😬', text: "I often don't know", pts: 0 }
-    ]
-  },
-  {
-    category: '👥 Client Systems',
-    catKey: 'clients',
-    text: 'When a client asks for extra work, you typically...',
-    options: [
-      { icon: '📝', text: 'Quote it separately with a change order', pts: 3 },
-      { icon: '📌', text: 'Add it but note it', pts: 2 },
-      { icon: '😅', text: 'Just do it to keep them happy', pts: 1 },
-      { icon: '😰', text: 'Panic', pts: 0 }
-    ]
-  },
-  // MONEY & INVOICING
-  {
-    category: '💸 Money & Invoicing',
-    catKey: 'money',
-    text: 'How quickly do you send invoices after completing work?',
-    options: [
-      { icon: '⚡', text: 'Same day or automated', pts: 3 },
-      { icon: '📅', text: 'Within a week', pts: 2 },
-      { icon: '🤔', text: 'Whenever I remember', pts: 1 },
-      { icon: '😳', text: 'Clients often have to chase me', pts: 0 }
-    ]
-  },
-  {
-    category: '💸 Money & Invoicing',
-    catKey: 'money',
-    text: 'Do you know your average monthly revenue for the past 3 months?',
-    options: [
-      { icon: '📊', text: 'Yes, exactly', pts: 3 },
-      { icon: '🔍', text: 'Roughly', pts: 2 },
-      { icon: '😶', text: 'Not really', pts: 1 },
-      { icon: '🤷', text: 'No idea', pts: 0 }
-    ]
-  },
-  {
-    category: '💸 Money & Invoicing',
-    catKey: 'money',
-    text: 'What percentage of clients pay within your stated terms?',
-    options: [
-      { icon: '🏆', text: '80%+', pts: 3 },
-      { icon: '👍', text: '50–80%', pts: 2 },
-      { icon: '😬', text: 'Under 50%', pts: 1 },
-      { icon: '📭', text: "I don't have stated terms", pts: 0 }
-    ]
-  },
-  // SYSTEMS & ORGANISATION
-  {
-    category: '🗂️ Systems & Organisation',
-    catKey: 'systems',
-    text: 'How do you manage your project deadlines?',
-    options: [
-      { icon: '🔔', text: 'Centralised system with alerts', pts: 3 },
-      { icon: '📆', text: 'Calendar / task app', pts: 2 },
-      { icon: '🧠', text: 'Mental notes or paper', pts: 1 },
-      { icon: '🔥', text: 'Things just get missed sometimes', pts: 0 }
-    ]
-  },
-  {
-    category: '🗂️ Systems & Organisation',
-    catKey: 'systems',
-    text: 'Could you hand your business to someone else for a week with written docs?',
-    options: [
-      { icon: '✅', text: 'Yes easily', pts: 3 },
-      { icon: '🟡', text: 'Mostly yes', pts: 2 },
-      { icon: '😬', text: 'It would be chaotic', pts: 1 },
-      { icon: '🚫', text: 'Absolutely not', pts: 0 }
-    ]
-  },
-  {
-    category: '🗂️ Systems & Organisation',
-    catKey: 'systems',
-    text: 'How do you store and find past client work, contracts, and files?',
-    options: [
-      { icon: '🗂️', text: 'Organised system by client', pts: 3 },
-      { icon: '📁', text: 'Mostly organised', pts: 2 },
-      { icon: '💻', text: "It's somewhere on my computer", pts: 1 },
-      { icon: '🔍', text: 'Constant searching', pts: 0 }
-    ]
-  },
-  // GROWTH & PIPELINE
-  {
-    category: '🚀 Growth & Pipeline',
-    catKey: 'growth',
-    text: 'Do you have a lead pipeline — a list of prospects you\'re nurturing?',
-    options: [
-      { icon: '📈', text: 'Yes, actively maintained', pts: 3 },
-      { icon: '📝', text: 'Informal list', pts: 2 },
-      { icon: '📬', text: 'I only pursue inbound enquiries', pts: 1 },
-      { icon: '❌', text: 'No pipeline at all', pts: 0 }
-    ]
-  },
-  {
-    category: '🚀 Growth & Pipeline',
-    catKey: 'growth',
-    text: 'When did you last proactively reach out to a past client?',
-    options: [
-      { icon: '✅', text: 'In the last month', pts: 3 },
-      { icon: '🗓️', text: 'Last 3 months', pts: 2 },
-      { icon: '⏰', text: 'Over 6 months ago', pts: 1 },
-      { icon: '🚫', text: "Never done this", pts: 0 }
-    ]
-  },
-  {
-    category: '🚀 Growth & Pipeline',
-    catKey: 'growth',
-    text: "What's your plan if your biggest client cancelled tomorrow?",
-    options: [
-      { icon: '💪', text: 'I have 3+ active leads', pts: 3 },
-      { icon: '🟡', text: "I'd be okay for a month", pts: 2 },
-      { icon: '😟', text: 'It would seriously hurt', pts: 1 },
-      { icon: '🚨', text: "I'd be in trouble immediately", pts: 0 }
-    ]
-  },
-  // WORK-LIFE BALANCE
-  {
-    category: '⚖️ Work-Life Balance',
-    catKey: 'balance',
-    text: 'Do you track your actual working hours vs. billable hours?',
-    options: [
-      { icon: '⏱️', text: 'Yes, always', pts: 3 },
-      { icon: '🔄', text: 'Sometimes', pts: 2 },
-      { icon: '🤔', text: 'No but I should', pts: 1 },
-      { icon: '❓', text: 'Never thought about it', pts: 0 }
-    ]
-  },
-  {
-    category: '⚖️ Work-Life Balance',
-    catKey: 'balance',
-    text: 'Do you have set working hours you actually stick to?',
-    options: [
-      { icon: '🕐', text: 'Yes, clear boundaries', pts: 3 },
-      { icon: '🟡', text: 'Mostly', pts: 2 },
-      { icon: '📱', text: 'Clients message whenever and I respond', pts: 1 },
-      { icon: '😵', text: 'I work constantly', pts: 0 }
-    ]
-  },
-  {
-    category: '⚖️ Work-Life Balance',
-    catKey: 'balance',
-    text: 'How often do you feel overwhelmed by your freelance workload?',
-    options: [
-      { icon: '😌', text: 'Rarely', pts: 3 },
-      { icon: '🙂', text: 'Occasionally', pts: 2 },
-      { icon: '😓', text: 'Often', pts: 1 },
-      { icon: '😵', text: 'Almost always', pts: 0 }
-    ]
-  }
+const LABELS = [
+  "Client Pipeline Tracking","Pricing Confidence","Invoicing System","Contract Usage",
+  "File Organization","Client Referrals","Tax Tracking","Client Onboarding",
+  "Rate Increase Strategy","Work-Life Balance"
 ];
 
-const recs = {
-  clients: { icon: '👥', text: '<strong>Client Systems:</strong> Set up a CRM to track every client, project, and follow-up. A simple Notion database prevents dropped balls and missed revenue.' },
-  money: { icon: '💸', text: '<strong>Invoicing:</strong> Set a rule — invoice within 24 hours of completing work. Track every payment in a dedicated system so nothing falls through.' },
-  systems: { icon: '🗂️', text: '<strong>Organisation:</strong> Build one central workspace where every project, file, and deadline lives. The 2 hours to set this up saves 2 hours a week forever.' },
-  growth: { icon: '🚀', text: '<strong>Pipeline:</strong> Spend 30 minutes each week on outreach — past clients, referrals, or warm leads. Freelancers who do this earn 40% more than those who don\'t.' },
-  balance: { icon: '⚖️', text: '<strong>Work-Life Balance:</strong> Set clear working hours and stick to them. Track billable vs. total hours — most freelancers are effectively earning far less than they think.' }
-};
+const ADVICE = [
+  { good:"You have a proper system to track leads — this is a huge advantage for converting more clients and never letting a hot prospect fall through the cracks.",
+    bad:"Without a pipeline tracker you're losing leads and follow-ups. A simple Notion CRM takes 30 minutes to set up and can meaningfully increase your close rate." },
+  { good:"Knowing your rates and holding them is one of the clearest signs of a sustainable freelance business — clients respect confidence.",
+    bad:"Uncertain pricing signals low confidence and leaves thousands on the table annually. Set a firm minimum rate this week and write it down somewhere visible." },
+  { good:"Professional invoicing with clear terms means faster payment, fewer awkward conversations, and a business that feels legitimate to clients.",
+    bad:"Informal invoicing delays payment and creates scope confusion. Add net-15 terms and a late fee clause to your next invoice template today." },
+  { good:"Always using a signed contract protects your income and defines scope clearly — this is the single most important habit in freelancing.",
+    bad:"Working without contracts puts every project at risk. FreelanceOS Pro includes a ready-to-use contract template you can send today." },
+  { good:"A well-organized file system saves hours per project and impresses clients when you can retrieve anything instantly.",
+    bad:"Disorganized files cost you time on every project and create version-control disasters. A templated folder structure per client fixes this in one afternoon." },
+  { good:"Steady referrals mean clients are genuinely satisfied — this is the cheapest and highest-converting marketing channel you have.",
+    bad:"Low referrals usually means no system to ask for them. Add a simple 'know anyone who could use my help?' to every project close-out email." },
+  { good:"Monthly tax tracking means no surprise bills and easy deductions at year end — keep this habit going.",
+    bad:"Scrambling at tax time costs money in missed deductions and late stress. A simple monthly income log (even a spreadsheet) pays for itself." },
+  { good:"A professional onboarding process sets clear expectations and reduces back-and-forth throughout the project — clients notice and appreciate it.",
+    bad:"Poor onboarding leads to scope creep and client confusion. A one-page project brief shared on day one eliminates 80% of mid-project friction." },
+  { good:"Strategic annual rate increases compound significantly over time — you're building premium positioning while others stagnate.",
+    bad:"Stagnant rates mean inflation is cutting your real income every year. Plan a 10-15% increase on your next new client and test the market response." },
+  { good:"Clear boundaries and protected personal time prevent burnout and make you more productive and creative during work hours.",
+    bad:"Burnout is the #1 reason freelancers quit. Define your work hours, communicate them to clients, and build a deliberate off-switch into your day." }
+];
 
-let currentQ = 0;
-let answers = new Array(15).fill(null);
+let ans = new Array(10).fill(null);
+let cur = 0;
 
-function getGrade(score) {
-  if (score >= 85) return { grade: 'A', color: '#10b981', label: 'Thriving Business' };
-  if (score >= 70) return { grade: 'B', color: '#3b82f6', label: 'Strong Foundation' };
-  if (score >= 55) return { grade: 'C', color: '#f59e0b', label: 'Room to Grow' };
-  if (score >= 35) return { grade: 'D', color: '#f97316', label: 'Needs Attention' };
-  return { grade: 'F', color: '#ef4444', label: 'Business at Risk' };
+function pick(btn, qi) {
+  const card = btn.closest('.question-card');
+  card.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  ans[qi] = parseInt(btn.dataset.pts);
+  setTimeout(() => {
+    qi < 9 ? goTo(qi + 1) : showResults();
+  }, 350);
 }
 
-function getResultMessage(score) {
-  if (score >= 85) return "Your freelance business is thriving. You have strong systems, consistent clients, and healthy finances. Focus on scaling what's already working.";
-  if (score >= 70) return "You've built a solid foundation. A few gaps remain — tighten up your systems and you'll have a truly hands-off business machine.";
-  if (score >= 55) return "You're making it work, but it's costing you time and mental energy. Plugging the gaps in your systems will immediately reduce stress and increase revenue.";
-  if (score >= 35) return "Your business needs attention. You're likely losing money to late invoices, losing time to disorganisation, and losing clients to unclear communication.";
-  return "Your freelance business is at risk. Without better systems, you're one bad month away from serious problems. The good news: this is 100% fixable.";
-}
-
-function startQuiz() {
-  document.getElementById('hero-section').style.display = 'none';
-  document.getElementById('quiz-section').style.display = 'block';
-  renderQuestion();
-}
-
-function renderQuestion() {
-  const q = questions[currentQ];
-  const pct = ((currentQ) / 15) * 100;
-  document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('progressText').textContent = `Question ${currentQ + 1} of 15`;
-  document.getElementById('backBtn').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
-
-  const nextBtn = document.getElementById('nextBtn');
-  nextBtn.textContent = currentQ === 14 ? 'See My Score →' : 'Next →';
-  nextBtn.classList.remove('active');
-
-  const container = document.getElementById('questionContainer');
-  container.innerHTML = `
-    <div class="question-card">
-      <div class="q-category">${q.category}</div>
-      <div class="q-text">${q.text}</div>
-      <div class="options">
-        ${q.options.map((opt, i) => `
-          <button class="option${answers[currentQ] === i ? ' selected' : ''}" onclick="selectOption(${i})">
-            <span class="opt-icon">${opt.icon}</span>
-            <span>${opt.text}</span>
-          </button>
-        `).join('')}
-      </div>
-    </div>
-  `;
-
-  if (answers[currentQ] !== null) {
-    nextBtn.classList.add('active');
-  }
-}
-
-function selectOption(idx) {
-  answers[currentQ] = idx;
-  document.querySelectorAll('.option').forEach((el, i) => {
-    el.classList.toggle('selected', i === idx);
-  });
-  document.getElementById('nextBtn').classList.add('active');
-}
-
-function nextQuestion() {
-  if (answers[currentQ] === null) return;
-  if (currentQ < 14) {
-    currentQ++;
-    renderQuestion();
-  } else {
-    showResults();
-  }
-}
-
-function prevQuestion() {
-  if (currentQ > 0) {
-    currentQ--;
-    renderQuestion();
-  }
+function goTo(idx) {
+  document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+  document.querySelector(`.question-card[data-q="${idx}"]`).classList.add('active');
+  cur = idx;
+  const pct = (idx / 10) * 100;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('q-num').textContent = idx + 1;
+  const done = ans.filter(a => a !== null).length;
+  const tot  = ans.reduce((s, a) => s + (a || 0), 0);
+  if (done > 0) document.getElementById('pts-display').textContent = tot + ' pts so far';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showResults() {
-  document.getElementById('quiz-section').style.display = 'none';
-  document.getElementById('results-section').style.display = 'block';
+  document.getElementById('quiz-body').style.display = 'none';
+  document.getElementById('progress-section').style.display = 'none';
 
-  // Calculate scores
-  const catKeys = ['clients', 'money', 'systems', 'growth', 'balance'];
-  const catScores = {};
-  let totalPoints = 0;
+  const total = ans.reduce((s, a) => s + (a || 0), 0);
 
-  catKeys.forEach((cat, ci) => {
-    const qIndices = [ci * 3, ci * 3 + 1, ci * 3 + 2];
-    let pts = 0;
-    qIndices.forEach(qi => {
-      if (answers[qi] !== null) pts += questions[qi].options[answers[qi]].pts;
-    });
-    catScores[cat] = Math.round((pts / 9) * 100);
-    totalPoints += pts;
+  let color, level, emoji;
+  if      (total <= 40) { color='#ef4444'; level='Critical';   emoji='🚨'; }
+  else if (total <= 60) { color='#f59e0b'; level='Needs Work'; emoji='⚠️'; }
+  else if (total <= 80) { color='#3b82f6'; level='Good';       emoji='👍'; }
+  else                  { color='#10b981'; level='Excellent';  emoji='🏆'; }
+
+  // Gauge
+  const arc = document.getElementById('gauge-fill');
+  arc.style.stroke = color;
+  setTimeout(() => {
+    arc.style.strokeDasharray = (total / 100 * 251.2) + ' 251.2';
+  }, 80);
+  document.getElementById('gauge-num').textContent = total;
+
+  const badge = document.getElementById('score-badge');
+  badge.textContent = level;
+  badge.style.cssText = `background:${color}22;border:1px solid ${color};color:${color};display:inline-block;padding:5px 18px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:10px`;
+
+  const TITLES = {
+    Critical:   '🚨 Your Freelance Business Is at Risk',
+    'Needs Work':'⚠️ Your Freelance Business Needs Work',
+    Good:       '👍 Your Freelance Business Is Solid',
+    Excellent:  '🏆 Your Freelance Business Is Thriving'
+  };
+  const SUMMARIES = {
+    Critical:    'Several critical gaps in your business fundamentals are costing you clients, money, and sanity. The good news: each one is fixable.',
+    'Needs Work':'You have some good habits but significant gaps that are limiting your income and growth. Let\'s fix the leaks.',
+    Good:        'You\'re doing well! A few targeted improvements could significantly boost your income and client satisfaction.',
+    Excellent:   'Impressive! You\'re running your freelance business like a pro. Keep it up and consider scaling.'
+  };
+  document.getElementById('res-title').textContent   = TITLES[level];
+  document.getElementById('res-summary').textContent = SUMMARIES[level];
+
+  // Insights
+  const scored = ans.map((p, i) => ({ i, p: p || 0 })).sort((a,b) => b.p - a.p);
+  const top3 = scored.slice(0, 3);
+  const bot3 = scored.slice(-3).reverse();
+
+  const sl = document.getElementById('str-list');
+  sl.innerHTML = '';
+  top3.forEach(({ i }) => {
+    sl.innerHTML += `<div class="insight-item"><span class="i-icon">✅</span><span><strong>${LABELS[i]}:</strong> ${ADVICE[i].good}</span></div>`;
   });
 
-  const healthScore = Math.round((totalPoints / 45) * 100);
-  const gradeInfo = getGrade(healthScore);
+  const il = document.getElementById('imp-list');
+  il.innerHTML = '';
+  bot3.forEach(({ i }) => {
+    il.innerHTML += `<div class="insight-item"><span class="i-icon">🔧</span><span><strong>${LABELS[i]}:</strong> ${ADVICE[i].bad}</span></div>`;
+  });
 
-  // Animate score counter
-  const scoreEl = document.getElementById('scoreNum');
-  const circle = document.getElementById('scoreCircle');
-  circle.style.borderColor = gradeInfo.color;
-  circle.style.boxShadow = `0 0 40px ${gradeInfo.color}33`;
-
-  let count = 0;
-  const target = healthScore;
-  const duration = 1200;
-  const steps = 60;
-  const increment = target / steps;
-  const timer = setInterval(() => {
-    count = Math.min(count + increment, target);
-    scoreEl.textContent = Math.round(count);
-    if (count >= target) clearInterval(timer);
-  }, duration / steps);
-
-  // Grade badge
-  const gradeBadge = document.getElementById('gradeBadge');
-  gradeBadge.textContent = `Grade: ${gradeInfo.grade}`;
-  gradeBadge.style.background = gradeInfo.color + '22';
-  gradeBadge.style.color = gradeInfo.color;
-  gradeBadge.style.border = `1px solid ${gradeInfo.color}44`;
-
-  document.getElementById('resultTitle').textContent = gradeInfo.label;
-  document.getElementById('resultSubtitle').textContent = getResultMessage(healthScore);
-
-  // Animate category bars
-  setTimeout(() => {
-    catKeys.forEach(cat => {
-      const bar = document.getElementById('bar-' + cat);
-      const scoreEl = document.getElementById('score-' + cat);
-      bar.style.width = catScores[cat] + '%';
-      scoreEl.textContent = catScores[cat];
-    });
-  }, 400);
-
-  // Recommendations: show 3 lowest categories
-  const sorted = catKeys.slice().sort((a, b) => catScores[a] - catScores[b]);
-  const top3 = sorted.slice(0, 3);
-  const recsList = document.getElementById('recsList');
-  recsList.innerHTML = top3.map(cat => `
-    <div class="rec-item">
-      <div class="rec-icon">${recs[cat].icon}</div>
-      <div class="rec-text">${recs[cat].text}</div>
-    </div>
-  `).join('');
+  // Share card
+  document.getElementById('share-score-n').textContent = total + '/100';
+  document.getElementById('share-level-n').innerHTML = `<span style="color:${color};font-weight:700">${emoji} ${level}</span> — Freelance Business Health Score`;
 
   // CTA
-  const ctaTitle = document.getElementById('ctaTitle');
-  const ctaBody = document.getElementById('ctaBody');
-  const ctaBtn = document.getElementById('ctaBtn');
-  const ctaSecondary = document.getElementById('ctaSecondary');
-
-  if (healthScore < 70) {
-    ctaTitle.textContent = 'Fix Your Score with FreelanceOS Pro';
-    ctaBody.textContent = 'FreelanceOS Pro gives you a done-for-you Notion workspace covering every weak area in your score — client CRM, invoice tracker, project manager, pipeline, and weekly review. 15+ templates, instant download.';
-    ctaBtn.textContent = 'Fix My Business with FreelanceOS Pro — $29 →';
-    ctaSecondary.innerHTML = 'New to this? <a href="https://buy.stripe.com/7sYdR9fbf4Nbb2fbhY6kg1V?prefilled_promo_code=FLASH40">Try the Quick Start for $9 first →</a>';
+  if (total < 70) {
+    document.getElementById('cta-h').textContent = 'The fastest way to fix all of these';
+    document.getElementById('cta-p').textContent = 'FreelanceOS Pro gives you done-for-you systems for every area — client pipeline, invoicing, onboarding, rate strategy and more. Use code FLASH40 for 40% off.';
+    document.getElementById('cta-a').innerHTML   = 'Get FreelanceOS Pro <span class="dbadge">FLASH40</span>';
   } else {
-    ctaTitle.textContent = 'Level Up Your Already-Strong Business';
-    ctaBody.textContent = "You've got solid foundations. FreelanceOS Pro adds the premium layer — advanced CRM, proposal templates, revenue dashboard, and time tracking — to help you scale to your next income level.";
-    ctaBtn.textContent = 'Get FreelanceOS Pro — $29 →';
-    ctaSecondary.innerHTML = '';
+    document.getElementById('cta-h').textContent = 'Level up with FreelanceOS Pro';
+    document.getElementById('cta-p').textContent = 'You\'re already solid — now go from good to great with the complete toolkit for thriving freelancers.';
+    document.getElementById('cta-a').textContent = 'Explore FreelanceOS Pro →';
   }
 
-  // Store score for share buttons
-  window._quizScore = healthScore;
-  window._quizGrade = gradeInfo.grade;
+  window._total = total;
+  window._ans   = [...ans];
+  document.getElementById('results-page').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function shareTwitter() {
-  const score = window._quizScore || 0;
-  const grade = window._quizGrade || '?';
-  const url = `https://twitter.com/intent/tweet?text=I+just+scored+${score}%2F100+on+the+Freelance+Business+Health+Score+quiz.+Grade%3A+${grade}.+How+does+your+freelance+biz+stack+up%3F&url=https%3A%2F%2Fbaphometsblade.github.io%2Ffreelanceos-storefront%2Ffreelance-health-score.html`;
-  window.open(url, '_blank');
-}
+function unlockReport() {
+  const input = document.getElementById('email-in');
+  if (!input.value.includes('@')) {
+    input.style.borderColor = '#ef4444';
+    input.focus();
+    return;
+  }
+  localStorage.setItem('fos_health_email', input.value.trim());
+  localStorage.setItem('fos_health_score', window._total);
+  document.getElementById('email-gate').style.display = 'none';
 
-function shareLinkedIn() {
-  window.open('https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fbaphometsblade.github.io%2Ffreelanceos-storefront%2Ffreelance-health-score.html', '_blank');
-}
-
-function copyLink() {
-  navigator.clipboard.writeText('https://baphometsblade.github.io/freelanceos-storefront/freelance-health-score.html').then(() => {
-    const btn = document.querySelector('.share-copy');
-    btn.textContent = '✅ Copied!';
-    setTimeout(() => { btn.textContent = '🔗 Copy Link'; }, 2000);
+  const prioritized = window._ans.map((p, i) => ({ i, p: p || 0 })).sort((a,b) => a.p - b.p);
+  const lines = [];
+  const intro = window._total >= 70
+    ? `Strong overall score of ${window._total}/100. Focus on your weakest areas below to push toward 90+.`
+    : `Your score of ${window._total}/100 reveals clear, actionable improvements available right now. Start with the top item below.`;
+  lines.push({ icon: window._total >= 70 ? '🟢' : '📍', text: intro });
+  prioritized.slice(0, 5).forEach(({ i }) => {
+    lines.push({ icon: window._ans[i] === 0 ? '🔴' : '🟡', text: `<strong>${LABELS[i]}:</strong> ${ADVICE[i].bad}` });
   });
+
+  const container = document.getElementById('report-items');
+  container.innerHTML = '';
+  lines.forEach(({ icon, text }) => {
+    container.innerHTML += `<div class="report-item"><span class="ri-icon">${icon}</span><span>${text}</span></div>`;
+  });
+
+  document.getElementById('full-report').style.display = 'block';
+  document.getElementById('full-report').scrollIntoView({ behavior: 'smooth' });
 }
 
-function retakeQuiz() {
-  currentQ = 0;
-  answers = new Array(15).fill(null);
-  document.getElementById('results-section').style.display = 'none';
-  document.getElementById('quiz-section').style.display = 'block';
-  renderQuestion();
+function copyShare() {
+  const score = window._total || 0;
+  const url   = 'https://freelanceos-storefront.vercel.app/freelance-health-score.html';
+  const text  = `Just scored ${score}/100 on the Freelance Business Health Check 📊 Find out if your freelance business is healthy: ${url}`;
+  const btn   = document.getElementById('copy-share-btn');
+  const done  = () => { btn.textContent = '✓ Copied!'; btn.classList.add('done'); setTimeout(() => { btn.textContent = '📋 Copy to Share'; btn.classList.remove('done'); }, 2500); };
+  navigator.clipboard ? navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done)) : fallbackCopy(text, done);
+}
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  cb();
+}
+
+function retake() {
+  ans = new Array(10).fill(null);
+  cur = 0;
+  document.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+  document.getElementById('results-page').style.display = 'none';
+  document.getElementById('full-report').style.display  = 'none';
+  document.getElementById('email-gate').style.display   = 'block';
+  document.getElementById('quiz-body').style.display    = 'block';
+  document.getElementById('progress-section').style.display = 'block';
+  document.getElementById('gauge-fill').style.strokeDasharray = '0 251.2';
+  document.getElementById('pts-display').textContent = '';
+  goTo(0);
 }
 </script>
 </body>

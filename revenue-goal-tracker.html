@@ -1,0 +1,2296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revenue Goal Tracker — Free Freelance Tool | FreelanceOS</title>
+<meta name="description" content="Track your freelance revenue goal in real time. See pacing analysis, monthly projections, gap analysis, and scenario planning — all in one free interactive dashboard.">
+<meta property="og:title" content="Revenue Goal Tracker — Free Freelance Tool | FreelanceOS">
+<meta property="og:description" content="Track your freelance revenue goal in real time. Pacing analysis, projections, gap analysis & scenario planning — free.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="revenue-goal-tracker.html">
+<meta property="og:site_name" content="FreelanceOS">
+<meta property="og:image" content="https://freelanceos.com/og-revenue-goal-tracker.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Revenue Goal Tracker — Free Freelance Tool | FreelanceOS">
+<meta name="twitter:description" content="Track your freelance revenue goal in real time. Free pacing analysis, projections & scenario planning.">
+<meta name="twitter:image" content="https://freelanceos.com/og-revenue-goal-tracker.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Revenue Goal Tracker",
+  "description": "Track your freelance revenue goal in real time with pacing analysis, monthly projections, gap analysis, and scenario planning.",
+  "url": "https://freelanceos.com/revenue-goal-tracker.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "FreelanceOS"
+  }
+}
+</script>
+<style>
+/* ========================================
+   RESET & CSS VARIABLES
+   ======================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --card-hover: #1e293b;
+  --border: #1e293b;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --accent: #a855f7;
+  --accent2: #ec4899;
+  --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --gradient-subtle: linear-gradient(135deg, rgba(168,85,247,.15), rgba(236,72,153,.15));
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --radius: 12px;
+  --radius-lg: 16px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ========================================
+   BACKGROUND AMBIENT GLOW
+   ======================================== */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(168,85,247,.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(236,72,153,.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========================================
+   LAYOUT
+   ======================================== */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.header {
+  text-align: center;
+  padding: 48px 20px 32px;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gradient-subtle);
+  border: 1px solid rgba(168,85,247,.3);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.header-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+
+.header h1 {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff 0%, #a855f7 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header p {
+  color: var(--text-muted);
+  font-size: 17px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   GLASS-MORPHISM CARDS
+   ======================================== */
+.glass-card {
+  background: rgba(15,23,42,0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(168,85,247,0.1);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 20px;
+  transition: border-color .3s;
+}
+
+.glass-card:hover {
+  border-color: rgba(168,85,247,0.2);
+}
+
+.card-title {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title .icon {
+  font-size: 16px;
+}
+
+/* ========================================
+   VIEW MANAGEMENT (Step 1 / Step 2)
+   ======================================== */
+.view {
+  display: none;
+  animation: fadeUp .5s ease;
+}
+
+.view.active {
+  display: block;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   SLIDER CONTROLS
+   ======================================== */
+.slider-group {
+  margin-bottom: 28px;
+}
+
+.slider-group:last-child {
+  margin-bottom: 0;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.slider-label .label-text {
+  color: var(--text-muted);
+}
+
+.slider-value {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gradient);
+  border: 3px solid var(--card);
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(168,85,247,.4);
+  transition: transform .15s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gradient);
+  border: 3px solid var(--card);
+  cursor: pointer;
+}
+
+.slider-hint {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+/* ========================================
+   MONTH SELECTOR GRID
+   ======================================== */
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.month-btn {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.month-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.month-btn.selected {
+  border-color: var(--accent);
+  background: rgba(168,85,247,.12);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.btn {
+  padding: 14px 36px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: var(--gradient);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(168,85,247,.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(168,85,247,.4);
+}
+
+.btn-secondary {
+  background: var(--card-hover);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-dim);
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+/* ========================================
+   PROGRESS RING
+   ======================================== */
+.progress-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.progress-ring-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.progress-ring-svg {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 12;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1), stroke 0.5s;
+}
+
+.progress-ring-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.progress-ring-pct {
+  font-size: 42px;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.progress-ring-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ========================================
+   STATS GRID
+   ======================================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-val.green { color: var(--success); }
+.stat-val.yellow { color: var(--warning); }
+.stat-val.red { color: var(--danger); }
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ========================================
+   PACING METER
+   ======================================== */
+.pacing-meter {
+  position: relative;
+  height: 32px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 16px 0;
+  border: 1px solid var(--border);
+}
+
+.pacing-meter-fill {
+  height: 100%;
+  border-radius: var(--radius);
+  transition: width 1s cubic-bezier(.4,0,.2,1);
+}
+
+.pacing-meter-marker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: left 1s;
+  z-index: 2;
+}
+
+.pacing-meter-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+
+/* ========================================
+   SVG CHART
+   ======================================== */
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.chart-wrap svg {
+  display: block;
+  margin: 0 auto;
+}
+
+/* ========================================
+   GAP ANALYSIS
+   ======================================== */
+.gap-list {
+  list-style: none;
+}
+
+.gap-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.gap-item:last-child {
+  border-bottom: none;
+}
+
+.gap-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.gap-icon.purple { background: rgba(168,85,247,.15); }
+.gap-icon.pink { background: rgba(236,72,153,.15); }
+.gap-icon.green { background: rgba(34,197,94,.15); }
+.gap-icon.orange { background: rgba(245,158,11,.15); }
+
+.gap-text {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.gap-text strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ========================================
+   SCENARIO CALCULATOR
+   ======================================== */
+.scenario-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+.scenario-card:last-child {
+  margin-bottom: 0;
+}
+
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.scenario-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.scenario-impact {
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.scenario-impact.positive { color: var(--success); }
+.scenario-impact.negative { color: var(--danger); }
+
+/* ========================================
+   COUNTDOWN
+   ======================================== */
+.countdown-wrap {
+  text-align: center;
+  padding: 28px 0;
+}
+
+.countdown-number {
+  font-size: 72px;
+  font-weight: 900;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.countdown-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.countdown-stat {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+}
+
+.countdown-stat-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ========================================
+   ACTION PLAN
+   ======================================== */
+.action-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.action-status.ahead {
+  background: rgba(34,197,94,.12);
+  border: 1px solid rgba(34,197,94,.3);
+  color: var(--success);
+}
+
+.action-status.on-track {
+  background: rgba(245,158,11,.12);
+  border: 1px solid rgba(245,158,11,.3);
+  color: var(--warning);
+}
+
+.action-status.behind {
+  background: rgba(239,68,68,.12);
+  border: 1px solid rgba(239,68,68,.3);
+  color: var(--danger);
+}
+
+.action-list {
+  list-style: none;
+  counter-reset: action;
+}
+
+.action-item {
+  counter-increment: action;
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.action-item:last-child {
+  border-bottom: none;
+}
+
+.action-item::before {
+  content: counter(action);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--gradient-subtle);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ========================================
+   SHARE SECTION
+   ======================================== */
+.share-preview {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 16px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+}
+
+.share-btn.twitter {
+  background: #1d9bf0;
+  color: #fff;
+}
+
+.share-btn.twitter:hover {
+  background: #1a8cd8;
+}
+
+.share-btn.copy {
+  background: var(--card-hover);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.share-btn.copy:hover {
+  border-color: var(--accent);
+}
+
+/* ========================================
+   MILESTONE TRACKER
+   ======================================== */
+.milestones-wrap {
+  position: relative;
+  padding: 8px 0;
+}
+
+.milestone-track {
+  position: relative;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 24px 0 40px;
+}
+
+.milestone-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--gradient);
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+.milestone-dot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  background: var(--bg);
+  transition: all .5s;
+  z-index: 2;
+}
+
+.milestone-dot.reached {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(168,85,247,.5);
+}
+
+.milestone-label {
+  position: absolute;
+  top: 20px;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  text-align: center;
+}
+
+.milestone-label.reached {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ========================================
+   QUARTERLY BREAKDOWN
+   ======================================== */
+.quarter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.quarter-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  text-align: center;
+  transition: border-color .3s;
+}
+
+.quarter-box.current {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(168,85,247,.15);
+}
+
+.quarter-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.quarter-val {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.quarter-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* ========================================
+   CTA CARD
+   ======================================== */
+.cta-card {
+  background: var(--gradient-subtle);
+  border: 1px solid rgba(168,85,247,.25);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  margin: 32px 0;
+}
+
+.cta-card h3 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.cta-card p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 20px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-badge {
+  display: inline-block;
+  background: rgba(236,72,153,.15);
+  color: var(--accent2);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--gradient);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all .2s;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(168,85,247,.3);
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(168,85,247,.45);
+}
+
+.cta-promo {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 12px;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  text-align: center;
+  padding: 40px 20px 32px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 20px;
+  margin-bottom: 20px;
+}
+
+.footer-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color .2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.disclaimer {
+  font-size: 11px;
+  color: var(--text-dim);
+  max-width: 560px;
+  margin: 16px auto 0;
+  line-height: 1.6;
+}
+
+/* ========================================
+   URGENCY BAR
+   ======================================== */
+.urgency-bar {
+  background: var(--gradient);
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+/* ========================================
+   CHART LEGEND
+   ======================================== */
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.chart-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+/* ========================================
+   DIVIDER
+   ======================================== */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(168,85,247,.4); }
+  70% { box-shadow: 0 0 0 12px rgba(168,85,247,0); }
+  100% { box-shadow: 0 0 0 0 rgba(168,85,247,0); }
+}
+.pulse { animation: pulse 2s infinite; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 600px) {
+  .container { padding: 12px; }
+  .glass-card { padding: 20px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .month-grid { grid-template-columns: repeat(3, 1fr); }
+  .countdown-number { font-size: 56px; }
+  .header { padding: 32px 12px 24px; }
+  .quarter-grid { grid-template-columns: 1fr 1fr; }
+  .btn { padding: 12px 24px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<div class="header">
+  <div class="header-badge"><span class="dot"></span> Free Tool — No signup required</div>
+  <h1>Revenue Goal Tracker</h1>
+  <p>See exactly where you stand, what you need to earn per month, and how to close the gap before December 31.</p>
+</div>
+
+<div class="container">
+
+  <!-- ============================================================
+       STEP 1: INPUT VIEW
+       ============================================================ -->
+  <div id="view-input" class="view active">
+
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#127919;</span> Set Your Revenue Goal</div>
+
+      <!-- Annual Goal -->
+      <div class="slider-group">
+        <div class="slider-label">
+          <span class="label-text">Annual Revenue Goal</span>
+          <span class="slider-value" id="val-goal">$100,000</span>
+        </div>
+        <input type="range" id="slider-goal" min="10000" max="500000" step="5000" value="100000">
+        <div class="slider-hint">How much do you want to earn this year?</div>
+      </div>
+
+      <!-- Revenue Earned -->
+      <div class="slider-group">
+        <div class="slider-label">
+          <span class="label-text">Revenue Earned So Far</span>
+          <span class="slider-value" id="val-earned">$0</span>
+        </div>
+        <input type="range" id="slider-earned" min="0" max="500000" step="1000" value="0">
+        <div class="slider-hint">Total revenue collected January through now</div>
+      </div>
+
+      <!-- Average Project Value -->
+      <div class="slider-group">
+        <div class="slider-label">
+          <span class="label-text">Average Project Value</span>
+          <span class="slider-value" id="val-project">$5,000</span>
+        </div>
+        <input type="range" id="slider-project" min="500" max="50000" step="500" value="5000">
+        <div class="slider-hint">Typical revenue per project or engagement</div>
+      </div>
+
+      <!-- Monthly Average -->
+      <div class="slider-group">
+        <div class="slider-label">
+          <span class="label-text">Avg Monthly Revenue (Last 3 Months)</span>
+          <span class="slider-value" id="val-monthly">$8,000</span>
+        </div>
+        <input type="range" id="slider-monthly" min="0" max="50000" step="500" value="8000">
+        <div class="slider-hint">Your recent monthly average — used for pacing</div>
+      </div>
+
+      <!-- Pipeline Value -->
+      <div class="slider-group">
+        <div class="slider-label">
+          <span class="label-text">Pipeline Value (Deals in Progress)</span>
+          <span class="slider-value" id="val-pipeline">$0</span>
+        </div>
+        <input type="range" id="slider-pipeline" min="0" max="100000" step="1000" value="0">
+        <div class="slider-hint">Value of proposals sent or deals not yet closed</div>
+      </div>
+
+      <!-- Hourly Rate -->
+      <div class="slider-group">
+        <div class="slider-label">
+          <span class="label-text">Your Hourly Rate</span>
+          <span class="slider-value" id="val-rate">$100</span>
+        </div>
+        <input type="range" id="slider-rate" min="10" max="500" step="5" value="100">
+        <div class="slider-hint">Used for time-based calculations</div>
+      </div>
+    </div>
+
+    <!-- Month Selector -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#128197;</span> Current Month</div>
+      <div class="slider-hint" style="margin-bottom:12px">Select the month you're currently in (auto-detected from your system).</div>
+      <div class="month-grid" id="month-grid"></div>
+    </div>
+
+    <!-- Calculate Button -->
+    <div class="btn-row">
+      <button class="btn btn-primary pulse" id="btn-calculate" onclick="showDashboard()">
+        &#9889; Track My Revenue Goal
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       STEP 2: RESULTS DASHBOARD
+       ============================================================ -->
+  <div id="view-dashboard" class="view">
+
+    <!-- Urgency Bar -->
+    <div class="urgency-bar" id="urgency-bar"></div>
+
+    <!-- 1. Progress Ring -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#128200;</span> Goal Progress</div>
+      <div class="progress-ring-wrap">
+        <div class="progress-ring-container">
+          <svg class="progress-ring-svg" width="220" height="220" viewBox="0 0 220 220">
+            <circle class="progress-ring-bg" cx="110" cy="110" r="96"/>
+            <circle class="progress-ring-fill" id="progress-ring" cx="110" cy="110" r="96"
+              stroke-dasharray="603.19" stroke-dashoffset="603.19"/>
+          </svg>
+          <div class="progress-ring-center">
+            <div class="progress-ring-pct" id="ring-pct">0%</div>
+            <div class="progress-ring-sub" id="ring-sub">$0 / $0</div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-grid" id="stats-grid"></div>
+    </div>
+
+    <!-- Milestone Tracker -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#127942;</span> Milestones</div>
+      <div class="milestones-wrap" id="milestones-wrap"></div>
+    </div>
+
+    <!-- 2. Pacing Analysis -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#128640;</span> Pacing Analysis</div>
+      <div id="pacing-content"></div>
+    </div>
+
+    <!-- Quarterly Breakdown -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#128203;</span> Quarterly Breakdown</div>
+      <div class="quarter-grid" id="quarter-grid"></div>
+    </div>
+
+    <!-- 3. Monthly Projection Chart -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#128202;</span> Monthly Projection Chart</div>
+      <div class="chart-wrap" id="chart-wrap"></div>
+      <div class="chart-legend">
+        <div class="chart-legend-item"><div class="chart-legend-dot" style="background:var(--accent)"></div> Actual</div>
+        <div class="chart-legend-item"><div class="chart-legend-dot" style="background:rgba(168,85,247,0.35)"></div> Projected</div>
+        <div class="chart-legend-item"><div class="chart-legend-dot" style="background:var(--accent2);height:2px;width:16px;border-radius:1px"></div> Required Avg</div>
+      </div>
+    </div>
+
+    <!-- 4. Gap Analysis -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#128270;</span> Gap Analysis</div>
+      <ul class="gap-list" id="gap-list"></ul>
+    </div>
+
+    <!-- 5. Scenario Calculator -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#128300;</span> Scenario Calculator</div>
+      <p style="font-size:13px;color:var(--text-dim);margin-bottom:18px">Adjust the sliders to see how changes affect your projected year-end revenue in real time.</p>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-title">&#128184; Raise your rate by...</div>
+          <div class="scenario-impact" id="scenario-rate-impact">+$0</div>
+        </div>
+        <div class="slider-label">
+          <span class="label-text">Rate increase</span>
+          <span class="slider-value" id="val-scenario-rate">0%</span>
+        </div>
+        <input type="range" id="slider-scenario-rate" min="0" max="100" step="5" value="0">
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-title">&#128188; Take on more projects...</div>
+          <div class="scenario-impact" id="scenario-projects-impact">+$0</div>
+        </div>
+        <div class="slider-label">
+          <span class="label-text">Additional projects</span>
+          <span class="slider-value" id="val-scenario-projects">0</span>
+        </div>
+        <input type="range" id="slider-scenario-projects" min="0" max="20" step="1" value="0">
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-title">&#128640; Increase project size by...</div>
+          <div class="scenario-impact" id="scenario-size-impact">+$0</div>
+        </div>
+        <div class="slider-label">
+          <span class="label-text">Project size increase</span>
+          <span class="slider-value" id="val-scenario-size">0%</span>
+        </div>
+        <input type="range" id="slider-scenario-size" min="0" max="100" step="5" value="0">
+      </div>
+
+      <div class="divider"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0">
+        <span style="font-size:14px;font-weight:600;color:var(--text-muted)">Projected Year-End Total</span>
+        <span id="scenario-total" style="font-size:22px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums">$0</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0">
+        <span style="font-size:13px;color:var(--text-dim)">vs. your goal</span>
+        <span id="scenario-vs-goal" style="font-size:14px;font-weight:700;font-variant-numeric:tabular-nums">$0</span>
+      </div>
+    </div>
+
+    <!-- 6. Days Left Counter -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#9200;</span> Days Left Counter</div>
+      <div class="countdown-wrap">
+        <div class="countdown-number" id="days-left">0</div>
+        <div class="countdown-label" id="days-label">days left to earn $0</div>
+        <div class="countdown-stats">
+          <div class="countdown-stat">
+            <div class="countdown-stat-val" id="per-day">$0</div>
+            <div class="countdown-stat-label">per day</div>
+          </div>
+          <div class="countdown-stat">
+            <div class="countdown-stat-val" id="per-hour">$0</div>
+            <div class="countdown-stat-label">per work hour</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Action Plan -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#128161;</span> Action Plan</div>
+      <div id="action-status"></div>
+      <ul class="action-list" id="action-list"></ul>
+    </div>
+
+    <!-- 8. Share -->
+    <div class="glass-card">
+      <div class="card-title"><span class="icon">&#128227;</span> Share Your Progress</div>
+      <div class="share-preview" id="share-preview"></div>
+      <div class="share-buttons">
+        <button class="share-btn twitter" onclick="shareTwitter()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Share on X
+        </button>
+        <button class="share-btn copy" onclick="copyShare()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <span id="copy-label">Copy to clipboard</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- CTA Card -->
+    <div class="cta-card">
+      <div class="cta-badge">&#9889; LIMITED TIME — 40% OFF</div>
+      <h3>Stop guessing. Start tracking everything.</h3>
+      <p>FreelanceOS is the all-in-one Notion system for tracking revenue, clients, projects, invoices, and growth — for freelancers.</p>
+      <a class="cta-btn" href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">
+        Get FreelanceOS — 40% Off
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="cta-promo">Use code <strong style="color:var(--accent)">FLASH40</strong> at checkout</div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="btn-row" style="margin-bottom:10px">
+      <button class="btn btn-secondary" onclick="showInput()">&#8592; Adjust Inputs</button>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/freelanceos-storefront/income-projector.html">Income Projector</a>
+      <a href="/freelanceos-storefront/pricing-confidence.html">Pricing Confidence</a>
+      <a href="/freelanceos-storefront/emergency-fund.html">Emergency Fund</a>
+      <a href="/freelanceos-storefront/business-health.html">Business Health</a>
+    </div>
+    <p class="disclaimer">This tool is for informational and educational purposes only. It does not constitute financial, tax, or legal advice. Revenue projections are estimates based on the inputs you provide and actual results may vary. Consult a qualified professional for advice specific to your situation. &copy; 2026 FreelanceOS. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ================================================================
+     JAVASCRIPT — PURE VANILLA, NO DEPENDENCIES
+     ================================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ================================================
+     CONSTANTS
+     ================================================ */
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var MONTHS_FULL = [
+    'January','February','March','April','May','June',
+    'July','August','September','October','November','December'
+  ];
+  var WORK_HOURS_PER_DAY = 8;
+  var AVG_HOURS_PER_PROJECT = 40;
+  var CONVERSION_RATE = 0.30;
+  var CIRCUMFERENCE = 2 * Math.PI * 96;
+  var MILESTONE_PCTS = [10, 25, 50, 75, 90, 100];
+
+  /* ================================================
+     STATE OBJECT
+     ================================================ */
+  var state = {
+    goal: 100000,
+    earned: 0,
+    projectValue: 5000,
+    monthlyAvg: 8000,
+    pipeline: 0,
+    hourlyRate: 100,
+    currentMonth: new Date().getMonth()
+  };
+
+  /* ================================================
+     UTILITY FUNCTIONS
+     ================================================ */
+  function fmt(n) {
+    if (n >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function fmtFull(n) {
+    return '$' + Math.round(n).toLocaleString();
+  }
+
+  function fmtPct(n) {
+    return Math.round(n) + '%';
+  }
+
+  function fmtDecimal(n) {
+    return n.toFixed(1);
+  }
+
+  function clamp(v, min, max) {
+    return Math.max(min, Math.min(max, v));
+  }
+
+  /* ================================================
+     DOM HELPER
+     ================================================ */
+  function $(id) {
+    return document.getElementById(id);
+  }
+
+  /* ================================================
+     BUILD MONTH GRID
+     ================================================ */
+  function buildMonthGrid() {
+    var grid = $('month-grid');
+    var now = new Date().getMonth();
+    for (var i = 0; i < 12; i++) {
+      var btn = document.createElement('div');
+      btn.className = 'month-btn' + (i === now ? ' selected' : '');
+      btn.textContent = MONTHS[i];
+      btn.dataset.month = i;
+      btn.addEventListener('click', function() {
+        var allBtns = document.querySelectorAll('.month-btn');
+        for (var j = 0; j < allBtns.length; j++) {
+          allBtns[j].classList.remove('selected');
+        }
+        this.classList.add('selected');
+        state.currentMonth = parseInt(this.dataset.month);
+      });
+      grid.appendChild(btn);
+    }
+  }
+
+  /* ================================================
+     SLIDER INITIALIZATION
+     ================================================ */
+  function initSliders() {
+    var sliders = [
+      { id: 'slider-goal', val: 'val-goal', key: 'goal', format: function(v) { return fmtFull(v); } },
+      { id: 'slider-earned', val: 'val-earned', key: 'earned', format: function(v) { return fmtFull(v); } },
+      { id: 'slider-project', val: 'val-project', key: 'projectValue', format: function(v) { return fmtFull(v); } },
+      { id: 'slider-monthly', val: 'val-monthly', key: 'monthlyAvg', format: function(v) { return fmtFull(v); } },
+      { id: 'slider-pipeline', val: 'val-pipeline', key: 'pipeline', format: function(v) { return fmtFull(v); } },
+      { id: 'slider-rate', val: 'val-rate', key: 'hourlyRate', format: function(v) { return '$' + v; } }
+    ];
+
+    sliders.forEach(function(s) {
+      var el = $(s.id);
+      el.addEventListener('input', function() {
+        var v = parseFloat(this.value);
+        state[s.key] = v;
+        $(s.val).textContent = s.format(v);
+
+        // Keep earned slider max in sync with goal
+        if (s.key === 'goal') {
+          var earnedSlider = $('slider-earned');
+          earnedSlider.max = v;
+          if (state.earned > v) {
+            state.earned = v;
+            earnedSlider.value = v;
+            $('val-earned').textContent = fmtFull(v);
+          }
+        }
+
+        updateSliderTrack(this);
+      });
+      updateSliderTrack(el);
+    });
+  }
+
+  /* ================================================
+     SLIDER TRACK GRADIENT FILL
+     ================================================ */
+  function updateSliderTrack(el) {
+    var min = parseFloat(el.min);
+    var max = parseFloat(el.max);
+    var val = parseFloat(el.value);
+    var pct = ((val - min) / (max - min)) * 100;
+    el.style.background =
+      'linear-gradient(to right, #a855f7 0%, #ec4899 ' + pct + '%, #1e293b ' + pct + '%)';
+  }
+
+  /* ================================================
+     CORE CALCULATIONS
+     ================================================ */
+  function calculate() {
+    var goal = state.goal;
+    var earned = state.earned;
+    var projectValue = state.projectValue;
+    var monthlyAvg = state.monthlyAvg;
+    var pipeline = state.pipeline;
+    var hourlyRate = state.hourlyRate;
+    var month = state.currentMonth;
+
+    // Remaining to goal
+    var remaining = Math.max(0, goal - earned);
+
+    // Time calculations
+    var monthsLeft = 12 - month;
+    var monthsElapsed = month;
+
+    // Progress percentage
+    var pctComplete = goal > 0 ? (earned / goal) * 100 : 0;
+
+    // Expected pacing — linear distribution
+    var expectedByNow = (monthsElapsed / 12) * goal;
+    var paceGap = earned - expectedByNow;
+    var aheadBehind = paceGap >= 0 ? 'ahead' : 'behind';
+
+    // Required monthly rate to hit goal
+    var requiredMonthly = monthsLeft > 0 ? remaining / monthsLeft : remaining;
+
+    // Projected year-end at current run rate
+    var projectedTotal = earned + (monthlyAvg * monthsLeft);
+    var projectedGap = projectedTotal - goal;
+
+    // Days left in the calendar year
+    var now = new Date();
+    var endOfYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
+    var daysLeft = Math.max(0, Math.ceil((endOfYear - now) / (1000 * 60 * 60 * 24)));
+
+    // Per-day and per-work-hour revenue required
+    var perDay = daysLeft > 0 ? remaining / daysLeft : remaining;
+    var workDaysLeft = Math.round(daysLeft * 5 / 7);
+    var perWorkHour = workDaysLeft > 0
+      ? remaining / (workDaysLeft * WORK_HOURS_PER_DAY)
+      : 0;
+
+    // Gap analysis — projects needed
+    var projectsNeeded = projectValue > 0
+      ? Math.ceil(remaining / projectValue)
+      : 0;
+    var projectsPerMonth = monthsLeft > 0
+      ? (projectsNeeded / monthsLeft)
+      : projectsNeeded;
+    var hoursNeeded = projectsNeeded * AVG_HOURS_PER_PROJECT;
+    var clientsNeeded = CONVERSION_RATE > 0
+      ? Math.ceil(projectsNeeded / CONVERSION_RATE)
+      : 0;
+
+    // Pipeline coverage ratio
+    var pipelineCoverage = remaining > 0
+      ? (pipeline / remaining) * 100
+      : 100;
+
+    // Status level determination
+    var statusLevel;
+    if (paceGap >= 0) {
+      statusLevel = 'ahead';
+    } else if (Math.abs(paceGap) <= goal * 0.1) {
+      statusLevel = 'on-track';
+    } else {
+      statusLevel = 'behind';
+    }
+
+    // Quarterly breakdown
+    var quarterlyGoal = goal / 4;
+    var quarters = [];
+    var avgPerElapsedMonth = monthsElapsed > 0 ? earned / monthsElapsed : monthlyAvg;
+    for (var q = 0; q < 4; q++) {
+      var qStart = q * 3;
+      var qEnd = qStart + 3;
+      var qActual = 0;
+      var qProjected = 0;
+      var qLabel = 'Q' + (q + 1);
+      var isCurrent = (month >= qStart && month < qEnd);
+
+      for (var m = qStart; m < qEnd; m++) {
+        if (m < monthsElapsed) {
+          qActual += avgPerElapsedMonth;
+        } else {
+          qProjected += monthlyAvg;
+        }
+      }
+      quarters.push({
+        label: qLabel,
+        actual: qActual,
+        projected: qProjected,
+        target: quarterlyGoal,
+        isCurrent: isCurrent
+      });
+    }
+
+    return {
+      goal: goal,
+      earned: earned,
+      remaining: remaining,
+      pctComplete: pctComplete,
+      monthsLeft: monthsLeft,
+      monthsElapsed: monthsElapsed,
+      requiredMonthly: requiredMonthly,
+      monthlyAvg: monthlyAvg,
+      projectedTotal: projectedTotal,
+      projectedGap: projectedGap,
+      paceGap: paceGap,
+      aheadBehind: aheadBehind,
+      expectedByNow: expectedByNow,
+      daysLeft: daysLeft,
+      perDay: perDay,
+      perWorkHour: perWorkHour,
+      workDaysLeft: workDaysLeft,
+      projectsNeeded: projectsNeeded,
+      projectsPerMonth: projectsPerMonth,
+      hoursNeeded: hoursNeeded,
+      clientsNeeded: clientsNeeded,
+      projectValue: projectValue,
+      hourlyRate: hourlyRate,
+      pipeline: pipeline,
+      pipelineCoverage: pipelineCoverage,
+      statusLevel: statusLevel,
+      quarters: quarters
+    };
+  }
+
+  /* ================================================
+     MASTER RENDER FUNCTION
+     ================================================ */
+  function renderDashboard(data) {
+    renderUrgencyBar(data);
+    renderProgressRing(data);
+    renderStatsGrid(data);
+    renderMilestones(data);
+    renderPacing(data);
+    renderQuarterlyBreakdown(data);
+    renderChart(data);
+    renderGapAnalysis(data);
+    initScenarioSliders(data);
+    renderCountdown(data);
+    renderActionPlan(data);
+    renderShare(data);
+  }
+
+  /* ================================================
+     URGENCY BAR
+     ================================================ */
+  function renderUrgencyBar(d) {
+    var el = $('urgency-bar');
+    var year = new Date().getFullYear();
+    if (d.daysLeft <= 30) {
+      el.textContent = 'Only ' + d.daysLeft + ' days left in ' + year + ' — every single day counts now!';
+    } else if (d.daysLeft <= 60) {
+      el.textContent = d.daysLeft + ' days left — the final stretch. Lock in and close every deal.';
+    } else if (d.daysLeft <= 90) {
+      el.textContent = d.daysLeft + ' days left — Q4 is here. This is where goals are won or lost.';
+    } else if (d.daysLeft <= 180) {
+      el.textContent = d.daysLeft + ' days remaining in ' + year + ' — second half hustle starts now.';
+    } else {
+      el.textContent = d.daysLeft + ' days remaining in ' + year + ' — you have time, but no time to waste.';
+    }
+  }
+
+  /* ================================================
+     PROGRESS RING
+     ================================================ */
+  function renderProgressRing(d) {
+    var pct = Math.min(100, d.pctComplete);
+    var offset = CIRCUMFERENCE - (pct / 100) * CIRCUMFERENCE;
+    var ring = $('progress-ring');
+
+    // Animate ring fill after a brief delay
+    setTimeout(function() {
+      ring.style.strokeDashoffset = offset;
+      if (d.statusLevel === 'ahead') {
+        ring.style.stroke = '#22c55e';
+      } else if (d.statusLevel === 'on-track') {
+        ring.style.stroke = '#f59e0b';
+      } else {
+        ring.style.stroke = '#ef4444';
+      }
+    }, 200);
+
+    $('ring-pct').textContent = fmtPct(pct);
+    $('ring-sub').textContent = fmtFull(d.earned) + ' / ' + fmtFull(d.goal);
+  }
+
+  /* ================================================
+     STATS GRID
+     ================================================ */
+  function renderStatsGrid(d) {
+    var colorClass;
+    if (d.statusLevel === 'ahead') colorClass = 'green';
+    else if (d.statusLevel === 'on-track') colorClass = 'yellow';
+    else colorClass = 'red';
+
+    var html = '';
+    html += '<div class="stat-box">';
+    html += '  <div class="stat-val">' + fmtFull(d.remaining) + '</div>';
+    html += '  <div class="stat-label">Remaining to Goal</div>';
+    html += '</div>';
+
+    html += '<div class="stat-box">';
+    html += '  <div class="stat-val">' + fmtFull(d.requiredMonthly) + '</div>';
+    html += '  <div class="stat-label">Needed per Month</div>';
+    html += '</div>';
+
+    html += '<div class="stat-box">';
+    html += '  <div class="stat-val ' + colorClass + '">' + fmtFull(Math.abs(d.paceGap)) + '</div>';
+    html += '  <div class="stat-label">' + (d.aheadBehind === 'ahead' ? 'Ahead of Pace' : 'Behind Pace') + '</div>';
+    html += '</div>';
+
+    html += '<div class="stat-box">';
+    html += '  <div class="stat-val">' + fmtFull(d.projectedTotal) + '</div>';
+    html += '  <div class="stat-label">Projected Year-End</div>';
+    html += '</div>';
+
+    $('stats-grid').innerHTML = html;
+  }
+
+  /* ================================================
+     MILESTONE TRACKER
+     ================================================ */
+  function renderMilestones(d) {
+    var wrap = $('milestones-wrap');
+    var pct = Math.min(100, d.pctComplete);
+
+    var html = '<div class="milestone-track">';
+    html += '<div class="milestone-progress" style="width:' + pct + '%"></div>';
+
+    for (var i = 0; i < MILESTONE_PCTS.length; i++) {
+      var mp = MILESTONE_PCTS[i];
+      var reached = pct >= mp;
+      var leftPos = mp + '%';
+      var dollarVal = fmtFull(d.goal * mp / 100);
+
+      html += '<div class="milestone-dot' + (reached ? ' reached' : '') + '" style="left:' + leftPos + '"></div>';
+      html += '<div class="milestone-label' + (reached ? ' reached' : '') + '" style="left:' + leftPos + '">';
+      html += mp + '%<br>' + dollarVal;
+      html += '</div>';
+    }
+
+    html += '</div>';
+    wrap.innerHTML = html;
+  }
+
+  /* ================================================
+     PACING ANALYSIS
+     ================================================ */
+  function renderPacing(d) {
+    var html = '';
+
+    // Text analysis
+    html += '<div style="margin-bottom:16px">';
+    html += '<p style="font-size:15px;margin-bottom:10px">';
+    html += '<strong style="color:var(--accent)">You need ' + fmtFull(d.requiredMonthly) + '/month</strong>';
+    html += ' for the remaining ' + d.monthsLeft + ' months to hit your goal.';
+    html += '</p>';
+
+    html += '<p style="font-size:14px;color:var(--text-muted);margin-bottom:10px">';
+    html += 'At your current pace (' + fmtFull(d.monthlyAvg) + '/month), ';
+    html += 'you\'ll end the year at <strong style="color:var(--text)">' + fmtFull(d.projectedTotal) + '</strong>.';
+    html += '</p>';
+
+    var gapColor = d.aheadBehind === 'ahead' ? 'var(--success)' : 'var(--danger)';
+    var gapSymbol = d.aheadBehind === 'ahead' ? '+' : '-';
+    html += '<p style="font-size:15px;font-weight:700;color:' + gapColor + '">';
+    html += 'You\'re ' + gapSymbol + fmtFull(Math.abs(d.paceGap)) + ' ' + d.aheadBehind + ' pace.';
+    html += '</p>';
+    html += '</div>';
+
+    // Pacing meter visualization
+    var meterMax = Math.max(d.requiredMonthly, d.monthlyAvg) * 1.3;
+    if (meterMax === 0) meterMax = 10000;
+    var currentPct = Math.min(100, (d.monthlyAvg / meterMax) * 100);
+    var requiredPct = Math.min(100, (d.requiredMonthly / meterMax) * 100);
+    var meterColor;
+    if (d.monthlyAvg >= d.requiredMonthly) {
+      meterColor = 'var(--success)';
+    } else if (d.monthlyAvg >= d.requiredMonthly * 0.8) {
+      meterColor = 'var(--warning)';
+    } else {
+      meterColor = 'var(--danger)';
+    }
+
+    html += '<div style="margin-bottom:6px;display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim)">';
+    html += '<span>Current Run Rate</span>';
+    html += '<span>Required Run Rate</span>';
+    html += '</div>';
+
+    html += '<div class="pacing-meter">';
+    html += '<div class="pacing-meter-fill" style="width:' + currentPct + '%;background:' + meterColor + ';opacity:0.7"></div>';
+    html += '<div class="pacing-meter-marker" style="left:' + requiredPct + '%"></div>';
+    html += '<div class="pacing-meter-label" style="left:8px;color:#fff">' + fmtFull(d.monthlyAvg) + '</div>';
+    html += '</div>';
+
+    html += '<div style="text-align:right;font-size:11px;color:var(--text-dim);margin-top:4px">';
+    html += 'Required: ' + fmtFull(d.requiredMonthly) + '/mo — white marker = target';
+    html += '</div>';
+
+    $('pacing-content').innerHTML = html;
+  }
+
+  /* ================================================
+     QUARTERLY BREAKDOWN
+     ================================================ */
+  function renderQuarterlyBreakdown(d) {
+    var html = '';
+    for (var q = 0; q < d.quarters.length; q++) {
+      var qd = d.quarters[q];
+      var total = qd.actual + qd.projected;
+      var vsTarget = total - qd.target;
+      var vsColor = vsTarget >= 0 ? 'var(--success)' : 'var(--danger)';
+      var vsSymbol = vsTarget >= 0 ? '+' : '';
+
+      html += '<div class="quarter-box' + (qd.isCurrent ? ' current' : '') + '">';
+      html += '<div class="quarter-label">' + qd.label + (qd.isCurrent ? ' *' : '') + '</div>';
+      html += '<div class="quarter-val">' + fmt(total) + '</div>';
+      html += '<div class="quarter-sub" style="color:' + vsColor + '">';
+      html += vsSymbol + fmt(vsTarget);
+      html += '</div>';
+      html += '</div>';
+    }
+    $('quarter-grid').innerHTML = html;
+  }
+
+  /* ================================================
+     MONTHLY PROJECTION CHART (SVG)
+     ================================================ */
+  function renderChart(d) {
+    var W = 720;
+    var H = 300;
+    var padLeft = 56;
+    var padRight = 16;
+    var padTop = 24;
+    var padBottom = 40;
+    var chartW = W - padLeft - padRight;
+    var chartH = H - padTop - padBottom;
+
+    // Compute monthly values
+    var monthlyActual = [];
+    var monthlyProjected = [];
+    var avgPerMonth = d.monthsElapsed > 0
+      ? d.earned / d.monthsElapsed
+      : d.monthlyAvg;
+
+    for (var i = 0; i < 12; i++) {
+      if (i < d.monthsElapsed) {
+        monthlyActual.push(avgPerMonth);
+        monthlyProjected.push(null);
+      } else {
+        monthlyActual.push(null);
+        monthlyProjected.push(d.monthlyAvg);
+      }
+    }
+
+    // Determine Y-axis max
+    var maxVal = Math.max(avgPerMonth, d.monthlyAvg, d.requiredMonthly) * 1.25;
+    if (maxVal === 0) maxVal = 1000;
+
+    var barW = chartW / 12;
+    var barPad = barW * 0.2;
+    var innerBarW = barW - barPad * 2;
+
+    // Build SVG
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:720px;height:auto">';
+
+    // Gradient definition
+    svg += '<defs>';
+    svg += '<linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">';
+    svg += '<stop offset="0%" stop-color="#a855f7"/>';
+    svg += '<stop offset="100%" stop-color="#ec4899"/>';
+    svg += '</linearGradient>';
+    svg += '</defs>';
+
+    // Grid lines and Y-axis labels
+    var gridLines = 5;
+    for (var g = 0; g <= gridLines; g++) {
+      var gy = padTop + (chartH / gridLines) * g;
+      var gVal = maxVal - (maxVal / gridLines) * g;
+      svg += '<line x1="' + padLeft + '" y1="' + gy + '" x2="' + (W - padRight) + '" y2="' + gy + '" stroke="#1e293b" stroke-width="1"/>';
+      svg += '<text x="' + (padLeft - 8) + '" y="' + (gy + 4) + '" text-anchor="end" fill="#64748b" font-size="10" font-family="system-ui">' + fmt(gVal) + '</text>';
+    }
+
+    // Required monthly average reference line
+    var reqY = padTop + chartH - (d.requiredMonthly / maxVal) * chartH;
+    svg += '<line x1="' + padLeft + '" y1="' + reqY + '" x2="' + (W - padRight) + '" y2="' + reqY + '" stroke="#ec4899" stroke-width="2" stroke-dasharray="6,4"/>';
+    svg += '<text x="' + (W - padRight) + '" y="' + (reqY - 6) + '" text-anchor="end" fill="#ec4899" font-size="10" font-family="system-ui">Goal: ' + fmt(d.requiredMonthly) + '/mo</text>';
+
+    // Render bars for each month
+    for (var i = 0; i < 12; i++) {
+      var x = padLeft + barW * i + barPad;
+
+      if (monthlyActual[i] !== null) {
+        // Actual revenue bars (solid)
+        var bh = (monthlyActual[i] / maxVal) * chartH;
+        var by = padTop + chartH - bh;
+        svg += '<rect x="' + x + '" y="' + by + '" width="' + innerBarW + '" height="' + bh + '" rx="4" fill="url(#barGrad)" opacity="0.9">';
+        svg += '<animate attributeName="height" from="0" to="' + bh + '" dur="0.6s" fill="freeze"/>';
+        svg += '<animate attributeName="y" from="' + (padTop + chartH) + '" to="' + by + '" dur="0.6s" fill="freeze"/>';
+        svg += '</rect>';
+        svg += '<text x="' + (x + innerBarW / 2) + '" y="' + (by - 6) + '" text-anchor="middle" fill="#a855f7" font-size="9" font-weight="600" font-family="system-ui">' + fmt(monthlyActual[i]) + '</text>';
+      } else if (monthlyProjected[i] !== null) {
+        // Projected revenue bars (semi-transparent)
+        var bh = (monthlyProjected[i] / maxVal) * chartH;
+        var by = padTop + chartH - bh;
+        svg += '<rect x="' + x + '" y="' + by + '" width="' + innerBarW + '" height="' + bh + '" rx="4" fill="url(#barGrad)" opacity="0.3">';
+        svg += '<animate attributeName="height" from="0" to="' + bh + '" dur="0.8s" fill="freeze"/>';
+        svg += '<animate attributeName="y" from="' + (padTop + chartH) + '" to="' + by + '" dur="0.8s" fill="freeze"/>';
+        svg += '</rect>';
+        svg += '<text x="' + (x + innerBarW / 2) + '" y="' + (by - 6) + '" text-anchor="middle" fill="rgba(168,85,247,0.5)" font-size="9" font-weight="600" font-family="system-ui">' + fmt(monthlyProjected[i]) + '</text>';
+      }
+
+      // Month label on X-axis
+      svg += '<text x="' + (x + innerBarW / 2) + '" y="' + (H - 12) + '" text-anchor="middle" fill="#64748b" font-size="11" font-family="system-ui">' + MONTHS[i] + '</text>';
+    }
+
+    svg += '</svg>';
+
+    // Projected total annotation
+    var projColor = d.projectedGap >= 0 ? 'var(--success)' : 'var(--danger)';
+    svg += '<div style="text-align:center;margin-top:8px;font-size:13px;color:var(--text-muted)">';
+    svg += 'Projected year-end at current pace: ';
+    svg += '<strong style="color:' + projColor + '">' + fmtFull(d.projectedTotal) + '</strong>';
+    svg += '</div>';
+
+    $('chart-wrap').innerHTML = svg;
+  }
+
+  /* ================================================
+     GAP ANALYSIS
+     ================================================ */
+  function renderGapAnalysis(d) {
+    var html = '';
+
+    html += '<li class="gap-item">';
+    html += '<div class="gap-icon purple">&#128176;</div>';
+    html += '<div class="gap-text">';
+    html += 'To hit your goal, you need <strong>' + d.projectsNeeded + ' more project' + (d.projectsNeeded !== 1 ? 's' : '') + '</strong>';
+    html += ' at ' + fmtFull(d.projectValue) + ' average value.';
+    html += '</div>';
+    html += '</li>';
+
+    html += '<li class="gap-item">';
+    html += '<div class="gap-icon pink">&#128197;</div>';
+    html += '<div class="gap-text">';
+    html += 'That\'s <strong>' + fmtDecimal(d.projectsPerMonth) + ' projects per month</strong>';
+    html += ' for the remaining ' + d.monthsLeft + ' month' + (d.monthsLeft !== 1 ? 's' : '') + '.';
+    html += '</div>';
+    html += '</li>';
+
+    html += '<li class="gap-item">';
+    html += '<div class="gap-icon green">&#9201;</div>';
+    html += '<div class="gap-text">';
+    html += 'At ~' + AVG_HOURS_PER_PROJECT + ' hours per project, that\'s <strong>';
+    html += d.hoursNeeded.toLocaleString() + ' more billable hours</strong> needed.';
+    html += '</div>';
+    html += '</li>';
+
+    html += '<li class="gap-item">';
+    html += '<div class="gap-icon orange">&#128101;</div>';
+    html += '<div class="gap-text">';
+    html += 'You need <strong>' + d.clientsNeeded + ' new leads</strong>';
+    html += ' (at a ' + Math.round(CONVERSION_RATE * 100) + '% conversion rate)';
+    html += ' to land those ' + d.projectsNeeded + ' projects.';
+    html += '</div>';
+    html += '</li>';
+
+    if (d.pipeline > 0) {
+      html += '<li class="gap-item">';
+      html += '<div class="gap-icon purple">&#128205;</div>';
+      html += '<div class="gap-text">';
+      html += 'Your pipeline (' + fmtFull(d.pipeline) + ') covers ';
+      html += '<strong>' + fmtPct(d.pipelineCoverage) + '</strong> of the remaining gap.';
+      if (d.pipelineCoverage < 50) {
+        html += ' <span style="color:var(--danger)">Pipeline needs significant growth.</span>';
+      } else if (d.pipelineCoverage < 100) {
+        html += ' <span style="color:var(--warning)">Getting there — keep filling the funnel.</span>';
+      } else {
+        html += ' <span style="color:var(--success)">Strong pipeline coverage.</span>';
+      }
+      html += '</div>';
+      html += '</li>';
+    }
+
+    var atRate = d.hourlyRate > 0
+      ? Math.ceil(d.remaining / d.hourlyRate)
+      : 0;
+    html += '<li class="gap-item">';
+    html += '<div class="gap-icon pink">&#128176;</div>';
+    html += '<div class="gap-text">';
+    html += 'At your rate of ' + fmtFull(d.hourlyRate) + '/hr, the remaining ';
+    html += fmtFull(d.remaining) + ' equals <strong>' + atRate.toLocaleString() + ' billable hours</strong>.';
+    html += '</div>';
+    html += '</li>';
+
+    $('gap-list').innerHTML = html;
+  }
+
+  /* ================================================
+     SCENARIO CALCULATOR
+     ================================================ */
+  function initScenarioSliders(d) {
+    var rateSlider = $('slider-scenario-rate');
+    var projSlider = $('slider-scenario-projects');
+    var sizeSlider = $('slider-scenario-size');
+
+    // Reset slider positions
+    rateSlider.value = 0;
+    projSlider.value = 0;
+    sizeSlider.value = 0;
+    $('val-scenario-rate').textContent = '0%';
+    $('val-scenario-projects').textContent = '0';
+    $('val-scenario-size').textContent = '0%';
+
+    function updateScenarios() {
+      var rateIncrease = parseFloat(rateSlider.value) / 100;
+      var extraProjects = parseInt(projSlider.value);
+      var sizeIncrease = parseFloat(sizeSlider.value) / 100;
+
+      // Update value labels
+      $('val-scenario-rate').textContent = rateSlider.value + '%';
+      $('val-scenario-projects').textContent = projSlider.value;
+      $('val-scenario-size').textContent = sizeSlider.value + '%';
+
+      // Update slider track fills
+      updateSliderTrack(rateSlider);
+      updateSliderTrack(projSlider);
+      updateSliderTrack(sizeSlider);
+
+      // Calculate impacts
+      var baseProjected = d.projectedTotal;
+      var remainingProjected = d.monthlyAvg * d.monthsLeft;
+
+      // Rate increase: affects all future revenue proportionally
+      var rateImpact = remainingProjected * rateIncrease;
+
+      // Extra projects at adjusted size
+      var adjustedProjectValue = d.projectValue * (1 + sizeIncrease);
+      var projectsImpact = extraProjects * adjustedProjectValue;
+
+      // Size increase on existing projected projects
+      var existingProjectsRemaining = d.monthsLeft > 0
+        ? Math.round(remainingProjected / Math.max(1, d.projectValue))
+        : 0;
+      var sizeImpact = existingProjectsRemaining * d.projectValue * sizeIncrease;
+
+      var totalImpact = rateImpact + projectsImpact + sizeImpact;
+      var newProjected = baseProjected + totalImpact;
+
+      // Update rate impact display
+      var rateEl = $('scenario-rate-impact');
+      rateEl.textContent = (rateImpact >= 0 ? '+' : '') + fmtFull(rateImpact);
+      rateEl.className = 'scenario-impact ' + (rateImpact >= 0 ? 'positive' : 'negative');
+
+      // Update projects impact display
+      var projEl = $('scenario-projects-impact');
+      projEl.textContent = (projectsImpact >= 0 ? '+' : '') + fmtFull(projectsImpact);
+      projEl.className = 'scenario-impact ' + (projectsImpact >= 0 ? 'positive' : 'negative');
+
+      // Update size impact display
+      var sizeEl = $('scenario-size-impact');
+      sizeEl.textContent = (sizeImpact >= 0 ? '+' : '') + fmtFull(sizeImpact);
+      sizeEl.className = 'scenario-impact ' + (sizeImpact >= 0 ? 'positive' : 'negative');
+
+      // Update totals
+      $('scenario-total').textContent = fmtFull(newProjected);
+
+      var vsGoal = newProjected - d.goal;
+      var vsGoalEl = $('scenario-vs-goal');
+      vsGoalEl.textContent = (vsGoal >= 0 ? '+' : '') + fmtFull(vsGoal);
+      vsGoalEl.style.color = vsGoal >= 0 ? 'var(--success)' : 'var(--danger)';
+    }
+
+    rateSlider.addEventListener('input', updateScenarios);
+    projSlider.addEventListener('input', updateScenarios);
+    sizeSlider.addEventListener('input', updateScenarios);
+
+    // Initial calculation
+    updateScenarios();
+  }
+
+  /* ================================================
+     COUNTDOWN TIMER
+     ================================================ */
+  function renderCountdown(d) {
+    animateNumber($('days-left'), d.daysLeft, 1200);
+    $('days-label').textContent = 'days left to earn ' + fmtFull(d.remaining);
+    $('per-day').textContent = fmtFull(d.perDay);
+    $('per-hour').textContent = fmtFull(d.perWorkHour);
+  }
+
+  /**
+   * Animate a number from 0 to target with easing
+   */
+  function animateNumber(el, target, duration) {
+    var startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      // Ease-out cubic for smooth deceleration
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.round(eased * target);
+      el.textContent = current;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  /* ================================================
+     ACTION PLAN GENERATOR
+     ================================================ */
+  function renderActionPlan(d) {
+    var statusEl = $('action-status');
+    var listEl = $('action-list');
+    var html = '';
+    var items = [];
+
+    if (d.statusLevel === 'ahead') {
+      // User is ahead of pace
+      statusEl.innerHTML = '<div class="action-status ahead">' +
+        '&#128640; You\'re crushing it — ahead of pace by ' + fmtFull(Math.abs(d.paceGap)) +
+        '</div>';
+
+      items.push(
+        'Keep your current cadence of ' + fmtFull(d.monthlyAvg) + '/month — consistency is your superpower right now.'
+      );
+      items.push(
+        'Consider raising your project rates by 10-20%. You\'ve earned pricing leverage — use it before year-end.'
+      );
+      items.push(
+        'Use the surplus to invest in systems: automate onboarding, build SOPs, create templates. This compounds next year.'
+      );
+      items.push(
+        'Start building a pipeline buffer for Q1 of next year so you don\'t start January cold.'
+      );
+      items.push(
+        'Document what\'s working. Which clients, channels, and project types drove growth? Double down on the top performers.'
+      );
+
+    } else if (d.statusLevel === 'on-track') {
+      // User is roughly on track
+      statusEl.innerHTML = '<div class="action-status on-track">' +
+        '&#9889; On track — but you have no margin for a slow month' +
+        '</div>';
+
+      items.push(
+        'You need ' + fmtFull(d.requiredMonthly) + '/month and you\'re doing ' + fmtFull(d.monthlyAvg) +
+        '. Close the gap by landing 1-2 extra projects.'
+      );
+      items.push(
+        'Follow up on every open proposal this week. Your pipeline (' + fmtFull(d.pipeline) +
+        ') won\'t close itself — send those follow-ups today.'
+      );
+      items.push(
+        'Create a "quick win" service offering — a fixed-price package under ' +
+        fmtFull(d.projectValue * 0.5) + ' that fills gaps between larger projects.'
+      );
+      items.push(
+        'Reach out to 3 past clients with a new offer or check-in. Repeat clients close 3x faster than new leads.'
+      );
+      items.push(
+        'Block 2 hours every Monday for outreach and pipeline building. Treat it like a client deliverable — non-negotiable.'
+      );
+
+    } else {
+      // User is behind pace
+      statusEl.innerHTML = '<div class="action-status behind">' +
+        '&#128680; Behind pace — you need to close the gap of ' + fmtFull(Math.abs(d.paceGap)) +
+        '</div>';
+
+      var increaseNeeded = d.monthlyAvg > 0
+        ? ((d.requiredMonthly - d.monthlyAvg) / d.monthlyAvg) * 100
+        : 100;
+
+      items.push(
+        'You need to increase monthly revenue from ' + fmtFull(d.monthlyAvg) + ' to ' +
+        fmtFull(d.requiredMonthly) + '. That\'s ' + fmtPct(increaseNeeded) + ' more per month starting now.'
+      );
+      items.push(
+        'Emergency pipeline blitz: email every warm contact, past client, and open proposal this week. Target ' +
+        Math.min(10, d.clientsNeeded) + ' conversations by Friday.'
+      );
+      items.push(
+        'Launch a limited-time offer or package deal to accelerate closes. Urgency works — give them a 2-week deadline.'
+      );
+      items.push(
+        'Add a complementary revenue stream: retainer upsells, strategy audits, or rush-fee premium services you can deliver fast.'
+      );
+      items.push(
+        'Cut scope creep ruthlessly. Every unbilled hour is money lost. Enforce your contracts and bill for extras immediately.'
+      );
+      items.push(
+        'Consider subcontracting overflow work so you can take on more projects without burning out. Your capacity is the bottleneck.'
+      );
+    }
+
+    items.forEach(function(item) {
+      html += '<li class="action-item">' + item + '</li>';
+    });
+    listEl.innerHTML = html;
+  }
+
+  /* ================================================
+     SHARE FUNCTIONALITY
+     ================================================ */
+  function renderShare(d) {
+    var text = "I'm " + fmtPct(d.pctComplete) + ' toward my ' + fmtFull(d.goal) +
+      ' revenue goal. ' + d.daysLeft + ' days left.';
+    $('share-preview').textContent = text;
+    window._shareText = text;
+  }
+
+  /* -- Share to X/Twitter -- */
+  window.shareTwitter = function() {
+    var text = window._shareText +
+      ' Track yours free: https://freelanceos.com/revenue-goal-tracker.html';
+    var url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+    window.open(url, '_blank', 'width=550,height=420');
+  };
+
+  /* -- Copy to clipboard -- */
+  window.copyShare = function() {
+    var text = window._shareText;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        var label = $('copy-label');
+        label.textContent = 'Copied!';
+        setTimeout(function() {
+          label.textContent = 'Copy to clipboard';
+        }, 2000);
+      });
+    } else {
+      // Fallback for older browsers
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      var label = $('copy-label');
+      label.textContent = 'Copied!';
+      setTimeout(function() {
+        label.textContent = 'Copy to clipboard';
+      }, 2000);
+    }
+  };
+
+  /* ================================================
+     VIEW SWITCHING
+     ================================================ */
+  window.showDashboard = function() {
+    var data = calculate();
+    $('view-input').classList.remove('active');
+    $('view-dashboard').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Small delay for animation smoothness
+    setTimeout(function() {
+      renderDashboard(data);
+    }, 100);
+  };
+
+  window.showInput = function() {
+    $('view-dashboard').classList.remove('active');
+    $('view-input').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Reset scenario sliders
+    $('slider-scenario-rate').value = 0;
+    $('slider-scenario-projects').value = 0;
+    $('slider-scenario-size').value = 0;
+  };
+
+  /* ================================================
+     INITIALIZATION
+     ================================================ */
+  function init() {
+    buildMonthGrid();
+    initSliders();
+  }
+
+  // Run when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+</body>
+</html>

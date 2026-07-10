@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Client Portal Generator for Freelancers | FreelanceOS</title>
+<meta name="description" content="Create professional client portal pages in minutes. Share project status, deliverables, files, and invoices with your clients. Free tool by FreelanceOS.">
+<meta name="keywords" content="client portal generator, freelance client portal, project status page, client dashboard, freelancer tools">
+<meta property="og:title" content="Free Client Portal Generator for Freelancers | FreelanceOS">
+<meta property="og:description" content="Create professional client portal pages in minutes. Share project status, deliverables, files, and invoices with your clients.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.io/client-portal">
+<meta property="og:image" content="https://freelanceos.io/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Client Portal Generator for Freelancers | FreelanceOS">
+<meta name="twitter:description" content="Create professional client portal pages in minutes. Free tool by FreelanceOS.">
+<meta name="twitter:image" content="https://freelanceos.io/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Client Portal Page Generator",
+  "description": "Create professional client-facing project portal pages with status tracking, deliverables, file sharing, invoices, and feedback collection.",
+  "url": "https://freelanceos.io/client-portal",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#020617;--card:#0f172a;--border:rgba(168,85,247,0.2);
+  --accent1:#a855f7;--accent2:#ec4899;
+  --grad:linear-gradient(135deg,#a855f7,#ec4899);
+  --text:#e2e8f0;--muted:#94a3b8;--font:system-ui,-apple-system,sans-serif;
+  --radius:16px;--radius-sm:12px;--radius-xs:8px;
+  --green:#10b981;--yellow:#f59e0b;--red:#ef4444;--blue:#3b82f6;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;min-height:100vh}
+
+/* CTA Banner */
+.cta-banner{background:var(--grad);padding:12px 20px;text-align:center;font-weight:600;font-size:14px;letter-spacing:.3px}
+.cta-banner a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.5)}
+.cta-banner a:hover{border-bottom-color:#fff}
+
+/* Header */
+.header{padding:32px 20px 24px;text-align:center;max-width:900px;margin:0 auto}
+.header h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.header p{color:var(--muted);font-size:15px;max-width:600px;margin:0 auto}
+.badge{display:inline-block;background:rgba(168,85,247,.15);border:1px solid var(--border);color:var(--accent1);font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:.5px}
+
+/* Layout */
+.app{max-width:1100px;margin:0 auto;padding:0 16px 60px}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;background:var(--card);padding:8px;border-radius:var(--radius);border:1px solid var(--border)}
+.tab{padding:8px 14px;border-radius:var(--radius-xs);border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:var(--font)}
+.tab:hover{color:var(--text);background:rgba(168,85,247,.1)}
+.tab.active{background:var(--grad);color:#fff;font-weight:600}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.card-title{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card-title .icon{width:28px;height:28px;border-radius:8px;background:rgba(168,85,247,.15);display:flex;align-items:center;justify-content:center;font-size:14px}
+
+/* Forms */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid.three{grid-template-columns:1fr 1fr 1fr}
+.form-grid.full{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.field input,.field select,.field textarea{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-xs);padding:10px 12px;color:var(--text);font-size:14px;font-family:var(--font);transition:border .2s;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent1)}
+.field textarea{resize:vertical;min-height:80px}
+.field select option{background:#1e293b}
+
+/* Buttons */
+.btn{padding:9px 18px;border-radius:var(--radius-sm);border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.btn-primary{background:var(--grad);color:#fff}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-secondary{background:rgba(255,255,255,.06);color:var(--text);border:1px solid rgba(255,255,255,.1)}
+.btn-secondary:hover{background:rgba(255,255,255,.1)}
+.btn-danger{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.btn-danger:hover{background:rgba(239,68,68,.25)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-xs{padding:4px 8px;font-size:11px}
+
+/* Status badges */
+.badge-status{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.s-pending{background:rgba(148,163,184,.15);color:#94a3b8}
+.s-inprogress{background:rgba(59,130,246,.15);color:#60a5fa}
+.s-review{background:rgba(245,158,11,.15);color:#fbbf24}
+.s-approved{background:rgba(16,185,129,.15);color:#34d399}
+.s-paid{background:rgba(16,185,129,.15);color:#34d399}
+.s-outstanding{background:rgba(245,158,11,.15);color:#fbbf24}
+.s-overdue{background:rgba(239,68,68,.15);color:#f87171}
+.s-update{background:rgba(59,130,246,.15);color:#60a5fa}
+.s-question{background:rgba(245,158,11,.15);color:#fbbf24}
+.s-milestone{background:rgba(168,85,247,.15);color:#c084fc}
+.s-alert{background:rgba(239,68,68,.15);color:#f87171}
+
+/* Progress bar */
+.progress-wrap{background:rgba(255,255,255,.06);border-radius:20px;height:8px;overflow:hidden}
+.progress-bar{background:var(--grad);height:100%;border-radius:20px;transition:width .4s}
+
+/* Phase stepper */
+.phases{display:flex;gap:0;margin:16px 0;overflow-x:auto;padding-bottom:4px}
+.phase-item{flex:1;min-width:90px;text-align:center;position:relative;cursor:pointer}
+.phase-item::after{content:'';position:absolute;top:16px;left:50%;width:100%;height:2px;background:rgba(255,255,255,.1);z-index:0}
+.phase-item:last-child::after{display:none}
+.phase-dot{width:32px;height:32px;border-radius:50%;border:2px solid rgba(255,255,255,.15);background:var(--card);display:flex;align-items:center;justify-content:center;margin:0 auto 6px;position:relative;z-index:1;font-size:12px;transition:all .2s}
+.phase-item.done .phase-dot{background:var(--grad);border-color:var(--accent1);color:#fff}
+.phase-item.active .phase-dot{border-color:var(--accent1);color:var(--accent1);box-shadow:0 0 0 3px rgba(168,85,247,.2)}
+.phase-item.done::after{background:var(--grad)}
+.phase-label{font-size:11px;color:var(--muted);font-weight:500}
+.phase-item.active .phase-label{color:var(--accent1);font-weight:600}
+.phase-item.done .phase-label{color:var(--text)}
+
+/* List items */
+.list-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-xs);padding:14px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
+.list-item:hover{border-color:var(--border)}
+.list-item-content{flex:1;min-width:0}
+.list-item-title{font-size:14px;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-item-meta{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.list-item-actions{display:flex;gap:6px;flex-shrink:0}
+
+/* Timeline */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:rgba(255,255,255,.08)}
+.tl-item{position:relative;margin-bottom:18px}
+.tl-dot{position:absolute;left:-24px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid var(--card);z-index:1}
+.tl-body{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-xs);padding:12px 14px}
+.tl-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.tl-date{font-size:11px;color:var(--muted)}
+
+/* Milestone checklist */
+.milestone-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.milestone-row:last-child{border:none}
+.check-box{width:20px;height:20px;border-radius:5px;border:2px solid rgba(255,255,255,.2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.check-box.checked{background:var(--grad);border-color:var(--accent1)}
+.milestone-text{flex:1;font-size:13px}
+.milestone-date{font-size:11px;color:var(--muted);white-space:nowrap}
+
+/* Star rating */
+.stars{display:flex;gap:4px}
+.star{font-size:22px;cursor:pointer;color:rgba(255,255,255,.2);transition:color .15s}
+.star.lit,.star:hover,.star:hover ~ .star{color:var(--yellow)}
+.stars:hover .star{color:var(--yellow)}
+.stars .star:hover ~ .star{color:rgba(255,255,255,.2)}
+
+/* File category */
+.file-cat{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(168,85,247,.12);color:var(--accent1);border:1px solid rgba(168,85,247,.2)}
+
+/* Section toggle */
+.section-panel{display:none}
+.section-panel.active{display:block}
+
+/* Summary boxes */
+.summary-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-xs);padding:16px;text-align:center}
+.summary-box .val{font-size:22px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.summary-box .lbl{font-size:11px;color:var(--muted);margin-top:2px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:20px}
+
+/* Preview modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{width:100%;max-width:920px;max-height:90vh;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;background:#fff;border:1px solid rgba(255,255,255,.1)}
+.modal-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;background:#1e293b;color:#fff;font-weight:700;font-size:14px}
+.modal-body{flex:1;overflow-y:auto;background:#fff}
+.modal iframe{width:100%;height:72vh;border:none}
+
+/* Theme selector */
+.theme-btns{display:flex;gap:8px;flex-wrap:wrap}
+.theme-btn{padding:8px 16px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.theme-btn.active{border-color:var(--accent1);color:var(--accent1);background:rgba(168,85,247,.1)}
+
+/* Footer */
+footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 20px;text-align:center;color:var(--muted);font-size:13px;max-width:1100px;margin:0 auto}
+footer a{color:var(--accent1);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.disclaimer{font-size:11px;color:rgba(148,163,184,.6);margin-top:12px;line-height:1.7}
+
+/* Empty state */
+.empty-state{text-align:center;padding:32px;color:var(--muted)}
+.empty-state .e-icon{font-size:32px;margin-bottom:8px;opacity:.4}
+.empty-state p{font-size:13px}
+
+/* Divider */
+.divider{height:1px;background:rgba(255,255,255,.06);margin:20px 0}
+
+/* Color swatch */
+.color-row{display:flex;align-items:center;gap:10px}
+.color-swatch{width:36px;height:36px;border-radius:8px;border:2px solid rgba(255,255,255,.2);cursor:pointer;flex-shrink:0}
+
+/* Feedback list */
+.feedback-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-xs);padding:14px;margin-bottom:10px}
+.rating-stars{color:var(--yellow);font-size:14px;letter-spacing:2px}
+
+/* Responsive */
+@media(max-width:640px){
+  .form-grid{grid-template-columns:1fr}
+  .form-grid.three{grid-template-columns:1fr}
+  .card{padding:16px}
+  .tabs{gap:4px}
+  .tab{padding:7px 10px;font-size:12px}
+}
+
+/* Glassmorphism for hero */
+.glass{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(168,85,247,.3);border-radius:3px}
+
+/* Help text */
+.help{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* Invoice total */
+.invoice-totals{background:rgba(168,85,247,.08);border:1px solid var(--border);border-radius:var(--radius-xs);padding:16px;margin-top:16px}
+.invoice-totals .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+.invoice-totals .row:last-child{margin:0;font-weight:700;font-size:15px;color:var(--text);border-top:1px solid var(--border);padding-top:8px;margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+  ⚡ Save 40% on FreelanceOS Pro — Use code <strong>FLASH40</strong> at checkout &nbsp;
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Claim Discount →</a>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="badge">Tool #79 · FreelanceOS Suite</div>
+  <h1>Client Portal Page Generator</h1>
+  <p>Build a beautiful, professional client-facing project portal. Track status, deliverables, files, and invoices — all in one shareable page.</p>
+</div>
+
+<div class="app">
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <button class="tab active" onclick="showTab('branding')" id="t-branding">🏷️ Branding</button>
+    <button class="tab" onclick="showTab('status')" id="t-status">📊 Status</button>
+    <button class="tab" onclick="showTab('deliverables')" id="t-deliverables">📦 Deliverables</button>
+    <button class="tab" onclick="showTab('comms')" id="t-comms">💬 Updates</button>
+    <button class="tab" onclick="showTab('files')" id="t-files">📁 Files</button>
+    <button class="tab" onclick="showTab('meetings')" id="t-meetings">📝 Meetings</button>
+    <button class="tab" onclick="showTab('invoices')" id="t-invoices">💰 Invoices</button>
+    <button class="tab" onclick="showTab('feedback')" id="t-feedback">⭐ Feedback</button>
+    <button class="tab" onclick="showTab('preview')" id="t-preview">👁️ Preview</button>
+  </div>
+
+  <!-- ============ TAB: BRANDING ============ -->
+  <div id="tab-branding" class="section-panel active">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">🏷️</span> Portal Branding</div>
+        <button class="btn btn-secondary btn-sm" onclick="resetBranding()">Reset</button>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Your Business Name</label>
+          <input type="text" id="b-biz" placeholder="Acme Creative Studio" oninput="saveBranding()">
+        </div>
+        <div class="field">
+          <label>Your Tagline / Role</label>
+          <input type="text" id="b-role" placeholder="Full-Stack Developer & Designer" oninput="saveBranding()">
+        </div>
+        <div class="field">
+          <label>Client Name</label>
+          <input type="text" id="b-client" placeholder="Jane Smith / Bright Ideas Co." oninput="saveBranding()">
+        </div>
+        <div class="field">
+          <label>Project Name</label>
+          <input type="text" id="b-project" placeholder="Brand Refresh 2026" oninput="saveBranding()">
+        </div>
+        <div class="field">
+          <label>Project Start Date</label>
+          <input type="date" id="b-start" oninput="saveBranding()">
+        </div>
+        <div class="field">
+          <label>Target Launch Date</label>
+          <input type="date" id="b-end" oninput="saveBranding()">
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-grid full">
+        <div class="field">
+          <label>Welcome Message (shown at top of portal)</label>
+          <textarea id="b-welcome" rows="3" placeholder="Hi [Client Name], welcome to your project portal! This is your central hub for tracking progress, accessing files, and staying in sync..." oninput="saveBranding()"></textarea>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-grid three">
+        <div class="field">
+          <label>Contact Email</label>
+          <input type="email" id="b-email" placeholder="you@studio.com" oninput="saveBranding()">
+        </div>
+        <div class="field">
+          <label>Contact Phone</label>
+          <input type="text" id="b-phone" placeholder="+1 (555) 000-0000" oninput="saveBranding()">
+        </div>
+        <div class="field">
+          <label>Website</label>
+          <input type="url" id="b-website" placeholder="https://yourstudio.com" oninput="saveBranding()">
+        </div>
+      </div>
+      <div class="divider"></div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:600">Brand Colors (used in exported portal)</p>
+      <div class="form-grid three">
+        <div class="field">
+          <label>Primary Color</label>
+          <div class="color-row">
+            <input type="color" class="color-swatch" id="b-color1" value="#a855f7" oninput="saveBranding()">
+            <input type="text" id="b-color1-hex" value="#a855f7" placeholder="#a855f7" oninput="syncColor('b-color1','b-color1-hex')">
+          </div>
+        </div>
+        <div class="field">
+          <label>Accent Color</label>
+          <div class="color-row">
+            <input type="color" class="color-swatch" id="b-color2" value="#ec4899" oninput="saveBranding()">
+            <input type="text" id="b-color2-hex" value="#ec4899" placeholder="#ec4899" oninput="syncColor('b-color2','b-color2-hex')">
+          </div>
+        </div>
+        <div class="field">
+          <label>Logo Placeholder Text</label>
+          <input type="text" id="b-logo-text" placeholder="AC" maxlength="3" oninput="saveBranding()">
+          <span class="help">Up to 3 characters shown as logo initials</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: STATUS ============ -->
+  <div id="tab-status" class="section-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">📊</span> Project Phase</div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Click a phase to set the current project phase</p>
+      <div class="phases" id="phases-row">
+        <!-- rendered by JS -->
+      </div>
+      <div class="divider"></div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Overall Progress (%)</label>
+          <input type="range" id="s-progress" min="0" max="100" value="0" oninput="updateProgress(this.value)" style="width:100%;accent-color:#a855f7">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px"><span>0%</span><span id="progress-val" style="color:var(--accent1);font-weight:700">0%</span><span>100%</span></div>
+        </div>
+        <div class="field">
+          <label>Status Note</label>
+          <input type="text" id="s-note" placeholder="On track for launch week" oninput="saveStatus()">
+        </div>
+      </div>
+      <div class="progress-wrap" style="margin-top:10px">
+        <div class="progress-bar" id="main-progress" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">✅</span> Milestone Checklist</div>
+        <button class="btn btn-primary btn-sm" onclick="openMilestoneModal()">+ Add Milestone</button>
+      </div>
+      <div id="milestones-list">
+        <div class="empty-state"><div class="e-icon">🎯</div><p>No milestones yet. Add project milestones to track progress.</p></div>
+      </div>
+    </div>
+
+    <!-- Milestone modal -->
+    <div id="milestone-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;padding:16px">
+      <div class="card" style="max-width:480px;width:100%;margin:0">
+        <div class="card-header"><div class="card-title">Add Milestone</div><button class="btn btn-secondary btn-sm" onclick="closeMilestoneModal()">✕</button></div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Milestone Name</label>
+            <input type="text" id="m-name" placeholder="Discovery kickoff call">
+          </div>
+          <div class="field">
+            <label>Due Date</label>
+            <input type="date" id="m-date">
+          </div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn btn-secondary" onclick="closeMilestoneModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="addMilestone()">Add Milestone</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: DELIVERABLES ============ -->
+  <div id="tab-deliverables" class="section-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">📦</span> Add Deliverable</div>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Deliverable Name</label>
+          <input type="text" id="d-name" placeholder="Homepage Wireframe">
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="d-status">
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Review">Review</option>
+            <option value="Approved">Approved</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Due Date</label>
+          <input type="date" id="d-due">
+        </div>
+        <div class="field">
+          <label>Download URL (optional)</label>
+          <input type="url" id="d-link" placeholder="https://drive.google.com/...">
+        </div>
+        <div class="field">
+          <label>Revision Count</label>
+          <input type="number" id="d-revs" value="0" min="0">
+        </div>
+        <div class="field">
+          <label>Notes</label>
+          <input type="text" id="d-notes" placeholder="Client to review by Friday">
+        </div>
+      </div>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="addDeliverable()">+ Add Deliverable</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">📋</span> Deliverables List</div>
+        <div id="d-count" style="font-size:12px;color:var(--muted)">0 deliverables</div>
+      </div>
+      <div id="deliverables-list">
+        <div class="empty-state"><div class="e-icon">📦</div><p>No deliverables added yet.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: COMMS ============ -->
+  <div id="tab-comms" class="section-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">💬</span> Add Update</div>
+      </div>
+      <div class="form-grid three">
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="c-date">
+        </div>
+        <div class="field">
+          <label>Type</label>
+          <select id="c-type">
+            <option value="Update">Update</option>
+            <option value="Question">Question</option>
+            <option value="Milestone">Milestone</option>
+            <option value="Alert">Alert</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>From</label>
+          <input type="text" id="c-from" placeholder="Your Name">
+        </div>
+      </div>
+      <div class="form-grid full" style="margin-top:12px">
+        <div class="field">
+          <label>Message</label>
+          <textarea id="c-msg" rows="3" placeholder="Write your update, question, or milestone note here..."></textarea>
+        </div>
+      </div>
+      <div style="margin-top:12px"><button class="btn btn-primary" onclick="addUpdate()">+ Post Update</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">📰</span> Update Feed</div>
+      </div>
+      <div class="timeline" id="updates-timeline">
+        <div class="empty-state" style="padding-left:0"><div class="e-icon">💬</div><p>No updates posted yet.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: FILES ============ -->
+  <div id="tab-files" class="section-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">📁</span> Add File</div>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>File Name</label>
+          <input type="text" id="f-name" placeholder="Signed Contract.pdf">
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <select id="f-cat">
+            <option value="Contracts">Contracts</option>
+            <option value="Designs">Designs</option>
+            <option value="Assets">Assets</option>
+            <option value="Deliverables">Deliverables</option>
+            <option value="Reference">Reference</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>File Type</label>
+          <input type="text" id="f-type" placeholder="PDF, PNG, ZIP...">
+        </div>
+        <div class="field">
+          <label>Date Added</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="field" style="grid-column:span 2">
+          <label>Download URL</label>
+          <input type="url" id="f-link" placeholder="https://drive.google.com/...">
+        </div>
+      </div>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="addFile()">+ Add File</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">🗂️</span> Shared Files</div>
+        <div id="f-count" style="font-size:12px;color:var(--muted)">0 files</div>
+      </div>
+      <div id="files-list">
+        <div class="empty-state"><div class="e-icon">📁</div><p>No files shared yet.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: MEETINGS ============ -->
+  <div id="tab-meetings" class="section-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">📝</span> Add Meeting Notes</div>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Meeting Date</label>
+          <input type="date" id="mt-date">
+        </div>
+        <div class="field">
+          <label>Attendees</label>
+          <input type="text" id="mt-attendees" placeholder="Jane, John, Sarah">
+        </div>
+        <div class="field">
+          <label>Next Meeting Date</label>
+          <input type="date" id="mt-next">
+        </div>
+        <div class="field">
+          <label>Next Meeting Topic</label>
+          <input type="text" id="mt-next-topic" placeholder="Design review">
+        </div>
+      </div>
+      <div class="form-grid full" style="margin-top:12px">
+        <div class="field">
+          <label>Key Decisions</label>
+          <textarea id="mt-decisions" rows="3" placeholder="1. Approved color palette&#10;2. Revised scope to include mobile app&#10;3. Budget increased by $500"></textarea>
+        </div>
+        <div class="field" style="margin-top:12px">
+          <label>Action Items</label>
+          <textarea id="mt-actions" rows="3" placeholder="1. [You] Send revised wireframes by Thursday&#10;2. [Client] Provide brand assets by Wednesday&#10;3. [Both] Review contract addendum"></textarea>
+        </div>
+      </div>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="addMeeting()">+ Save Meeting Notes</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">🗓️</span> Meeting Archive</div>
+        <div id="mt-count" style="font-size:12px;color:var(--muted)">0 meetings</div>
+      </div>
+      <div id="meetings-list">
+        <div class="empty-state"><div class="e-icon">📝</div><p>No meeting notes added yet.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: INVOICES ============ -->
+  <div id="tab-invoices" class="section-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">💰</span> Add Invoice</div>
+      </div>
+      <div class="form-grid three">
+        <div class="field">
+          <label>Invoice #</label>
+          <input type="text" id="i-num" placeholder="INV-001">
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <input type="text" id="i-desc" placeholder="Phase 1 — Discovery">
+        </div>
+        <div class="field">
+          <label>Amount ($)</label>
+          <input type="number" id="i-amount" placeholder="1500.00" step="0.01" min="0">
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="i-status">
+            <option value="Paid">Paid</option>
+            <option value="Outstanding">Outstanding</option>
+            <option value="Overdue">Overdue</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Issue Date</label>
+          <input type="date" id="i-issue">
+        </div>
+        <div class="field">
+          <label>Due Date</label>
+          <input type="date" id="i-due">
+        </div>
+      </div>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="addInvoice()">+ Add Invoice</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">📑</span> Invoice History</div>
+      </div>
+      <div class="summary-grid" id="invoice-summary">
+        <div class="summary-box"><div class="val" id="inv-total">$0</div><div class="lbl">Total Contract</div></div>
+        <div class="summary-box"><div class="val" id="inv-paid" style="color:var(--green)">$0</div><div class="lbl">Paid</div></div>
+        <div class="summary-box"><div class="val" id="inv-outstanding" style="color:var(--yellow)">$0</div><div class="lbl">Outstanding</div></div>
+        <div class="summary-box"><div class="val" id="inv-overdue" style="color:var(--red)">$0</div><div class="lbl">Overdue</div></div>
+      </div>
+      <div id="invoices-list">
+        <div class="empty-state"><div class="e-icon">💰</div><p>No invoices added yet.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: FEEDBACK ============ -->
+  <div id="tab-feedback" class="section-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">⭐</span> Collect Feedback</div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Simulate or record client feedback entries here. These will be shown in the portal preview.</p>
+      <div class="form-grid">
+        <div class="field">
+          <label>From (Client Name)</label>
+          <input type="text" id="fb-from" placeholder="Jane Smith">
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="fb-date">
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <select id="fb-cat">
+            <option value="Design">Design</option>
+            <option value="Content">Content</option>
+            <option value="Functionality">Functionality</option>
+            <option value="Communication">Communication</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Rating (1–5)</label>
+          <div class="stars" id="star-selector">
+            <span class="star" data-v="1" onclick="setRating(1)">★</span>
+            <span class="star" data-v="2" onclick="setRating(2)">★</span>
+            <span class="star" data-v="3" onclick="setRating(3)">★</span>
+            <span class="star" data-v="4" onclick="setRating(4)">★</span>
+            <span class="star" data-v="5" onclick="setRating(5)">★</span>
+          </div>
+          <input type="hidden" id="fb-rating" value="0">
+        </div>
+      </div>
+      <div class="form-grid full" style="margin-top:12px">
+        <div class="field">
+          <label>Comments</label>
+          <textarea id="fb-comments" rows="3" placeholder="The wireframes look great! Just a few small tweaks to the nav..."></textarea>
+        </div>
+      </div>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="addFeedback()">+ Record Feedback</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">📊</span> Feedback Received</div>
+        <div id="fb-avg" style="font-size:12px;color:var(--muted)"></div>
+      </div>
+      <div id="feedback-list">
+        <div class="empty-state"><div class="e-icon">⭐</div><p>No feedback recorded yet.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: PREVIEW ============ -->
+  <div id="tab-preview" class="section-panel">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">👁️</span> Export Options</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+        <div>
+          <p style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Portal Theme</p>
+          <div class="theme-btns">
+            <button class="theme-btn active" onclick="setTheme('professional')" id="theme-professional">Professional</button>
+            <button class="theme-btn" onclick="setTheme('creative')" id="theme-creative">Creative</button>
+            <button class="theme-btn" onclick="setTheme('minimal')" id="theme-minimal">Minimal</button>
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <p style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Actions</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-secondary" onclick="previewPortal()">👁️ Preview Portal</button>
+            <button class="btn btn-primary" onclick="exportPortal()">⬇️ Download HTML</button>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <p style="font-size:13px;color:var(--muted)">The exported portal is a single HTML file you can send to or share with your client. It's client-facing, so it shows a clean light-themed design — no builder tools, just the project info.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span class="icon">📋</span> Portal Summary</div>
+      </div>
+      <div id="portal-summary-preview"></div>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<!-- Preview Modal -->
+<div id="preview-modal" class="modal-overlay" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <span>Client Portal Preview</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-sm" style="background:rgba(255,255,255,.15);color:#fff;border:none;cursor:pointer" onclick="exportPortal()">⬇️ Download</button>
+        <button class="btn btn-sm" style="background:rgba(255,255,255,.15);color:#fff;border:none;cursor:pointer" onclick="closeModal()">✕ Close</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <iframe id="preview-frame" title="Portal Preview"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>
+    <strong style="color:var(--text)">Client Portal Page Generator</strong> — Tool #79 in the
+    <a href="/freelanceos-storefront/free-templates.html">FreelanceOS Free Toolkit</a>
+  </p>
+  <p style="margin-top:6px">
+    Upgrade to <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40">FreelanceOS Pro</a> for 280+ templates, advanced dashboards, and more.
+  </p>
+  <p class="disclaimer">
+    This tool stores data in your browser's localStorage only. No data is sent to any server. Generated HTML portals are static files for sharing purposes.
+    FreelanceOS is not responsible for the content of exported files or how they are used.
+    This tool is provided for informational and productivity purposes only.
+  </p>
+</footer>
+
+<script>
+// ============================================================
+// DATA STORE
+// ============================================================
+const KEY = 'clientPortal_v2';
+let DATA = {
+  branding: { biz:'', role:'', client:'', project:'', start:'', end:'', welcome:'', email:'', phone:'', website:'', color1:'#a855f7', color2:'#ec4899', logoText:'', color1hex:'#a855f7', color2hex:'#ec4899' },
+  status: { phase: 0, progress: 0, note: '' },
+  milestones: [],
+  deliverables: [],
+  updates: [],
+  files: [],
+  meetings: [],
+  invoices: [],
+  feedback: [],
+  theme: 'professional'
+};
+
+function load() {
+  try { const s = localStorage.getItem(KEY); if(s) DATA = Object.assign(DATA, JSON.parse(s)); } catch(e){}
+}
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(DATA)); } catch(e){}
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(name) {
+  document.querySelectorAll('.section-panel').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('t-' + name).classList.add('active');
+  if(name === 'preview') renderPortalSummary();
+}
+
+// ============================================================
+// BRANDING
+// ============================================================
+function saveBranding() {
+  DATA.branding.biz = v('b-biz');
+  DATA.branding.role = v('b-role');
+  DATA.branding.client = v('b-client');
+  DATA.branding.project = v('b-project');
+  DATA.branding.start = v('b-start');
+  DATA.branding.end = v('b-end');
+  DATA.branding.welcome = v('b-welcome');
+  DATA.branding.email = v('b-email');
+  DATA.branding.phone = v('b-phone');
+  DATA.branding.website = v('b-website');
+  DATA.branding.color1 = v('b-color1');
+  DATA.branding.color2 = v('b-color2');
+  DATA.branding.color1hex = v('b-color1-hex');
+  DATA.branding.color2hex = v('b-color2-hex');
+  DATA.branding.logoText = v('b-logo-text');
+  save();
+}
+function resetBranding() {
+  if(!confirm('Reset all branding fields?')) return;
+  DATA.branding = { biz:'', role:'', client:'', project:'', start:'', end:'', welcome:'', email:'', phone:'', website:'', color1:'#a855f7', color2:'#ec4899', logoText:'', color1hex:'#a855f7', color2hex:'#ec4899' };
+  save(); populateBranding();
+}
+function syncColor(colorId, hexId) {
+  const hex = v(hexId);
+  if(/^#[0-9a-fA-F]{6}$/.test(hex)) {
+    document.getElementById(colorId).value = hex;
+    saveBranding();
+  }
+}
+function populateBranding() {
+  const b = DATA.branding;
+  set('b-biz', b.biz); set('b-role', b.role); set('b-client', b.client);
+  set('b-project', b.project); set('b-start', b.start); set('b-end', b.end);
+  set('b-welcome', b.welcome); set('b-email', b.email); set('b-phone', b.phone);
+  set('b-website', b.website); set('b-color1', b.color1||'#a855f7');
+  set('b-color2', b.color2||'#ec4899'); set('b-color1-hex', b.color1hex||'#a855f7');
+  set('b-color2-hex', b.color2hex||'#ec4899'); set('b-logo-text', b.logoText);
+}
+
+// ============================================================
+// STATUS
+// ============================================================
+const PHASES = ['Discovery','Design','Development','Review','Launch'];
+function renderPhases() {
+  const row = document.getElementById('phases-row');
+  row.innerHTML = PHASES.map((p,i) => {
+    const done = i < DATA.status.phase;
+    const active = i === DATA.status.phase;
+    return `<div class="phase-item ${done?'done':''} ${active?'active':''}" onclick="setPhase(${i})">
+      <div class="phase-dot">${done ? '✓' : (i+1)}</div>
+      <div class="phase-label">${p}</div>
+    </div>`;
+  }).join('');
+}
+function setPhase(i) {
+  DATA.status.phase = i; save(); renderPhases();
+}
+function updateProgress(val) {
+  document.getElementById('progress-val').textContent = val + '%';
+  document.getElementById('main-progress').style.width = val + '%';
+  DATA.status.progress = parseInt(val); saveStatus();
+}
+function saveStatus() {
+  DATA.status.note = v('s-note'); save();
+}
+function populateStatus() {
+  set('s-progress', DATA.status.progress);
+  set('s-note', DATA.status.note);
+  document.getElementById('progress-val').textContent = DATA.status.progress + '%';
+  document.getElementById('main-progress').style.width = DATA.status.progress + '%';
+  renderPhases();
+}
+
+// ============================================================
+// MILESTONES
+// ============================================================
+function openMilestoneModal() {
+  const m = document.getElementById('milestone-modal');
+  m.style.display = 'flex';
+  set('m-name',''); set('m-date','');
+}
+function closeMilestoneModal() {
+  document.getElementById('milestone-modal').style.display = 'none';
+}
+function addMilestone() {
+  const name = v('m-name').trim();
+  if(!name) { alert('Milestone name required'); return; }
+  DATA.milestones.push({ id: uid(), name, date: v('m-date'), done: false });
+  save(); closeMilestoneModal(); renderMilestones();
+}
+function toggleMilestone(id) {
+  const m = DATA.milestones.find(x => x.id === id);
+  if(m) { m.done = !m.done; save(); renderMilestones(); }
+}
+function deleteMilestone(id) {
+  DATA.milestones = DATA.milestones.filter(x => x.id !== id);
+  save(); renderMilestones();
+}
+function renderMilestones() {
+  const el = document.getElementById('milestones-list');
+  if(!DATA.milestones.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">🎯</div><p>No milestones yet.</p></div>'; return; }
+  el.innerHTML = DATA.milestones.map(m => `
+    <div class="milestone-row">
+      <div class="check-box ${m.done?'checked':''}" onclick="toggleMilestone('${m.id}')">${m.done?'✓':''}</div>
+      <div class="milestone-text" style="${m.done?'text-decoration:line-through;color:var(--muted)':''}">${esc(m.name)}</div>
+      <div class="milestone-date">${m.date ? fmt(m.date) : ''}</div>
+      <button class="btn btn-danger btn-xs" onclick="deleteMilestone('${m.id}')">✕</button>
+    </div>`).join('');
+}
+
+// ============================================================
+// DELIVERABLES
+// ============================================================
+function addDeliverable() {
+  const name = v('d-name').trim();
+  if(!name) { alert('Deliverable name required'); return; }
+  DATA.deliverables.push({ id:uid(), name, status:v('d-status'), due:v('d-due'), link:v('d-link'), revs:parseInt(v('d-revs'))||0, notes:v('d-notes') });
+  save(); clearFields(['d-name','d-link','d-due','d-notes']); set('d-revs','0'); renderDeliverables();
+}
+function deleteDeliverable(id) {
+  DATA.deliverables = DATA.deliverables.filter(x => x.id !== id); save(); renderDeliverables();
+}
+function updateDeliverableStatus(id, val) {
+  const d = DATA.deliverables.find(x => x.id === id);
+  if(d) { d.status = val; save(); renderDeliverables(); }
+}
+function renderDeliverables() {
+  const el = document.getElementById('deliverables-list');
+  document.getElementById('d-count').textContent = DATA.deliverables.length + ' deliverables';
+  if(!DATA.deliverables.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">📦</div><p>No deliverables added yet.</p></div>'; return; }
+  el.innerHTML = DATA.deliverables.map(d => `
+    <div class="list-item">
+      <div class="list-item-content">
+        <div class="list-item-title">${esc(d.name)}</div>
+        <div class="list-item-meta">
+          <span class="badge-status s-${statusClass(d.status)}">${esc(d.status)}</span>
+          ${d.due ? `<span>Due: ${fmt(d.due)}</span>` : ''}
+          ${d.revs ? `<span>Rev ${d.revs}</span>` : ''}
+          ${d.notes ? `<span style="color:var(--muted)">${esc(d.notes)}</span>` : ''}
+          ${d.link ? `<a href="${esc(d.link)}" target="_blank" rel="noopener" style="color:var(--accent1);font-size:12px">↓ Download</a>` : ''}
+        </div>
+      </div>
+      <div class="list-item-actions">
+        <select onchange="updateDeliverableStatus('${d.id}', this.value)" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text);border-radius:6px;padding:4px 6px;font-size:12px;cursor:pointer">
+          ${['Pending','In Progress','Review','Approved'].map(s=>`<option ${d.status===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+        <button class="btn btn-danger btn-xs" onclick="deleteDeliverable('${d.id}')">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+// ============================================================
+// UPDATES / COMMS
+// ============================================================
+function addUpdate() {
+  const msg = v('c-msg').trim();
+  if(!msg) { alert('Message required'); return; }
+  DATA.updates.unshift({ id:uid(), date:v('c-date')||today(), type:v('c-type'), from:v('c-from'), msg });
+  save(); clearFields(['c-msg','c-from']); renderUpdates();
+}
+function deleteUpdate(id) {
+  DATA.updates = DATA.updates.filter(x => x.id !== id); save(); renderUpdates();
+}
+function renderUpdates() {
+  const el = document.getElementById('updates-timeline');
+  if(!DATA.updates.length) { el.innerHTML = '<div class="empty-state" style="padding-left:0"><div class="e-icon">💬</div><p>No updates posted yet.</p></div>'; return; }
+  const colors = { Update:'#3b82f6', Question:'#f59e0b', Milestone:'#a855f7', Alert:'#ef4444' };
+  el.innerHTML = DATA.updates.map(u => `
+    <div class="tl-item">
+      <div class="tl-dot" style="background:${colors[u.type]||'#94a3b8'}"></div>
+      <div class="tl-body">
+        <div class="tl-header">
+          <span class="badge-status s-${u.type.toLowerCase()}">${esc(u.type)}</span>
+          ${u.from ? `<span style="font-size:12px;font-weight:600">${esc(u.from)}</span>` : ''}
+          <span class="tl-date">${u.date ? fmt(u.date) : ''}</span>
+          <button class="btn btn-danger btn-xs" onclick="deleteUpdate('${u.id}')" style="margin-left:auto">✕</button>
+        </div>
+        <p style="font-size:13px;white-space:pre-wrap">${esc(u.msg)}</p>
+      </div>
+    </div>`).join('');
+}
+
+// ============================================================
+// FILES
+// ============================================================
+function addFile() {
+  const name = v('f-name').trim();
+  if(!name) { alert('File name required'); return; }
+  DATA.files.push({ id:uid(), name, cat:v('f-cat'), type:v('f-type'), date:v('f-date')||today(), link:v('f-link') });
+  save(); clearFields(['f-name','f-type','f-date','f-link']); renderFiles();
+}
+function deleteFile(id) {
+  DATA.files = DATA.files.filter(x => x.id !== id); save(); renderFiles();
+}
+function renderFiles() {
+  const el = document.getElementById('files-list');
+  document.getElementById('f-count').textContent = DATA.files.length + ' files';
+  if(!DATA.files.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">📁</div><p>No files shared yet.</p></div>'; return; }
+  // Group by category
+  const cats = {};
+  DATA.files.forEach(f => { if(!cats[f.cat]) cats[f.cat] = []; cats[f.cat].push(f); });
+  el.innerHTML = Object.keys(cats).map(cat => `
+    <div style="margin-bottom:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">${esc(cat)}</div>
+      ${cats[cat].map(f => `
+        <div class="list-item">
+          <div style="font-size:20px">${fileIcon(f.cat)}</div>
+          <div class="list-item-content">
+            <div class="list-item-title">${esc(f.name)}</div>
+            <div class="list-item-meta">
+              ${f.type ? `<span class="file-cat">${esc(f.type)}</span>` : ''}
+              <span>${fmt(f.date)}</span>
+              ${f.link ? `<a href="${esc(f.link)}" target="_blank" rel="noopener" style="color:var(--accent1);font-size:12px">↓ Download</a>` : '<span style="color:var(--muted)">No link</span>'}
+            </div>
+          </div>
+          <button class="btn btn-danger btn-xs" onclick="deleteFile('${f.id}')">✕</button>
+        </div>`).join('')}
+    </div>`).join('');
+}
+function fileIcon(cat) {
+  const m = { Contracts:'📋', Designs:'🎨', Assets:'🖼️', Deliverables:'📦', Reference:'📚' };
+  return m[cat] || '📄';
+}
+
+// ============================================================
+// MEETINGS
+// ============================================================
+function addMeeting() {
+  const decisions = v('mt-decisions').trim();
+  const actions = v('mt-actions').trim();
+  if(!decisions && !actions) { alert('Add key decisions or action items'); return; }
+  DATA.meetings.unshift({ id:uid(), date:v('mt-date')||today(), attendees:v('mt-attendees'), decisions, actions, next:v('mt-next'), nextTopic:v('mt-next-topic') });
+  save(); clearFields(['mt-attendees','mt-decisions','mt-actions','mt-next','mt-next-topic','mt-date']); renderMeetings();
+}
+function deleteMeeting(id) {
+  DATA.meetings = DATA.meetings.filter(x => x.id !== id); save(); renderMeetings();
+}
+function renderMeetings() {
+  const el = document.getElementById('meetings-list');
+  document.getElementById('mt-count').textContent = DATA.meetings.length + ' meetings';
+  if(!DATA.meetings.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">📝</div><p>No meeting notes yet.</p></div>'; return; }
+  el.innerHTML = DATA.meetings.map(m => `
+    <div class="list-item" style="flex-direction:column;align-items:stretch">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div>
+          <div style="font-weight:700;font-size:14px">Meeting — ${m.date ? fmt(m.date) : 'Date not set'}</div>
+          ${m.attendees ? `<div style="font-size:12px;color:var(--muted)">Attendees: ${esc(m.attendees)}</div>` : ''}
+        </div>
+        <button class="btn btn-danger btn-xs" onclick="deleteMeeting('${m.id}')">✕</button>
+      </div>
+      ${m.decisions ? `<div style="margin-bottom:8px"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Key Decisions</div><p style="font-size:13px;white-space:pre-wrap;color:var(--text)">${esc(m.decisions)}</p></div>` : ''}
+      ${m.actions ? `<div style="margin-bottom:8px"><div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Action Items</div><p style="font-size:13px;white-space:pre-wrap;color:var(--text)">${esc(m.actions)}</p></div>` : ''}
+      ${m.next ? `<div style="background:rgba(168,85,247,.08);border:1px solid var(--border);border-radius:6px;padding:8px;font-size:12px;color:var(--muted)">📅 Next meeting: <strong style="color:var(--text)">${fmt(m.next)}</strong>${m.nextTopic ? ` — ${esc(m.nextTopic)}` : ''}</div>` : ''}
+    </div>`).join('');
+}
+
+// ============================================================
+// INVOICES
+// ============================================================
+function addInvoice() {
+  const amount = parseFloat(v('i-amount'));
+  if(!v('i-num').trim()) { alert('Invoice number required'); return; }
+  if(isNaN(amount) || amount < 0) { alert('Valid amount required'); return; }
+  DATA.invoices.push({ id:uid(), num:v('i-num'), desc:v('i-desc'), amount, status:v('i-status'), issue:v('i-issue')||today(), due:v('i-due') });
+  save(); clearFields(['i-num','i-desc','i-amount','i-issue','i-due']); renderInvoices();
+}
+function deleteInvoice(id) {
+  DATA.invoices = DATA.invoices.filter(x => x.id !== id); save(); renderInvoices();
+}
+function renderInvoices() {
+  const el = document.getElementById('invoices-list');
+  let total=0, paid=0, outstanding=0, overdue=0;
+  DATA.invoices.forEach(i => {
+    total += i.amount;
+    if(i.status==='Paid') paid += i.amount;
+    else if(i.status==='Outstanding') outstanding += i.amount;
+    else if(i.status==='Overdue') overdue += i.amount;
+  });
+  document.getElementById('inv-total').textContent = '$' + total.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('inv-paid').textContent = '$' + paid.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('inv-outstanding').textContent = '$' + outstanding.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('inv-overdue').textContent = '$' + overdue.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  if(!DATA.invoices.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">💰</div><p>No invoices added yet.</p></div>'; return; }
+  el.innerHTML = DATA.invoices.map(i => `
+    <div class="list-item">
+      <div class="list-item-content">
+        <div class="list-item-title">${esc(i.num)} ${i.desc ? '— ' + esc(i.desc) : ''}</div>
+        <div class="list-item-meta">
+          <span class="badge-status s-${i.status.toLowerCase().replace(' ','')}">${esc(i.status)}</span>
+          <span>$${i.amount.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+          ${i.issue ? `<span>Issued: ${fmt(i.issue)}</span>` : ''}
+          ${i.due ? `<span>Due: ${fmt(i.due)}</span>` : ''}
+        </div>
+      </div>
+      <button class="btn btn-danger btn-xs" onclick="deleteInvoice('${i.id}')">✕</button>
+    </div>`).join('');
+}
+
+// ============================================================
+// FEEDBACK
+// ============================================================
+let currentRating = 0;
+function setRating(val) {
+  currentRating = val;
+  document.getElementById('fb-rating').value = val;
+  document.querySelectorAll('#star-selector .star').forEach((s, i) => {
+    s.style.color = i < val ? 'var(--yellow)' : 'rgba(255,255,255,.2)';
+  });
+}
+function addFeedback() {
+  const comments = v('fb-comments').trim();
+  if(!comments) { alert('Comments required'); return; }
+  DATA.feedback.unshift({ id:uid(), from:v('fb-from'), date:v('fb-date')||today(), cat:v('fb-cat'), rating:currentRating, comments });
+  save(); clearFields(['fb-from','fb-date','fb-comments']); currentRating = 0;
+  document.querySelectorAll('#star-selector .star').forEach(s => s.style.color = 'rgba(255,255,255,.2)');
+  renderFeedback();
+}
+function deleteFeedback(id) {
+  DATA.feedback = DATA.feedback.filter(x => x.id !== id); save(); renderFeedback();
+}
+function renderFeedback() {
+  const el = document.getElementById('feedback-list');
+  const avg = el2 => {
+    if(!DATA.feedback.length) return;
+    const r = DATA.feedback.filter(f=>f.rating>0);
+    if(!r.length) return;
+    const a = r.reduce((s,f)=>s+f.rating,0)/r.length;
+    document.getElementById('fb-avg').textContent = `Avg rating: ${a.toFixed(1)} / 5 (${r.length} reviews)`;
+  };
+  avg();
+  if(!DATA.feedback.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">⭐</div><p>No feedback recorded yet.</p></div>'; return; }
+  el.innerHTML = DATA.feedback.map(f => `
+    <div class="feedback-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px">
+        <div>
+          ${f.from ? `<span style="font-weight:700;font-size:13px">${esc(f.from)}</span> · ` : ''}
+          <span class="file-cat">${esc(f.cat)}</span>
+          ${f.date ? ` · <span style="font-size:12px;color:var(--muted)">${fmt(f.date)}</span>` : ''}
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          ${f.rating ? `<span class="rating-stars">${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</span>` : ''}
+          <button class="btn btn-danger btn-xs" onclick="deleteFeedback('${f.id}')">✕</button>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);white-space:pre-wrap">${esc(f.comments)}</p>
+    </div>`).join('');
+}
+
+// ============================================================
+// PREVIEW & EXPORT
+// ============================================================
+let currentTheme = 'professional';
+function setTheme(t) {
+  currentTheme = t; DATA.theme = t; save();
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('theme-' + t).classList.add('active');
+}
+
+function renderPortalSummary() {
+  const b = DATA.branding;
+  const s = DATA.status;
+  const el = document.getElementById('portal-summary-preview');
+  const sections = [
+    ['Branding', b.biz || b.client || b.project ? '✅ Configured' : '⚠️ Not set'],
+    ['Status', `Phase: ${PHASES[s.phase]} · ${s.progress}% complete`],
+    ['Milestones', `${DATA.milestones.length} milestones (${DATA.milestones.filter(m=>m.done).length} done)`],
+    ['Deliverables', `${DATA.deliverables.length} deliverables`],
+    ['Updates', `${DATA.updates.length} messages`],
+    ['Files', `${DATA.files.length} files`],
+    ['Meetings', `${DATA.meetings.length} meeting notes`],
+    ['Invoices', `${DATA.invoices.length} invoices`],
+    ['Feedback', `${DATA.feedback.length} entries`],
+    ['Theme', currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)]
+  ];
+  el.innerHTML = `<div class="form-grid three">` + sections.map(([lbl, val]) =>
+    `<div class="summary-box"><div class="val" style="font-size:15px;padding:4px 0">${val}</div><div class="lbl">${lbl}</div></div>`
+  ).join('') + `</div>
+  <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn btn-secondary" onclick="previewPortal()">👁️ Preview Portal</button>
+    <button class="btn btn-primary" onclick="exportPortal()">⬇️ Download HTML</button>
+  </div>`;
+}
+
+function previewPortal() {
+  const html = buildPortalHTML();
+  const iframe = document.getElementById('preview-frame');
+  iframe.srcdoc = html;
+  document.getElementById('preview-modal').style.display = 'flex';
+}
+function closeModal() {
+  document.getElementById('preview-modal').style.display = 'none';
+}
+function exportPortal() {
+  const html = buildPortalHTML();
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (DATA.branding.project || 'client-portal').replace(/[^a-z0-9]/gi,'-').toLowerCase() + '-portal.html';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+// ============================================================
+// BUILD PORTAL HTML (client-facing)
+// ============================================================
+function buildPortalHTML() {
+  const b = DATA.branding;
+  const s = DATA.status;
+  const t = currentTheme;
+  const c1 = b.color1 || '#a855f7';
+  const c2 = b.color2 || '#ec4899';
+  const logoTxt = b.logoText || (b.biz ? b.biz.slice(0,2).toUpperCase() : 'CP');
+  const projName = b.project || 'Project Portal';
+  const clientName = b.client || 'Client';
+  const bizName = b.biz || 'Your Studio';
+
+  const themes = {
+    professional: { bg:'#f8fafc', card:'#ffffff', text:'#0f172a', muted:'#64748b', border:'#e2e8f0', headerBg:c1 },
+    creative: { bg:'#fdf4ff', card:'#ffffff', text:'#2d1a47', muted:'#7c5fa0', border:'#e9d5ff', headerBg:`linear-gradient(135deg,${c1},${c2})` },
+    minimal: { bg:'#ffffff', card:'#f8fafc', text:'#111827', muted:'#6b7280', border:'#f3f4f6', headerBg:'#111827' }
+  };
+  const th = themes[t] || themes.professional;
+  const grad = `linear-gradient(135deg,${c1},${c2})`;
+
+  const msDone = DATA.milestones.filter(m=>m.done).length;
+  const msTotal = DATA.milestones.length;
+
+  // Build sections
+  let sections = '';
+
+  // Welcome / project info
+  sections += `
+  <section class="section">
+    <div class="welcome-box">
+      ${b.welcome ? `<p class="welcome-msg">${escHTML(b.welcome)}</p>` : ''}
+      <div class="info-grid">
+        ${b.start ? `<div class="info-item"><div class="info-lbl">Start Date</div><div class="info-val">${fmt(b.start)}</div></div>` : ''}
+        ${b.end ? `<div class="info-item"><div class="info-lbl">Target Launch</div><div class="info-val">${fmt(b.end)}</div></div>` : ''}
+        ${b.email ? `<div class="info-item"><div class="info-lbl">Contact</div><div class="info-val"><a href="mailto:${escHTML(b.email)}" style="color:${c1}">${escHTML(b.email)}</a></div></div>` : ''}
+        ${b.phone ? `<div class="info-item"><div class="info-lbl">Phone</div><div class="info-val">${escHTML(b.phone)}</div></div>` : ''}
+        ${b.website ? `<div class="info-item"><div class="info-lbl">Website</div><div class="info-val"><a href="${escHTML(b.website)}" target="_blank" style="color:${c1}">${escHTML(b.website)}</a></div></div>` : ''}
+      </div>
+    </div>
+  </section>`;
+
+  // Status
+  sections += `
+  <section class="section">
+    <h2 class="sec-title">📊 Project Status</h2>
+    <div class="card-inner">
+      <div class="phase-list">
+        ${PHASES.map((p,i) => {
+          const done = i < s.phase;
+          const active = i === s.phase;
+          return `<div class="ph-item ${done?'ph-done':''} ${active?'ph-active':''}">
+            <div class="ph-dot" style="${done||active?'background:'+grad+';color:#fff':''}">${done?'✓':(i+1)}</div>
+            <div class="ph-label">${p}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div style="margin-top:20px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px">
+          <span style="font-weight:600">Overall Progress</span>
+          <span style="font-weight:700;color:${c1}">${s.progress}%</span>
+        </div>
+        <div style="background:#e2e8f0;border-radius:20px;height:10px;overflow:hidden">
+          <div style="background:${grad};height:100%;width:${s.progress}%;border-radius:20px;transition:width .4s"></div>
+        </div>
+        ${s.note ? `<p style="margin-top:8px;font-size:13px;color:${th.muted}">${escHTML(s.note)}</p>` : ''}
+      </div>
+      ${DATA.milestones.length ? `
+      <div style="margin-top:20px;border-top:1px solid ${th.border};padding-top:16px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">Milestones <span style="font-size:12px;font-weight:400;color:${th.muted}">(${msDone}/${msTotal} complete)</span></h3>
+        ${DATA.milestones.map(m => `
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid ${th.border}">
+            <div style="width:20px;height:20px;border-radius:5px;border:2px solid ${m.done ? c1 : '#d1d5db'};background:${m.done ? `${grad.replace('linear-gradient','linear-gradient')}` : 'transparent'};display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0">${m.done ? '✓' : ''}</div>
+            <span style="flex:1;font-size:13px;${m.done ? 'text-decoration:line-through;color:'+th.muted : ''}">${escHTML(m.name)}</span>
+            ${m.date ? `<span style="font-size:11px;color:${th.muted}">${fmt(m.date)}</span>` : ''}
+          </div>`).join('')}
+      </div>` : ''}
+    </div>
+  </section>`;
+
+  // Deliverables
+  if(DATA.deliverables.length) {
+    const statusColors = { Pending:'#6b7280', 'In Progress':'#3b82f6', Review:'#f59e0b', Approved:'#10b981' };
+    sections += `
+    <section class="section">
+      <h2 class="sec-title">📦 Deliverables</h2>
+      <div class="card-inner">
+        ${DATA.deliverables.map(d => `
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid ${th.border};flex-wrap:wrap">
+            <div style="flex:1;min-width:160px">
+              <div style="font-size:14px;font-weight:600">${escHTML(d.name)}</div>
+              ${d.notes ? `<div style="font-size:12px;color:${th.muted};margin-top:2px">${escHTML(d.notes)}</div>` : ''}
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span style="background:${statusColors[d.status]||'#6b7280'}20;color:${statusColors[d.status]||'#6b7280'};border:1px solid ${statusColors[d.status]||'#6b7280'}40;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px">${escHTML(d.status)}</span>
+              ${d.due ? `<span style="font-size:12px;color:${th.muted}">Due: ${fmt(d.due)}</span>` : ''}
+              ${d.revs ? `<span style="font-size:12px;color:${th.muted}">Rev. ${d.revs}</span>` : ''}
+              ${d.link ? `<a href="${escHTML(d.link)}" target="_blank" rel="noopener" style="background:${grad};-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:12px;font-weight:700;text-decoration:none">↓ Download</a>` : ''}
+            </div>
+          </div>`).join('')}
+      </div>
+    </section>`;
+  }
+
+  // Updates feed
+  if(DATA.updates.length) {
+    const tlColors = { Update:'#3b82f6', Question:'#f59e0b', Milestone:c1, Alert:'#ef4444' };
+    sections += `
+    <section class="section">
+      <h2 class="sec-title">💬 Project Updates</h2>
+      <div style="position:relative;padding-left:20px">
+        <div style="position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:#e2e8f0"></div>
+        ${DATA.updates.map(u => `
+          <div style="position:relative;margin-bottom:16px">
+            <div style="position:absolute;left:-20px;top:4px;width:12px;height:12px;border-radius:50%;background:${tlColors[u.type]||'#6b7280'};border:2px solid #fff"></div>
+            <div style="background:${th.card};border:1px solid ${th.border};border-radius:10px;padding:12px 14px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+                <span style="background:${tlColors[u.type]||'#6b7280'}20;color:${tlColors[u.type]||'#6b7280'};border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;text-transform:uppercase">${escHTML(u.type)}</span>
+                ${u.from ? `<span style="font-size:12px;font-weight:600">${escHTML(u.from)}</span>` : ''}
+                ${u.date ? `<span style="font-size:11px;color:${th.muted}">${fmt(u.date)}</span>` : ''}
+              </div>
+              <p style="font-size:13px;white-space:pre-wrap;color:${th.text}">${escHTML(u.msg)}</p>
+            </div>
+          </div>`).join('')}
+      </div>
+    </section>`;
+  }
+
+  // Files
+  if(DATA.files.length) {
+    const cats = {};
+    DATA.files.forEach(f => { if(!cats[f.cat]) cats[f.cat] = []; cats[f.cat].push(f); });
+    sections += `
+    <section class="section">
+      <h2 class="sec-title">📁 Shared Files</h2>
+      ${Object.keys(cats).map(cat => `
+        <div style="margin-bottom:16px">
+          <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:${th.muted};margin-bottom:8px">${fileIcon(cat)} ${escHTML(cat)}</h3>
+          <div class="card-inner" style="padding:0">
+            ${cats[cat].map(f => `
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid ${th.border}">
+                <div style="font-size:20px">${fileIcon(f.cat)}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHTML(f.name)}</div>
+                  <div style="font-size:11px;color:${th.muted}">${f.type ? escHTML(f.type) + ' · ' : ''}${fmt(f.date)}</div>
+                </div>
+                ${f.link ? `<a href="${escHTML(f.link)}" target="_blank" rel="noopener" style="background:${grad};-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">↓ Download</a>` : ''}
+              </div>`).join('')}
+          </div>
+        </div>`).join('')}
+    </section>`;
+  }
+
+  // Meetings
+  if(DATA.meetings.length) {
+    sections += `
+    <section class="section">
+      <h2 class="sec-title">📝 Meeting Notes</h2>
+      ${DATA.meetings.map(m => `
+        <div class="card-inner" style="margin-bottom:14px">
+          <div style="font-size:15px;font-weight:700;margin-bottom:4px">Meeting — ${m.date ? fmt(m.date) : 'Date not set'}</div>
+          ${m.attendees ? `<div style="font-size:12px;color:${th.muted};margin-bottom:10px">Attendees: ${escHTML(m.attendees)}</div>` : ''}
+          ${m.decisions ? `<div style="margin-bottom:10px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:${th.muted};margin-bottom:4px">Key Decisions</div><p style="font-size:13px;white-space:pre-wrap">${escHTML(m.decisions)}</p></div>` : ''}
+          ${m.actions ? `<div style="margin-bottom:10px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:${th.muted};margin-bottom:4px">Action Items</div><p style="font-size:13px;white-space:pre-wrap">${escHTML(m.actions)}</p></div>` : ''}
+          ${m.next ? `<div style="background:${c1}10;border:1px solid ${c1}30;border-radius:8px;padding:8px 12px;font-size:12px;color:${th.muted}">📅 Next: <strong style="color:${th.text}">${fmt(m.next)}</strong>${m.nextTopic ? ' — ' + escHTML(m.nextTopic) : ''}</div>` : ''}
+        </div>`).join('')}
+    </section>`;
+  }
+
+  // Invoices
+  if(DATA.invoices.length) {
+    let paid=0, outstanding=0, overdue=0, total=0;
+    DATA.invoices.forEach(i => { total+=i.amount; if(i.status==='Paid') paid+=i.amount; else if(i.status==='Outstanding') outstanding+=i.amount; else if(i.status==='Overdue') overdue+=i.amount; });
+    const iStatColors = { Paid:'#10b981', Outstanding:'#f59e0b', Overdue:'#ef4444' };
+    sections += `
+    <section class="section">
+      <h2 class="sec-title">💰 Invoices & Payments</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px">
+        ${[['Total','$'+total.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}),c1],['Paid','$'+paid.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}),'#10b981'],['Outstanding','$'+outstanding.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}),'#f59e0b'],['Overdue','$'+overdue.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}),'#ef4444']].map(([lbl,val,col])=>`
+          <div style="background:${th.card};border:1px solid ${th.border};border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:18px;font-weight:800;color:${col}">${val}</div>
+            <div style="font-size:11px;color:${th.muted};margin-top:2px;text-transform:uppercase;letter-spacing:.5px;font-weight:600">${lbl}</div>
+          </div>`).join('')}
+      </div>
+      <div class="card-inner" style="padding:0">
+        ${DATA.invoices.map(i => `
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid ${th.border};flex-wrap:wrap">
+            <div style="flex:1;min-width:0">
+              <div style="font-size:13px;font-weight:700">${escHTML(i.num)}${i.desc?' — '+escHTML(i.desc):''}</div>
+              <div style="font-size:11px;color:${th.muted}">${i.issue?'Issued '+fmt(i.issue):''}${i.due?' · Due '+fmt(i.due):''}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:15px;font-weight:800;color:${th.text}">$${i.amount.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+              <span style="background:${iStatColors[i.status]||'#6b7280'}20;color:${iStatColors[i.status]||'#6b7280'};border:1px solid ${iStatColors[i.status]||'#6b7280'}40;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase">${escHTML(i.status)}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </section>`;
+  }
+
+  // Feedback (client view)
+  if(DATA.feedback.length) {
+    const avg = DATA.feedback.filter(f=>f.rating>0).reduce((s,f,i,a)=>s+f.rating/a.length,0);
+    sections += `
+    <section class="section">
+      <h2 class="sec-title">⭐ Feedback</h2>
+      ${avg ? `<p style="font-size:14px;font-weight:600;margin-bottom:12px">Average rating: <span style="color:${c1}">${avg.toFixed(1)} / 5</span></p>` : ''}
+      ${DATA.feedback.map(f => `
+        <div class="card-inner" style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+            <div style="font-size:13px;font-weight:600">${f.from ? escHTML(f.from) + ' · ' : ''}<span style="background:${c1}20;color:${c1};border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700">${escHTML(f.cat)}</span>${f.date ? ' · <span style="font-size:11px;color:'+th.muted+'">'+fmt(f.date)+'</span>' : ''}</div>
+            ${f.rating ? `<span style="color:#f59e0b;font-size:14px;letter-spacing:2px">${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</span>` : ''}
+          </div>
+          <p style="font-size:13px;color:${th.muted};white-space:pre-wrap">${escHTML(f.comments)}</p>
+        </div>`).join('')}
+    </section>`;
+  }
+
+  // Build final HTML
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>${escHTML(projName)} — ${escHTML(clientName)} | ${escHTML(bizName)}</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:${th.bg};color:${th.text};font-family:system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+.portal-header{background:${th.headerBg};padding:32px 20px;color:#fff}
+.portal-header h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:800;margin-bottom:4px}
+.portal-header p{font-size:14px;opacity:.85}
+.logo-circle{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin-bottom:14px;letter-spacing:1px}
+.header-inner{max-width:820px;margin:0 auto}
+.container{max-width:820px;margin:0 auto;padding:24px 16px 60px}
+.section{margin-bottom:28px}
+.sec-title{font-size:17px;font-weight:800;margin-bottom:14px;color:${th.text}}
+.card-inner{background:${th.card};border:1px solid ${th.border};border-radius:12px;padding:18px}
+.welcome-box{background:${th.card};border:1px solid ${th.border};border-radius:12px;padding:20px;margin-bottom:0}
+.welcome-msg{font-size:14px;color:${th.muted};margin-bottom:14px;white-space:pre-wrap}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.info-item{background:${th.bg};border:1px solid ${th.border};border-radius:8px;padding:10px 12px}
+.info-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:${th.muted};margin-bottom:2px}
+.info-val{font-size:13px;font-weight:600}
+.phase-list{display:flex;gap:0;overflow-x:auto;padding-bottom:4px}
+.ph-item{flex:1;min-width:80px;text-align:center;position:relative}
+.ph-item::after{content:'';position:absolute;top:14px;left:50%;width:100%;height:2px;background:${th.border};z-index:0}
+.ph-item:last-child::after{display:none}
+.ph-dot{width:28px;height:28px;border-radius:50%;border:2px solid ${th.border};background:${th.card};display:flex;align-items:center;justify-content:center;margin:0 auto 6px;position:relative;z-index:1;font-size:11px;font-weight:700}
+.ph-label{font-size:10px;color:${th.muted};font-weight:500}
+.ph-active .ph-label{color:${c1};font-weight:700}
+.ph-done::after{background:${grad}}
+footer{border-top:1px solid ${th.border};padding:24px 16px;text-align:center;font-size:12px;color:${th.muted};max-width:820px;margin:0 auto}
+footer a{color:${c1};text-decoration:none}
+@media(max-width:560px){.info-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="portal-header">
+  <div class="header-inner">
+    <div class="logo-circle">${escHTML(logoTxt)}</div>
+    <h1>${escHTML(projName)}</h1>
+    <p>${escHTML(clientName)} · Managed by ${escHTML(bizName)}</p>
+  </div>
+</div>
+<div class="container">
+  ${sections}
+</div>
+<footer>
+  <p>This portal was created for <strong>${escHTML(clientName)}</strong> by <strong>${escHTML(bizName)}</strong>.</p>
+  ${b.email ? `<p style="margin-top:4px">Questions? <a href="mailto:${escHTML(b.email)}">${escHTML(b.email)}</a></p>` : ''}
+  <p style="margin-top:8px;font-size:11px;opacity:.6">Generated with <a href="https://freelanceos.io" target="_blank">FreelanceOS Client Portal Generator</a></p>
+</footer>
+</body>
+</html>`;
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function v(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+function set(id, val) { const el = document.getElementById(id); if(el) el.value = val || ''; }
+function esc(str) { return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escHTML(str) { return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function clearFields(ids) { ids.forEach(id => set(id,'')); }
+function uid() { return Math.random().toString(36).slice(2,10) + Date.now().toString(36); }
+function today() { return new Date().toISOString().slice(0,10); }
+function fmt(d) {
+  if(!d) return '';
+  try {
+    const dt = new Date(d + 'T12:00:00');
+    return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  } catch(e){ return d; }
+}
+function statusClass(s) {
+  const m = {'Pending':'pending','In Progress':'inprogress','Review':'review','Approved':'approved','Paid':'paid','Outstanding':'outstanding','Overdue':'overdue'};
+  return m[s] || 'pending';
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  load();
+  populateBranding();
+  populateStatus();
+  renderMilestones();
+  renderDeliverables();
+  renderUpdates();
+  renderFiles();
+  renderMeetings();
+  renderInvoices();
+  renderFeedback();
+  // Set date defaults
+  const cDateEl = document.getElementById('c-date');
+  const fbDateEl = document.getElementById('fb-date');
+  const fDateEl = document.getElementById('f-date');
+  const td = today();
+  if(cDateEl && !cDateEl.value) cDateEl.value = td;
+  if(fbDateEl && !fbDateEl.value) fbDateEl.value = td;
+  if(fDateEl && !fDateEl.value) fDateEl.value = td;
+  // Theme
+  if(DATA.theme) setTheme(DATA.theme);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+// Close modal on overlay click
+document.getElementById('preview-modal').addEventListener('click', function(e) {
+  if(e.target === this) closeModal();
+});
+</script>
+</body>
+</html>

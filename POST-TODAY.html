@@ -3,1092 +3,874 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>POST TODAY — FreelanceOS Launch Hub</title>
+  <title>📡 LAUNCH MISSION CONTROL — FreelanceOS Daily Action Hub</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      background: #111;
-      color: #e5e7eb;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      line-height: 1.6;
-      padding: 0 0 60px;
+    :root {
+      --bg:     #0d0d0d;
+      --bg2:    #161616;
+      --bg3:    #1e1e1e;
+      --border: #2a2a2a;
+      --text:   #e5e7eb;
+      --muted:  #9ca3af;
+      --green:  #10b981;
+      --red:    #ef4444;
+      --blue:   #3b82f6;
+      --yellow: #eab308;
+      --purple: #7c3aed;
+      --orange: #f59e0b;
+      --pink:   #ec4899;
     }
 
-    a { color: #10b981; text-decoration: none; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace;
+      min-height: 100vh;
+    }
+
+    a { color: var(--green); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, #0d1f18 0%, #111 60%);
-      border-bottom: 3px solid #10b981;
-      padding: 48px 32px 40px;
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #0a1f12 0%, #0d0d0d 50%);
+      border-bottom: 3px solid var(--green);
+      padding: 36px 32px 28px;
       text-align: center;
     }
-    .hero-badge {
+    .header-badge {
       display: inline-block;
-      background: #10b981;
+      background: var(--green);
       color: #000;
+      font-size: 11px;
       font-weight: 700;
-      font-size: 12px;
       letter-spacing: 2px;
-      padding: 4px 14px;
+      padding: 4px 12px;
       border-radius: 3px;
-      margin-bottom: 16px;
       text-transform: uppercase;
+      margin-bottom: 14px;
     }
-    .hero h1 {
-      font-size: clamp(24px, 4vw, 42px);
+    .header h1 {
+      font-size: clamp(24px, 4vw, 40px);
       font-weight: 900;
       color: #fff;
-      line-height: 1.1;
       letter-spacing: -1px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
-    .hero-date {
+    .header-sub {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .header-date {
       font-size: 13px;
-      color: #6b7280;
-      margin-bottom: 18px;
+      color: var(--muted);
+      margin-bottom: 16px;
     }
-    .hero-sub {
-      max-width: 680px;
-      margin: 0 auto;
-      font-size: 16px;
-      color: #9ca3af;
-      line-height: 1.7;
+    .progress-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+    .progress-strip .prog-label { color: var(--muted); }
+    .progress-strip .prog-count { color: var(--green); font-weight: 700; font-size: 16px; }
+    .progress-bar-outer {
+      width: 140px;
+      height: 6px;
+      background: #2a2a2a;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), #34d399);
+      border-radius: 3px;
+      transition: width 0.4s ease;
     }
 
     /* ── LAYOUT ── */
-    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    .container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
 
-    /* ── PRIORITY STRIP ── */
-    .priority-strip {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      padding: 36px 24px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .priority-box {
-      border-radius: 10px;
-      padding: 20px 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .priority-box.red   { background: #1f0a0a; border: 2px solid #ef4444; }
-    .priority-box.yellow{ background: #1a1600; border: 2px solid #eab308; }
-    .priority-box.green { background: #0a1f14; border: 2px solid #10b981; }
-
-    .priority-box .prio-header {
-      font-size: 15px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .priority-box.red   .prio-header { color: #ef4444; }
-    .priority-box.yellow .prio-header { color: #eab308; }
-    .priority-box.green .prio-header { color: #10b981; }
-
-    .priority-box p { font-size: 13px; color: #9ca3af; }
-    .priority-box .prio-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .priority-box .prio-link {
-      display: inline-block;
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .priority-box.red   .prio-link { background: #ef4444; color: #fff; }
-    .priority-box.yellow .prio-link { background: #eab308; color: #000; }
-    .priority-box.green .prio-link { background: #10b981; color: #000; }
-
-    /* Checkbox */
-    .prio-check { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #6b7280; }
-    .prio-check input[type=checkbox] { width: 16px; height: 16px; accent-color: #10b981; cursor: pointer; }
-    .prio-check.done { text-decoration: line-through; color: #4b5563; }
-
-    /* ── SECTION HEADERS ── */
+    /* ── SECTION ── */
     .section {
-      max-width: 900px;
-      margin: 0 auto 48px;
-      padding: 0 24px;
+      margin: 36px 0;
     }
-    .section-header {
+    .section-head {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       padding-bottom: 12px;
-      border-bottom: 2px solid #1f2937;
+      border-bottom: 1px solid var(--border);
     }
-    .section-header h2 {
+    .section-icon {
       font-size: 22px;
+      line-height: 1;
+    }
+    .section-title {
+      font-size: 18px;
       font-weight: 800;
       color: #fff;
     }
-    .section-tag {
-      background: #10b981;
-      color: #000;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 3px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .section-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: auto;
     }
 
-    /* Explanation box */
-    .explain-box {
-      background: #1a2e22;
-      border-left: 4px solid #10b981;
-      border-radius: 0 8px 8px 0;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-      font-size: 14px;
-      color: #9ca3af;
-      line-height: 1.7;
-    }
-
-    /* ── POST CARD ── */
-    .post-card {
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 10px;
+    /* ── PLATFORM CARD ── */
+    .platform-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       padding: 22px 24px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
-    .post-card-header {
+    .platform-card.done {
+      opacity: 0.6;
+      border-color: var(--green);
+    }
+    .card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 14px;
-      flex-wrap: wrap;
-      gap: 8px;
+      gap: 12px;
     }
-    .post-card-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #10b981;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .post-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .card-title { font-size: 14px; font-weight: 700; color: #fff; }
+    .card-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .card-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
-    pre {
-      background: #0d0d0d;
-      border: 1px solid #222;
-      border-radius: 6px;
-      padding: 16px;
-      font-family: 'SF Mono', 'Fira Code', monospace;
+    /* ── COPY BLOCK ── */
+    .copy-block {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
       font-size: 13px;
-      color: #d1fae5;
-      white-space: pre-wrap;
-      word-break: break-word;
-      margin-bottom: 14px;
+      color: var(--text);
       line-height: 1.6;
+      position: relative;
     }
-    pre strong { color: #10b981; }
+    .copy-block strong {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .copy-block .copy-text { white-space: pre-wrap; }
 
-    /* Buttons */
+    /* ── BUTTONS ── */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      transition: opacity 0.15s, transform 0.1s;
-      text-decoration: none;
-    }
-    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
-    .btn-copy { background: #10b981; color: #000; }
-    .btn-link { background: #1f2937; color: #e5e7eb; border: 1px solid #374151; }
-    .btn-open { background: #3b82f6; color: #fff; }
-
-    /* ── TWEET CARDS ── */
-    .tweet-block { margin-bottom: 16px; }
-    .tweet-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-    .tweet-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-    .tweet-text {
-      flex: 1;
-      background: #0d0d0d;
-      border: 1px solid #222;
-      border-radius: 6px;
-      padding: 12px 14px;
-      font-size: 13px;
-      color: #d1fae5;
-      line-height: 1.6;
-      min-width: 200px;
-    }
-
-    /* ── GUMROAD FIELD ── */
-    .field-block { margin-bottom: 20px; }
-    .field-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-    .field-row { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
-    .field-text {
-      flex: 1;
-      background: #0d0d0d;
-      border: 1px solid #222;
-      border-radius: 6px;
-      padding: 12px 14px;
-      font-size: 13px;
-      color: #d1fae5;
-      line-height: 1.6;
-      min-width: 200px;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    /* ── CHECKLIST ── */
-    .progress-bar-wrap {
-      background: #1a1a1a;
-      border-radius: 8px;
-      padding: 20px 24px;
-      margin-bottom: 24px;
-      border: 1px solid #2a2a2a;
-    }
-    .progress-label {
-      font-size: 15px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-    #progress-count { color: #10b981; font-size: 20px; }
-    .progress-track {
-      height: 8px;
-      background: #2a2a2a;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: #10b981;
-      border-radius: 4px;
-      transition: width 0.3s;
-    }
-
-    .checklist { list-style: none; }
-    .checklist li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
+      padding: 8px 14px;
       border-radius: 7px;
-      margin-bottom: 6px;
-      background: #161616;
-      border: 1px solid #222;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .checklist li:hover { background: #1e1e1e; }
-    .checklist li.done {
-      text-decoration: line-through;
-      color: #4b5563;
-      background: #111;
-    }
-    .checklist li input[type=checkbox] { width: 17px; height: 17px; accent-color: #10b981; cursor: pointer; flex-shrink: 0; }
-
-    /* ── QUICK LINKS ── */
-    .links-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .links-grid a {
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 7px;
-      padding: 10px 18px;
       font-size: 13px;
       font-weight: 600;
-      color: #e5e7eb;
-      transition: border-color 0.15s, color 0.15s;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s, background 0.15s;
+      white-space: nowrap;
+      text-decoration: none;
     }
-    .links-grid a:hover { border-color: #10b981; color: #10b981; text-decoration: none; }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn-copy    { background: #252525; color: var(--text); border: 1px solid var(--border); }
+    .btn-copy.copied { background: #0a2a1a; color: var(--green); border-color: var(--green); }
+    .btn-reddit  { background: #ff4500; color: #fff; }
+    .btn-twitter { background: #1da1f2; color: #fff; }
+    .btn-linkedin{ background: #0a66c2; color: #fff; }
+    .btn-pinterest { background: #e60023; color: #fff; }
+    .btn-tiktok  { background: #111; color: #fff; border: 1px solid #333; }
+    .btn-green   { background: var(--green); color: #000; }
+    .btn-purple  { background: var(--purple); color: #fff; }
+    .btn-yellow  { background: var(--yellow); color: #000; }
+    .btn-blue    { background: var(--blue); color: #fff; }
+    .btn-muted   { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+
+    /* DONE CHECKBOX */
+    .done-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .done-check {
+      width: 18px; height: 18px;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+    .done-label { font-size: 13px; color: var(--muted); cursor: pointer; }
+
+    /* ── TIPS ROW ── */
+    .tips-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .tip-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .tip-box strong { display: block; color: var(--text); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+
+    /* ── QUICK LINKS ── */
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 20px 0;
+    }
 
     /* ── FOOTER ── */
-    footer {
-      text-align: center;
+    .footer {
+      border-top: 1px solid var(--border);
       padding: 24px;
+      text-align: center;
       font-size: 12px;
-      color: #374151;
-      border-top: 1px solid #1f2937;
-      margin-top: 48px;
+      color: var(--muted);
     }
 
-    /* Divider */
-    .divider { border: none; border-top: 1px solid #1f2937; margin: 40px 0; }
+    /* ── TWEET GRID ── */
+    .tweet-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
 
-    /* Thread group */
-    .thread-group {
-      background: #161616;
-      border: 1px solid #222;
+    /* ── TODAY'S HOOK HIGHLIGHT ── */
+    .hook-highlight {
+      background: linear-gradient(135deg, #0f1a2e, var(--bg2));
+      border: 2px solid var(--blue);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .hook-highlight strong { color: var(--blue); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
+    .hook-highlight p { font-size: 15px; color: #fff; line-height: 1.5; }
+
+    /* ── ROTATE TIP ── */
+    .rotate-tip {
+      background: var(--bg2);
+      border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 20px 22px;
-      margin-bottom: 20px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 14px;
     }
-    .thread-group-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: #10b981;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .rotate-tip strong { color: var(--yellow); font-size: 12px; text-transform: uppercase; display: block; margin-bottom: 6px; }
+
+    @media (max-width: 640px) {
+      .header { padding: 24px 16px 20px; }
+      .container { padding: 0 14px; }
+      .platform-card { padding: 16px; }
+      .card-actions { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">Workspace — Not Public</div>
-  <h1>🚨 FIRST SALE ACTION PLAN — DO THIS TODAY</h1>
-  <div class="hero-date">Updated: May 8, 2026</div>
-  <p class="hero-sub">Your storefront has 170+ pages, 5 products, and 4 viral tools. The ONLY thing standing between you and your first sale is getting people to the site. These posts will do that.</p>
-</div>
-
-<!-- PRIORITY STRIP -->
-<div class="priority-strip">
-
-  <div class="priority-box red">
-    <div class="prio-header">🔴 #1 PRIORITY</div>
-    <p>Post the Health Score to r/freelance <strong>RIGHT NOW</strong>. Takes 5 min. Genuinely valuable content — Reddit will upvote it.</p>
-    <div class="prio-row">
-      <a class="prio-link" href="https://www.reddit.com/r/freelance/submit" target="_blank">Open r/freelance →</a>
-      <label class="prio-check" id="pc-label-0">
-        <input type="checkbox" id="pc-0" onchange="savePriority(0)" /> Done
-      </label>
-    </div>
-  </div>
-
-  <div class="priority-box yellow">
-    <div class="prio-header">🟡 #2 PRIORITY</div>
-    <p>List on Gumroad (15 min). Marketplace search means passive traffic you don't have to generate yourself.</p>
-    <div class="prio-row">
-      <a class="prio-link" href="https://app.gumroad.com/" target="_blank">Open Gumroad →</a>
-      <label class="prio-check" id="pc-label-1">
-        <input type="checkbox" id="pc-1" onchange="savePriority(1)" /> Done
-      </label>
-    </div>
-  </div>
-
-  <div class="priority-box green">
-    <div class="prio-header">🟢 #3 PRIORITY</div>
-    <p>Post free template to r/Notion (5 min). Community actively upvotes free templates. Soft mention of Pro at the end.</p>
-    <div class="prio-row">
-      <a class="prio-link" href="https://www.reddit.com/r/Notion/submit" target="_blank">Open r/Notion →</a>
-      <label class="prio-check" id="pc-label-2">
-        <input type="checkbox" id="pc-2" onchange="savePriority(2)" /> Done
-      </label>
-    </div>
-  </div>
-
-</div>
-
-<!-- ════════════════════════════════════════
-     SECTION 1 — HEALTH SCORE REDDIT POSTS
-     ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-header">
-    <h2>🏥 Health Score Reddit Posts</h2>
-    <span class="section-tag">The Big Play</span>
-  </div>
-
-  <div class="explain-box">
-    The <strong>Freelance Business Health Score</strong> quiz is your best Reddit post. It's genuinely valuable (not promotional), scores freelancers 0–100, and has a soft CTA at the end. Reddit LOVES tools like this. Post it as a "I built a free tool" post — don't lead with any product mention.
-  </div>
-
-  <!-- POST A -->
-  <div class="post-card">
-    <div class="post-card-header">
-      <div class="post-card-title">Post A — r/freelance</div>
-      <div class="post-actions">
-        <button class="btn btn-copy" onclick="copyText('post-a')">📋 Copy Post</button>
-        <a class="btn btn-open" href="https://www.reddit.com/r/freelance/submit" target="_blank">Open r/freelance →</a>
-      </div>
-    </div>
-    <div id="post-a">
-<pre><strong>Title:</strong> I built a free Freelance Business Health Score quiz — what did you score?
-
-<strong>Body:</strong>
-Hey r/freelance,
-
-After years of seeing freelancers (including myself) struggle with the same problems — inconsistent income, scope creep, late payments, disorganisation — I built a free quiz to help freelancers benchmark their business health.
-
-It's 15 questions across 5 areas: client systems, money/invoicing, organisation, pipeline/growth, and work-life balance. Takes about 2 minutes.
-
-You get:
-• A score from 0-100
-• A grade (A-F)
-• A breakdown by category so you can see exactly where to improve
-• Specific recommendations based on your weakest areas
-
-Link: https://baphometsblade.github.io/freelanceos-storefront/freelance-health-score.html
-
-Curious what scores people are getting. I've been testing it with freelancers in my network and the average is around 58/100. Drop your score in the comments!
-
-(There's a soft product recommendation at the end based on your score — full transparency. But the quiz itself is genuinely free and useful regardless.)</pre>
-    </div>
-  </div>
-
-  <!-- POST B -->
-  <div class="post-card">
-    <div class="post-card-header">
-      <div class="post-card-title">Post B — r/digitalnomad</div>
-      <div class="post-actions">
-        <button class="btn btn-copy" onclick="copyText('post-b')">📋 Copy Post</button>
-        <a class="btn btn-open" href="https://www.reddit.com/r/digitalnomad/submit" target="_blank">Open r/digitalnomad →</a>
-      </div>
-    </div>
-    <div id="post-b">
-<pre><strong>Title:</strong> I built a free Freelance Business Health Score quiz — what's your score?
-
-<strong>Body:</strong>
-Hey r/digitalnomad,
-
-Moving location every few months while running a business means your systems have to be airtight. I kept struggling with the same issues — inconsistent income, invoicing chaos, scope creep — so I built a free quiz to help freelancers and nomads benchmark their business health.
-
-It's 15 questions across 5 areas: client systems, money/invoicing, organisation, pipeline/growth, and work-life balance. Takes about 2 minutes.
-
-You get:
-• A score from 0-100
-• A grade (A-F)
-• A breakdown by category so you can see exactly where to improve
-• Specific recommendations based on your weakest areas
-
-Link: https://baphometsblade.github.io/freelanceos-storefront/freelance-health-score.html
-
-Curious what scores nomads are getting vs. desk-based freelancers. Drop your score in the comments!
-
-(There's a soft product recommendation at the end based on your score — full transparency. The quiz itself is genuinely free and useful regardless.)</pre>
-    </div>
-  </div>
-
-  <!-- POST C -->
-  <div class="post-card">
-    <div class="post-card-header">
-      <div class="post-card-title">Post C — r/Entrepreneur</div>
-      <div class="post-actions">
-        <button class="btn btn-copy" onclick="copyText('post-c')">📋 Copy Post</button>
-        <a class="btn btn-open" href="https://www.reddit.com/r/Entrepreneur/submit" target="_blank">Open r/Entrepreneur →</a>
-      </div>
-    </div>
-    <div id="post-c">
-<pre><strong>Title:</strong> I built a free tool to benchmark business health for solopreneurs — what did you score?
-
-<strong>Body:</strong>
-Hey r/Entrepreneur,
-
-I built a free Freelance Business Health Score quiz for solopreneurs and freelancers. It covers the 5 areas that make or break a solo business: client systems, money/invoicing, organisation, pipeline/growth, and work-life balance.
-
-15 questions, takes 2 minutes. You get a score from 0–100, a grade, and specific recommendations based on where you score lowest.
-
-Link: https://baphometsblade.github.io/freelanceos-storefront/freelance-health-score.html
-
-Most solopreneurs I've tested it with score 55–65. The biggest gaps are always pipeline and invoicing. Curious where this community lands.
-
-Drop your score below — would love to compare results.
-
-(Soft product CTA at the end based on your score. Full transparency. Quiz itself is 100% free.)</pre>
+<!-- HEADER -->
+<div class="header">
+  <div class="header-badge">⚡ Internal Tool</div>
+  <h1>📡 LAUNCH MISSION CONTROL</h1>
+  <p class="header-sub">Today's marketing actions — click, copy, post</p>
+  <div class="header-date" id="today-date">Loading date...</div>
+  <div class="progress-strip">
+    <span class="prog-label">Progress:</span>
+    <span class="prog-count" id="prog-count">0 / 14 actions done</span>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="prog-bar" style="width:0%"></div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════
-     SECTION 2 — NOTION TEMPLATE POST
-     ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-header">
-    <h2>📓 Notion Template Post</h2>
-    <span class="section-tag">r/Notion</span>
-  </div>
+<div class="container">
 
-  <div class="explain-box">
-    r/Notion is the best subreddit for template sharing. The community actively upvotes free templates. Post the free Client Tracker, include a mention that you have a full paid system at the end. Don't lead with the paid product.
-  </div>
+  <!-- ═══════════════════════════════════════════════
+       SECTION 1: REDDIT
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">🔴</span>
+      <span class="section-title">REDDIT — Highest Impact</span>
+      <span class="section-meta">Best times: 9–11am EST or 7–9pm EST</span>
+    </div>
 
-  <div class="post-card">
-    <div class="post-card-header">
-      <div class="post-card-title">Post — r/Notion</div>
-      <div class="post-actions">
-        <button class="btn btn-copy" onclick="copyText('post-notion')">📋 Copy Post</button>
-        <a class="btn btn-open" href="https://www.reddit.com/r/Notion/submit" target="_blank">Open r/Notion →</a>
+    <!-- r/Notion -->
+    <div class="platform-card" id="card-reddit-notion">
+      <div class="card-header">
+        <div>
+          <div class="card-title">r/Notion</div>
+          <div class="card-sub">Hyper-targeted — builders and power users</div>
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-reddit" href="https://www.reddit.com/r/Notion/submit" target="_blank" rel="noopener">Open r/Notion →</a>
+        </div>
+      </div>
+
+      <div class="copy-block">
+        <strong>Title</strong>
+        <div class="copy-text" id="r-notion-title">I built a complete freelance business OS in Notion after getting burned by scattered tools — sharing everything I made for free</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('r-notion-title', this)">📋 Copy Title</button>
+
+      <div class="copy-block" style="margin-top:12px">
+        <strong>Body</strong>
+        <div class="copy-text" id="r-notion-body">Two years ago I lost a $4,000 project because I couldn't find the original scope doc fast enough when the client disputed what we'd agreed. It was in my email somewhere. Embarrassing, expensive, and 100% preventable.
+
+That moment made me go all-in on building a proper system. Over the next few months I built a full freelance OS in Notion: a client pipeline that tracks every lead, a project management setup with templated deliverable checklists, a rate calculator that tells me my minimum viable hourly rate, an invoice generator, and an income tracker.
+
+I ended up making 12+ free tools total. Rate calculator, invoice generator, client dashboard, proposal templates — all free, no email required.
+
+The free tools are at https://freelanceos-storefront.vercel.app/free-tools.html — just use them.
+
+Happy to answer any Notion questions in the comments. What's your current freelance system setup?</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('r-notion-body', this)">📋 Copy Body</button>
+
+      <div class="done-wrap">
+        <input type="checkbox" class="done-check" id="done-reddit-notion" onchange="markDone('card-reddit-notion', this)">
+        <label class="done-label" for="done-reddit-notion">Posted ✓</label>
       </div>
     </div>
-    <div id="post-notion">
-<pre><strong>Title:</strong> Free Notion Client Tracker template — manage clients, projects, and follow-ups
 
-<strong>Body:</strong>
-Built this Notion client tracker for my own freelance business and wanted to share it with the community.
+    <!-- r/freelance -->
+    <div class="platform-card" id="card-reddit-freelance">
+      <div class="card-header">
+        <div>
+          <div class="card-title">r/freelance</div>
+          <div class="card-sub">2M+ members, high intent freelancers</div>
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-reddit" href="https://www.reddit.com/r/freelance/submit" target="_blank" rel="noopener">Open r/freelance →</a>
+        </div>
+      </div>
 
-What's included:
-• Client database with status tracking (Active / Proposal / On Hold / Inactive)
-• Project linking — see all projects per client at a glance
-• Follow-up reminder system
-• Notes and communication log per client
-• Filters for quick views (active clients, clients needing follow-up)
+      <div class="copy-block">
+        <strong>Title</strong>
+        <div class="copy-text" id="r-free-title">After 3 years freelancing, here's the system that finally made me feel like I had a real business (Notion template)</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('r-free-title', this)">📋 Copy Title</button>
 
-Free download here (enter your email and I'll send the Notion link): https://baphometsblade.github.io/freelanceos-storefront/free-download.html
+      <div class="copy-block" style="margin-top:12px">
+        <strong>Body</strong>
+        <div class="copy-text" id="r-free-body">For my first two years freelancing I operated in constant low-grade chaos. Leads tracked in a Notes app. Rates made up on the spot. Invoice templates cobbled together in Google Docs. I kept saying "I'll build a proper system when things slow down" — but they never did.
 
-No Notion paid plan required — works with free accounts.
+The turning point: I built everything in Notion. Client pipeline. Rate calculator (the one that shows you your actual minimum based on your expenses and target income). Project folders. A weekly review template.
 
-I also built a more complete system (FreelanceOS Pro) with invoicing, project management, time tracking, etc. if anyone's interested. But this client tracker is 100% free.
+The difference was immediate. More professional with clients, faster follow-up, no more forgotten invoices.
 
-Happy to answer questions or take feedback — it's v1 so open to improvements!</pre>
+I made the core tools free: rate calculator, invoice generator, client dashboard, and more. No email required — just use them.
+
+Link: https://freelanceos-storefront.vercel.app/free-tools.html
+
+What does your current system look like? Curious where others are at.</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('r-free-body', this)">📋 Copy Body</button>
+
+      <div class="done-wrap">
+        <input type="checkbox" class="done-check" id="done-reddit-freelance" onchange="markDone('card-reddit-freelance', this)">
+        <label class="done-label" for="done-reddit-freelance">Posted ✓</label>
+      </div>
+    </div>
+
+    <!-- r/digitalnomad -->
+    <div class="platform-card" id="card-reddit-dn">
+      <div class="card-header">
+        <div>
+          <div class="card-title">r/digitalnomad</div>
+          <div class="card-sub">Location-independent angle — high overlap with freelancers</div>
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-reddit" href="https://www.reddit.com/r/digitalnomad/submit" target="_blank" rel="noopener">Open r/digitalnomad →</a>
+        </div>
+      </div>
+
+      <div class="copy-block">
+        <strong>Title</strong>
+        <div class="copy-text" id="r-dn-title">The exact Notion setup I use to run my freelance business from anywhere (everything free)</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('r-dn-title', this)">📋 Copy Title</button>
+
+      <div class="copy-block" style="margin-top:12px">
+        <strong>Body</strong>
+        <div class="copy-text" id="r-dn-body">Running a freelance business while moving between time zones is genuinely hard. Clients are on different schedules, your "office" changes constantly, and if your system lives in your head it breaks the moment you're on a 14-hour travel day.
+
+Everything I built is in Notion — accessible from anywhere, device agnostic, no clunky desktop software. Client pipeline, project templates, rate calculator, income tracker. I can pick up a new laptop in any city and be fully operational in 20 minutes.
+
+I made the core tools free to use:
+- Rate calculator (figures out your real minimum hourly rate)
+- Invoice generator (professional, with payment terms)
+- Client dashboard (see all your active projects in one view)
+- Proposal templates and more
+
+All at: https://freelanceos-storefront.vercel.app/free-tools.html — no signup, no email.
+
+What's your go-to setup for staying organized while traveling?</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('r-dn-body', this)">📋 Copy Body</button>
+
+      <div class="done-wrap">
+        <input type="checkbox" class="done-check" id="done-reddit-dn" onchange="markDone('card-reddit-dn', this)">
+        <label class="done-label" for="done-reddit-dn">Posted ✓</label>
+      </div>
     </div>
   </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 2: TWITTER/X
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">🐦</span>
+      <span class="section-title">TWITTER / X</span>
+      <span class="section-meta">Best: 8-10am, 12-1pm, 5-6pm EST</span>
+    </div>
+
+    <div class="tweet-grid">
+
+      <div class="platform-card" id="card-tw1">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Tweet 1 — Value Giveaway</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn btn-twitter" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener">Open Twitter →</a>
+          </div>
+        </div>
+        <div class="copy-block">
+          <div class="copy-text" id="tw1">Gave away my entire freelance Notion system for free today 🎁
+
+Rate calculator, invoice generator, dashboard — all free, no email needed.
+
+Link in replies 👇</div>
+        </div>
+        <button class="btn btn-copy" onclick="copyEl('tw1', this)">📋 Copy Tweet</button>
+        <div class="done-wrap">
+          <input type="checkbox" class="done-check" id="done-tw1" onchange="markDone('card-tw1', this)">
+          <label class="done-label" for="done-tw1">Posted ✓</label>
+        </div>
+      </div>
+
+      <div class="platform-card" id="card-tw2">
+        <div class="card-header">
+          <div><div class="card-title">Tweet 2 — Curiosity Hook</div></div>
+          <div class="card-actions">
+            <a class="btn btn-twitter" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener">Open Twitter →</a>
+          </div>
+        </div>
+        <div class="copy-block">
+          <div class="copy-text" id="tw2">Freelancers: what would your business look like if it ran itself?
+
+I built this in Notion →
+https://freelanceos-storefront.vercel.app/free-tools.html
+
+Client pipeline. Rate calculator. Invoice gen. All free.</div>
+        </div>
+        <button class="btn btn-copy" onclick="copyEl('tw2', this)">📋 Copy Tweet</button>
+        <div class="done-wrap">
+          <input type="checkbox" class="done-check" id="done-tw2" onchange="markDone('card-tw2', this)">
+          <label class="done-label" for="done-tw2">Posted ✓</label>
+        </div>
+      </div>
+
+      <div class="platform-card" id="card-tw3">
+        <div class="card-header">
+          <div><div class="card-title">Tweet 3 — Thread Starter</div></div>
+          <div class="card-actions">
+            <a class="btn btn-twitter" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener">Open Twitter →</a>
+          </div>
+        </div>
+        <div class="copy-block">
+          <div class="copy-text" id="tw3-hook">I spent 100 hours building the perfect freelance OS in Notion.
+
+I'm giving away the core tools free. Thread 🧵</div>
+        </div>
+        <button class="btn btn-copy" onclick="copyEl('tw3-hook', this)">📋 Copy Hook Tweet</button>
+
+        <div class="copy-block" style="margin-top:10px">
+          <strong>Thread Continuation</strong>
+          <div class="copy-text" id="tw3-thread">2/ The problem: every freelancer I know runs their business from a mess of apps, email threads, and sticky notes.
+
+Invoice in Wave. Pipeline in Trello. Rates from gut feel. Files scattered across 3 cloud drives.
+
+3/ I built everything in one Notion workspace:
+• Client pipeline (CRM-style, drag between stages)
+• Rate calculator (shows your real min rate)
+• Invoice generator (professional, with terms)
+• Income tracker (monthly P&L, auto-totals)
+• Project templates
+
+4/ All the free tools are here:
+https://freelanceos-storefront.vercel.app/free-tools.html
+
+No email. No paywall. Just use them.
+
+5/ What tool has made the biggest difference in your freelance workflow? Drop it below 👇</div>
+        </div>
+        <button class="btn btn-copy" onclick="copyEl('tw3-thread', this)">📋 Copy Thread</button>
+        <div class="done-wrap">
+          <input type="checkbox" class="done-check" id="done-tw3" onchange="markDone('card-tw3', this)">
+          <label class="done-label" for="done-tw3">Posted ✓</label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 3: LINKEDIN
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">💼</span>
+      <span class="section-title">LINKEDIN</span>
+      <span class="section-meta">Best: Tue–Thu, 8-10am or 12pm EST</span>
+    </div>
+
+    <div class="platform-card" id="card-li">
+      <div class="card-header">
+        <div>
+          <div class="card-title">LinkedIn Post — Professional Story</div>
+          <div class="card-sub">Personal story format — highest engagement on LinkedIn</div>
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-linkedin" href="https://www.linkedin.com/feed/" target="_blank" rel="noopener">Open LinkedIn →</a>
+        </div>
+      </div>
+
+      <div class="copy-block">
+        <div class="copy-text" id="li-post">I realized why I was undercharging as a freelancer.
+
+It wasn't imposter syndrome. It wasn't lack of confidence.
+
+It was that I had no idea what my actual number was.
+
+No tracking. No system. Just a rough figure in my head that felt "reasonable."
+
+When I finally sat down and calculated:
+• My monthly business expenses
+• My target personal income
+• Hours I actually work (not the fantasy version)
+• Taxes and self-employment costs
+
+My "real" rate was 40% higher than what I was charging.
+
+I'd been leaving significant money on the table for years — not because I wasn't skilled enough, but because I'd never done the math.
+
+I built a free rate calculator that does this in under 2 minutes. Plug in your numbers, get your real minimum rate.
+
+It's free at: https://freelanceos-storefront.vercel.app/rate-calculator.html
+
+If you're a freelancer who's never calculated your actual floor rate — do it today. The number might surprise you.
+
+What's your biggest freelance pricing challenge?
+
+#freelance #freelancing #consulting #notiontemplate #ratecard</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('li-post', this)">📋 Copy LinkedIn Post</button>
+
+      <div class="done-wrap">
+        <input type="checkbox" class="done-check" id="done-li" onchange="markDone('card-li', this)">
+        <label class="done-label" for="done-li">Posted ✓</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 4: PINTEREST
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">📌</span>
+      <span class="section-title">PINTEREST</span>
+      <span class="section-meta">Pin 3–5 per day for compound growth</span>
+    </div>
+
+    <div class="tips-row">
+      <div class="tip-box">
+        <strong>Target Boards</strong>
+        Freelance Tips · Notion Templates · Work From Home · Side Hustle Ideas · Productivity Tools
+      </div>
+      <div class="tip-box">
+        <strong>Best Times</strong>
+        Evening: 8–11pm EST. Weekend mornings also strong. Schedule with Tailwind for consistency.
+      </div>
+      <div class="tip-box">
+        <strong>Pin Strategy</strong>
+        Repin 2–3 others for every 1 you post. Keywords in title AND description. Vertical images only (2:3 ratio).
+      </div>
+    </div>
+
+    <div class="platform-card" id="card-pin">
+      <div class="card-header">
+        <div><div class="card-title">Pinterest Actions</div></div>
+        <div class="card-actions">
+          <a class="btn btn-pinterest" href="https://www.pinterest.com/pin/creation/button/" target="_blank" rel="noopener">Create Pin →</a>
+          <a class="btn btn-muted" href="/sessions/nifty-nice-turing/mnt/freelanceos-storefront/pinterest-kit.html" target="_blank">Open Pinterest Kit →</a>
+        </div>
+      </div>
+
+      <div class="copy-block">
+        <strong>Pin Description 1 — Rate Calculator</strong>
+        <div class="copy-text" id="pin1">Free Freelance Rate Calculator — Stop guessing your rates. This free tool calculates your exact minimum hourly rate based on your real expenses, income goals, and work hours. Takes 2 minutes. #freelance #freelancetips #ratecard #notiontemplate #workfromhome</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('pin1', this)">📋 Copy</button>
+
+      <div class="copy-block" style="margin-top:10px">
+        <strong>Pin Description 2 — Freelance Health Score</strong>
+        <div class="copy-text" id="pin2">Take the Free Freelance Business Health Check — Answer 10 questions and get your score out of 100. See exactly where you're leaving money on the table + get your personalized action plan. #freelance #freelancebusiness #solopreneur #notiontemplate #sidehustle</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('pin2', this)">📋 Copy</button>
+
+      <div class="copy-block" style="margin-top:10px">
+        <strong>Pin Description 3 — FreelanceOS Pro</strong>
+        <div class="copy-text" id="pin3">Complete Freelance Business OS in Notion — Client pipeline, invoicing, project management, rate calculator, and more. 200+ templates built for freelancers, consultants, and solopreneurs. Use code FLASH40. #notiontemplate #freelancetools #productivity #freelancer2026</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('pin3', this)">📋 Copy</button>
+
+      <div class="done-wrap">
+        <input type="checkbox" class="done-check" id="done-pin" onchange="markDone('card-pin', this)">
+        <label class="done-label" for="done-pin">Pins posted ✓</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 5: TIKTOK / REELS
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">🎬</span>
+      <span class="section-title">TIKTOK / REELS</span>
+      <span class="section-meta">Record one short video today</span>
+    </div>
+
+    <div class="hook-highlight">
+      <strong>🎯 Today's Hook (random pick)</strong>
+      <p id="tiktok-hook">Loading hook...</p>
+    </div>
+
+    <div class="platform-card" id="card-tiktok">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Short Video Action</div>
+          <div class="card-sub">30-60 seconds. Hook in first 2 seconds. Text overlay recommended.</div>
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-tiktok" href="https://www.tiktok.com/upload" target="_blank" rel="noopener">Upload TikTok →</a>
+          <a class="btn btn-muted" href="TIKTOK-SCRIPTS.html" target="_blank">Open TikTok Scripts →</a>
+        </div>
+      </div>
+
+      <div class="copy-block">
+        <strong>Hashtags to Use (copy all)</strong>
+        <div class="copy-text" id="tiktok-tags">#freelance #notion #freelancetips #sidehustle #workfromhome #notion2026 #notiontemplate #freelancer #solopreneur #freelancelife</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('tiktok-tags', this)">📋 Copy Hashtags</button>
+
+      <div class="done-wrap">
+        <input type="checkbox" class="done-check" id="done-tiktok" onchange="markDone('card-tiktok', this)">
+        <label class="done-label" for="done-tiktok">Video posted ✓</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 6: EMAIL LIST
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">📧</span>
+      <span class="section-title">EMAIL LIST</span>
+      <span class="section-meta">Highest-value channel — treat it like gold</span>
+    </div>
+
+    <div class="rotate-tip">
+      <strong>📈 Subscriber Growth Tip of the Day</strong>
+      <span id="email-tip">Loading tip...</span>
+    </div>
+
+    <div class="platform-card" id="card-email">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Email Actions</div>
+          <div class="card-sub">Welcome new subscribers · Check open rates · Schedule next broadcast</div>
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-green" href="https://app.beehiiv.com" target="_blank" rel="noopener">Open Beehiiv →</a>
+        </div>
+      </div>
+
+      <div class="copy-block">
+        <strong>Welcome Sequence File</strong>
+        <div class="copy-text" id="email-seq">EMAIL-WELCOME-SEQUENCE.html — open in your editor or via GitHub</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('email-seq', this)">📋 Copy Filename</button>
+
+      <div class="copy-block" style="margin-top:10px">
+        <strong>Today's Subject Line Option</strong>
+        <div class="copy-text" id="email-subj">Your free freelance toolkit is waiting (rate calculator + 11 more tools)</div>
+      </div>
+      <button class="btn btn-copy" onclick="copyEl('email-subj', this)">📋 Copy Subject</button>
+
+      <div class="done-wrap">
+        <input type="checkbox" class="done-check" id="done-email" onchange="markDone('card-email', this)">
+        <label class="done-label" for="done-email">Email checked ✓</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 7: QUICK LINKS
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">🔗</span>
+      <span class="section-title">QUICK LINKS</span>
+    </div>
+
+    <div class="quick-links">
+      <a class="btn btn-green" href="https://dashboard.stripe.com" target="_blank" rel="noopener">💳 Stripe Dashboard</a>
+      <a class="btn btn-blue" href="https://app.beehiiv.com" target="_blank" rel="noopener">📧 Beehiiv Dashboard</a>
+      <a class="btn btn-muted" href="https://freelanceos-storefront.vercel.app/" target="_blank" rel="noopener">🌐 GitHub Pages Site</a>
+      <a class="btn btn-muted" href="https://search.google.com/search-console" target="_blank" rel="noopener">📊 Search Console</a>
+      <a class="btn btn-reddit" href="https://www.reddit.com/r/freelance" target="_blank" rel="noopener">🔴 r/freelance</a>
+      <a class="btn btn-twitter" href="https://twitter.com" target="_blank" rel="noopener">🐦 Twitter/X</a>
+      <a class="btn btn-linkedin" href="https://www.linkedin.com/feed/" target="_blank" rel="noopener">💼 LinkedIn</a>
+      <a class="btn btn-pinterest" href="https://www.pinterest.com" target="_blank" rel="noopener">📌 Pinterest</a>
+      <a class="btn btn-purple" href="https://freelanceos-storefront.vercel.app/freelance-health-score.html" target="_blank" rel="noopener">📊 Health Score Quiz</a>
+      <a class="btn btn-yellow" href="https://freelanceos-storefront.vercel.app/free-tools.html" target="_blank" rel="noopener">🛠 Free Tools Page</a>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  Updated May 2026 · Push new content daily — consistency beats perfection ·
+  <a href="https://freelanceos-storefront.vercel.app/">FreelanceOS</a>
 </div>
-
-<!-- ════════════════════════════════════════
-     SECTION 3 — TWITTER/X THREADS
-     ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-header">
-    <h2>🐦 Twitter / X Threads</h2>
-    <span class="section-tag">3 threads</span>
-  </div>
-
-  <!-- Thread 1 -->
-  <div class="thread-group">
-    <div class="thread-group-title">Thread 1 — Health Score Tool</div>
-
-    <div class="tweet-block">
-      <div class="tweet-label">Tweet 1 / 3</div>
-      <div class="tweet-row">
-        <div class="tweet-text" id="t1-1">I built a free Freelance Business Health Score quiz.
-
-15 questions. Score yourself 0-100 across:
-• Client systems
-• Money &amp; invoicing
-• Organisation
-• Growth &amp; pipeline
-• Work-life balance
-
-Takes 2 mins. What's your score? 🧵</div>
-        <button class="btn btn-copy" onclick="copyText('t1-1')">📋 Copy</button>
-      </div>
-    </div>
-
-    <div class="tweet-block">
-      <div class="tweet-label">Tweet 2 / 3</div>
-      <div class="tweet-row">
-        <div class="tweet-text" id="t1-2">Most freelancers I know score between 40-65.
-
-The biggest weak spots are usually:
-1) No lead pipeline
-2) Invoicing chaos
-3) No written contracts
-
-That's 3 things you can fix this week.</div>
-        <button class="btn btn-copy" onclick="copyText('t1-2')">📋 Copy</button>
-      </div>
-    </div>
-
-    <div class="tweet-block">
-      <div class="tweet-label">Tweet 3 / 3</div>
-      <div class="tweet-row">
-        <div class="tweet-text" id="t1-3">The quiz also shows your weakest category so you know exactly where to improve.
-
-Built it because I kept seeing the same problems over and over.
-
-Try it here: https://baphometsblade.github.io/freelanceos-storefront/freelance-health-score.html</div>
-        <button class="btn btn-copy" onclick="copyText('t1-3')">📋 Copy</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Thread 2 -->
-  <div class="thread-group">
-    <div class="thread-group-title">Thread 2 — Free Notion Template</div>
-
-    <div class="tweet-block">
-      <div class="tweet-label">Tweet 1 / 3</div>
-      <div class="tweet-row">
-        <div class="tweet-text" id="t2-1">I built a free Notion Client Tracker for freelancers.
-
-Track clients, projects, follow-ups, and communication — all in one place.
-
-Works with Notion's free plan. Grab it here 🧵</div>
-        <button class="btn btn-copy" onclick="copyText('t2-1')">📋 Copy</button>
-      </div>
-    </div>
-
-    <div class="tweet-block">
-      <div class="tweet-label">Tweet 2 / 3</div>
-      <div class="tweet-row">
-        <div class="tweet-text" id="t2-2">What's in it:
-
-• Client database (Active / Proposal / On Hold)
-• Project linking — see every project per client
-• Follow-up reminders built in
-• Notes &amp; comms log per client
-• Filter views for "needs follow-up"
-
-It replaced a messy spreadsheet I'd been dragging around for 2 years.</div>
-        <button class="btn btn-copy" onclick="copyText('t2-2')">📋 Copy</button>
-      </div>
-    </div>
-
-    <div class="tweet-block">
-      <div class="tweet-label">Tweet 3 / 3</div>
-      <div class="tweet-row">
-        <div class="tweet-text" id="t2-3">Free download (enter email, I'll send the link):
-https://baphometsblade.github.io/freelanceos-storefront/free-download.html
-
-No Notion paid plan needed. If you want the full system with invoicing, time tracking, and project management — I built that too.</div>
-        <button class="btn btn-copy" onclick="copyText('t2-3')">📋 Copy</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Thread 3 -->
-  <div class="thread-group">
-    <div class="thread-group-title">Thread 3 — FreelanceOS Story (Soft Promo)</div>
-
-    <div class="tweet-block">
-      <div class="tweet-label">Tweet 1 / 3</div>
-      <div class="tweet-row">
-        <div class="tweet-text" id="t3-1">I built a complete Notion workspace for freelancers while freelancing full-time.
-
-It started as my personal system. Then I shared it with a few people. They kept asking for it.
-
-So I packaged it up. 🧵</div>
-        <button class="btn btn-copy" onclick="copyText('t3-1')">📋 Copy</button>
-      </div>
-    </div>
-
-    <div class="tweet-block">
-      <div class="tweet-label">Tweet 2 / 3</div>
-      <div class="tweet-row">
-        <div class="tweet-text" id="t3-2">FreelanceOS Pro includes:
-
-📋 Client CRM
-💸 Invoice tracker
-📊 Project manager (Kanban)
-⏱ Time log
-🎯 Weekly review template
-🏆 Goal tracker
-📬 Lead pipeline
-... and 8 more templates
-
-One Notion workspace. One-time $29.</div>
-        <button class="btn btn-copy" onclick="copyText('t3-2')">📋 Copy</button>
-      </div>
-    </div>
-
-    <div class="tweet-block">
-      <div class="tweet-label">Tweet 3 / 3</div>
-      <div class="tweet-row">
-        <div class="tweet-text" id="t3-3">If you freelance and live in spreadsheet chaos — this is for you.
-
-Full storefront: https://baphometsblade.github.io/freelanceos-storefront/
-
-Or start with the free Health Score quiz to see where your business actually stands: https://baphometsblade.github.io/freelanceos-storefront/freelance-health-score.html</div>
-        <button class="btn btn-copy" onclick="copyText('t3-3')">📋 Copy</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════
-     SECTION 4 — GUMROAD LISTING
-     ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-header">
-    <h2>🟡 Gumroad Listing</h2>
-    <span class="section-tag">15-min setup</span>
-  </div>
-
-  <div class="explain-box">
-    Gumroad has marketplace search. People actively look for Notion templates there. Set up your listing in the next 15 minutes — copy each field below directly into Gumroad.
-  </div>
-
-  <div style="margin-bottom: 24px;">
-    <a class="btn btn-open" href="https://app.gumroad.com/" target="_blank" style="font-size:15px; padding:12px 24px;">Open Gumroad → Create a Product</a>
-  </div>
-
-  <div class="field-block">
-    <div class="field-label">Product Name</div>
-    <div class="field-row">
-      <div class="field-text" id="g-name">FreelanceOS Pro — Complete Notion Workspace for Freelancers (15+ Templates)</div>
-      <button class="btn btn-copy" onclick="copyText('g-name')">📋 Copy</button>
-    </div>
-  </div>
-
-  <div class="field-block">
-    <div class="field-label">Short Description (150 chars)</div>
-    <div class="field-row">
-      <div class="field-text" id="g-short">Run your entire freelance business from one Notion workspace. CRM, invoicing, project management, time tracking &amp; more.</div>
-      <button class="btn btn-copy" onclick="copyText('g-short')">📋 Copy</button>
-    </div>
-  </div>
-
-  <div class="field-block">
-    <div class="field-label">Full Description (paste into Gumroad description field)</div>
-    <div class="field-row">
-      <div class="field-text" id="g-desc">FreelanceOS Pro is a complete Notion template system built for freelancers who are tired of scattered tools, forgotten invoices, and client chaos.
-
-WHAT'S INCLUDED:
-
-📋 CLIENT CRM — Track every client relationship in one database. Contact details, project history, follow-up reminders, and communication logs. Never lose a client relationship detail again.
-
-💸 INVOICE &amp; PAYMENT TRACKER — Send invoices faster and track payment status (sent / paid / overdue / cancelled). See at a glance what you're owed and who's late.
-
-📊 PROJECT MANAGER — Kanban board for every active project. Stages, deadlines, deliverables, and client links all in one view.
-
-⏱ TIME LOG — Track billable hours by client and project. See your actual effective hourly rate (it's often lower than you think — this fixes that).
-
-🎯 WEEKLY REVIEW — A 30-minute weekly ritual template to review your wins, plan next week, and keep your business moving forward.
-
-🎨 CONTENT CALENDAR — Plan and track your content across platforms. Repurpose queue built in.
-
-🏆 GOAL TRACKER — OKR-style goal tracking for solopreneurs. Link goals to projects, track progress.
-
-📬 LEAD PIPELINE — Track prospects from first contact to signed contract. Never let a warm lead go cold.
-
-... and 7 more templates including proposal template, contract vault, and business dashboard.
-
-EVERYTHING WORKS WITH FREE NOTION ACCOUNTS.
-
-HOW IT WORKS:
-1. Purchase and receive your download link
-2. Open the Notion template link
-3. Click "Duplicate" to copy to your Notion workspace
-4. Start using immediately — no setup required
-
-PERFECT FOR:
-✓ Freelance designers, developers, writers, and consultants
-✓ Solopreneurs managing 3+ clients
-✓ Freelancers who've outgrown their spreadsheets
-✓ Anyone tired of using 5 different apps
-
-ONE-TIME PAYMENT. Lifetime access. Free updates included.
-
-Questions? Reply to this listing — I respond within 24 hours.</div>
-      <button class="btn btn-copy" onclick="copyText('g-desc')">📋 Copy</button>
-    </div>
-  </div>
-
-  <div class="field-block">
-    <div class="field-label">Tags (paste all into Gumroad tags field)</div>
-    <div class="field-row">
-      <div class="field-text" id="g-tags">notion, notion template, freelance, productivity, business, template, client management, invoice, project management, solopreneur</div>
-      <button class="btn btn-copy" onclick="copyText('g-tags')">📋 Copy</button>
-    </div>
-  </div>
-
-  <div class="field-block">
-    <div class="field-label">Price</div>
-    <div class="field-row">
-      <div class="field-text" id="g-price">$29</div>
-      <button class="btn btn-copy" onclick="copyText('g-price')">📋 Copy</button>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════
-     SECTION 4B — VIRAL TOOLS REDDIT POSTS
-     ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-header">
-    <h2>🔥 NEW: Promote Your Free Tools on Reddit</h2>
-    <span class="section-tag">3 Posts Ready</span>
-  </div>
-
-  <div class="explain-box">
-    You now have two new free tools live: the <strong>Invoice Generator</strong> and the <strong>Client Onboarding Checklist</strong>. These are genuinely useful, not promotional — Reddit loves "I built a free tool" posts. Post all 3 within 24 hours for maximum coverage.
-  </div>
-
-  <!-- POST 1 -->
-  <div class="post-card">
-    <div class="post-card-header">
-      <div class="post-card-title">Post 1 — r/freelance (Invoice Generator)</div>
-      <div class="post-actions">
-        <button class="btn btn-copy" onclick="copyText('viral-post-1')">📋 Copy Post</button>
-        <a class="btn btn-open" href="https://www.reddit.com/r/freelance/submit" target="_blank">Open r/freelance →</a>
-      </div>
-    </div>
-    <div id="viral-post-1">
-<pre><strong>Title:</strong> Built a free freelance invoice generator — generates printable PDF invoices in 30 seconds (no signup)
-
-<strong>Body:</strong>
-Hey r/freelance,
-
-I built a free invoice generator for freelancers. Fill in your details + line items, get a formatted invoice you can print or save as PDF. No email required, no watermarks, completely free.
-
-Link: https://baphometsblade.github.io/freelanceos-storefront/freelance-invoice-builder.html
-
-Would love feedback!</pre>
-    </div>
-  </div>
-
-  <!-- POST 2 -->
-  <div class="post-card">
-    <div class="post-card-header">
-      <div class="post-card-title">Post 2 — r/freelance (Onboarding Checklist)</div>
-      <div class="post-actions">
-        <button class="btn btn-copy" onclick="copyText('viral-post-2')">📋 Copy Post</button>
-        <a class="btn btn-open" href="https://www.reddit.com/r/freelance/submit" target="_blank">Open r/freelance →</a>
-      </div>
-    </div>
-    <div id="viral-post-2">
-<pre><strong>Title:</strong> Free 30-step client onboarding checklist — interactive, saves your progress, printable
-
-<strong>Body:</strong>
-Tired of forgetting steps when onboarding new clients? I built a free interactive checklist with 6 phases (pre-contract → contract → kickoff → brief → delivery → ongoing). It saves your progress in the browser and you can print it as a PDF.
-
-Link: https://baphometsblade.github.io/freelanceos-storefront/client-onboarding-checklist.html</pre>
-    </div>
-  </div>
-
-  <!-- POST 3 -->
-  <div class="post-card">
-    <div class="post-card-header">
-      <div class="post-card-title">Post 3 — r/Notion (Free Template)</div>
-      <div class="post-actions">
-        <button class="btn btn-copy" onclick="copyText('viral-post-3')">📋 Copy Post</button>
-        <a class="btn btn-open" href="https://www.reddit.com/r/Notion/submit" target="_blank">Open r/Notion →</a>
-      </div>
-    </div>
-    <div id="viral-post-3">
-<pre><strong>Title:</strong> Made a free Notion template for freelance client management — CRM + projects + invoices in one system
-
-<strong>Body:</strong>
-I made FreelanceOS Lite — a free Notion template that gives freelancers a complete client management system. It includes a client CRM (14 properties), project tracker, invoice log, and time tracker. The Pro version ($29) has even more.
-
-Grab it free here: https://baphometsblade.github.io/freelanceos-storefront/free-download.html</pre>
-    </div>
-  </div>
-
-</div>
-
-<!-- ════════════════════════════════════════
-     SECTION 5 — CHECKLIST
-     ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-header">
-    <h2>📋 Today's Launch Checklist</h2>
-    <span class="section-tag">Track Progress</span>
-  </div>
-
-  <div class="progress-bar-wrap">
-    <div class="progress-label"><span id="progress-count">0 / 10</span> launch actions complete</div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
-    </div>
-  </div>
-
-  <ul class="checklist" id="checklist">
-    <li onclick="toggleCheck(0)"><input type="checkbox" id="chk-0" onchange="toggleCheck(0)" onclick="event.stopPropagation()" /> Posted Health Score to r/freelance</li>
-    <li onclick="toggleCheck(1)"><input type="checkbox" id="chk-1" onchange="toggleCheck(1)" onclick="event.stopPropagation()" /> Posted Health Score to r/digitalnomad</li>
-    <li onclick="toggleCheck(2)"><input type="checkbox" id="chk-2" onchange="toggleCheck(2)" onclick="event.stopPropagation()" /> Posted free template to r/Notion</li>
-    <li onclick="toggleCheck(3)"><input type="checkbox" id="chk-3" onchange="toggleCheck(3)" onclick="event.stopPropagation()" /> Posted Twitter thread 1 (Health Score)</li>
-    <li onclick="toggleCheck(4)"><input type="checkbox" id="chk-4" onchange="toggleCheck(4)" onclick="event.stopPropagation()" /> Created Gumroad listing</li>
-    <li onclick="toggleCheck(5)"><input type="checkbox" id="chk-5" onchange="toggleCheck(5)" onclick="event.stopPropagation()" /> Submitted to notionpages.com</li>
-    <li onclick="toggleCheck(6)"><input type="checkbox" id="chk-6" onchange="toggleCheck(6)" onclick="event.stopPropagation()" /> Submitted to notioneverything.com</li>
-    <li onclick="toggleCheck(7)"><input type="checkbox" id="chk-7" onchange="toggleCheck(7)" onclick="event.stopPropagation()" /> Posted on IndieHackers</li>
-    <li onclick="toggleCheck(8)"><input type="checkbox" id="chk-8" onchange="toggleCheck(8)" onclick="event.stopPropagation()" /> Posted on LinkedIn</li>
-    <li onclick="toggleCheck(9)"><input type="checkbox" id="chk-9" onchange="toggleCheck(9)" onclick="event.stopPropagation()" /> Sent to 5 freelancer friends</li>
-  </ul>
-</div>
-
-<!-- ════════════════════════════════════════
-     SECTION 6 — QUICK LINKS
-     ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-header">
-    <h2>🔗 Quick Links</h2>
-  </div>
-  <div class="links-grid">
-    <a href="https://baphometsblade.github.io/freelanceos-storefront/" target="_blank">🏠 Homepage</a>
-    <a href="https://baphometsblade.github.io/freelanceos-storefront/freelance-health-score.html" target="_blank">🏥 Health Score Tool</a>
-    <a href="https://baphometsblade.github.io/freelanceos-storefront/free-download.html" target="_blank">📥 Free Download</a>
-    <a href="https://baphometsblade.github.io/freelanceos-storefront/pricing.html" target="_blank">💰 Pricing</a>
-    <a href="https://baphometsblade.github.io/freelanceos-storefront/deal.html" target="_blank">⚡ Deal Page</a>
-    <a href="https://baphometsblade.github.io/freelanceos-storefront/gallery.html" target="_blank">🖼 Gallery</a>
-    <a href="https://baphometsblade.github.io/freelanceos-storefront/checkout/freelanceos-pro.html" target="_blank">🛒 Pro Checkout</a>
-    <a href="POST-TODAY.html">📋 POST-TODAY (this page)</a>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  Built by FreelanceOS &middot; workspace page &middot; not public-facing
-</footer>
 
 <script>
-  // ─── COPY BUTTONS ───────────────────────────────────────────
-  function copyText(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const text = el.innerText || el.textContent;
-    try {
-      navigator.clipboard.writeText(text).then(function() {
-        flashCopyBtn(event.currentTarget);
-      }).catch(function() {
-        fallbackCopy(text, event.currentTarget);
-      });
-    } catch(e) {
-      fallbackCopy(text, event.currentTarget);
-    }
+  // DATE
+  const d = new Date();
+  const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('today-date').textContent =
+    days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+
+  // PROGRESS TRACKER
+  const TOTAL_ACTIONS = 14;
+  function updateProgress() {
+    const checked = document.querySelectorAll('.done-check:checked').length;
+    const pct = Math.round((checked / TOTAL_ACTIONS) * 100);
+    document.getElementById('prog-count').textContent = checked + ' / ' + TOTAL_ACTIONS + ' actions done';
+    document.getElementById('prog-bar').style.width = pct + '%';
   }
 
-  // We need to capture the button reference properly
-  document.querySelectorAll('.btn-copy').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('onclick');
-      // handled inline, just need flashCopyBtn
+  function markDone(cardId, cb) {
+    const card = document.getElementById(cardId);
+    if (cb.checked) card.classList.add('done');
+    else            card.classList.remove('done');
+    updateProgress();
+    saveDone();
+  }
+
+  // PERSIST CHECKBOXES
+  function saveDone() {
+    const state = {};
+    document.querySelectorAll('.done-check').forEach(cb => { state[cb.id] = cb.checked; });
+    localStorage.setItem('mission_done_' + getTodayKey(), JSON.stringify(state));
+  }
+  function loadDone() {
+    const saved = localStorage.getItem('mission_done_' + getTodayKey());
+    if (!saved) return;
+    const state = JSON.parse(saved);
+    Object.entries(state).forEach(([id, checked]) => {
+      const cb = document.getElementById(id);
+      if (cb) {
+        cb.checked = checked;
+        if (checked) {
+          const card = cb.closest('.platform-card');
+          if (card) card.classList.add('done');
+        }
+      }
     });
-  });
-
-  function flashCopyBtn(btn) {
-    if (!btn) return;
-    const original = btn.innerHTML;
-    btn.innerHTML = '✅ Copied!';
-    btn.style.background = '#065f46';
-    setTimeout(function() {
-      btn.innerHTML = original;
-      btn.style.background = '';
-    }, 2000);
+    updateProgress();
+  }
+  function getTodayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
   }
 
-  // Override copyText to properly capture button
-  function copyText(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const text = el.innerText || el.textContent;
-
-    // Find the button that triggered this — use event delegation
-    const btn = window._lastCopyBtn;
-
-    try {
-      navigator.clipboard.writeText(text).then(function() {
-        flashCopyBtn(btn);
-      }).catch(function() {
-        fallbackCopy(text, btn);
-      });
-    } catch(e) {
-      fallbackCopy(text, btn);
-    }
+  // COPY FUNCTION
+  function copyEl(id, btn) {
+    const el   = document.getElementById(id);
+    const text = el.textContent.trim();
+    const done = () => {
+      const prev = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = prev; btn.classList.remove('copied'); }, 2200);
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(done).catch(() => fallback(text, done));
+    } else { fallback(text, done); }
   }
-
-  function fallbackCopy(text, btn) {
+  function fallback(text, cb) {
     const ta = document.createElement('textarea');
     ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.focus();
-    ta.select();
-    try { document.execCommand('copy'); } catch(e) {}
-    document.body.removeChild(ta);
-    flashCopyBtn(btn);
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); cb();
   }
 
-  // Attach proper click handlers to all copy buttons
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('[onclick^="copyText"]').forEach(function(btn) {
-      const orig = btn.getAttribute('onclick');
-      btn.removeAttribute('onclick');
-      btn.addEventListener('click', function(e) {
-        window._lastCopyBtn = this;
-        const match = orig.match(/copyText\('([^']+)'\)/);
-        if (match) copyText(match[1]);
-      });
-    });
-    loadAllStates();
-  });
+  // TIKTOK HOOKS (random daily pick)
+  const HOOKS = [
+    "POV: you're a freelancer who just discovered your minimum hourly rate is 40% higher than what you charge 🤯",
+    "Things freelancers lose money on every week (and how to fix all of them for free)",
+    "I built 12 free tools for freelancers. Here's the one that changed everything 👇",
+    "What a $10k/month freelancer's Notion setup actually looks like",
+    "The 3-minute invoice trick that gets me paid 2 weeks faster",
+    "Why freelancers undercharge (it's not what you think)",
+    "Free tools that make you look like a $10k/month freelancer on day one",
+    "Freelance business health check: what's YOUR score? Link in bio",
+    "Stop doing this in your freelance proposals (it's costing you clients)",
+    "I tracked every hour I worked for 30 days. Here's what I found 📊"
+  ];
+  const hookIdx = Math.floor(Math.random() * HOOKS.length);
+  document.getElementById('tiktok-hook').textContent = HOOKS[hookIdx];
 
-  // ─── PRIORITY CHECKBOXES ────────────────────────────────────
-  function savePriority(i) {
-    const cb = document.getElementById('pc-' + i);
-    localStorage.setItem('postTodayPrio_' + i, cb.checked ? '1' : '0');
-    updatePrioLabel(i, cb.checked);
-  }
+  // EMAIL TIPS (rotate by day of week)
+  const EMAIL_TIPS = [
+    "Monday: Add the free tools page link to your Reddit bio — 3 free clicks per day from context alone.",
+    "Tuesday: Ask 3 past clients to forward your newsletter to one person who freelances.",
+    "Wednesday: Create a Pinterest pin linking to your Beehiiv subscribe page — long-tail evergreen traffic.",
+    "Thursday: Post a 'behind the scenes' story on Instagram/LinkedIn about building FreelanceOS.",
+    "Friday: Update your email footer with the latest tool you launched — drives discovery.",
+    "Saturday: Write and schedule Monday's broadcast now — consistency is the compound interest of email.",
+    "Sunday: Review last week's open rate. Subject lines with numbers outperform generic ones 2:1."
+  ];
+  document.getElementById('email-tip').textContent = EMAIL_TIPS[d.getDay()];
 
-  function updatePrioLabel(i, checked) {
-    const lbl = document.getElementById('pc-label-' + i);
-    if (lbl) {
-      if (checked) lbl.classList.add('done');
-      else lbl.classList.remove('done');
-    }
-  }
-
-  // ─── MAIN CHECKLIST ─────────────────────────────────────────
-  function toggleCheck(i) {
-    const cb = document.getElementById('chk-' + i);
-    const li = cb.closest('li');
-    cb.checked = !cb.checked;
-    if (cb.checked) li.classList.add('done');
-    else li.classList.remove('done');
-    localStorage.setItem('postToday2_' + i, cb.checked ? '1' : '0');
-    updateProgress();
-  }
-
-  function updateProgress() {
-    let count = 0;
-    for (let i = 0; i < 10; i++) {
-      if (document.getElementById('chk-' + i) && document.getElementById('chk-' + i).checked) count++;
-    }
-    document.getElementById('progress-count').textContent = count + ' / 10';
-    document.getElementById('progress-fill').style.width = (count / 10 * 100) + '%';
-  }
-
-  // ─── LOAD SAVED STATES ──────────────────────────────────────
-  function loadAllStates() {
-    // Priority checkboxes
-    for (let i = 0; i < 3; i++) {
-      const val = localStorage.getItem('postTodayPrio_' + i);
-      if (val === '1') {
-        const cb = document.getElementById('pc-' + i);
-        if (cb) { cb.checked = true; updatePrioLabel(i, true); }
-      }
-    }
-    // Main checklist
-    for (let i = 0; i < 10; i++) {
-      const val = localStorage.getItem('postToday2_' + i);
-      const cb = document.getElementById('chk-' + i);
-      if (val === '1' && cb) {
-        cb.checked = true;
-        const li = cb.closest('li');
-        if (li) li.classList.add('done');
-      }
-    }
-    updateProgress();
-  }
+  // INIT
+  loadDone();
 </script>
-
 </body>
 </html>

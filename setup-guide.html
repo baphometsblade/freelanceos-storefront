@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreelanceOS Setup Guide — Detailed Walkthrough for All Products</title>
+  <meta name="description" content="Step-by-step setup guide for all FreelanceOS products. Learn how to customize your Notion workspace, set up databases, and get the most out of your templates.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FreelanceOS Setup Guide — Detailed Walkthrough for All Products">
+  <meta property="og:description" content="Step-by-step setup guide for all FreelanceOS products. Learn how to customize your Notion workspace, set up databases, and get the most out of your templates.">
+  <meta property="og:url" content="https://freelanceos-storefront.vercel.app/setup-guide.html">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E2%9A%A1</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:          #0f0f0f;
+      --bg-card:     rgba(255,255,255,0.04);
+      --bg-card-2:   rgba(255,255,255,0.025);
+      --border:      rgba(255,255,255,0.08);
+      --border-soft: rgba(255,255,255,0.05);
+      --purple:      #7c3aed;
+      --purple-light:#a78bfa;
+      --cyan:        #06b6d4;
+      --green:       #10b981;
+      --orange:      #f59e0b;
+      --pink:        #ec4899;
+      --grad:        linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+      --txt1:        #f8fafc;
+      --txt2:        #cbd5e1;
+      --txt3:        #94a3b8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--txt1);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Top nav ── */
+    .topnav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,15,15,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 56px;
+    }
+    .topnav-logo {
+      font-size: .9rem; font-weight: 900; letter-spacing: -.01em;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: none;
+    }
+    .topnav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .topnav-links a {
+      font-size: .82rem; color: var(--txt3); text-decoration: none; font-weight: 500;
+      transition: color .15s;
+    }
+    .topnav-links a:hover { color: var(--txt1); }
+    .topnav-links .btn-small {
+      background: var(--grad); color: #fff;
+      padding: .35rem .875rem; border-radius: 2rem;
+      font-size: .78rem; font-weight: 700;
+      -webkit-text-fill-color: #fff;
+    }
+
+    /* ── Page hero ── */
+    .page-hero {
+      background: linear-gradient(180deg, #0d0d1a 0%, #0f0f0f 100%);
+      padding: 3.5rem 1.5rem 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero-inner { max-width: 680px; margin: 0 auto; }
+    .page-hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900; letter-spacing: -.02em;
+      line-height: 1.12; margin-bottom: .75rem;
+    }
+    .page-hero h1 span {
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-hero p {
+      font-size: .95rem; color: var(--txt2); line-height: 1.6;
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: .4rem;
+      justify-content: center;
+      font-size: .75rem; color: var(--txt3);
+      margin-bottom: 1.25rem;
+    }
+    .breadcrumb a { color: var(--txt3); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--txt1); }
+    .breadcrumb span { opacity: .4; }
+
+    /* ── Layout: sidebar + content ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      max-width: 1140px;
+      margin: 0 auto;
+      min-height: calc(100vh - 56px);
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      padding: 2rem 1.25rem;
+      position: sticky; top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+    }
+    .sidebar-label {
+      font-size: .68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--txt3);
+      padding: 0 .5rem; margin-bottom: .5rem;
+    }
+    .sidebar-nav { display: flex; flex-direction: column; gap: .15rem; margin-bottom: 1.75rem; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .82rem; font-weight: 500; color: var(--txt3);
+      text-decoration: none;
+      padding: .5rem .65rem; border-radius: .5rem;
+      transition: background .12s, color .12s;
+    }
+    .sidebar-link:hover { background: rgba(255,255,255,0.05); color: var(--txt1); }
+    .sidebar-link.active { background: rgba(124,58,237,0.12); color: var(--purple-light); font-weight: 700; }
+    .sidebar-link .sl-icon { font-size: 1rem; flex-shrink: 0; }
+
+    .sidebar-sub { display: flex; flex-direction: column; gap: .1rem; padding-left: 1.5rem; margin-top: .1rem; margin-bottom: .25rem; }
+    .sidebar-sub a {
+      font-size: .76rem; color: var(--txt3);
+      text-decoration: none; padding: .3rem .5rem; border-radius: .4rem;
+      transition: color .12s;
+    }
+    .sidebar-sub a:hover { color: var(--txt1); }
+
+    /* ── Mobile product nav ── */
+    .mobile-product-nav {
+      display: none;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      gap: .4rem; flex-wrap: wrap;
+    }
+    .mpn-btn {
+      font-size: .78rem; font-weight: 700;
+      padding: .4rem .875rem; border-radius: 2rem;
+      border: 1.5px solid var(--border);
+      background: transparent; color: var(--txt3);
+      cursor: pointer; text-decoration: none;
+      transition: all .15s;
+    }
+    .mpn-btn:hover { border-color: var(--purple); color: var(--txt2); }
+    .mpn-btn.active { background: var(--grad); border-color: transparent; color: #fff; }
+
+    /* ── Content area ── */
+    .content {
+      padding: 2.5rem 2.5rem 5rem;
+      max-width: 800px;
+    }
+
+    /* ── Product sections ── */
+    .product-section {
+      margin-bottom: 4.5rem;
+      scroll-margin-top: 80px;
+    }
+    .product-section:last-child { margin-bottom: 0; }
+
+    .product-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .product-icon-lg {
+      width: 52px; height: 52px; border-radius: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; flex-shrink: 0;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.2);
+    }
+    .product-header h2 {
+      font-size: 1.5rem; font-weight: 900; letter-spacing: -.01em; margin-bottom: .2rem;
+    }
+    .product-header p { font-size: .85rem; color: var(--txt3); }
+
+    /* ── Sub-sections ── */
+    .subsection {
+      margin-bottom: 2.25rem;
+    }
+    .subsection-title {
+      font-size: .7rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--purple-light);
+      margin-bottom: .875rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .subsection-title::after {
+      content: ''; flex: 1; height: 1px; background: rgba(167,139,250,0.2);
+    }
+
+    h3.sub-h3 {
+      font-size: .95rem; font-weight: 700;
+      margin-bottom: .65rem; margin-top: 1.25rem; color: var(--txt1);
+    }
+    h3.sub-h3:first-child { margin-top: 0; }
+
+    p.body-text {
+      font-size: .875rem; color: var(--txt2); line-height: 1.65;
+      margin-bottom: .75rem;
+    }
+
+    /* ── First 10 Minutes steps ── */
+    .minutes-list { display: flex; flex-direction: column; gap: .65rem; }
+    .minutes-item {
+      display: flex; align-items: flex-start; gap: .875rem;
+      padding: 1rem 1.125rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: .875rem;
+    }
+    .mi-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--grad); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 900; color: #fff; margin-top: .05rem;
+    }
+    .mi-body strong { display: block; font-size: .875rem; font-weight: 700; margin-bottom: .2rem; }
+    .mi-body span { font-size: .8rem; color: var(--txt3); line-height: 1.5; }
+
+    /* ── Database cards ── */
+    .db-grid { display: flex; flex-direction: column; gap: .875rem; }
+    .db-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.25rem 1.375rem;
+    }
+    .db-card-header {
+      display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem;
+    }
+    .db-tag {
+      font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.2);
+      color: var(--purple-light);
+      padding: .2rem .6rem; border-radius: .35rem;
+    }
+    .db-name { font-size: .95rem; font-weight: 800; }
+    .db-desc { font-size: .82rem; color: var(--txt2); margin-bottom: .6rem; line-height: 1.55; }
+    .db-props {
+      display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .65rem;
+    }
+    .prop-tag {
+      font-size: .7rem; font-weight: 600;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-soft);
+      color: var(--txt3); padding: .18rem .55rem; border-radius: .3rem;
+    }
+    .db-connection {
+      font-size: .78rem; color: var(--txt3); margin-bottom: .4rem;
+    }
+    .db-connection strong { color: var(--cyan); }
+    .db-protip {
+      display: flex; align-items: flex-start; gap: .5rem;
+      font-size: .78rem; color: var(--txt3);
+      background: rgba(245,158,11,0.06);
+      border: 1px solid rgba(245,158,11,0.15);
+      border-radius: .5rem; padding: .5rem .75rem;
+      line-height: 1.5;
+    }
+
+    /* ── Tips list ── */
+    .tips-list { display: flex; flex-direction: column; gap: .55rem; }
+    .tips-item {
+      display: flex; align-items: flex-start; gap: .75rem;
+      font-size: .875rem; color: var(--txt2); line-height: 1.55;
+    }
+    .tips-item::before {
+      content: '→';
+      color: var(--purple-light);
+      font-weight: 700; flex-shrink: 0; margin-top: .05rem;
+    }
+
+    /* ── Checklist ── */
+    .check-list { display: flex; flex-direction: column; gap: .5rem; }
+    .check-row {
+      display: flex; align-items: flex-start; gap: .75rem;
+      font-size: .875rem; color: var(--txt2); line-height: 1.5;
+    }
+    .check-box {
+      width: 18px; height: 18px; border-radius: .35rem; flex-shrink: 0;
+      border: 1.5px solid rgba(16,185,129,0.3);
+      background: rgba(16,185,129,0.05);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .6rem; color: var(--green); margin-top: .1rem;
+    }
+
+    /* ── Advanced features ── */
+    .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .875rem; }
+    @media (max-width: 600px) { .adv-grid { grid-template-columns: 1fr; } }
+    .adv-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: .875rem; padding: 1rem 1.125rem;
+    }
+    .adv-card h4 {
+      font-size: .85rem; font-weight: 800; margin-bottom: .35rem;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .adv-card p { font-size: .78rem; color: var(--txt3); line-height: 1.5; }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: .8rem; color: var(--txt3); text-decoration: none;
+      margin-bottom: 2rem; transition: color .15s;
+    }
+    .back-link:hover { color: var(--txt1); }
+
+    /* ── Section divider ── */
+    .section-divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Inline code ── */
+    code {
+      font-size: .8rem; font-family: 'SF Mono', 'Fira Code', monospace;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border-soft);
+      padding: .1rem .4rem; border-radius: .3rem; color: var(--purple-light);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .mobile-product-nav { display: flex; }
+      .content { padding: 1.75rem 1.25rem 4rem; }
+      .topnav { padding: 0 1rem; }
+      .topnav-links .hide-mobile { display: none; }
+      .adv-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top nav -->
+<nav class="topnav">
+  <a href="/" class="topnav-logo">FreelanceOS ⚡</a>
+  <div class="topnav-links">
+    <a href="/getting-started.html" class="hide-mobile">Getting Started</a>
+    <a href="/faq.html" class="hide-mobile">FAQ</a>
+    <a href="mailto:hello@freelanceos.com" class="btn-small">Support</a>
+  </div>
+</nav>
+
+<!-- Page hero -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/getting-started.html">Getting Started</a>
+      <span>›</span>
+      <span>Setup Guide</span>
+    </div>
+    <h1>FreelanceOS <span>Setup Guide</span></h1>
+    <p>Detailed walkthrough for all products — databases explained, customization tips, advanced features, and monthly maintenance checklists.</p>
+  </div>
+</div>
+
+<!-- Mobile product nav -->
+<div class="mobile-product-nav">
+  <a href="#freelanceos-pro" class="mpn-btn">💼 FreelanceOS Pro</a>
+  <a href="#creatorhq" class="mpn-btn">🎬 CreatorHQ</a>
+  <a href="#agencyos" class="mpn-btn">🏢 AgencyOS</a>
+  <a href="#youtube-empire" class="mpn-btn">📺 YouTube Empire</a>
+</div>
+
+<!-- Layout: sidebar + content -->
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Products</div>
+    <nav class="sidebar-nav">
+      <a href="#freelanceos-pro" class="sidebar-link active">
+        <span class="sl-icon">💼</span> FreelanceOS Pro
+      </a>
+      <div class="sidebar-sub">
+        <a href="#fos-first10">First 10 Minutes</a>
+        <a href="#fos-databases">Core Databases</a>
+        <a href="#fos-customize">Customization</a>
+        <a href="#fos-advanced">Advanced</a>
+        <a href="#fos-monthly">Monthly Checklist</a>
+      </div>
+
+      <a href="#creatorhq" class="sidebar-link">
+        <span class="sl-icon">🎬</span> CreatorHQ
+      </a>
+      <div class="sidebar-sub">
+        <a href="#chq-first10">First 10 Minutes</a>
+        <a href="#chq-databases">Core Databases</a>
+        <a href="#chq-customize">Customization</a>
+        <a href="#chq-advanced">Advanced</a>
+        <a href="#chq-monthly">Monthly Checklist</a>
+      </div>
+
+      <a href="#agencyos" class="sidebar-link">
+        <span class="sl-icon">🏢</span> AgencyOS
+      </a>
+      <div class="sidebar-sub">
+        <a href="#aos-first10">First 10 Minutes</a>
+        <a href="#aos-databases">Core Databases</a>
+        <a href="#aos-customize">Customization</a>
+        <a href="#aos-advanced">Advanced</a>
+        <a href="#aos-monthly">Monthly Checklist</a>
+      </div>
+
+      <a href="#youtube-empire" class="sidebar-link">
+        <span class="sl-icon">📺</span> YouTube Empire
+      </a>
+      <div class="sidebar-sub">
+        <a href="#yt-first10">First 10 Minutes</a>
+        <a href="#yt-databases">Core Databases</a>
+        <a href="#yt-customize">Customization</a>
+        <a href="#yt-advanced">Advanced</a>
+        <a href="#yt-monthly">Monthly Checklist</a>
+      </div>
+    </nav>
+
+    <div class="sidebar-label">Help</div>
+    <nav class="sidebar-nav">
+      <a href="/getting-started.html" class="sidebar-link">
+        <span class="sl-icon">🚀</span> Getting Started
+      </a>
+      <a href="/faq.html" class="sidebar-link">
+        <span class="sl-icon">📚</span> FAQ
+      </a>
+      <a href="mailto:hello@freelanceos.com" class="sidebar-link">
+        <span class="sl-icon">💬</span> Email Support
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Content -->
+  <main class="content">
+    <a href="/getting-started.html" class="back-link">← Back to Getting Started</a>
+
+    <!-- ════════════════════════════════════════════
+         FREELANCEOS PRO
+    ════════════════════════════════════════════ -->
+    <section class="product-section" id="freelanceos-pro">
+      <div class="product-header">
+        <div class="product-icon-lg">💼</div>
+        <div>
+          <h2>FreelanceOS Pro</h2>
+          <p>The all-in-one Notion business OS for freelancers</p>
+        </div>
+      </div>
+
+      <!-- First 10 Minutes -->
+      <div class="subsection" id="fos-first10">
+        <div class="subsection-title">A. First 10 Minutes</div>
+        <p class="body-text">After duplicating the template, do these 3 things before anything else:</p>
+        <div class="minutes-list">
+          <div class="minutes-item">
+            <div class="mi-num">1</div>
+            <div class="mi-body">
+              <strong>Rename the workspace to your business name</strong>
+              <span>Click the page title at the top and replace "FreelanceOS Pro" with your business name. This personalizes the dashboard and all linked views.</span>
+            </div>
+          </div>
+          <div class="minutes-item">
+            <div class="mi-num">2</div>
+            <div class="mi-body">
+              <strong>Add your first real client</strong>
+              <span>Open the Client CRM, click "New," and fill in a real client's name, email, status, and project type. Real data makes the system click immediately.</span>
+            </div>
+          </div>
+          <div class="minutes-item">
+            <div class="mi-num">3</div>
+            <div class="mi-body">
+              <strong>Set your preferences in the Rate Calculator</strong>
+              <span>Enter your hourly rate, monthly expenses, and income goal. The Rate Calculator auto-calculates your minimum viable rate — this is the most eye-opening feature in the whole system.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Databases -->
+      <div class="subsection" id="fos-databases">
+        <div class="subsection-title">B. Core Databases Explained</div>
+        <div class="db-grid">
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Client CRM</div>
+            </div>
+            <p class="db-desc">Your central contact list — every client, past, present, and potential, lives here.</p>
+            <div class="db-props">
+              <span class="prop-tag">Name</span><span class="prop-tag">Email</span><span class="prop-tag">Status</span>
+              <span class="prop-tag">Project Type</span><span class="prop-tag">Rate</span><span class="prop-tag">Notes</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Project Tracker (one client → many projects), Invoice Log (one client → many invoices)</p>
+            <div class="db-protip">💡 <span>Set Status to Active/Lead/Past so you can filter your pipeline at a glance. Add every email address — you'll thank yourself at invoice time.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Project Tracker</div>
+            </div>
+            <p class="db-desc">Track every project from proposal to completion — deadlines, budgets, and progress in one view.</p>
+            <div class="db-props">
+              <span class="prop-tag">Client</span><span class="prop-tag">Status</span><span class="prop-tag">Deadline</span>
+              <span class="prop-tag">Budget</span><span class="prop-tag">Type</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Client CRM (relation), Invoice Log (relation)</p>
+            <div class="db-protip">💡 <span>Create a Board view grouped by Status (Proposal → In Progress → Review → Complete) for a visual kanban pipeline.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Invoice Log</div>
+            </div>
+            <p class="db-desc">Every invoice in one place with automatic overdue tracking and revenue totals.</p>
+            <div class="db-props">
+              <span class="prop-tag">Project</span><span class="prop-tag">Amount</span><span class="prop-tag">Due Date</span>
+              <span class="prop-tag">Paid Date</span><span class="prop-tag">Status</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Project Tracker (relation), Client CRM (via rollup)</p>
+            <div class="db-protip">💡 <span>Add a formula property: <code>dateBetween(now(), prop("Due Date"), "days")</code> to auto-flag invoices that are overdue.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Rate Calculator</div>
+            </div>
+            <p class="db-desc">Enter your expenses and income goal — the calculator tells you the exact hourly rate you need to charge.</p>
+            <div class="db-props">
+              <span class="prop-tag">Your Rates</span><span class="prop-tag">Expenses</span><span class="prop-tag">Income Goal</span>
+            </div>
+            <p class="db-connection"><strong>Auto-calculates:</strong> minimum hourly rate, annual revenue needed, hours needed per week</p>
+            <div class="db-protip">💡 <span>Run this quarterly. Your rates should go up each year as you gain experience — the calculator shows you exactly when you're undercharging.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Onboarding Checklist</div>
+            </div>
+            <p class="db-desc">A reusable template for every new client — ensures a consistent, professional onboarding every time.</p>
+            <div class="db-props">
+              <span class="prop-tag">Task</span><span class="prop-tag">Client</span><span class="prop-tag">Status</span><span class="prop-tag">Due</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Client CRM (per-client checklist), Project Tracker</p>
+            <div class="db-protip">💡 <span>Use the Notion template feature inside this database to create a pre-filled checklist that appears with one click for each new client.</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Customization -->
+      <div class="subsection" id="fos-customize">
+        <div class="subsection-title">C. Customization Tips</div>
+        <div class="tips-list">
+          <div class="tips-item">Add custom properties by clicking "+" next to any property — useful for niche-specific fields like "platform," "content type," or "retainer hours"</div>
+          <div class="tips-item">Rename columns to match your workflow — change "Project Type" to "Service Category" or whatever matches how you think</div>
+          <div class="tips-item">Create views: filter by Client, group by Status, or sort by Deadline — use "Add a View" in each database to build these</div>
+          <div class="tips-item">Use database templates for recurring tasks — click the dropdown arrow on "New" to create templates for common project types</div>
+          <div class="tips-item">Set up recurring tasks by duplicating checklist templates and adjusting the due date — no automation required</div>
+        </div>
+      </div>
+
+      <!-- Advanced -->
+      <div class="subsection" id="fos-advanced">
+        <div class="subsection-title">D. Advanced Features</div>
+        <div class="adv-grid">
+          <div class="adv-card">
+            <h4>🔗 Linked Views</h4>
+            <p>Display a filtered view of your Project Tracker inside a Client CRM page — so each client page shows only their projects. Use "Create linked database" in a page, then filter by the client relation.</p>
+          </div>
+          <div class="adv-card">
+            <h4>📐 Formulas</h4>
+            <p>Auto-calculate totals and overdue days. Common ones: <code>dateBetween(now(), prop("Due Date"), "days")</code> for days until due, and <code>prop("Budget") - prop("Invoiced")</code> for remaining budget.</p>
+          </div>
+          <div class="adv-card">
+            <h4>⚡ Notion Automations</h4>
+            <p>Set up triggers like: when Status changes to "Paid" → set Paid Date to today. Find this in database settings → Automations. No external tools needed.</p>
+          </div>
+          <div class="adv-card">
+            <h4>🌐 Client Sharing</h4>
+            <p>Share a filtered Project Tracker view with clients via a public Notion link. They see only their projects — not your entire workspace. Use "Share" → "Share to web" with view-only access.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Checklist -->
+      <div class="subsection" id="fos-monthly">
+        <div class="subsection-title">E. Monthly Maintenance (5 minutes)</div>
+        <div class="check-list">
+          <div class="check-row"><div class="check-box">✓</div> Archive completed projects by changing Status to "Archived" — keeps the active view clean</div>
+          <div class="check-row"><div class="check-box">✓</div> Update invoice statuses — mark paid invoices, chase overdue ones</div>
+          <div class="check-row"><div class="check-box">✓</div> Review your client pipeline — who needs a follow-up or proposal?</div>
+          <div class="check-row"><div class="check-box">✓</div> Update your rates in the Rate Calculator if anything has changed</div>
+          <div class="check-row"><div class="check-box">✓</div> Export key revenue data to a spreadsheet for quarterly tax review</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════════════════════════════════
+         CREATORHQ
+    ════════════════════════════════════════════ -->
+    <section class="product-section" id="creatorhq">
+      <div class="product-header">
+        <div class="product-icon-lg" style="background:rgba(236,72,153,0.12);border-color:rgba(236,72,153,0.2)">🎬</div>
+        <div>
+          <h2>CreatorHQ</h2>
+          <p>The complete Notion command center for content creators</p>
+        </div>
+      </div>
+
+      <!-- First 10 Minutes -->
+      <div class="subsection" id="chq-first10">
+        <div class="subsection-title">A. First 10 Minutes</div>
+        <div class="minutes-list">
+          <div class="minutes-item">
+            <div class="mi-num">1</div>
+            <div class="mi-body">
+              <strong>Rename the workspace to your creator name or channel</strong>
+              <span>Replace "CreatorHQ" with your handle or channel name. This makes the dashboard feel personal and sets the right context for your content workflow.</span>
+            </div>
+          </div>
+          <div class="minutes-item">
+            <div class="mi-num">2</div>
+            <div class="mi-body">
+              <strong>Add your first 3 content ideas to the Idea Vault</strong>
+              <span>Open the Idea Vault, add the ideas already floating in your head. Set the platform and priority. Real data makes the system feel alive immediately.</span>
+            </div>
+          </div>
+          <div class="minutes-item">
+            <div class="mi-num">3</div>
+            <div class="mi-body">
+              <strong>Set your platform(s) and posting schedule</strong>
+              <span>In the Content Calendar, set up your recurring time slots — Mon/Wed/Fri for YouTube, daily for TikTok, etc. Your currency and timezone can be set in the Analytics Log.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Databases -->
+      <div class="subsection" id="chq-databases">
+        <div class="subsection-title">B. Core Databases Explained</div>
+        <div class="db-grid">
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Content Calendar</div>
+            </div>
+            <p class="db-desc">Your master publishing schedule — every piece of content, every platform, every date.</p>
+            <div class="db-props">
+              <span class="prop-tag">Platform</span><span class="prop-tag">Date</span><span class="prop-tag">Format</span>
+              <span class="prop-tag">Topic</span><span class="prop-tag">Status</span><span class="prop-tag">CTA</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Idea Vault (pull from ideas), Brand Deals CRM (tag sponsored content)</p>
+            <div class="db-protip">💡 <span>Use a Calendar view to see your posting schedule visually. Create a filter for each platform so you can view Instagram vs YouTube separately.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Idea Vault</div>
+            </div>
+            <p class="db-desc">Never lose an idea again — this is your swipe file, inspiration log, and content backlog in one.</p>
+            <div class="db-props">
+              <span class="prop-tag">Platform</span><span class="prop-tag">Type</span><span class="prop-tag">Notes</span>
+              <span class="prop-tag">Status</span><span class="prop-tag">Priority</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Content Calendar (promote ideas to scheduled posts)</p>
+            <div class="db-protip">💡 <span>Set Status to Idea → Developing → Scheduled → Published to track the lifecycle of every idea. Filter by Priority High for your weekly planning session.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Brand Deals CRM</div>
+            </div>
+            <p class="db-desc">Manage every sponsorship from first email to final payment — never lose track of a deal again.</p>
+            <div class="db-props">
+              <span class="prop-tag">Brand</span><span class="prop-tag">Status</span><span class="prop-tag">Rate</span>
+              <span class="prop-tag">Deliverables</span><span class="prop-tag">Deadline</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Content Calendar (tag sponsored posts), Analytics Log (track deal performance)</p>
+            <div class="db-protip">💡 <span>Add a "Rate History" note property to track how your sponsorship rates grow over time — essential for negotiation conversations.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Analytics Log</div>
+            </div>
+            <p class="db-desc">Track your growth numbers week-by-week across every platform — so you always know what's working.</p>
+            <div class="db-props">
+              <span class="prop-tag">Platform</span><span class="prop-tag">Metric</span><span class="prop-tag">Weekly Values</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Content Calendar (correlate posts with growth spikes)</p>
+            <div class="db-protip">💡 <span>Log every Monday. 15 minutes of data entry per week gives you a 52-week growth chart by year-end — invaluable for brand pitch decks.</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Customization -->
+      <div class="subsection" id="chq-customize">
+        <div class="subsection-title">C. Customization Tips</div>
+        <div class="tips-list">
+          <div class="tips-item">Add platform-specific properties to the Content Calendar — e.g., "Thumbnail URL," "Script Link," "Hook Line"</div>
+          <div class="tips-item">Create a Gallery view in the Idea Vault using cover images for visual inspiration boards</div>
+          <div class="tips-item">Build a filtered view of the Content Calendar showing only sponsored posts for brand deal reporting</div>
+          <div class="tips-item">Use database templates for your recurring content formats — e.g., a "YouTube Long-form" template that pre-fills Format, Status, and includes a script outline</div>
+          <div class="tips-item">Add a "Content Pillars" property to tag ideas and posts by theme — lets you track content mix balance over time</div>
+        </div>
+      </div>
+
+      <!-- Advanced -->
+      <div class="subsection" id="chq-advanced">
+        <div class="subsection-title">D. Advanced Features</div>
+        <div class="adv-grid">
+          <div class="adv-card">
+            <h4>🔗 Linked Views</h4>
+            <p>Embed a filtered Content Calendar view inside each Brand Deals page — so each sponsor page shows all content you've created for that brand. Use "Create linked database," then filter by brand relation.</p>
+          </div>
+          <div class="adv-card">
+            <h4>📐 Formulas</h4>
+            <p>Auto-calculate engagement rate: <code>prop("Likes") / prop("Views") * 100</code>. Track days since last post: <code>dateBetween(now(), prop("Published Date"), "days")</code>.</p>
+          </div>
+          <div class="adv-card">
+            <h4>⚡ Notion Automations</h4>
+            <p>When Status changes to "Published" → set Published Date to today, move to "Published" filter view automatically. Find in database settings → Automations.</p>
+          </div>
+          <div class="adv-card">
+            <h4>🌐 Sharing with Brands</h4>
+            <p>Share a filtered Brand Deals view with sponsors as a public Notion link — they can see their deal status and deliverables without seeing your full workspace.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Checklist -->
+      <div class="subsection" id="chq-monthly">
+        <div class="subsection-title">E. Monthly Maintenance (5 minutes)</div>
+        <div class="check-list">
+          <div class="check-row"><div class="check-box">✓</div> Archive published content older than 3 months to keep the calendar clean</div>
+          <div class="check-row"><div class="check-box">✓</div> Update brand deal statuses — mark completed deals, chase outstanding payments</div>
+          <div class="check-row"><div class="check-box">✓</div> Review your idea vault — promote top ideas to the content calendar for next month</div>
+          <div class="check-row"><div class="check-box">✓</div> Log your monthly analytics summary and note any growth spikes</div>
+          <div class="check-row"><div class="check-box">✓</div> Update your sponsorship rates if your audience has grown since last quarter</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════════════════════════════════
+         AGENCYOS
+    ════════════════════════════════════════════ -->
+    <section class="product-section" id="agencyos">
+      <div class="product-header">
+        <div class="product-icon-lg" style="background:rgba(6,182,212,0.12);border-color:rgba(6,182,212,0.2)">🏢</div>
+        <div>
+          <h2>AgencyOS</h2>
+          <p>Notion workspace built for small agencies and freelance teams</p>
+        </div>
+      </div>
+
+      <!-- First 10 Minutes -->
+      <div class="subsection" id="aos-first10">
+        <div class="subsection-title">A. First 10 Minutes</div>
+        <div class="minutes-list">
+          <div class="minutes-item">
+            <div class="mi-num">1</div>
+            <div class="mi-body">
+              <strong>Rename the workspace to your agency name</strong>
+              <span>Replace "AgencyOS" with your agency name. Every team member and client who sees the workspace should see your brand — not a template name.</span>
+            </div>
+          </div>
+          <div class="minutes-item">
+            <div class="mi-num">2</div>
+            <div class="mi-body">
+              <strong>Add your first client to the Client Portal</strong>
+              <span>Create a client entry with their name, status, NDA status, and start date. This is the foundation everything else builds from.</span>
+            </div>
+          </div>
+          <div class="minutes-item">
+            <div class="mi-num">3</div>
+            <div class="mi-body">
+              <strong>Add your team members and set their permissions</strong>
+              <span>Invite team members to the Notion workspace and set page-level sharing so each person sees what they need. Set your timezone and currency in workspace settings.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Databases -->
+      <div class="subsection" id="aos-databases">
+        <div class="subsection-title">B. Core Databases Explained</div>
+        <div class="db-grid">
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Client Portal</div>
+            </div>
+            <p class="db-desc">One record per client — the master view of your entire client roster with NDA, contract, and status tracking.</p>
+            <div class="db-props">
+              <span class="prop-tag">Client Name</span><span class="prop-tag">Status</span><span class="prop-tag">NDA</span>
+              <span class="prop-tag">Start Date</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Team Tasks (filter by client), Project Tracker (one client → many projects), Retainer Tracker</p>
+            <div class="db-protip">💡 <span>Each client record can contain sub-pages for meeting notes, brief documents, and assets — keep everything about a client in one place.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Team Tasks</div>
+            </div>
+            <p class="db-desc">Every task assigned to every team member, linked to clients and projects — your team's single source of truth.</p>
+            <div class="db-props">
+              <span class="prop-tag">Assignee</span><span class="prop-tag">Client</span><span class="prop-tag">Deadline</span><span class="prop-tag">Status</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Client Portal (relation), Project Tracker (relation)</p>
+            <div class="db-protip">💡 <span>Create a personal view filtered to "Assignee = Me" for each team member's daily task list. Group by client for a client-by-client workload view.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Project Tracker</div>
+            </div>
+            <p class="db-desc">Every active and upcoming project — phase, deliverables, and deadline tracked in one view.</p>
+            <div class="db-props">
+              <span class="prop-tag">Client</span><span class="prop-tag">Phase</span><span class="prop-tag">Deliverables</span><span class="prop-tag">Deadline</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Client Portal (relation), Team Tasks (relation)</p>
+            <div class="db-protip">💡 <span>Use a Timeline view to see all project deadlines at once — invaluable for capacity planning and avoiding over-booking.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Retainer Tracker</div>
+            </div>
+            <p class="db-desc">Track monthly retainer clients — hours included, hours used, rollover balance, and renewal date.</p>
+            <div class="db-props">
+              <span class="prop-tag">Client</span><span class="prop-tag">Monthly Rate</span><span class="prop-tag">Hours Included</span><span class="prop-tag">Rollover</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Client Portal (relation), Team Tasks (hours rollup)</p>
+            <div class="db-protip">💡 <span>Add a formula to auto-calculate hours remaining: <code>prop("Hours Included") - prop("Hours Used")</code>. Flag negative values in red with conditional formatting.</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Customization -->
+      <div class="subsection" id="aos-customize">
+        <div class="subsection-title">C. Customization Tips</div>
+        <div class="tips-list">
+          <div class="tips-item">Add a "Service Type" property to Project Tracker to filter by design, development, marketing, etc.</div>
+          <div class="tips-item">Create a client-facing view of the Project Tracker with sensitive columns hidden — share this URL with clients</div>
+          <div class="tips-item">Build a "Weekly Capacity" view in Team Tasks that shows each person's task count and deadline spread</div>
+          <div class="tips-item">Use Notion templates in Team Tasks for common task types — e.g., "New Project Kickoff" creates 8 standard tasks automatically</div>
+          <div class="tips-item">Add a "Profit Margin" formula to Project Tracker: <code>(prop("Revenue") - prop("Cost")) / prop("Revenue") * 100</code></div>
+        </div>
+      </div>
+
+      <!-- Advanced -->
+      <div class="subsection" id="aos-advanced">
+        <div class="subsection-title">D. Advanced Features</div>
+        <div class="adv-grid">
+          <div class="adv-card">
+            <h4>🔗 Linked Views</h4>
+            <p>Inside each Client Portal page, embed linked views of their projects, tasks, and invoices. Clients who have Notion access see a filtered view of only their data.</p>
+          </div>
+          <div class="adv-card">
+            <h4>📐 Formulas</h4>
+            <p>Calculate days overdue: <code>if(prop("Status") != "Done", dateBetween(now(), prop("Deadline"), "days"), 0)</code>. Auto-flag anything negative as overdue.</p>
+          </div>
+          <div class="adv-card">
+            <h4>⚡ Notion Automations</h4>
+            <p>When Project Phase changes to "Review" → create a new task "Review sign-off" assigned to the project manager. Reduces missed handoff steps significantly.</p>
+          </div>
+          <div class="adv-card">
+            <h4>🌐 Client Portals</h4>
+            <p>Share a public Notion page with each client that shows their project status, deliverables, and next steps. Update it weekly for a professional client experience.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Checklist -->
+      <div class="subsection" id="aos-monthly">
+        <div class="subsection-title">E. Monthly Maintenance (5 minutes)</div>
+        <div class="check-list">
+          <div class="check-row"><div class="check-box">✓</div> Archive completed projects and move them to a "Completed" filtered view</div>
+          <div class="check-row"><div class="check-box">✓</div> Update retainer hours — confirm this month's hours are logged correctly</div>
+          <div class="check-row"><div class="check-box">✓</div> Review client pipeline — who needs a renewal conversation or upsell proposal?</div>
+          <div class="check-row"><div class="check-box">✓</div> Update team task assignments for the upcoming month</div>
+          <div class="check-row"><div class="check-box">✓</div> Review project profitability — are retainer rates still right given hours used?</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════════════════════════════════
+         YOUTUBE EMPIRE
+    ════════════════════════════════════════════ -->
+    <section class="product-section" id="youtube-empire">
+      <div class="product-header">
+        <div class="product-icon-lg" style="background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.2)">📺</div>
+        <div>
+          <h2>YouTube Empire</h2>
+          <p>The complete Notion system for serious YouTube creators</p>
+        </div>
+      </div>
+
+      <!-- First 10 Minutes -->
+      <div class="subsection" id="yt-first10">
+        <div class="subsection-title">A. First 10 Minutes</div>
+        <div class="minutes-list">
+          <div class="minutes-item">
+            <div class="mi-num">1</div>
+            <div class="mi-body">
+              <strong>Rename the workspace to your channel name</strong>
+              <span>Replace "YouTube Empire" with your channel name. This connects you to the system emotionally and makes it feel like yours from day one.</span>
+            </div>
+          </div>
+          <div class="minutes-item">
+            <div class="mi-num">2</div>
+            <div class="mi-body">
+              <strong>Add your current top 3 video ideas to the Video Planner</strong>
+              <span>Open the Video Planner, add the ideas you're most excited about right now. Set format (Long-form, Short, Live), status, and target publish date.</span>
+            </div>
+          </div>
+          <div class="minutes-item">
+            <div class="mi-num">3</div>
+            <div class="mi-body">
+              <strong>Set up your channel's baseline analytics</strong>
+              <span>In the Analytics Dashboard, enter your current subscriber count, average views, and CTR. This becomes your baseline — every week you'll see your growth from here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Databases -->
+      <div class="subsection" id="yt-databases">
+        <div class="subsection-title">B. Core Databases Explained</div>
+        <div class="db-grid">
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Video Planner</div>
+            </div>
+            <p class="db-desc">Your full production pipeline — every video from idea to published, with deadlines and status tracking.</p>
+            <div class="db-props">
+              <span class="prop-tag">Title</span><span class="prop-tag">Status</span><span class="prop-tag">Publish Date</span>
+              <span class="prop-tag">Format</span><span class="prop-tag">Platform</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Script Templates (link to template used), Sponsor Tracker (tag sponsored videos)</p>
+            <div class="db-protip">💡 <span>Use a Board view grouped by Status: Idea → Scripting → Filming → Editing → Scheduled → Published. Move cards through the pipeline visually.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Script Templates</div>
+            </div>
+            <p class="db-desc">Reusable script frameworks for your recurring video formats — cut scripting time in half.</p>
+            <div class="db-props">
+              <span class="prop-tag">Type</span><span class="prop-tag">Purpose</span><span class="prop-tag">Template Text</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Video Planner (link to template for each video)</p>
+            <div class="db-protip">💡 <span>Build one script template per video format you make regularly. Each template should include your hook structure, main points format, and CTA section.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Sponsor Tracker</div>
+            </div>
+            <p class="db-desc">Manage every YouTube sponsorship — from first pitch to final payment — with exclusivity and deadline tracking.</p>
+            <div class="db-props">
+              <span class="prop-tag">Brand</span><span class="prop-tag">Status</span><span class="prop-tag">Rate</span>
+              <span class="prop-tag">Deliverables</span><span class="prop-tag">Exclusivity</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Video Planner (tag sponsored videos), Analytics Dashboard (track sponsor ROI)</p>
+            <div class="db-protip">💡 <span>Always log the exclusivity category — prevents accidentally working with a competitor's brand within a restricted window. This mistake is costly.</span></div>
+          </div>
+
+          <div class="db-card">
+            <div class="db-card-header">
+              <div class="db-tag">Database</div>
+              <div class="db-name">Analytics Dashboard</div>
+            </div>
+            <p class="db-desc">Track views, watch time, CTR, and subscriber growth for every video — so you know what actually works.</p>
+            <div class="db-props">
+              <span class="prop-tag">Video</span><span class="prop-tag">Views</span><span class="prop-tag">Watch Time</span>
+              <span class="prop-tag">CTR</span><span class="prop-tag">Subs Gained</span>
+            </div>
+            <p class="db-connection"><strong>Connects to:</strong> Video Planner (relation to video record)</p>
+            <div class="db-protip">💡 <span>Log analytics 30 days after publish, not immediately. This gives accurate performance data once the algorithm has had time to distribute the video.</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Customization -->
+      <div class="subsection" id="yt-customize">
+        <div class="subsection-title">C. Customization Tips</div>
+        <div class="tips-list">
+          <div class="tips-item">Add a "Thumbnail Concept" text property to Video Planner to capture thumbnail ideas while scripting</div>
+          <div class="tips-item">Create a "High Performer" filtered view in Analytics Dashboard showing videos with CTR above your channel average</div>
+          <div class="tips-item">Build a "Content Series" property to group related videos — useful for series planning and cross-linking</div>
+          <div class="tips-item">Add a "Hook" property to each video entry — forces you to nail the hook before filming begins</div>
+          <div class="tips-item">Use Notion database templates for your video formats: one for "Tutorial," one for "Story-driven," one for "Shorts" — pre-fills the right script template and checklist</div>
+        </div>
+      </div>
+
+      <!-- Advanced -->
+      <div class="subsection" id="yt-advanced">
+        <div class="subsection-title">D. Advanced Features</div>
+        <div class="adv-grid">
+          <div class="adv-card">
+            <h4>🔗 Linked Views</h4>
+            <p>Inside each Sponsor record, embed a linked view of the Video Planner filtered by that sponsor — shows all sponsored content for that brand at a glance. Useful for brand reporting.</p>
+          </div>
+          <div class="adv-card">
+            <h4>📐 Formulas</h4>
+            <p>Calculate average view duration: <code>prop("Watch Time (mins)") / prop("Views")</code>. Or revenue per view: <code>prop("Revenue") / prop("Views") * 1000</code> for RPM tracking.</p>
+          </div>
+          <div class="adv-card">
+            <h4>⚡ Notion Automations</h4>
+            <p>When Status changes to "Published" → set Publish Date to today, create a reminder to log analytics in 30 days. Keeps your analytics database consistently up to date.</p>
+          </div>
+          <div class="adv-card">
+            <h4>🌐 Sharing with Sponsors</h4>
+            <p>Create a sponsor-facing page showing their deal status and deliverables. Share via public Notion link. Professional, transparent, and saves you reply emails.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Checklist -->
+      <div class="subsection" id="yt-monthly">
+        <div class="subsection-title">E. Monthly Maintenance (5 minutes)</div>
+        <div class="check-list">
+          <div class="check-row"><div class="check-box">✓</div> Archive videos from 3+ months ago to keep the active Video Planner clean</div>
+          <div class="check-row"><div class="check-box">✓</div> Update sponsor deal statuses — mark completed deals, follow up on outstanding payments</div>
+          <div class="check-row"><div class="check-box">✓</div> Log analytics for videos published 30 days ago</div>
+          <div class="check-row"><div class="check-box">✓</div> Review high-performer analytics — what patterns made those videos work?</div>
+          <div class="check-row"><div class="check-box">✓</div> Update your sponsorship rates if subscriber count or views have grown significantly</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to getting started -->
+    <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);text-align:center;">
+      <p style="font-size:.875rem;color:var(--txt3);margin-bottom:1rem;">Need a quick refresher? Head back to the getting started guide.</p>
+      <a href="/getting-started.html" style="display:inline-flex;align-items:center;gap:.4rem;background:var(--grad);color:#fff;font-size:.85rem;font-weight:700;padding:.65rem 1.4rem;border-radius:2rem;text-decoration:none;transition:opacity .15s">← Getting Started Guide</a>
+    </div>
+
+  </main>
+</div>
+
+<!-- Footer -->
+<footer style="text-align:center;padding:2rem 1.5rem;border-top:1px solid var(--border);font-size:.78rem;color:var(--txt3);">
+  <p style="margin-bottom:.5rem;">
+    <a href="/" style="color:var(--txt3);text-decoration:none">FreelanceOS</a> &nbsp;·&nbsp;
+    <a href="/getting-started.html" style="color:var(--txt3);text-decoration:none">Getting Started</a> &nbsp;·&nbsp;
+    <a href="/faq.html" style="color:var(--txt3);text-decoration:none">FAQ</a> &nbsp;·&nbsp;
+    <a href="mailto:hello@freelanceos.com" style="color:var(--txt3);text-decoration:none">hello@freelanceos.com</a>
+  </p>
+  <p>30-day money-back guarantee &nbsp;·&nbsp; One payment, lifetime access.</p>
+</footer>
+
+<script>
+// ── Sidebar active highlight on scroll ───────────────────────────────────────
+(function() {
+  const sections = document.querySelectorAll('.product-section');
+  const sideLinks = document.querySelectorAll('.sidebar-link');
+
+  function onScroll() {
+    let current = '';
+    sections.forEach(function(s) {
+      if (window.scrollY >= s.offsetTop - 120) {
+        current = s.id;
+      }
+    });
+    sideLinks.forEach(function(link) {
+      const href = link.getAttribute('href').replace('#', '');
+      link.classList.toggle('active', href === current);
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+// ── Mobile product nav active state ─────────────────────────────────────────
+document.querySelectorAll('.mpn-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mpn-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

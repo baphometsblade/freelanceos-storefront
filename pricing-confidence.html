@@ -1,0 +1,2487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Am I Charging Enough? — Free Pricing Confidence Tool | FreelanceOS</title>
+    <meta name="description" content="Find out if you're undercharging as a freelancer. Get your Pricing Confidence Score, see market rate data for your niche, and discover how much money you're leaving on the table.">
+    <meta name="keywords" content="freelance pricing, freelance rates, am I charging enough, freelance rate calculator, pricing confidence, freelancer income">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Am I Charging Enough? — Free Pricing Confidence Tool">
+    <meta property="og:description" content="Get your Pricing Confidence Score and discover how much money you're leaving on the table. Free tool for freelancers.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freelanceos.pro/freelanceos-storefront/pricing-confidence.html">
+    <meta property="og:image" content="https://freelanceos.pro/og-pricing-confidence.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="FreelanceOS">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Am I Charging Enough? — Free Pricing Confidence Tool">
+    <meta name="twitter:description" content="I just found out I'm leaving $XX,XXX on the table every year. Take the free Pricing Confidence Test.">
+    <meta name="twitter:image" content="https://freelanceos.pro/og-pricing-confidence.png">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Am I Charging Enough? — Pricing Confidence Tool",
+        "description": "Free interactive tool that calculates your Pricing Confidence Score, compares your rate to market data, and shows how much money you're leaving on the table.",
+        "url": "https://freelanceos.pro/freelanceos-storefront/pricing-confidence.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "FreelanceOS",
+            "url": "https://freelanceos.pro"
+        }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #a855f7;
+            --accent2: #ec4899;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(168, 85, 247, 0.1);
+            --border-hover: rgba(168, 85, 247, 0.3);
+            --glass: rgba(15, 23, 42, 0.8);
+            --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --gradient-text: linear-gradient(135deg, #a855f7, #ec4899);
+            --success: #22c55e;
+            --warning: #eab308;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .bg-orb:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-orb:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            background: var(--accent2);
+            bottom: -150px;
+            left: -150px;
+            animation-delay: -7s;
+        }
+
+        .bg-orb:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: #6366f1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.1); }
+            50% { transform: translate(-30px, 50px) scale(0.9); }
+            75% { transform: translate(40px, 30px) scale(1.05); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 50px 0 40px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--accent);
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .header-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .header h1 .gradient-text {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            margin-bottom: 40px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-dim);
+            transition: color 0.3s;
+        }
+
+        .progress-step.active {
+            color: var(--text);
+        }
+
+        .progress-step.completed {
+            color: var(--accent);
+        }
+
+        .step-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--text-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .progress-step.active .step-dot {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent);
+        }
+
+        .progress-step.completed .step-dot {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: white;
+        }
+
+        .step-line {
+            width: 40px;
+            height: 2px;
+            background: var(--text-dim);
+            transition: background 0.3s;
+        }
+
+        .step-line.active {
+            background: var(--accent);
+        }
+
+        .progress-bar-track {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 4px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        /* Glass card */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: border-color 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .form-sublabel {
+            display: block;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+        }
+
+        select option {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        /* Slider */
+        .slider-container {
+            position: relative;
+        }
+
+        .slider-value-display {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(148, 163, 184, 0.15);
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gradient);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4);
+            transition: transform 0.15s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gradient);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* Radio-style option cards */
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .option-grid.cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .option-grid.cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .option-card {
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .option-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .option-card.selected {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.12);
+            color: white;
+            font-weight: 600;
+        }
+
+        .option-card .option-emoji {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        /* Questions step */
+        .question-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(148, 163, 184, 0.08);
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s;
+        }
+
+        .question-card:hover {
+            border-color: rgba(168, 85, 247, 0.15);
+        }
+
+        .question-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .question-text {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+
+        .answer-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .answer-btn {
+            padding: 8px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .answer-btn:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            color: var(--text);
+        }
+
+        .answer-btn.selected {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.15);
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .nav-buttons .btn-primary {
+            flex: 1;
+        }
+
+        /* Results page */
+        .results-section {
+            display: none;
+        }
+
+        /* Score gauge */
+        .score-container {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .gauge-wrapper {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            margin: 0 auto 24px;
+        }
+
+        .gauge-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .gauge-bg {
+            fill: none;
+            stroke: rgba(148, 163, 184, 0.1);
+            stroke-width: 12;
+        }
+
+        .gauge-fill {
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gauge-score {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .gauge-score .number {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .gauge-score .out-of {
+            font-size: 1rem;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+
+        .verdict-label {
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .verdict-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Market position meter */
+        .market-meter {
+            margin: 32px 0;
+        }
+
+        .meter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 16px;
+        }
+
+        .meter-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .meter-rate {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .meter-bar-container {
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .meter-bar {
+            height: 16px;
+            border-radius: 8px;
+            background: linear-gradient(90deg,
+                #ef4444 0%,
+                #f97316 20%,
+                #eab308 40%,
+                #22c55e 60%,
+                #3b82f6 80%,
+                #8b5cf6 100%
+            );
+            position: relative;
+            overflow: visible;
+        }
+
+        .meter-marker {
+            position: absolute;
+            top: -8px;
+            width: 4px;
+            height: 32px;
+            background: white;
+            border-radius: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            transition: left 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+        .meter-marker-label {
+            position: absolute;
+            top: -36px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            color: var(--bg);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .meter-marker-label::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: white;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .meter-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-dim);
+            padding: 0 2px;
+        }
+
+        .meter-median-line {
+            position: absolute;
+            top: -4px;
+            height: 24px;
+            width: 2px;
+            background: rgba(255,255,255,0.4);
+            z-index: 1;
+        }
+
+        .median-label {
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        /* Money reveal */
+        .money-reveal {
+            text-align: center;
+            padding: 40px 24px;
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .money-reveal::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient);
+            opacity: 0.05;
+            border-radius: 16px;
+        }
+
+        .money-reveal-title {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .money-amount {
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .money-amount .dollar {
+            font-size: 0.6em;
+            vertical-align: top;
+            margin-right: 2px;
+        }
+
+        .money-period {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .money-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .money-stat {
+            text-align: center;
+        }
+
+        .money-stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .money-stat-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        /* Rate recommendation */
+        .rate-rec-grid {
+            display: grid;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .rate-rec-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.08);
+        }
+
+        .rate-rec-label {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .rate-rec-value {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .rate-rec-item.recommended {
+            border-color: rgba(168, 85, 247, 0.3);
+            background: rgba(168, 85, 247, 0.08);
+        }
+
+        .rate-rec-item.recommended .rate-rec-value {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Action plan */
+        .action-item {
+            display: flex;
+            gap: 14px;
+            padding: 18px;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.06);
+        }
+
+        .action-number {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            margin-top: 2px;
+        }
+
+        .action-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .action-content p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* What-if section */
+        .whatif-section {
+            text-align: center;
+            padding: 24px;
+            background: rgba(168, 85, 247, 0.05);
+            border-radius: 14px;
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            margin: 24px 0;
+        }
+
+        .whatif-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .whatif-rate-display {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .whatif-result {
+            font-size: 1.1rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .whatif-result .highlight {
+            color: var(--success);
+            font-weight: 800;
+        }
+
+        /* Share section */
+        .share-section {
+            text-align: center;
+            margin: 32px 0;
+        }
+
+        .share-badge {
+            display: inline-block;
+            padding: 20px 28px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 14px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 420px;
+        }
+
+        .share-badge .share-score {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: transform 0.15s, opacity 0.15s;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .share-btn.twitter {
+            background: #1d9bf0;
+            color: white;
+        }
+
+        .share-btn.copy {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--text);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 40px 28px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            margin: 32px 0;
+        }
+
+        .cta-section h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .cta-features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .cta-feature svg {
+            color: var(--accent);
+            width: 16px;
+            height: 16px;
+        }
+
+        .cta-price {
+            margin-bottom: 20px;
+        }
+
+        .cta-price .original {
+            text-decoration: line-through;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            margin-right: 8px;
+        }
+
+        .cta-price .sale {
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-code {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(168, 85, 247, 0.15);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 40px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 4px 24px rgba(168, 85, 247, 0.35);
+            text-decoration: none;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 32px rgba(168, 85, 247, 0.45);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-disclaimer {
+            font-size: 12px;
+            color: var(--text-dim);
+            max-width: 500px;
+            margin: 0 auto 12px;
+            line-height: 1.5;
+        }
+
+        .footer-brand {
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .footer-brand a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.4); }
+        }
+
+        @keyframes shakeAttention {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
+        .animate-delay-5 { animation-delay: 0.5s; opacity: 0; }
+        .animate-delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 12px 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .container { padding: 16px; }
+            .glass-card { padding: 20px; }
+            .header { padding: 30px 0 24px; }
+            .option-grid { grid-template-columns: 1fr 1fr; }
+            .option-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+            .money-breakdown { grid-template-columns: 1fr; gap: 12px; }
+            .meter-labels { font-size: 9px; }
+            .answer-options { gap: 6px; }
+            .answer-btn { padding: 6px 12px; font-size: 12px; }
+            .share-buttons { flex-direction: column; align-items: center; }
+            .cta-features { flex-direction: column; align-items: center; }
+            .footer-links { flex-direction: column; gap: 12px; }
+            .progress-steps .step-label { display: none; }
+        }
+
+        /* Hide steps */
+        .step-content { display: none; }
+        .step-content.active { display: block; }
+
+        /* Pulse animation for money */
+        .pulse-money {
+            animation: pulseGlow 2s ease-in-out infinite;
+            border-radius: 16px;
+        }
+
+        /* Confetti */
+        .confetti-piece {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { opacity: 1; transform: translateY(-10vh) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="bg-pattern">
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v20M2 12h20M5.5 5.5l13 13M18.5 5.5l-13 13"/>
+                </svg>
+                Free Pricing Tool
+            </div>
+            <h1>Am I <span class="gradient-text">Charging Enough?</span></h1>
+            <p>Discover your Pricing Confidence Score, see where you stand against market rates, and find out exactly how much money you're leaving on the table.</p>
+        </header>
+
+        <!-- Progress -->
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-dot">1</div>
+                    <span class="step-label">Profile</span>
+                </div>
+                <div class="step-line" id="line1"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-dot">2</div>
+                    <span class="step-label">Situation</span>
+                </div>
+                <div class="step-line" id="line2"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-dot">3</div>
+                    <span class="step-label">Verdict</span>
+                </div>
+            </div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <!-- Step 1: Profile -->
+        <div class="step-content active" id="step1">
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#x1f464;</div>
+                    Your Freelance Profile
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Primary Skill / Niche</label>
+                    <select id="skillNiche">
+                        <option value="" disabled selected>Select your primary skill...</option>
+                        <option value="web-design">Web Design</option>
+                        <option value="uiux-design">UI/UX Design</option>
+                        <option value="graphic-design">Graphic Design</option>
+                        <option value="brand-identity">Brand Identity</option>
+                        <option value="web-development">Web Development</option>
+                        <option value="mobile-development">Mobile Development</option>
+                        <option value="copywriting">Copywriting</option>
+                        <option value="content-writing">Content Writing</option>
+                        <option value="technical-writing">Technical Writing</option>
+                        <option value="seo-content">SEO / Content Strategy</option>
+                        <option value="social-media">Social Media Management</option>
+                        <option value="video-production">Video Production</option>
+                        <option value="photography">Photography</option>
+                        <option value="illustration">Illustration</option>
+                        <option value="marketing-consulting">Marketing Consulting</option>
+                        <option value="business-consulting">Business Consulting</option>
+                        <option value="virtual-assistant">Virtual Assistant</option>
+                        <option value="bookkeeping">Bookkeeping</option>
+                        <option value="translation">Translation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Experience Level</label>
+                    <div class="option-grid" data-field="experience">
+                        <div class="option-card" data-value="1-2">
+                            <span class="option-emoji">&#x1f331;</span>
+                            1-2 years
+                        </div>
+                        <div class="option-card" data-value="3-5">
+                            <span class="option-emoji">&#x1f33f;</span>
+                            3-5 years
+                        </div>
+                        <div class="option-card" data-value="5-10">
+                            <span class="option-emoji">&#x1f333;</span>
+                            5-10 years
+                        </div>
+                        <div class="option-card" data-value="10-15">
+                            <span class="option-emoji">&#x1f3c6;</span>
+                            10-15 years
+                        </div>
+                        <div class="option-card" data-value="15+">
+                            <span class="option-emoji">&#x2b50;</span>
+                            15+ years
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <select id="location">
+                        <option value="" disabled selected>Select your location...</option>
+                        <option value="us-major">US - Major City (NYC, SF, LA, Chicago)</option>
+                        <option value="us-mid">US - Mid-size City</option>
+                        <option value="us-rural">US - Rural / Small Town</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="canada">Canada</option>
+                        <option value="australia">Australia</option>
+                        <option value="western-europe">Western Europe</option>
+                        <option value="eastern-europe">Eastern Europe</option>
+                        <option value="india">India</option>
+                        <option value="southeast-asia">Southeast Asia</option>
+                        <option value="latin-america">Latin America</option>
+                        <option value="middle-east">Middle East</option>
+                        <option value="africa">Africa</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Your Current Hourly Rate</label>
+                    <div class="slider-container">
+                        <div class="slider-value-display" id="rateDisplay">$75/hr</div>
+                        <input type="range" id="hourlyRate" min="5" max="500" value="75" step="5">
+                        <div class="slider-labels">
+                            <span>$5/hr</span>
+                            <span>$250/hr</span>
+                            <span>$500/hr</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Typical Project Size</label>
+                    <div class="option-grid cols-3" data-field="projectSize">
+                        <div class="option-card" data-value="under500">< $500</div>
+                        <div class="option-card" data-value="500-2k">$500 - $2K</div>
+                        <div class="option-card" data-value="2k-5k">$2K - $5K</div>
+                        <div class="option-card" data-value="5k-15k">$5K - $15K</div>
+                        <div class="option-card" data-value="15k-50k">$15K - $50K</div>
+                        <div class="option-card" data-value="50k+">$50K+</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">How Do You Find Most of Your Clients?</label>
+                    <div class="option-grid cols-3" data-field="clientSource">
+                        <div class="option-card" data-value="platforms">Upwork / Fiverr</div>
+                        <div class="option-card" data-value="referrals">Referrals Only</div>
+                        <div class="option-card" data-value="social">Social / Content</div>
+                        <div class="option-card" data-value="cold">Cold Outreach</div>
+                        <div class="option-card" data-value="agency">Agency Sub</div>
+                        <div class="option-card" data-value="mix">Mix of Sources</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn-primary" id="toStep2" disabled>
+                    Next: Your Situation
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Situation -->
+        <div class="step-content" id="step2">
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#x1f4ca;</div>
+                    Your Pricing Situation
+                </div>
+                <p style="color:var(--text-muted); font-size:14px; margin-bottom:24px;">Answer honestly. No one sees this but you. The more truthful you are, the more useful your results.</p>
+
+                <div id="questionsContainer"></div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn-secondary" id="backToStep1">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                </button>
+                <button class="btn-primary" id="getVerdict" disabled>
+                    Get My Verdict
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Results -->
+        <div class="step-content" id="step3">
+            <!-- Score -->
+            <div class="glass-card animate-in animate-delay-1" id="scoreCard">
+                <div class="score-container">
+                    <div class="gauge-wrapper">
+                        <svg class="gauge-svg" viewBox="0 0 200 200">
+                            <circle class="gauge-bg" cx="100" cy="100" r="88"/>
+                            <circle class="gauge-fill" id="gaugeFill" cx="100" cy="100" r="88"
+                                stroke-dasharray="553"
+                                stroke-dashoffset="553"/>
+                        </svg>
+                        <div class="gauge-score">
+                            <div class="number" id="scoreNumber">0</div>
+                            <div class="out-of">out of 100</div>
+                        </div>
+                    </div>
+                    <div class="verdict-label" id="verdictLabel">CALCULATING...</div>
+                    <div class="verdict-desc" id="verdictDesc"></div>
+                </div>
+            </div>
+
+            <!-- Market Position -->
+            <div class="glass-card animate-in animate-delay-2" id="marketCard">
+                <div class="card-title">
+                    <div class="icon">&#x1f4c8;</div>
+                    Your Market Position
+                </div>
+                <div class="market-meter">
+                    <div class="meter-header">
+                        <div class="meter-title">Where You Stand</div>
+                        <div class="meter-rate" id="meterRateInfo"></div>
+                    </div>
+                    <div class="meter-bar-container">
+                        <div class="meter-bar">
+                            <div class="meter-median-line" id="medianLine" style="left:50%">
+                                <span class="median-label" id="medianLabel"></span>
+                            </div>
+                            <div class="meter-marker" id="meterMarker" style="left:0%">
+                                <div class="meter-marker-label" id="markerLabel">$0/hr</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meter-labels">
+                        <span>Bottom 10%</span>
+                        <span>Below Avg</span>
+                        <span>Median</span>
+                        <span>Above Avg</span>
+                        <span>Top 10%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Money Reveal -->
+            <div class="glass-card animate-in animate-delay-3 pulse-money" id="moneyCard">
+                <div class="money-reveal">
+                    <div class="money-reveal-title">Money You're Leaving on the Table</div>
+                    <div class="money-amount" id="moneyAmount">
+                        <span class="dollar">$</span><span id="moneyNumber">0</span>
+                    </div>
+                    <div class="money-period">per year at your current rate</div>
+                    <div class="money-breakdown">
+                        <div class="money-stat">
+                            <div class="money-stat-value" id="moneyMonthly">$0</div>
+                            <div class="money-stat-label">Per Month</div>
+                        </div>
+                        <div class="money-stat">
+                            <div class="money-stat-value" id="money5yr">$0</div>
+                            <div class="money-stat-label">Over 5 Years</div>
+                        </div>
+                        <div class="money-stat">
+                            <div class="money-stat-value" id="moneyLifetime">$0</div>
+                            <div class="money-stat-label">Over 10 Years</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rate Recommendation -->
+            <div class="glass-card animate-in animate-delay-4" id="rateCard">
+                <div class="card-title">
+                    <div class="icon">&#x1f4b0;</div>
+                    Rate Recommendation
+                </div>
+                <div class="rate-rec-grid" id="rateGrid"></div>
+            </div>
+
+            <!-- What-if -->
+            <div class="glass-card animate-in animate-delay-4" id="whatifCard">
+                <div class="card-title">
+                    <div class="icon">&#x1f52e;</div>
+                    What If You Charged More?
+                </div>
+                <div class="whatif-section">
+                    <div class="whatif-label">Drag to explore a different rate</div>
+                    <input type="range" id="whatifSlider" min="5" max="500" value="100" step="5" style="width:100%;margin-bottom:12px;">
+                    <div class="whatif-rate-display" id="whatifRateDisplay">$100/hr</div>
+                    <div class="whatif-result" id="whatifResult"></div>
+                </div>
+            </div>
+
+            <!-- Action Plan -->
+            <div class="glass-card animate-in animate-delay-5" id="actionCard">
+                <div class="card-title">
+                    <div class="icon">&#x1f680;</div>
+                    Your Personalized Action Plan
+                </div>
+                <div id="actionPlan"></div>
+            </div>
+
+            <!-- Share -->
+            <div class="glass-card animate-in animate-delay-5">
+                <div class="share-section">
+                    <div class="share-badge" id="shareBadge">
+                        <span class="share-score" id="shareScoreText">Score: 0/100</span>
+                        I scored <span id="shareScoreInline">0</span>/100 on the Pricing Confidence Test. Am I charging enough? Find out:
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-btn twitter" id="shareTwitter">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            Share on X
+                        </button>
+                        <button class="share-btn copy" id="copyResult">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                            Copy Result
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Try different rate -->
+            <div style="text-align:center; margin: 24px 0;">
+                <button class="btn-secondary" id="tryAgain">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                    Try Different Rate
+                </button>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section animate-in animate-delay-6">
+                <h3>Stop Guessing. Start Earning What You're Worth.</h3>
+                <p>FreelanceOS Pro includes rate calculators, pricing templates, negotiation scripts, and everything you need to run your freelance business with confidence.</p>
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Rate Calculators
+                    </div>
+                    <div class="cta-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Pricing Templates
+                    </div>
+                    <div class="cta-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Negotiation Scripts
+                    </div>
+                    <div class="cta-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Client Management
+                    </div>
+                </div>
+                <div class="cta-price">
+                    <span class="original">$29</span>
+                    <span class="sale">$17.40</span>
+                    <br>
+                    <span class="cta-code">Code: FLASH40</span>
+                </div>
+                <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" class="btn-cta">
+                    Get FreelanceOS Pro  &mdash; 40% Off
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-links">
+                    <a href="/freelanceos-storefront/freelance-rate-calculator.html">Rate Calculator</a>
+                    <a href="/freelanceos-storefront/income-projector.html">Income Projector</a>
+                    <a href="/freelanceos-storefront/rate-negotiation-simulator.html">Negotiation Simulator</a>
+                    <a href="/freelanceos-storefront/fire-this-client.html">Fire This Client?</a>
+                </div>
+                <p class="footer-disclaimer">Market rate data is estimated based on publicly available industry surveys, job boards, and freelancer community data. Ranges are approximations and may not reflect your exact market. For personalized pricing advice, consult a business coach.</p>
+                <p class="footer-brand">Built by <a href="https://freelanceos.pro" target="_blank">FreelanceOS</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ===================================================
+        //  MARKET RATE DATA
+        //  Ranges: [p10, p25, median, p75, p90] hourly rates
+        //  by niche, then adjusted by experience & location
+        // ===================================================
+        const BASE_RATES = {
+            'web-design':           [30, 50, 75, 110, 175],
+            'uiux-design':          [35, 55, 85, 130, 200],
+            'graphic-design':       [25, 40, 60, 90, 150],
+            'brand-identity':       [35, 55, 85, 125, 200],
+            'web-development':      [35, 60, 90, 135, 200],
+            'mobile-development':   [40, 65, 100, 150, 225],
+            'copywriting':          [30, 50, 75, 120, 200],
+            'content-writing':      [20, 35, 55, 85, 140],
+            'technical-writing':    [35, 55, 80, 120, 175],
+            'seo-content':          [30, 50, 75, 115, 175],
+            'social-media':         [20, 35, 55, 85, 135],
+            'video-production':     [35, 55, 85, 130, 200],
+            'photography':          [25, 45, 75, 120, 200],
+            'illustration':         [25, 40, 65, 100, 165],
+            'marketing-consulting': [40, 65, 100, 150, 250],
+            'business-consulting':  [50, 75, 125, 185, 300],
+            'virtual-assistant':    [12, 20, 30, 45, 65],
+            'bookkeeping':          [20, 30, 45, 65, 95],
+            'translation':          [15, 25, 40, 60, 100],
+            'other':                [25, 40, 65, 100, 160]
+        };
+
+        const EXPERIENCE_MULTIPLIERS = {
+            '1-2':  0.65,
+            '3-5':  0.85,
+            '5-10': 1.0,
+            '10-15': 1.25,
+            '15+':  1.5
+        };
+
+        const LOCATION_MULTIPLIERS = {
+            'us-major':       1.3,
+            'us-mid':         1.05,
+            'us-rural':       0.85,
+            'uk':             1.0,
+            'canada':         0.95,
+            'australia':      1.05,
+            'western-europe': 1.0,
+            'eastern-europe': 0.55,
+            'india':          0.35,
+            'southeast-asia': 0.40,
+            'latin-america':  0.45,
+            'middle-east':    0.65,
+            'africa':         0.35,
+            'other':          0.7
+        };
+
+        // Estimated billable hours per year
+        const ANNUAL_HOURS = 1600;
+
+        // ===================================================
+        //  QUESTIONS DATA
+        // ===================================================
+        const QUESTIONS = [
+            {
+                id: 'pushback',
+                text: 'Do clients push back on your rate?',
+                options: ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'],
+                scores: [10, 8, 5, 2, 0]
+            },
+            {
+                id: 'bookingSpeed',
+                text: 'How quickly do you book out?',
+                options: ['Same week', '1-2 weeks', '1 month', '2-3 months', '3+ months'],
+                scores: [0, 3, 6, 9, 12]
+            },
+            {
+                id: 'negotiate',
+                text: 'Do you negotiate down from your initial quote?',
+                options: ['Never', 'Occasionally', 'Half the time', 'Usually', 'Always'],
+                scores: [12, 9, 5, 2, 0]
+            },
+            {
+                id: 'raisedRates',
+                text: 'Have you raised your rates in the last 12 months?',
+                options: ['Yes, significantly', 'Yes, slightly', 'No', 'I actually lowered them'],
+                scores: [12, 8, 3, 0]
+            },
+            {
+                id: 'cheapCompare',
+                text: 'Do clients compare you to cheaper alternatives?',
+                options: ['Never', 'Rarely', 'Sometimes', 'Often', 'Constantly'],
+                scores: [12, 9, 6, 3, 0]
+            },
+            {
+                id: 'quoteAcceptance',
+                text: 'What percentage of leads accept your quotes?',
+                options: ['Almost all (>80%)', 'Most (60-80%)', 'About half', 'Less than half', 'Very few (<20%)'],
+                scores: [3, 8, 12, 7, 4]
+            },
+            {
+                id: 'rateAnxiety',
+                text: 'Do you feel anxious when stating your rate?',
+                options: ['Never', 'Slightly', 'Moderately', 'Very', 'Extremely'],
+                scores: [12, 9, 5, 2, 0]
+            },
+            {
+                id: 'incomeFeeling',
+                text: 'How do you feel about your current income?',
+                options: ['Very comfortable', 'Comfortable', 'Getting by', 'Struggling', 'Drowning'],
+                scores: [12, 9, 5, 2, 0]
+            }
+        ];
+
+        // ===================================================
+        //  STATE
+        // ===================================================
+        let state = {
+            currentStep: 1,
+            profile: {
+                skill: '',
+                experience: '',
+                location: '',
+                hourlyRate: 75,
+                projectSize: '',
+                clientSource: ''
+            },
+            answers: {},
+            results: null
+        };
+
+        // ===================================================
+        //  DOM REFERENCES
+        // ===================================================
+        const $ = (sel) => document.querySelector(sel);
+        const $$ = (sel) => document.querySelectorAll(sel);
+
+        // ===================================================
+        //  INIT
+        // ===================================================
+        function init() {
+            buildQuestions();
+            bindProfileEvents();
+            bindNavigationEvents();
+            bindSlider();
+            bindShareEvents();
+            bindWhatIf();
+            validateStep1();
+        }
+
+        // ===================================================
+        //  BUILD QUESTIONS
+        // ===================================================
+        function buildQuestions() {
+            const container = $('#questionsContainer');
+            let html = '';
+            QUESTIONS.forEach((q, i) => {
+                html += `
+                <div class="question-card">
+                    <div class="question-number">Question ${i + 1} of ${QUESTIONS.length}</div>
+                    <div class="question-text">${q.text}</div>
+                    <div class="answer-options" data-question="${q.id}">
+                        ${q.options.map((opt, j) => `
+                            <button class="answer-btn" data-value="${j}">${opt}</button>
+                        `).join('')}
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+
+            // Bind answer clicks
+            container.querySelectorAll('.answer-options').forEach(group => {
+                group.querySelectorAll('.answer-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        group.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        state.answers[group.dataset.question] = parseInt(btn.dataset.value);
+                        validateStep2();
+                    });
+                });
+            });
+        }
+
+        // ===================================================
+        //  PROFILE EVENTS
+        // ===================================================
+        function bindProfileEvents() {
+            // Dropdowns
+            $('#skillNiche').addEventListener('change', (e) => {
+                state.profile.skill = e.target.value;
+                validateStep1();
+            });
+
+            $('#location').addEventListener('change', (e) => {
+                state.profile.location = e.target.value;
+                validateStep1();
+            });
+
+            // Option cards
+            $$('.option-grid[data-field]').forEach(grid => {
+                grid.querySelectorAll('.option-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        grid.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        state.profile[grid.dataset.field] = card.dataset.value;
+                        validateStep1();
+                    });
+                });
+            });
+        }
+
+        // ===================================================
+        //  SLIDER
+        // ===================================================
+        function bindSlider() {
+            const slider = $('#hourlyRate');
+            const display = $('#rateDisplay');
+
+            slider.addEventListener('input', () => {
+                state.profile.hourlyRate = parseInt(slider.value);
+                display.textContent = `$${slider.value}/hr`;
+                updateSliderTrack(slider);
+            });
+
+            updateSliderTrack(slider);
+        }
+
+        function updateSliderTrack(slider) {
+            const pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+            slider.style.background = `linear-gradient(90deg, #a855f7 0%, #ec4899 ${pct}%, rgba(148,163,184,0.15) ${pct}%)`;
+        }
+
+        // ===================================================
+        //  NAVIGATION
+        // ===================================================
+        function bindNavigationEvents() {
+            $('#toStep2').addEventListener('click', () => goToStep(2));
+            $('#backToStep1').addEventListener('click', () => goToStep(1));
+            $('#getVerdict').addEventListener('click', () => {
+                calculateResults();
+                goToStep(3);
+                renderResults();
+            });
+            $('#tryAgain').addEventListener('click', () => {
+                goToStep(1);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        function goToStep(step) {
+            state.currentStep = step;
+
+            // Hide all steps
+            $$('.step-content').forEach(s => s.classList.remove('active'));
+            $(`#step${step}`).classList.add('active');
+
+            // Update progress
+            $$('.progress-step').forEach((ps, i) => {
+                ps.classList.remove('active', 'completed');
+                if (i + 1 === step) ps.classList.add('active');
+                if (i + 1 < step) ps.classList.add('completed');
+            });
+
+            // Lines
+            $('#line1').classList.toggle('active', step >= 2);
+            $('#line2').classList.toggle('active', step >= 3);
+
+            // Progress bar
+            const pct = step === 1 ? 5 : step === 2 ? 50 : 100;
+            $('#progressBar').style.width = pct + '%';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===================================================
+        //  VALIDATION
+        // ===================================================
+        function validateStep1() {
+            const p = state.profile;
+            const valid = p.skill && p.experience && p.location && p.projectSize && p.clientSource;
+            $('#toStep2').disabled = !valid;
+        }
+
+        function validateStep2() {
+            const allAnswered = QUESTIONS.every(q => state.answers[q.id] !== undefined);
+            $('#getVerdict').disabled = !allAnswered;
+        }
+
+        // ===================================================
+        //  CALCULATION ENGINE
+        // ===================================================
+        function getMarketRates() {
+            const base = BASE_RATES[state.profile.skill] || BASE_RATES['other'];
+            const expMul = EXPERIENCE_MULTIPLIERS[state.profile.experience] || 1.0;
+            const locMul = LOCATION_MULTIPLIERS[state.profile.location] || 0.7;
+
+            // Client source adjustment
+            let sourceMul = 1.0;
+            switch (state.profile.clientSource) {
+                case 'platforms': sourceMul = 0.75; break;
+                case 'referrals': sourceMul = 1.15; break;
+                case 'social':    sourceMul = 1.05; break;
+                case 'cold':      sourceMul = 0.95; break;
+                case 'agency':    sourceMul = 0.85; break;
+                case 'mix':       sourceMul = 1.0;  break;
+            }
+
+            return base.map(r => Math.round(r * expMul * locMul * sourceMul));
+        }
+
+        function calculateResults() {
+            const rates = getMarketRates();
+            const [p10, p25, median, p75, p90] = rates;
+            const userRate = state.profile.hourlyRate;
+
+            // --- Situation score (from questions) ---
+            let situationScore = 0;
+            let maxSituationScore = 0;
+
+            QUESTIONS.forEach(q => {
+                const ansIdx = state.answers[q.id];
+                if (ansIdx !== undefined) {
+                    situationScore += q.scores[ansIdx];
+                    maxSituationScore += Math.max(...q.scores);
+                }
+            });
+
+            const situationPct = (situationScore / maxSituationScore) * 100;
+
+            // --- Market position score ---
+            let marketScore;
+            if (userRate <= p10) {
+                marketScore = (userRate / p10) * 15;
+            } else if (userRate <= p25) {
+                marketScore = 15 + ((userRate - p10) / (p25 - p10)) * 15;
+            } else if (userRate <= median) {
+                marketScore = 30 + ((userRate - p25) / (median - p25)) * 20;
+            } else if (userRate <= p75) {
+                marketScore = 50 + ((userRate - median) / (p75 - median)) * 20;
+            } else if (userRate <= p90) {
+                marketScore = 70 + ((userRate - p75) / (p90 - p75)) * 20;
+            } else {
+                marketScore = 90 + Math.min(10, ((userRate - p90) / (p90 * 0.5)) * 10);
+            }
+            marketScore = Math.min(100, Math.max(0, marketScore));
+
+            // --- Combined score ---
+            const score = Math.round(situationPct * 0.55 + marketScore * 0.45);
+
+            // --- Market position percentage ---
+            let marketPositionPct;
+            const range = p90 - p10;
+            if (range > 0) {
+                marketPositionPct = Math.max(2, Math.min(98, ((userRate - p10) / range) * 100));
+            } else {
+                marketPositionPct = 50;
+            }
+
+            // --- Recommended rate ---
+            const recommendedMin = Math.round(Math.max(median * 0.85, p25));
+            const recommendedMax = Math.round(p75 * 1.1);
+            const minimumViable = Math.round(p25 * 0.9);
+            const premiumRate = p75;
+            const aspirational = p90;
+
+            // --- Money left on table ---
+            const targetRate = Math.max(median, userRate);
+            const annualDiff = Math.max(0, (targetRate - userRate) * ANNUAL_HOURS);
+            const monthlyDiff = Math.round(annualDiff / 12);
+            const fiveYearDiff = annualDiff * 5;
+            const tenYearDiff = annualDiff * 10;
+
+            // --- Verdict ---
+            let verdict, verdictColor, verdictDesc;
+            if (score >= 85) {
+                verdict = 'PREMIUM PRICER';
+                verdictColor = '#22c55e';
+                verdictDesc = "You're commanding top rates and the market validates it. Clients see you as premium and are happy to pay for it. Keep pushing.";
+            } else if (score >= 70) {
+                verdict = 'FAIRLY PRICED';
+                verdictColor = '#3b82f6';
+                verdictDesc = "You're in the sweet spot. There's room to grow, but you're not leaving too much on the table. A strategic rate increase could be your next move.";
+            } else if (score >= 50) {
+                verdict = 'LEAVING MONEY ON THE TABLE';
+                verdictColor = '#eab308';
+                verdictDesc = "Your skills are worth more than you're charging. The gap between your rate and your value is real, measurable, and fixable.";
+            } else if (score >= 30) {
+                verdict = 'SIGNIFICANTLY UNDERCHARGING';
+                verdictColor = '#f97316';
+                verdictDesc = "You're subsidizing your clients with your own income. Every project you take at this rate costs you money you've already earned the right to charge.";
+            } else {
+                verdict = 'DANGEROUSLY UNDERPRICED';
+                verdictColor = '#ef4444';
+                verdictDesc = "This rate is unsustainable. You're working harder than most for less than almost everyone. Emergency pricing intervention needed.";
+            }
+
+            // --- Action plan ---
+            const actions = generateActionPlan(annualDiff);
+
+            state.results = {
+                score,
+                verdict,
+                verdictColor,
+                verdictDesc,
+                marketPositionPct,
+                rates,
+                median,
+                recommendedMin,
+                recommendedMax,
+                minimumViable,
+                premiumRate,
+                aspirational,
+                annualDiff,
+                monthlyDiff,
+                fiveYearDiff,
+                tenYearDiff,
+                actions
+            };
+        }
+
+        function generateActionPlan(annualDiff) {
+            const actions = [];
+            const a = state.answers;
+            const p = state.profile;
+
+            // Negotiate too much
+            if (a.negotiate >= 2) {
+                actions.push({
+                    title: 'Stop Negotiating Against Yourself',
+                    text: 'You\'re discounting too often. State your rate clearly, then let the silence do the work. If a client can\'t afford you, they\'re not your client. Every discount trains clients to ask for more.'
+                });
+            }
+
+            // Booking too fast
+            if (a.bookingSpeed <= 1) {
+                const suggestedIncrease = Math.round(p.hourlyRate * 0.2);
+                actions.push({
+                    title: 'Raise Your Rate Immediately',
+                    text: `You're booking within ${a.bookingSpeed === 0 ? 'the same week' : '1-2 weeks'}. That means you're too cheap. Raise your rate by at least $${suggestedIncrease}/hr right now. When demand is high, price must follow.`
+                });
+            }
+
+            // High anxiety
+            if (a.rateAnxiety >= 2) {
+                const anxietyCost = formatCurrency(annualDiff);
+                actions.push({
+                    title: 'Your Rate Anxiety Is Costing You Real Money',
+                    text: `That knot in your stomach when you quote a rate? It's costing you up to ${anxietyCost} per year. Practice saying your new rate out loud 10 times every morning. Confidence is a skill you can train.`
+                });
+            }
+
+            // Lowered rates
+            if (a.raisedRates === 3) {
+                actions.push({
+                    title: 'You Went the Wrong Direction',
+                    text: 'Lowering your rate was the wrong call. The market didn\'t change - your confidence did. Raise back to your previous rate immediately, then plan a 15% increase within 90 days.'
+                });
+            }
+
+            // Never raised rates
+            if (a.raisedRates === 2) {
+                actions.push({
+                    title: 'Annual Rate Increases Are Non-Negotiable',
+                    text: 'If you haven\'t raised your rates in over a year, you\'ve effectively given yourself a pay cut thanks to inflation. Implement an annual rate review: minimum 5-10% increase every January, no exceptions.'
+                });
+            }
+
+            // Cheap comparisons
+            if (a.cheapCompare >= 2) {
+                actions.push({
+                    title: 'Reposition Away From Price Shoppers',
+                    text: 'If clients are comparing you to Fiverr freelancers, you have a positioning problem, not a pricing problem. Lead with results and ROI in every conversation. Show case studies, not portfolios.'
+                });
+            }
+
+            // Too many acceptances
+            if (a.quoteAcceptance === 0) {
+                actions.push({
+                    title: 'Your Close Rate Is a Red Flag',
+                    text: 'If more than 80% of prospects say yes, your price is too low. A healthy close rate is 30-60%. Raise your rate until you start hearing some no\'s. Those no\'s are how you know you\'ve priced correctly.'
+                });
+            }
+
+            // Too few acceptances
+            if (a.quoteAcceptance >= 3) {
+                actions.push({
+                    title: 'Fix Your Sales Process Before Your Rate',
+                    text: 'Low acceptance isn\'t always about price. Review your proposals: Are you demonstrating value? Showing ROI? Including social proof? Sometimes the fix is better positioning, not lower prices.'
+                });
+            }
+
+            // Income struggle
+            if (a.incomeFeeling >= 3) {
+                actions.push({
+                    title: 'Build a Financial Safety Net, Then Raise',
+                    text: 'When you\'re in survival mode, you make bad pricing decisions. First: cut expenses to buy breathing room. Then: raise your rate 25% on all new clients. Existing clients get a 90-day notice of your new rates.'
+                });
+            }
+
+            // Platforms
+            if (p.clientSource === 'platforms') {
+                actions.push({
+                    title: 'Escape the Platform Race to the Bottom',
+                    text: 'Upwork and Fiverr compress rates. Start building a direct client pipeline through content marketing or warm outreach. Every client you win directly is worth 2-3x a platform client because you keep 100% and set your own terms.'
+                });
+            }
+
+            // Pushback
+            if (a.pushback <= 1) {
+                actions.push({
+                    title: 'No Pushback Means You\'re Priced Too Low',
+                    text: 'If nobody ever pushes back on your rate, you\'re leaving money on the table. The sweet spot is occasional pushback: it means you\'re priced at the edge of what the market will bear.'
+                });
+            }
+
+            // Always push back
+            if (a.pushback >= 4) {
+                actions.push({
+                    title: 'Qualify Leads Before You Quote',
+                    text: 'Constant pushback means you\'re either attracting budget clients or not communicating your value upfront. Add a budget question to your intake form to filter out price shoppers before you invest time in a proposal.'
+                });
+            }
+
+            // Cap at 5
+            return actions.slice(0, 5);
+        }
+
+        // ===================================================
+        //  RENDER RESULTS
+        // ===================================================
+        function renderResults() {
+            const r = state.results;
+            if (!r) return;
+
+            // Animate score
+            animateScore(r.score, r.verdictColor);
+
+            // Verdict
+            $('#verdictLabel').textContent = r.verdict;
+            $('#verdictLabel').style.color = r.verdictColor;
+            $('#verdictDesc').textContent = r.verdictDesc;
+
+            // Market position
+            renderMarketMeter(r);
+
+            // Money reveal
+            animateMoneyReveal(r);
+
+            // Rate recommendations
+            renderRateRec(r);
+
+            // What-if
+            const whatifSlider = $('#whatifSlider');
+            whatifSlider.value = Math.round((r.recommendedMin + r.recommendedMax) / 2);
+            updateWhatIf();
+            updateSliderTrack(whatifSlider);
+
+            // Action plan
+            renderActionPlan(r.actions);
+
+            // Share
+            $('#shareScoreText').textContent = `Score: ${r.score}/100`;
+            $('#shareScoreInline').textContent = r.score;
+
+            // Confetti for high scores
+            if (r.score >= 85) {
+                setTimeout(launchConfetti, 1500);
+            }
+        }
+
+        // ===================================================
+        //  ANIMATED SCORE GAUGE
+        // ===================================================
+        function animateScore(target, color) {
+            const fill = $('#gaugeFill');
+            const numberEl = $('#scoreNumber');
+            const circumference = 2 * Math.PI * 88;
+
+            fill.style.stroke = color;
+            fill.setAttribute('stroke-dasharray', circumference);
+            fill.setAttribute('stroke-dashoffset', circumference);
+
+            // Trigger animation
+            setTimeout(() => {
+                const offset = circumference - (target / 100) * circumference;
+                fill.style.strokeDashoffset = offset;
+            }, 300);
+
+            // Count up number
+            let current = 0;
+            const duration = 2000;
+            const step = target / (duration / 16);
+            const interval = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(interval);
+                }
+                numberEl.textContent = Math.round(current);
+                numberEl.style.color = color;
+            }, 16);
+        }
+
+        // ===================================================
+        //  MARKET METER
+        // ===================================================
+        function renderMarketMeter(r) {
+            const marker = $('#meterMarker');
+            const markerLabel = $('#markerLabel');
+            const medianLabel = $('#medianLabel');
+            const rateInfo = $('#meterRateInfo');
+
+            markerLabel.textContent = `$${state.profile.hourlyRate}/hr`;
+            medianLabel.textContent = `Median: $${r.median}/hr`;
+            rateInfo.textContent = `Your rate: $${state.profile.hourlyRate}/hr vs market median: $${r.median}/hr`;
+
+            // Animate marker position
+            setTimeout(() => {
+                marker.style.left = r.marketPositionPct + '%';
+            }, 600);
+        }
+
+        // ===================================================
+        //  MONEY REVEAL (the viral moment)
+        // ===================================================
+        function animateMoneyReveal(r) {
+            if (r.annualDiff <= 0) {
+                $('#moneyNumber').textContent = '0';
+                $('#moneyMonthly').textContent = '$0';
+                $('#money5yr').textContent = '$0';
+                $('#moneyLifetime').textContent = '$0';
+                $('.money-reveal-title').textContent = "You're Not Leaving Money on the Table!";
+                $('#moneyCard').classList.remove('pulse-money');
+                return;
+            }
+
+            const moneyEl = $('#moneyNumber');
+            const target = r.annualDiff;
+            let current = 0;
+            const duration = 2500;
+            const startTime = Date.now();
+
+            // Delay start for dramatic effect
+            setTimeout(() => {
+                const animate = () => {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    // Ease-out cubic
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    current = Math.round(target * eased);
+
+                    moneyEl.textContent = current.toLocaleString();
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        // Shake animation at the end
+                        $('#moneyCard').style.animation = 'shakeAttention 0.5s ease-in-out';
+                        setTimeout(() => {
+                            $('#moneyCard').style.animation = '';
+                        }, 500);
+                    }
+                };
+                animate();
+
+                // Static values
+                $('#moneyMonthly').textContent = formatCurrency(r.monthlyDiff);
+                $('#money5yr').textContent = formatCurrency(r.fiveYearDiff);
+                $('#moneyLifetime').textContent = formatCurrency(r.tenYearDiff);
+            }, 800);
+        }
+
+        // ===================================================
+        //  RATE RECOMMENDATIONS
+        // ===================================================
+        function renderRateRec(r) {
+            const grid = $('#rateGrid');
+            const items = [
+                { label: 'Minimum Viable Rate (costs + taxes + savings)', value: `$${r.minimumViable}/hr`, cls: '' },
+                { label: `Market Median for Your Profile`, value: `$${r.median}/hr`, cls: '' },
+                { label: 'Your Recommended Range', value: `$${r.recommendedMin} - $${r.recommendedMax}/hr`, cls: 'recommended' },
+                { label: 'Premium Rate (top 20%)', value: `$${r.premiumRate}/hr`, cls: '' },
+                { label: 'Aspirational Rate (top 10%)', value: `$${r.aspirational}/hr`, cls: '' }
+            ];
+
+            grid.innerHTML = items.map(item => `
+                <div class="rate-rec-item ${item.cls}">
+                    <span class="rate-rec-label">${item.label}</span>
+                    <span class="rate-rec-value">${item.value}</span>
+                </div>
+            `).join('');
+        }
+
+        // ===================================================
+        //  ACTION PLAN
+        // ===================================================
+        function renderActionPlan(actions) {
+            const container = $('#actionPlan');
+            if (actions.length === 0) {
+                container.innerHTML = '<div class="action-item"><div class="action-content"><h4>You\'re Doing Great</h4><p>Your pricing strategy looks solid. Keep doing what you\'re doing and consider a strategic rate increase every 6-12 months.</p></div></div>';
+                return;
+            }
+
+            container.innerHTML = actions.map((a, i) => `
+                <div class="action-item">
+                    <div class="action-number">${i + 1}</div>
+                    <div class="action-content">
+                        <h4>${a.title}</h4>
+                        <p>${a.text}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===================================================
+        //  WHAT-IF SLIDER
+        // ===================================================
+        function bindWhatIf() {
+            const slider = $('#whatifSlider');
+            slider.addEventListener('input', () => {
+                updateWhatIf();
+                updateSliderTrack(slider);
+            });
+        }
+
+        function updateWhatIf() {
+            const slider = $('#whatifSlider');
+            const newRate = parseInt(slider.value);
+            const currentRate = state.profile.hourlyRate;
+            const diff = (newRate - currentRate) * ANNUAL_HOURS;
+            const fiveYearDiff = diff * 5;
+
+            $('#whatifRateDisplay').textContent = `$${newRate}/hr`;
+
+            if (diff > 0) {
+                $('#whatifResult').innerHTML = `At <strong>$${newRate}/hr</strong>, you'd earn <span class="highlight">+${formatCurrency(diff)}/year</span> more.<br>Over 5 years, that's <span class="highlight">${formatCurrency(fiveYearDiff)}</span> in additional income.`;
+            } else if (diff < 0) {
+                $('#whatifResult').innerHTML = `At <strong>$${newRate}/hr</strong>, you'd earn <span style="color:#ef4444">${formatCurrency(diff)}/year</span> less.`;
+            } else {
+                $('#whatifResult').innerHTML = `That's your current rate. Try sliding higher to see the potential.`;
+            }
+        }
+
+        // ===================================================
+        //  SHARE
+        // ===================================================
+        function bindShareEvents() {
+            $('#shareTwitter').addEventListener('click', () => {
+                const score = state.results ? state.results.score : 0;
+                const text = encodeURIComponent(`I scored ${score}/100 on the Pricing Confidence Test. Am I charging enough? Find out:\n\nhttps://freelanceos.pro/freelanceos-storefront/pricing-confidence.html`);
+                window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank', 'width=550,height=420');
+            });
+
+            $('#copyResult').addEventListener('click', () => {
+                const score = state.results ? state.results.score : 0;
+                const verdict = state.results ? state.results.verdict : '';
+                const text = `I scored ${score}/100 (${verdict}) on the Pricing Confidence Test. Am I charging enough? Find out: https://freelanceos.pro/freelanceos-storefront/pricing-confidence.html`;
+
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('Copied to clipboard!');
+                }).catch(() => {
+                    // Fallback
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    showToast('Copied to clipboard!');
+                });
+            });
+        }
+
+        // ===================================================
+        //  CONFETTI
+        // ===================================================
+        function launchConfetti() {
+            const colors = ['#a855f7', '#ec4899', '#6366f1', '#22c55e', '#eab308', '#3b82f6'];
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const piece = document.createElement('div');
+                    piece.className = 'confetti-piece';
+                    piece.style.left = Math.random() * 100 + 'vw';
+                    piece.style.width = (Math.random() * 8 + 4) + 'px';
+                    piece.style.height = (Math.random() * 8 + 4) + 'px';
+                    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    piece.style.animationDelay = (Math.random() * 0.5) + 's';
+                    document.body.appendChild(piece);
+                    setTimeout(() => piece.remove(), 4000);
+                }, i * 30);
+            }
+        }
+
+        // ===================================================
+        //  UTILS
+        // ===================================================
+        function formatCurrency(amount) {
+            if (amount >= 1000000) {
+                return '$' + (amount / 1000000).toFixed(1) + 'M';
+            }
+            if (Math.abs(amount) >= 1000) {
+                return '$' + Math.abs(amount).toLocaleString();
+            }
+            return '$' + Math.abs(amount).toLocaleString();
+        }
+
+        function showToast(message) {
+            const toast = $('#toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // ===================================================
+        //  LAUNCH
+        // ===================================================
+        document.addEventListener('DOMContentLoaded', init);
+    })();
+    </script>
+</body>
+</html>

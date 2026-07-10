@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Client Feedback Loop Dashboard for Freelancers | FreelanceOS</title>
+<meta name="description" content="Track client feedback, monitor sentiment trends, convert feedback into action items, and improve client satisfaction — all free, runs in your browser.">
+<meta name="keywords" content="client feedback dashboard, freelancer tools, feedback tracker, client sentiment, freelance business tools">
+<meta property="og:title" content="Free Client Feedback Loop Dashboard for Freelancers | FreelanceOS">
+<meta property="og:description" content="Track client feedback, monitor sentiment trends, convert feedback into action items, and improve client satisfaction — all free, runs in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.com/feedback-loop">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Client Feedback Loop Dashboard for Freelancers | FreelanceOS">
+<meta name="twitter:description" content="Track client feedback, monitor sentiment trends, convert feedback into action items, and improve client satisfaction — all free, runs in your browser.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Client Feedback Loop Dashboard",
+  "description": "A free browser-based dashboard for freelancers to track client feedback, monitor sentiment trends, and convert feedback into actionable improvements.",
+  "url": "https://freelanceos.com/feedback-loop",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#020617;--card:#0f172a;--border:rgba(168,85,247,0.2);--border-hover:rgba(168,85,247,0.5);
+  --accent1:#a855f7;--accent2:#ec4899;--text:#e2e8f0;--muted:#94a3b8;
+  --positive:#22c55e;--negative:#ef4444;--neutral:#f59e0b;
+  --card-radius:16px;--btn-radius:12px;
+  --gradient:linear-gradient(135deg,#a855f7,#ec4899);
+}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh;font-size:15px;line-height:1.6}
+h1,h2,h3,h4{font-weight:700;line-height:1.3}
+a{color:var(--accent1);text-decoration:none}
+a:hover{text-decoration:underline}
+button{cursor:pointer;border:none;font-family:inherit;font-size:14px}
+input,select,textarea{font-family:inherit;font-size:14px;color:var(--text);background:#1e293b;border:1px solid var(--border);border-radius:8px;padding:8px 12px;width:100%;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent1)}
+select option{background:#1e293b}
+textarea{resize:vertical;min-height:80px}
+label{font-size:13px;color:var(--muted);display:block;margin-bottom:4px}
+
+/* CTA Banner */
+.cta-banner{background:var(--gradient);padding:14px 20px;text-align:center;font-size:14px;font-weight:600;position:sticky;top:0;z-index:100}
+.cta-banner a{color:#fff;text-decoration:underline}
+
+/* Header */
+.header{padding:28px 20px 20px;max-width:1200px;margin:0 auto}
+.header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:22px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.badge{background:rgba(168,85,247,0.15);border:1px solid var(--border);color:var(--accent1);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.disclaimer{background:rgba(168,85,247,0.06);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:12px;color:var(--muted);margin-top:12px;display:flex;align-items:center;gap:8px}
+
+/* Nav Tabs */
+.nav{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:50px;z-index:90;overflow-x:auto}
+.nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 20px}
+.nav-tab{padding:14px 16px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;background:none;transition:all .2s}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--accent1);border-bottom-color:var(--accent1)}
+
+/* Main */
+.main{max-width:1200px;margin:0 auto;padding:24px 20px 60px}
+.section{display:none}
+.section.active{display:block}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--card-radius);padding:20px;transition:border-color .2s}
+.card:hover{border-color:var(--border-hover)}
+.card-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.card-subtitle{font-size:13px;color:var(--muted);margin-bottom:16px}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--btn-radius);font-weight:600;font-size:13px;transition:all .2s;cursor:pointer}
+.btn-primary{background:var(--gradient);color:#fff;border:none}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--border-hover);color:var(--text)}
+.btn-danger{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3)}
+.btn-danger:hover{background:rgba(239,68,68,.25)}
+.btn-success{background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.3)}
+.btn-sm{padding:6px 12px;font-size:12px;border-radius:8px}
+
+/* Form */
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:12px}
+.form-group{display:flex;flex-direction:column}
+.form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+
+/* Sentiment badges */
+.badge-positive{background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.3);padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-negative{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3);padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-neutral{background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3);padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-type{background:rgba(168,85,247,.15);color:var(--accent1);border:1px solid var(--border);padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-priority-high{background:rgba(239,68,68,.15);color:#ef4444;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.badge-priority-medium{background:rgba(245,158,11,.15);color:#f59e0b;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.badge-priority-low{background:rgba(34,197,94,.15);color:#22c55e;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+
+/* Stat cards */
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.stat-value{font-size:28px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px}
+.stat-change{font-size:12px;margin-top:4px}
+.stat-change.up{color:var(--positive)}
+.stat-change.down{color:var(--negative)}
+
+/* Gauge */
+.gauge-wrap{display:flex;justify-content:center;margin:8px 0}
+canvas.gauge{display:block}
+
+/* Feedback item */
+.feedback-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;transition:border-color .2s}
+.feedback-item:hover{border-color:var(--border-hover)}
+.feedback-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.feedback-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.feedback-client{font-weight:700;font-size:15px}
+.feedback-project{font-size:12px;color:var(--muted)}
+.feedback-date{font-size:12px;color:var(--muted)}
+.feedback-text{font-size:14px;color:var(--text);line-height:1.6;margin-top:8px}
+.feedback-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+
+/* Action items */
+.action-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px}
+.action-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.action-title{font-weight:600;font-size:14px;flex:1}
+.status-open{background:rgba(239,68,68,.12);color:#ef4444;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.status-progress{background:rgba(245,158,11,.12);color:#f59e0b;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.status-done{background:rgba(34,197,94,.12);color:#22c55e;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+
+/* Filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filter-select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:8px;font-size:13px;cursor:pointer;min-width:140px}
+.search-input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-size:13px;min-width:200px}
+
+/* Templates */
+.template-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.template-title{font-size:14px;font-weight:700;margin-bottom:4px;color:var(--accent1)}
+.template-preview{font-size:13px;color:var(--muted);margin-bottom:10px;line-height:1.5}
+.template-full{display:none;font-size:13px;color:var(--text);line-height:1.7;white-space:pre-wrap;background:rgba(168,85,247,.05);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px}
+.template-full.open{display:block}
+
+/* Client cards */
+.client-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.client-name-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.client-name{font-size:16px;font-weight:700}
+.trend-bar{width:100%;height:6px;background:#1e293b;border-radius:3px;overflow:hidden;margin:6px 0}
+.trend-fill{height:100%;border-radius:3px;transition:width .5s}
+.at-risk{border-color:rgba(239,68,68,.4)!important}
+.thriving{border-color:rgba(34,197,94,.4)!important}
+.alert-banner{padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.alert-risk{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
+.alert-good{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.2)}
+
+/* Improvement tracker */
+.improvement-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:start;margin:10px 0}
+.compare-before,.compare-after{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px}
+.compare-arrow{color:var(--accent1);font-size:18px;display:flex;align-items:center;padding-top:10px}
+
+/* Charts */
+.chart-wrap{position:relative;margin:12px 0}
+canvas{display:block;max-width:100%}
+
+/* Tag cloud */
+.tag-cloud{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.tag{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:default;transition:transform .15s}
+.tag:hover{transform:scale(1.05)}
+
+/* Scheduler */
+.schedule-row{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(168,85,247,.05);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;flex-wrap:wrap}
+.schedule-client{font-weight:600;font-size:14px;flex:1}
+.schedule-interval{font-size:12px;color:var(--muted)}
+.schedule-next{font-size:12px;color:var(--accent1);font-weight:600}
+
+/* Empty state */
+.empty{text-align:center;padding:48px 20px;color:var(--muted)}
+.empty-icon{font-size:48px;margin-bottom:12px;opacity:.5}
+.empty h3{font-size:18px;margin-bottom:6px;color:var(--text)}
+.empty p{font-size:14px}
+
+/* Toast */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{background:#1e293b;border:1px solid var(--border);color:var(--text);padding:12px 18px;border-radius:10px;font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,.5);animation:fadeIn .3s ease;display:flex;align-items:center;gap:8px}
+.toast.success{border-color:rgba(34,197,94,.4);color:#22c55e}
+.toast.error{border-color:rgba(239,68,68,.4);color:#ef4444}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--card-radius);padding:24px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.modal-title{font-size:18px;font-weight:700}
+.modal-close{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:18px;line-height:1}
+
+/* Section header */
+.section-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.section-title{font-size:22px;font-weight:800}
+.section-desc{font-size:14px;color:var(--muted);margin-top:4px}
+
+/* Progress */
+.progress-bar{width:100%;height:8px;background:#1e293b;border-radius:4px;overflow:hidden;margin:4px 0}
+.progress-fill{height:100%;background:var(--gradient);border-radius:4px;transition:width .5s}
+
+/* Footer */
+.footer{text-align:center;padding:32px 20px;border-top:1px solid var(--border);color:var(--muted);font-size:13px;margin-top:40px}
+.footer a{color:var(--accent1)}
+
+/* Responsive */
+@media(max-width:600px){
+  .nav-tab{padding:12px 10px;font-size:12px}
+  .section-title{font-size:18px}
+  .stat-value{font-size:22px}
+  .compare-row{grid-template-columns:1fr;gap:4px}
+  .compare-arrow{justify-content:center;padding:0}
+  .modal{padding:16px}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(168,85,247,.3);border-radius:3px}
+
+/* Chart line styles */
+.line-chart-svg{width:100%;overflow:visible}
+</style>
+</head>
+<body>
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+  🚀 Get the full FreelanceOS template pack — use code <strong>FLASH40</strong> for 40% off!
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener"> Claim deal →</a>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="logo">FreelanceOS</div>
+      <h1 style="font-size:18px;font-weight:700;margin-top:2px">Client Feedback Loop Dashboard</h1>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="badge">Tool #69</span>
+      <span class="badge">Free</span>
+    </div>
+  </div>
+  <div class="disclaimer">
+    🔒 This tool runs entirely in your browser. No data is sent to any server.
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav" role="navigation" aria-label="Dashboard sections">
+  <div class="nav-inner">
+    <button class="nav-tab active" onclick="showSection('dashboard')" aria-label="Sentiment Dashboard">Dashboard</button>
+    <button class="nav-tab" onclick="showSection('collect')" aria-label="Collect Feedback">Collect</button>
+    <button class="nav-tab" onclick="showSection('timeline')" aria-label="Feedback Timeline">Timeline</button>
+    <button class="nav-tab" onclick="showSection('actions')" aria-label="Action Items">Actions</button>
+    <button class="nav-tab" onclick="showSection('clients')" aria-label="Client Trends">Clients</button>
+    <button class="nav-tab" onclick="showSection('templates')" aria-label="Response Templates">Templates</button>
+    <button class="nav-tab" onclick="showSection('scheduler')" aria-label="Request Scheduler">Scheduler</button>
+    <button class="nav-tab" onclick="showSection('improvements')" aria-label="Improvement Tracker">Improvements</button>
+    <button class="nav-tab" onclick="showSection('export')" aria-label="Export & Reports">Export</button>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ====== DASHBOARD ====== -->
+<section id="section-dashboard" class="section active">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Sentiment Dashboard</h2>
+      <p class="section-desc">Visual overview of your client feedback health</p>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="renderDashboard()">↻ Refresh</button>
+  </div>
+
+  <div class="grid-4" style="margin-bottom:20px" id="dash-stats"></div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title">Overall Sentiment Score</div>
+      <div class="card-subtitle">Based on all feedback entries</div>
+      <div class="gauge-wrap"><canvas id="gaugeCanvas" width="240" height="130" class="gauge"></canvas></div>
+      <p id="gaugeLabel" style="text-align:center;font-size:13px;color:var(--muted);margin-top:-4px"></p>
+    </div>
+    <div class="card">
+      <div class="card-title">Feedback by Type</div>
+      <div class="card-subtitle">Distribution of feedback categories</div>
+      <div class="chart-wrap" style="height:160px">
+        <canvas id="donutCanvas" width="300" height="160"></canvas>
+      </div>
+      <div id="donut-legend" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title">Sentiment Over Time</div>
+    <div class="card-subtitle">Positive % per month</div>
+    <div class="chart-wrap" style="height:160px">
+      <canvas id="lineCanvas" width="700" height="160"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Common Themes</div>
+    <div class="card-subtitle">Keywords from all feedback</div>
+    <div id="tag-cloud" class="tag-cloud"></div>
+  </div>
+</section>
+
+<!-- ====== COLLECT ====== -->
+<section id="section-collect" class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Feedback Collection Hub</h2>
+      <p class="section-desc">Add new client feedback entries</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Add Feedback Entry</div>
+    <div class="card-subtitle">Log feedback from a client interaction</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="fc-client">Client Name *</label>
+        <input type="text" id="fc-client" placeholder="e.g. Acme Corp">
+      </div>
+      <div class="form-group">
+        <label for="fc-project">Project / Work</label>
+        <input type="text" id="fc-project" placeholder="e.g. Website Redesign">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="fc-date">Date</label>
+        <input type="date" id="fc-date">
+      </div>
+      <div class="form-group">
+        <label for="fc-type">Feedback Type *</label>
+        <select id="fc-type">
+          <option value="Praise">Praise</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Complaint">Complaint</option>
+          <option value="Feature Request">Feature Request</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="fc-sentiment">Sentiment *</label>
+        <select id="fc-sentiment">
+          <option value="Positive">Positive</option>
+          <option value="Neutral">Neutral</option>
+          <option value="Negative">Negative</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fc-priority">Priority</label>
+        <select id="fc-priority">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label for="fc-text">Feedback Text *</label>
+      <textarea id="fc-text" placeholder="Paste or type the client's exact feedback here..."></textarea>
+    </div>
+    <div class="form-group" style="margin-bottom:0">
+      <label for="fc-source">Source</label>
+      <input type="text" id="fc-source" placeholder="e.g. Email, Call, Survey, Slack">
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" onclick="addFeedback()">+ Add Feedback</button>
+      <button class="btn btn-ghost" onclick="clearFeedbackForm()">Clear</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TIMELINE ====== -->
+<section id="section-timeline" class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Feedback Timeline</h2>
+      <p class="section-desc">Chronological view of all feedback</p>
+    </div>
+    <span id="timeline-count" style="font-size:13px;color:var(--muted)"></span>
+  </div>
+
+  <div class="filters">
+    <input type="text" class="search-input" id="tl-search" placeholder="Search feedback..." oninput="renderTimeline()">
+    <select class="filter-select" id="tl-client" onchange="renderTimeline()"><option value="">All Clients</option></select>
+    <select class="filter-select" id="tl-sentiment" onchange="renderTimeline()">
+      <option value="">All Sentiments</option>
+      <option value="Positive">Positive</option>
+      <option value="Neutral">Neutral</option>
+      <option value="Negative">Negative</option>
+    </select>
+    <select class="filter-select" id="tl-type" onchange="renderTimeline()">
+      <option value="">All Types</option>
+      <option value="Praise">Praise</option>
+      <option value="Suggestion">Suggestion</option>
+      <option value="Complaint">Complaint</option>
+      <option value="Feature Request">Feature Request</option>
+    </select>
+    <input type="date" class="filter-select" id="tl-from" onchange="renderTimeline()" title="From date">
+    <input type="date" class="filter-select" id="tl-to" onchange="renderTimeline()" title="To date">
+  </div>
+
+  <div id="timeline-list"></div>
+</section>
+
+<!-- ====== ACTIONS ====== -->
+<section id="section-actions" class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Action Item Generator</h2>
+      <p class="section-desc">Convert feedback into tasks and track resolution</p>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="openAddActionModal()">+ New Action</button>
+  </div>
+
+  <div class="filters">
+    <select class="filter-select" id="ai-status" onchange="renderActions()">
+      <option value="">All Statuses</option>
+      <option value="Open">Open</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Done">Done</option>
+    </select>
+    <select class="filter-select" id="ai-priority" onchange="renderActions()">
+      <option value="">All Priorities</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+  </div>
+
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <div class="stat-card" style="flex:1;min-width:100px"><div class="stat-value" id="ai-open-count">0</div><div class="stat-label">Open</div></div>
+    <div class="stat-card" style="flex:1;min-width:100px"><div class="stat-value" id="ai-progress-count">0</div><div class="stat-label">In Progress</div></div>
+    <div class="stat-card" style="flex:1;min-width:100px"><div class="stat-value" id="ai-done-count">0</div><div class="stat-label">Done</div></div>
+  </div>
+
+  <div id="actions-list"></div>
+</section>
+
+<!-- ====== CLIENTS ====== -->
+<section id="section-clients" class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Client Satisfaction Trends</h2>
+      <p class="section-desc">Track satisfaction per client over time</p>
+    </div>
+  </div>
+  <div id="clients-list"></div>
+</section>
+
+<!-- ====== TEMPLATES ====== -->
+<section id="section-templates" class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Response Templates</h2>
+      <p class="section-desc">Professional response templates for any feedback situation</p>
+    </div>
+  </div>
+  <div id="templates-list"></div>
+</section>
+
+<!-- ====== SCHEDULER ====== -->
+<section id="section-scheduler" class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Feedback Request Scheduler</h2>
+      <p class="section-desc">Schedule when to request feedback from each client</p>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="openAddScheduleModal()">+ Add Client</button>
+  </div>
+
+  <div id="schedule-list"></div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title" style="margin-bottom:12px">Generate Feedback Request Email</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Client Name</label>
+        <input type="text" id="email-client" placeholder="Client name">
+      </div>
+      <div class="form-group">
+        <label>Project / Work Completed</label>
+        <input type="text" id="email-project" placeholder="Recent project or work">
+      </div>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="generateFeedbackEmail()">Generate Email</button>
+    <div id="email-output" style="display:none;margin-top:12px">
+      <label>Generated Email</label>
+      <textarea id="email-text" style="min-height:200px;font-size:13px;line-height:1.6" readonly></textarea>
+      <button class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="copyEmail()">Copy Email</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== IMPROVEMENTS ====== -->
+<section id="section-improvements" class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Improvement Tracker</h2>
+      <p class="section-desc">Log improvements made based on client feedback</p>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="openAddImprovementModal()">+ Log Improvement</button>
+  </div>
+  <div id="improvements-list"></div>
+</section>
+
+<!-- ====== EXPORT ====== -->
+<section id="section-export" class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Export & Reports</h2>
+      <p class="section-desc">Download your feedback data in multiple formats</p>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card" style="text-align:center;padding:28px 20px">
+      <div style="font-size:36px;margin-bottom:12px">📊</div>
+      <div class="card-title">Full HTML Report</div>
+      <div class="card-subtitle">Visual report with charts and all data</div>
+      <button class="btn btn-primary" style="margin-top:12px" onclick="exportHTMLReport()">Download HTML</button>
+    </div>
+    <div class="card" style="text-align:center;padding:28px 20px">
+      <div style="font-size:36px;margin-bottom:12px">📋</div>
+      <div class="card-title">CSV Export</div>
+      <div class="card-subtitle">All feedback as a spreadsheet-ready CSV</div>
+      <button class="btn btn-primary" style="margin-top:12px" onclick="exportCSV()">Download CSV</button>
+    </div>
+    <div class="card" style="text-align:center;padding:28px 20px">
+      <div style="font-size:36px;margin-bottom:12px">📝</div>
+      <div class="card-title">Monthly Summary</div>
+      <div class="card-subtitle">Text summary of this month's feedback</div>
+      <button class="btn btn-primary" style="margin-top:12px" onclick="exportMonthlySummary()">Download Summary</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title" style="margin-bottom:12px">Data Management</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-ghost btn-sm" onclick="exportJSON()">Export Backup (JSON)</button>
+      <button class="btn btn-ghost btn-sm" onclick="importJSON()">Import Backup</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
+      <button class="btn btn-danger btn-sm" onclick="clearAllData()">Clear All Data</button>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px">All data is stored in your browser's localStorage. Export a backup regularly to avoid data loss.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ====== MODALS ====== -->
+
+<!-- Add Action Modal -->
+<div class="modal-overlay" id="modal-action">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="action-modal-title">New Action Item</h3>
+      <button class="modal-close" onclick="closeModal('modal-action')">×</button>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Action Title *</label>
+      <input type="text" id="am-title" placeholder="What needs to be done?">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Status</label>
+        <select id="am-status">
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="am-priority">
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Due Date</label>
+        <input type="date" id="am-due">
+      </div>
+      <div class="form-group">
+        <label>Linked Client</label>
+        <input type="text" id="am-client" placeholder="Client name">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Description</label>
+      <textarea id="am-desc" placeholder="Details about this action..."></textarea>
+    </div>
+    <div class="form-group" style="margin-bottom:0">
+      <label>Linked Feedback (optional)</label>
+      <select id="am-feedback">
+        <option value="">None</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" onclick="saveAction()">Save Action</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-action')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Schedule Modal -->
+<div class="modal-overlay" id="modal-schedule">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Add Feedback Schedule</h3>
+      <button class="modal-close" onclick="closeModal('modal-schedule')">×</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Client Name *</label>
+        <input type="text" id="sm-client" placeholder="Client name">
+      </div>
+      <div class="form-group">
+        <label>Interval</label>
+        <select id="sm-interval">
+          <option value="After each project">After each project</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Quarterly">Quarterly</option>
+          <option value="Biannually">Biannually</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:0">
+      <label>Last Feedback Date</label>
+      <input type="date" id="sm-last">
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" onclick="saveSchedule()">Save Schedule</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-schedule')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Improvement Modal -->
+<div class="modal-overlay" id="modal-improvement">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Log Improvement</h3>
+      <button class="modal-close" onclick="closeModal('modal-improvement')">×</button>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Improvement Title *</label>
+      <input type="text" id="im-title" placeholder="What was improved?">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date Implemented</label>
+        <input type="date" id="im-date">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="im-category">
+          <option value="Process">Process</option>
+          <option value="Communication">Communication</option>
+          <option value="Deliverable Quality">Deliverable Quality</option>
+          <option value="Pricing">Pricing</option>
+          <option value="Turnaround Time">Turnaround Time</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Before (how it was)</label>
+      <textarea id="im-before" placeholder="Describe the situation before the improvement..."></textarea>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>After (how it is now)</label>
+      <textarea id="im-after" placeholder="Describe what was improved and the outcome..."></textarea>
+    </div>
+    <div class="form-group" style="margin-bottom:0">
+      <label>Linked Feedback</label>
+      <select id="im-feedback">
+        <option value="">None</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" onclick="saveImprovement()">Save Improvement</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-improvement')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>FreelanceOS — Tool #69 of 49+ free tools for freelancers</p>
+  <p style="margin-top:6px"><a href="/freelanceos-storefront/free-templates.html">← Back to Free Templates</a></p>
+  <p style="margin-top:6px;font-size:12px">🔒 This tool runs entirely in your browser. No data is sent to any server.</p>
+  <p style="margin-top:10px">
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;padding:10px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none">
+      Get Full FreelanceOS Pack — 40% off with FLASH40 →
+    </a>
+  </p>
+</footer>
+
+<script>
+// ============================================================
+// STATE & STORAGE
+// ============================================================
+const KEYS = {
+  feedback: 'flos_feedback',
+  actions: 'flos_actions',
+  schedules: 'flos_schedules',
+  improvements: 'flos_improvements'
+};
+
+function load(key) {
+  try { return JSON.parse(localStorage.getItem(key)) || []; }
+  catch(e) { return []; }
+}
+function save(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+let feedback = load(KEYS.feedback);
+let actions = load(KEYS.actions);
+let schedules = load(KEYS.schedules);
+let improvements = load(KEYS.improvements);
+
+// Seed sample data if empty
+function seedData() {
+  if (feedback.length > 0) return;
+  const now = new Date();
+  const sampleFeedback = [
+    { id: uid(), client: 'Acme Corp', project: 'Website Redesign', date: fmtDate(new Date(now - 86400000*5)), type: 'Praise', sentiment: 'Positive', priority: 'Low', text: 'Absolutely love the new design! The user experience is so much better and our conversion rate has already improved by 15%.', source: 'Email' },
+    { id: uid(), client: 'TechStart Ltd', project: 'Logo Design', date: fmtDate(new Date(now - 86400000*12)), type: 'Complaint', sentiment: 'Negative', priority: 'High', text: "The initial mockups didn't match what we discussed in the brief. We expected 3 concepts but only received 2.", source: 'Call' },
+    { id: uid(), client: 'GreenPath', project: 'Social Media Content', date: fmtDate(new Date(now - 86400000*20)), type: 'Suggestion', sentiment: 'Neutral', priority: 'Medium', text: 'The content quality is great. It would help if you could send a content calendar at the start of each month so we can plan our approvals better.', source: 'Slack' },
+    { id: uid(), client: 'Acme Corp', project: 'SEO Audit', date: fmtDate(new Date(now - 86400000*35)), type: 'Feature Request', sentiment: 'Positive', priority: 'Medium', text: 'Really happy with the audit. Could you also look into our competitor backlink profiles next time?', source: 'Email' },
+    { id: uid(), client: 'Bloom Agency', project: 'Copywriting', date: fmtDate(new Date(now - 86400000*45)), type: 'Praise', sentiment: 'Positive', priority: 'Low', text: 'The copy you wrote for our landing page exceeded all expectations. Open rates are up 30%!', source: 'Email' },
+    { id: uid(), client: 'TechStart Ltd', project: 'Brand Guidelines', date: fmtDate(new Date(now - 86400000*60)), type: 'Complaint', sentiment: 'Negative', priority: 'High', text: 'Turnaround was 3 days late. This caused us to miss our product launch date. We need better deadline management.', source: 'Call' },
+    { id: uid(), client: 'GreenPath', project: 'Email Campaign', date: fmtDate(new Date(now - 86400000*75)), type: 'Praise', sentiment: 'Positive', priority: 'Low', text: 'Best email campaign we have run. 42% open rate versus our usual 18%. Well done!', source: 'Survey' },
+    { id: uid(), client: 'Bloom Agency', project: 'Video Scripts', date: fmtDate(new Date(now - 86400000*90)), type: 'Suggestion', sentiment: 'Neutral', priority: 'Low', text: 'Scripts were solid. Consider adding more data-driven hooks at the start to improve viewer retention.', source: 'Slack' }
+  ];
+  feedback = sampleFeedback;
+  save(KEYS.feedback, feedback);
+
+  actions = [
+    { id: uid(), title: 'Deliver 3 logo concepts (not 2) for next TechStart project', status: 'Open', priority: 'High', due: fmtDate(new Date(now + 86400000*7)), client: 'TechStart Ltd', desc: 'Always provide 3 concepts as agreed in contract.', linkedFeedback: '' },
+    { id: uid(), title: 'Create monthly content calendar template', status: 'In Progress', priority: 'Medium', due: fmtDate(new Date(now + 86400000*14)), client: 'GreenPath', desc: 'Build a reusable content calendar to send at month start.', linkedFeedback: '' },
+    { id: uid(), title: 'Implement deadline tracking with 48hr buffer', status: 'Done', priority: 'High', due: fmtDate(new Date(now - 86400000*5)), client: 'TechStart Ltd', desc: 'Add 2-day buffer to all project timelines.', linkedFeedback: '' }
+  ];
+  save(KEYS.actions, actions);
+
+  schedules = [
+    { id: uid(), client: 'Acme Corp', interval: 'Monthly', last: fmtDate(new Date(now - 86400000*5)) },
+    { id: uid(), client: 'TechStart Ltd', interval: 'After each project', last: fmtDate(new Date(now - 86400000*12)) },
+    { id: uid(), client: 'GreenPath', interval: 'Quarterly', last: fmtDate(new Date(now - 86400000*20)) }
+  ];
+  save(KEYS.schedules, schedules);
+
+  improvements = [
+    { id: uid(), title: 'Added 2-day deadline buffer to all projects', date: fmtDate(new Date(now - 86400000*3)), category: 'Process', before: 'Delivered projects on exactly the agreed date with no buffer, leading to missed deadlines when unexpected issues arose.', after: 'All project timelines now include a 2-day buffer. Client-facing deadline is 2 days earlier than internal deadline.', linkedFeedback: '' }
+  ];
+  save(KEYS.improvements, improvements);
+}
+
+function fmtDate(d) {
+  return d.toISOString().split('T')[0];
+}
+function displayDate(s) {
+  if (!s) return '';
+  const d = new Date(s + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const labels = ['dashboard','collect','timeline','actions','clients','templates','scheduler','improvements','export'];
+  const idx = labels.indexOf(id);
+  if (idx >= 0) tabs[idx].classList.add('active');
+  if (id === 'dashboard') renderDashboard();
+  if (id === 'timeline') { populateClientFilter(); renderTimeline(); }
+  if (id === 'actions') renderActions();
+  if (id === 'clients') renderClients();
+  if (id === 'scheduler') renderScheduler();
+  if (id === 'improvements') renderImprovements();
+  if (id === 'templates') renderTemplates();
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function toast(msg, type='success') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = (type==='success'?'✓ ':type==='error'?'✗ ':'ℹ ') + msg;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(()=>t.remove(), 300); }, 3000);
+}
+
+// ============================================================
+// MODALS
+// ============================================================
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
+});
+
+// ============================================================
+// FEEDBACK COLLECTION
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('fc-date').value = fmtDate(new Date());
+  seedData();
+  renderDashboard();
+});
+
+function addFeedback() {
+  const client = document.getElementById('fc-client').value.trim();
+  const text = document.getElementById('fc-text').value.trim();
+  if (!client) { toast('Please enter a client name', 'error'); return; }
+  if (!text) { toast('Please enter feedback text', 'error'); return; }
+  const entry = {
+    id: uid(),
+    client,
+    project: document.getElementById('fc-project').value.trim(),
+    date: document.getElementById('fc-date').value || fmtDate(new Date()),
+    type: document.getElementById('fc-type').value,
+    sentiment: document.getElementById('fc-sentiment').value,
+    priority: document.getElementById('fc-priority').value,
+    text,
+    source: document.getElementById('fc-source').value.trim()
+  };
+  feedback.unshift(entry);
+  save(KEYS.feedback, feedback);
+  clearFeedbackForm();
+  toast('Feedback added successfully!');
+}
+
+function clearFeedbackForm() {
+  ['fc-client','fc-project','fc-text','fc-source'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fc-date').value = fmtDate(new Date());
+  document.getElementById('fc-type').value = 'Praise';
+  document.getElementById('fc-sentiment').value = 'Positive';
+  document.getElementById('fc-priority').value = 'Low';
+}
+
+function deleteFeedback(id) {
+  if (!confirm('Delete this feedback entry?')) return;
+  feedback = feedback.filter(f => f.id !== id);
+  save(KEYS.feedback, feedback);
+  renderTimeline();
+  toast('Feedback deleted');
+}
+
+function createActionFromFeedback(id) {
+  const f = feedback.find(x => x.id === id);
+  if (!f) return;
+  populateActionFeedbackSelect(id);
+  document.getElementById('am-title').value = `Address ${f.type.toLowerCase()}: ${f.text.slice(0,60)}${f.text.length>60?'...':''}`;
+  document.getElementById('am-client').value = f.client;
+  document.getElementById('am-priority').value = f.priority;
+  document.getElementById('am-feedback').value = id;
+  document.getElementById('action-modal-title').textContent = 'New Action from Feedback';
+  openModal('modal-action');
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard() {
+  const total = feedback.length;
+  const pos = feedback.filter(f=>f.sentiment==='Positive').length;
+  const neg = feedback.filter(f=>f.sentiment==='Negative').length;
+  const neu = feedback.filter(f=>f.sentiment==='Neutral').length;
+  const score = total > 0 ? Math.round(((pos - neg*0.5) / total) * 100) : 0;
+  const clamped = Math.max(0, Math.min(100, score));
+
+  // Stats
+  const statsEl = document.getElementById('dash-stats');
+  statsEl.innerHTML = `
+    <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total Feedback</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--positive)">${pos}</div><div class="stat-label">Positive</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--negative)">${neg}</div><div class="stat-label">Negative</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--neutral)">${neu}</div><div class="stat-label">Neutral</div></div>
+  `;
+
+  drawGauge(clamped);
+  drawDonut();
+  drawLine();
+  buildTagCloud();
+}
+
+function drawGauge(score) {
+  const canvas = document.getElementById('gaugeCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+  const cx = w/2, cy = h - 10;
+  const r = 90;
+  // BG arc
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, Math.PI, 0, false);
+  ctx.strokeStyle = '#1e293b';
+  ctx.lineWidth = 18;
+  ctx.stroke();
+  // Fill arc
+  const angle = Math.PI + (score/100) * Math.PI;
+  const gradient = ctx.createLinearGradient(cx-r, cy, cx+r, cy);
+  gradient.addColorStop(0, '#a855f7');
+  gradient.addColorStop(1, '#ec4899');
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, Math.PI, angle, false);
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 18;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+  // Score text
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'bold 32px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText(score, cx, cy - 20);
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '13px system-ui';
+  ctx.fillText('Sentiment Score', cx, cy - 2);
+
+  const label = score >= 70 ? 'Excellent' : score >= 50 ? 'Good' : score >= 30 ? 'Fair' : 'Needs Attention';
+  const el = document.getElementById('gaugeLabel');
+  if (el) el.textContent = label;
+}
+
+function drawDonut() {
+  const canvas = document.getElementById('donutCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const types = ['Praise','Suggestion','Complaint','Feature Request'];
+  const colors = ['#a855f7','#22c55e','#ef4444','#f59e0b'];
+  const counts = types.map(t => feedback.filter(f=>f.type===t).length);
+  const total = counts.reduce((a,b)=>a+b,0);
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+  if (total === 0) {
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '13px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('No data yet', w/2, h/2);
+    return;
+  }
+  const cx = 80, cy = h/2, r = 60, inner = 35;
+  let start = -Math.PI/2;
+  counts.forEach((c, i) => {
+    if (c === 0) return;
+    const slice = (c/total) * 2 * Math.PI;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, start+slice);
+    ctx.closePath();
+    ctx.fillStyle = colors[i];
+    ctx.fill();
+    start += slice;
+  });
+  // Inner circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, inner, 0, Math.PI*2);
+  ctx.fillStyle = '#0f172a';
+  ctx.fill();
+  // Total
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'bold 16px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText(total, cx, cy+3);
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '9px system-ui';
+  ctx.fillText('total', cx, cy+14);
+  // Legend
+  const legendEl = document.getElementById('donut-legend');
+  if (legendEl) {
+    legendEl.innerHTML = types.map((t,i) => `
+      <span style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted)">
+        <span style="width:10px;height:10px;border-radius:2px;background:${colors[i]};display:inline-block"></span>
+        ${t} (${counts[i]})
+      </span>`).join('');
+  }
+}
+
+function drawLine() {
+  const canvas = document.getElementById('lineCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+
+  // Get last 6 months of data
+  const now = new Date();
+  const months = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push({ label: d.toLocaleDateString('en-US',{month:'short'}), year: d.getFullYear(), month: d.getMonth() });
+  }
+  const data = months.map(m => {
+    const mFeed = feedback.filter(f => {
+      const d = new Date(f.date + 'T00:00:00');
+      return d.getFullYear() === m.year && d.getMonth() === m.month;
+    });
+    if (mFeed.length === 0) return null;
+    return Math.round((mFeed.filter(f=>f.sentiment==='Positive').length / mFeed.length) * 100);
+  });
+
+  const pad = { l: 36, r: 16, t: 12, b: 28 };
+  const iw = w - pad.l - pad.r;
+  const ih = h - pad.t - pad.b;
+
+  // Grid
+  ctx.strokeStyle = '#1e293b';
+  ctx.lineWidth = 1;
+  [0,25,50,75,100].forEach(v => {
+    const y = pad.t + ih - (v/100)*ih;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w-pad.r, y); ctx.stroke();
+    ctx.fillStyle = '#475569'; ctx.font = '10px system-ui'; ctx.textAlign = 'right';
+    ctx.fillText(v+'%', pad.l-4, y+4);
+  });
+
+  // X labels
+  ctx.fillStyle = '#475569'; ctx.font = '10px system-ui'; ctx.textAlign = 'center';
+  months.forEach((m, i) => {
+    const x = pad.l + (i/(months.length-1))*iw;
+    ctx.fillText(m.label, x, h-6);
+  });
+
+  // Line
+  const points = data.map((v, i) => ({
+    x: pad.l + (i/(months.length-1))*iw,
+    y: v !== null ? pad.t + ih - (v/100)*ih : null
+  }));
+
+  ctx.strokeStyle = '#a855f7';
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  let first = true;
+  points.forEach(p => {
+    if (p.y === null) { first = true; return; }
+    if (first) { ctx.moveTo(p.x, p.y); first = false; }
+    else ctx.lineTo(p.x, p.y);
+  });
+  ctx.stroke();
+
+  // Dots
+  points.forEach(p => {
+    if (p.y === null) return;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 4, 0, Math.PI*2);
+    ctx.fillStyle = '#a855f7';
+    ctx.fill();
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // Values
+  ctx.fillStyle = '#e2e8f0'; ctx.font = '10px system-ui'; ctx.textAlign = 'center';
+  points.forEach(p => {
+    if (p.y === null) return;
+    const idx = points.indexOf(p);
+    ctx.fillText(data[idx]+'%', p.x, p.y - 8);
+  });
+}
+
+function buildTagCloud() {
+  const stopwords = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','is','it','this','that','we','our','with','was','has','have','had','be','been','are','were','as','from','by','i','my','your','their','its','not','so','they','you','me','us','he','she','can','will','all','up','if','no','do','out','more','also','very','just','get','got','did','would','could','should','about','some','what','which','than','when','then','there','here','these','those','like','been','well','only','into','over','before','after','make','made','said','much','how','now','new','any','each','even','first','last','time','way','use','one','two','three']);
+  const freq = {};
+  feedback.forEach(f => {
+    f.text.toLowerCase().replace(/[^a-z0-9 ]/g,'').split(/\s+/).forEach(w => {
+      if (w.length > 3 && !stopwords.has(w)) freq[w] = (freq[w]||0)+1;
+    });
+  });
+  const sorted = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,20);
+  const max = sorted[0]?.[1] || 1;
+  const colors = ['#a855f7','#ec4899','#22c55e','#f59e0b','#3b82f6','#06b6d4'];
+  const el = document.getElementById('tag-cloud');
+  if (!el) return;
+  if (sorted.length === 0) { el.innerHTML = '<span style="color:var(--muted);font-size:13px">Add feedback to see themes</span>'; return; }
+  el.innerHTML = sorted.map(([w, c], i) => {
+    const size = Math.round(11 + (c/max)*10);
+    const col = colors[i % colors.length];
+    return `<span class="tag" style="font-size:${size}px;background:${col}22;color:${col};border:1px solid ${col}44">${w}</span>`;
+  }).join('');
+}
+
+// ============================================================
+// TIMELINE
+// ============================================================
+function populateClientFilter() {
+  const sel = document.getElementById('tl-client');
+  const clients = [...new Set(feedback.map(f=>f.client))].sort();
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">All Clients</option>' + clients.map(c=>`<option value="${esc(c)}" ${c===cur?'selected':''}>${esc(c)}</option>`).join('');
+}
+
+function renderTimeline() {
+  const list = document.getElementById('timeline-list');
+  const search = document.getElementById('tl-search')?.value.toLowerCase() || '';
+  const client = document.getElementById('tl-client')?.value || '';
+  const sentiment = document.getElementById('tl-sentiment')?.value || '';
+  const type = document.getElementById('tl-type')?.value || '';
+  const from = document.getElementById('tl-from')?.value || '';
+  const to = document.getElementById('tl-to')?.value || '';
+
+  let items = [...feedback].sort((a,b) => b.date.localeCompare(a.date));
+  if (client) items = items.filter(f => f.client === client);
+  if (sentiment) items = items.filter(f => f.sentiment === sentiment);
+  if (type) items = items.filter(f => f.type === type);
+  if (from) items = items.filter(f => f.date >= from);
+  if (to) items = items.filter(f => f.date <= to);
+  if (search) items = items.filter(f => (f.client+f.project+f.text+f.type+f.sentiment).toLowerCase().includes(search));
+
+  const count = document.getElementById('timeline-count');
+  if (count) count.textContent = `${items.length} entr${items.length===1?'y':'ies'}`;
+
+  if (items.length === 0) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">💬</div><h3>No feedback found</h3><p>${feedback.length===0?'Add your first feedback entry in the Collect tab':'No results for current filters'}</p></div>`;
+    return;
+  }
+
+  list.innerHTML = items.map(f => `
+    <div class="feedback-item">
+      <div class="feedback-header">
+        <div>
+          <div class="feedback-client">${esc(f.client)}</div>
+          <div class="feedback-project">${esc(f.project||'')} ${f.source?'· via '+esc(f.source):''}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+          <span class="feedback-date">${displayDate(f.date)}</span>
+        </div>
+      </div>
+      <div class="feedback-meta">
+        <span class="badge-${f.sentiment.toLowerCase()}">${f.sentiment}</span>
+        <span class="badge-type">${esc(f.type)}</span>
+        <span class="badge-priority-${f.priority.toLowerCase()}">${f.priority}</span>
+      </div>
+      <div class="feedback-text">${esc(f.text)}</div>
+      <div class="feedback-actions">
+        <button class="btn btn-ghost btn-sm" onclick="createActionFromFeedback('${f.id}')">→ Create Action</button>
+        <button class="btn btn-ghost btn-sm" onclick="copyToClipboard('${esc(f.text).replace(/'/g,"\\'")}')">Copy</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteFeedback('${f.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// ACTIONS
+// ============================================================
+let editingActionId = null;
+
+function openAddActionModal() {
+  editingActionId = null;
+  document.getElementById('action-modal-title').textContent = 'New Action Item';
+  ['am-title','am-client','am-desc'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('am-status').value='Open';
+  document.getElementById('am-priority').value='Medium';
+  document.getElementById('am-due').value='';
+  populateActionFeedbackSelect('');
+  openModal('modal-action');
+}
+
+function populateActionFeedbackSelect(selectedId) {
+  const sel = document.getElementById('am-feedback');
+  sel.innerHTML = '<option value="">None</option>' + feedback.map(f=>`<option value="${f.id}" ${f.id===selectedId?'selected':''}>${esc(f.client)} — ${esc(f.text.slice(0,50))}...</option>`).join('');
+}
+
+function saveAction() {
+  const title = document.getElementById('am-title').value.trim();
+  if (!title) { toast('Please enter a title', 'error'); return; }
+  const item = {
+    id: editingActionId || uid(),
+    title,
+    status: document.getElementById('am-status').value,
+    priority: document.getElementById('am-priority').value,
+    due: document.getElementById('am-due').value,
+    client: document.getElementById('am-client').value.trim(),
+    desc: document.getElementById('am-desc').value.trim(),
+    linkedFeedback: document.getElementById('am-feedback').value
+  };
+  if (editingActionId) {
+    actions = actions.map(a => a.id === editingActionId ? item : a);
+    toast('Action updated');
+  } else {
+    actions.unshift(item);
+    toast('Action added');
+  }
+  save(KEYS.actions, actions);
+  closeModal('modal-action');
+  renderActions();
+}
+
+function editAction(id) {
+  const a = actions.find(x=>x.id===id);
+  if (!a) return;
+  editingActionId = id;
+  document.getElementById('action-modal-title').textContent = 'Edit Action Item';
+  document.getElementById('am-title').value = a.title;
+  document.getElementById('am-status').value = a.status;
+  document.getElementById('am-priority').value = a.priority;
+  document.getElementById('am-due').value = a.due||'';
+  document.getElementById('am-client').value = a.client||'';
+  document.getElementById('am-desc').value = a.desc||'';
+  populateActionFeedbackSelect(a.linkedFeedback||'');
+  openModal('modal-action');
+}
+
+function cycleStatus(id) {
+  const cycle = ['Open','In Progress','Done'];
+  actions = actions.map(a => {
+    if (a.id !== id) return a;
+    const next = cycle[(cycle.indexOf(a.status)+1)%cycle.length];
+    return {...a, status: next};
+  });
+  save(KEYS.actions, actions);
+  renderActions();
+}
+
+function deleteAction(id) {
+  if (!confirm('Delete this action item?')) return;
+  actions = actions.filter(a=>a.id!==id);
+  save(KEYS.actions, actions);
+  renderActions();
+  toast('Action deleted');
+}
+
+function renderActions() {
+  const statusF = document.getElementById('ai-status')?.value||'';
+  const priorityF = document.getElementById('ai-priority')?.value||'';
+  let items = [...actions];
+  if (statusF) items = items.filter(a=>a.status===statusF);
+  if (priorityF) items = items.filter(a=>a.priority===priorityF);
+
+  document.getElementById('ai-open-count').textContent = actions.filter(a=>a.status==='Open').length;
+  document.getElementById('ai-progress-count').textContent = actions.filter(a=>a.status==='In Progress').length;
+  document.getElementById('ai-done-count').textContent = actions.filter(a=>a.status==='Done').length;
+
+  const list = document.getElementById('actions-list');
+  if (items.length===0) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">✅</div><h3>No action items</h3><p>Create actions from feedback entries or use the + button</p></div>`;
+    return;
+  }
+  const statusClass = s => s==='Open'?'status-open':s==='In Progress'?'status-progress':'status-done';
+  list.innerHTML = items.map(a => {
+    const linkedF = a.linkedFeedback ? feedback.find(f=>f.id===a.linkedFeedback) : null;
+    const isOverdue = a.due && a.due < fmtDate(new Date()) && a.status!=='Done';
+    return `
+      <div class="action-item${a.status==='Done'?' opacity-50':''}">
+        <div class="action-header">
+          <span class="action-title" style="${a.status==='Done'?'text-decoration:line-through;color:var(--muted)':''}">${esc(a.title)}</span>
+          <span class="${statusClass(a.status)}" style="cursor:pointer" onclick="cycleStatus('${a.id}')" title="Click to cycle status">${a.status}</span>
+          <span class="badge-priority-${a.priority.toLowerCase()}">${a.priority}</span>
+        </div>
+        ${a.client?`<div style="font-size:12px;color:var(--muted);margin-bottom:4px">Client: ${esc(a.client)}</div>`:''}
+        ${a.desc?`<div style="font-size:13px;color:var(--text);margin-bottom:6px">${esc(a.desc)}</div>`:''}
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          ${a.due?`<span style="font-size:12px;color:${isOverdue?'#ef4444':'var(--muted)'};font-weight:${isOverdue?700:400}">Due: ${displayDate(a.due)}${isOverdue?' (overdue)':''}</span>`:''}
+          ${linkedF?`<span style="font-size:11px;color:var(--accent1)">↑ From: ${esc(linkedF.client)}</span>`:''}
+        </div>
+        <div class="feedback-actions">
+          <button class="btn btn-ghost btn-sm" onclick="editAction('${a.id}')">Edit</button>
+          <button class="btn btn-ghost btn-sm" onclick="cycleStatus('${a.id}')">→ ${a.status==='Done'?'Reopen':a.status==='In Progress'?'Mark Done':'Start'}</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteAction('${a.id}')">Delete</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ============================================================
+// CLIENT TRENDS
+// ============================================================
+function renderClients() {
+  const clients = [...new Set(feedback.map(f=>f.client))].sort();
+  const list = document.getElementById('clients-list');
+  if (clients.length===0) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">👥</div><h3>No clients yet</h3><p>Add feedback entries to see client satisfaction trends</p></div>`;
+    return;
+  }
+
+  list.innerHTML = clients.map(client => {
+    const cf = feedback.filter(f=>f.client===client).sort((a,b)=>a.date.localeCompare(b.date));
+    const pos = cf.filter(f=>f.sentiment==='Positive').length;
+    const neg = cf.filter(f=>f.sentiment==='Negative').length;
+    const score = cf.length > 0 ? Math.round(((pos - neg*0.5)/cf.length)*100) : 0;
+    const pct = Math.max(0, Math.min(100, score));
+
+    // Trend: compare last 3 vs previous
+    const recent = cf.slice(-3);
+    const older = cf.slice(0, Math.max(0, cf.length-3));
+    const recentScore = recent.length > 0 ? Math.round(((recent.filter(f=>f.sentiment==='Positive').length - recent.filter(f=>f.sentiment==='Negative').length*0.5)/recent.length)*100) : null;
+    const olderScore = older.length > 0 ? Math.round(((older.filter(f=>f.sentiment==='Positive').length - older.filter(f=>f.sentiment==='Negative').length*0.5)/older.length)*100) : null;
+    const trend = recentScore !== null && olderScore !== null ? recentScore - olderScore : 0;
+    const isAtRisk = score < 30 || (older.length > 0 && trend < -20);
+    const isThriving = score >= 75 && cf.length >= 2;
+
+    const barColor = pct >= 65 ? '#22c55e' : pct >= 40 ? '#f59e0b' : '#ef4444';
+
+    return `
+      <div class="client-card ${isAtRisk?'at-risk':isThriving?'thriving':''}">
+        ${isAtRisk?`<div class="alert-banner alert-risk">⚠ At-risk client — declining or low satisfaction</div>`:''}
+        ${isThriving?`<div class="alert-banner alert-good">🌟 Thriving — consistently positive feedback!</div>`:''}
+        <div class="client-name-row">
+          <div>
+            <div class="client-name">${esc(client)}</div>
+            <div style="font-size:12px;color:var(--muted)">${cf.length} feedback entr${cf.length===1?'y':'ies'}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:22px;font-weight:800;color:${barColor}">${pct}</div>
+            <div style="font-size:11px;color:var(--muted)">score</div>
+          </div>
+        </div>
+        <div class="trend-bar"><div class="trend-fill" style="width:${pct}%;background:${barColor}"></div></div>
+        <div style="display:flex;gap:12px;margin-top:8px;font-size:12px;color:var(--muted);flex-wrap:wrap">
+          <span style="color:var(--positive)">✓ ${pos} positive</span>
+          <span style="color:var(--negative)">✗ ${neg} negative</span>
+          <span style="color:var(--neutral)">~ ${cf.filter(f=>f.sentiment==='Neutral').length} neutral</span>
+          ${trend !== 0 && olderScore !== null ? `<span style="color:${trend>0?'var(--positive)':'var(--negative)'}">${trend>0?'↑':'↓'} ${Math.abs(trend)}pts recent trend</span>`:''}
+        </div>
+        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+          ${cf.slice(-4).reverse().map(f=>`<span class="badge-${f.sentiment.toLowerCase()}" title="${esc(f.date)}: ${esc(f.text.slice(0,60))}...">${f.type.slice(0,3)}</span>`).join('')}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ============================================================
+// TEMPLATES
+// ============================================================
+const TEMPLATES = [
+  {
+    title: 'Thank You for Positive Feedback',
+    icon: '🌟',
+    preview: 'Express genuine gratitude and reinforce the working relationship.',
+    body: `Subject: Thank you for your kind words!
+
+Hi [Client Name],
+
+Thank you so much for taking the time to share such wonderful feedback about [project/work]. It genuinely means a lot to me.
+
+Hearing that [specific thing they mentioned] made a real impact is exactly the kind of outcome I work hard toward. It's a pleasure working with you on projects where we can achieve results like this.
+
+I'm already thinking about how we can build on this momentum for our next project together.
+
+Thanks again — feedback like yours keeps me motivated to deliver my best.
+
+Warm regards,
+[Your Name]`
+  },
+  {
+    title: 'Acknowledge a Complaint',
+    icon: '🙏',
+    preview: 'Take ownership, apologize sincerely, and outline next steps.',
+    body: `Subject: Regarding your recent feedback — here's how I'm addressing it
+
+Hi [Client Name],
+
+Thank you for being direct with me about [issue]. I want to start by sincerely apologizing — this wasn't the experience you deserved, and I take full responsibility.
+
+I've reviewed what happened with [project], and I can see that [brief explanation of what went wrong].
+
+Here's what I'm doing to make this right:
+1. [Immediate action]
+2. [Process improvement to prevent recurrence]
+
+I'd like to schedule a quick call this week to make sure we're fully aligned and that you're satisfied with how this is resolved. Would [day] or [day] work for you?
+
+Again, I'm sorry for the frustration this caused. Your satisfaction is my priority.
+
+Regards,
+[Your Name]`
+  },
+  {
+    title: 'Follow Up on a Suggestion',
+    icon: '💡',
+    preview: 'Show you took their suggestion seriously with a concrete update.',
+    body: `Subject: Update on your suggestion — [brief summary]
+
+Hi [Client Name],
+
+I wanted to circle back on the suggestion you made about [suggestion topic]. I've been giving it serious thought, and I wanted to let you know where things stand.
+
+[Option A — Implemented]: I've actually gone ahead and implemented this! Starting with our next project, [description of change]. I think you'll notice the difference immediately.
+
+[Option B — In progress]: This is something I'm actively working on building into my process. I expect to have it in place by [date].
+
+[Option C — Explored but not moving forward]: After exploring this, here's my thinking: [reason]. That said, I do plan to [alternative approach].
+
+I appreciate that you took the time to share this — it genuinely helps me improve my service.
+
+Best,
+[Your Name]`
+  },
+  {
+    title: 'Request Clarification on Feedback',
+    icon: '🔍',
+    preview: 'Ask follow-up questions to better understand vague or critical feedback.',
+    body: `Subject: Quick follow-up on your feedback
+
+Hi [Client Name],
+
+Thank you for sharing your thoughts on [project/work]. I want to make sure I fully understand your feedback so I can address it properly.
+
+Could you help me clarify a couple of points?
+
+1. When you mentioned [specific point], did you mean [interpretation A] or [interpretation B]?
+2. On the [specific element], what would your ideal outcome have looked like?
+3. Is there a specific example or reference you can point me to?
+
+Understanding the nuances will help me respond in the most useful way — and ensure any changes I make actually solve the right problem.
+
+Happy to jump on a quick 15-minute call if that's easier. Just let me know.
+
+Best regards,
+[Your Name]`
+  },
+  {
+    title: 'Share an Improvement Made',
+    icon: '🚀',
+    preview: "Tell a client you implemented their suggestion — builds tremendous trust.",
+    body: `Subject: I made an improvement based on your feedback!
+
+Hi [Client Name],
+
+A while back you mentioned [original feedback/suggestion]. I wanted to let you know that I've acted on it.
+
+What changed:
+Previously, [describe old way]. Now, [describe new way/improvement].
+
+The impact: [describe expected or actual improvement — speed, quality, clarity, etc.]
+
+You'll see this in effect from [when they'll notice it — next project, next deliverable, etc.].
+
+Feedback like yours is exactly what helps me keep improving. If you notice the difference (or have more thoughts), I'd genuinely love to hear from you.
+
+Looking forward to working with you again soon.
+
+Best,
+[Your Name]`
+  },
+  {
+    title: 'Check-In After Resolving an Issue',
+    icon: '✅',
+    preview: 'Follow up after fixing a complaint to confirm client satisfaction.',
+    body: `Subject: Checking in — is everything working better now?
+
+Hi [Client Name],
+
+It's been [time period] since we addressed [issue that was resolved]. I wanted to check in and make sure everything is working smoothly now.
+
+Specifically, I wanted to confirm:
+• [First thing that was fixed] — is this working as expected?
+• [Second thing, if applicable] — any concerns there?
+• Overall, how are you feeling about [service/project]?
+
+If anything still feels off, please don't hesitate to let me know. I'd rather know about a problem than have you quietly frustrated.
+
+And if everything is great — that's wonderful news, and I'd love to keep that momentum going into our next project!
+
+Warmly,
+[Your Name]`
+  }
+];
+
+function renderTemplates() {
+  const list = document.getElementById('templates-list');
+  list.innerHTML = TEMPLATES.map((t, i) => `
+    <div class="template-card">
+      <div class="template-title">${t.icon} ${t.title}</div>
+      <div class="template-preview">${t.preview}</div>
+      <div class="template-full" id="tpl-body-${i}">${esc(t.body)}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="toggleTemplate(${i})" id="tpl-toggle-${i}">View Template</button>
+        <button class="btn btn-ghost btn-sm" onclick="copyToClipboard(templates[${i}].body)">Copy</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.templates = TEMPLATES;
+
+function toggleTemplate(i) {
+  const el = document.getElementById('tpl-body-'+i);
+  const btn = document.getElementById('tpl-toggle-'+i);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open');
+    btn.textContent = 'View Template';
+  } else {
+    el.classList.add('open');
+    btn.textContent = 'Hide Template';
+  }
+}
+
+// ============================================================
+// SCHEDULER
+// ============================================================
+function openAddScheduleModal() {
+  document.getElementById('sm-client').value='';
+  document.getElementById('sm-interval').value='Monthly';
+  document.getElementById('sm-last').value=fmtDate(new Date());
+  openModal('modal-schedule');
+}
+
+function saveSchedule() {
+  const client = document.getElementById('sm-client').value.trim();
+  if (!client) { toast('Please enter a client name','error'); return; }
+  const s = {
+    id: uid(),
+    client,
+    interval: document.getElementById('sm-interval').value,
+    last: document.getElementById('sm-last').value || fmtDate(new Date())
+  };
+  schedules.push(s);
+  save(KEYS.schedules, schedules);
+  closeModal('modal-schedule');
+  renderScheduler();
+  toast('Schedule added');
+}
+
+function deleteSchedule(id) {
+  schedules = schedules.filter(s=>s.id!==id);
+  save(KEYS.schedules, schedules);
+  renderScheduler();
+  toast('Schedule removed');
+}
+
+function getNextDate(last, interval) {
+  const d = new Date(last + 'T00:00:00');
+  if (interval==='Monthly') d.setMonth(d.getMonth()+1);
+  else if (interval==='Quarterly') d.setMonth(d.getMonth()+3);
+  else if (interval==='Biannually') d.setMonth(d.getMonth()+6);
+  else d.setDate(d.getDate()+30); // After each project — default 30 days
+  return fmtDate(d);
+}
+
+function renderScheduler() {
+  const list = document.getElementById('schedule-list');
+  if (schedules.length===0) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">📅</div><h3>No schedules set</h3><p>Add clients to track when to request feedback from them</p></div>`;
+    return;
+  }
+  const today = fmtDate(new Date());
+  list.innerHTML = schedules.map(s => {
+    const next = getNextDate(s.last, s.interval);
+    const isDue = next <= today;
+    return `
+      <div class="schedule-row">
+        <div>
+          <div class="schedule-client">${esc(s.client)}</div>
+          <div class="schedule-interval">${s.interval} · Last: ${displayDate(s.last)}</div>
+        </div>
+        <div>
+          <div class="schedule-next" style="color:${isDue?'#ef4444':'var(--accent1)'}">
+            ${isDue?'⚠ DUE NOW':'Next: '+displayDate(next)}
+          </div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-ghost btn-sm" onclick="prefillSchedulerEmail('${esc(s.client)}')">Draft Email</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteSchedule('${s.id}')">Remove</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function prefillSchedulerEmail(client) {
+  document.getElementById('email-client').value = client;
+  document.getElementById('email-project').value = '';
+  generateFeedbackEmail();
+}
+
+function generateFeedbackEmail() {
+  const client = document.getElementById('email-client').value.trim() || '[Client Name]';
+  const project = document.getElementById('email-project').value.trim() || '[recent project]';
+  const email = `Subject: Quick question about your recent experience
+
+Hi ${client},
+
+I hope you're doing well! I'm always looking to improve the quality of my work, and your opinion matters a lot to me.
+
+I'd love to hear your thoughts on ${project}. It only takes a couple of minutes, and your feedback directly shapes how I work.
+
+A few things I'd love your input on:
+• Overall, how satisfied were you with the final result? (1–10)
+• What was the best part of working together?
+• Is there anything I could have done better?
+• Would you work with me again or refer me to others?
+
+Feel free to reply directly to this email — even a sentence or two is incredibly helpful.
+
+Thank you so much for your time, ${client}. I genuinely appreciate your partnership.
+
+Warm regards,
+[Your Name]
+[Your Website / Contact Info]`;
+  document.getElementById('email-text').value = email;
+  document.getElementById('email-output').style.display = 'block';
+}
+
+function copyEmail() {
+  const text = document.getElementById('email-text').value;
+  copyToClipboard(text);
+}
+
+// ============================================================
+// IMPROVEMENTS
+// ============================================================
+function openAddImprovementModal() {
+  ['im-title','im-before','im-after'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('im-date').value = fmtDate(new Date());
+  document.getElementById('im-category').value = 'Process';
+  const sel = document.getElementById('im-feedback');
+  sel.innerHTML = '<option value="">None</option>' + feedback.map(f=>`<option value="${f.id}">${esc(f.client)} — ${esc(f.text.slice(0,50))}...</option>`).join('');
+  openModal('modal-improvement');
+}
+
+function saveImprovement() {
+  const title = document.getElementById('im-title').value.trim();
+  if (!title) { toast('Please enter a title','error'); return; }
+  const imp = {
+    id: uid(),
+    title,
+    date: document.getElementById('im-date').value || fmtDate(new Date()),
+    category: document.getElementById('im-category').value,
+    before: document.getElementById('im-before').value.trim(),
+    after: document.getElementById('im-after').value.trim(),
+    linkedFeedback: document.getElementById('im-feedback').value
+  };
+  improvements.unshift(imp);
+  save(KEYS.improvements, improvements);
+  closeModal('modal-improvement');
+  renderImprovements();
+  toast('Improvement logged');
+}
+
+function deleteImprovement(id) {
+  if (!confirm('Delete this improvement?')) return;
+  improvements = improvements.filter(i=>i.id!==id);
+  save(KEYS.improvements, improvements);
+  renderImprovements();
+  toast('Improvement deleted');
+}
+
+function renderImprovements() {
+  const list = document.getElementById('improvements-list');
+  if (improvements.length===0) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">🔧</div><h3>No improvements logged</h3><p>Track improvements you've made based on client feedback</p></div>`;
+    return;
+  }
+  list.innerHTML = improvements.map(imp => {
+    const linkedF = imp.linkedFeedback ? feedback.find(f=>f.id===imp.linkedFeedback) : null;
+    return `
+      <div class="improvement-card">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+          <div>
+            <div style="font-size:16px;font-weight:700">${esc(imp.title)}</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">${imp.category} · ${displayDate(imp.date)}</div>
+          </div>
+          ${linkedF?`<span style="font-size:11px;color:var(--accent1);flex-shrink:0">↑ From: ${esc(linkedF.client)}</span>`:''}
+        </div>
+        ${(imp.before||imp.after)?`
+          <div class="compare-row">
+            ${imp.before?`<div class="compare-before"><div style="font-size:11px;font-weight:700;color:var(--negative);margin-bottom:4px">BEFORE</div><div style="font-size:13px;color:var(--text)">${esc(imp.before)}</div></div>`:'<div></div>'}
+            <div class="compare-arrow">→</div>
+            ${imp.after?`<div class="compare-after"><div style="font-size:11px;font-weight:700;color:var(--positive);margin-bottom:4px">AFTER</div><div style="font-size:13px;color:var(--text)">${esc(imp.after)}</div></div>`:'<div></div>'}
+          </div>`:''}
+        <div style="margin-top:8px;display:flex;gap:6px">
+          <button class="btn btn-danger btn-sm" onclick="deleteImprovement('${imp.id}')">Delete</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ============================================================
+// EXPORT
+// ============================================================
+function exportCSV() {
+  const headers = ['ID','Client','Project','Date','Type','Sentiment','Priority','Source','Text'];
+  const rows = feedback.map(f => [f.id,f.client,f.project,f.date,f.type,f.sentiment,f.priority,f.source||'',f.text].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  download('feedback-export.csv', csv, 'text/csv');
+  toast('CSV downloaded');
+}
+
+function exportJSON() {
+  const data = { feedback, actions, schedules, improvements, exportedAt: new Date().toISOString() };
+  download('freelanceos-feedback-backup.json', JSON.stringify(data, null, 2), 'application/json');
+  toast('Backup downloaded');
+}
+
+function importJSON() {
+  document.getElementById('import-file').click();
+}
+
+function handleImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (data.feedback) { feedback = data.feedback; save(KEYS.feedback, feedback); }
+      if (data.actions) { actions = data.actions; save(KEYS.actions, actions); }
+      if (data.schedules) { schedules = data.schedules; save(KEYS.schedules, schedules); }
+      if (data.improvements) { improvements = data.improvements; save(KEYS.improvements, improvements); }
+      toast('Backup imported successfully!');
+      renderDashboard();
+    } catch { toast('Invalid backup file','error'); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function exportHTMLReport() {
+  const pos = feedback.filter(f=>f.sentiment==='Positive').length;
+  const neg = feedback.filter(f=>f.sentiment==='Negative').length;
+  const neu = feedback.filter(f=>f.sentiment==='Neutral').length;
+  const score = feedback.length > 0 ? Math.round(((pos - neg*0.5)/feedback.length)*100) : 0;
+  const clients = [...new Set(feedback.map(f=>f.client))];
+
+  const html = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Client Feedback Report — ${new Date().toLocaleDateString()}</title>
+<style>body{font-family:system-ui;max-width:800px;margin:40px auto;padding:20px;color:#1e293b;background:#f8fafc}
+h1{color:#a855f7}h2{color:#475569;border-bottom:2px solid #e2e8f0;padding-bottom:8px;margin-top:32px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.stat{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;text-align:center}
+.stat-val{font-size:28px;font-weight:800;color:#a855f7}.stat-lbl{font-size:12px;color:#94a3b8;margin-top:4px}
+.fb{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:10px}
+.fb-head{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.badge{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700}
+.pos{background:#dcfce7;color:#166534}.neg{background:#fee2e2;color:#991b1b}.neu{background:#fef3c7;color:#92400e}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8}
+</style></head><body>
+<h1>Client Feedback Report</h1>
+<p style="color:#94a3b8">Generated on ${new Date().toLocaleString()} by FreelanceOS Feedback Loop Dashboard</p>
+<div class="stat-grid">
+<div class="stat"><div class="stat-val">${feedback.length}</div><div class="stat-lbl">Total Feedback</div></div>
+<div class="stat"><div class="stat-val" style="color:#22c55e">${pos}</div><div class="stat-lbl">Positive</div></div>
+<div class="stat"><div class="stat-val" style="color:#ef4444">${neg}</div><div class="stat-lbl">Negative</div></div>
+<div class="stat"><div class="stat-val">${Math.max(0,score)}</div><div class="stat-lbl">Sentiment Score</div></div>
+</div>
+<h2>Clients Covered (${clients.length})</h2>
+<p>${clients.map(c=>`<span style="margin-right:8px">• ${c}</span>`).join('')}</p>
+<h2>All Feedback (${feedback.length} entries)</h2>
+${[...feedback].sort((a,b)=>b.date.localeCompare(a.date)).map(f=>`
+<div class="fb">
+<div class="fb-head">
+<strong>${f.client}</strong>${f.project?` — ${f.project}`:''}
+<span class="badge ${f.sentiment==='Positive'?'pos':f.sentiment==='Negative'?'neg':'neu'}">${f.sentiment}</span>
+<span class="badge" style="background:#ede9fe;color:#5b21b6">${f.type}</span>
+<span style="font-size:12px;color:#94a3b8">${f.date}</span>
+</div>
+<p style="margin:0;font-size:14px">${f.text}</p>
+</div>`).join('')}
+<h2>Action Items (${actions.length})</h2>
+${actions.map(a=>`<div class="fb"><strong>${a.title}</strong> — <em>${a.status}</em>${a.due?' · Due: '+a.due:''}</div>`).join('')}
+<div class="footer"><p>Generated by <strong>FreelanceOS Feedback Loop Dashboard</strong> (Tool #69)</p><p>🔒 All data was processed locally in your browser. No data was sent to any server.</p></div>
+</body></html>`;
+  download(`feedback-report-${fmtDate(new Date())}.html`, html, 'text/html');
+  toast('HTML report downloaded');
+}
+
+function exportMonthlySummary() {
+  const now = new Date();
+  const y = now.getFullYear(), m = now.getMonth();
+  const monthFeed = feedback.filter(f => {
+    const d = new Date(f.date + 'T00:00:00');
+    return d.getFullYear()===y && d.getMonth()===m;
+  });
+  const monthName = now.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+  const pos = monthFeed.filter(f=>f.sentiment==='Positive').length;
+  const neg = monthFeed.filter(f=>f.sentiment==='Negative').length;
+  const summary = `CLIENT FEEDBACK MONTHLY SUMMARY — ${monthName.toUpperCase()}
+${'='.repeat(50)}
+
+OVERVIEW
+--------
+Total Feedback Entries: ${monthFeed.length}
+Positive: ${pos} (${monthFeed.length>0?Math.round((pos/monthFeed.length)*100):0}%)
+Negative: ${neg} (${monthFeed.length>0?Math.round((neg/monthFeed.length)*100):0}%)
+Neutral: ${monthFeed.filter(f=>f.sentiment==='Neutral').length}
+
+FEEDBACK BY TYPE
+----------------
+${['Praise','Suggestion','Complaint','Feature Request'].map(t=>`${t}: ${monthFeed.filter(f=>f.type===t).length}`).join('\n')}
+
+CLIENTS HEARD FROM
+------------------
+${[...new Set(monthFeed.map(f=>f.client))].map(c=>`• ${c}`).join('\n')||'None this month'}
+
+INDIVIDUAL ENTRIES
+------------------
+${monthFeed.map(f=>`[${f.date}] ${f.client} (${f.sentiment} / ${f.type})
+${f.text}
+`).join('\n')||'No feedback collected this month.'}
+
+ACTION ITEMS OPEN
+-----------------
+${actions.filter(a=>a.status!=='Done').map(a=>`• [${a.status}] ${a.title}`).join('\n')||'No open action items.'}
+
+IMPROVEMENTS MADE THIS MONTH
+-----------------------------
+${improvements.filter(i=>{ const d=new Date(i.date+'T00:00:00'); return d.getFullYear()===y&&d.getMonth()===m; }).map(i=>`• ${i.title}`).join('\n')||'None logged.'}
+
+---
+Generated ${now.toLocaleString()} by FreelanceOS Feedback Loop Dashboard
+`;
+  download(`monthly-summary-${y}-${String(m+1).padStart(2,'0')}.txt`, summary, 'text/plain');
+  toast('Monthly summary downloaded');
+}
+
+function clearAllData() {
+  if (!confirm('This will permanently delete ALL feedback, actions, schedules, and improvements. This cannot be undone. Continue?')) return;
+  feedback=[]; actions=[]; schedules=[]; improvements=[];
+  Object.values(KEYS).forEach(k => localStorage.removeItem(k));
+  toast('All data cleared');
+  renderDashboard();
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function esc(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+function download(filename, content, type) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard')).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+    toast('Copied to clipboard');
+  });
+}
+</script>
+</body>
+</html>

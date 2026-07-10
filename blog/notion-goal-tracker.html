@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notion Goal Tracker — Set, Track &amp; Crush Your Goals in 2026 | FreelanceOS</title>
+<meta name="description" content="Build a Notion goal tracker using OKRs, SMART goals, and daily/weekly/quarterly tracking cadences. Complete database structure and accountability system for freelancers.">
+<link rel="canonical" href="https://freelanceos-storefront.vercel.app/blog/notion-goal-tracker.html">
+<meta property="og:title" content="Notion Goal Tracker — Set, Track &amp; Crush Your Goals in 2026 | FreelanceOS">
+<meta property="og:description" content="Build a Notion goal tracker using OKRs and SMART goals. Database structure, tracking cadence, and accountability system for freelancers — complete 2026 guide.">
+<meta property="og:url" content="https://freelanceos-storefront.vercel.app/blog/notion-goal-tracker.html">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Notion Goal Tracker: The Complete System for Freelancers in 2026","author":{"@type":"Organization","name":"FreelanceOS"},"publisher":{"@type":"Organization","name":"FreelanceOS","url":"https://freelanceos-storefront.vercel.app/"},"datePublished":"2026-06-16","dateModified":"2026-06-16","description":"Build a Notion goal tracker using OKRs and SMART goals. Database structure, tracking cadence, and accountability system for freelancers — complete 2026 guide."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://freelanceos-storefront.vercel.app/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://freelanceos-storefront.vercel.app/blog/"},{"@type":"ListItem","position":3,"name":"Notion Goal Tracker","item":"https://freelanceos-storefront.vercel.app/blog/notion-goal-tracker.html"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I build a goal tracker in Notion?","acceptedAnswer":{"@type":"Answer","text":"Build a Notion goal tracker by creating a Goals database with these properties: Goal Title (text), Category/Life Area (select), Type (Annual/Quarterly/Project), Status (Active/Achieved/Paused/Dropped), Start Date, Target Date, Progress % (number or formula), Key Results (text), and Review Date (date). Link goals to a Projects database so projects trace back to goals. Add multiple views: a board grouped by Category, a table filtered to Active goals, and a calendar view showing target dates."}},{"@type":"Question","name":"What is the OKR method for goal setting?","acceptedAnswer":{"@type":"Answer","text":"OKR stands for Objectives and Key Results. An Objective is an ambitious, qualitative direction: 'Build a thriving freelance business.' Key Results are 3–5 measurable outcomes that define what achieving the objective looks like: 'Revenue exceeds $8,000/month by Q4,' 'Client retention rate above 80%,' 'Launch one productized service by June.' OKRs work because they separate the WHY (objective) from the WHAT (key results), making it easy to check whether you're actually making progress or just feeling busy."}},{"@type":"Question","name":"How often should I review my goals in Notion?","acceptedAnswer":{"@type":"Answer","text":"Review goals at three cadences: (1) Weekly — a 5-minute check: are this week's tasks connected to any active goal? (2) Monthly — a 30-minute deep review: update progress on each active goal, note what moved, assess whether the goal still makes sense. (3) Quarterly — a full goal review: assess the quarter against your OKRs, set new quarterly goals, adjust annual goals based on what you've learned. Annual reviews complete the cycle. Most people skip the monthly review and wonder why their goals don't progress."}},{"@type":"Question","name":"What goal categories should freelancers track?","acceptedAnswer":{"@type":"Answer","text":"The five most important goal categories for freelancers are: (1) Income goals — total revenue, per-project rates, income diversification. (2) Business development — new clients, referral partnerships, service launches. (3) Skill and portfolio — new capabilities, case studies, portfolio quality. (4) Operations — systems, tools, processes that make the business more efficient or scalable. (5) Personal development — health, learning, relationships, life quality. Goals should span all five categories, not just income."}},{"@type":"Question","name":"What is the difference between a goal and a project in Notion?","acceptedAnswer":{"@type":"Answer","text":"Goals are outcomes you want to achieve — they describe a future state. Projects are initiatives with tasks that move you toward a goal — they describe activities you'll undertake. A goal might be 'Earn $10,000/month consistently by December.' Projects that serve that goal might be: 'Raise rates with existing clients,' 'Launch productized SEO audit service,' 'Develop 3 referral partnerships.' In Notion, link Projects to Goals via a Relation property so every project traces back to the goal it serves."}},{"@type":"Question","name":"How do I track progress toward goals in Notion?","acceptedAnswer":{"@type":"Answer","text":"Track goal progress in Notion with a Progress % property (number, 0–100). Update it manually during weekly or monthly reviews, or auto-calculate it using a rollup of linked projects or tasks. For numeric goals (revenue target), use a formula: current_value / target_value * 100. For milestone goals, use a Select property (Not Started / In Progress / Complete) for each key result. Add a 'Last Updated' date property so you can see at a glance which goals haven't been reviewed recently."}},{"@type":"Question","name":"Should I use SMART goals or OKRs in Notion?","acceptedAnswer":{"@type":"Answer","text":"SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound) and OKRs are complementary, not competing. Use OKR structure at the annual and quarterly level — objectives set ambitious direction, key results define what success looks like. Use SMART criteria when writing each key result — it should be specific, measurable (has a number), achievable (not fantasy), relevant (connects to the objective), and time-bound (has a deadline). In Notion, your goal entries are the Key Results, written SMART, nested under Objectives as a parent goal."}},{"@type":"Question","name":"How does FreelanceOS help with goal tracking?","acceptedAnswer":{"@type":"Answer","text":"FreelanceOS Pro includes a complete goal tracking system connected to your business operations. Your Goals database links to your Projects database, which links to your Tasks and Clients. This means income goals have direct visibility into the projects and clients generating that revenue. The quarterly review template prompts you through OKR assessment, and the annual review template provides the full strategic zoom-out. Goals aren't isolated in a 'goals' section — they're woven through the entire system."}}]}
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#7c3aed,#a78bfa);width:0%;z-index:9999;transition:width .1s}
+nav{background:#111;border-bottom:1px solid #222;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+nav a{color:#e5e7eb;text-decoration:none;font-weight:700;font-size:17px}
+.nav-links a{color:#9ca3af;font-size:14px;margin-left:20px;text-decoration:none}.nav-links a:hover{color:#fff}
+.hero{background:linear-gradient(135deg,#111827,#1e1b4b);padding:64px 24px 44px;text-align:center}
+.eyebrow{color:#7c3aed;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.hero h1{color:#f9fafb;font-size:clamp(24px,4vw,44px);font-weight:900;max-width:860px;margin:0 auto 16px;line-height:1.2}
+.meta{color:#6b7280;font-size:13px;margin-top:12px}
+.breadcrumb{color:#6b7280;font-size:13px;max-width:820px;margin:0 auto;padding:16px 24px 0}
+.breadcrumb a{color:#7c3aed;text-decoration:none}
+article{max-width:820px;margin:0 auto;padding:48px 24px}
+h2{color:#f9fafb;font-size:20px;font-weight:800;margin:44px 0 16px;background:linear-gradient(135deg,#4c1d95,#1e1b4b);padding:12px 16px;border-radius:8px;border-left:4px solid #7c3aed}
+h3{color:#e5e7eb;font-size:17px;font-weight:700;margin:28px 0 10px}
+p{color:#d1d5db;margin-bottom:16px}
+ul,ol{color:#d1d5db;margin:0 0 16px 22px}li{margin-bottom:8px}
+a{color:#7c3aed}a:hover{color:#a78bfa}
+.toc{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:24px 28px;margin:32px 0}
+.toc h4{color:#a78bfa;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+.toc ol{margin-left:18px}.toc li{margin-bottom:6px}.toc a{color:#9ca3af;text-decoration:none;font-size:14px}.toc a:hover{color:#a78bfa}
+.okr-card{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:24px;margin:16px 0}
+.okr-label{color:#7c3aed;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.okr-title{color:#f9fafb;font-size:16px;font-weight:800;margin-bottom:14px}
+.kr-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid #1f2937}
+.kr-check{width:18px;height:18px;border:2px solid #374151;border-radius:4px;flex-shrink:0;margin-top:2px}
+.kr-text{color:#d1d5db;font-size:14px}
+.cadence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0}
+@media(max-width:640px){.cadence-grid{grid-template-columns:1fr}}
+.cadence-card{background:#111827;border:1px solid #1f2937;border-radius:10px;padding:20px}
+.cadence-freq{color:#a78bfa;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.cadence-title{color:#f9fafb;font-size:15px;font-weight:700;margin-bottom:8px}
+.cadence-body{color:#9ca3af;font-size:13px;line-height:1.6}
+.field-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.field-table th{background:#1f2937;color:#a78bfa;text-align:left;padding:10px 14px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.field-table td{padding:12px 14px;border-bottom:1px solid #1f2937;color:#d1d5db;vertical-align:top}
+.field-table tr:last-child td{border-bottom:none}
+.field-table .field-name{color:#f9fafb;font-weight:700}
+.smart-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:16px 0}
+.smart-item{background:#0f172a;border:1px solid #374151;border-radius:8px;padding:14px 18px;display:flex;gap:14px;align-items:flex-start}
+.smart-letter{background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#fff;font-size:14px;font-weight:900;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.smart-word{color:#f9fafb;font-weight:700;margin-bottom:4px;font-size:14px}
+.smart-body{color:#9ca3af;font-size:13px}
+.tip-box{background:#0f172a;border:1px solid #374151;border-left:4px solid #7c3aed;border-radius:8px;padding:16px 20px;margin:20px 0}
+.tip-label{color:#a78bfa;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.tip-box p{color:#d1d5db;font-size:14px;margin:0}
+.cta-box{background:linear-gradient(135deg,#4c1d95,#1e1b4b);border:2px solid #6d28d9;border-radius:16px;padding:40px 32px;text-align:center;margin:48px 0}
+.cta-box h3{color:#f9fafb;font-size:22px;font-weight:800;margin-bottom:10px}
+.cta-box p{color:#c4b5fd;margin-bottom:20px}
+.btn{display:inline-block;background:#7c3aed;color:#fff;font-weight:700;padding:14px 32px;border-radius:10px;text-decoration:none;font-size:15px}.btn:hover{background:#6d28d9;color:#fff}
+.faq-item{border-bottom:1px solid #1f2937;padding:0}
+.faq-q{color:#f9fafb;font-size:16px;font-weight:700;padding:20px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.faq-q::after{content:'+';color:#7c3aed;font-size:20px;font-weight:400;flex-shrink:0;margin-left:12px}
+.faq-item.open .faq-q::after{content:'−'}
+.faq-a{color:#9ca3af;font-size:14px;padding-bottom:20px;display:none;line-height:1.7}
+.faq-item.open .faq-a{display:block}
+.email-capture{background:#111827;border:1px solid #374151;border-radius:12px;padding:28px 32px;margin:40px 0;text-align:center}
+.email-capture h4{color:#f9fafb;font-size:18px;font-weight:800;margin-bottom:8px}
+.email-capture p{color:#9ca3af;font-size:14px;margin-bottom:18px}
+.email-form{display:flex;gap:10px;max-width:440px;margin:0 auto;flex-wrap:wrap}
+.email-form input{flex:1;min-width:200px;background:#1a1a1a;border:1px solid #374151;border-radius:8px;padding:11px 14px;color:#e5e7eb;font-size:14px;outline:none}
+.email-form input:focus{border-color:#7c3aed}
+.email-form button{background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
+.success-msg{color:#6ee7b7;font-size:14px;margin-top:10px;display:none}
+.related-links{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0}
+@media(max-width:600px){.related-links{grid-template-columns:1fr}}
+.related-card{background:#111827;border:1px solid #1f2937;border-radius:10px;padding:18px;text-decoration:none;display:block;transition:border-color .2s}
+.related-card:hover{border-color:#7c3aed}
+.related-card .rel-label{color:#7c3aed;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.related-card h4{color:#f9fafb;font-size:14px;font-weight:700;line-height:1.4}
+footer{background:#111;border-top:1px solid #222;padding:32px 24px;text-align:center;color:#6b7280;font-size:13px}
+footer a{color:#9ca3af;text-decoration:none;margin:0 8px}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<script>
+window.addEventListener('scroll',function(){
+  var el=document.getElementById('progress-bar');
+  var s=document.documentElement.scrollTop||document.body.scrollTop;
+  var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  el.style.width=(s/h*100)+'%';
+});
+</script>
+
+<nav>
+  <a href="https://freelanceos-storefront.vercel.app/">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="https://freelanceos-storefront.vercel.app/free-download.html">Free Tools</a>
+    <a href="https://freelanceos-storefront.vercel.app/blog/">Blog</a>
+    <a href="https://freelanceos-storefront.vercel.app/#products">Products</a>
+    <a href="https://freelanceos-storefront.vercel.app/start-here.html">Start Here</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">Notion Goal Tracker &mdash; Complete Guide 2026</div>
+  <h1>Notion Goal Tracker: The System That Actually Keeps You on Track</h1>
+  <p style="color:#9ca3af;max-width:640px;margin:12px auto 0">OKR method, SMART goals, daily/weekly/quarterly tracking cadence, goal categories, accountability — and how FreelanceOS connects goals to your actual business results.</p>
+  <div class="meta">June 2026 &nbsp;&middot;&nbsp; 11 min read</div>
+</div>
+
+<div class="breadcrumb">
+  <a href="https://freelanceos-storefront.vercel.app/">Home</a> &rsaquo;
+  <a href="https://freelanceos-storefront.vercel.app/blog/">Blog</a> &rsaquo;
+  Notion Goal Tracker
+</div>
+
+<article>
+
+<p>Most goal trackers fail not because of motivation — but because of system design. Goals set in January and forgotten by March share a common problem: they live in a document that isn't connected to the work you do every day. A Notion goal tracker that works is one where your daily tasks trace back to quarterly milestones, which trace back to annual goals, which trace back to your actual values and priorities.</p>
+
+<p>For freelancers, this matters even more than for salaried employees. Without a manager, quarterly review, or performance system, you are the entire accountability structure. Your goal tracker isn't just a productivity tool — it's the mechanism that turns your independent work into intentional career progress rather than a series of reactive client demands.</p>
+
+<div class="toc">
+  <h4>Table of Contents</h4>
+  <ol>
+    <li><a href="#okr-method">The OKR Method for Freelancers</a></li>
+    <li><a href="#smart-goals">Writing SMART Goals in Notion</a></li>
+    <li><a href="#database-structure">Goal Database Structure</a></li>
+    <li><a href="#tracking-cadence">Tracking Cadence: Daily, Weekly, Quarterly</a></li>
+    <li><a href="#goal-categories">Goal Categories for Freelancers</a></li>
+    <li><a href="#accountability">Building Accountability Into the System</a></li>
+    <li><a href="#freelanceos">FreelanceOS: Goals Connected to Business Results</a></li>
+    <li><a href="#faq">Frequently Asked Questions</a></li>
+  </ol>
+</div>
+
+<h2 id="okr-method">The OKR Method for Freelancers</h2>
+
+<p>OKR — Objectives and Key Results — is the goal-setting framework used by Google, Intel, and now thousands of individual freelancers and solopreneurs. It works because it separates the ambitious direction (the Objective) from the concrete measurements that define success (the Key Results).</p>
+
+<h3>How OKRs Work</h3>
+
+<p>An <strong>Objective</strong> is qualitative, ambitious, and inspirational: "Build a client base I'm proud of" or "Establish myself as the go-to freelance copywriter for SaaS companies." It answers: what do I want to achieve?</p>
+
+<p><strong>Key Results</strong> are 3–5 measurable outcomes that define what achieving the objective would look like: "Revenue exceeds $7,000/month for three consecutive months" or "Land 2 clients in my target niche by June 30." They answer: how will I know I've succeeded?</p>
+
+<div class="okr-card">
+  <div class="okr-label">Example OKR — Q3 2026</div>
+  <div class="okr-title">&#127919; Objective: Build a consistently profitable freelance business</div>
+  <div class="kr-item">
+    <div class="kr-check"></div>
+    <div class="kr-text"><strong>KR1:</strong> Monthly revenue exceeds $6,500 for all three months of Q3</div>
+  </div>
+  <div class="kr-item">
+    <div class="kr-check"></div>
+    <div class="kr-text"><strong>KR2:</strong> Effective hourly rate reaches $85+ across all projects</div>
+  </div>
+  <div class="kr-item">
+    <div class="kr-check"></div>
+    <div class="kr-text"><strong>KR3:</strong> 80% of Q3 revenue comes from returning clients or referrals (not cold outreach)</div>
+  </div>
+  <div class="kr-item">
+    <div class="kr-check"></div>
+    <div class="kr-text"><strong>KR4:</strong> Raise minimum project rate to $2,500 by August 1</div>
+  </div>
+</div>
+
+<p>In Notion, create one entry per Key Result in your Goals database, all linked to a parent Objective (using a Relation property that points to itself, or a separate Objectives page). Check off Key Results as you achieve them. Update a Progress % based on measurable progress.</p>
+
+<div class="tip-box">
+  <div class="tip-label">OKR Rule</div>
+  <p>OKRs should be slightly uncomfortable — if you're 100% confident you'll hit all your Key Results, they're not ambitious enough. The sweet spot is about 70% confidence: you'll definitely hit some, probably hit most, and might hit all if things go well.</p>
+</div>
+
+<h2 id="smart-goals">Writing SMART Goals in Notion</h2>
+
+<p>SMART goals work alongside OKRs — use the SMART criteria to quality-check each Key Result before committing it to your tracker. A Key Result that fails the SMART test is usually a red flag that it won't drive meaningful action.</p>
+
+<div class="smart-grid">
+  <div class="smart-item">
+    <div class="smart-letter">S</div>
+    <div><div class="smart-word">Specific</div><div class="smart-body">Is it clear exactly what you're trying to achieve? "Earn more" is not specific. "Earn $7,500 in August" is specific. Bad: "Get better at client communication." Good: "Implement a weekly client update system by July 15."</div></div>
+  </div>
+  <div class="smart-item">
+    <div class="smart-letter">M</div>
+    <div><div class="smart-word">Measurable</div><div class="smart-body">Can you produce a number that objectively shows progress? Revenue, client count, projects completed, hours, words written, streak days — whatever it is, it should resolve to a number. "Feel less stressed" is not measurable. "Maintain a 30-hour work week" is.</div></div>
+  </div>
+  <div class="smart-item">
+    <div class="smart-letter">A</div>
+    <div><div class="smart-word">Achievable</div><div class="smart-body">Is this possible given your current resources, time, and context? OKRs should be stretch goals (70% confidence), but impossible goals (0% confidence) aren't motivating — they're depressing. Ground your targets in what you know about your own trajectory.</div></div>
+  </div>
+  <div class="smart-item">
+    <div class="smart-letter">R</div>
+    <div><div class="smart-word">Relevant</div><div class="smart-body">Does this goal connect to your broader objectives and life priorities? Goals that don't connect to anything larger tend to get deprioritized when things get busy — and rightfully so. Every goal should trace back to a "why."</div></div>
+  </div>
+  <div class="smart-item">
+    <div class="smart-letter">T</div>
+    <div><div class="smart-word">Time-bound</div><div class="smart-body">Does it have a specific deadline? Without a deadline, "someday" goals live in purgatory indefinitely. "By Q3 end" or "Before October 1" creates the urgency that moves goals from intentions to plans.</div></div>
+  </div>
+</div>
+
+<h2 id="database-structure">Goal Database Structure</h2>
+
+<p>The Notion database that powers a goal tracking system for freelancers:</p>
+
+<table class="field-table">
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="field-name">Goal Title</td>
+      <td>Title</td>
+      <td>Clear, specific statement of the goal. Write as a Key Result for OKR goals.</td>
+    </tr>
+    <tr>
+      <td class="field-name">Category</td>
+      <td>Select</td>
+      <td>Income / Business Dev / Skill / Operations / Personal. See goal categories below.</td>
+    </tr>
+    <tr>
+      <td class="field-name">Horizon</td>
+      <td>Select</td>
+      <td>Annual / Quarterly / Project-based. Determines which review cadence applies.</td>
+    </tr>
+    <tr>
+      <td class="field-name">Status</td>
+      <td>Select</td>
+      <td>Active / Achieved / Paused / Dropped. Never delete dropped goals — they're data.</td>
+    </tr>
+    <tr>
+      <td class="field-name">Target Date</td>
+      <td>Date</td>
+      <td>The specific deadline. Use Calendar view to see all goal deadlines together.</td>
+    </tr>
+    <tr>
+      <td class="field-name">Progress %</td>
+      <td>Number (0–100)</td>
+      <td>Updated manually during reviews. Visual in Gallery and Table views.</td>
+    </tr>
+    <tr>
+      <td class="field-name">Key Milestones</td>
+      <td>Text</td>
+      <td>3–5 checkpoints that indicate progress. "Sign first client by April 30."</td>
+    </tr>
+    <tr>
+      <td class="field-name">Linked Projects</td>
+      <td>Relation → Projects</td>
+      <td>Which projects are directly contributing to this goal? Creates accountability chain.</td>
+    </tr>
+    <tr>
+      <td class="field-name">Review Notes</td>
+      <td>Text</td>
+      <td>Running log of what moved since last review. Key context for quarterly assessments.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="tracking-cadence">Tracking Cadence: Daily, Weekly, Quarterly</h2>
+
+<p>A goal tracker is only as good as your review rhythm. Here's the cadence that keeps goals alive and connected to your work:</p>
+
+<div class="cadence-grid">
+  <div class="cadence-card">
+    <div class="cadence-freq">Daily</div>
+    <div class="cadence-title">The Connection Check</div>
+    <div class="cadence-body">During your morning planning (5 minutes): look at your Top 3 tasks for the day. For at least one, ask: which active goal does this serve? If none of your top priorities connect to an active goal, something is wrong — either your tasks are reactive or your goals are disconnected from your real work.</div>
+  </div>
+  <div class="cadence-card">
+    <div class="cadence-freq">Weekly</div>
+    <div class="cadence-title">The Progress Pulse</div>
+    <div class="cadence-body">During your Sunday planning session (15–20 minutes): scroll through active goals and note what moved in the past 7 days. Did any goals advance? Which goals have been untouched for two+ weeks? Those are your warning signals — either reprioritize or mark as Paused and remove them from your active attention.</div>
+  </div>
+  <div class="cadence-card">
+    <div class="cadence-freq">Quarterly</div>
+    <div class="cadence-title">The Full OKR Review</div>
+    <div class="cadence-body">Every 90 days (60–90 minutes): score each Key Result (0–100% achieved), assess the overall objective, capture your biggest lessons, then set new OKRs for the next quarter. This is the most important planning session of the quarter — it connects your operational work to your strategic direction.</div>
+  </div>
+</div>
+
+<div class="cta-box">
+  <h3>Goals That Connect to Your Business — Not Just a List</h3>
+  <p>FreelanceOS Pro links your goals to your clients, projects, and revenue. See which goals are actually being served by your current workload — and which are getting ignored. Use code FLASH40 for 40% off.</p>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro &rarr;</a>
+</div>
+
+<h2 id="goal-categories">Goal Categories for Freelancers</h2>
+
+<p>Freelancers need goals across five categories. Focusing only on income goals is the most common mistake — it optimizes the business while neglecting the skills, systems, and personal sustainability that make the income possible long-term.</p>
+
+<h3>1. Income &amp; Financial Goals</h3>
+<p>Annual revenue target, monthly revenue floor, effective hourly rate target, savings rate, emergency fund. These are the numbers most freelancers start with. They're important, but they're outputs of everything else — work on the inputs (below) and the income follows.</p>
+
+<h3>2. Business Development Goals</h3>
+<p>New clients in target niche, referral partnerships established, productized service launched, testimonials collected, portfolio case studies published. These are the sales and marketing activities that fill your pipeline with better work at better rates.</p>
+
+<h3>3. Skill &amp; Portfolio Goals</h3>
+<p>New capability developed, certification earned, portfolio piece completed in a new format, industry knowledge deepened. Skills are the foundation of everything — raising rates without improving skills is a temporary trick. Improving skills gives you permanent leverage.</p>
+
+<h3>4. Operations &amp; Systems Goals</h3>
+<p>Proposal process streamlined, client onboarding system built, invoicing automated, proposal win rate improved. Operational goals make the business more efficient and scalable — each hour you save on admin is an hour you can give to billable work or genuine rest.</p>
+
+<h3>5. Business Milestones</h3>
+<p>Hit first $10k month, transition from generalist to specialist, raise minimum rate to a target number, fire a problematic client type, launch a product or course. Milestones are the meaningful waypoints that mark professional growth — the moments you'll remember and reference in future annual reviews.</p>
+
+<h2 id="accountability">Building Accountability Into the System</h2>
+
+<p>External accountability multiplies the effectiveness of any goal system. Inside Notion, you can build accountability with structure:</p>
+
+<ul>
+  <li><strong>The "Last Reviewed" date:</strong> Any goal where Last Reviewed is more than 30 days ago is at risk of becoming decoration. A filtered view showing "Active goals not reviewed in 30+ days" creates automatic accountability.</li>
+  <li><strong>Public goals page:</strong> Some freelancers create a public Notion page with their quarterly goals — visible to clients, collaborators, or a small community. Public commitments are dramatically more likely to be honored.</li>
+  <li><strong>Accountability partner check-in:</strong> Share your quarterly goals with one trusted peer at the start of each quarter. Brief weekly check-ins (5 minutes async via voice note or text) are more effective than elaborate accountability systems.</li>
+  <li><strong>Goal retrospective log:</strong> Keep a running "Retrospective" text property on each goal. After each weekly review, add one sentence: what moved, what's stuck, what you're learning. Over a quarter, this becomes a rich log of your growth process — and a reference for the OKR scoring session.</li>
+</ul>
+
+<h2 id="freelanceos">FreelanceOS: Goals Connected to Business Results</h2>
+
+<p>The <a href="https://freelanceos-storefront.vercel.app/#products">FreelanceOS Pro</a> goal tracking system is built around one principle: goals should be connected to the work you're actually doing, not stored in a separate document you visit four times a year.</p>
+
+<p>In FreelanceOS, your Goals database is linked to your Projects database via a Relation property. Every project you take on can be tagged to the goal it serves. When you open your monthly revenue goal, you see which clients and projects are contributing to it. When you open your "raise rates" goal, you see the proposal pages where you've implemented the new rate — or haven't.</p>
+
+<p>The income goal tracker integrates directly with your Invoices database. Your revenue target for the quarter shows real-time progress from your actual paid invoices — no manual updating, no spreadsheet. The goal and the business data live in the same system.</p>
+
+<p>For freelancers who've spent years keeping goals in one place and business records in another — this connection is the thing that finally makes both systems actually useful.</p>
+
+<div class="email-capture">
+  <h4>Get the Free Notion Goal Tracker Template</h4>
+  <p>Free goal tracker template with OKR database structure, five goal categories, and a quarterly review template pre-loaded in Notion.</p>
+  <div class="email-form">
+    <input type="email" id="emailInput" placeholder="you@example.com">
+    <button onclick="captureEmail()">Send Template</button>
+  </div>
+  <div class="success-msg" id="successMsg">You're in! Check your inbox for the template link.</div>
+</div>
+
+<h2>Related Reading</h2>
+<div class="related-links">
+  <a class="related-card" href="notion-annual-review-template.html">
+    <div class="rel-label">Annual Review</div>
+    <h4>The Ultimate Notion Annual Review Template for 2026 (Free + Premium)</h4>
+  </a>
+  <a class="related-card" href="notion-life-planner.html">
+    <div class="rel-label">Life Planning</div>
+    <h4>How to Build a Notion Life Planner That Actually Works (2026 Guide)</h4>
+  </a>
+  <a class="related-card" href="notion-weekly-planner.html">
+    <div class="rel-label">Weekly Planning</div>
+    <h4>How to Build a Notion Weekly Planner in 2026 (Free Template)</h4>
+  </a>
+  <a class="related-card" href="freelance-productivity-system.html">
+    <div class="rel-label">Productivity</div>
+    <h4>The Freelance Productivity System That Actually Works (2026 Edition)</h4>
+  </a>
+</div>
+
+<h2 id="faq">Frequently Asked Questions</h2>
+<div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">How do I build a goal tracker in Notion?</div>
+    <div class="faq-a">Build a Notion goal tracker by creating a Goals database with these properties: Goal Title (text), Category/Life Area (select), Type (Annual/Quarterly/Project), Status (Active/Achieved/Paused/Dropped), Start Date, Target Date, Progress % (number or formula), Key Results (text), and Review Date (date). Link goals to a Projects database so projects trace back to goals. Add multiple views: a board grouped by Category, a table filtered to Active goals, and a calendar view showing target dates.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">What is the OKR method for goal setting?</div>
+    <div class="faq-a">OKR stands for Objectives and Key Results. An Objective is an ambitious, qualitative direction: 'Build a thriving freelance business.' Key Results are 3–5 measurable outcomes that define what achieving the objective looks like: 'Revenue exceeds $8,000/month by Q4,' 'Client retention rate above 80%,' 'Launch one productized service by June.' OKRs work because they separate the WHY (objective) from the WHAT (key results), making it easy to check whether you're actually making progress or just feeling busy.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">How often should I review my goals in Notion?</div>
+    <div class="faq-a">Review goals at three cadences: (1) Weekly — a 5-minute check: are this week's tasks connected to any active goal? (2) Monthly — a 30-minute deep review: update progress on each active goal, note what moved, assess whether the goal still makes sense. (3) Quarterly — a full goal review: assess the quarter against your OKRs, set new quarterly goals, adjust annual goals based on what you've learned. Annual reviews complete the cycle. Most people skip the monthly review and wonder why their goals don't progress.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">What goal categories should freelancers track?</div>
+    <div class="faq-a">The five most important goal categories for freelancers are: (1) Income goals — total revenue, per-project rates, income diversification. (2) Business development — new clients, referral partnerships, service launches. (3) Skill and portfolio — new capabilities, case studies, portfolio quality. (4) Operations — systems, tools, processes that make the business more efficient or scalable. (5) Personal development — health, learning, relationships, life quality. Goals should span all five categories, not just income.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">What is the difference between a goal and a project in Notion?</div>
+    <div class="faq-a">Goals are outcomes you want to achieve — they describe a future state. Projects are initiatives with tasks that move you toward a goal — they describe activities you'll undertake. A goal might be 'Earn $10,000/month consistently by December.' Projects that serve that goal might be: 'Raise rates with existing clients,' 'Launch productized SEO audit service,' 'Develop 3 referral partnerships.' In Notion, link Projects to Goals via a Relation property so every project traces back to the goal it serves.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">How do I track progress toward goals in Notion?</div>
+    <div class="faq-a">Track goal progress in Notion with a Progress % property (number, 0–100). Update it manually during weekly or monthly reviews, or auto-calculate it using a rollup of linked projects or tasks. For numeric goals (revenue target), use a formula: current_value / target_value * 100. For milestone goals, use a Select property (Not Started / In Progress / Complete) for each key result. Add a 'Last Updated' date property so you can see at a glance which goals haven't been reviewed recently.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Should I use SMART goals or OKRs in Notion?</div>
+    <div class="faq-a">SMART goals and OKRs are complementary, not competing. Use OKR structure at the annual and quarterly level — objectives set ambitious direction, key results define what success looks like. Use SMART criteria when writing each key result — it should be specific, measurable (has a number), achievable (not fantasy), relevant (connects to the objective), and time-bound (has a deadline). In Notion, your goal entries are the Key Results, written SMART, nested under Objectives as a parent goal.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">How does FreelanceOS help with goal tracking?</div>
+    <div class="faq-a">FreelanceOS Pro includes a complete goal tracking system connected to your business operations. Your Goals database links to your Projects database, which links to your Tasks and Clients. This means income goals have direct visibility into the projects and clients generating that revenue. The quarterly review template prompts you through OKR assessment, and the annual review template provides the full strategic zoom-out. Goals aren't isolated in a 'goals' section — they're woven through the entire system.</div>
+  </div>
+</div>
+
+</article>
+
+<script>
+function toggleFaq(el){var item=el.parentElement;item.classList.toggle('open');}
+function captureEmail(){
+  var email=document.getElementById('emailInput').value.trim();
+  if(!email||!email.includes('@'))return;
+  var leads=JSON.parse(localStorage.getItem('freelanceos_leads')||'[]');
+  leads.push({email:email,source:'goal-tracker',date:new Date().toISOString()});
+  localStorage.setItem('freelanceos_leads',JSON.stringify(leads));
+  document.getElementById('emailInput').value='';
+  document.getElementById('successMsg').style.display='block';
+}
+</script>
+
+<footer>
+  <p style="margin-bottom:12px">
+    <a href="https://freelanceos-storefront.vercel.app/">Home</a>
+    <a href="https://freelanceos-storefront.vercel.app/blog/">Blog</a>
+    <a href="https://freelanceos-storefront.vercel.app/free-download.html">Free Templates</a>
+    <a href="https://freelanceos-storefront.vercel.app/#products">Products</a>
+  </p>
+  <p>&copy; 2026 FreelanceOS &mdash; Notion templates and systems for freelancers.</p>
+</footer>
+</body></html>

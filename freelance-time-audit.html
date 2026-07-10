@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Time Audit — Where Are Your Hours Really Going? | FreelanceOS</title>
+<meta name="description" content="See exactly where your billable hours are leaking. Enter your typical week, discover how much admin and 'fake work' is costing you, and get a personalized action plan.">
+<meta property="og:title" content="Freelance Time Audit — Where Are Your Hours Really Going?">
+<meta property="og:description" content="Most freelancers are shocked. Find out how much non-billable time is draining your income — and get a personalized fix.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos-storefront.vercel.app/freelance-time-audit.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Freelance Time Audit — Are You Leaking Billable Hours?">
+<meta name="twitter:description" content="Log your typical week, see your billable percentage, and get a personalized plan to reclaim lost income.">
+<link rel="canonical" href="https://freelanceos-storefront.vercel.app/freelance-time-audit.html">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f0f;--card:#111;--card2:#181818;
+  --accent:#7c3aed;--accent-light:#a78bfa;
+  --green:#10b981;--yellow:#f59e0b;--red:#ef4444;--blue:#3b82f6;
+  --text:#e5e7eb;--text-muted:#9ca3af;--text-dim:#6b7280;
+  --border:rgba(255,255,255,.08);--border-accent:rgba(124,58,237,.35);
+  --radius:14px;--radius-sm:10px;--radius-xs:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* Nav */
+.nav{padding:14px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(15,15,15,.95);backdrop-filter:blur(12px);z-index:100}
+.nav-brand{font-weight:800;font-size:.95rem;background:linear-gradient(135deg,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-back{font-size:.8rem;color:var(--text-muted);display:flex;align-items:center;gap:5px;transition:color .2s}
+.nav-back:hover{color:var(--text)}
+
+/* Hero */
+.hero{padding:56px 24px 40px;text-align:center;max-width:760px;margin:0 auto}
+.viral-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:999px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);font-size:.72rem;font-weight:700;color:var(--accent-light);margin-bottom:20px;letter-spacing:.05em}
+.hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
+.grad-text{background:linear-gradient(135deg,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1rem;color:var(--text-muted);max-width:520px;margin:0 auto}
+
+/* Main */
+.main{max-width:1100px;margin:0 auto;padding:0 20px 80px}
+
+/* Panel */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:24px}
+.panel-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-light);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.panel-label::before{content:'';width:16px;height:2px;background:var(--accent);border-radius:999px;display:inline-block}
+.panel h2{font-size:1.1rem;font-weight:700;margin-bottom:20px}
+
+/* Sliders */
+.slider-group{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.slider-group{grid-template-columns:1fr}}
+.slider-item{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
+.slider-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.slider-title{font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:7px}
+.slider-emoji{font-size:1.1rem;width:24px;text-align:center}
+.slider-val{font-size:1rem;font-weight:800;color:var(--accent-light);min-width:40px;text-align:right}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:999px;background:rgba(255,255,255,.1);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent-light);cursor:pointer;box-shadow:0 0 8px rgba(124,58,237,.4)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent-light);cursor:pointer;border:none}
+
+.total-row{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding:14px 18px;border-radius:var(--radius-xs);background:var(--card2);border:1px solid var(--border)}
+.total-label{font-size:.9rem;font-weight:600;color:var(--text-muted)}
+.total-val{font-size:1.3rem;font-weight:800}
+.total-val.warn{color:var(--red)}
+.total-val.ok{color:var(--green)}
+.total-warn{font-size:.78rem;color:var(--red);margin-top:8px;display:none;padding:8px 12px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:var(--radius-xs)}
+
+/* Finance inputs */
+.finance-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.finance-grid{grid-template-columns:1fr}}
+.field label{display:block;font-size:.82rem;font-weight:600;color:var(--text-muted);margin-bottom:7px}
+.field input{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-xs);padding:11px 14px;color:var(--text);font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s}
+.field input:focus{border-color:var(--accent)}
+
+/* Stat cards */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+@media(max-width:700px){.stat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.stat-grid{grid-template-columns:1fr}}
+.stat-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .sv{font-size:1.4rem;font-weight:800;color:var(--accent-light);line-height:1.1}
+.stat-card .sl{font-size:.72rem;color:var(--text-dim);margin-top:4px;line-height:1.4}
+.stat-card.highlight{border-color:rgba(124,58,237,.3);background:rgba(124,58,237,.06)}
+.stat-card.danger .sv{color:var(--red)}
+.stat-card.success .sv{color:var(--green)}
+.stat-card.warn .sv{color:var(--yellow)}
+
+/* Donut chart */
+.chart-section{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:center;margin-top:20px}
+@media(max-width:600px){.chart-section{grid-template-columns:1fr;justify-items:center}}
+.donut-wrap{position:relative;width:180px;height:180px;flex-shrink:0}
+.donut-wrap svg{width:100%;height:100%}
+.donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.donut-center .dc-num{font-size:1.5rem;font-weight:800;color:var(--accent-light)}
+.donut-center .dc-label{font-size:.65rem;color:var(--text-dim);line-height:1.3}
+.legend{display:flex;flex-direction:column;gap:8px}
+.legend-item{display:flex;align-items:center;gap:10px;font-size:.82rem}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.legend-name{color:var(--text-muted);flex:1}
+.legend-hrs{font-weight:700;color:var(--text);min-width:40px;text-align:right}
+.legend-pct{color:var(--text-dim);min-width:36px;text-align:right;font-size:.75rem}
+
+/* Ideal week */
+.ideal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+@media(max-width:600px){.ideal-grid{grid-template-columns:1fr}}
+.ideal-col{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px}
+.ideal-col h4{font-size:.85rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.ideal-col .ideal-tag{font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:999px}
+.tag-current{background:rgba(148,163,184,.1);color:var(--text-dim);border:1px solid rgba(148,163,184,.15)}
+.tag-ideal{background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.2)}
+.week-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:.8rem}
+.week-bar-wrap{flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:999px;overflow:hidden}
+.week-bar{height:100%;border-radius:999px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.week-label{color:var(--text-muted);min-width:90px;font-size:.75rem}
+.week-val{color:var(--text);font-weight:700;min-width:32px;text-align:right;font-size:.78rem}
+
+/* Advice cards */
+.advice-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:0}
+@media(max-width:700px){.advice-grid{grid-template-columns:1fr}}
+.advice-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;position:relative;overflow:hidden}
+.advice-card.top-drain{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.03)}
+.advice-card.top-drain::before{content:'TOP DRAIN';position:absolute;top:10px;right:10px;font-size:.58rem;font-weight:800;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.2);padding:2px 7px;border-radius:999px;letter-spacing:.06em}
+.advice-card h4{font-size:.88rem;font-weight:700;margin-bottom:8px}
+.advice-card p{font-size:.78rem;color:var(--text-muted);line-height:1.6;margin-bottom:10px}
+.advice-recovery{font-size:.78rem;font-weight:700;color:var(--green);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);padding:6px 10px;border-radius:var(--radius-xs)}
+
+/* Share & email */
+.share-card{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(167,139,250,.06));border:1px solid rgba(124,58,237,.25);border-radius:var(--radius-sm);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:20px}
+.share-text{font-size:.85rem;font-weight:600;color:var(--text)}
+.share-btn{padding:8px 16px;border:1px solid rgba(124,58,237,.4);border-radius:var(--radius-xs);background:transparent;color:var(--accent-light);font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+.share-btn:hover{background:rgba(124,58,237,.15)}
+.share-btn.copied{border-color:var(--green);color:var(--green)}
+
+.email-capture{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(167,139,250,.05));border:1px solid rgba(124,58,237,.2);border-radius:var(--radius-sm);padding:24px;margin-top:20px}
+.email-capture h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.email-capture p{font-size:.8rem;color:var(--text-muted);margin-bottom:16px}
+.email-row{display:flex;gap:8px;flex-wrap:wrap}
+.email-row input{flex:1;min-width:200px;background:rgba(255,255,255,.06);border:1px solid rgba(124,58,237,.25);border-radius:var(--radius-xs);padding:10px 14px;color:var(--text);font-size:.85rem;font-family:inherit;outline:none}
+.email-row input:focus{border-color:var(--accent)}
+.email-row button{padding:10px 18px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border:none;border-radius:var(--radius-xs);color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}
+.email-ok{font-size:.8rem;font-weight:700;color:var(--green);margin-top:8px;display:none}
+
+/* Pro CTA */
+.pro-cta{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(167,139,250,.05));border:1px solid rgba(124,58,237,.25);border-radius:var(--radius);padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:24px}
+.pro-cta-body h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+.pro-cta-body p{font-size:.82rem;color:var(--text-muted)}
+.pro-cta-btn{padding:12px 22px;background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:var(--radius-xs);color:#fff;font-weight:700;font-size:.85rem;white-space:nowrap;transition:all .2s;display:inline-block;text-decoration:none}
+.pro-cta-btn:hover{opacity:.88;transform:translateY(-1px)}
+
+.section-sep{height:1px;background:var(--border);margin:24px 0}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/freelanceos-storefront/toolkit.html" class="nav-back">← All Free Tools</a>
+  <span class="nav-brand">FreelanceOS</span>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" style="font-size:.78rem;font-weight:700;background:linear-gradient(135deg,#7c3aed,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Get Pro — 40% off →</a>
+</nav>
+
+<div class="hero">
+  <div class="viral-badge">⏰ FREE TIME AUDIT</div>
+  <h1>Where Are Your <span class="grad-text">Hours Really Going?</span></h1>
+  <p>Most freelancers are shocked. Log your typical week and discover how much non-billable time is silently draining your income — then get a personalized fix.</p>
+</div>
+
+<div class="main">
+
+  <!-- Step 1: Sliders -->
+  <div class="panel">
+    <div class="panel-label">Step 1</div>
+    <h2>Log Your Typical Week</h2>
+
+    <div class="slider-group" id="slider-group"></div>
+
+    <div class="total-row">
+      <span class="total-label">Total hours logged this week</span>
+      <span class="total-val" id="total-hrs">0 hrs</span>
+    </div>
+    <div class="total-warn" id="total-warn">⚠️ Over 60 hours — are you accounting for rest and recovery time?</div>
+  </div>
+
+  <!-- Step 2: Financial Reality -->
+  <div class="panel">
+    <div class="panel-label">Step 2</div>
+    <h2>Financial Reality Check</h2>
+
+    <div class="finance-grid">
+      <div class="field">
+        <label>Target annual income ($)</label>
+        <input type="number" id="target-income" value="80000" min="10000" max="2000000">
+      </div>
+      <div class="field">
+        <label>Your hourly billing rate ($)</label>
+        <input type="number" id="hourly-rate" value="75" min="1" max="5000">
+      </div>
+    </div>
+
+    <div class="stat-grid" id="stat-grid"></div>
+  </div>
+
+  <!-- Step 3: Report -->
+  <div class="panel" id="report-panel">
+    <div class="panel-label">Step 3 — Your Report</div>
+    <h2>Personalized Time Audit Report</h2>
+
+    <!-- Donut chart -->
+    <div class="chart-section">
+      <div class="donut-wrap">
+        <svg viewBox="0 0 120 120" id="donut-svg">
+          <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="16"/>
+          <!-- arcs inserted by JS -->
+        </svg>
+        <div class="donut-center">
+          <div class="dc-num" id="billable-pct-donut">0%</div>
+          <div class="dc-label">billable</div>
+        </div>
+      </div>
+      <div class="legend" id="donut-legend"></div>
+    </div>
+
+    <div class="section-sep"></div>
+
+    <!-- Advice cards -->
+    <div style="font-size:.9rem;font-weight:700;margin-bottom:14px">🔍 Your Biggest Opportunities</div>
+    <div class="advice-grid" id="advice-grid"></div>
+
+    <div class="section-sep"></div>
+
+    <!-- Ideal week comparison -->
+    <div style="font-size:.9rem;font-weight:700;margin-bottom:4px">📊 Your Week vs. Ideal Freelance Week</div>
+    <div style="font-size:.78rem;color:var(--text-dim);margin-bottom:4px">Ideal: 35hr week — 25 billable, 5 marketing, 3 admin, 2 learning</div>
+    <div class="ideal-grid" id="ideal-grid"></div>
+
+    <div class="section-sep"></div>
+
+    <!-- Efficiency score + share -->
+    <div class="share-card">
+      <div class="share-text" id="share-text">My freelance efficiency score is <b id="eff-score-inline">—</b>/100 🎯</div>
+      <button class="share-btn" id="share-btn" onclick="copyShare()">📤 Copy Share Message</button>
+    </div>
+
+    <div class="email-capture">
+      <h3>📋 Get the Free Freelance Ideal Week Planner (Notion Template)</h3>
+      <p>A pre-built Notion template with time blocks, weekly review, and productivity tracker. Free — no signup wall.</p>
+      <div class="email-row">
+        <input type="email" id="email-cap" placeholder="your@email.com">
+        <button onclick="captureEmail()">Send Me the Template →</button>
+      </div>
+      <div class="email-ok" id="email-ok">✓ Check your inbox — your template is on the way!</div>
+    </div>
+
+    <div class="pro-cta">
+      <div class="pro-cta-body">
+        <h3>FreelanceOS Pro — Time Tracker + Ideal Week Planner Included</h3>
+        <p>Pre-built Notion database with time tracker, weekly review template, and Ideal Week planner — all connected and ready to use from day one.</p>
+      </div>
+      <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="pro-cta-btn">Get FreelanceOS Pro — 40% off →</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const CATEGORIES = [
+  {key:'billable',  emoji:'💼', label:'Client work (billable)',       default:20, color:'#a78bfa', ideal:25},
+  {key:'email',     emoji:'📧', label:'Email & admin',                default:8,  color:'#3b82f6', ideal:3},
+  {key:'marketing', emoji:'📢', label:'Marketing & social media',     default:5,  color:'#10b981', ideal:5},
+  {key:'learning',  emoji:'🔧', label:'Learning & skill building',    default:3,  color:'#f59e0b', ideal:2},
+  {key:'meetings',  emoji:'💬', label:'Meetings & calls (non-billable)',default:5, color:'#ec4899', ideal:2},
+  {key:'proposals', emoji:'🔍', label:'Proposals & prospecting',      default:4,  color:'#06b6d4', ideal:3},
+  {key:'fakework',  emoji:'😴', label:'"Fake work" (busy but unproductive)',default:3, color:'#ef4444', ideal:0},
+  {key:'other',     emoji:'🌐', label:'Other',                        default:2,  color:'#9ca3af', ideal:0},
+];
+
+// Build sliders
+const sliderGroup = document.getElementById('slider-group');
+CATEGORIES.forEach(cat => {
+  const div = document.createElement('div');
+  div.className = 'slider-item';
+  div.innerHTML = `
+    <div class="slider-header">
+      <div class="slider-title">
+        <span class="slider-emoji">${cat.emoji}</span>
+        <span>${cat.label}</span>
+      </div>
+      <div class="slider-val" id="val-${cat.key}">${cat.default} hrs</div>
+    </div>
+    <input type="range" id="slider-${cat.key}" min="0" max="50" value="${cat.default}" step="0.5">
+  `;
+  sliderGroup.appendChild(div);
+  document.getElementById(`slider-${cat.key}`).addEventListener('input', recalc);
+});
+
+function getVals() {
+  return CATEGORIES.map(cat => ({
+    ...cat,
+    hrs: parseFloat(document.getElementById(`slider-${cat.key}`).value)||0
+  }));
+}
+
+function recalc() {
+  const vals = getVals();
+  vals.forEach(v => {
+    document.getElementById(`val-${v.key}`).textContent = v.hrs + ' hrs';
+  });
+
+  const total = vals.reduce((s,v)=>s+v.hrs,0);
+  const totalEl = document.getElementById('total-hrs');
+  totalEl.textContent = total.toFixed(1) + ' hrs';
+  totalEl.className = 'total-val ' + (total > 60 ? 'warn' : total > 0 ? 'ok' : '');
+  document.getElementById('total-warn').style.display = total > 60 ? 'block' : 'none';
+
+  const billable = vals.find(v=>v.key==='billable').hrs;
+  const email = vals.find(v=>v.key==='email').hrs;
+  const marketing = vals.find(v=>v.key==='marketing').hrs;
+  const fakework = vals.find(v=>v.key==='fakework').hrs;
+  const meetings = vals.find(v=>v.key==='meetings').hrs;
+
+  const targetIncome = parseFloat(document.getElementById('target-income').value)||80000;
+  const rate = parseFloat(document.getElementById('hourly-rate').value)||75;
+
+  const billablePct = total > 0 ? (billable/total*100) : 0;
+  const hrsNeeded = targetIncome / (rate * 48); // hrs/week needed
+  const gap = billable - hrsNeeded;
+  const annualActual = billable * rate * 48;
+  const nonBillableDrainHrs = (email + fakework + meetings);
+  const nonBillableDrainDollars = nonBillableDrainHrs * rate * 48;
+
+  // Stat grid
+  const stats = [
+    {val: billablePct.toFixed(0)+'%', label:'Billable % of your week', cls: billablePct>=60?'success':billablePct>=40?'warn':'danger'},
+    {val: hrsNeeded.toFixed(1)+' hrs', label:'Billable hrs/wk needed to hit goal', cls:'highlight'},
+    {val: (gap>=0?'+':'')+gap.toFixed(1)+' hrs', label:gap>=0?'Hrs above target — great!':'Hrs below target this week', cls:gap>=0?'success':'danger'},
+    {val:'$'+Math.round(annualActual).toLocaleString(), label:'Annual income at current pace', cls: annualActual>=targetIncome?'success':annualActual>=targetIncome*.7?'warn':'danger'},
+    {val:'$'+Math.round(targetIncome).toLocaleString(), label:'Your income target', cls:'highlight'},
+    {val:'-$'+Math.round(nonBillableDrainDollars).toLocaleString(), label:'Admin/fake work costs/year in lost billable time', cls:'danger'},
+  ];
+  const statGrid = document.getElementById('stat-grid');
+  statGrid.innerHTML = stats.map(s=>`
+    <div class="stat-card ${s.cls||''}">
+      <div class="sv">${s.val}</div>
+      <div class="sl">${s.label}</div>
+    </div>`).join('');
+
+  // Donut chart
+  buildDonut(vals, total);
+
+  // Advice cards
+  buildAdvice(vals, rate);
+
+  // Ideal week
+  buildIdealWeek(vals, total);
+
+  // Efficiency score
+  let eff = 0;
+  eff += Math.min(billablePct, 70) * 0.7; // up to 49 for billable%
+  if (email <= 5) eff += 15;
+  else if (email <= 8) eff += 8;
+  if (fakework <= 2) eff += 10;
+  else if (fakework <= 3) eff += 5;
+  if (marketing >= 3) eff += 10;
+  if (meetings <= 3) eff += 10;
+  eff = Math.min(100, Math.round(eff));
+  document.getElementById('eff-score-inline').textContent = eff;
+  const shareMsg = `My freelance efficiency score is ${eff}/100. I found out exactly where my billable hours are leaking — find yours with the free Freelance Time Audit tool: https://freelanceos-storefront.vercel.app/freelance-time-audit.html`;
+  document.getElementById('share-btn').dataset.msg = shareMsg;
+}
+
+function buildDonut(vals, total) {
+  const svg = document.getElementById('donut-svg');
+  // Remove old arcs
+  svg.querySelectorAll('.arc').forEach(e=>e.remove());
+
+  if (total === 0) return;
+
+  const r = 50; const cx = 60; const cy = 60;
+  let startAngle = -Math.PI/2;
+  vals.forEach(v => {
+    if (v.hrs <= 0) return;
+    const angle = (v.hrs/total) * Math.PI * 2;
+    const endAngle = startAngle + angle;
+    const x1 = cx + r * Math.cos(startAngle);
+    const y1 = cy + r * Math.sin(startAngle);
+    const x2 = cx + r * Math.cos(endAngle);
+    const y2 = cy + r * Math.sin(endAngle);
+    const large = angle > Math.PI ? 1 : 0;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('class','arc');
+    path.setAttribute('d', `M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2}`);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke', v.color);
+    path.setAttribute('stroke-width','16');
+    path.setAttribute('stroke-linecap','butt');
+    svg.appendChild(path);
+    startAngle = endAngle;
+  });
+
+  // Billable pct center
+  const billablePct = vals.find(v=>v.key==='billable').hrs / total * 100;
+  document.getElementById('billable-pct-donut').textContent = billablePct.toFixed(0)+'%';
+
+  // Legend
+  const legend = document.getElementById('donut-legend');
+  legend.innerHTML = vals.filter(v=>v.hrs>0).map(v=>`
+    <div class="legend-item">
+      <div class="legend-dot" style="background:${v.color}"></div>
+      <span class="legend-name">${v.emoji} ${v.label.split('(')[0].trim()}</span>
+      <span class="legend-hrs">${v.hrs}h</span>
+      <span class="legend-pct">${(v.hrs/total*100).toFixed(0)}%</span>
+    </div>`).join('');
+}
+
+function buildAdvice(vals, rate) {
+  const email = vals.find(v=>v.key==='email').hrs;
+  const meetings = vals.find(v=>v.key==='meetings').hrs;
+  const fakework = vals.find(v=>v.key==='fakework').hrs;
+  const marketing = vals.find(v=>v.key==='marketing').hrs;
+
+  const advices = [];
+
+  // Calculate recovery in $
+  const r48 = rate * 48;
+
+  if (email > 5) {
+    const recoverable = Math.max(0, email - 3);
+    advices.push({
+      emoji:'📧', title:'Email is a major time drain',
+      desc:`You're spending ${email} hrs/week on email & admin. Schedule 2 email blocks/day (9am + 4pm), unsubscribe ruthlessly, and create templates for common replies.`,
+      recovery:`Potential recovery: ${recoverable} hrs/wk = $${Math.round(recoverable*r48).toLocaleString()}/year`,
+      isDrain: email >= 8
+    });
+  }
+  if (meetings > 3) {
+    const recoverable = Math.max(0, meetings - 2);
+    advices.push({
+      emoji:'💬', title:'Meetings are eating your profits',
+      desc:`You're losing ${meetings} hrs/week to non-billable meetings. Switch to async (Loom video, voice notes), require agendas, default to 25-min meetings.`,
+      recovery:`Potential recovery: ${recoverable} hrs/wk = $${Math.round(recoverable*r48).toLocaleString()}/year`,
+      isDrain: meetings >= 6
+    });
+  }
+  if (fakework > 2) {
+    const recoverable = Math.max(0, fakework - 1);
+    advices.push({
+      emoji:'😴', title:'"Fake work" is your silent killer',
+      desc:`${fakework} hrs/week of busy-but-unproductive time. Time-block with Pomodoro, disable notifications during deep work, use a daily 3-task priority list.`,
+      recovery:`Potential recovery: ${recoverable} hrs/wk = $${Math.round(recoverable*r48).toLocaleString()}/year`,
+      isDrain: fakework >= 4
+    });
+  }
+  if (marketing < 3) {
+    advices.push({
+      emoji:'📢', title:'Underinvesting in marketing',
+      desc:`You're only spending ${marketing} hrs/week on marketing. Freelancers who invest 5+ hrs/week in marketing earn 40% more on average. Batch content creation, repurpose client work as case studies.`,
+      recovery:`Invest 5 hrs/week = potential 40% income uplift`,
+      isDrain: false
+    });
+  }
+
+  // Always show something
+  if (advices.length === 0) {
+    advices.push({
+      emoji:'🎉', title:'Your week looks well-balanced!',
+      desc:'Your time split looks healthy. Keep protecting your billable time, maintain your marketing consistency, and review this audit monthly as your workload shifts.',
+      recovery:'Keep it up — review monthly',
+      isDrain: false
+    });
+  }
+
+  // Sort: drains first
+  advices.sort((a,b)=>(b.isDrain?1:0)-(a.isDrain?1:0));
+
+  const grid = document.getElementById('advice-grid');
+  grid.innerHTML = advices.map((a,i)=>`
+    <div class="advice-card ${i===0&&a.isDrain?'top-drain':''}">
+      <h4>${a.emoji} ${a.title}</h4>
+      <p>${a.desc}</p>
+      <div class="advice-recovery">💰 ${a.recovery}</div>
+    </div>`).join('');
+}
+
+function buildIdealWeek(vals, total) {
+  const idealTotal = 35;
+  const idealVals = {
+    billable:25, marketing:5, email:3, learning:2,
+    meetings:0, proposals:0, fakework:0, other:0
+  };
+  const maxHrs = Math.max(total, idealTotal, 1);
+
+  const grid = document.getElementById('ideal-grid');
+  // Current column
+  let currentHTML = `<div class="ideal-col"><h4>Your Current Week <span class="ideal-tag tag-current">${total.toFixed(0)} hrs</span></h4>`;
+  let idealHTML = `<div class="ideal-col"><h4>Ideal Freelance Week <span class="ideal-tag tag-ideal">35 hrs</span></h4>`;
+
+  CATEGORIES.forEach(cat => {
+    const curHrs = parseFloat(document.getElementById(`slider-${cat.key}`).value)||0;
+    const idealHrs = cat.ideal || 0;
+    const curW = Math.min(100, (curHrs/maxHrs)*100);
+    const ideaW = Math.min(100, (idealHrs/maxHrs)*100);
+    if (curHrs > 0 || idealHrs > 0) {
+      currentHTML += `<div class="week-row">
+        <div class="week-label">${cat.emoji} ${cat.label.split('(')[0].trim().slice(0,14)}</div>
+        <div class="week-bar-wrap"><div class="week-bar" style="width:${curW}%;background:${cat.color}"></div></div>
+        <div class="week-val">${curHrs}h</div>
+      </div>`;
+      idealHTML += `<div class="week-row">
+        <div class="week-label">${cat.emoji} ${cat.label.split('(')[0].trim().slice(0,14)}</div>
+        <div class="week-bar-wrap"><div class="week-bar" style="width:${ideaW}%;background:${cat.color}"></div></div>
+        <div class="week-val">${idealHrs}h</div>
+      </div>`;
+    }
+  });
+
+  currentHTML += '</div>';
+  idealHTML += '</div>';
+  grid.innerHTML = currentHTML + idealHTML;
+}
+
+function copyShare() {
+  const btn = document.getElementById('share-btn');
+  const msg = btn.dataset.msg || 'Check the free Freelance Time Audit: https://freelanceos-storefront.vercel.app/freelance-time-audit.html';
+  navigator.clipboard.writeText(msg).then(()=>{
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📤 Copy Share Message';btn.classList.remove('copied');},2500);
+  });
+}
+
+function captureEmail() {
+  const email = document.getElementById('email-cap').value.trim();
+  if (!email||!email.includes('@')) return;
+  const leads = JSON.parse(localStorage.getItem('freelanceos_leads')||'[]');
+  leads.push({email, source:'time-audit', date:new Date().toISOString()});
+  localStorage.setItem('freelanceos_leads', JSON.stringify(leads));
+  document.getElementById('email-ok').style.display = 'block';
+}
+
+// Finance inputs re-trigger
+['target-income','hourly-rate'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', recalc);
+});
+
+recalc();
+</script>
+</body>
+</html>

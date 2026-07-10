@@ -1,0 +1,2926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Client Satisfaction Survey Builder | FreelanceOS</title>
+<meta name="description" content="Build professional client satisfaction surveys with CSAT, NPS, and CES scoring. Track feedback, analyze trends, and improve your freelance business with data-driven insights.">
+<meta property="og:title" content="Free Client Satisfaction Survey Builder | FreelanceOS">
+<meta property="og:description" content="Build professional client satisfaction surveys with CSAT, NPS, and CES scoring. Track feedback, analyze trends, and improve your freelance business.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos.pro/satisfaction-survey.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Client Satisfaction Survey Builder | FreelanceOS">
+<meta name="twitter:description" content="Build professional client satisfaction surveys with CSAT, NPS, and CES scoring for freelancers.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Client Satisfaction Survey Builder",
+  "description": "Build professional client satisfaction surveys with CSAT, NPS, and CES scoring. Track feedback, analyze trends, and improve your freelance business.",
+  "url": "https://freelanceos.pro/satisfaction-survey.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --card-border: rgba(168,85,247,0.2);
+  --accent-1: #a855f7;
+  --accent-2: #ec4899;
+  --accent-gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --text: #e2e8f0;
+  --heading: #f8fafc;
+  --input-bg: #1e293b;
+  --input-border: rgba(168,85,247,0.3);
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+.app-header {
+  background: rgba(15,23,42,0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--card-border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.app-header h1 {
+  font-size: 20px;
+  color: var(--heading);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.app-header h1 .badge {
+  background: var(--accent-gradient);
+  color: white;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  padding: 8px 24px;
+  background: rgba(15,23,42,0.5);
+  border-bottom: 1px solid var(--card-border);
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+.tab-btn {
+  padding: 10px 18px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-btn);
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.tab-btn:hover { color: var(--heading); background: rgba(168,85,247,0.1); }
+.tab-btn.active {
+  background: var(--accent-gradient);
+  color: white;
+}
+.tab-content { display: none; padding: 24px; }
+.tab-content.active { display: block; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+input[type="text"], input[type="email"], input[type="url"], input[type="number"], input[type="date"],
+textarea, select {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 3px rgba(168,85,247,0.2);
+}
+textarea { resize: vertical; min-height: 80px; }
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn:hover { transform: scale(1.02); }
+.btn-primary {
+  background: var(--accent-gradient);
+  color: white;
+}
+.btn-secondary {
+  background: rgba(168,85,247,0.15);
+  color: var(--accent-1);
+  border: 1px solid var(--card-border);
+}
+.btn-danger {
+  background: rgba(239,68,68,0.15);
+  color: var(--danger);
+  border: 1px solid rgba(239,68,68,0.3);
+}
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  margin-bottom: 16px;
+}
+.section-subtitle {
+  font-size: 14px;
+  color: #94a3b8;
+  margin-bottom: 24px;
+}
+.flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-3 { margin-bottom: 12px; }
+.mb-4 { margin-bottom: 16px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.text-sm { font-size: 13px; }
+.text-muted { color: #64748b; }
+.text-center { text-align: center; }
+.w-full { width: 100%; }
+
+/* Builder Layout */
+.builder-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr 300px;
+  gap: 16px;
+  min-height: calc(100vh - 140px);
+}
+.builder-sidebar {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.question-type-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--input-bg);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 6px;
+  font-family: inherit;
+  text-align: left;
+}
+.question-type-btn:hover {
+  border-color: var(--card-border);
+  background: rgba(168,85,247,0.1);
+}
+.question-type-btn .icon { font-size: 18px; width: 24px; text-align: center; }
+
+/* Question Cards */
+.question-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  margin-bottom: 12px;
+  cursor: grab;
+  transition: all 0.2s;
+  position: relative;
+}
+.question-card:hover { border-color: rgba(168,85,247,0.4); }
+.question-card.dragging {
+  opacity: 0.5;
+  border-color: var(--accent-1);
+  cursor: grabbing;
+}
+.question-card .drag-handle {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #475569;
+  cursor: grab;
+  font-size: 16px;
+  user-select: none;
+}
+.question-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.question-card .card-header .type-badge {
+  background: rgba(168,85,247,0.15);
+  color: var(--accent-1);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.question-card .card-actions { display: flex; gap: 6px; align-items: center; }
+.toggle-switch {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  display: inline-block;
+}
+.toggle-switch input { display: none; }
+.toggle-slider {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #334155;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 2px;
+  top: 2px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--accent-1); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); }
+.delete-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.delete-btn:hover { color: var(--danger); background: rgba(239,68,68,0.1); }
+
+/* Preview Styles */
+.preview-container {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.preview-light {
+  background: #ffffff;
+  color: #1a1a2e;
+  border-radius: var(--radius-card);
+  padding: 32px;
+  min-height: 400px;
+}
+.preview-light h2 { color: #1a1a2e; }
+.preview-light p { color: #4a4a6a; }
+.preview-light label { color: #4a4a6a; }
+.preview-light input[type="text"],
+.preview-light textarea {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #1a1a2e;
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 100%;
+  font-size: 14px;
+  font-family: inherit;
+}
+.preview-light input:focus,
+.preview-light textarea:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 3px rgba(168,85,247,0.15);
+  outline: none;
+}
+.preview-progress {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.preview-progress-bar {
+  height: 100%;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+.emoji-scale {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.emoji-scale button {
+  font-size: 32px;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  opacity: 0.5;
+}
+.emoji-scale button:hover, .emoji-scale button.selected {
+  opacity: 1;
+  border-color: #a855f7;
+  background: rgba(168,85,247,0.1);
+}
+.nps-scale {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nps-scale button {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  background: white;
+  color: #1a1a2e;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.nps-scale button:hover, .nps-scale button.selected {
+  border-color: #a855f7;
+  background: #a855f7;
+  color: white;
+}
+.nps-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+.ces-scale {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+.ces-scale button {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  background: white;
+  color: #1a1a2e;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.ces-scale button:hover, .ces-scale button.selected {
+  border-color: #a855f7;
+  background: #a855f7;
+  color: white;
+}
+.likert-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+}
+.likert-option input[type="radio"] { accent-color: #a855f7; width: 16px; height: 16px; }
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: grab;
+  user-select: none;
+}
+.ranking-item .rank-num {
+  width: 24px;
+  height: 24px;
+  background: #a855f7;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Analytics */
+.stat-card {
+  text-align: center;
+  padding: 24px;
+}
+.stat-value {
+  font-size: 42px;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-label {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+.stat-trend {
+  font-size: 14px;
+  margin-top: 4px;
+}
+.trend-up { color: var(--success); }
+.trend-down { color: var(--danger); }
+
+/* Canvas containers */
+.chart-container {
+  position: relative;
+  width: 100%;
+}
+.chart-container canvas {
+  width: 100%;
+  height: auto;
+}
+
+/* Word cloud */
+.word-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  min-height: 150px;
+}
+.word-cloud span {
+  display: inline-block;
+  padding: 2px 6px;
+  cursor: default;
+  transition: transform 0.2s;
+}
+.word-cloud span:hover { transform: scale(1.1); }
+
+/* Benchmark bars */
+.benchmark-bar-container {
+  margin-bottom: 16px;
+}
+.benchmark-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.benchmark-bar-track {
+  height: 24px;
+  background: #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+.benchmark-bar-fill {
+  height: 100%;
+  border-radius: 12px;
+  transition: width 0.5s;
+}
+.benchmark-marker {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: white;
+  z-index: 2;
+}
+
+/* Action Plan */
+.priority-high { border-left: 4px solid var(--danger); }
+.priority-medium { border-left: 4px solid var(--warning); }
+.priority-low { border-left: 4px solid var(--success); }
+.priority-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.priority-badge.high { background: rgba(239,68,68,0.15); color: var(--danger); }
+.priority-badge.medium { background: rgba(245,158,11,0.15); color: var(--warning); }
+.priority-badge.low { background: rgba(34,197,94,0.15); color: var(--success); }
+
+/* Drag placeholder */
+.drag-placeholder {
+  border: 2px dashed var(--accent-1);
+  border-radius: var(--radius-card);
+  min-height: 60px;
+  margin-bottom: 12px;
+  background: rgba(168,85,247,0.05);
+}
+
+/* CTA Banner */
+.cta-banner {
+  background: var(--accent-gradient);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  text-align: center;
+  margin: 24px;
+}
+.cta-banner h3 { color: white; font-size: 22px; margin-bottom: 8px; }
+.cta-banner p { color: rgba(255,255,255,0.9); margin-bottom: 16px; }
+.cta-banner a {
+  display: inline-block;
+  background: white;
+  color: #7c3aed;
+  padding: 12px 28px;
+  border-radius: var(--radius-btn);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  transition: transform 0.2s;
+}
+.cta-banner a:hover { transform: scale(1.05); }
+
+/* Footer */
+.app-footer {
+  border-top: 1px solid var(--card-border);
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: #64748b;
+}
+.app-footer a { color: var(--accent-1); text-decoration: none; }
+.app-footer a:hover { text-decoration: underline; }
+.footer-links { display: flex; gap: 16px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+
+/* Matrix/Grid */
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.matrix-table th, .matrix-table td {
+  padding: 8px 12px;
+  text-align: center;
+  border-bottom: 1px solid rgba(168,85,247,0.1);
+}
+.matrix-table th { color: #94a3b8; font-weight: 600; }
+.matrix-table td:first-child { text-align: left; color: var(--text); }
+.matrix-table input[type="radio"] { accent-color: #a855f7; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  padding: 12px 20px;
+  border-radius: var(--radius-btn);
+  color: var(--text);
+  font-size: 14px;
+  z-index: 9999;
+  animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+@keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+/* Yes/No toggle buttons */
+.yesno-group { display: flex; gap: 8px; }
+.yesno-btn {
+  padding: 10px 28px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  background: white;
+  color: #1a1a2e;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.yesno-btn:hover, .yesno-btn.selected {
+  border-color: #a855f7;
+  background: #a855f7;
+  color: white;
+}
+
+/* Survey settings panel */
+.settings-panel { padding: 16px; }
+.settings-panel .form-group { margin-bottom: 14px; }
+.settings-panel .form-group label { margin-bottom: 4px; }
+
+/* Response list */
+.response-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--card-border);
+}
+.response-item:last-child { border-bottom: none; }
+
+/* Library card */
+.library-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+.library-card:hover { border-color: rgba(168,85,247,0.4); }
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  max-width: 500px;
+  width: 90%;
+}
+
+@media (max-width: 900px) {
+  .builder-layout { grid-template-columns: 1fr; }
+  .builder-sidebar { position: static; }
+  .tab-nav { padding: 8px 12px; }
+  .tab-btn { padding: 8px 12px; font-size: 13px; }
+}
+@media (max-width: 600px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .stat-value { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#hg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <defs><linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+      <path d="M9 12l2 2 4-4"/>
+      <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.48 0 2.88.36 4.11.99"/>
+    </svg>
+    Client Satisfaction Survey Builder
+    <span class="badge">Tool #63</span>
+  </h1>
+  <div class="flex gap-2">
+    <button class="btn btn-secondary btn-sm" onclick="exportCurrentSurveyHTML()">Copy HTML</button>
+    <button class="btn btn-primary btn-sm" onclick="exportCSV()">Export CSV</button>
+  </div>
+</header>
+
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn active" data-tab="builder">Builder</button>
+  <button class="tab-btn" data-tab="templates">Templates</button>
+  <button class="tab-btn" data-tab="preview">Preview</button>
+  <button class="tab-btn" data-tab="responses">Responses</button>
+  <button class="tab-btn" data-tab="analytics">Analytics</button>
+  <button class="tab-btn" data-tab="benchmarks">Benchmarks</button>
+  <button class="tab-btn" data-tab="actionplan">Action Plan</button>
+  <button class="tab-btn" data-tab="library">Library</button>
+</nav>
+
+<!-- ========== BUILDER TAB ========== -->
+<div class="tab-content active" id="tab-builder">
+  <div class="builder-layout">
+    <!-- Left sidebar: question types -->
+    <div class="builder-sidebar">
+      <div class="card" style="padding:16px">
+        <h3 style="font-size:14px;color:var(--heading);margin-bottom:12px">Question Types</h3>
+        <button class="question-type-btn" onclick="addQuestion('csat')">
+          <span class="icon">&#128522;</span> CSAT (1-5)
+        </button>
+        <button class="question-type-btn" onclick="addQuestion('ces')">
+          <span class="icon">&#9878;</span> CES (1-7)
+        </button>
+        <button class="question-type-btn" onclick="addQuestion('nps')">
+          <span class="icon">&#128200;</span> NPS (0-10)
+        </button>
+        <button class="question-type-btn" onclick="addQuestion('matrix')">
+          <span class="icon">&#9638;</span> Matrix / Grid
+        </button>
+        <button class="question-type-btn" onclick="addQuestion('likert')">
+          <span class="icon">&#9733;</span> Likert Scale
+        </button>
+        <button class="question-type-btn" onclick="addQuestion('text')">
+          <span class="icon">&#9998;</span> Open Text
+        </button>
+        <button class="question-type-btn" onclick="addQuestion('yesno')">
+          <span class="icon">&#10003;</span> Yes / No
+        </button>
+        <button class="question-type-btn" onclick="addQuestion('ranking')">
+          <span class="icon">&#8645;</span> Ranking
+        </button>
+      </div>
+    </div>
+
+    <!-- Center: question list -->
+    <div>
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="section-title" style="margin-bottom:0">Survey Questions</h2>
+        <span class="text-sm text-muted" id="questionCount">0 questions</span>
+      </div>
+      <div id="questionList" style="min-height:200px">
+        <div id="emptyState" class="card text-center" style="padding:48px">
+          <p style="font-size:40px;margin-bottom:12px">&#128203;</p>
+          <p style="color:var(--heading);font-size:16px;font-weight:600">Start Building Your Survey</p>
+          <p class="text-muted text-sm mt-3">Click a question type from the sidebar or choose a template to get started.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right sidebar: settings -->
+    <div class="builder-sidebar">
+      <div class="card settings-panel">
+        <h3 style="font-size:14px;color:var(--heading);margin-bottom:14px">Survey Settings</h3>
+        <div class="form-group">
+          <label>Survey Title</label>
+          <input type="text" id="surveyTitle" value="Client Satisfaction Survey" oninput="saveSurvey()">
+        </div>
+        <div class="form-group">
+          <label>Intro Text</label>
+          <textarea id="surveyIntro" rows="3" oninput="saveSurvey()">We value your feedback. Please take a moment to share your experience working with us.</textarea>
+        </div>
+        <div class="form-group">
+          <label>Thank-You Message</label>
+          <textarea id="surveyThankYou" rows="2" oninput="saveSurvey()">Thank you for your feedback! Your responses help us improve our services.</textarea>
+        </div>
+        <div class="form-group">
+          <label>Business Name</label>
+          <input type="text" id="surveyBrand" value="" placeholder="Your Business Name" oninput="saveSurvey()">
+        </div>
+        <div class="form-group">
+          <label>Logo URL</label>
+          <input type="url" id="surveyLogo" value="" placeholder="https://..." oninput="saveSurvey()">
+        </div>
+        <div class="form-group">
+          <label>Estimated Completion (min)</label>
+          <input type="number" id="surveyTime" value="3" min="1" max="30" oninput="saveSurvey()">
+        </div>
+        <div class="form-group flex items-center justify-between">
+          <label style="margin:0">Anonymous</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="surveyAnon" onchange="saveSurvey()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TEMPLATES TAB ========== -->
+<div class="tab-content" id="tab-templates">
+  <h2 class="section-title">Survey Templates</h2>
+  <p class="section-subtitle">Choose a pre-built template to quickly create a professional client satisfaction survey.</p>
+  <div class="card-grid" id="templateGrid"></div>
+</div>
+
+<!-- ========== PREVIEW TAB ========== -->
+<div class="tab-content" id="tab-preview">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="section-title" style="margin-bottom:0">Live Survey Preview</h2>
+    <div class="flex gap-2 items-center">
+      <span class="text-sm text-muted">Mode:</span>
+      <button class="btn btn-sm" id="previewModeToggle" onclick="togglePreviewMode()">One-at-a-time</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportCurrentSurveyHTML()">Copy as HTML</button>
+    </div>
+  </div>
+  <div class="preview-container">
+    <div class="preview-light" id="previewArea"></div>
+  </div>
+</div>
+
+<!-- ========== RESPONSES TAB ========== -->
+<div class="tab-content" id="tab-responses">
+  <div class="flex justify-between items-center mb-4">
+    <div>
+      <h2 class="section-title" style="margin-bottom:0">Response Entry</h2>
+      <p class="section-subtitle" style="margin-bottom:0">Manually enter survey responses from phone or in-person feedback.</p>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="exportCSV()">Export CSV</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div>
+      <div class="card">
+        <h3 style="font-size:16px;color:var(--heading);margin-bottom:16px">New Response</h3>
+        <div class="form-group mb-3">
+          <label>Client Name</label>
+          <input type="text" id="respClientName" placeholder="Jane Smith">
+        </div>
+        <div class="form-group mb-3">
+          <label>Company</label>
+          <input type="text" id="respCompany" placeholder="Acme Corp">
+        </div>
+        <div class="form-group mb-3">
+          <label>Date</label>
+          <input type="date" id="respDate">
+        </div>
+        <div id="responseFormQuestions"></div>
+        <button class="btn btn-primary w-full mt-4" onclick="submitResponse()">Submit Response</button>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3 style="font-size:16px;color:var(--heading);margin-bottom:16px">Saved Responses (<span id="responseCount">0</span>)</h3>
+        <div id="responseList" style="max-height:500px;overflow-y:auto"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ANALYTICS TAB ========== -->
+<div class="tab-content" id="tab-analytics">
+  <h2 class="section-title">Analytics Dashboard</h2>
+  <p class="section-subtitle">Visualize satisfaction metrics and discover insights from your survey data.</p>
+  <div id="analyticsEmpty" class="card text-center" style="padding:48px;display:none">
+    <p style="font-size:40px;margin-bottom:12px">&#128202;</p>
+    <p style="color:var(--heading);font-size:16px;font-weight:600">No Response Data Yet</p>
+    <p class="text-muted text-sm mt-3">Submit some responses to see analytics here.</p>
+  </div>
+  <div id="analyticsDash">
+    <div class="card-grid mb-4" id="statCards"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" id="analyticsCharts">
+      <div class="card">
+        <h3 style="font-size:15px;color:var(--heading);margin-bottom:12px">NPS Gauge</h3>
+        <div class="chart-container"><canvas id="npsGaugeCanvas" width="400" height="240"></canvas></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;color:var(--heading);margin-bottom:12px">Score Trends Over Time</h3>
+        <div class="chart-container"><canvas id="trendCanvas" width="400" height="240"></canvas></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;color:var(--heading);margin-bottom:12px">Per-Question Scores</h3>
+        <div class="chart-container"><canvas id="questionBarCanvas" width="400" height="300"></canvas></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;color:var(--heading);margin-bottom:12px">Response Word Cloud</h3>
+        <div class="word-cloud" id="wordCloud"></div>
+      </div>
+    </div>
+    <div class="flex justify-between items-center mt-4">
+      <span></span>
+      <button class="btn btn-secondary btn-sm" onclick="copyAnalyticsSummary()">Copy Summary to Clipboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== BENCHMARKS TAB ========== -->
+<div class="tab-content" id="tab-benchmarks">
+  <h2 class="section-title">Industry Benchmarks</h2>
+  <p class="section-subtitle">Compare your satisfaction scores against industry averages.</p>
+  <div class="card mb-4">
+    <div class="flex items-center gap-3">
+      <label style="margin:0;white-space:nowrap">Your Industry:</label>
+      <select id="benchmarkIndustry" onchange="renderBenchmarks()" style="max-width:300px">
+        <option value="webdev">Web Development</option>
+        <option value="graphicdesign">Graphic Design</option>
+        <option value="copywriting">Copywriting</option>
+        <option value="marketing">Marketing</option>
+        <option value="consulting">Consulting</option>
+        <option value="photography">Photography</option>
+        <option value="video">Video Production</option>
+        <option value="uxui">UI/UX Design</option>
+      </select>
+    </div>
+  </div>
+  <div id="benchmarkContent"></div>
+</div>
+
+<!-- ========== ACTION PLAN TAB ========== -->
+<div class="tab-content" id="tab-actionplan">
+  <div class="flex justify-between items-center mb-4">
+    <div>
+      <h2 class="section-title" style="margin-bottom:0">Action Plan</h2>
+      <p class="section-subtitle" style="margin-bottom:0">Data-driven recommendations to improve client satisfaction.</p>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="exportActionPlan()">Export as Text</button>
+  </div>
+  <div id="actionPlanContent"></div>
+</div>
+
+<!-- ========== LIBRARY TAB ========== -->
+<div class="tab-content" id="tab-library">
+  <div class="flex justify-between items-center mb-4">
+    <div>
+      <h2 class="section-title" style="margin-bottom:0">Survey Library</h2>
+      <p class="section-subtitle" style="margin-bottom:0">Save, organize, and reuse your survey designs.</p>
+    </div>
+    <div class="flex gap-2">
+      <button class="btn btn-primary btn-sm" onclick="showSaveModal()">Save Current</button>
+      <button class="btn btn-secondary btn-sm" onclick="importSurveyJSON()">Import JSON</button>
+    </div>
+  </div>
+  <div class="card-grid" id="libraryGrid"></div>
+  <div id="libraryEmpty" class="card text-center" style="padding:48px">
+    <p style="font-size:40px;margin-bottom:12px">&#128218;</p>
+    <p style="color:var(--heading);font-size:16px;font-weight:600">No Saved Surveys Yet</p>
+    <p class="text-muted text-sm mt-3">Save your current survey to add it to the library.</p>
+  </div>
+</div>
+
+<!-- Save Modal -->
+<div class="modal-overlay" id="saveModal" style="display:none" onclick="if(event.target===this)closeSaveModal()">
+  <div class="modal-content">
+    <h3 style="font-size:18px;color:var(--heading);margin-bottom:16px">Save Survey to Library</h3>
+    <div class="form-group mb-3">
+      <label>Survey Name</label>
+      <input type="text" id="saveModalName" placeholder="My Survey">
+    </div>
+    <div class="form-group mb-4">
+      <label>Description</label>
+      <textarea id="saveModalDesc" rows="2" placeholder="Brief description..."></textarea>
+    </div>
+    <div class="flex gap-2 justify-between">
+      <button class="btn btn-secondary" onclick="closeSaveModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSurveyToLibrary()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+  <h3>Upgrade to FreelanceOS Pro</h3>
+  <p>Get the complete freelance business toolkit with 49+ premium tools, templates, and automation systems. Use code <strong>FLASH40</strong> for 40% off.</p>
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get FreelanceOS Pro &rarr;</a>
+</div>
+
+<!-- Footer -->
+<footer class="app-footer">
+  <div class="footer-links">
+    <a href="https://freelanceos.pro">FreelanceOS Home</a>
+    <a href="https://freelanceos.pro/free-templates.html">Free Templates</a>
+    <a href="https://freelanceos.pro/toolkit.html">All Tools</a>
+    <a href="https://freelanceos.pro/compare.html">Compare Plans</a>
+  </div>
+  <p>All data is stored locally in your browser. Nothing is sent to any server.</p>
+  <p style="margin-top:4px">&copy; 2026 FreelanceOS. Free for personal and commercial use.</p>
+</footer>
+
+<script>
+/* ================================================================
+   STATE & STORAGE
+   ================================================================ */
+const LS_SURVEY = 'freelanceos_survey_current';
+const LS_RESPONSES = 'freelanceos_survey_responses';
+const LS_LIBRARY = 'freelanceos_survey_library';
+
+let survey = loadFromLS(LS_SURVEY) || {
+  title: 'Client Satisfaction Survey',
+  intro: 'We value your feedback. Please take a moment to share your experience working with us.',
+  thankYou: 'Thank you for your feedback! Your responses help us improve our services.',
+  brand: '',
+  logo: '',
+  time: 3,
+  anonymous: false,
+  questions: []
+};
+
+let responses = loadFromLS(LS_RESPONSES) || [];
+let library = loadFromLS(LS_LIBRARY) || [];
+let previewMode = 'single'; // 'single' or 'all'
+let previewStep = 0;
+let dragState = { dragging: false, el: null, startY: 0, startIdx: -1, placeholder: null };
+
+function loadFromLS(key) {
+  try { const d = localStorage.getItem(key); return d ? JSON.parse(d) : null; } catch(e) { return null; }
+}
+function saveToLS(key, data) {
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch(e) {}
+}
+function saveSurvey() {
+  survey.title = document.getElementById('surveyTitle').value;
+  survey.intro = document.getElementById('surveyIntro').value;
+  survey.thankYou = document.getElementById('surveyThankYou').value;
+  survey.brand = document.getElementById('surveyBrand').value;
+  survey.logo = document.getElementById('surveyLogo').value;
+  survey.time = parseInt(document.getElementById('surveyTime').value) || 3;
+  survey.anonymous = document.getElementById('surveyAnon').checked;
+  saveToLS(LS_SURVEY, survey);
+}
+function loadSurveyToUI() {
+  document.getElementById('surveyTitle').value = survey.title || '';
+  document.getElementById('surveyIntro').value = survey.intro || '';
+  document.getElementById('surveyThankYou').value = survey.thankYou || '';
+  document.getElementById('surveyBrand').value = survey.brand || '';
+  document.getElementById('surveyLogo').value = survey.logo || '';
+  document.getElementById('surveyTime').value = survey.time || 3;
+  document.getElementById('surveyAnon').checked = survey.anonymous || false;
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+/* ================================================================
+   TAB NAVIGATION
+   ================================================================ */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'preview') renderPreview();
+    if (btn.dataset.tab === 'responses') renderResponseForm();
+    if (btn.dataset.tab === 'analytics') renderAnalytics();
+    if (btn.dataset.tab === 'benchmarks') renderBenchmarks();
+    if (btn.dataset.tab === 'actionplan') renderActionPlan();
+    if (btn.dataset.tab === 'library') renderLibrary();
+  });
+});
+
+/* ================================================================
+   UNIQUE ID GENERATOR
+   ================================================================ */
+function uid() { return 'q_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 5); }
+
+/* ================================================================
+   QUESTION DEFAULTS
+   ================================================================ */
+function getDefaultQuestion(type) {
+  const base = { id: uid(), type, title: '', required: true };
+  switch(type) {
+    case 'csat':
+      return { ...base, title: 'How satisfied are you with our service?' };
+    case 'ces':
+      return { ...base, title: 'How easy was it to work with us?' };
+    case 'nps':
+      return { ...base, title: 'How likely are you to recommend us to a colleague?' };
+    case 'matrix':
+      return { ...base, title: 'Please rate the following aspects:', rows: ['Quality','Timeliness','Communication'], columns: ['Poor','Fair','Good','Very Good','Excellent'] };
+    case 'likert':
+      return { ...base, title: 'How would you rate the overall experience?', options: ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'] };
+    case 'text':
+      return { ...base, title: 'Any additional comments or feedback?', subtype: 'long' };
+    case 'yesno':
+      return { ...base, title: 'Would you work with us again?' };
+    case 'ranking':
+      return { ...base, title: 'Rank the following in order of importance:', items: ['Quality of work','Communication','Timeliness','Value for money'] };
+    default:
+      return base;
+  }
+}
+
+/* ================================================================
+   ADD QUESTION
+   ================================================================ */
+function addQuestion(type) {
+  const q = getDefaultQuestion(type);
+  survey.questions.push(q);
+  saveSurvey();
+  renderQuestionList();
+}
+
+/* ================================================================
+   RENDER QUESTION LIST (Builder)
+   ================================================================ */
+function renderQuestionList() {
+  const list = document.getElementById('questionList');
+  const empty = document.getElementById('emptyState');
+  const count = document.getElementById('questionCount');
+  count.textContent = survey.questions.length + ' question' + (survey.questions.length !== 1 ? 's' : '');
+
+  if (survey.questions.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(createEmptyState());
+    return;
+  }
+
+  list.innerHTML = '';
+  survey.questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.dataset.idx = idx;
+    card.setAttribute('draggable', 'false');
+
+    const typeLabels = { csat: 'CSAT (1-5)', ces: 'CES (1-7)', nps: 'NPS (0-10)', matrix: 'Matrix', likert: 'Likert', text: 'Open Text', yesno: 'Yes/No', ranking: 'Ranking' };
+
+    let configHTML = '';
+    if (q.type === 'text') {
+      configHTML = `<div class="form-group mt-3"><label>Response Type</label><select onchange="updateQuestionField(${idx},'subtype',this.value)"><option value="short" ${q.subtype==='short'?'selected':''}>Short Answer</option><option value="long" ${q.subtype==='long'?'selected':''}>Long Answer</option></select></div>`;
+    } else if (q.type === 'matrix') {
+      configHTML = `<div class="form-group mt-3"><label>Rows (one per line)</label><textarea rows="3" oninput="updateQuestionField(${idx},'rows',this.value.split('\\n').filter(r=>r.trim()))">${(q.rows||[]).join('\n')}</textarea></div>
+      <div class="form-group mt-3"><label>Columns (one per line)</label><textarea rows="3" oninput="updateQuestionField(${idx},'columns',this.value.split('\\n').filter(r=>r.trim()))">${(q.columns||[]).join('\n')}</textarea></div>`;
+    } else if (q.type === 'likert') {
+      configHTML = `<div class="form-group mt-3"><label>Options (one per line)</label><textarea rows="4" oninput="updateQuestionField(${idx},'options',this.value.split('\\n').filter(r=>r.trim()))">${(q.options||[]).join('\n')}</textarea></div>`;
+    } else if (q.type === 'ranking') {
+      configHTML = `<div class="form-group mt-3"><label>Items to Rank (one per line)</label><textarea rows="4" oninput="updateQuestionField(${idx},'items',this.value.split('\\n').filter(r=>r.trim()))">${(q.items||[]).join('\n')}</textarea></div>`;
+    }
+
+    card.innerHTML = `
+      <span class="drag-handle" onmousedown="startDrag(event, ${idx})">&#8942;&#8942;</span>
+      <div class="card-header" style="padding-left:24px">
+        <span class="type-badge">${typeLabels[q.type] || q.type}</span>
+        <div class="card-actions">
+          <span class="text-sm text-muted" style="margin-right:4px">Required</span>
+          <label class="toggle-switch">
+            <input type="checkbox" ${q.required?'checked':''} onchange="updateQuestionField(${idx},'required',this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+          <button class="delete-btn" onclick="deleteQuestion(${idx})" title="Delete">&#10005;</button>
+        </div>
+      </div>
+      <div style="padding-left:24px">
+        <input type="text" value="${escapeHTML(q.title)}" placeholder="Question title..." oninput="updateQuestionField(${idx},'title',this.value)" style="font-size:15px;font-weight:600">
+        ${configHTML}
+      </div>
+    `;
+    list.appendChild(card);
+  });
+  saveToLS(LS_SURVEY, survey);
+}
+
+function createEmptyState() {
+  const div = document.createElement('div');
+  div.id = 'emptyState';
+  div.className = 'card text-center';
+  div.style.padding = '48px';
+  div.innerHTML = `<p style="font-size:40px;margin-bottom:12px">&#128203;</p>
+    <p style="color:var(--heading);font-size:16px;font-weight:600">Start Building Your Survey</p>
+    <p class="text-muted text-sm mt-3">Click a question type from the sidebar or choose a template to get started.</p>`;
+  return div;
+}
+
+function updateQuestionField(idx, field, value) {
+  if (survey.questions[idx]) {
+    survey.questions[idx][field] = value;
+    saveToLS(LS_SURVEY, survey);
+  }
+}
+
+function deleteQuestion(idx) {
+  survey.questions.splice(idx, 1);
+  saveSurvey();
+  renderQuestionList();
+}
+
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+/* ================================================================
+   DRAG AND DROP (mouse events, no libraries)
+   ================================================================ */
+function startDrag(e, idx) {
+  e.preventDefault();
+  const list = document.getElementById('questionList');
+  const cards = Array.from(list.querySelectorAll('.question-card'));
+  const card = cards[idx];
+  if (!card) return;
+
+  dragState.dragging = true;
+  dragState.el = card;
+  dragState.startIdx = idx;
+  dragState.startY = e.clientY;
+  card.classList.add('dragging');
+
+  const placeholder = document.createElement('div');
+  placeholder.className = 'drag-placeholder';
+  placeholder.style.height = card.offsetHeight + 'px';
+  dragState.placeholder = placeholder;
+  card.parentNode.insertBefore(placeholder, card.nextSibling);
+
+  card.style.position = 'relative';
+  card.style.zIndex = '50';
+
+  const onMouseMove = (ev) => {
+    if (!dragState.dragging) return;
+    const dy = ev.clientY - dragState.startY;
+    card.style.transform = `translateY(${dy}px)`;
+
+    const cards2 = Array.from(list.querySelectorAll('.question-card:not(.dragging)'));
+    const ph = dragState.placeholder;
+    let inserted = false;
+    for (let i = 0; i < cards2.length; i++) {
+      const rect = cards2[i].getBoundingClientRect();
+      const mid = rect.top + rect.height / 2;
+      if (ev.clientY < mid) {
+        list.insertBefore(ph, cards2[i]);
+        inserted = true;
+        break;
+      }
+    }
+    if (!inserted) {
+      list.appendChild(ph);
+    }
+  };
+
+  const onMouseUp = () => {
+    if (!dragState.dragging) return;
+    dragState.dragging = false;
+    card.classList.remove('dragging');
+    card.style.position = '';
+    card.style.zIndex = '';
+    card.style.transform = '';
+
+    const ph = dragState.placeholder;
+    if (ph && ph.parentNode) {
+      ph.parentNode.insertBefore(card, ph);
+      ph.remove();
+    }
+
+    // Recalculate order from DOM
+    const newCards = Array.from(list.querySelectorAll('.question-card'));
+    const newQuestions = [];
+    newCards.forEach(c => {
+      const oi = parseInt(c.dataset.idx);
+      if (survey.questions[oi]) newQuestions.push(survey.questions[oi]);
+    });
+    if (newQuestions.length === survey.questions.length) {
+      survey.questions = newQuestions;
+      saveToLS(LS_SURVEY, survey);
+      renderQuestionList();
+    }
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+}
+
+/* ================================================================
+   TEMPLATES
+   ================================================================ */
+const templates = [
+  {
+    name: 'Project Completion Satisfaction',
+    desc: 'Evaluate client satisfaction after delivering a project. Covers delivery quality, timeline adherence, communication, and overall experience.',
+    questions: [
+      { type: 'csat', title: 'How satisfied are you with the final deliverables?', required: true },
+      { type: 'nps', title: 'How likely are you to recommend our services to a colleague or friend?', required: true },
+      { type: 'likert', title: 'The project was delivered on or before the agreed timeline.', options: ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'], required: true },
+      { type: 'csat', title: 'How satisfied were you with our communication throughout the project?', required: true },
+      { type: 'likert', title: 'The final work met or exceeded my expectations for quality.', options: ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'], required: true },
+      { type: 'yesno', title: 'Would you hire us again for a similar project?', required: true },
+      { type: 'text', title: 'What could we have done differently to improve your experience?', subtype: 'long', required: false }
+    ]
+  },
+  {
+    name: 'Quarterly Relationship Check-in',
+    desc: 'Periodic assessment for ongoing client relationships. Measures relationship health, satisfaction trends, and areas for improvement.',
+    questions: [
+      { type: 'csat', title: 'How satisfied are you with our working relationship this quarter?', required: true },
+      { type: 'ces', title: 'How easy has it been to collaborate with us on projects?', required: true },
+      { type: 'likert', title: 'I feel my business goals are well understood by the team.', options: ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'], required: true },
+      { type: 'matrix', title: 'Rate the following aspects of our ongoing service:', rows: ['Responsiveness','Proactiveness','Quality consistency','Strategic guidance'], columns: ['Poor','Fair','Good','Very Good','Excellent'], required: true },
+      { type: 'nps', title: 'Based on your experience this quarter, how likely are you to recommend us?', required: true },
+      { type: 'text', title: 'What should we focus on improving next quarter?', subtype: 'long', required: false }
+    ]
+  },
+  {
+    name: 'Service Quality Assessment',
+    desc: 'Deep-dive into the technical and professional quality of services delivered. Ideal for skill-based freelancers.',
+    questions: [
+      { type: 'csat', title: 'How satisfied are you with the technical quality of our work?', required: true },
+      { type: 'matrix', title: 'Please rate the following quality dimensions:', rows: ['Technical expertise','Attention to detail','Creative problem-solving','Adherence to specifications','Error-free delivery'], columns: ['Poor','Below Average','Average','Above Average','Excellent'], required: true },
+      { type: 'likert', title: 'The deliverables required minimal revisions after submission.', options: ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'], required: true },
+      { type: 'ces', title: 'How easy was the review and revision process?', required: true },
+      { type: 'ranking', title: 'Rank these quality factors by importance to you:', items: ['Technical accuracy','Visual polish','Speed of delivery','Innovation','Documentation'], required: true },
+      { type: 'text', title: 'What specific aspects of our work quality stand out (positively or negatively)?', subtype: 'long', required: false }
+    ]
+  },
+  {
+    name: 'Communication Effectiveness',
+    desc: 'Evaluate how well you communicate with clients. Covers response time, clarity, proactiveness, and preferred channels.',
+    questions: [
+      { type: 'csat', title: 'How satisfied are you with our overall communication?', required: true },
+      { type: 'matrix', title: 'Rate the following communication aspects:', rows: ['Response speed','Clarity of messages','Status update frequency','Availability for questions','Proactive updates'], columns: ['Poor','Fair','Good','Very Good','Excellent'], required: true },
+      { type: 'likert', title: 'I always knew the status of my project without having to ask.', options: ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'], required: true },
+      { type: 'ces', title: 'How easy was it to reach us when you needed to?', required: true },
+      { type: 'yesno', title: 'Were there any communication breakdowns during our engagement?', required: true },
+      { type: 'text', title: 'How can we improve our communication with you?', subtype: 'long', required: false }
+    ]
+  },
+  {
+    name: 'Value for Money Evaluation',
+    desc: 'Assess whether clients feel they received fair value for the investment. Covers pricing, ROI, and perceived worth.',
+    questions: [
+      { type: 'csat', title: 'How satisfied are you with the value you received relative to the price paid?', required: true },
+      { type: 'likert', title: 'The pricing for our services was fair and transparent.', options: ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'], required: true },
+      { type: 'likert', title: 'The return on investment from our work met my expectations.', options: ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'], required: true },
+      { type: 'nps', title: 'Based on the value received, how likely are you to recommend us?', required: true },
+      { type: 'ces', title: 'How easy was our pricing and payment process?', required: true },
+      { type: 'ranking', title: 'Rank what matters most in determining value:', items: ['Final output quality','Speed of delivery','Communication experience','Strategic advice','Cost efficiency'], required: true },
+      { type: 'text', title: 'Any thoughts on pricing, packages, or perceived value?', subtype: 'long', required: false }
+    ]
+  },
+  {
+    name: 'Overall Business Relationship',
+    desc: 'Comprehensive assessment covering all aspects of the freelancer-client relationship. Ideal for annual reviews.',
+    questions: [
+      { type: 'csat', title: 'How satisfied are you with our overall business relationship?', required: true },
+      { type: 'nps', title: 'How likely are you to recommend our services to others?', required: true },
+      { type: 'ces', title: 'How easy is it to do business with us?', required: true },
+      { type: 'matrix', title: 'Rate the following relationship dimensions:', rows: ['Trustworthiness','Professionalism','Reliability','Flexibility','Innovation'], columns: ['Poor','Fair','Good','Very Good','Excellent'], required: true },
+      { type: 'likert', title: 'Our business relationship has improved over time.', options: ['Strongly Disagree','Disagree','Neutral','Agree','Strongly Agree'], required: true },
+      { type: 'yesno', title: 'Do you plan to continue working with us in the next 12 months?', required: true },
+      { type: 'ranking', title: 'Rank these relationship qualities by importance:', items: ['Trust and reliability','Communication quality','Work quality','Fair pricing','Cultural fit','Proactive problem solving'], required: true },
+      { type: 'text', title: 'What is the single most important thing we could do to strengthen our relationship?', subtype: 'long', required: false }
+    ]
+  }
+];
+
+function renderTemplates() {
+  const grid = document.getElementById('templateGrid');
+  grid.innerHTML = '';
+  templates.forEach((t, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3 style="font-size:16px;color:var(--heading);margin-bottom:8px">${escapeHTML(t.name)}</h3>
+      <p class="text-sm text-muted mb-3">${escapeHTML(t.desc)}</p>
+      <div class="flex justify-between items-center">
+        <span class="text-sm" style="color:var(--accent-1)">${t.questions.length} questions</span>
+        <button class="btn btn-primary btn-sm" onclick="useTemplate(${i})">Use Template</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function useTemplate(idx) {
+  const t = templates[idx];
+  survey.questions = t.questions.map(q => ({ ...q, id: uid() }));
+  survey.title = t.name;
+  saveToLS(LS_SURVEY, survey);
+  loadSurveyToUI();
+  renderQuestionList();
+  // Switch to builder tab
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector('[data-tab="builder"]').classList.add('active');
+  document.getElementById('tab-builder').classList.add('active');
+  showToast('Template loaded: ' + t.name);
+}
+
+/* ================================================================
+   PREVIEW
+   ================================================================ */
+let previewAnswers = {};
+
+function togglePreviewMode() {
+  previewMode = previewMode === 'single' ? 'all' : 'single';
+  previewStep = 0;
+  document.getElementById('previewModeToggle').textContent = previewMode === 'single' ? 'One-at-a-time' : 'All at once';
+  renderPreview();
+}
+
+function renderPreview() {
+  const area = document.getElementById('previewArea');
+  const qs = survey.questions;
+  if (qs.length === 0) {
+    area.innerHTML = `<div style="text-align:center;padding:40px"><p style="font-size:36px;margin-bottom:12px">&#128203;</p><p style="font-weight:600;font-size:16px">No questions yet</p><p style="color:#94a3b8;font-size:14px;margin-top:8px">Add questions in the Builder tab to see a preview.</p></div>`;
+    return;
+  }
+
+  let html = '';
+
+  // Branding
+  if (survey.logo) {
+    html += `<div style="text-align:center;margin-bottom:16px"><img src="${escapeHTML(survey.logo)}" alt="Logo" style="max-height:60px;max-width:200px;border-radius:8px"></div>`;
+  }
+  if (survey.brand) {
+    html += `<p style="text-align:center;font-size:13px;color:#94a3b8;margin-bottom:8px">${escapeHTML(survey.brand)}</p>`;
+  }
+
+  html += `<h2 style="font-size:22px;font-weight:700;margin-bottom:8px;text-align:center">${escapeHTML(survey.title)}</h2>`;
+  html += `<p style="text-align:center;color:#64748b;font-size:14px;margin-bottom:20px">${escapeHTML(survey.intro)}</p>`;
+  if (survey.time) {
+    html += `<p style="text-align:center;color:#94a3b8;font-size:12px;margin-bottom:16px">Estimated time: ${survey.time} minute${survey.time>1?'s':''}</p>`;
+  }
+
+  // Progress bar
+  if (previewMode === 'single') {
+    const pct = qs.length > 0 ? Math.round(((previewStep) / qs.length) * 100) : 0;
+    html += `<div class="preview-progress"><div class="preview-progress-bar" style="width:${pct}%"></div></div>`;
+  } else {
+    html += `<div class="preview-progress"><div class="preview-progress-bar" style="width:100%"></div></div>`;
+  }
+
+  if (previewMode === 'single') {
+    if (previewStep >= qs.length) {
+      // Thank you screen
+      html += `<div style="text-align:center;padding:40px 0"><p style="font-size:48px;margin-bottom:12px">&#127881;</p><p style="font-weight:700;font-size:20px;margin-bottom:8px">Thank You!</p><p style="color:#64748b">${escapeHTML(survey.thankYou)}</p></div>`;
+    } else {
+      html += renderPreviewQuestion(qs[previewStep], previewStep);
+      html += `<div style="display:flex;justify-content:space-between;margin-top:20px">`;
+      if (previewStep > 0) {
+        html += `<button onclick="prevPreviewStep()" style="padding:10px 24px;border:1px solid #dee2e6;border-radius:8px;background:white;color:#1a1a2e;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit">Back</button>`;
+      } else {
+        html += `<span></span>`;
+      }
+      html += `<button onclick="nextPreviewStep()" style="padding:10px 24px;border:none;border-radius:8px;background:linear-gradient(135deg,#a855f7,#ec4899);color:white;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit">${previewStep < qs.length - 1 ? 'Next' : 'Submit'}</button>`;
+      html += `</div>`;
+    }
+  } else {
+    qs.forEach((q, i) => { html += renderPreviewQuestion(q, i); });
+    html += `<div style="text-align:center;margin-top:24px"><button onclick="previewSubmitAll()" style="padding:12px 32px;border:none;border-radius:8px;background:linear-gradient(135deg,#a855f7,#ec4899);color:white;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit">Submit Survey</button></div>`;
+  }
+
+  area.innerHTML = html;
+}
+
+function renderPreviewQuestion(q, idx) {
+  let html = `<div style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid #eee">`;
+  html += `<p style="font-weight:600;font-size:15px;margin-bottom:10px;color:#1a1a2e">${idx+1}. ${escapeHTML(q.title)} ${q.required ? '<span style="color:#ef4444">*</span>' : ''}</p>`;
+
+  switch(q.type) {
+    case 'csat':
+      html += `<div class="emoji-scale">`;
+      const emojis = ['&#128544;','&#128577;','&#128528;','&#128578;','&#128525;'];
+      const emojiLabels = ['Very Unsatisfied','Unsatisfied','Neutral','Satisfied','Very Satisfied'];
+      emojis.forEach((em, i) => {
+        const sel = previewAnswers[q.id] === (i+1) ? 'selected' : '';
+        html += `<button class="${sel}" onclick="setPreviewAnswer('${q.id}',${i+1});renderPreview()" title="${emojiLabels[i]}">${em}</button>`;
+      });
+      html += `</div>`;
+      break;
+
+    case 'ces':
+      html += `<div class="ces-scale">`;
+      for (let i = 1; i <= 7; i++) {
+        const sel = previewAnswers[q.id] === i ? 'selected' : '';
+        html += `<button class="${sel}" onclick="setPreviewAnswer('${q.id}',${i});renderPreview()">${i}</button>`;
+      }
+      html += `</div>`;
+      html += `<div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8;margin-top:4px"><span>Very Difficult</span><span>Very Easy</span></div>`;
+      break;
+
+    case 'nps':
+      html += `<div class="nps-scale">`;
+      for (let i = 0; i <= 10; i++) {
+        const sel = previewAnswers[q.id] === i ? 'selected' : '';
+        html += `<button class="${sel}" onclick="setPreviewAnswer('${q.id}',${i});renderPreview()">${i}</button>`;
+      }
+      html += `</div>`;
+      html += `<div class="nps-labels"><span>Detractor (0-6)</span><span>Passive (7-8)</span><span>Promoter (9-10)</span></div>`;
+      break;
+
+    case 'matrix':
+      html += `<table class="matrix-table" style="color:#1a1a2e"><thead><tr><th></th>`;
+      (q.columns||[]).forEach(c => { html += `<th>${escapeHTML(c)}</th>`; });
+      html += `</tr></thead><tbody>`;
+      (q.rows||[]).forEach((r, ri) => {
+        html += `<tr><td>${escapeHTML(r)}</td>`;
+        (q.columns||[]).forEach((c, ci) => {
+          const key = q.id + '_' + ri;
+          const checked = previewAnswers[key] === ci ? 'checked' : '';
+          html += `<td><input type="radio" name="preview_${q.id}_${ri}" ${checked} onclick="setPreviewAnswer('${key}',${ci});renderPreview()"></td>`;
+        });
+        html += `</tr>`;
+      });
+      html += `</tbody></table>`;
+      break;
+
+    case 'likert':
+      (q.options||[]).forEach((opt, oi) => {
+        const checked = previewAnswers[q.id] === oi ? 'checked' : '';
+        html += `<div class="likert-option"><input type="radio" name="preview_${q.id}" ${checked} onclick="setPreviewAnswer('${q.id}',${oi});renderPreview()"><span style="color:#4a4a6a">${escapeHTML(opt)}</span></div>`;
+      });
+      break;
+
+    case 'text':
+      if (q.subtype === 'short') {
+        html += `<input type="text" placeholder="Your answer..." value="${escapeHTML(previewAnswers[q.id]||'')}" oninput="setPreviewAnswer('${q.id}',this.value)">`;
+      } else {
+        html += `<textarea rows="4" placeholder="Your answer..." oninput="setPreviewAnswer('${q.id}',this.value)">${escapeHTML(previewAnswers[q.id]||'')}</textarea>`;
+      }
+      break;
+
+    case 'yesno':
+      html += `<div class="yesno-group">`;
+      html += `<button class="yesno-btn ${previewAnswers[q.id]==='yes'?'selected':''}" onclick="setPreviewAnswer('${q.id}','yes');renderPreview()">Yes</button>`;
+      html += `<button class="yesno-btn ${previewAnswers[q.id]==='no'?'selected':''}" onclick="setPreviewAnswer('${q.id}','no');renderPreview()">No</button>`;
+      html += `</div>`;
+      break;
+
+    case 'ranking':
+      const items = previewAnswers[q.id] || (q.items||[]).slice();
+      if (!previewAnswers[q.id]) previewAnswers[q.id] = items.slice();
+      items.forEach((item, ri) => {
+        html += `<div class="ranking-item" draggable="false" data-qid="${q.id}" data-ri="${ri}" onmousedown="startRankDrag(event,'${q.id}',${ri})"><span class="rank-num">${ri+1}</span><span style="color:#4a4a6a">${escapeHTML(item)}</span></div>`;
+      });
+      break;
+  }
+  html += `</div>`;
+  return html;
+}
+
+function setPreviewAnswer(qid, val) {
+  previewAnswers[qid] = val;
+}
+
+function nextPreviewStep() {
+  previewStep++;
+  renderPreview();
+}
+function prevPreviewStep() {
+  if (previewStep > 0) previewStep--;
+  renderPreview();
+}
+function previewSubmitAll() {
+  previewStep = survey.questions.length;
+  previewMode = 'single';
+  renderPreview();
+}
+
+/* Ranking drag in preview */
+function startRankDrag(e, qid, ri) {
+  e.preventDefault();
+  const items = previewAnswers[qid];
+  if (!items) return;
+  let startY = e.clientY;
+  const itemHeight = 44;
+
+  const onMove = (ev) => {
+    const dy = ev.clientY - startY;
+    const shift = Math.round(dy / itemHeight);
+    if (shift !== 0 && ri + shift >= 0 && ri + shift < items.length) {
+      const temp = items[ri];
+      items[ri] = items[ri + shift];
+      items[ri + shift] = temp;
+      ri = ri + shift;
+      startY = ev.clientY;
+      previewAnswers[qid] = items;
+      renderPreview();
+    }
+  };
+  const onUp = () => {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+  };
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+}
+
+/* ================================================================
+   RESPONSE ENTRY
+   ================================================================ */
+function renderResponseForm() {
+  const container = document.getElementById('responseFormQuestions');
+  container.innerHTML = '';
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('respDate').value = today;
+
+  survey.questions.forEach((q, i) => {
+    let html = `<div class="mb-3"><label style="color:var(--text);font-weight:600">${i+1}. ${escapeHTML(q.title)} ${q.required?'<span style="color:var(--danger)">*</span>':''}</label>`;
+
+    switch(q.type) {
+      case 'csat':
+        html += `<select id="resp_${q.id}"><option value="">Select...</option>`;
+        for (let v = 1; v <= 5; v++) html += `<option value="${v}">${v} - ${['Very Unsatisfied','Unsatisfied','Neutral','Satisfied','Very Satisfied'][v-1]}</option>`;
+        html += `</select>`;
+        break;
+      case 'ces':
+        html += `<select id="resp_${q.id}"><option value="">Select...</option>`;
+        for (let v = 1; v <= 7; v++) html += `<option value="${v}">${v}</option>`;
+        html += `</select>`;
+        break;
+      case 'nps':
+        html += `<select id="resp_${q.id}"><option value="">Select...</option>`;
+        for (let v = 0; v <= 10; v++) html += `<option value="${v}">${v}</option>`;
+        html += `</select>`;
+        break;
+      case 'matrix':
+        (q.rows||[]).forEach((r, ri) => {
+          html += `<div class="mb-2"><span class="text-sm" style="color:#94a3b8">${escapeHTML(r)}</span><select id="resp_${q.id}_${ri}"><option value="">Select...</option>`;
+          (q.columns||[]).forEach((c, ci) => { html += `<option value="${ci}">${escapeHTML(c)}</option>`; });
+          html += `</select></div>`;
+        });
+        break;
+      case 'likert':
+        html += `<select id="resp_${q.id}"><option value="">Select...</option>`;
+        (q.options||[]).forEach((o, oi) => { html += `<option value="${oi}">${escapeHTML(o)}</option>`; });
+        html += `</select>`;
+        break;
+      case 'text':
+        if (q.subtype === 'short') {
+          html += `<input type="text" id="resp_${q.id}" placeholder="Response...">`;
+        } else {
+          html += `<textarea id="resp_${q.id}" rows="3" placeholder="Response..."></textarea>`;
+        }
+        break;
+      case 'yesno':
+        html += `<select id="resp_${q.id}"><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select>`;
+        break;
+      case 'ranking':
+        html += `<input type="text" id="resp_${q.id}" placeholder="Enter order, e.g.: 1,3,2,4" value="${(q.items||[]).map((_,i)=>i+1).join(',')}">`;
+        break;
+    }
+    html += `</div>`;
+    container.innerHTML += html;
+  });
+
+  renderResponseList();
+}
+
+function submitResponse() {
+  const resp = {
+    id: uid(),
+    clientName: document.getElementById('respClientName').value,
+    company: document.getElementById('respCompany').value,
+    date: document.getElementById('respDate').value,
+    timestamp: new Date().toISOString(),
+    answers: {}
+  };
+
+  survey.questions.forEach(q => {
+    if (q.type === 'matrix') {
+      const matrixAns = {};
+      (q.rows||[]).forEach((r, ri) => {
+        const el = document.getElementById('resp_' + q.id + '_' + ri);
+        if (el) matrixAns[r] = el.value !== '' ? parseInt(el.value) : null;
+      });
+      resp.answers[q.id] = matrixAns;
+    } else {
+      const el = document.getElementById('resp_' + q.id);
+      if (el) {
+        let val = el.value;
+        if (['csat','ces','nps','likert'].includes(q.type) && val !== '') val = parseInt(val);
+        resp.answers[q.id] = val;
+      }
+    }
+  });
+
+  responses.push(resp);
+  saveToLS(LS_RESPONSES, responses);
+  renderResponseList();
+  showToast('Response saved successfully');
+
+  // Clear form inputs
+  document.getElementById('respClientName').value = '';
+  document.getElementById('respCompany').value = '';
+  survey.questions.forEach(q => {
+    if (q.type === 'matrix') {
+      (q.rows||[]).forEach((r, ri) => {
+        const el = document.getElementById('resp_' + q.id + '_' + ri);
+        if (el) el.value = '';
+      });
+    } else {
+      const el = document.getElementById('resp_' + q.id);
+      if (el) el.value = q.type === 'ranking' ? (q.items||[]).map((_,i)=>i+1).join(',') : '';
+    }
+  });
+}
+
+function renderResponseList() {
+  const list = document.getElementById('responseList');
+  const count = document.getElementById('responseCount');
+  count.textContent = responses.length;
+
+  if (responses.length === 0) {
+    list.innerHTML = '<p class="text-sm text-muted text-center" style="padding:20px">No responses recorded yet.</p>';
+    return;
+  }
+
+  list.innerHTML = '';
+  responses.slice().reverse().forEach((r, i) => {
+    const realIdx = responses.length - 1 - i;
+    const div = document.createElement('div');
+    div.className = 'response-item';
+    const dateStr = r.date || new Date(r.timestamp).toLocaleDateString();
+    div.innerHTML = `
+      <div>
+        <p style="font-weight:600;color:var(--heading);font-size:14px">${escapeHTML(r.clientName || 'Anonymous')}${r.company ? ' - ' + escapeHTML(r.company) : ''}</p>
+        <p class="text-sm text-muted">${dateStr}</p>
+      </div>
+      <button class="delete-btn" onclick="deleteResponse(${realIdx})" title="Delete">&#10005;</button>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function deleteResponse(idx) {
+  responses.splice(idx, 1);
+  saveToLS(LS_RESPONSES, responses);
+  renderResponseList();
+  showToast('Response deleted');
+}
+
+/* ================================================================
+   ANALYTICS
+   ================================================================ */
+function renderAnalytics() {
+  if (responses.length === 0) {
+    document.getElementById('analyticsEmpty').style.display = 'block';
+    document.getElementById('analyticsDash').style.display = 'none';
+    return;
+  }
+  document.getElementById('analyticsEmpty').style.display = 'none';
+  document.getElementById('analyticsDash').style.display = 'block';
+
+  // Calculate scores
+  const csatScores = [];
+  const npsScores = [];
+  const cesScores = [];
+  const textResponses = [];
+  const perQuestion = {};
+
+  survey.questions.forEach(q => {
+    perQuestion[q.id] = { title: q.title, type: q.type, values: [] };
+  });
+
+  responses.forEach(r => {
+    survey.questions.forEach(q => {
+      const ans = r.answers[q.id];
+      if (ans === undefined || ans === '' || ans === null) return;
+
+      if (q.type === 'csat' && typeof ans === 'number') {
+        csatScores.push(ans);
+        perQuestion[q.id].values.push(ans);
+      }
+      if (q.type === 'nps' && typeof ans === 'number') {
+        npsScores.push(ans);
+        perQuestion[q.id].values.push(ans);
+      }
+      if (q.type === 'ces' && typeof ans === 'number') {
+        cesScores.push(ans);
+        perQuestion[q.id].values.push(ans);
+      }
+      if (q.type === 'likert' && typeof ans === 'number') {
+        perQuestion[q.id].values.push(ans);
+      }
+      if (q.type === 'text' && typeof ans === 'string' && ans.trim()) {
+        textResponses.push(ans);
+      }
+      if (q.type === 'yesno') {
+        perQuestion[q.id].values.push(ans === 'yes' ? 1 : 0);
+      }
+      if (q.type === 'matrix' && typeof ans === 'object') {
+        const vals = Object.values(ans).filter(v => v !== null && v !== undefined);
+        if (vals.length) perQuestion[q.id].values.push(avg(vals));
+      }
+    });
+  });
+
+  // Stat cards
+  const csatAvg = csatScores.length ? avg(csatScores) : null;
+  const cesAvg = cesScores.length ? avg(cesScores) : null;
+  const npsScore = calcNPS(npsScores);
+
+  const statCards = document.getElementById('statCards');
+  statCards.innerHTML = '';
+
+  const stats = [
+    { label: 'Overall CSAT', value: csatAvg !== null ? csatAvg.toFixed(1) + '/5' : 'N/A', sub: csatScores.length + ' ratings' },
+    { label: 'NPS Score', value: npsScore !== null ? (npsScore >= 0 ? '+' : '') + npsScore : 'N/A', sub: npsScores.length + ' ratings' },
+    { label: 'CES Average', value: cesAvg !== null ? cesAvg.toFixed(1) + '/7' : 'N/A', sub: cesScores.length + ' ratings' },
+    { label: 'Total Responses', value: responses.length.toString(), sub: 'all time' }
+  ];
+
+  stats.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'card stat-card';
+    card.innerHTML = `<div class="stat-value">${s.value}</div><div class="stat-label">${s.label}</div><div class="text-sm text-muted">${s.sub}</div>`;
+    statCards.appendChild(card);
+  });
+
+  // NPS Gauge
+  drawNPSGauge(npsScore !== null ? npsScore : 0);
+
+  // Trend chart
+  drawTrendChart();
+
+  // Per-question bar chart
+  drawQuestionBars(perQuestion);
+
+  // Word cloud
+  renderWordCloud(textResponses);
+}
+
+function avg(arr) { return arr.reduce((a,b) => a+b, 0) / arr.length; }
+
+function calcNPS(scores) {
+  if (scores.length === 0) return null;
+  let promoters = 0, detractors = 0;
+  scores.forEach(s => {
+    if (s >= 9) promoters++;
+    else if (s <= 6) detractors++;
+  });
+  return Math.round(((promoters - detractors) / scores.length) * 100);
+}
+
+/* Canvas: NPS Gauge */
+function drawNPSGauge(score) {
+  const canvas = document.getElementById('npsGaugeCanvas');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  const cx = w / 2, cy = h - 30;
+  const r = Math.min(w, h) - 80;
+  const startAngle = Math.PI;
+  const endAngle = 2 * Math.PI;
+
+  // Background segments: Detractor (red), Passive (yellow), Promoter (green)
+  const segments = [
+    { start: Math.PI, end: Math.PI + (Math.PI * 0.6), color: '#ef4444' },      // -100 to -20 (detractor heavy)
+    { start: Math.PI + (Math.PI * 0.6), end: Math.PI + (Math.PI * 0.8), color: '#f59e0b' }, // -20 to +20 (passive)
+    { start: Math.PI + (Math.PI * 0.8), end: 2 * Math.PI, color: '#22c55e' }    // +20 to +100 (promoter)
+  ];
+
+  segments.forEach(seg => {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, seg.start, seg.end, false);
+    ctx.lineWidth = 30;
+    ctx.strokeStyle = seg.color;
+    ctx.globalAlpha = 0.3;
+    ctx.stroke();
+  });
+  ctx.globalAlpha = 1;
+
+  // Active arc
+  const normalizedScore = (score + 100) / 200; // 0 to 1
+  const needleAngle = Math.PI + (normalizedScore * Math.PI);
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, Math.PI, needleAngle, false);
+  ctx.lineWidth = 30;
+  const activeColor = score >= 20 ? '#22c55e' : score >= -20 ? '#f59e0b' : '#ef4444';
+  ctx.strokeStyle = activeColor;
+  ctx.stroke();
+
+  // Needle
+  const needleLen = r - 20;
+  const nx = cx + needleLen * Math.cos(needleAngle);
+  const ny = cy + needleLen * Math.sin(needleAngle);
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.lineTo(nx, ny);
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = '#f8fafc';
+  ctx.stroke();
+
+  // Center dot
+  ctx.beginPath();
+  ctx.arc(cx, cy, 8, 0, 2 * Math.PI);
+  ctx.fillStyle = '#f8fafc';
+  ctx.fill();
+
+  // Score text
+  ctx.fillStyle = '#f8fafc';
+  ctx.font = 'bold 28px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText((score >= 0 ? '+' : '') + score, cx, cy - 20);
+
+  // Labels
+  ctx.font = '12px system-ui';
+  ctx.fillStyle = '#94a3b8';
+  ctx.textAlign = 'left';
+  ctx.fillText('-100', cx - r - 15, cy + 20);
+  ctx.textAlign = 'right';
+  ctx.fillText('+100', cx + r + 15, cy + 20);
+  ctx.textAlign = 'center';
+  ctx.fillText('0', cx, cy - r - 10);
+}
+
+/* Canvas: Trend Line Chart */
+function drawTrendChart() {
+  const canvas = document.getElementById('trendCanvas');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  if (responses.length < 2) {
+    ctx.fillStyle = '#64748b';
+    ctx.font = '14px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('Need at least 2 responses for trend data', w/2, h/2);
+    return;
+  }
+
+  // Group responses by date and calculate average CSAT per date
+  const dateScores = {};
+  responses.forEach(r => {
+    const d = r.date || r.timestamp.split('T')[0];
+    if (!dateScores[d]) dateScores[d] = [];
+    survey.questions.forEach(q => {
+      if (q.type === 'csat' && typeof r.answers[q.id] === 'number') {
+        dateScores[d].push(r.answers[q.id]);
+      }
+    });
+  });
+
+  const dates = Object.keys(dateScores).sort();
+  const averages = dates.map(d => dateScores[d].length ? avg(dateScores[d]) : null).filter(v => v !== null);
+
+  if (averages.length < 2) {
+    ctx.fillStyle = '#64748b';
+    ctx.font = '14px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('Need CSAT data on multiple dates for trends', w/2, h/2);
+    return;
+  }
+
+  const pad = { top: 30, right: 30, bottom: 40, left: 50 };
+  const plotW = w - pad.left - pad.right;
+  const plotH = h - pad.top - pad.bottom;
+
+  // Y axis (1-5 for CSAT)
+  const yMin = 1, yMax = 5;
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(148,163,184,0.15)';
+  ctx.lineWidth = 1;
+  for (let y = yMin; y <= yMax; y++) {
+    const py = pad.top + plotH - ((y - yMin) / (yMax - yMin)) * plotH;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, py);
+    ctx.lineTo(w - pad.right, py);
+    ctx.stroke();
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText(y.toString(), pad.left - 8, py + 4);
+  }
+
+  // Draw line
+  const gradient = ctx.createLinearGradient(pad.left, 0, w - pad.right, 0);
+  gradient.addColorStop(0, '#a855f7');
+  gradient.addColorStop(1, '#ec4899');
+
+  ctx.beginPath();
+  averages.forEach((val, i) => {
+    const x = pad.left + (i / (averages.length - 1)) * plotW;
+    const y = pad.top + plotH - ((val - yMin) / (yMax - yMin)) * plotH;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  // Area fill
+  ctx.lineTo(pad.left + plotW, pad.top + plotH);
+  ctx.lineTo(pad.left, pad.top + plotH);
+  ctx.closePath();
+  const areaGrad = ctx.createLinearGradient(0, pad.top, 0, pad.top + plotH);
+  areaGrad.addColorStop(0, 'rgba(168,85,247,0.2)');
+  areaGrad.addColorStop(1, 'rgba(168,85,247,0.02)');
+  ctx.fillStyle = areaGrad;
+  ctx.fill();
+
+  // Data points
+  averages.forEach((val, i) => {
+    const x = pad.left + (i / (averages.length - 1)) * plotW;
+    const y = pad.top + plotH - ((val - yMin) / (yMax - yMin)) * plotH;
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = '#a855f7';
+    ctx.fill();
+    ctx.strokeStyle = '#020617';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // X labels
+  ctx.fillStyle = '#64748b';
+  ctx.font = '10px system-ui';
+  ctx.textAlign = 'center';
+  const showDates = dates.slice(0, averages.length);
+  showDates.forEach((d, i) => {
+    const x = pad.left + (i / (showDates.length - 1)) * plotW;
+    const label = d.substring(5); // MM-DD
+    ctx.fillText(label, x, h - 10);
+  });
+}
+
+/* Canvas: Per-Question Bar Chart */
+function drawQuestionBars(perQuestion) {
+  const canvas = document.getElementById('questionBarCanvas');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  const entries = Object.entries(perQuestion).filter(([k,v]) => v.values.length > 0);
+  if (entries.length === 0) {
+    ctx.fillStyle = '#64748b';
+    ctx.font = '14px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('No scored questions with responses yet', w/2, h/2);
+    return;
+  }
+
+  const pad = { top: 10, right: 20, bottom: 10, left: 160 };
+  const barH = Math.min(28, (h - pad.top - pad.bottom - entries.length * 4) / entries.length);
+  const plotW = w - pad.left - pad.right;
+
+  entries.forEach(([qid, data], i) => {
+    const y = pad.top + i * (barH + 8);
+    const avgVal = avg(data.values);
+    let maxVal = 5;
+    if (data.type === 'ces') maxVal = 7;
+    if (data.type === 'nps') maxVal = 10;
+    if (data.type === 'likert') maxVal = (survey.questions.find(q => q.id === qid)?.options?.length || 5) - 1;
+    if (data.type === 'yesno') maxVal = 1;
+    if (data.type === 'matrix') maxVal = (survey.questions.find(q => q.id === qid)?.columns?.length || 5) - 1;
+
+    const barW = (avgVal / maxVal) * plotW;
+
+    // Label
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'right';
+    let label = data.title.length > 22 ? data.title.substring(0, 22) + '...' : data.title;
+    ctx.fillText(label, pad.left - 8, y + barH / 2 + 4);
+
+    // Bar background
+    ctx.fillStyle = 'rgba(148,163,184,0.1)';
+    ctx.beginPath();
+    ctx.roundRect(pad.left, y, plotW, barH, 4);
+    ctx.fill();
+
+    // Bar fill
+    const grad = ctx.createLinearGradient(pad.left, 0, pad.left + barW, 0);
+    grad.addColorStop(0, '#a855f7');
+    grad.addColorStop(1, '#ec4899');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.roundRect(pad.left, y, Math.max(barW, 4), barH, 4);
+    ctx.fill();
+
+    // Value
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = 'bold 11px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText(avgVal.toFixed(1), pad.left + barW + 6, y + barH / 2 + 4);
+  });
+}
+
+/* Word Cloud */
+function renderWordCloud(texts) {
+  const cloud = document.getElementById('wordCloud');
+  cloud.innerHTML = '';
+
+  if (texts.length === 0) {
+    cloud.innerHTML = '<span style="color:#64748b;font-size:14px">No text responses to analyze yet.</span>';
+    return;
+  }
+
+  const stopWords = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','is','was','are','were','be','been','have','has','had','do','does','did','will','would','could','should','may','might','can','shall','it','its','this','that','these','those','i','me','my','we','our','you','your','he','him','she','her','they','them','their','what','which','who','whom','how','when','where','why','not','no','so','if','very','just','about','also','more','some','any','all','each','every','much','many','too','own','other','only','than','then','now','here','there','out','up','down','into','from','over','after','before','between','under','again','once','during','through','same','both','few','such','because','until','while','as','us','really','even','well','still']);
+  const wordCount = {};
+
+  texts.forEach(text => {
+    const words = text.toLowerCase().replace(/[^a-z\s'-]/g, '').split(/\s+/);
+    words.forEach(w => {
+      w = w.trim();
+      if (w.length > 2 && !stopWords.has(w)) {
+        wordCount[w] = (wordCount[w] || 0) + 1;
+      }
+    });
+  });
+
+  const sorted = Object.entries(wordCount).sort((a,b) => b[1] - a[1]).slice(0, 40);
+  if (sorted.length === 0) {
+    cloud.innerHTML = '<span style="color:#64748b;font-size:14px">No significant words found.</span>';
+    return;
+  }
+
+  const maxCount = sorted[0][1];
+  const minCount = sorted[sorted.length - 1][1];
+  const colors = ['#a855f7','#ec4899','#8b5cf6','#d946ef','#c084fc','#f472b6','#818cf8','#e879f9'];
+
+  sorted.forEach(([word, count]) => {
+    const ratio = maxCount === minCount ? 0.5 : (count - minCount) / (maxCount - minCount);
+    const fontSize = 16 + ratio * 32;
+    const span = document.createElement('span');
+    span.textContent = word;
+    span.style.fontSize = fontSize + 'px';
+    span.style.color = colors[Math.floor(Math.random() * colors.length)];
+    span.style.fontWeight = ratio > 0.5 ? '700' : '400';
+    span.style.opacity = 0.6 + ratio * 0.4;
+    cloud.appendChild(span);
+  });
+}
+
+function copyAnalyticsSummary() {
+  const csatScores = [];
+  const npsScores = [];
+  const cesScores = [];
+
+  responses.forEach(r => {
+    survey.questions.forEach(q => {
+      const ans = r.answers[q.id];
+      if (q.type === 'csat' && typeof ans === 'number') csatScores.push(ans);
+      if (q.type === 'nps' && typeof ans === 'number') npsScores.push(ans);
+      if (q.type === 'ces' && typeof ans === 'number') cesScores.push(ans);
+    });
+  });
+
+  const csatAvg = csatScores.length ? avg(csatScores).toFixed(2) : 'N/A';
+  const npsScore = calcNPS(npsScores);
+  const cesAvg = cesScores.length ? avg(cesScores).toFixed(2) : 'N/A';
+
+  const summary = `Client Satisfaction Analytics Summary
+=====================================
+Total Responses: ${responses.length}
+CSAT Average: ${csatAvg}/5 (${csatScores.length} ratings)
+NPS Score: ${npsScore !== null ? npsScore : 'N/A'} (${npsScores.length} ratings)
+CES Average: ${cesAvg}/7 (${cesScores.length} ratings)
+Generated: ${new Date().toLocaleDateString()}`;
+
+  navigator.clipboard.writeText(summary).then(() => showToast('Analytics summary copied to clipboard'));
+}
+
+/* ================================================================
+   BENCHMARKS
+   ================================================================ */
+const benchmarkData = {
+  webdev:        { name: 'Web Development',  csat: 4.1, nps: 38, ces: 5.2 },
+  graphicdesign: { name: 'Graphic Design',   csat: 4.3, nps: 42, ces: 5.5 },
+  copywriting:   { name: 'Copywriting',      csat: 4.0, nps: 35, ces: 5.0 },
+  marketing:     { name: 'Marketing',        csat: 3.9, nps: 30, ces: 4.8 },
+  consulting:    { name: 'Consulting',       csat: 4.2, nps: 40, ces: 5.3 },
+  photography:   { name: 'Photography',      csat: 4.4, nps: 45, ces: 5.6 },
+  video:         { name: 'Video Production', csat: 4.1, nps: 37, ces: 5.1 },
+  uxui:          { name: 'UI/UX Design',     csat: 4.2, nps: 41, ces: 5.4 }
+};
+
+function renderBenchmarks() {
+  const industry = document.getElementById('benchmarkIndustry').value;
+  const bench = benchmarkData[industry];
+  const container = document.getElementById('benchmarkContent');
+
+  // Get user scores
+  const csatScores = [];
+  const npsScores = [];
+  const cesScores = [];
+
+  responses.forEach(r => {
+    survey.questions.forEach(q => {
+      const ans = r.answers[q.id];
+      if (q.type === 'csat' && typeof ans === 'number') csatScores.push(ans);
+      if (q.type === 'nps' && typeof ans === 'number') npsScores.push(ans);
+      if (q.type === 'ces' && typeof ans === 'number') cesScores.push(ans);
+    });
+  });
+
+  const userCSAT = csatScores.length ? avg(csatScores) : null;
+  const userNPS = calcNPS(npsScores);
+  const userCES = cesScores.length ? avg(cesScores) : null;
+
+  let html = `<div class="card mb-4"><h3 style="font-size:16px;color:var(--heading);margin-bottom:16px">Your Scores vs ${escapeHTML(bench.name)} Industry Average</h3>`;
+
+  // CSAT comparison
+  html += renderBenchmarkBar('CSAT Score', userCSAT, bench.csat, 5, '/5');
+  // NPS comparison
+  html += renderBenchmarkBar('NPS Score', userNPS, bench.nps, 100, '', true);
+  // CES comparison
+  html += renderBenchmarkBar('CES Score', userCES, bench.ces, 7, '/7');
+
+  html += `</div>`;
+
+  // Percentile ranking
+  html += `<div class="card"><h3 style="font-size:16px;color:var(--heading);margin-bottom:16px">Percentile Ranking</h3>`;
+
+  const allBenchmarks = Object.values(benchmarkData);
+
+  if (userCSAT !== null) {
+    const csatPercentile = calcPercentile(userCSAT, allBenchmarks.map(b => b.csat));
+    html += `<div class="mb-3"><div class="flex justify-between mb-2"><span>CSAT Percentile</span><span style="font-weight:700;color:${csatPercentile >= 50 ? 'var(--success)' : 'var(--danger)'}">${csatPercentile}th percentile</span></div>`;
+    html += `<div class="benchmark-bar-track"><div class="benchmark-bar-fill" style="width:${csatPercentile}%;background:${csatPercentile >= 50 ? 'var(--success)' : 'var(--danger)'}"></div></div></div>`;
+  }
+  if (userNPS !== null) {
+    const npsPercentile = calcPercentile(userNPS, allBenchmarks.map(b => b.nps));
+    html += `<div class="mb-3"><div class="flex justify-between mb-2"><span>NPS Percentile</span><span style="font-weight:700;color:${npsPercentile >= 50 ? 'var(--success)' : 'var(--danger)'}">${npsPercentile}th percentile</span></div>`;
+    html += `<div class="benchmark-bar-track"><div class="benchmark-bar-fill" style="width:${npsPercentile}%;background:${npsPercentile >= 50 ? 'var(--success)' : 'var(--danger)'}"></div></div></div>`;
+  }
+  if (userCES !== null) {
+    const cesPercentile = calcPercentile(userCES, allBenchmarks.map(b => b.ces));
+    html += `<div class="mb-3"><div class="flex justify-between mb-2"><span>CES Percentile</span><span style="font-weight:700;color:${cesPercentile >= 50 ? 'var(--success)' : 'var(--danger)'}">${cesPercentile}th percentile</span></div>`;
+    html += `<div class="benchmark-bar-track"><div class="benchmark-bar-fill" style="width:${cesPercentile}%;background:${cesPercentile >= 50 ? 'var(--success)' : 'var(--danger)'}"></div></div></div>`;
+  }
+
+  if (userCSAT === null && userNPS === null && userCES === null) {
+    html += `<p class="text-muted text-sm">Submit survey responses to see your percentile rankings.</p>`;
+  }
+
+  html += `</div>`;
+
+  // All industries comparison table
+  html += `<div class="card mt-4"><h3 style="font-size:16px;color:var(--heading);margin-bottom:16px">All Industry Benchmarks</h3>`;
+  html += `<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">`;
+  html += `<thead><tr style="border-bottom:1px solid var(--card-border)"><th style="text-align:left;padding:8px;color:#94a3b8">Industry</th><th style="padding:8px;color:#94a3b8">CSAT</th><th style="padding:8px;color:#94a3b8">NPS</th><th style="padding:8px;color:#94a3b8">CES</th></tr></thead><tbody>`;
+
+  Object.values(benchmarkData).forEach(b => {
+    html += `<tr style="border-bottom:1px solid rgba(168,85,247,0.1)"><td style="padding:8px;color:var(--text)">${b.name}</td><td style="padding:8px;text-align:center">${b.csat}/5</td><td style="padding:8px;text-align:center">${b.nps}</td><td style="padding:8px;text-align:center">${b.ces}/7</td></tr>`;
+  });
+
+  html += `</tbody></table></div></div>`;
+
+  container.innerHTML = html;
+}
+
+function renderBenchmarkBar(label, userVal, benchVal, maxVal, suffix, isNPS) {
+  let html = `<div class="benchmark-bar-container">`;
+  html += `<div class="benchmark-bar-label"><span>${label}</span>`;
+
+  if (userVal !== null) {
+    const diff = userVal - benchVal;
+    const diffText = diff >= 0 ? '+' + diff.toFixed(1) : diff.toFixed(1);
+    const color = diff >= 0 ? 'var(--success)' : 'var(--danger)';
+    html += `<span>You: <strong>${isNPS ? (userVal >= 0 ? '+' : '') + userVal : userVal.toFixed(1) + suffix}</strong> | Industry: <strong>${isNPS ? benchVal : benchVal + suffix}</strong> <span style="color:${color}">(${diffText})</span></span>`;
+  } else {
+    html += `<span>Industry avg: <strong>${isNPS ? benchVal : benchVal + suffix}</strong></span>`;
+  }
+
+  html += `</div>`;
+
+  const normalMax = isNPS ? 200 : maxVal;
+  const normalOffset = isNPS ? 100 : 0;
+
+  html += `<div class="benchmark-bar-track" style="position:relative">`;
+
+  if (userVal !== null) {
+    const userPct = ((userVal + normalOffset) / normalMax) * 100;
+    const benchPct = ((benchVal + normalOffset) / normalMax) * 100;
+    const color = userVal >= benchVal ? 'var(--success)' : 'var(--danger)';
+    html += `<div class="benchmark-bar-fill" style="width:${Math.max(userPct,2)}%;background:${color}"></div>`;
+    html += `<div class="benchmark-marker" style="left:${benchPct}%"></div>`;
+  } else {
+    const benchPct = ((benchVal + normalOffset) / normalMax) * 100;
+    html += `<div class="benchmark-bar-fill" style="width:${benchPct}%;background:var(--accent-1);opacity:0.5"></div>`;
+  }
+
+  html += `</div></div>`;
+  return html;
+}
+
+function calcPercentile(val, benchArray) {
+  const sorted = benchArray.slice().sort((a,b) => a-b);
+  let count = 0;
+  sorted.forEach(v => { if (val >= v) count++; });
+  return Math.round((count / sorted.length) * 100);
+}
+
+/* ================================================================
+   ACTION PLAN
+   ================================================================ */
+function renderActionPlan() {
+  const container = document.getElementById('actionPlanContent');
+
+  if (responses.length === 0) {
+    container.innerHTML = `<div class="card text-center" style="padding:48px"><p style="font-size:40px;margin-bottom:12px">&#128161;</p><p style="color:var(--heading);font-size:16px;font-weight:600">No Data for Recommendations</p><p class="text-muted text-sm mt-3">Submit survey responses to generate an action plan.</p></div>`;
+    return;
+  }
+
+  // Analyze scores per category
+  const categories = {
+    'Communication': { scores: [], questions: [] },
+    'Quality': { scores: [], questions: [] },
+    'Value': { scores: [], questions: [] },
+    'Timeliness': { scores: [], questions: [] },
+    'Professionalism': { scores: [], questions: [] }
+  };
+
+  const commKeywords = ['communication','communicate','response','respond','update','message','reach','availability','proactive','clarity','clear'];
+  const qualityKeywords = ['quality','deliverable','work','technical','expertise','error','revision','skill','output','result','detail','accuracy'];
+  const valueKeywords = ['value','price','pricing','money','cost','roi','investment','worth','fair','affordable','budget'];
+  const timeKeywords = ['time','timeline','deadline','deliver','schedule','delay','fast','slow','on time','punctual','late','early','speed'];
+  const profKeywords = ['professional','trust','reliable','relationship','partner','recommend','hire','again','trustworthy','dependable','flexible'];
+
+  function categorize(title) {
+    const lower = title.toLowerCase();
+    const cats = [];
+    if (commKeywords.some(k => lower.includes(k))) cats.push('Communication');
+    if (qualityKeywords.some(k => lower.includes(k))) cats.push('Quality');
+    if (valueKeywords.some(k => lower.includes(k))) cats.push('Value');
+    if (timeKeywords.some(k => lower.includes(k))) cats.push('Timeliness');
+    if (profKeywords.some(k => lower.includes(k))) cats.push('Professionalism');
+    if (cats.length === 0) cats.push('Quality'); // default
+    return cats;
+  }
+
+  survey.questions.forEach(q => {
+    const cats = categorize(q.title);
+    cats.forEach(cat => {
+      categories[cat].questions.push(q);
+      responses.forEach(r => {
+        const ans = r.answers[q.id];
+        if (typeof ans === 'number') {
+          let normalized;
+          if (q.type === 'csat') normalized = ans / 5;
+          else if (q.type === 'ces') normalized = ans / 7;
+          else if (q.type === 'nps') normalized = ans / 10;
+          else if (q.type === 'likert') normalized = ans / ((q.options?.length || 5) - 1);
+          else if (q.type === 'yesno') normalized = ans;
+          else normalized = ans / 5;
+          categories[cat].scores.push(normalized);
+        } else if (q.type === 'matrix' && typeof ans === 'object') {
+          const vals = Object.values(ans).filter(v => v !== null);
+          const maxCol = (q.columns?.length || 5) - 1;
+          vals.forEach(v => categories[cat].scores.push(v / maxCol));
+        }
+      });
+    });
+  });
+
+  // Generate recommendations
+  const recommendations = [];
+
+  const actionTemplates = {
+    'Communication': {
+      actions: [
+        'Set up automated status update emails sent every Monday and Thursday',
+        'Create a shared project channel for real-time communication',
+        'Implement a 2-hour maximum response time policy during business hours',
+        'Schedule weekly 15-minute check-in calls with each active client',
+        'Create status report templates to ensure consistent, clear updates'
+      ]
+    },
+    'Quality': {
+      actions: [
+        'Implement a quality checklist before every deliverable submission',
+        'Add a self-review step with a 24-hour cooling period before delivery',
+        'Create standardized testing procedures for each service type',
+        'Document and track revision rates to identify recurring issues',
+        'Invest in skill development for your most-requested services'
+      ]
+    },
+    'Value': {
+      actions: [
+        'Create transparent pricing breakdowns showing what each line item covers',
+        'Add a bonus deliverable or extra revision to each project package',
+        'Implement ROI tracking and share results with clients quarterly',
+        'Offer flexible payment plans for larger projects',
+        'Create tiered service packages so clients can choose their value level'
+      ]
+    },
+    'Timeliness': {
+      actions: [
+        'Add 20% buffer time to all project estimates to account for unknowns',
+        'Implement milestone-based delivery with client checkpoints',
+        'Use project management tools to track deadlines and send reminders',
+        'Communicate delays proactively before deadlines, not after',
+        'Create a standard project timeline template for common project types'
+      ]
+    },
+    'Professionalism': {
+      actions: [
+        'Create professional onboarding documents and welcome packets',
+        'Standardize your client communication with branded templates',
+        'Set up a client portal for organized file sharing and updates',
+        'Follow up after project completion to ensure long-term satisfaction',
+        'Implement a structured feedback loop at every project milestone'
+      ]
+    }
+  };
+
+  Object.entries(categories).forEach(([cat, data]) => {
+    if (data.scores.length === 0) return;
+    const catAvg = avg(data.scores);
+    const currentScore = (catAvg * 5).toFixed(1);
+    let priority, target;
+
+    if (catAvg < 0.6) {
+      priority = 'High';
+      target = (catAvg * 5 + 1.5).toFixed(1);
+    } else if (catAvg < 0.75) {
+      priority = 'Medium';
+      target = (catAvg * 5 + 1.0).toFixed(1);
+    } else {
+      priority = 'Low';
+      target = Math.min(5, catAvg * 5 + 0.5).toFixed(1);
+    }
+
+    const actions = actionTemplates[cat].actions.slice(0, priority === 'High' ? 4 : priority === 'Medium' ? 3 : 2);
+
+    recommendations.push({
+      area: cat,
+      currentScore: parseFloat(currentScore),
+      targetScore: parseFloat(target),
+      priority,
+      actions
+    });
+  });
+
+  // Sort by priority
+  const priorityOrder = { High: 0, Medium: 1, Low: 2 };
+  recommendations.sort((a,b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+
+  let html = '';
+
+  if (recommendations.length === 0) {
+    html = `<div class="card text-center" style="padding:48px"><p class="text-muted">No scored questions found. Add CSAT, NPS, CES, or Likert questions and collect responses.</p></div>`;
+    container.innerHTML = html;
+    return;
+  }
+
+  // Summary card
+  const highCount = recommendations.filter(r => r.priority === 'High').length;
+  const medCount = recommendations.filter(r => r.priority === 'Medium').length;
+  const lowCount = recommendations.filter(r => r.priority === 'Low').length;
+
+  html += `<div class="card mb-4"><div class="flex gap-4 flex-wrap justify-between items-center">
+    <div><span class="text-sm text-muted">Action Items Summary</span></div>
+    <div class="flex gap-3">
+      ${highCount > 0 ? `<span class="priority-badge high">${highCount} High Priority</span>` : ''}
+      ${medCount > 0 ? `<span class="priority-badge medium">${medCount} Medium Priority</span>` : ''}
+      ${lowCount > 0 ? `<span class="priority-badge low">${lowCount} Low Priority</span>` : ''}
+    </div>
+  </div></div>`;
+
+  recommendations.forEach(rec => {
+    const pClass = rec.priority.toLowerCase();
+    html += `<div class="card priority-${pClass} mb-3" style="padding-left:28px">
+      <div class="flex justify-between items-center mb-3">
+        <h3 style="font-size:16px;color:var(--heading)">${rec.area}</h3>
+        <span class="priority-badge ${pClass}">${rec.priority} Priority</span>
+      </div>
+      <div class="flex gap-4 mb-3">
+        <div><span class="text-sm text-muted">Current Score</span><p style="font-size:20px;font-weight:700;color:${rec.currentScore < 3 ? 'var(--danger)' : rec.currentScore < 4 ? 'var(--warning)' : 'var(--success)'}">${rec.currentScore}/5</p></div>
+        <div><span class="text-sm text-muted">Target Score</span><p style="font-size:20px;font-weight:700;color:var(--accent-1)">${rec.targetScore}/5</p></div>
+      </div>
+      <div><span class="text-sm text-muted">Recommended Actions:</span><ul style="margin-top:8px;padding-left:20px">`;
+
+    rec.actions.forEach(a => {
+      html += `<li style="margin-bottom:6px;font-size:14px;color:var(--text)">${escapeHTML(a)}</li>`;
+    });
+
+    html += `</ul></div></div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function exportActionPlan() {
+  const container = document.getElementById('actionPlanContent');
+  if (!container.textContent.trim()) {
+    showToast('No action plan to export');
+    return;
+  }
+
+  let text = 'CLIENT SATISFACTION ACTION PLAN\n';
+  text += '================================\n';
+  text += 'Generated: ' + new Date().toLocaleDateString() + '\n\n';
+
+  // Rebuild from data
+  const categories = { 'Communication': [], 'Quality': [], 'Value': [], 'Timeliness': [], 'Professionalism': [] };
+  const commKeywords = ['communication','communicate','response','respond','update','message','reach','availability','proactive','clarity','clear'];
+  const qualityKeywords = ['quality','deliverable','work','technical','expertise','error','revision','skill','output','result','detail','accuracy'];
+  const valueKeywords = ['value','price','pricing','money','cost','roi','investment','worth','fair','affordable','budget'];
+  const timeKeywords = ['time','timeline','deadline','deliver','schedule','delay','fast','slow','on time','punctual','late','early','speed'];
+  const profKeywords = ['professional','trust','reliable','relationship','partner','recommend','hire','again','trustworthy','dependable','flexible'];
+
+  survey.questions.forEach(q => {
+    const lower = q.title.toLowerCase();
+    let cats = [];
+    if (commKeywords.some(k => lower.includes(k))) cats.push('Communication');
+    if (qualityKeywords.some(k => lower.includes(k))) cats.push('Quality');
+    if (valueKeywords.some(k => lower.includes(k))) cats.push('Value');
+    if (timeKeywords.some(k => lower.includes(k))) cats.push('Timeliness');
+    if (profKeywords.some(k => lower.includes(k))) cats.push('Professionalism');
+    if (cats.length === 0) cats.push('Quality');
+
+    cats.forEach(cat => {
+      responses.forEach(r => {
+        const ans = r.answers[q.id];
+        if (typeof ans === 'number') {
+          let normalized;
+          if (q.type === 'csat') normalized = ans / 5;
+          else if (q.type === 'ces') normalized = ans / 7;
+          else if (q.type === 'nps') normalized = ans / 10;
+          else if (q.type === 'likert') normalized = ans / ((q.options?.length || 5) - 1);
+          else normalized = ans / 5;
+          categories[cat].push(normalized);
+        }
+      });
+    });
+  });
+
+  Object.entries(categories).forEach(([cat, scores]) => {
+    if (scores.length === 0) return;
+    const catAvg = avg(scores);
+    const currentScore = (catAvg * 5).toFixed(1);
+    const priority = catAvg < 0.6 ? 'HIGH' : catAvg < 0.75 ? 'MEDIUM' : 'LOW';
+    text += `[${priority}] ${cat} - Score: ${currentScore}/5\n`;
+    text += '---\n\n';
+  });
+
+  navigator.clipboard.writeText(text).then(() => showToast('Action plan copied to clipboard'));
+}
+
+/* ================================================================
+   LIBRARY
+   ================================================================ */
+function renderLibrary() {
+  const grid = document.getElementById('libraryGrid');
+  const empty = document.getElementById('libraryEmpty');
+
+  if (library.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  grid.innerHTML = '';
+  library.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'library-card';
+    const dateStr = item.savedAt ? new Date(item.savedAt).toLocaleDateString() : 'Unknown';
+    card.innerHTML = `
+      <h3 style="font-size:15px;color:var(--heading);margin-bottom:6px">${escapeHTML(item.name)}</h3>
+      <p class="text-sm text-muted mb-3">${escapeHTML(item.description || '')}</p>
+      <div class="flex justify-between items-center mb-3">
+        <span class="text-sm" style="color:var(--accent-1)">${(item.survey?.questions||[]).length} questions</span>
+        <span class="text-sm text-muted">${dateStr}</span>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <button class="btn btn-primary btn-sm" onclick="loadFromLibrary(${i})">Load</button>
+        <button class="btn btn-secondary btn-sm" onclick="duplicateInLibrary(${i})">Duplicate</button>
+        <button class="btn btn-secondary btn-sm" onclick="exportLibraryItem(${i})">Export JSON</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteFromLibrary(${i})">Delete</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function showSaveModal() {
+  document.getElementById('saveModal').style.display = 'flex';
+  document.getElementById('saveModalName').value = survey.title || 'My Survey';
+  document.getElementById('saveModalDesc').value = '';
+}
+
+function closeSaveModal() {
+  document.getElementById('saveModal').style.display = 'none';
+}
+
+function saveSurveyToLibrary() {
+  const name = document.getElementById('saveModalName').value.trim() || 'Untitled Survey';
+  const desc = document.getElementById('saveModalDesc').value.trim();
+
+  library.push({
+    id: uid(),
+    name,
+    description: desc,
+    survey: JSON.parse(JSON.stringify(survey)),
+    savedAt: new Date().toISOString()
+  });
+
+  saveToLS(LS_LIBRARY, library);
+  closeSaveModal();
+  renderLibrary();
+  showToast('Survey saved to library');
+}
+
+function loadFromLibrary(idx) {
+  const item = library[idx];
+  if (!item) return;
+  survey = JSON.parse(JSON.stringify(item.survey));
+  saveToLS(LS_SURVEY, survey);
+  loadSurveyToUI();
+  renderQuestionList();
+  // Switch to builder
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector('[data-tab="builder"]').classList.add('active');
+  document.getElementById('tab-builder').classList.add('active');
+  showToast('Survey loaded: ' + item.name);
+}
+
+function duplicateInLibrary(idx) {
+  const item = library[idx];
+  if (!item) return;
+  const dup = JSON.parse(JSON.stringify(item));
+  dup.id = uid();
+  dup.name = item.name + ' (Copy)';
+  dup.savedAt = new Date().toISOString();
+  // Give questions new IDs
+  if (dup.survey && dup.survey.questions) {
+    dup.survey.questions.forEach(q => { q.id = uid(); });
+  }
+  library.push(dup);
+  saveToLS(LS_LIBRARY, library);
+  renderLibrary();
+  showToast('Survey duplicated');
+}
+
+function deleteFromLibrary(idx) {
+  library.splice(idx, 1);
+  saveToLS(LS_LIBRARY, library);
+  renderLibrary();
+  showToast('Survey deleted from library');
+}
+
+function exportLibraryItem(idx) {
+  const item = library[idx];
+  if (!item) return;
+  const json = JSON.stringify(item, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (item.name || 'survey').replace(/\s+/g, '-').toLowerCase() + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Survey exported as JSON');
+}
+
+function importSurveyJSON() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (data.survey && data.survey.questions) {
+          data.id = uid();
+          data.savedAt = new Date().toISOString();
+          library.push(data);
+          saveToLS(LS_LIBRARY, library);
+          renderLibrary();
+          showToast('Survey imported successfully');
+        } else {
+          showToast('Invalid survey JSON format');
+        }
+      } catch(err) {
+        showToast('Error reading JSON file');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+/* ================================================================
+   EXPORT: CSV
+   ================================================================ */
+function exportCSV() {
+  if (responses.length === 0) {
+    showToast('No responses to export');
+    return;
+  }
+
+  const headers = ['Client Name','Company','Date','Timestamp'];
+  survey.questions.forEach(q => {
+    if (q.type === 'matrix') {
+      (q.rows||[]).forEach(r => headers.push(q.title + ' - ' + r));
+    } else {
+      headers.push(q.title);
+    }
+  });
+
+  let csv = headers.map(h => '"' + h.replace(/"/g, '""') + '"').join(',') + '\n';
+
+  responses.forEach(r => {
+    const row = [r.clientName || '', r.company || '', r.date || '', r.timestamp || ''];
+    survey.questions.forEach(q => {
+      const ans = r.answers[q.id];
+      if (q.type === 'matrix' && typeof ans === 'object') {
+        (q.rows||[]).forEach(rowLabel => {
+          const val = ans[rowLabel];
+          row.push(val !== null && val !== undefined ? (q.columns||[])[val] || val : '');
+        });
+      } else if (ans !== undefined && ans !== null) {
+        if (q.type === 'likert' && typeof ans === 'number') {
+          row.push((q.options||[])[ans] || ans);
+        } else if (q.type === 'ranking' && typeof ans === 'string') {
+          row.push(ans);
+        } else {
+          row.push(ans);
+        }
+      } else {
+        row.push('');
+      }
+    });
+    csv += row.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',') + '\n';
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'survey-responses.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV exported');
+}
+
+/* ================================================================
+   EXPORT: Copy Survey as Standalone HTML
+   ================================================================ */
+function exportCurrentSurveyHTML() {
+  const qs = survey.questions;
+  if (qs.length === 0) {
+    showToast('No questions to export');
+    return;
+  }
+
+  let html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHTML(survey.title)}</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fa;color:#1a1a2e;min-height:100vh;padding:24px;line-height:1.6}
+.survey-container{max-width:640px;margin:0 auto;background:white;border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,0.08)}
+h1{font-size:24px;margin-bottom:8px;text-align:center}
+.intro{text-align:center;color:#666;margin-bottom:24px;font-size:15px}
+.question{margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid #eee}
+.question:last-of-type{border-bottom:none}
+.q-title{font-weight:600;font-size:15px;margin-bottom:10px}
+.required{color:#ef4444}
+input[type="text"],textarea{width:100%;padding:10px 14px;border:1px solid #dee2e6;border-radius:8px;font-size:14px;font-family:inherit}
+textarea{resize:vertical;min-height:80px}
+input:focus,textarea:focus{outline:none;border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,0.15)}
+.scale-btns{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.scale-btns button{padding:8px 14px;border:2px solid #dee2e6;border-radius:8px;background:white;cursor:pointer;font-family:inherit;font-size:14px;transition:all 0.2s}
+.scale-btns button:hover,.scale-btns button.sel{border-color:#a855f7;background:#a855f7;color:white}
+.emoji-btns{display:flex;gap:8px;justify-content:center}
+.emoji-btns button{font-size:32px;background:none;border:2px solid transparent;border-radius:12px;padding:8px;cursor:pointer;opacity:0.5;transition:all 0.2s}
+.emoji-btns button:hover,.emoji-btns button.sel{opacity:1;border-color:#a855f7}
+.radio-opt{display:flex;align-items:center;gap:8px;padding:4px 0}
+.radio-opt input{accent-color:#a855f7}
+.submit-btn{display:block;width:100%;padding:14px;border:none;border-radius:8px;background:linear-gradient(135deg,#a855f7,#ec4899);color:white;font-size:16px;font-weight:600;cursor:pointer;margin-top:16px;font-family:inherit}
+.submit-btn:hover{opacity:0.95}
+.thank-you{text-align:center;padding:40px 0}
+.thank-you h2{font-size:24px;margin-bottom:8px}
+.nps-labels{display:flex;justify-content:space-between;font-size:11px;color:#999;margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px;text-align:center;border-bottom:1px solid #eee}
+td:first-child{text-align:left}
+th{color:#999;font-weight:600}
+</style>
+</head>
+<body>
+<div class="survey-container" id="surveyForm">`;
+
+  if (survey.logo) {
+    html += `<div style="text-align:center;margin-bottom:16px"><img src="${escapeHTML(survey.logo)}" alt="Logo" style="max-height:60px;border-radius:8px"></div>`;
+  }
+  if (survey.brand) {
+    html += `<p style="text-align:center;color:#999;font-size:13px;margin-bottom:8px">${escapeHTML(survey.brand)}</p>`;
+  }
+
+  html += `<h1>${escapeHTML(survey.title)}</h1>`;
+  html += `<p class="intro">${escapeHTML(survey.intro)}</p>`;
+
+  qs.forEach((q, i) => {
+    html += `<div class="question"><p class="q-title">${i+1}. ${escapeHTML(q.title)} ${q.required ? '<span class="required">*</span>' : ''}</p>`;
+    switch(q.type) {
+      case 'csat':
+        html += `<div class="emoji-btns" data-qid="${q.id}">`;
+        ['&#128544;','&#128577;','&#128528;','&#128578;','&#128525;'].forEach((em, ei) => {
+          html += `<button onclick="sel(this)" data-val="${ei+1}">${em}</button>`;
+        });
+        html += `</div>`;
+        break;
+      case 'ces':
+        html += `<div class="scale-btns" data-qid="${q.id}">`;
+        for(let v=1;v<=7;v++) html += `<button onclick="sel(this)" data-val="${v}">${v}</button>`;
+        html += `</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#999;margin-top:4px"><span>Very Difficult</span><span>Very Easy</span></div>`;
+        break;
+      case 'nps':
+        html += `<div class="scale-btns" data-qid="${q.id}">`;
+        for(let v=0;v<=10;v++) html += `<button onclick="sel(this)" data-val="${v}">${v}</button>`;
+        html += `</div><div class="nps-labels"><span>Not at all likely</span><span>Extremely likely</span></div>`;
+        break;
+      case 'matrix':
+        html += `<table><thead><tr><th></th>`;
+        (q.columns||[]).forEach(c => html += `<th>${escapeHTML(c)}</th>`);
+        html += `</tr></thead><tbody>`;
+        (q.rows||[]).forEach((r, ri) => {
+          html += `<tr><td>${escapeHTML(r)}</td>`;
+          (q.columns||[]).forEach((c, ci) => {
+            html += `<td><input type="radio" name="m_${q.id}_${ri}" value="${ci}"></td>`;
+          });
+          html += `</tr>`;
+        });
+        html += `</tbody></table>`;
+        break;
+      case 'likert':
+        (q.options||[]).forEach((o, oi) => {
+          html += `<div class="radio-opt"><input type="radio" name="l_${q.id}" value="${oi}"><span>${escapeHTML(o)}</span></div>`;
+        });
+        break;
+      case 'text':
+        if (q.subtype === 'short') html += `<input type="text" id="t_${q.id}" placeholder="Your answer...">`;
+        else html += `<textarea id="t_${q.id}" placeholder="Your answer..."></textarea>`;
+        break;
+      case 'yesno':
+        html += `<div class="scale-btns" data-qid="${q.id}"><button onclick="sel(this)" data-val="yes">Yes</button><button onclick="sel(this)" data-val="no">No</button></div>`;
+        break;
+      case 'ranking':
+        html += `<p style="font-size:13px;color:#999;margin-bottom:6px">Drag items to reorder:</p>`;
+        (q.items||[]).forEach((item, ii) => {
+          html += `<div style="display:flex;align-items:center;gap:8px;padding:8px;background:#f8f9fa;border:1px solid #dee2e6;border-radius:8px;margin-bottom:4px;cursor:grab"><span style="width:20px;height:20px;background:#a855f7;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">${ii+1}</span><span>${escapeHTML(item)}</span></div>`;
+        });
+        break;
+    }
+    html += `</div>`;
+  });
+
+  html += `<button class="submit-btn" onclick="document.getElementById('surveyForm').innerHTML='<div class=\\'thank-you\\'><h2>Thank You!</h2><p>${escapeHTML(survey.thankYou).replace(/'/g, "\\'")}</p></div>'">Submit Survey</button>`;
+  html += `</div>
+<script>
+function sel(btn){btn.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel')}
+<\/script>
+</body></html>`;
+
+  navigator.clipboard.writeText(html).then(() => showToast('Survey HTML copied to clipboard'));
+}
+
+/* ================================================================
+   INITIALIZATION
+   ================================================================ */
+function init() {
+  loadSurveyToUI();
+  renderQuestionList();
+  renderTemplates();
+  document.getElementById('respDate').value = new Date().toISOString().split('T')[0];
+}
+
+init();
+</script>
+
+</body>
+</html>

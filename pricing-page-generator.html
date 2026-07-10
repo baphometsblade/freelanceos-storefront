@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Pricing Page Generator for Freelancers | FreelanceOS</title>
+<meta name="description" content="Build a stunning freelance pricing page in minutes. Choose themes, set packages, add social proof, and export as a ready-to-host HTML file. Free tool by FreelanceOS.">
+<meta property="og:title" content="Free Pricing Page Generator for Freelancers | FreelanceOS">
+<meta property="og:description" content="Create a professional pricing page with packages, testimonials, FAQs, and psychology tricks. Export as HTML instantly.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Pricing Page Generator for Freelancers | FreelanceOS">
+<meta name="twitter:description" content="Build and export a freelance pricing page in minutes. Free tool.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Freelance Pricing Page Generator","description":"Build professional freelance pricing pages with packages, themes, social proof, and export as HTML.","url":"https://freelanceos.com/pricing-page-generator","applicationCategory":"BusinessApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"FreelanceOS"}}</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#020617;--card:#0f172a;--card-border:rgba(168,85,247,0.2);
+--accent1:#a855f7;--accent2:#ec4899;
+--text:#e2e8f0;--muted:#94a3b8;
+--radius-card:16px;--radius-btn:12px;
+--success:#10b981;--danger:#ef4444;--warning:#f59e0b;
+}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh;line-height:1.6}
+h1,h2,h3,h4{font-weight:600;line-height:1.3}
+a{color:var(--accent1);text-decoration:none}
+a:hover{text-decoration:underline}
+input,select,textarea{background:#1e293b;border:1px solid rgba(168,85,247,0.25);border-radius:8px;color:var(--text);padding:8px 12px;font-family:inherit;font-size:14px;width:100%;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent1)}
+select option{background:#1e293b}
+button{cursor:pointer;font-family:inherit;font-size:14px;border:none;border-radius:var(--radius-btn);padding:10px 20px;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#fff;font-weight:600}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-secondary{background:rgba(168,85,247,0.15);color:var(--accent1);border:1px solid rgba(168,85,247,0.3)}
+.btn-secondary:hover{background:rgba(168,85,247,0.25)}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.1)}
+.btn-ghost:hover{background:rgba(255,255,255,0.05);color:var(--text)}
+.btn-danger{background:rgba(239,68,68,0.15);color:var(--danger);border:1px solid rgba(239,68,68,0.3)}
+.btn-danger:hover{background:rgba(239,68,68,0.25)}
+.btn-sm{padding:6px 12px;font-size:12px}
+
+/* Layout */
+.app-header{background:rgba(15,23,42,0.9);border-bottom:1px solid var(--card-border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.app-logo{font-size:18px;font-weight:700;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.app-layout{display:grid;grid-template-columns:340px 1fr;min-height:calc(100vh - 57px)}
+.sidebar{background:var(--card);border-right:1px solid var(--card-border);overflow-y:auto;position:sticky;top:57px;height:calc(100vh - 57px)}
+.main-area{padding:24px;overflow-y:auto}
+
+/* Flash Banner */
+.flash-banner{background:linear-gradient(135deg,rgba(168,85,247,0.2),rgba(236,72,153,0.2));border:1px solid rgba(168,85,247,0.4);border-radius:12px;padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.flash-banner-text{font-size:14px;color:var(--text)}
+.flash-banner strong{color:var(--accent1)}
+
+/* Nav tabs */
+.sidebar-tabs{display:flex;overflow-x:auto;border-bottom:1px solid var(--card-border);background:rgba(2,6,23,0.5)}
+.sidebar-tab{padding:12px 14px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;flex-shrink:0}
+.sidebar-tab.active{color:var(--accent1);border-bottom-color:var(--accent1)}
+.sidebar-tab:hover:not(.active){color:var(--text)}
+.sidebar-panel{padding:20px;display:none}
+.sidebar-panel.active{display:block}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-card);padding:20px;margin-bottom:16px}
+.card-sm{padding:14px;border-radius:12px}
+.section-label{font-size:11px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.field-group{margin-bottom:16px}
+.field-label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+
+/* Toggle */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-label{font-size:13px;color:var(--text)}
+.toggle-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:#334155;border-radius:22px;cursor:pointer;transition:.3s}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle input:checked + .toggle-slider{background:var(--accent1)}
+.toggle input:checked + .toggle-slider::before{transform:translateX(18px)}
+
+/* Package builder */
+.pkg-item{background:rgba(2,6,23,0.5);border:1px solid rgba(168,85,247,0.15);border-radius:12px;padding:14px;margin-bottom:10px;position:relative}
+.pkg-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.pkg-drag{color:var(--muted);cursor:grab;font-size:18px}
+.pkg-num{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.pkg-actions{margin-left:auto;display:flex;gap:6px}
+.feature-list{list-style:none;margin-top:8px}
+.feature-item{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:12px}
+.feature-item input[type=text]{flex:1;padding:4px 8px;font-size:12px}
+.feature-item button{padding:3px 6px;font-size:11px;flex-shrink:0}
+.add-feature-btn{width:100%;margin-top:6px;padding:6px;font-size:12px;background:rgba(168,85,247,0.08);color:var(--muted);border:1px dashed rgba(168,85,247,0.2);border-radius:8px;cursor:pointer}
+.add-feature-btn:hover{background:rgba(168,85,247,0.15);color:var(--accent1)}
+
+/* Addon item */
+.addon-item{background:rgba(2,6,23,0.5);border:1px solid rgba(168,85,247,0.1);border-radius:10px;padding:12px;margin-bottom:8px}
+.addon-header{display:flex;gap:8px;margin-bottom:8px}
+.addon-header input{flex:1}
+
+/* FAQ item */
+.faq-item{background:rgba(2,6,23,0.5);border:1px solid rgba(168,85,247,0.1);border-radius:10px;padding:12px;margin-bottom:8px}
+
+/* Theme grid */
+.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.theme-swatch{border:2px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;cursor:pointer;transition:all .2s;text-align:center}
+.theme-swatch.selected{border-color:var(--accent1);background:rgba(168,85,247,0.1)}
+.theme-swatch:hover:not(.selected){border-color:rgba(168,85,247,0.4)}
+.theme-preview{width:100%;height:50px;border-radius:6px;margin-bottom:8px;overflow:hidden;display:flex;gap:2px;padding:4px}
+.theme-preview-bar{flex:1;border-radius:3px}
+.theme-name{font-size:11px;font-weight:600;color:var(--text)}
+
+/* Preview area */
+.preview-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.preview-toolbar h2{font-size:16px;flex:1}
+.preview-frame{border:1px solid var(--card-border);border-radius:var(--radius-card);overflow:hidden;width:100%;background:#fff}
+.preview-frame iframe{width:100%;border:none;display:block;min-height:600px}
+
+/* AB section */
+.ab-card{background:rgba(168,85,247,0.05);border:1px solid rgba(168,85,247,0.2);border-radius:12px;padding:16px;margin-bottom:12px}
+.ab-variation{background:rgba(2,6,23,0.6);border-radius:8px;padding:10px 14px;margin-top:8px;font-size:13px;color:var(--text);border-left:3px solid var(--accent1)}
+.ab-variation:nth-child(3){border-left-color:var(--accent2)}
+.ab-variation:nth-child(4){border-left-color:var(--success)}
+
+/* Social proof */
+.testimonial-item{background:rgba(2,6,23,0.5);border:1px solid rgba(168,85,247,0.1);border-radius:10px;padding:12px;margin-bottom:8px}
+
+/* Badges */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-purple{background:rgba(168,85,247,0.2);color:var(--accent1)}
+.badge-pink{background:rgba(236,72,153,0.2);color:var(--accent2)}
+.badge-green{background:rgba(16,185,129,0.2);color:var(--success)}
+
+/* Section headers in main */
+.main-section-title{font-size:20px;font-weight:700;margin-bottom:6px}
+.main-section-sub{color:var(--muted);font-size:14px;margin-bottom:20px}
+
+/* Responsive */
+@media(max-width:768px){
+  .app-layout{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto}
+  .field-row,.field-row-3{grid-template-columns:1fr}
+  .theme-grid{grid-template-columns:1fr 1fr}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(168,85,247,0.3);border-radius:3px}
+
+/* Pricing structure selector */
+.structure-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.structure-opt{padding:10px;border:1px solid rgba(168,85,247,0.2);border-radius:10px;cursor:pointer;text-align:center;transition:all .2s;font-size:12px;font-weight:600;color:var(--muted)}
+.structure-opt.selected,.structure-opt:hover{border-color:var(--accent1);color:var(--accent1);background:rgba(168,85,247,0.1)}
+
+/* Psychology badges preview */
+.psych-preview{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.psych-badge-demo{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700}
+
+/* Countdown display */
+.countdown-preview{display:flex;gap:4px;align-items:center;margin-top:8px;font-size:13px;color:var(--warning)}
+
+/* Footer */
+.app-footer{border-top:1px solid var(--card-border);padding:20px 24px;text-align:center;font-size:13px;color:var(--muted);margin-top:40px}
+.app-footer a{color:var(--accent1)}
+
+/* Disclaimer */
+.disclaimer{font-size:11px;color:var(--muted);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px 14px;margin-top:16px}
+
+/* Export modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(2,6,23,0.85);backdrop-filter:blur(10px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-card);padding:28px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto}
+.modal-title{font-size:20px;font-weight:700;margin-bottom:6px}
+.modal-close{float:right;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0;line-height:1}
+.code-block{background:rgba(2,6,23,0.8);border:1px solid rgba(168,85,247,0.15);border-radius:10px;padding:14px;font-family:monospace;font-size:12px;color:#a5f3fc;overflow-x:auto;max-height:250px;overflow-y:auto;white-space:pre;margin:12px 0}
+
+/* Sticky CTA */
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,42,0.95);border-top:1px solid var(--card-border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:90;backdrop-filter:blur(20px);transform:translateY(100%);transition:transform .3s}
+.sticky-cta.visible{transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- App Header -->
+<header class="app-header">
+  <div class="app-logo">FreelanceOS</div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="badge badge-purple">Tool #82</span>
+    <button class="btn-primary" onclick="openExportModal()">Export HTML</button>
+  </div>
+</header>
+
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-tabs">
+      <div class="sidebar-tab active" onclick="switchTab('structure')">Structure</div>
+      <div class="sidebar-tab" onclick="switchTab('packages')">Packages</div>
+      <div class="sidebar-tab" onclick="switchTab('themes')">Themes</div>
+      <div class="sidebar-tab" onclick="switchTab('addons')">Add-ons</div>
+      <div class="sidebar-tab" onclick="switchTab('faq')">FAQ</div>
+      <div class="sidebar-tab" onclick="switchTab('social')">Social</div>
+      <div class="sidebar-tab" onclick="switchTab('psych')">Psych</div>
+      <div class="sidebar-tab" onclick="switchTab('cta')">CTA</div>
+    </div>
+
+    <!-- STRUCTURE PANEL -->
+    <div class="sidebar-panel active" id="panel-structure">
+      <div class="section-label">Pricing Structure</div>
+      <div class="structure-options" id="structureOptions"></div>
+
+      <div class="field-group">
+        <label class="field-label">Page Headline</label>
+        <input type="text" id="pageHeadline" value="Simple, Transparent Pricing" oninput="saveAndRender()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Subheadline</label>
+        <textarea id="pageSubheadline" rows="2" oninput="saveAndRender()">Choose the plan that fits your project. No hidden fees, no surprises.</textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Currency Symbol</label>
+        <select id="currencySymbol" onchange="saveAndRender()">
+          <option value="$">$ USD</option>
+          <option value="€">€ EUR</option>
+          <option value="£">£ GBP</option>
+          <option value="AU$">AU$ AUD</option>
+          <option value="CA$">CA$ CAD</option>
+          <option value="¥">¥ JPY</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Billing Period Label</label>
+        <input type="text" id="billingPeriod" value="/ project" oninput="saveAndRender()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Your Name / Business</label>
+        <input type="text" id="businessName" value="Your Freelance Business" oninput="saveAndRender()">
+      </div>
+    </div>
+
+    <!-- PACKAGES PANEL -->
+    <div class="sidebar-panel" id="panel-packages">
+      <div class="section-label">Service Packages</div>
+      <div id="pkgList"></div>
+      <button class="btn-secondary" style="width:100%;margin-top:8px" onclick="addPackage()" id="addPkgBtn">+ Add Package</button>
+      <div class="disclaimer">Drag the = handle to reorder packages</div>
+    </div>
+
+    <!-- THEMES PANEL -->
+    <div class="sidebar-panel" id="panel-themes">
+      <div class="section-label">Page Theme</div>
+      <div class="theme-grid" id="themeGrid"></div>
+    </div>
+
+    <!-- ADDONS PANEL -->
+    <div class="sidebar-panel" id="panel-addons">
+      <div class="section-label">Optional Add-ons</div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Add-ons appear below your packages as optional extras customers can select.</p>
+      <div id="addonList"></div>
+      <button class="btn-secondary" style="width:100%;margin-top:8px" onclick="addAddon()">+ Add Add-on</button>
+    </div>
+
+    <!-- FAQ PANEL -->
+    <div class="sidebar-panel" id="panel-faq">
+      <div class="section-label">Pricing FAQs</div>
+      <div id="faqList"></div>
+      <button class="btn-secondary" style="width:100%;margin-top:8px" onclick="addFaq()">+ Add FAQ</button>
+      <button class="btn-ghost btn-sm" style="width:100%;margin-top:6px" onclick="addDefaultFaqs()">Load 8 Freelancer FAQs</button>
+    </div>
+
+    <!-- SOCIAL PROOF PANEL -->
+    <div class="sidebar-panel" id="panel-social">
+      <div class="section-label">Social Proof</div>
+      <div class="field-group">
+        <label class="field-label">Client Count</label>
+        <input type="number" id="clientCount" value="127" min="1" oninput="saveAndRender()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Satisfaction Rate (%)</label>
+        <input type="number" id="satisfactionRate" value="98" min="1" max="100" oninput="saveAndRender()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Years in Business</label>
+        <input type="number" id="yearsInBusiness" value="5" min="1" oninput="saveAndRender()">
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Money-back Guarantee</div><div class="toggle-sub">Shows a guarantee badge</div></div>
+        <label class="toggle"><input type="checkbox" id="showGuarantee" checked onchange="saveAndRender()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="field-group" style="margin-top:12px">
+        <label class="field-label">Guarantee Duration</label>
+        <input type="text" id="guaranteeDays" value="30-Day" oninput="saveAndRender()">
+      </div>
+
+      <div class="section-label" style="margin-top:16px">Testimonials</div>
+      <div id="testimonialList"></div>
+      <button class="btn-secondary" style="width:100%;margin-top:8px" onclick="addTestimonial()">+ Add Testimonial</button>
+
+      <div class="section-label" style="margin-top:16px">Client Logos (text)</div>
+      <div class="field-group">
+        <label class="field-label">Logo names (comma separated)</label>
+        <input type="text" id="clientLogos" value="Acme Inc, TechCorp, StartupXYZ, BrandCo" oninput="saveAndRender()">
+      </div>
+    </div>
+
+    <!-- PSYCHOLOGY PANEL -->
+    <div class="sidebar-panel" id="panel-psych">
+      <div class="section-label">Pricing Psychology</div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Charm Pricing</div><div class="toggle-sub">$997 instead of $1000</div></div>
+        <label class="toggle"><input type="checkbox" id="charmPricing" onchange="saveAndRender()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Anchor Pricing</div><div class="toggle-sub">Show "value" above price</div></div>
+        <label class="toggle"><input type="checkbox" id="anchorPricing" checked onchange="saveAndRender()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Most Popular Badge</div><div class="toggle-sub">Highlight middle package</div></div>
+        <label class="toggle"><input type="checkbox" id="popularBadge" checked onchange="saveAndRender()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Limited Spots Notice</div><div class="toggle-sub">Scarcity message</div></div>
+        <label class="toggle"><input type="checkbox" id="limitedSpots" onchange="saveAndRender()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="field-group" style="margin-top:12px" id="spotsField" style="display:none">
+        <label class="field-label">Spots Left Message</label>
+        <input type="text" id="spotsMessage" value="Only 3 spots left this month" oninput="saveAndRender()">
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Countdown Timer</div><div class="toggle-sub">Urgency countdown</div></div>
+        <label class="toggle"><input type="checkbox" id="showCountdown" onchange="toggleCountdownField()"><span class="toggle-slider"></span></label>
+      </div>
+      <div id="countdownField" style="display:none;margin-top:10px">
+        <div class="field-group">
+          <label class="field-label">Timer Label</label>
+          <input type="text" id="countdownLabel" value="Offer ends in:" oninput="saveAndRender()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Hours remaining</label>
+          <input type="number" id="countdownHours" value="48" min="1" max="999" oninput="saveAndRender()">
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Annual/Monthly Toggle</div><div class="toggle-sub">Let visitors switch billing</div></div>
+        <label class="toggle"><input type="checkbox" id="billingToggle" onchange="saveAndRender()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="field-group" style="margin-top:10px">
+        <label class="field-label">Annual Discount (%)</label>
+        <input type="number" id="annualDiscount" value="20" min="1" max="90" oninput="saveAndRender()">
+      </div>
+    </div>
+
+    <!-- CTA PANEL -->
+    <div class="sidebar-panel" id="panel-cta">
+      <div class="section-label">CTA Settings</div>
+      <div class="field-group">
+        <label class="field-label">Primary CTA Text</label>
+        <input type="text" id="ctaText" value="Get Started Today" oninput="saveAndRender()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">CTA Link / URL</label>
+        <input type="text" id="ctaLink" value="#contact" oninput="saveAndRender()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Above-Fold Subtext</label>
+        <input type="text" id="ctaSubtext" value="No credit card required. Start free." oninput="saveAndRender()">
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Sticky Bottom CTA</div><div class="toggle-sub">Fixed bar on scroll</div></div>
+        <label class="toggle"><input type="checkbox" id="stickyCta" checked onchange="saveAndRender()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="field-group" style="margin-top:12px">
+        <label class="field-label">Sticky CTA Text</label>
+        <input type="text" id="stickyCtaText" value="Ready to get started? Book a free call" oninput="saveAndRender()">
+      </div>
+      <div class="section-label" style="margin-top:16px">Above-Fold Section</div>
+      <div class="field-group">
+        <label class="field-label">Hero tagline</label>
+        <input type="text" id="heroTagline" value="Professional services. Fair pricing." oninput="saveAndRender()">
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- Main Area -->
+  <main class="main-area">
+
+    <!-- Flash Banner -->
+    <div class="flash-banner">
+      <div class="flash-banner-text">
+        <strong>FLASH40 — 40% off FreelanceOS Pro</strong> — 280+ page freelance operating system. Today only.
+      </div>
+      <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" class="btn-primary btn-sm">Claim 40% Off</a>
+    </div>
+
+    <!-- Tabs: Preview / A/B -->
+    <div style="display:flex;gap:12px;margin-bottom:20px;border-bottom:1px solid var(--card-border);padding-bottom:0">
+      <div id="mainTab-preview" style="padding:0 4px 12px;border-bottom:2px solid var(--accent1);cursor:pointer;font-weight:600;font-size:14px;color:var(--accent1)" onclick="switchMainTab('preview')">Live Preview</div>
+      <div id="mainTab-ab" style="padding:0 4px 12px;border-bottom:2px solid transparent;cursor:pointer;font-size:14px;color:var(--muted)" onclick="switchMainTab('ab')">A/B Suggestions</div>
+    </div>
+
+    <!-- Preview Panel -->
+    <div id="mainPanel-preview">
+      <div class="preview-toolbar">
+        <h2 class="main-section-title">Live Preview</h2>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <select id="previewDevice" onchange="updatePreviewDevice()" style="width:auto;padding:6px 10px;font-size:12px">
+            <option value="full">Desktop</option>
+            <option value="tablet">Tablet (768px)</option>
+            <option value="mobile">Mobile (390px)</option>
+          </select>
+          <button class="btn-secondary btn-sm" onclick="refreshPreview()">Refresh</button>
+          <button class="btn-primary btn-sm" onclick="openExportModal()">Export HTML</button>
+        </div>
+      </div>
+      <div class="preview-frame" id="previewFrame">
+        <iframe id="previewIframe" onload="iframeLoaded()"></iframe>
+      </div>
+    </div>
+
+    <!-- A/B Panel -->
+    <div id="mainPanel-ab" style="display:none">
+      <div class="main-section-title">A/B Test Suggestions</div>
+      <div class="main-section-sub">3 variations of your headlines, CTAs, and package names to split test</div>
+
+      <div class="ab-card">
+        <div class="section-label">Headline Variations</div>
+        <div id="ab-headlines"></div>
+      </div>
+      <div class="ab-card">
+        <div class="section-label">CTA Button Variations</div>
+        <div id="ab-ctas"></div>
+      </div>
+      <div class="ab-card">
+        <div class="section-label">Package Name Variations</div>
+        <div id="ab-pkgnames"></div>
+      </div>
+      <button class="btn-secondary" onclick="generateABSuggestions()" style="margin-top:8px">Regenerate Suggestions</button>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> This tool generates a pricing page template. Prices, packages, and guarantees shown are examples only. Review all content before publishing. FreelanceOS is not responsible for business decisions made using this tool.
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>FreelanceOS Pricing Page Generator &mdash; Tool #82 of 49+ free tools</p>
+      <p style="margin-top:6px"><a href="/freelanceos-storefront/free-templates.html">Browse all free templates</a> &nbsp;|&nbsp; <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank">Upgrade to FreelanceOS Pro (40% off with FLASH40)</a></p>
+    </footer>
+
+  </main>
+</div>
+
+<!-- Export Modal -->
+<div class="modal-overlay" id="exportModal" style="display:none" onclick="closeExportModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeExportModal()">&times;</button>
+    <div class="modal-title">Export Your Pricing Page</div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px">Your pricing page is ready. Download it as an HTML file or copy the embed code.</p>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+      <button class="btn-primary" onclick="downloadHTML()">Download HTML File</button>
+      <button class="btn-secondary" onclick="copyHTMLCode()">Copy Full HTML</button>
+      <button class="btn-ghost" onclick="copyEmbedCode()">Copy Embed Code</button>
+    </div>
+
+    <div class="section-label">Preview of Export Code</div>
+    <div class="code-block" id="exportCodePreview"></div>
+
+    <div class="disclaimer">The exported file is a complete, self-contained HTML page ready to upload to any web host or embed in your website.</div>
+  </div>
+</div>
+
+<script>
+// ===================== STATE =====================
+var state = {
+  pricingStructure: 'project',
+  pageHeadline: 'Simple, Transparent Pricing',
+  pageSubheadline: 'Choose the plan that fits your project. No hidden fees, no surprises.',
+  currencySymbol: '$',
+  billingPeriod: '/ project',
+  businessName: 'Your Freelance Business',
+  theme: 'dark-premium',
+  packages: [
+    {id:1,name:'Starter',price:997,anchorPrice:1500,recommended:false,ctaText:'Get Started',features:['Up to 5 pages','Basic SEO setup','2 revision rounds','7-day turnaround','Email support']},
+    {id:2,name:'Professional',price:2497,anchorPrice:3500,recommended:true,ctaText:'Most Popular',features:['Up to 15 pages','Advanced SEO','Unlimited revisions','5-day turnaround','Priority support','Analytics setup','1 month free support']},
+    {id:3,name:'Premium',price:4997,anchorPrice:7000,recommended:false,ctaText:'Go Premium',features:['Unlimited pages','Full SEO strategy','Unlimited revisions','3-day turnaround','Dedicated support','Analytics + CRO','3 months free support','Custom integrations']}
+  ],
+  addons: [
+    {id:1,name:'Copywriting',description:'Professional copy for all pages',price:497},
+    {id:2,name:'Logo Design',description:'Custom logo with 3 concepts',price:297}
+  ],
+  faqs: [],
+  testimonials: [
+    {id:1,text:'Working with them transformed our business. ROI in the first month.',author:'Sarah K.',role:'Founder, TechCorp'},
+    {id:2,text:'Professional, fast, and the results speak for themselves.',author:'James M.',role:'CEO, StartupXYZ'}
+  ],
+  clientLogos: 'Acme Inc, TechCorp, StartupXYZ, BrandCo',
+  clientCount: 127,
+  satisfactionRate: 98,
+  yearsInBusiness: 5,
+  showGuarantee: true,
+  guaranteeDays: '30-Day',
+  charmPricing: false,
+  anchorPricing: true,
+  popularBadge: true,
+  limitedSpots: false,
+  spotsMessage: 'Only 3 spots left this month',
+  showCountdown: false,
+  countdownLabel: 'Offer ends in:',
+  countdownHours: 48,
+  billingToggle: false,
+  annualDiscount: 20,
+  ctaText: 'Get Started Today',
+  ctaLink: '#contact',
+  ctaSubtext: 'No credit card required. Start free.',
+  stickyCta: true,
+  stickyCtaText: 'Ready to get started? Book a free call',
+  heroTagline: 'Professional services. Fair pricing.',
+  nextPkgId: 4,
+  nextAddonId: 3,
+  nextFaqId: 1,
+  nextTestimonialId: 3
+};
+
+var themes = [
+  {id:'dark-premium',name:'Dark Premium',bg:'#0a0a0f',card:'#111827',accent:'#a855f7',text:'#f1f5f9',bars:['#a855f7','#ec4899','#1e293b']},
+  {id:'light-modern',name:'Light Modern',bg:'#f8fafc',card:'#ffffff',accent:'#6366f1',text:'#0f172a',bars:['#6366f1','#8b5cf6','#e2e8f0']},
+  {id:'minimal-clean',name:'Minimal Clean',bg:'#ffffff',card:'#f9fafb',accent:'#000000',text:'#111827',bars:['#111827','#6b7280','#e5e7eb']},
+  {id:'bold-gradient',name:'Bold Gradient',bg:'#1a0533',card:'#2d1254',accent:'#f59e0b',text:'#ffffff',bars:['#f59e0b','#ec4899','#2d1254']},
+  {id:'corporate',name:'Corporate',bg:'#f0f4f8',card:'#ffffff',accent:'#1e40af',text:'#1e293b',bars:['#1e40af','#3b82f6','#dbeafe']},
+  {id:'creative',name:'Creative',bg:'#0d1117',card:'#161b22',accent:'#22d3ee',text:'#e6edf3',bars:['#22d3ee','#a78bfa','#161b22']},
+  {id:'startup',name:'Startup',bg:'#fafafa',card:'#ffffff',accent:'#10b981',text:'#111827',bars:['#10b981','#059669','#d1fae5']},
+  {id:'professional',name:'Professional',bg:'#1c1917',card:'#292524',accent:'#f97316',text:'#fafaf9',bars:['#f97316','#fb923c','#292524']}
+];
+
+var pricingStructures = [
+  {id:'hourly',label:'Hourly'},
+  {id:'project',label:'Project'},
+  {id:'retainer',label:'Retainer'},
+  {id:'value',label:'Value-based'},
+  {id:'tiered',label:'Tiered'}
+];
+
+// ===================== INIT =====================
+function init() {
+  loadState();
+  renderStructureOptions();
+  renderThemeGrid();
+  syncFormToState();
+  renderPackages();
+  renderAddons();
+  renderFaqs();
+  renderTestimonials();
+  renderPreview();
+  generateABSuggestions();
+  document.getElementById('limitedSpots').addEventListener('change', function(){
+    document.getElementById('spotsField').style.display = this.checked ? 'block' : 'none';
+    saveAndRender();
+  });
+}
+
+function loadState() {
+  try {
+    var saved = localStorage.getItem('fpg_state_v2');
+    if (saved) {
+      var parsed = JSON.parse(saved);
+      Object.assign(state, parsed);
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('fpg_state_v2', JSON.stringify(state));
+  } catch(e) {}
+}
+
+function readFormToState() {
+  state.pageHeadline = v('pageHeadline');
+  state.pageSubheadline = v('pageSubheadline');
+  state.currencySymbol = v('currencySymbol');
+  state.billingPeriod = v('billingPeriod');
+  state.businessName = v('businessName');
+  state.clientCount = parseInt(v('clientCount')) || 127;
+  state.satisfactionRate = parseInt(v('satisfactionRate')) || 98;
+  state.yearsInBusiness = parseInt(v('yearsInBusiness')) || 5;
+  state.showGuarantee = cb('showGuarantee');
+  state.guaranteeDays = v('guaranteeDays');
+  state.charmPricing = cb('charmPricing');
+  state.anchorPricing = cb('anchorPricing');
+  state.popularBadge = cb('popularBadge');
+  state.limitedSpots = cb('limitedSpots');
+  state.spotsMessage = v('spotsMessage');
+  state.showCountdown = cb('showCountdown');
+  state.countdownLabel = v('countdownLabel');
+  state.countdownHours = parseInt(v('countdownHours')) || 48;
+  state.billingToggle = cb('billingToggle');
+  state.annualDiscount = parseInt(v('annualDiscount')) || 20;
+  state.ctaText = v('ctaText');
+  state.ctaLink = v('ctaLink');
+  state.ctaSubtext = v('ctaSubtext');
+  state.stickyCta = cb('stickyCta');
+  state.stickyCtaText = v('stickyCtaText');
+  state.heroTagline = v('heroTagline');
+  state.clientLogos = v('clientLogos');
+}
+
+function syncFormToState() {
+  sv('pageHeadline', state.pageHeadline);
+  sv('pageSubheadline', state.pageSubheadline);
+  sv('currencySymbol', state.currencySymbol);
+  sv('billingPeriod', state.billingPeriod);
+  sv('businessName', state.businessName);
+  sv('clientCount', state.clientCount);
+  sv('satisfactionRate', state.satisfactionRate);
+  sv('yearsInBusiness', state.yearsInBusiness);
+  scb('showGuarantee', state.showGuarantee);
+  sv('guaranteeDays', state.guaranteeDays);
+  scb('charmPricing', state.charmPricing);
+  scb('anchorPricing', state.anchorPricing);
+  scb('popularBadge', state.popularBadge);
+  scb('limitedSpots', state.limitedSpots);
+  sv('spotsMessage', state.spotsMessage);
+  scb('showCountdown', state.showCountdown);
+  sv('countdownLabel', state.countdownLabel);
+  sv('countdownHours', state.countdownHours);
+  scb('billingToggle', state.billingToggle);
+  sv('annualDiscount', state.annualDiscount);
+  sv('ctaText', state.ctaText);
+  sv('ctaLink', state.ctaLink);
+  sv('ctaSubtext', state.ctaSubtext);
+  scb('stickyCta', state.stickyCta);
+  sv('stickyCtaText', state.stickyCtaText);
+  sv('heroTagline', state.heroTagline);
+  sv('clientLogos', state.clientLogos);
+  document.getElementById('spotsField').style.display = state.limitedSpots ? 'block' : 'none';
+  document.getElementById('countdownField').style.display = state.showCountdown ? 'block' : 'none';
+}
+
+function v(id){var el=document.getElementById(id);return el?el.value:'';}
+function cb(id){var el=document.getElementById(id);return el?el.checked:false;}
+function sv(id,val){var el=document.getElementById(id);if(el)el.value=val;}
+function scb(id,val){var el=document.getElementById(id);if(el)el.checked=!!val;}
+
+function saveAndRender() {
+  readFormToState();
+  saveState();
+  renderPreview();
+}
+
+// ===================== TABS =====================
+function switchTab(name) {
+  document.querySelectorAll('.sidebar-tab').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.sidebar-panel').forEach(function(p){p.classList.remove('active')});
+  event.target.classList.add('active');
+  document.getElementById('panel-'+name).classList.add('active');
+}
+
+function switchMainTab(name) {
+  ['preview','ab'].forEach(function(t){
+    var tab = document.getElementById('mainTab-'+t);
+    var panel = document.getElementById('mainPanel-'+t);
+    if(t===name){
+      tab.style.borderBottomColor='var(--accent1)';tab.style.color='var(--accent1)';tab.style.fontWeight='600';
+      panel.style.display='block';
+    } else {
+      tab.style.borderBottomColor='transparent';tab.style.color='var(--muted)';tab.style.fontWeight='400';
+      panel.style.display='none';
+    }
+  });
+}
+
+// ===================== STRUCTURE =====================
+function renderStructureOptions() {
+  var html = '';
+  pricingStructures.forEach(function(s){
+    html += '<div class="structure-opt'+(state.pricingStructure===s.id?' selected':'')+'" onclick="selectStructure(\''+s.id+'\')">'+s.label+'</div>';
+  });
+  document.getElementById('structureOptions').innerHTML = html;
+}
+
+function selectStructure(id) {
+  state.pricingStructure = id;
+  var bp = {hourly:' / hr',project:' / project',retainer:' / month',value:' / engagement',tiered:' / month'};
+  state.billingPeriod = bp[id] || '/ project';
+  sv('billingPeriod', state.billingPeriod);
+  renderStructureOptions();
+  saveAndRender();
+}
+
+// ===================== THEMES =====================
+function renderThemeGrid() {
+  var html = '';
+  themes.forEach(function(t){
+    var barsHtml = t.bars.map(function(c){return '<div class="theme-preview-bar" style="background:'+c+'"></div>';}).join('');
+    html += '<div class="theme-swatch'+(state.theme===t.id?' selected':'')+'" onclick="selectTheme(\''+t.id+'\')">';
+    html += '<div class="theme-preview" style="background:'+t.bg+'">'+barsHtml+'</div>';
+    html += '<div class="theme-name">'+t.name+'</div></div>';
+  });
+  document.getElementById('themeGrid').innerHTML = html;
+}
+
+function selectTheme(id) {
+  state.theme = id;
+  saveState();
+  renderThemeGrid();
+  renderPreview();
+}
+
+// ===================== PACKAGES =====================
+function renderPackages() {
+  var html = '';
+  var pkgs = state.packages;
+  pkgs.forEach(function(pkg, idx){
+    html += '<div class="pkg-item" id="pkg-'+pkg.id+'" draggable="true" ondragstart="pkgDragStart(event,'+pkg.id+')" ondragover="pkgDragOver(event)" ondrop="pkgDrop(event,'+pkg.id+')">';
+    html += '<div class="pkg-header">';
+    html += '<span class="pkg-drag" title="Drag to reorder">&#9776;</span>';
+    html += '<div class="pkg-num">'+(idx+1)+'</div>';
+    html += '<input type="text" value="'+esc(pkg.name)+'" style="font-weight:600;font-size:13px" oninput="updatePkgField('+pkg.id+',\'name\',this.value)">';
+    html += '<div class="pkg-actions">';
+    html += '<button class="btn-ghost btn-sm" onclick="togglePkgRecommended('+pkg.id+')" title="Toggle recommended">'+(pkg.recommended?'&#9733;':'&#9734;')+'</button>';
+    html += '<button class="btn-danger btn-sm" onclick="removePkg('+pkg.id+')">&#10005;</button>';
+    html += '</div></div>';
+    html += '<div class="field-row">';
+    html += '<div><label class="field-label">Price</label><input type="number" value="'+pkg.price+'" oninput="updatePkgField('+pkg.id+',\'price\',+this.value)"></div>';
+    html += '<div><label class="field-label">Anchor Price</label><input type="number" value="'+pkg.anchorPrice+'" oninput="updatePkgField('+pkg.id+',\'anchorPrice\',+this.value)"></div>';
+    html += '</div>';
+    html += '<div class="field-group"><label class="field-label">CTA Button Text</label><input type="text" value="'+esc(pkg.ctaText)+'" oninput="updatePkgField('+pkg.id+',\'ctaText\',this.value)"></div>';
+    html += '<label class="field-label">Features</label>';
+    html += '<ul class="feature-list" id="feat-'+pkg.id+'">';
+    pkg.features.forEach(function(f, fi){
+      html += '<li class="feature-item"><input type="text" value="'+esc(f)+'" oninput="updateFeature('+pkg.id+','+fi+',this.value)"><button class="btn-danger btn-sm" onclick="removeFeature('+pkg.id+','+fi+')">&#10005;</button></li>';
+    });
+    html += '</ul>';
+    html += '<button class="add-feature-btn" onclick="addFeature('+pkg.id+')">+ Add feature</button>';
+    html += '</div>';
+  });
+  document.getElementById('pkgList').innerHTML = html;
+  document.getElementById('addPkgBtn').style.display = pkgs.length >= 4 ? 'none' : '';
+}
+
+var dragPkgId = null;
+function pkgDragStart(e, id){dragPkgId=id;}
+function pkgDragOver(e){e.preventDefault();}
+function pkgDrop(e, targetId){
+  e.preventDefault();
+  if(dragPkgId===targetId)return;
+  var fromIdx=state.packages.findIndex(function(p){return p.id===dragPkgId;});
+  var toIdx=state.packages.findIndex(function(p){return p.id===targetId;});
+  var moved=state.packages.splice(fromIdx,1)[0];
+  state.packages.splice(toIdx,0,moved);
+  renderPackages();
+  saveAndRender();
+}
+
+function updatePkgField(id, field, val){
+  var pkg=state.packages.find(function(p){return p.id===id;});
+  if(pkg)pkg[field]=val;
+  saveAndRender();
+}
+
+function togglePkgRecommended(id){
+  state.packages.forEach(function(p){p.recommended=p.id===id?!p.recommended:false;});
+  renderPackages();
+  saveAndRender();
+}
+
+function removePkg(id){
+  state.packages=state.packages.filter(function(p){return p.id!==id;});
+  renderPackages();
+  saveAndRender();
+}
+
+function addPackage(){
+  if(state.packages.length>=4)return;
+  state.packages.push({id:state.nextPkgId++,name:'New Package',price:1997,anchorPrice:2997,recommended:false,ctaText:'Get Started',features:['Feature 1','Feature 2','Feature 3']});
+  renderPackages();
+  saveAndRender();
+}
+
+function addFeature(pkgId){
+  var pkg=state.packages.find(function(p){return p.id===pkgId;});
+  if(pkg)pkg.features.push('New feature');
+  renderPackages();
+  saveAndRender();
+}
+
+function updateFeature(pkgId, fi, val){
+  var pkg=state.packages.find(function(p){return p.id===pkgId;});
+  if(pkg)pkg.features[fi]=val;
+  saveState();
+}
+
+function removeFeature(pkgId, fi){
+  var pkg=state.packages.find(function(p){return p.id===pkgId;});
+  if(pkg)pkg.features.splice(fi,1);
+  renderPackages();
+  saveAndRender();
+}
+
+// ===================== ADDONS =====================
+function renderAddons(){
+  var html='';
+  state.addons.forEach(function(a){
+    html+='<div class="addon-item">';
+    html+='<div class="addon-header">';
+    html+='<input type="text" value="'+esc(a.name)+'" placeholder="Add-on name" oninput="updateAddon('+a.id+',\'name\',this.value)">';
+    html+='<input type="number" value="'+a.price+'" placeholder="Price" style="width:90px" oninput="updateAddon('+a.id+',\'price\',+this.value)">';
+    html+='<button class="btn-danger btn-sm" onclick="removeAddon('+a.id+')">&#10005;</button>';
+    html+='</div>';
+    html+='<input type="text" value="'+esc(a.description)+'" placeholder="Short description" oninput="updateAddon('+a.id+',\'description\',this.value)">';
+    html+='</div>';
+  });
+  document.getElementById('addonList').innerHTML=html;
+}
+
+function updateAddon(id,field,val){var a=state.addons.find(function(x){return x.id===id;});if(a)a[field]=val;saveState();renderPreview();}
+function removeAddon(id){state.addons=state.addons.filter(function(a){return a.id!==id;});renderAddons();saveAndRender();}
+function addAddon(){state.addons.push({id:state.nextAddonId++,name:'New Add-on',description:'Description of this add-on',price:197});renderAddons();saveAndRender();}
+
+// ===================== FAQS =====================
+var defaultFaqs=[
+  {q:"What's included in each package?",a:"Each package includes everything listed in the features section. You'll receive a detailed breakdown before we start."},
+  {q:"Do you offer refunds?",a:"Yes, we offer a "+state.guaranteeDays+" money-back guarantee if you're not satisfied with the deliverables."},
+  {q:"How long does a project take?",a:"Timelines vary by package — see the turnaround listed for each tier. Rush delivery is available as an add-on."},
+  {q:"Can I upgrade my package later?",a:"Absolutely. You can upgrade at any time and we'll apply what you've already paid toward the new package."},
+  {q:"Do you require a deposit?",a:"Yes, we require a 50% deposit to begin, with the remainder due upon delivery."},
+  {q:"What payment methods do you accept?",a:"We accept all major credit cards, bank transfer, and PayPal. All payments are secured with SSL encryption."},
+  {q:"What if I need revisions beyond the package limit?",a:"Additional revisions are billed at our hourly rate. We'll always discuss scope before doing any out-of-scope work."},
+  {q:"How do we communicate during the project?",a:"You'll have access to a dedicated project portal. We also offer weekly update calls for all Professional and Premium packages."}
+];
+
+function addDefaultFaqs(){state.faqs=defaultFaqs.map(function(f,i){return{id:i+1,q:f.q,a:f.a};});state.nextFaqId=9;renderFaqs();saveAndRender();}
+
+function renderFaqs(){
+  var html='';
+  state.faqs.forEach(function(f){
+    html+='<div class="faq-item">';
+    html+='<div style="display:flex;gap:6px;margin-bottom:6px"><input type="text" value="'+esc(f.q)+'" placeholder="Question" oninput="updateFaq('+f.id+',\'q\',this.value)" style="flex:1"><button class="btn-danger btn-sm" onclick="removeFaq('+f.id+')">&#10005;</button></div>';
+    html+='<textarea rows="2" placeholder="Answer" oninput="updateFaq('+f.id+',\'a\',this.value)">'+esc(f.a)+'</textarea>';
+    html+='</div>';
+  });
+  document.getElementById('faqList').innerHTML=html;
+}
+
+function updateFaq(id,field,val){var f=state.faqs.find(function(x){return x.id===id;});if(f)f[field]=val;saveState();renderPreview();}
+function removeFaq(id){state.faqs=state.faqs.filter(function(f){return f.id!==id;});renderFaqs();saveAndRender();}
+function addFaq(){state.faqs.push({id:state.nextFaqId++,q:'New question?',a:'Your answer here.'});renderFaqs();saveAndRender();}
+
+// ===================== TESTIMONIALS =====================
+function renderTestimonials(){
+  var html='';
+  state.testimonials.forEach(function(t){
+    html+='<div class="testimonial-item">';
+    html+='<textarea rows="2" oninput="updateTestimonial('+t.id+',\'text\',this.value)">'+esc(t.text)+'</textarea>';
+    html+='<div class="field-row" style="margin-top:6px">';
+    html+='<input type="text" value="'+esc(t.author)+'" placeholder="Name" oninput="updateTestimonial('+t.id+',\'author\',this.value)">';
+    html+='<input type="text" value="'+esc(t.role)+'" placeholder="Role / Company" oninput="updateTestimonial('+t.id+',\'role\',this.value)">';
+    html+='</div>';
+    html+='<button class="btn-danger btn-sm" style="margin-top:6px" onclick="removeTestimonial('+t.id+')">Remove</button>';
+    html+='</div>';
+  });
+  document.getElementById('testimonialList').innerHTML=html;
+}
+
+function updateTestimonial(id,field,val){var t=state.testimonials.find(function(x){return x.id===id;});if(t)t[field]=val;saveState();renderPreview();}
+function removeTestimonial(id){state.testimonials=state.testimonials.filter(function(t){return t.id!==id;});renderTestimonials();saveAndRender();}
+function addTestimonial(){state.testimonials.push({id:state.nextTestimonialId++,text:'Add testimonial quote here.',author:'Client Name',role:'Title, Company'});renderTestimonials();saveAndRender();}
+
+// ===================== COUNTDOWN FIELD =====================
+function toggleCountdownField(){
+  document.getElementById('countdownField').style.display=cb('showCountdown')?'block':'none';
+  saveAndRender();
+}
+
+// ===================== PREVIEW DEVICE =====================
+function updatePreviewDevice(){
+  var iframe=document.getElementById('previewIframe');
+  var frame=document.getElementById('previewFrame');
+  var device=v('previewDevice');
+  if(device==='mobile'){iframe.style.width='390px';frame.style.overflowX='auto';}
+  else if(device==='tablet'){iframe.style.width='768px';frame.style.overflowX='auto';}
+  else{iframe.style.width='100%';frame.style.overflowX='hidden';}
+}
+
+function refreshPreview(){renderPreview();}
+function iframeLoaded(){}
+
+// ===================== PRICE FORMAT =====================
+function formatPrice(price){
+  if(state.charmPricing && price % 10 === 0 && price > 0) price = price - 3;
+  return state.currencySymbol + price.toLocaleString();
+}
+
+// ===================== GENERATE HTML =====================
+function generatePageHTML(){
+  var theme = themes.find(function(t){return t.id===state.theme;}) || themes[0];
+  var pkgs = state.packages;
+  var sym = state.currencySymbol;
+  var period = state.billingPeriod;
+
+  var pkgsHTML = '';
+  pkgs.forEach(function(pkg, idx){
+    var price = state.charmPricing && pkg.price % 10===0 && pkg.price>0 ? pkg.price-3 : pkg.price;
+    var anchorPrice = pkg.anchorPrice;
+    var isRecommended = state.popularBadge && pkg.recommended;
+    var featuresHTML = pkg.features.map(function(f){
+      return '<li style="display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:14px;color:'+theme.text+'"><span style="color:'+theme.accent+';margin-top:2px;flex-shrink:0">&#10003;</span><span>'+esc(f)+'</span></li>';
+    }).join('');
+    var borderStyle = isRecommended ? '2px solid '+theme.accent : '1px solid rgba(255,255,255,0.1)';
+    var pkgBg = isRecommended ? 'linear-gradient(160deg,'+theme.card+' 0%,rgba(168,85,247,0.08) 100%)' : theme.card;
+    pkgsHTML += '<div style="background:'+pkgBg+';border:'+borderStyle+';border-radius:16px;padding:28px;position:relative;display:flex;flex-direction:column">';
+    if(isRecommended) pkgsHTML += '<div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,'+theme.accent+',#ec4899);color:#fff;padding:5px 18px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap">Most Popular</div>';
+    pkgsHTML += '<div style="font-size:18px;font-weight:700;color:'+theme.text+';margin-bottom:8px">'+esc(pkg.name)+'</div>';
+    if(state.anchorPricing && anchorPrice > price){
+      pkgsHTML += '<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;margin-bottom:2px">'+sym+anchorPrice.toLocaleString()+'</div>';
+    }
+    pkgsHTML += '<div style="font-size:36px;font-weight:800;color:'+theme.text+'">'+sym+price.toLocaleString()+'<span style="font-size:15px;font-weight:400;color:#94a3b8">'+period+'</span></div>';
+    pkgsHTML += '<ul style="list-style:none;padding:0;margin:20px 0;flex:1">'+featuresHTML+'</ul>';
+    pkgsHTML += '<a href="'+esc(state.ctaLink)+'" style="display:block;text-align:center;background:linear-gradient(135deg,'+theme.accent+',#ec4899);color:#fff;padding:13px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity=.9" onmouseout="this.style.opacity=1">'+esc(pkg.ctaText)+'</a>';
+    pkgsHTML += '</div>';
+  });
+
+  var addonsHTML = '';
+  if(state.addons.length > 0){
+    addonsHTML = '<section style="max-width:900px;margin:60px auto 0;padding:0 20px">';
+    addonsHTML += '<h2 style="text-align:center;font-size:26px;color:'+theme.text+';margin-bottom:8px">Optional Add-ons</h2>';
+    addonsHTML += '<p style="text-align:center;color:#94a3b8;margin-bottom:32px">Enhance your package with these popular add-ons</p>';
+    addonsHTML += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">';
+    state.addons.forEach(function(a){
+      addonsHTML += '<div style="background:'+theme.card+';border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px;display:flex;align-items:center;gap:14px">';
+      addonsHTML += '<input type="checkbox" style="width:18px;height:18px;accent-color:'+theme.accent+'">';
+      addonsHTML += '<div><div style="font-size:14px;font-weight:600;color:'+theme.text+'">'+esc(a.name)+'</div>';
+      addonsHTML += '<div style="font-size:12px;color:#94a3b8;margin-top:2px">'+esc(a.description)+'</div>';
+      addonsHTML += '<div style="font-size:16px;font-weight:700;color:'+theme.accent+';margin-top:4px">+'+sym+a.price.toLocaleString()+'</div></div>';
+      addonsHTML += '</div>';
+    });
+    addonsHTML += '</div></section>';
+  }
+
+  var faqHTML = '';
+  if(state.faqs.length > 0){
+    faqHTML = '<section style="max-width:700px;margin:70px auto 0;padding:0 20px">';
+    faqHTML += '<h2 style="text-align:center;font-size:26px;color:'+theme.text+';margin-bottom:32px">Frequently Asked Questions</h2>';
+    state.faqs.forEach(function(f,i){
+      faqHTML += '<div style="border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin-bottom:10px;overflow:hidden">';
+      faqHTML += '<button onclick="var d=document.getElementById(\'faq'+i+'\');var a=this.querySelector(\'.faq-arrow\');d.style.display=d.style.display===\'none\'?\'block\':\'none\';a.style.transform=d.style.display===\'block\'?\'rotate(180deg)\':\'rotate(0deg)\'" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:'+theme.card+';color:'+theme.text+';border:none;cursor:pointer;font-size:15px;font-weight:600;text-align:left">';
+      faqHTML += esc(f.q)+'<span class="faq-arrow" style="transition:transform .3s;font-size:12px">&#9660;</span></button>';
+      faqHTML += '<div id="faq'+i+'" style="display:none;padding:0 20px 16px;background:'+theme.card+';color:#94a3b8;font-size:14px;line-height:1.7">'+esc(f.a)+'</div>';
+      faqHTML += '</div>';
+    });
+    faqHTML += '</section>';
+  }
+
+  var socialHTML = '<section style="background:rgba(168,85,247,0.05);border:1px solid rgba(168,85,247,0.15);border-radius:16px;max-width:900px;margin:60px auto 0;padding:36px 24px">';
+  socialHTML += '<div style="display:flex;flex-wrap:wrap;gap:24px;justify-content:center;margin-bottom:32px">';
+  socialHTML += '<div style="text-align:center"><div style="font-size:36px;font-weight:800;color:'+theme.accent+'">'+state.clientCount+'+</div><div style="font-size:13px;color:#94a3b8">Happy Clients</div></div>';
+  socialHTML += '<div style="text-align:center"><div style="font-size:36px;font-weight:800;color:'+theme.accent+'">'+state.satisfactionRate+'%</div><div style="font-size:13px;color:#94a3b8">Satisfaction Rate</div></div>';
+  socialHTML += '<div style="text-align:center"><div style="font-size:36px;font-weight:800;color:'+theme.accent+'">'+state.yearsInBusiness+'+</div><div style="font-size:13px;color:#94a3b8">Years Experience</div></div>';
+  socialHTML += '</div>';
+  if(state.showGuarantee){
+    socialHTML += '<div style="text-align:center;margin-bottom:28px"><div style="display:inline-flex;align-items:center;gap:10px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:40px;padding:10px 24px"><span style="font-size:24px">&#128737;</span><span style="font-size:15px;font-weight:700;color:#10b981">'+esc(state.guaranteeDays)+' Money-Back Guarantee</span></div></div>';
+  }
+  if(state.testimonials.length > 0){
+    socialHTML += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:28px">';
+    state.testimonials.forEach(function(t){
+      socialHTML += '<div style="background:'+theme.card+';border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px">';
+      socialHTML += '<div style="font-size:24px;color:'+theme.accent+';margin-bottom:8px">&#10077;</div>';
+      socialHTML += '<p style="font-size:14px;color:'+theme.text+';line-height:1.7;margin-bottom:14px">'+esc(t.text)+'</p>';
+      socialHTML += '<div style="font-size:13px;font-weight:700;color:'+theme.text+'">'+esc(t.author)+'</div>';
+      socialHTML += '<div style="font-size:12px;color:#94a3b8">'+esc(t.role)+'</div>';
+      socialHTML += '</div>';
+    });
+    socialHTML += '</div>';
+  }
+  var logos = state.clientLogos.split(',').map(function(l){return l.trim();}).filter(Boolean);
+  if(logos.length > 0){
+    socialHTML += '<div style="text-align:center;margin-bottom:12px"><div style="font-size:13px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Trusted by leading companies</div>';
+    socialHTML += '<div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center">';
+    logos.forEach(function(l){
+      socialHTML += '<div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;color:#94a3b8;letter-spacing:.05em">'+esc(l)+'</div>';
+    });
+    socialHTML += '</div></div>';
+  }
+  socialHTML += '</section>';
+
+  var countdownHTML = '';
+  if(state.showCountdown){
+    countdownHTML = '<div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:14px 24px;text-align:center;margin-bottom:24px;max-width:600px;margin-left:auto;margin-right:auto">';
+    countdownHTML += '<div style="font-size:14px;color:#f59e0b;font-weight:600">'+esc(state.countdownLabel)+'</div>';
+    countdownHTML += '<div id="countdown-timer" style="font-size:28px;font-weight:800;color:#f59e0b;letter-spacing:.1em;margin-top:4px"></div>';
+    countdownHTML += '</div>';
+  }
+
+  var spotsHTML = '';
+  if(state.limitedSpots){
+    spotsHTML = '<div style="text-align:center;margin-bottom:20px"><div style="display:inline-block;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:8px 20px;font-size:14px;font-weight:700;color:#ef4444">&#9888; '+esc(state.spotsMessage)+'</div></div>';
+  }
+
+  var billingToggleHTML = '';
+  if(state.billingToggle){
+    billingToggleHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:32px">';
+    billingToggleHTML += '<span style="font-size:14px;color:'+theme.text+'">Monthly</span>';
+    billingToggleHTML += '<label style="position:relative;width:50px;height:26px;cursor:pointer"><input type="checkbox" id="billingSwitch" style="opacity:0;width:0;height:0" onchange="toggleBilling(this.checked)"><span style="position:absolute;inset:0;background:#334155;border-radius:26px;transition:.3s"></span><span id="billing-knob" style="position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s"></span></label>';
+    billingToggleHTML += '<span style="font-size:14px;color:'+theme.text+'">Annual <span style="background:rgba(16,185,129,0.2);color:#10b981;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">Save '+state.annualDiscount+'%</span></span>';
+    billingToggleHTML += '</div>';
+  }
+
+  var stickyCtaHTML = '';
+  if(state.stickyCta){
+    stickyCtaHTML = '<div id="sticky-bottom-cta" style="position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,42,0.97);border-top:1px solid rgba(168,85,247,0.3);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:999;backdrop-filter:blur(20px);transform:translateY(100%);transition:transform .4s">';
+    stickyCtaHTML += '<div style="font-size:15px;color:'+theme.text+'">'+esc(state.stickyCtaText)+'</div>';
+    stickyCtaHTML += '<a href="'+esc(state.ctaLink)+'" style="background:linear-gradient(135deg,'+theme.accent+',#ec4899);color:#fff;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap">'+esc(state.ctaText)+'</a>';
+    stickyCtaHTML += '</div>';
+  }
+
+  var countdownScript = '';
+  if(state.showCountdown){
+    var totalSec = state.countdownHours * 3600;
+    countdownScript = 'var _ctEnd=Date.now()+'+totalSec+'000;function _ctTick(){var r=Math.max(0,Math.floor((_ctEnd-Date.now())/1000));var h=Math.floor(r/3600);var m=Math.floor((r%3600)/60);var s=r%60;var el=document.getElementById("countdown-timer");if(el)el.textContent=String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");if(r>0)setTimeout(_ctTick,1000);}setTimeout(_ctTick,100);';
+  }
+
+  var billingScript = '';
+  if(state.billingToggle){
+    billingScript = 'function toggleBilling(annual){var knob=document.getElementById("billing-knob");var sw=document.getElementById("billingSwitch");if(knob)knob.style.left=annual?"27px":"3px";document.querySelectorAll(".price-val").forEach(function(el){var m=+el.dataset.monthly;el.textContent="'+sym+'"+(annual?Math.round(m*(1-'+state.annualDiscount+'/100)).toLocaleString():m.toLocaleString());});document.querySelectorAll(".period-label").forEach(function(el){el.textContent=annual?"/ month (billed annually)":"'+period+'"});}';
+  }
+
+  var stickyScript = '';
+  if(state.stickyCta){
+    stickyScript = 'window.addEventListener("scroll",function(){var el=document.getElementById("sticky-bottom-cta");if(el)el.style.transform=window.scrollY>300?"translateY(0)":"translateY(100%)";});';
+  }
+
+  var priceAttr = state.billingToggle ? ' class="price-val" data-monthly="' : '';
+
+  var pkgsHTMLBilling = '';
+  pkgs.forEach(function(pkg, idx){
+    var price = state.charmPricing && pkg.price % 10===0 && pkg.price>0 ? pkg.price-3 : pkg.price;
+    var anchorPrice = pkg.anchorPrice;
+    var isRecommended = state.popularBadge && pkg.recommended;
+    var featuresHTML = pkg.features.map(function(f){
+      return '<li style="display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:14px;color:'+theme.text+'"><span style="color:'+theme.accent+';margin-top:2px;flex-shrink:0">&#10003;</span><span>'+esc(f)+'</span></li>';
+    }).join('');
+    var borderStyle = isRecommended ? '2px solid '+theme.accent : '1px solid rgba(255,255,255,0.1)';
+    var pkgBg = isRecommended ? 'linear-gradient(160deg,'+theme.card+' 0%,rgba(168,85,247,0.08) 100%)' : theme.card;
+    pkgsHTMLBilling += '<div style="background:'+pkgBg+';border:'+borderStyle+';border-radius:16px;padding:28px;position:relative;display:flex;flex-direction:column">';
+    if(isRecommended) pkgsHTMLBilling += '<div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,'+theme.accent+',#ec4899);color:#fff;padding:5px 18px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap">Most Popular</div>';
+    pkgsHTMLBilling += '<div style="font-size:18px;font-weight:700;color:'+theme.text+';margin-bottom:8px">'+esc(pkg.name)+'</div>';
+    if(state.anchorPricing && anchorPrice > price){
+      pkgsHTMLBilling += '<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;margin-bottom:2px">'+sym+anchorPrice.toLocaleString()+'</div>';
+    }
+    if(state.billingToggle){
+      pkgsHTMLBilling += '<div style="font-size:36px;font-weight:800;color:'+theme.text+'"><span class="price-val" data-monthly="'+price+'">'+sym+price.toLocaleString()+'</span><span class="period-label" style="font-size:15px;font-weight:400;color:#94a3b8">'+period+'</span></div>';
+    } else {
+      pkgsHTMLBilling += '<div style="font-size:36px;font-weight:800;color:'+theme.text+'">'+sym+price.toLocaleString()+'<span style="font-size:15px;font-weight:400;color:#94a3b8">'+period+'</span></div>';
+    }
+    pkgsHTMLBilling += '<ul style="list-style:none;padding:0;margin:20px 0;flex:1">'+featuresHTML+'</ul>';
+    pkgsHTMLBilling += '<a href="'+esc(state.ctaLink)+'" style="display:block;text-align:center;background:linear-gradient(135deg,'+theme.accent+',#ec4899);color:#fff;padding:13px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none">'+esc(pkg.ctaText)+'</a>';
+    pkgsHTMLBilling += '</div>';
+  });
+
+  var html = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">';
+  html += '<title>'+esc(state.businessName)+' — Pricing</title>';
+  html += '<meta name="description" content="'+esc(state.pageSubheadline)+'">';
+  html += '<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{background:'+theme.bg+';font-family:system-ui,-apple-system,sans-serif;line-height:1.6}a{text-decoration:none}@media(max-width:640px){.pkg-grid{grid-template-columns:1fr!important}}</style>';
+  html += '</head><body>';
+
+  html += '<section style="padding:80px 20px 40px;text-align:center">';
+  html += '<p style="font-size:14px;font-weight:600;color:'+theme.accent+';text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px">'+esc(state.heroTagline)+'</p>';
+  html += '<h1 style="font-size:clamp(32px,5vw,54px);font-weight:800;color:'+theme.text+';margin-bottom:16px;line-height:1.15">'+esc(state.pageHeadline)+'</h1>';
+  html += '<p style="font-size:18px;color:#94a3b8;max-width:580px;margin:0 auto 28px">'+esc(state.pageSubheadline)+'</p>';
+  html += countdownHTML;
+  html += spotsHTML;
+  html += '<a href="'+esc(state.ctaLink)+'" style="display:inline-block;background:linear-gradient(135deg,'+theme.accent+',#ec4899);color:#fff;padding:15px 36px;border-radius:14px;font-size:16px;font-weight:700;margin-bottom:10px">'+esc(state.ctaText)+'</a>';
+  html += '<div style="font-size:13px;color:#94a3b8;margin-top:8px">'+esc(state.ctaSubtext)+'</div>';
+  html += '</section>';
+
+  html += '<section style="max-width:1100px;margin:0 auto;padding:20px 20px 60px">';
+  html += billingToggleHTML;
+  var cols = Math.min(pkgs.length, 3);
+  html += '<div class="pkg-grid" style="display:grid;grid-template-columns:repeat('+cols+',1fr);gap:20px;align-items:start">'+pkgsHTMLBilling+'</div>';
+  html += '</section>';
+
+  html += addonsHTML;
+  html += socialHTML;
+  html += faqHTML;
+
+  html += '<section style="padding:60px 20px;text-align:center">';
+  html += '<h2 style="font-size:28px;font-weight:700;color:'+theme.text+';margin-bottom:12px">Ready to get started?</h2>';
+  html += '<p style="color:#94a3b8;margin-bottom:24px">Join '+state.clientCount+'+ clients who trust '+esc(state.businessName)+'</p>';
+  html += '<a href="'+esc(state.ctaLink)+'" style="display:inline-block;background:linear-gradient(135deg,'+theme.accent+',#ec4899);color:#fff;padding:16px 40px;border-radius:14px;font-size:17px;font-weight:700">'+esc(state.ctaText)+'</a>';
+  html += '</section>';
+
+  html += stickyCtaHTML;
+
+  html += '<footer style="border-top:1px solid rgba(255,255,255,0.08);padding:24px 20px;text-align:center"><p style="font-size:13px;color:#64748b">&#169; '+new Date().getFullYear()+' '+esc(state.businessName)+' &mdash; Pricing page built with <a href="/pricing-page-generator.html" style="color:'+theme.accent+'">FreelanceOS Pricing Generator</a></p></footer>';
+
+  if(countdownScript || billingScript || stickyScript){
+    html += '<script>(function(){'+countdownScript+billingScript+stickyScript+'})()</s'+'cript>';
+  }
+
+  html += '<script src="/freelanceos-storefront/exit-intent.js"></script>
+</body></html>';
+  return html;
+}
+
+// ===================== PREVIEW =====================
+var previewTimer = null;
+function renderPreview(){
+  clearTimeout(previewTimer);
+  previewTimer = setTimeout(function(){
+    var iframe = document.getElementById('previewIframe');
+    var html = generatePageHTML();
+    var blob = new Blob([html], {type:'text/html'});
+    var url = URL.createObjectURL(blob);
+    iframe.src = url;
+    iframe.style.height = '';
+    iframe.onload = function(){
+      try{
+        var h = iframe.contentDocument.body.scrollHeight;
+        iframe.style.height = Math.max(600, h) + 'px';
+      }catch(e){iframe.style.height='700px';}
+    };
+  }, 300);
+}
+
+// ===================== EXPORT =====================
+function openExportModal(){
+  var html = generatePageHTML();
+  var preview = html.length > 2000 ? html.substring(0,2000)+'...' : html;
+  document.getElementById('exportCodePreview').textContent = preview;
+  document.getElementById('exportModal').style.display='flex';
+}
+
+function closeExportModal(e){
+  if(!e || e.target===document.getElementById('exportModal'))
+    document.getElementById('exportModal').style.display='none';
+}
+
+function downloadHTML(){
+  var html = generatePageHTML();
+  var blob = new Blob([html], {type:'text/html'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'pricing-page.html';
+  a.click();
+}
+
+function copyHTMLCode(){
+  var html = generatePageHTML();
+  navigator.clipboard.writeText(html).then(function(){
+    var btn = event.target;
+    var orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function(){btn.textContent=orig;},2000);
+  }).catch(function(){
+    var ta = document.createElement('textarea');
+    ta.value = html;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+function copyEmbedCode(){
+  var embedCode = '<iframe src="pricing-page.html" width="100%" height="800" frameborder="0" style="border:none;border-radius:16px;overflow:hidden"></iframe>';
+  navigator.clipboard.writeText(embedCode).then(function(){
+    var btn = event.target;
+    var orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function(){btn.textContent=orig;},2000);
+  }).catch(function(){});
+}
+
+// ===================== A/B SUGGESTIONS =====================
+var headlineVariants = [
+  ['Invest Once. Profit Forever.','Get Results or Your Money Back','Professional [Service] That Pays for Itself'],
+  ['The Smartest Investment You\'ll Make This Year','Zero Risk. Maximum Results.','Stop Guessing. Start Growing.'],
+  ['Results-First Pricing. No Surprises.','Flat-Rate [Service] for Growing Businesses','Pay for Outcomes, Not Hours']
+];
+var ctaVariants = [
+  ['Claim Your Spot','Start Your Project','Let\'s Build Something'],
+  ['Book a Free Strategy Call','See If We\'re a Fit','Get My Custom Quote'],
+  ['Yes, I\'m Ready','Lock in Your Rate','Reserve My Package']
+];
+var pkgNameSets = [
+  ['Essentials','Growth','Scale'],
+  ['Basic','Pro','Enterprise'],
+  ['Launch','Accelerate','Dominate'],
+  ['Solo','Team','Agency']
+];
+
+function generateABSuggestions(){
+  var h = headlineVariants[Math.floor(Math.random()*headlineVariants.length)];
+  var c = ctaVariants[Math.floor(Math.random()*ctaVariants.length)];
+  var p = pkgNameSets[Math.floor(Math.random()*pkgNameSets.length)];
+
+  var hEl = document.getElementById('ab-headlines');
+  var cEl = document.getElementById('ab-ctas');
+  var pEl = document.getElementById('ab-pkgnames');
+  if(!hEl)return;
+
+  hEl.innerHTML = h.map(function(v,i){return '<div class="ab-variation"><strong>V'+(i+1)+':</strong> "'+v+'"<button onclick="applyABHeadline(\''+v+'\')" class="btn-secondary btn-sm" style="margin-left:10px;float:right">Use this</button></div>';}).join('');
+  cEl.innerHTML = c.map(function(v,i){return '<div class="ab-variation"><strong>V'+(i+1)+':</strong> "'+v+'"<button onclick="applyABCTA(\''+v+'\')" class="btn-secondary btn-sm" style="margin-left:10px;float:right">Use this</button></div>';}).join('');
+  pEl.innerHTML = '<div class="ab-variation"><strong>Option:</strong> '+p.join(' / ')+'<button onclick="applyABPkgNames('+JSON.stringify(p)+')" class="btn-secondary btn-sm" style="margin-left:10px;float:right">Apply names</button></div>';
+}
+
+function applyABHeadline(val){
+  state.pageHeadline=val;
+  sv('pageHeadline',val);
+  saveAndRender();
+}
+function applyABCTA(val){
+  state.ctaText=val;
+  sv('ctaText',val);
+  saveAndRender();
+}
+function applyABPkgNames(names){
+  names.forEach(function(n,i){if(state.packages[i])state.packages[i].name=n;});
+  renderPackages();
+  saveAndRender();
+}
+
+// ===================== UTILS =====================
+function esc(s){
+  if(s==null)return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ===================== START =====================
+init();
+</script>
+<script src="/freelanceos-storefront/exit-intent.js"></script>
+</body>
+</html>

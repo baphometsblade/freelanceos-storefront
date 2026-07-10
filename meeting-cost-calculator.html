@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting Cost Calculator — See How Much Your Meetings Actually Cost | FreelanceOS</title>
+<meta name="description" content="Free meeting cost calculator. Enter attendees and hourly rates — watch the real cost tick up in real-time. Calculate annual meeting cost and billable hours lost.">
+<meta name="keywords" content="meeting cost calculator, cost of meetings, how much do meetings cost, meeting ROI calculator, meeting time calculator, true cost of meetings">
+<link rel="canonical" href="https://freelanceos-storefront.vercel.app/meeting-cost-calculator.html">
+<meta property="og:title" content="Meeting Cost Calculator — See the Real Price of Your Meetings">
+<meta property="og:description" content="Watch money drain in real-time. Enter attendees and rates, hit Start — see the true cost of every meeting. Free, no signup.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos-storefront.vercel.app/meeting-cost-calculator.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Meeting Cost Calculator — Watch Money Drain in Real Time">
+<meta name="twitter:description" content="Free tool: see the true dollar cost of any meeting as a live counter. Eye-opening for freelancers and teams.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Meeting Cost Calculator",
+  "description": "Calculate the real-time dollar cost of any meeting based on attendees and hourly rates.",
+  "url": "https://freelanceos-storefront.vercel.app/meeting-cost-calculator.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#020617;--card:#0f172a;--card-hover:#1e293b;
+  --text:#e2e8f0;--text-muted:#94a3b8;--text-dim:#64748b;
+  --accent:#a855f7;--accent2:#ec4899;--accent-green:#10b981;
+  --grad:linear-gradient(135deg,#a855f7,#ec4899);
+  --grad-fire:linear-gradient(135deg,#f97316,#ef4444,#dc2626);
+  --grad-green:linear-gradient(135deg,#10b981,#059669);
+  --border:rgba(148,163,184,.1);--border-hover:rgba(168,85,247,.35);
+  --radius:16px;--radius-sm:12px;--radius-xs:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.container{max-width:1060px;margin:0 auto;padding:0 20px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.fire-text{background:var(--grad-fire);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Nav */
+.nav{padding:16px 0;border-bottom:1px solid var(--border);background:rgba(2,6,23,.95);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-weight:800;font-size:1rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:.85rem;color:var(--text-muted);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{padding:8px 18px;background:var(--grad);border-radius:var(--radius-xs);font-size:.8rem;font-weight:700;color:#fff;-webkit-text-fill-color:#fff}
+
+/* Hero */
+.hero{padding:60px 0 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(168,85,247,.08) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;border-radius:999px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.25);font-size:.78rem;font-weight:700;color:#c084fc;margin-bottom:20px;letter-spacing:.05em}
+.hero h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
+.hero p{font-size:1.05rem;color:var(--text-muted);max-width:540px;margin:0 auto}
+
+/* Main layout */
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:36px 0 0}
+
+/* --- LIVE TIMER section --- */
+.timer-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;position:relative;overflow:hidden}
+.timer-card.running{border-color:rgba(249,115,22,.4);box-shadow:0 0 40px rgba(239,68,68,.12)}
+.card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:18px}
+
+/* Inputs */
+.input-row{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.input-group{display:flex;flex-direction:column;gap:5px}
+.input-group label{font-size:.78rem;font-weight:700;color:var(--text-muted)}
+.input-wrap{display:flex;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(148,163,184,.15);border-radius:var(--radius-xs);overflow:hidden;transition:border .2s}
+.input-wrap:focus-within{border-color:var(--accent)}
+.input-prefix{padding:0 10px;color:var(--text-dim);font-size:.9rem;background:rgba(255,255,255,.04);border-right:1px solid rgba(148,163,184,.1);align-self:stretch;display:flex;align-items:center;white-space:nowrap}
+.input-wrap input{flex:1;background:transparent;border:none;padding:11px 12px;color:var(--text);font-size:.95rem;font-family:inherit;outline:none;width:100%}
+.input-wrap input[type=range]{padding:0 12px;cursor:pointer;accent-color:#a855f7}
+
+/* Timer display */
+.timer-display{text-align:center;padding:28px 16px;position:relative;margin-bottom:16px}
+.cost-counter{font-size:clamp(2.8rem,7vw,4.5rem);font-weight:900;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums;transition:color .3s}
+.cost-counter.idle{color:var(--text-muted)}
+.cost-counter.running{background:var(--grad-fire);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cost-per-sec{font-size:.82rem;color:var(--text-dim);margin-top:6px}
+
+/* Fire animation */
+.fire-wrap{display:flex;justify-content:center;gap:3px;height:32px;margin-bottom:8px;opacity:0;transition:opacity .5s}
+.fire-wrap.visible{opacity:1}
+.flame{width:6px;border-radius:50% 50% 20% 20%;background:var(--grad-fire);animation:flicker 0.4s ease-in-out infinite alternate;transform-origin:bottom center}
+.flame:nth-child(1){height:20px;animation-delay:0s}
+.flame:nth-child(2){height:28px;animation-delay:.08s}
+.flame:nth-child(3){height:32px;animation-delay:.15s}
+.flame:nth-child(4){height:26px;animation-delay:.22s}
+.flame:nth-child(5){height:22px;animation-delay:.3s}
+.flame:nth-child(6){height:30px;animation-delay:.1s}
+.flame:nth-child(7){height:24px;animation-delay:.2s}
+@keyframes flicker{
+  0%{transform:scaleY(1) scaleX(1);opacity:.9}
+  100%{transform:scaleY(1.15) scaleX(.88);opacity:1}
+}
+/* Pulse glow when running */
+@keyframes pulse-glow{
+  0%,100%{box-shadow:0 0 20px rgba(239,68,68,.1)}
+  50%{box-shadow:0 0 40px rgba(239,68,68,.25),0 0 60px rgba(249,115,22,.15)}
+}
+.timer-card.running{animation:pulse-glow 2s ease-in-out infinite}
+
+.timer-meta{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.timer-chip{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:var(--radius-xs);padding:8px 14px;text-align:center}
+.timer-chip-val{font-size:1.1rem;font-weight:800;font-variant-numeric:tabular-nums}
+.timer-chip-label{font-size:.68rem;color:var(--text-dim)}
+
+.btn-start{width:100%;padding:14px;background:var(--grad-fire);border:none;border-radius:var(--radius-xs);color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;-webkit-text-fill-color:#fff;box-shadow:0 4px 20px rgba(239,68,68,.3);display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-start:hover{opacity:.9;transform:translateY(-2px)}
+.btn-start.stop{background:linear-gradient(135deg,#374151,#1f2937);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+
+/* --- Quick calculator section --- */
+.quick-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+
+.meeting-types{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.mtype-btn{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius-xs);cursor:pointer;transition:all .2s;font-family:inherit;color:var(--text);width:100%}
+.mtype-btn:hover,.mtype-btn.active{border-color:rgba(168,85,247,.4);background:rgba(168,85,247,.08)}
+.mtype-btn.active{border-color:#a855f7}
+.mtype-left{display:flex;align-items:center;gap:10px}
+.mtype-icon{font-size:1.1rem}
+.mtype-name{font-size:.88rem;font-weight:700}
+.mtype-dur{font-size:.75rem;color:var(--text-muted)}
+.mtype-cost{font-size:.9rem;font-weight:800;color:#c084fc}
+
+.quick-rate-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:16px}
+.quick-rate-row .input-group{flex:1}
+
+.quick-result{background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.2);border-radius:var(--radius-sm);padding:18px;text-align:center;display:none}
+.quick-result.visible{display:block}
+.quick-result-cost{font-size:2.5rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.03em}
+.quick-result-label{font-size:.82rem;color:var(--text-muted);margin-bottom:6px}
+.quick-result-eq{font-size:.78rem;color:var(--text-dim)}
+
+/* Annual section */
+.annual-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-top:24px}
+.annual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0 20px}
+.annual-input-group{display:flex;flex-direction:column;gap:5px}
+.annual-input-group label{font-size:.76rem;font-weight:700;color:var(--text-muted)}
+.annual-result{display:none;margin-top:4px}
+.annual-result.visible{display:block}
+.annual-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.annual-stat{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-xs);padding:14px;text-align:center}
+.annual-stat-val{font-size:1.5rem;font-weight:800;line-height:1.1;margin-bottom:3px}
+.annual-stat-val.fire{background:var(--grad-fire);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.annual-stat-val.green{color:var(--accent-green)}
+.annual-stat-val.purple{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.annual-stat-label{font-size:.72rem;color:var(--text-dim)}
+
+.btn-calc{padding:11px 20px;background:var(--grad);border:none;border-radius:var(--radius-xs);color:#fff;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;-webkit-text-fill-color:#fff;transition:all .2s}
+.btn-calc:hover{opacity:.9}
+
+/* Share card */
+.share-card{background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(239,68,68,.05));border:1px solid rgba(249,115,22,.25);border-radius:var(--radius);padding:24px;margin-top:24px;display:none}
+.share-card.visible{display:block}
+.share-card h3{font-size:1rem;font-weight:800;margin-bottom:6px}
+.share-card p{font-size:.85rem;color:var(--text-muted);margin-bottom:14px}
+.share-quote{background:rgba(255,255,255,.05);border-left:3px solid #f97316;padding:12px 16px;border-radius:0 var(--radius-xs) var(--radius-xs) 0;font-size:.88rem;color:var(--text);margin-bottom:14px;font-style:italic}
+.btn-share{padding:9px 18px;border:1px solid rgba(249,115,22,.35);border-radius:var(--radius-xs);color:#fb923c;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;background:rgba(249,115,22,.08);transition:all .2s;margin-right:10px}
+.btn-share:hover{background:rgba(249,115,22,.15)}
+.btn-share.copied{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3);color:#6ee7b7}
+
+/* Pro CTA */
+.pro-strip{background:linear-gradient(135deg,rgba(168,85,247,.1),rgba(236,72,153,.05));border:1px solid rgba(168,85,247,.2);border-radius:var(--radius);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:24px;margin-bottom:48px}
+.pro-strip h3{font-size:1rem;font-weight:800;margin-bottom:5px}
+.pro-strip p{font-size:.85rem;color:var(--text-muted)}
+.pro-strip-btn{padding:12px 24px;background:var(--grad);border-radius:var(--radius-xs);color:#fff;font-weight:800;font-size:.88rem;-webkit-text-fill-color:#fff;white-space:nowrap;flex-shrink:0;box-shadow:0 4px 20px rgba(168,85,247,.3);transition:all .2s}
+.pro-strip-btn:hover{opacity:.9;transform:translateY(-2px)}
+
+/* Footer */
+.footer{padding:40px 0;border-top:1px solid var(--border);text-align:center}
+.footer-brand{font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:10px}
+.footer-links a{font-size:.8rem;color:var(--text-dim);transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+.footer p{font-size:.76rem;color:var(--text-dim)}
+
+@media(max-width:768px){
+  .main-grid{grid-template-columns:1fr}
+  .annual-grid{grid-template-columns:1fr 1fr}
+  .annual-stats{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .pro-strip{flex-direction:column;text-align:center}
+}
+@media(max-width:480px){
+  .annual-grid{grid-template-columns:1fr}
+  .timer-meta{gap:8px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/freelanceos-storefront/" class="nav-brand">FreelanceOS</a>
+      <ul class="nav-links">
+        <li><a href="/freelanceos-storefront/toolkit.html">Free Tools</a></li>
+        <li><a href="/freelanceos-storefront/free-notion-templates.html">Templates</a></li>
+        <li><a href="/freelanceos-storefront/blog.html">Blog</a></li>
+      </ul>
+      <a href="/freelanceos-storefront/pricing.html" class="nav-cta">Get FreelanceOS Pro</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">💸 FREE MEETING CALCULATOR</div>
+    <h1>Meeting Cost<br><span class="grad-text">Calculator</span></h1>
+    <p>See how much money is burning in real-time while you sit in meetings. Enter attendees and rates — then watch the counter tick.</p>
+  </div>
+</section>
+
+<section style="padding:0 0 16px">
+  <div class="container">
+
+    <div class="main-grid">
+
+      <!-- LEFT: Live Timer -->
+      <div class="timer-card" id="timer-card">
+        <div class="card-label">⏱ Live Meeting Timer</div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label>Number of Attendees</label>
+            <div class="input-wrap">
+              <span class="input-prefix">👥</span>
+              <input type="number" id="attendees" value="5" min="1" max="100" oninput="updateRateCalc()">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Average Hourly Rate per Person</label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input type="number" id="hourly-rate" value="75" min="1" max="1000" oninput="updateRateCalc()">
+              <span class="input-prefix">/hr</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-display">
+          <div class="fire-wrap" id="fire-wrap">
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+            <div class="flame"></div>
+          </div>
+          <div class="cost-counter idle" id="cost-counter">$0.00</div>
+          <div class="cost-per-sec" id="rate-display">$6.25 / min with 5 people at $75/hr</div>
+        </div>
+
+        <div class="timer-meta">
+          <div class="timer-chip">
+            <div class="timer-chip-val" id="display-min">0:00</div>
+            <div class="timer-chip-label">Elapsed</div>
+          </div>
+          <div class="timer-chip">
+            <div class="timer-chip-val" id="display-attendees">5</div>
+            <div class="timer-chip-label">Attendees</div>
+          </div>
+          <div class="timer-chip">
+            <div class="timer-chip-val" id="display-rate">$75</div>
+            <div class="timer-chip-label">$/hr each</div>
+          </div>
+        </div>
+
+        <button class="btn-start" id="timer-btn" onclick="toggleTimer()">
+          <span id="timer-btn-icon">🔴</span>
+          <span id="timer-btn-text">Start Meeting</span>
+        </button>
+      </div>
+
+      <!-- RIGHT: Quick Calculator -->
+      <div class="quick-card">
+        <div class="card-label">📋 Meeting Type Calculator</div>
+
+        <div class="input-group" style="margin-bottom:14px">
+          <label>Average Hourly Rate per Person ($)</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input type="number" id="q-rate" value="75" min="1" max="1000" oninput="calcQuick()">
+            <span class="input-prefix">/hr</span>
+          </div>
+        </div>
+
+        <div class="input-group" style="margin-bottom:14px">
+          <label>Number of Attendees</label>
+          <div class="input-wrap">
+            <span class="input-prefix">👥</span>
+            <input type="number" id="q-attendees" value="5" min="1" max="100" oninput="calcQuick()">
+          </div>
+        </div>
+
+        <div class="meeting-types" id="meeting-types">
+          <button class="mtype-btn active" data-mins="15" onclick="selectMType(this)">
+            <div class="mtype-left">
+              <span class="mtype-icon">⚡</span>
+              <div>
+                <div class="mtype-name">Daily Stand-Up</div>
+                <div class="mtype-dur">15 minutes</div>
+              </div>
+            </div>
+            <span class="mtype-cost" id="mc-0">—</span>
+          </button>
+          <button class="mtype-btn" data-mins="30" onclick="selectMType(this)">
+            <div class="mtype-left">
+              <span class="mtype-icon">☕</span>
+              <div>
+                <div class="mtype-name">Quick Sync</div>
+                <div class="mtype-dur">30 minutes</div>
+              </div>
+            </div>
+            <span class="mtype-cost" id="mc-1">—</span>
+          </button>
+          <button class="mtype-btn" data-mins="60" onclick="selectMType(this)">
+            <div class="mtype-left">
+              <span class="mtype-icon">📞</span>
+              <div>
+                <div class="mtype-name">Client Call</div>
+                <div class="mtype-dur">1 hour</div>
+              </div>
+            </div>
+            <span class="mtype-cost" id="mc-2">—</span>
+          </button>
+          <button class="mtype-btn" data-mins="120" onclick="selectMType(this)">
+            <div class="mtype-left">
+              <span class="mtype-icon">🔍</span>
+              <div>
+                <div class="mtype-name">Discovery Call</div>
+                <div class="mtype-dur">2 hours</div>
+              </div>
+            </div>
+            <span class="mtype-cost" id="mc-3">—</span>
+          </button>
+          <button class="mtype-btn" data-mins="180" onclick="selectMType(this)">
+            <div class="mtype-left">
+              <span class="mtype-icon">🧠</span>
+              <div>
+                <div class="mtype-name">Brainstorm Session</div>
+                <div class="mtype-dur">3 hours</div>
+              </div>
+            </div>
+            <span class="mtype-cost" id="mc-4">—</span>
+          </button>
+          <button class="mtype-btn" data-mins="240" onclick="selectMType(this)">
+            <div class="mtype-left">
+              <span class="mtype-icon">📊</span>
+              <div>
+                <div class="mtype-name">Quarterly Review</div>
+                <div class="mtype-dur">4 hours</div>
+              </div>
+            </div>
+            <span class="mtype-cost" id="mc-5">—</span>
+          </button>
+        </div>
+
+        <div class="quick-result visible" id="quick-result">
+          <div class="quick-result-label">This meeting costs</div>
+          <div class="quick-result-cost" id="qr-cost">$94</div>
+          <div class="quick-result-eq" id="qr-eq">5 people × $75/hr × 15 min = $94</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Annual Cost -->
+    <div class="annual-card">
+      <div class="card-label">📅 Annual Meeting Cost</div>
+      <div style="font-size:.88rem;color:var(--text-muted);margin-bottom:14px">How much time — and money — do you spend in meetings each year?</div>
+
+      <div class="annual-grid">
+        <div class="annual-input-group">
+          <label>Hours in meetings per week</label>
+          <div class="input-wrap">
+            <input type="number" id="a-hours" value="5" min="0" max="80" placeholder="5">
+            <span class="input-prefix">hrs/wk</span>
+          </div>
+        </div>
+        <div class="annual-input-group">
+          <label>Your billable hourly rate</label>
+          <div class="input-wrap">
+            <span class="input-prefix">$</span>
+            <input type="number" id="a-rate" value="100" min="1" placeholder="100">
+            <span class="input-prefix">/hr</span>
+          </div>
+        </div>
+        <div class="annual-input-group">
+          <label>Weeks worked per year</label>
+          <div class="input-wrap">
+            <input type="number" id="a-weeks" value="48" min="1" max="52" placeholder="48">
+            <span class="input-prefix">weeks</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-calc" onclick="calcAnnual()">Calculate Annual Cost →</button>
+
+      <div class="annual-result" id="annual-result">
+        <div class="annual-stats">
+          <div class="annual-stat">
+            <div class="annual-stat-val fire" id="a-total-cost">—</div>
+            <div class="annual-stat-label">Lost to meetings/year</div>
+          </div>
+          <div class="annual-stat">
+            <div class="annual-stat-val green" id="a-hours-year">—</div>
+            <div class="annual-stat-label">Hours in meetings/year</div>
+          </div>
+          <div class="annual-stat">
+            <div class="annual-stat-val purple" id="a-projects">—</div>
+            <div class="annual-stat-label">Billable projects that time = </div>
+          </div>
+        </div>
+        <div style="font-size:.82rem;color:var(--text-muted);padding:12px 16px;background:rgba(255,255,255,.03);border-radius:var(--radius-xs);border:1px solid var(--border)">
+          💡 <strong id="annual-insight">At 5 hours/week, that's 240 hours per year — enough to bill 6 full-time projects at 40 hours each.</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share card -->
+    <div class="share-card" id="share-card">
+      <h3>🔥 Share This Result</h3>
+      <p>Show your team — or clients — what meetings are really costing.</p>
+      <div class="share-quote" id="share-quote">
+        "This 1-hour meeting with 5 people cost $375. See how much YOUR meetings cost →"
+      </div>
+      <button class="btn-share" id="share-btn" onclick="shareResult()">📋 Copy Shareable Message</button>
+      <button class="btn-share" onclick="shareUrl()">🔗 Copy Link</button>
+    </div>
+
+    <!-- Pro CTA -->
+    <div class="pro-strip">
+      <div style="flex:1;min-width:240px">
+        <h3>Stop Wasting Billable Hours in Meetings</h3>
+        <p>FreelanceOS Pro includes async communication templates — Loom update scripts, async standup formats, client status update systems, and a full "meeting-free freelance" playbook. Replace 3 hours of meetings with 15-minute async updates.</p>
+      </div>
+      <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="pro-strip-btn">Get FreelanceOS Pro — FLASH40 →</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand">FreelanceOS</div>
+    <div class="footer-links">
+      <a href="/freelanceos-storefront/">Home</a>
+      <a href="/freelanceos-storefront/toolkit.html">Free Tools</a>
+      <a href="/freelanceos-storefront/freelance-rate-calculator.html">Rate Calculator</a>
+      <a href="/freelanceos-storefront/freelance-income-tracker.html">Income Tracker</a>
+      <a href="/freelanceos-storefront/pricing.html">Pricing</a>
+    </div>
+    <p>&copy; 2026 FreelanceOS. All tools are free forever.</p>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let timerInterval = null;
+let timerRunning = false;
+let elapsedSeconds = 0;
+let selectedMins = 15;
+
+// ============================================================
+// FORMATTING
+// ============================================================
+function fmt$(n) {
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtInt$(n) {
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+function fmtTime(secs) {
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return m + ':' + String(s).padStart(2, '0');
+}
+
+// ============================================================
+// LIVE TIMER
+// ============================================================
+function getRatePerSec() {
+  const attendees = parseFloat(document.getElementById('attendees').value) || 1;
+  const rate = parseFloat(document.getElementById('hourly-rate').value) || 0;
+  return (attendees * rate) / 3600;
+}
+
+function updateRateCalc() {
+  const attendees = parseFloat(document.getElementById('attendees').value) || 1;
+  const rate = parseFloat(document.getElementById('hourly-rate').value) || 0;
+  const perMin = (attendees * rate) / 60;
+  document.getElementById('rate-display').textContent =
+    `${fmt$(perMin)} / min with ${attendees} ${attendees === 1 ? 'person' : 'people'} at $${rate}/hr`;
+  document.getElementById('display-attendees').textContent = attendees;
+  document.getElementById('display-rate').textContent = '$' + rate;
+  if (!timerRunning) {
+    document.getElementById('cost-counter').textContent = '$0.00';
+  }
+}
+
+function toggleTimer() {
+  if (timerRunning) {
+    stopTimer();
+  } else {
+    startTimer();
+  }
+}
+
+function startTimer() {
+  elapsedSeconds = 0;
+  timerRunning = true;
+  document.getElementById('timer-card').classList.add('running');
+  document.getElementById('cost-counter').classList.remove('idle');
+  document.getElementById('cost-counter').classList.add('running');
+  document.getElementById('fire-wrap').classList.add('visible');
+  document.getElementById('timer-btn-icon').textContent = '⏹';
+  document.getElementById('timer-btn-text').textContent = 'Stop Meeting';
+  document.getElementById('timer-btn').classList.add('stop');
+
+  timerInterval = setInterval(() => {
+    elapsedSeconds++;
+    const cost = elapsedSeconds * getRatePerSec();
+    document.getElementById('cost-counter').textContent = fmt$(cost);
+    document.getElementById('display-min').textContent = fmtTime(elapsedSeconds);
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('timer-card').classList.remove('running');
+  document.getElementById('cost-counter').classList.remove('running');
+  document.getElementById('cost-counter').classList.add('idle');
+  document.getElementById('fire-wrap').classList.remove('visible');
+  document.getElementById('timer-btn-icon').textContent = '🔄';
+  document.getElementById('timer-btn-text').textContent = 'Start New Meeting';
+  document.getElementById('timer-btn').classList.remove('stop');
+
+  // Show share card
+  const totalCost = elapsedSeconds * getRatePerSec();
+  const attendees = parseFloat(document.getElementById('attendees').value) || 1;
+  const mins = Math.round(elapsedSeconds / 60);
+  if (elapsedSeconds > 10) {
+    showShareCard(totalCost, attendees, mins);
+  }
+}
+
+// ============================================================
+// QUICK CALCULATOR
+// ============================================================
+function selectMType(btn) {
+  document.querySelectorAll('.mtype-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedMins = parseInt(btn.dataset.mins);
+  calcQuick();
+}
+
+function calcQuick() {
+  const rate = parseFloat(document.getElementById('q-rate').value) || 0;
+  const att = parseFloat(document.getElementById('q-attendees').value) || 1;
+
+  // Update all costs
+  const durations = [15, 30, 60, 120, 180, 240];
+  durations.forEach((d, i) => {
+    const cost = (att * rate * d) / 60;
+    const el = document.getElementById('mc-' + i);
+    if (el) el.textContent = fmtInt$(cost);
+  });
+
+  // Update main result
+  const selCost = (att * rate * selectedMins) / 60;
+  document.getElementById('qr-cost').textContent = fmtInt$(selCost);
+  document.getElementById('qr-eq').textContent =
+    `${att} ${att===1?'person':'people'} × $${rate}/hr × ${selectedMins} min = ${fmtInt$(selCost)}`;
+  document.getElementById('quick-result').classList.add('visible');
+}
+
+// ============================================================
+// ANNUAL COST
+// ============================================================
+function calcAnnual() {
+  const hoursPerWeek = parseFloat(document.getElementById('a-hours').value) || 0;
+  const rate = parseFloat(document.getElementById('a-rate').value) || 0;
+  const weeks = parseFloat(document.getElementById('a-weeks').value) || 48;
+
+  const hoursPerYear = hoursPerWeek * weeks;
+  const totalCost = hoursPerYear * rate;
+  const projectsEquiv = hoursPerYear > 0 ? (hoursPerYear / 40).toFixed(1) : 0;
+
+  document.getElementById('a-total-cost').textContent = fmtInt$(totalCost);
+  document.getElementById('a-hours-year').textContent = Math.round(hoursPerYear) + ' hrs';
+  document.getElementById('a-projects').textContent = projectsEquiv + 'x';
+
+  const insightEl = document.getElementById('annual-insight');
+  insightEl.textContent =
+    `At ${hoursPerWeek} hours/week, that's ${Math.round(hoursPerYear)} hours per year — enough to bill ${Math.round(projectsEquiv)} full projects at 40 hours each, worth ${fmtInt$(totalCost)} in missed billable revenue.`;
+
+  document.getElementById('annual-result').classList.add('visible');
+
+  // Also show share card
+  const attendees = parseFloat(document.getElementById('q-attendees').value) || 5;
+  showShareCard(totalCost, attendees, Math.round(hoursPerWeek * 60), true);
+}
+
+// ============================================================
+// SHARE
+// ============================================================
+function showShareCard(cost, attendees, mins, isAnnual = false) {
+  let quote;
+  if (isAnnual) {
+    quote = `I calculated my annual meeting cost and lost ${fmtInt$(cost)} in billable time sitting in meetings. See how much YOUR meetings cost →`;
+  } else {
+    const hrs = mins >= 60 ? Math.round(mins/60) + '-hour' : mins + '-minute';
+    quote = `This ${hrs} meeting with ${attendees} ${attendees===1?'person':'people'} cost ${fmtInt$(cost)}. See how much YOUR meetings cost → ${window.location.href.split('#')[0]}`;
+  }
+  document.getElementById('share-quote').textContent = '"' + quote + '"';
+  document.getElementById('share-card').classList.add('visible');
+
+  // Save to URL
+  const params = new URLSearchParams({ att: attendees, mins: mins, cost: Math.round(cost) });
+  history.replaceState(null, '', '#' + params.toString());
+}
+
+function shareResult() {
+  const text = document.getElementById('share-quote').textContent.replace(/^"|"$/g, '');
+  navigator.clipboard.writeText(text + '\n\n' + window.location.href.split('#')[0]).then(() => {
+    const btn = document.getElementById('share-btn');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copy Shareable Message'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
+function shareUrl() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const btns = document.querySelectorAll('.btn-share');
+    const urlBtn = btns[1];
+    urlBtn.textContent = '✓ Link Copied!';
+    urlBtn.classList.add('copied');
+    setTimeout(() => { urlBtn.textContent = '🔗 Copy Link'; urlBtn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('load', () => {
+  calcQuick();
+  updateRateCalc();
+
+  // Restore from URL hash
+  if (location.hash && location.hash.length > 1) {
+    try {
+      const params = new URLSearchParams(location.hash.slice(1));
+      const att = params.get('att');
+      const cost = params.get('cost');
+      const mins = params.get('mins');
+      if (att && cost) {
+        showShareCard(parseInt(cost), parseInt(att), parseInt(mins) || 60);
+      }
+    } catch(e) {}
+  }
+});
+</script>
+</body>
+</html>

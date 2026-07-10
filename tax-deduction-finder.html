@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance Tax Deduction Finder — Free Tool | FreelanceOS</title>
+<meta name="description" content="Find tax deductions you're missing. 50+ freelance deductions across 8 categories with savings calculator. Stop overpaying the IRS.">
+<meta property="og:title" content="Freelance Tax Deduction Finder — Free Tool">
+<meta property="og:description" content="You're probably overpaying the IRS. Find 50+ deductions most freelancers miss.">
+<meta property="og:url" content="https://freelanceos-storefront.vercel.app/tax-deduction-finder.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Freelance Tax Deduction Finder — Free Tool">
+<meta name="twitter:description" content="You're probably overpaying the IRS. Find 50+ deductions most freelancers miss.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Freelance Tax Deduction Finder",
+  "description": "Find 50+ tax deductions for freelancers with savings calculator",
+  "url": "https://freelanceos-storefront.vercel.app/tax-deduction-finder.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --card-border: #1e293b;
+  --accent: #a855f7;
+  --accent2: #ec4899;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --glass-bg: rgba(15, 23, 42, 0.8);
+  --glass-border: rgba(139, 92, 246, 0.2);
+}
+
+body {
+  background: #020617;
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.bg-grid {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-glow {
+  position: fixed;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-glow-2 {
+  position: fixed;
+  bottom: -200px; left: -200px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.back-link {
+  display: inline-block;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  transition: opacity 0.2s;
+}
+.back-link:hover { opacity: 0.8; text-decoration: none; }
+
+/* Header */
+.tool-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.tool-header .badge {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.tool-header h1 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.tool-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Glass Card */
+.glass-card {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.glass-card h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.glass-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* Form Controls */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.form-group select,
+.form-group input[type="number"],
+.form-group input[type="text"] {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 0.65rem 0.85rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.form-group select { cursor: pointer; }
+.form-group select option { background: var(--card); color: var(--text); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.btn:hover { transform: scale(1.02); box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3); }
+.btn:active { transform: scale(0.98); }
+
+.btn-sm {
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+  border-radius: 8px;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+.btn-outline:hover {
+  background: rgba(168, 85, 247, 0.1);
+  transform: scale(1.02);
+  box-shadow: none;
+}
+
+.btn-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Quick Start Presets */
+.presets {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.preset-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-radius: 50px;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.preset-btn:hover {
+  background: rgba(168, 85, 247, 0.2);
+  border-color: var(--accent);
+}
+
+.preset-btn.active {
+  background: rgba(168, 85, 247, 0.25);
+  border-color: var(--accent);
+}
+
+/* Progress Bar */
+.progress-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  border-radius: 50px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* Category Tabs */
+.category-tabs {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-border) transparent;
+}
+
+.category-tabs::-webkit-scrollbar { height: 4px; }
+.category-tabs::-webkit-scrollbar-track { background: transparent; }
+.category-tabs::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
+
+.cat-tab {
+  flex-shrink: 0;
+  padding: 0.55rem 1rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.cat-tab:hover { border-color: var(--accent); color: var(--text); }
+
+.cat-tab.active {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cat-tab .tab-count {
+  display: inline-block;
+  background: rgba(168, 85, 247, 0.2);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  margin-left: 0.3rem;
+}
+
+.cat-tab.active .tab-count {
+  background: rgba(168, 85, 247, 0.35);
+}
+
+/* Deduction Category Panels */
+.category-panel {
+  display: none;
+}
+
+.category-panel.active {
+  display: block;
+}
+
+.category-panel .cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.category-panel .cat-header h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0;
+}
+
+.check-all-btn {
+  padding: 0.35rem 0.8rem;
+  background: transparent;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.check-all-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Deduction Item */
+.deduction-item {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.deduction-item:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.deduction-item.checked {
+  border-color: rgba(168, 85, 247, 0.4);
+  background: rgba(168, 85, 247, 0.05);
+}
+
+.deduction-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.deduction-check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--card-border);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  margin-top: 2px;
+  background: transparent;
+}
+
+.deduction-check:hover { border-color: var(--accent); }
+
+.deduction-item.checked .deduction-check {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  border-color: var(--accent);
+}
+
+.deduction-check svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.deduction-item.checked .deduction-check svg { opacity: 1; }
+
+.deduction-info { flex: 1; min-width: 0; }
+
+.deduction-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.deduction-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+.deduction-hint {
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-top: 0.3rem;
+  opacity: 0.8;
+}
+
+.deduction-icons {
+  display: flex;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.icon-warn, .icon-info {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+}
+
+.icon-warn {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.icon-info {
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.tooltip-box {
+  display: none;
+  position: absolute;
+  top: 28px;
+  right: 0;
+  width: 280px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 0.8rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  line-height: 1.5;
+  z-index: 20;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.icon-info:hover .tooltip-box,
+.icon-warn:hover .tooltip-box {
+  display: block;
+}
+
+.deduction-amount-row {
+  display: none;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(30, 41, 59, 0.6);
+}
+
+.deduction-item.checked .deduction-amount-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.amount-input-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 140px;
+  max-width: 220px;
+}
+
+.amount-input-wrap .dollar-sign {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.amount-input {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem 0.5rem 1.5rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.amount-input:focus { outline: none; border-color: var(--accent); }
+
+.amount-input::-webkit-outer-spin-button,
+.amount-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.amount-input[type=number] { -moz-appearance: textfield; }
+
+/* Results Dashboard */
+.results-section {
+  margin-top: 2rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.result-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.result-card .result-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.result-card .result-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.result-card.highlight {
+  border-color: rgba(168, 85, 247, 0.4);
+  background: rgba(168, 85, 247, 0.08);
+}
+
+.result-card.highlight .result-value {
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, #22c55e, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Bar Chart */
+.bar-chart {
+  margin: 1rem 0;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.bar-label {
+  width: 150px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.bar-track {
+  flex: 1;
+  height: 24px;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  border-radius: 6px;
+  transition: width 0.6s ease;
+  min-width: 2px;
+}
+
+.bar-value {
+  width: 80px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Missing Deductions */
+.missing-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.missing-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.missing-item:hover {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.missing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warning);
+  flex-shrink: 0;
+}
+
+/* Tax Calendar */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.cal-item {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.cal-item .cal-date {
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cal-item .cal-amount {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0.3rem 0;
+}
+
+.cal-item .cal-note {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Tips */
+.tips-list {
+  list-style: none;
+  margin-top: 0.5rem;
+}
+
+.tips-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.tips-list li:last-child { border-bottom: none; }
+
+.tip-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Disclaimer */
+.disclaimer {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 1.5rem;
+}
+
+.disclaimer strong {
+  color: var(--danger);
+}
+
+/* Savings breakdown */
+.savings-breakdown {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.savings-item {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 0.8rem;
+}
+
+.savings-item .s-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.savings-item .s-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Animate number */
+.animate-num {
+  transition: all 0.3s ease;
+}
+
+/* Export section */
+.export-bar {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+/* CTA Banner */
+.cta-banner {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.cta-banner p:first-child {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.cta-banner p:nth-child(2) {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.cta-banner a {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.cta-banner a:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+  text-decoration: none;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+  font-size: 0.85rem;
+  border-top: 1px solid #1e293b;
+  margin-top: 3rem;
+}
+
+footer a { color: #a855f7; }
+
+/* Section toggle arrow */
+.section-toggle {
+  cursor: pointer;
+  user-select: none;
+}
+
+.section-toggle .arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 0.7rem;
+  margin-left: 0.3rem;
+}
+
+.section-toggle.collapsed .arrow {
+  transform: rotate(-90deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container { padding: 1rem; }
+  .form-grid { grid-template-columns: 1fr; }
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .bar-label { width: 100px; font-size: 0.72rem; }
+  .bar-value { width: 65px; font-size: 0.78rem; }
+  .missing-list { grid-template-columns: 1fr; }
+  .calendar-grid { grid-template-columns: 1fr 1fr; }
+  .savings-breakdown { grid-template-columns: 1fr 1fr; }
+  .tooltip-box { width: 220px; right: -10px; }
+}
+
+@media (max-width: 480px) {
+  .results-grid { grid-template-columns: 1fr; }
+  .calendar-grid { grid-template-columns: 1fr; }
+  .savings-breakdown { grid-template-columns: 1fr; }
+  .category-tabs { gap: 0.3rem; }
+  .cat-tab { padding: 0.45rem 0.7rem; font-size: 0.75rem; }
+  .deduction-item { padding: 0.8rem; }
+  .glass-card { padding: 1rem; }
+}
+
+/* Print styles */
+@media print {
+  body { background: #fff; color: #000; }
+  .bg-grid, .bg-glow, .bg-glow-2 { display: none; }
+  .glass-card { background: #fff; border: 1px solid #ddd; backdrop-filter: none; }
+  .btn, .preset-btn, .check-all-btn, .export-bar, .cta-banner, .back-link { display: none !important; }
+  .deduction-item { break-inside: avoid; }
+}
+
+/* Notification toast */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.85rem;
+  color: var(--text);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<div class="container">
+  <a href="/freelanceos-storefront/free-templates.html" class="back-link">&larr; Back to All Free Tools</a>
+
+  <div class="tool-header">
+    <div class="badge">Free Tool</div>
+    <h1>Freelance Tax Deduction Finder</h1>
+    <p>Stop overpaying the IRS. Discover 50+ deductions most freelancers miss and see exactly how much you could save.</p>
+  </div>
+
+  <!-- SETUP SECTION -->
+  <div class="glass-card" id="setup-section">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Your Setup
+    </h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="filing-status">Filing Status</label>
+        <select id="filing-status">
+          <option value="single">Single</option>
+          <option value="mfj">Married Filing Jointly</option>
+          <option value="hoh">Head of Household</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="annual-income">Est. Annual Freelance Income ($)</label>
+        <input type="number" id="annual-income" placeholder="75000" min="0" step="1000">
+      </div>
+      <div class="form-group">
+        <label for="tax-bracket">Federal Tax Bracket</label>
+        <select id="tax-bracket">
+          <option value="auto">Auto-calculate from income</option>
+          <option value="10">10%</option>
+          <option value="12">12%</option>
+          <option value="22">22%</option>
+          <option value="24">24%</option>
+          <option value="32">32%</option>
+          <option value="35">35%</option>
+          <option value="37">37%</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="state-select">State</label>
+        <select id="state-select">
+          <option value="">Select state...</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="biz-type">Business Type</label>
+        <select id="biz-type">
+          <option value="sole">Sole Proprietor</option>
+          <option value="llc">LLC</option>
+          <option value="scorp">S-Corp</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK START -->
+  <div class="glass-card">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Quick Start Presets
+    </h2>
+    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:0.75rem;">Select a preset to auto-check common deductions for your situation:</p>
+    <div class="presets">
+      <button class="preset-btn" data-preset="home" onclick="applyPreset('home')">I Work From Home</button>
+      <button class="preset-btn" data-preset="travel" onclick="applyPreset('travel')">I Travel For Work</button>
+      <button class="preset-btn" data-preset="digital" onclick="applyPreset('digital')">Digital Freelancer</button>
+      <button class="preset-btn" data-preset="all" onclick="applyPreset('all')">Check Everything</button>
+      <button class="preset-btn" data-preset="clear" onclick="applyPreset('clear')">Clear All</button>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="progress-text">0 of 50 deductions reviewed</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- CATEGORY TABS -->
+  <div class="category-tabs" id="category-tabs"></div>
+
+  <!-- DEDUCTION PANELS -->
+  <div id="deduction-panels"></div>
+
+  <!-- RESULTS DASHBOARD -->
+  <div class="results-section" id="results-section">
+    <div class="glass-card">
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Your Tax Savings Dashboard
+      </h2>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="result-label">Deductions Found</div>
+          <div class="result-value animate-num" id="res-count">0</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">Total Deductions</div>
+          <div class="result-value animate-num" id="res-total">$0</div>
+        </div>
+        <div class="result-card">
+          <div class="result-label">Federal Savings</div>
+          <div class="result-value animate-num" id="res-federal">$0</div>
+        </div>
+        <div class="result-card highlight">
+          <div class="result-label">Total Estimated Savings</div>
+          <div class="result-value animate-num" id="res-combined">$0</div>
+        </div>
+      </div>
+
+      <div class="savings-breakdown" id="savings-breakdown">
+        <div class="savings-item">
+          <div class="s-label">Federal Tax Savings</div>
+          <div class="s-value" id="sb-federal">$0</div>
+        </div>
+        <div class="savings-item">
+          <div class="s-label">State Tax Savings</div>
+          <div class="s-value" id="sb-state">$0</div>
+        </div>
+        <div class="savings-item">
+          <div class="s-label">SE Tax Savings</div>
+          <div class="s-value" id="sb-se">$0</div>
+        </div>
+        <div class="savings-item">
+          <div class="s-label">Effective Tax Rate Reduction</div>
+          <div class="s-value" id="sb-rate">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Breakdown Chart -->
+    <div class="glass-card">
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+        Savings by Category
+      </h2>
+      <div class="bar-chart" id="bar-chart"></div>
+    </div>
+
+    <!-- Missing Deductions -->
+    <div class="glass-card">
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Deductions You Might Be Missing
+      </h2>
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:0.5rem;">These are commonly claimed by freelancers but you haven't checked them yet:</p>
+      <div class="missing-list" id="missing-list"></div>
+    </div>
+
+    <!-- Tax Calendar -->
+    <div class="glass-card">
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Quarterly Estimated Tax Dates
+      </h2>
+      <p style="color:var(--text-muted);font-size:0.85rem;">Based on your income and deductions, here are your estimated quarterly payments:</p>
+      <div class="calendar-grid" id="tax-calendar"></div>
+    </div>
+
+    <!-- Receipt Tips -->
+    <div class="glass-card">
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Receipt Tracking Tips
+      </h2>
+      <ul class="tips-list" id="tips-list"></ul>
+    </div>
+
+    <!-- Export -->
+    <div class="glass-card">
+      <h2>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export Your Checklist
+      </h2>
+      <div class="export-bar">
+        <button class="btn btn-sm" onclick="exportCSV()">Download CSV</button>
+        <button class="btn btn-sm btn-outline" onclick="window.print()">Print Checklist</button>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <strong>Important Disclaimer:</strong> This tool is for informational and educational purposes only. It does not constitute tax, legal, or financial advice. Tax laws change frequently, and individual circumstances vary widely. Always consult a qualified CPA or tax professional before making tax decisions. FreelanceOS is not responsible for any errors, omissions, or actions taken based on information provided by this tool. IRS standard mileage rate and other figures are based on 2024 tax year and may differ for other years.
+    </div>
+  </div>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <p>Want the full FreelanceOS system?</p>
+    <p>40+ free tools like this one. Premium Notion workspace starting at $17.40</p>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank">Get 40% Off with FLASH40 &rarr;</a>
+  </div>
+
+  <footer>
+    <p>Part of the <a href="/freelanceos-storefront/free-templates.html">FreelanceOS Free Tools</a> collection</p>
+    <p style="margin-top:0.5rem;">&copy; 2025 FreelanceOS. For informational purposes only. Not tax advice &mdash; consult a qualified CPA.</p>
+  </footer>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================================================================
+   FREELANCE TAX DEDUCTION FINDER
+   Full production tool — vanilla JS, no dependencies
+   =================================================================== */
+
+// ─── State Tax Rates (approximate effective rates for freelancers) ───
+const STATE_DATA = {
+  'AL': { name: 'Alabama', rate: 5.0 }, 'AK': { name: 'Alaska', rate: 0 },
+  'AZ': { name: 'Arizona', rate: 2.5 }, 'AR': { name: 'Arkansas', rate: 4.4 },
+  'CA': { name: 'California', rate: 9.3 }, 'CO': { name: 'Colorado', rate: 4.4 },
+  'CT': { name: 'Connecticut', rate: 5.0 }, 'DE': { name: 'Delaware', rate: 5.5 },
+  'DC': { name: 'District of Columbia', rate: 6.5 }, 'FL': { name: 'Florida', rate: 0 },
+  'GA': { name: 'Georgia', rate: 5.49 }, 'HI': { name: 'Hawaii', rate: 7.25 },
+  'ID': { name: 'Idaho', rate: 5.8 }, 'IL': { name: 'Illinois', rate: 4.95 },
+  'IN': { name: 'Indiana', rate: 3.05 }, 'IA': { name: 'Iowa', rate: 5.7 },
+  'KS': { name: 'Kansas', rate: 5.25 }, 'KY': { name: 'Kentucky', rate: 4.0 },
+  'LA': { name: 'Louisiana', rate: 4.25 }, 'ME': { name: 'Maine', rate: 7.15 },
+  'MD': { name: 'Maryland', rate: 5.0 }, 'MA': { name: 'Massachusetts', rate: 5.0 },
+  'MI': { name: 'Michigan', rate: 4.25 }, 'MN': { name: 'Minnesota', rate: 7.85 },
+  'MS': { name: 'Mississippi', rate: 5.0 }, 'MO': { name: 'Missouri', rate: 4.95 },
+  'MT': { name: 'Montana', rate: 5.9 }, 'NE': { name: 'Nebraska', rate: 5.84 },
+  'NV': { name: 'Nevada', rate: 0 }, 'NH': { name: 'New Hampshire', rate: 0 },
+  'NJ': { name: 'New Jersey', rate: 6.37 }, 'NM': { name: 'New Mexico', rate: 4.9 },
+  'NY': { name: 'New York', rate: 6.85 }, 'NC': { name: 'North Carolina', rate: 4.5 },
+  'ND': { name: 'North Dakota', rate: 1.95 }, 'OH': { name: 'Ohio', rate: 3.5 },
+  'OK': { name: 'Oklahoma', rate: 4.75 }, 'OR': { name: 'Oregon', rate: 8.75 },
+  'PA': { name: 'Pennsylvania', rate: 3.07 }, 'RI': { name: 'Rhode Island', rate: 5.99 },
+  'SC': { name: 'South Carolina', rate: 6.2 }, 'SD': { name: 'South Dakota', rate: 0 },
+  'TN': { name: 'Tennessee', rate: 0 }, 'TX': { name: 'Texas', rate: 0 },
+  'UT': { name: 'Utah', rate: 4.65 }, 'VT': { name: 'Vermont', rate: 6.6 },
+  'VA': { name: 'Virginia', rate: 5.75 }, 'WA': { name: 'Washington', rate: 0 },
+  'WV': { name: 'West Virginia', rate: 5.12 }, 'WI': { name: 'Wisconsin', rate: 5.3 },
+  'WY': { name: 'Wyoming', rate: 0 }
+};
+
+// ─── Federal Tax Brackets (2024, Single) ───
+const BRACKETS_SINGLE = [
+  { min: 0, max: 11600, rate: 10 },
+  { min: 11600, max: 47150, rate: 12 },
+  { min: 47150, max: 100525, rate: 22 },
+  { min: 100525, max: 191950, rate: 24 },
+  { min: 191950, max: 243725, rate: 32 },
+  { min: 243725, max: 609350, rate: 35 },
+  { min: 609350, max: Infinity, rate: 37 }
+];
+
+const BRACKETS_MFJ = [
+  { min: 0, max: 23200, rate: 10 },
+  { min: 23200, max: 94300, rate: 12 },
+  { min: 94300, max: 201050, rate: 22 },
+  { min: 201050, max: 383900, rate: 24 },
+  { min: 383900, max: 487450, rate: 32 },
+  { min: 487450, max: 731200, rate: 35 },
+  { min: 731200, max: Infinity, rate: 37 }
+];
+
+const BRACKETS_HOH = [
+  { min: 0, max: 16550, rate: 10 },
+  { min: 16550, max: 63100, rate: 12 },
+  { min: 63100, max: 100500, rate: 22 },
+  { min: 100500, max: 191950, rate: 24 },
+  { min: 191950, max: 243700, rate: 32 },
+  { min: 243700, max: 609350, rate: 35 },
+  { min: 609350, max: Infinity, rate: 37 }
+];
+
+// ─── Deduction Categories and Items ───
+const CATEGORIES = [
+  {
+    id: 'home-office',
+    name: 'Home Office',
+    icon: '&#127968;',
+    deductions: [
+      {
+        id: 'home-simplified',
+        name: 'Simplified Home Office Deduction',
+        desc: '$5 per square foot of dedicated office space, up to 300 sq ft ($1,500 max).',
+        hint: 'Most freelancers claim $750 - $1,500',
+        warn: false,
+        irsNote: 'IRS Form 8829 or simplified method. Space must be used regularly and exclusively for business. The simplified method caps at $1,500 (300 sq ft x $5).',
+        commonPresets: ['home'],
+        popularMissed: true
+      },
+      {
+        id: 'home-rent-mortgage',
+        name: 'Rent or Mortgage Interest',
+        desc: 'Proportional share of rent or mortgage interest based on office percentage of home.',
+        hint: 'Typical: $1,200 - $6,000 (10-25% of housing)',
+        warn: true,
+        irsNote: 'Use the actual expense method (Form 8829). Calculate the percentage of your home used for business. You cannot claim both simplified and actual methods.',
+        commonPresets: ['home'],
+        popularMissed: false
+      },
+      {
+        id: 'home-utilities',
+        name: 'Utilities (Electric, Water, Gas)',
+        desc: 'Business percentage of monthly utility bills for your home office.',
+        hint: 'Typical: $300 - $1,200/year',
+        warn: false,
+        irsNote: 'Deductible under actual expense method only. Calculate the same percentage of home used for business.',
+        commonPresets: ['home'],
+        popularMissed: true
+      },
+      {
+        id: 'home-internet',
+        name: 'Internet Service',
+        desc: 'Business use percentage of your monthly internet bill multiplied by 12.',
+        hint: 'Typical: $600 - $1,440 (50-100% of bill)',
+        warn: false,
+        irsNote: 'Estimate the percentage of internet used for business. Many freelancers claim 50-80%. Keep a log if audited.',
+        commonPresets: ['home', 'digital'],
+        popularMissed: true
+      },
+      {
+        id: 'home-insurance',
+        name: 'Home Insurance',
+        desc: 'Proportional share of homeowners or renters insurance for your office space.',
+        hint: 'Typical: $100 - $500/year',
+        warn: false,
+        irsNote: 'Deductible under actual expense method. Same percentage as home office square footage.',
+        commonPresets: ['home'],
+        popularMissed: false
+      },
+      {
+        id: 'home-repairs',
+        name: 'Home Repairs & Maintenance',
+        desc: 'Proportional share of general home repairs. Direct office repairs are 100% deductible.',
+        hint: 'Typical: $200 - $1,500/year',
+        warn: true,
+        irsNote: 'General repairs: deduct office percentage. Repairs solely for office (e.g., painting office only): 100% deductible. Improvements must be depreciated.',
+        commonPresets: ['home'],
+        popularMissed: false
+      },
+      {
+        id: 'home-property-tax',
+        name: 'Property Taxes (Office Portion)',
+        desc: 'Business percentage of property taxes paid on your home.',
+        hint: 'Typical: $300 - $2,000/year',
+        warn: false,
+        irsNote: 'Deductible under actual expense method using the same percentage as your home office. Remaining personal portion may be itemized on Schedule A.',
+        commonPresets: ['home'],
+        popularMissed: false
+      }
+    ]
+  },
+  {
+    id: 'tech-equipment',
+    name: 'Technology & Equipment',
+    icon: '&#128187;',
+    deductions: [
+      {
+        id: 'tech-computer',
+        name: 'Computer / Laptop',
+        desc: 'Business-use percentage of computer purchase. 100% if used exclusively for work.',
+        hint: 'Typical: $800 - $3,000',
+        warn: false,
+        irsNote: 'Section 179 allows full deduction in the year of purchase if used >50% for business. Otherwise depreciate over 5 years.',
+        commonPresets: ['digital'],
+        popularMissed: false
+      },
+      {
+        id: 'tech-monitors',
+        name: 'Monitor(s)',
+        desc: 'External monitors used for business work.',
+        hint: 'Typical: $200 - $1,200',
+        warn: false,
+        irsNote: 'Fully deductible if used exclusively for business. If mixed use, deduct business percentage.',
+        commonPresets: ['digital'],
+        popularMissed: true
+      },
+      {
+        id: 'tech-phone',
+        name: 'Phone & Phone Plan',
+        desc: 'Business use percentage of your phone purchase and monthly plan.',
+        hint: 'Typical: $480 - $1,200/year',
+        warn: false,
+        irsNote: 'Deduct the business-use percentage. Most freelancers claim 50-75%. Keep a usage log for documentation.',
+        commonPresets: ['digital'],
+        popularMissed: true
+      },
+      {
+        id: 'tech-software',
+        name: 'Software Subscriptions',
+        desc: 'Adobe CC, Notion, Figma, Canva, project management tools, etc.',
+        hint: 'Typical: $600 - $3,600/year',
+        warn: false,
+        irsNote: 'Fully deductible if used for business. Subscription software is deducted in the year paid. Perpetual licenses may need to be depreciated.',
+        commonPresets: ['digital'],
+        popularMissed: false
+      },
+      {
+        id: 'tech-hosting',
+        name: 'Website Hosting & Domain',
+        desc: 'Hosting fees, domain registration, SSL certificates for business websites.',
+        hint: 'Typical: $100 - $600/year',
+        warn: false,
+        irsNote: 'Fully deductible as a business expense. Includes annual domain renewals, hosting plans, and related services.',
+        commonPresets: ['digital'],
+        popularMissed: false
+      },
+      {
+        id: 'tech-cloud',
+        name: 'Cloud Storage',
+        desc: 'Dropbox, Google Workspace, iCloud, OneDrive for business file storage.',
+        hint: 'Typical: $100 - $360/year',
+        warn: false,
+        irsNote: 'Deduct the business-use portion. If you have a dedicated business plan, it is 100% deductible.',
+        commonPresets: ['digital'],
+        popularMissed: true
+      },
+      {
+        id: 'tech-printer',
+        name: 'Printer / Scanner',
+        desc: 'Printer, scanner, ink/toner, and paper for business use.',
+        hint: 'Typical: $100 - $500/year',
+        warn: false,
+        irsNote: 'Deduct business-use percentage. Ink and paper are ongoing supply expenses deducted in the year purchased.',
+        commonPresets: [],
+        popularMissed: false
+      },
+      {
+        id: 'tech-furniture',
+        name: 'Office Furniture',
+        desc: 'Desk, ergonomic chair, standing desk, monitor arms, shelving.',
+        hint: 'Typical: $300 - $2,000',
+        warn: false,
+        irsNote: 'Section 179 allows full deduction in the year of purchase for items used >50% for business. Items over $2,500 may need to be depreciated.',
+        commonPresets: ['home', 'digital'],
+        popularMissed: true
+      }
+    ]
+  },
+  {
+    id: 'biz-ops',
+    name: 'Business Operations',
+    icon: '&#128188;',
+    deductions: [
+      {
+        id: 'biz-insurance',
+        name: 'Business Insurance',
+        desc: 'E&O insurance, general liability, professional liability, cyber insurance.',
+        hint: 'Typical: $500 - $3,000/year',
+        warn: false,
+        irsNote: 'Fully deductible as ordinary and necessary business expense. Includes professional liability, general liability, and E&O coverage.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'biz-bank-fees',
+        name: 'Business Bank Account Fees',
+        desc: 'Monthly maintenance fees, wire transfer fees, merchant processing fees.',
+        hint: 'Typical: $60 - $360/year',
+        warn: false,
+        irsNote: 'Fully deductible. Includes monthly fees, overdraft fees (if business account), and transaction fees. Must be a business account.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'biz-accounting',
+        name: 'Accounting & Bookkeeping Software',
+        desc: 'QuickBooks, FreshBooks, Wave, Xero, or bookkeeper fees.',
+        hint: 'Typical: $200 - $2,400/year',
+        warn: false,
+        irsNote: 'Fully deductible. Includes software subscriptions and fees paid to accountants or bookkeepers for business tax preparation.',
+        commonPresets: ['digital'],
+        popularMissed: false
+      },
+      {
+        id: 'biz-legal',
+        name: 'Legal Fees',
+        desc: 'Contract review, LLC formation filing, trademark registration, legal consultations.',
+        hint: 'Typical: $200 - $3,000/year',
+        warn: false,
+        irsNote: 'Business legal fees are fully deductible. Startup costs over $5,000 in the first year must be amortized over 15 years.',
+        commonPresets: [],
+        popularMissed: false
+      },
+      {
+        id: 'biz-licenses',
+        name: 'Business Licenses & Permits',
+        desc: 'State/city business licenses, professional certifications, and permit renewals.',
+        hint: 'Typical: $50 - $500/year',
+        warn: false,
+        irsNote: 'Fully deductible as an ordinary business expense. Keep receipts and renewal notices.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'biz-postage',
+        name: 'Postage & Shipping',
+        desc: 'USPS, FedEx, UPS shipping costs for business deliveries and correspondence.',
+        hint: 'Typical: $50 - $600/year',
+        warn: false,
+        irsNote: 'Fully deductible when used for business purposes. Includes shipping supplies like envelopes and boxes.',
+        commonPresets: [],
+        popularMissed: false
+      },
+      {
+        id: 'biz-supplies',
+        name: 'Office Supplies',
+        desc: 'Notebooks, pens, sticky notes, paper, binders, and other consumables.',
+        hint: 'Typical: $100 - $500/year',
+        warn: false,
+        irsNote: 'Fully deductible in the year purchased. Keep receipts. These are ordinary and necessary expenses.',
+        commonPresets: [],
+        popularMissed: true
+      }
+    ]
+  },
+  {
+    id: 'marketing',
+    name: 'Marketing & Sales',
+    icon: '&#128227;',
+    deductions: [
+      {
+        id: 'mkt-website',
+        name: 'Website Design / Development',
+        desc: 'Cost of building, redesigning, or maintaining your business website.',
+        hint: 'Typical: $500 - $5,000/year',
+        warn: false,
+        irsNote: 'Website costs are generally deductible. Design/development may be deducted or amortized over 3 years depending on complexity.',
+        commonPresets: ['digital'],
+        popularMissed: false
+      },
+      {
+        id: 'mkt-ads',
+        name: 'Advertising & Paid Ads',
+        desc: 'Google Ads, Facebook Ads, LinkedIn Ads, Instagram promotions, YouTube Ads.',
+        hint: 'Typical: $500 - $12,000/year',
+        warn: false,
+        irsNote: 'Fully deductible. Includes all digital and print advertising costs for promoting your business.',
+        commonPresets: ['digital'],
+        popularMissed: false
+      },
+      {
+        id: 'mkt-cards',
+        name: 'Business Cards & Print Materials',
+        desc: 'Business cards, brochures, flyers, branded stationery.',
+        hint: 'Typical: $50 - $500/year',
+        warn: false,
+        irsNote: 'Fully deductible as advertising expense. Includes design and printing costs.',
+        commonPresets: [],
+        popularMissed: false
+      },
+      {
+        id: 'mkt-email',
+        name: 'Email Marketing Tools',
+        desc: 'Mailchimp, ConvertKit, Beehiiv, ActiveCampaign, or similar platforms.',
+        hint: 'Typical: $120 - $1,200/year',
+        warn: false,
+        irsNote: 'Fully deductible as a business software/marketing expense.',
+        commonPresets: ['digital'],
+        popularMissed: true
+      },
+      {
+        id: 'mkt-social',
+        name: 'Social Media Management Tools',
+        desc: 'Buffer, Hootsuite, Later, Sprout Social, scheduling and analytics tools.',
+        hint: 'Typical: $120 - $1,200/year',
+        warn: false,
+        irsNote: 'Fully deductible when used for business marketing purposes.',
+        commonPresets: ['digital'],
+        popularMissed: true
+      },
+      {
+        id: 'mkt-networking',
+        name: 'Networking Event Tickets',
+        desc: 'Industry meetups, networking events, coworking day passes for business.',
+        hint: 'Typical: $100 - $1,500/year',
+        warn: false,
+        irsNote: 'Entry fees and registration costs are deductible. Meals at events are 50% deductible. Entertainment is generally not deductible.',
+        commonPresets: [],
+        popularMissed: true
+      }
+    ]
+  },
+  {
+    id: 'travel',
+    name: 'Travel & Transportation',
+    icon: '&#9992;&#65039;',
+    deductions: [
+      {
+        id: 'travel-mileage',
+        name: 'Business Mileage',
+        desc: 'IRS standard rate: $0.67/mile (2024). Track all business-related driving.',
+        hint: 'Typical: $2,000 - $8,000/year (3,000-12,000 miles)',
+        warn: true,
+        irsNote: 'You must choose between standard mileage rate ($0.67/mi in 2024) or actual expenses. Keep a mileage log with date, destination, purpose, and miles. Commuting does not count.',
+        commonPresets: ['travel'],
+        popularMissed: true
+      },
+      {
+        id: 'travel-flights',
+        name: 'Business Flights',
+        desc: 'Airfare for client meetings, conferences, project work, and business travel.',
+        hint: 'Typical: $500 - $5,000/year',
+        warn: false,
+        irsNote: 'Fully deductible if the primary purpose of the trip is business. Keep itineraries and boarding passes. Personal days on business trips must be separated.',
+        commonPresets: ['travel'],
+        popularMissed: false
+      },
+      {
+        id: 'travel-hotels',
+        name: 'Business Hotel & Lodging',
+        desc: 'Hotels, Airbnb, and lodging during business travel away from your tax home.',
+        hint: 'Typical: $500 - $4,000/year',
+        warn: false,
+        irsNote: 'Deductible when traveling away from your tax home overnight for business. Personal days must be excluded. Lavish/extravagant lodging may be questioned.',
+        commonPresets: ['travel'],
+        popularMissed: false
+      },
+      {
+        id: 'travel-meals',
+        name: 'Business Travel Meals',
+        desc: '50% of meal costs during business travel. Must be away from tax home.',
+        hint: 'Typical: $300 - $2,000/year (before 50% limit)',
+        warn: true,
+        irsNote: 'Only 50% of meal costs are deductible (down from 100% temporary provision that expired). Must be during business travel away from tax home. Keep itemized receipts.',
+        commonPresets: ['travel'],
+        popularMissed: true,
+        mealDeduction: true
+      },
+      {
+        id: 'travel-parking',
+        name: 'Parking & Tolls',
+        desc: 'Business-related parking fees and highway/bridge tolls.',
+        hint: 'Typical: $200 - $1,500/year',
+        warn: false,
+        irsNote: 'Fully deductible when incurred for business purposes. This is separate from the mileage deduction and can be claimed in addition to it.',
+        commonPresets: ['travel'],
+        popularMissed: true
+      },
+      {
+        id: 'travel-rideshare',
+        name: 'Ride-sharing (Uber/Lyft)',
+        desc: 'Business rides: client meetings, airport trips, conference transportation.',
+        hint: 'Typical: $200 - $2,000/year',
+        warn: false,
+        irsNote: 'Deductible when used for business purposes. Keep digital receipts from the app. Personal rides are not deductible.',
+        commonPresets: ['travel'],
+        popularMissed: true
+      }
+    ]
+  },
+  {
+    id: 'education',
+    name: 'Education & Development',
+    icon: '&#127891;',
+    deductions: [
+      {
+        id: 'edu-courses',
+        name: 'Online Courses & Certifications',
+        desc: 'Udemy, Coursera, Skillshare, LinkedIn Learning, professional certifications.',
+        hint: 'Typical: $200 - $2,000/year',
+        warn: false,
+        irsNote: 'Deductible if the education maintains or improves skills needed in your current business. Education to qualify for a new career is not deductible.',
+        commonPresets: ['digital'],
+        popularMissed: true
+      },
+      {
+        id: 'edu-books',
+        name: 'Books & Publications',
+        desc: 'Business books, industry publications, magazine subscriptions, Kindle books.',
+        hint: 'Typical: $100 - $600/year',
+        warn: false,
+        irsNote: 'Deductible when directly related to your business. Keep a list of titles and how they relate to your work.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'edu-conferences',
+        name: 'Conference Registration Fees',
+        desc: 'Industry conferences, virtual summits, workshops, and seminars.',
+        hint: 'Typical: $200 - $3,000/year',
+        warn: false,
+        irsNote: 'Registration fees are fully deductible. Travel costs to/from conferences are also deductible. Associated meals are 50% deductible.',
+        commonPresets: ['travel'],
+        popularMissed: false
+      },
+      {
+        id: 'edu-memberships',
+        name: 'Professional Memberships',
+        desc: 'Industry associations, professional organizations, trade groups, unions.',
+        hint: 'Typical: $100 - $1,000/year',
+        warn: false,
+        irsNote: 'Fully deductible if the organization is directly related to your business. Country club and social club dues are not deductible.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'edu-coaching',
+        name: 'Coaching & Mentorship Programs',
+        desc: 'Business coaching, mastermind groups, mentorship program fees.',
+        hint: 'Typical: $500 - $5,000/year',
+        warn: false,
+        irsNote: 'Deductible as a business education expense if directly related to improving your business skills and performance.',
+        commonPresets: [],
+        popularMissed: true
+      }
+    ]
+  },
+  {
+    id: 'health-retire',
+    name: 'Health & Retirement',
+    icon: '&#127973;',
+    deductions: [
+      {
+        id: 'health-premium',
+        name: 'Self-Employed Health Insurance',
+        desc: '100% of health insurance premiums for you, spouse, and dependents.',
+        hint: 'Typical: $3,000 - $12,000/year',
+        warn: true,
+        irsNote: 'Deducted on Form 1040 Line 17, not Schedule C. Cannot exceed net self-employment income. Cannot claim if eligible for employer-sponsored plan (including spouse\'s).',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'health-hsa',
+        name: 'HSA Contributions',
+        desc: 'Health Savings Account contributions if on a qualifying high-deductible plan.',
+        hint: '2024 limits: $4,150 individual / $8,300 family',
+        warn: false,
+        irsNote: 'Must have a qualifying HDHP. Contributions are tax-deductible, growth is tax-free, and withdrawals for medical expenses are tax-free. Triple tax advantage.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'health-retirement',
+        name: 'SEP IRA / Solo 401(k) Contributions',
+        desc: 'Tax-deferred retirement savings. SEP IRA: up to 25% of net income.',
+        hint: 'SEP IRA max: $69,000 (2024). Solo 401(k): $23,000 + 25%',
+        warn: true,
+        irsNote: 'SEP IRA: contribute up to 25% of net SE income (max $69,000 for 2024). Solo 401(k): $23,000 employee + 25% employer (max $69,000 total). Deadlines differ.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'health-dental-vision',
+        name: 'Dental & Vision Insurance',
+        desc: 'Self-employed dental and vision insurance premiums.',
+        hint: 'Typical: $300 - $1,200/year',
+        warn: false,
+        irsNote: 'Deductible under the self-employed health insurance deduction (Form 1040). Same rules as health insurance premium deduction.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'health-ltc',
+        name: 'Long-Term Care Insurance',
+        desc: 'Age-based deduction for qualified long-term care insurance premiums.',
+        hint: 'Limits vary by age: $480-$5,880/year (2024)',
+        warn: false,
+        irsNote: 'Deductible up to age-based limits. Under 40: $480. 40-50: $900. 50-60: $1,790. 60-70: $4,770. Over 70: $5,880 (2024 figures).',
+        commonPresets: [],
+        popularMissed: false
+      }
+    ]
+  },
+  {
+    id: 'misc',
+    name: 'Miscellaneous',
+    icon: '&#128221;',
+    deductions: [
+      {
+        id: 'misc-se-tax',
+        name: 'Self-Employment Tax Deduction',
+        desc: 'Deduct 50% of your self-employment tax (15.3%). Automatic above-the-line deduction.',
+        hint: 'On $75K income: ~$5,300 deduction',
+        warn: false,
+        irsNote: 'Calculated on Schedule SE. You pay 15.3% SE tax (12.4% Social Security + 2.9% Medicare) and deduct half on Form 1040. This is automatic if you file correctly.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'misc-qbi',
+        name: 'QBI Deduction (Section 199A)',
+        desc: '20% deduction on qualified business income for pass-through entities.',
+        hint: 'On $75K income: up to $15,000 deduction',
+        warn: true,
+        irsNote: 'Complex rules. Generally 20% of QBI for income under $191,950 (single) / $383,900 (MFJ). Specified service businesses face phase-outs above these thresholds. Consult a CPA.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'misc-bad-debt',
+        name: 'Bad Debt / Unpaid Invoices',
+        desc: 'Write off invoices you\'ve been unable to collect after reasonable effort.',
+        hint: 'Varies — track unpaid invoices',
+        warn: true,
+        irsNote: 'Only deductible if you previously reported the income (accrual basis). Cash-basis freelancers generally cannot deduct bad debts since the income was never reported. Document collection efforts.',
+        commonPresets: [],
+        popularMissed: false
+      },
+      {
+        id: 'misc-charity',
+        name: 'Charitable Contributions (Business)',
+        desc: 'Donations to qualified charities related to your business activities.',
+        hint: 'Typical: $100 - $2,000/year',
+        warn: true,
+        irsNote: 'Business charitable contributions are not deducted on Schedule C. They go on Schedule A (itemized deductions). Sole proprietors deduct personally. S-Corps can deduct directly.',
+        commonPresets: [],
+        popularMissed: false
+      },
+      {
+        id: 'misc-loan-interest',
+        name: 'Business Loan Interest',
+        desc: 'Interest on loans used for business purposes, including credit cards used for business.',
+        hint: 'Varies by loan amount',
+        warn: false,
+        irsNote: 'Interest is deductible if the loan was used for business purposes. Credit card interest on business purchases is also deductible. Keep statements.',
+        commonPresets: [],
+        popularMissed: true
+      },
+      {
+        id: 'misc-foreign-income',
+        name: 'Foreign Earned Income Exclusion',
+        desc: 'Exclude up to $126,500 (2024) of foreign earned income if you qualify.',
+        hint: 'Max: $126,500 exclusion (2024)',
+        warn: true,
+        irsNote: 'Must meet either the Bona Fide Residence Test or Physical Presence Test (330 full days abroad in 12-month period). File Form 2555. Cannot use if you\'re also claiming the Foreign Tax Credit on the same income.',
+        commonPresets: [],
+        popularMissed: false
+      }
+    ]
+  }
+];
+
+// ─── Receipt Tips by Category ───
+const RECEIPT_TIPS = {
+  'home-office': 'Take photos of your home office setup annually. Keep utility bills, mortgage statements, and insurance documents organized by year. Measure your office space and document the total home square footage.',
+  'tech-equipment': 'Save all purchase receipts and order confirmations for electronics. Screenshot software subscription charges monthly. Keep a log of business vs. personal use percentages for shared devices.',
+  'biz-ops': 'Use a dedicated business bank account and credit card. Download monthly statements. Keep copies of insurance policies, legal documents, and permit renewals in a dedicated folder.',
+  'marketing': 'Export ad platform spending reports monthly (Google Ads, Facebook Ads Manager). Save invoices from designers and developers. Screenshot social media tool billing pages.',
+  'travel': 'Use a mileage tracking app (Everlance, MileIQ) that auto-logs drives. Save boarding passes, hotel folios, and Uber/Lyft receipts. Note the business purpose for each trip immediately.',
+  'education': 'Save enrollment confirmations, completion certificates, and payment receipts for all courses. Keep a list linking each educational expense to a specific business skill or project.',
+  'health-retire': 'Request annual premium summaries from your insurance providers. Keep Form 5498 from retirement account custodians. Document HSA contributions and qualified medical expenses separately.',
+  'misc': 'Document bad debts with copies of invoices, collection attempts, and write-off dates. Keep Form 1099-MISC/NEC for all client income. Save records of foreign residency if claiming FEIE.'
+};
+
+// ─── App State ───
+let appState = {
+  deductions: {},
+  activeCategory: 'home-office',
+  income: 0,
+  filingStatus: 'single',
+  taxBracketOverride: 'auto',
+  stateCode: '',
+  bizType: 'sole'
+};
+
+// ─── Utility Functions ───
+
+function $(id) { return document.getElementById(id); }
+
+function formatCurrency(num) {
+  if (isNaN(num) || num === 0) return '$0';
+  return '$' + Math.round(num).toLocaleString('en-US');
+}
+
+function showToast(message) {
+  const toast = $('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function debounce(fn, ms) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
+// ─── Tax Bracket Calculation ───
+
+function getFederalBracket(income, status) {
+  const override = $('tax-bracket').value;
+  if (override !== 'auto') return parseFloat(override);
+
+  let brackets;
+  switch (status) {
+    case 'mfj': brackets = BRACKETS_MFJ; break;
+    case 'hoh': brackets = BRACKETS_HOH; break;
+    default: brackets = BRACKETS_SINGLE;
+  }
+
+  // Find marginal bracket
+  for (let i = brackets.length - 1; i >= 0; i--) {
+    if (income > brackets[i].min) return brackets[i].rate;
+  }
+  return 10;
+}
+
+function getStateRate(stateCode) {
+  if (!stateCode || !STATE_DATA[stateCode]) return 0;
+  return STATE_DATA[stateCode].rate;
+}
+
+// ─── Populate State Dropdown ───
+
+function populateStates() {
+  const sel = $('state-select');
+  const sortedStates = Object.entries(STATE_DATA).sort((a, b) => a[1].name.localeCompare(b[1].name));
+  sortedStates.forEach(([code, data]) => {
+    const opt = document.createElement('option');
+    opt.value = code;
+    opt.textContent = data.name;
+    sel.appendChild(opt);
+  });
+}
+
+// ─── Build Category Tabs ───
+
+function buildCategoryTabs() {
+  const container = $('category-tabs');
+  container.innerHTML = '';
+  CATEGORIES.forEach((cat, idx) => {
+    const tab = document.createElement('button');
+    tab.className = 'cat-tab' + (idx === 0 ? ' active' : '');
+    tab.dataset.catId = cat.id;
+    const checkedCount = cat.deductions.filter(d => appState.deductions[d.id]?.checked).length;
+    tab.innerHTML = `${cat.icon} ${cat.name} <span class="tab-count">${checkedCount}/${cat.deductions.length}</span>`;
+    tab.addEventListener('click', () => switchCategory(cat.id));
+    container.appendChild(tab);
+  });
+}
+
+function updateTabCounts() {
+  const tabs = document.querySelectorAll('.cat-tab');
+  tabs.forEach(tab => {
+    const catId = tab.dataset.catId;
+    const cat = CATEGORIES.find(c => c.id === catId);
+    if (!cat) return;
+    const checkedCount = cat.deductions.filter(d => appState.deductions[d.id]?.checked).length;
+    const countEl = tab.querySelector('.tab-count');
+    if (countEl) countEl.textContent = `${checkedCount}/${cat.deductions.length}`;
+  });
+}
+
+function switchCategory(catId) {
+  appState.activeCategory = catId;
+
+  // Update tab active state
+  document.querySelectorAll('.cat-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.catId === catId);
+  });
+
+  // Update panel visibility
+  document.querySelectorAll('.category-panel').forEach(p => {
+    p.classList.toggle('active', p.dataset.catId === catId);
+  });
+}
+
+// ─── Build Deduction Panels ───
+
+function buildDeductionPanels() {
+  const container = $('deduction-panels');
+  container.innerHTML = '';
+
+  CATEGORIES.forEach((cat, catIdx) => {
+    const panel = document.createElement('div');
+    panel.className = 'category-panel glass-card' + (catIdx === 0 ? ' active' : '');
+    panel.dataset.catId = cat.id;
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'cat-header';
+    header.innerHTML = `
+      <h3>${cat.icon} ${cat.name} <span style="color:var(--text-muted);font-weight:400;font-size:0.85rem;">(${cat.deductions.length} deductions)</span></h3>
+      <button class="check-all-btn" data-cat="${cat.id}" onclick="toggleAllInCategory('${cat.id}')">Check All</button>
+    `;
+    panel.appendChild(header);
+
+    // Deduction items
+    cat.deductions.forEach(ded => {
+      const item = document.createElement('div');
+      item.className = 'deduction-item';
+      item.id = 'item-' + ded.id;
+      item.dataset.dedId = ded.id;
+
+      const isChecked = appState.deductions[ded.id]?.checked || false;
+      const amount = appState.deductions[ded.id]?.amount || '';
+      if (isChecked) item.classList.add('checked');
+
+      item.innerHTML = `
+        <div class="deduction-top">
+          <div class="deduction-check" onclick="toggleDeduction('${ded.id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="deduction-info">
+            <div class="deduction-name">
+              ${ded.name}
+              ${ded.mealDeduction ? '<span style="font-size:0.7rem;background:rgba(245,158,11,0.15);color:var(--warning);padding:0.15rem 0.5rem;border-radius:6px;font-weight:500;">50% limit</span>' : ''}
+            </div>
+            <div class="deduction-desc">${ded.desc}</div>
+            <div class="deduction-hint">${ded.hint}</div>
+          </div>
+          <div class="deduction-icons">
+            ${ded.warn ? `<div class="icon-warn" title="Audit risk / Special rules">!<div class="tooltip-box"><strong style="color:var(--warning);">Special Rules / Higher Audit Risk</strong><br><br>${ded.irsNote}</div></div>` : ''}
+            <div class="icon-info" title="IRS rules">i<div class="tooltip-box"><strong style="color:var(--accent);">IRS Rules Summary</strong><br><br>${ded.irsNote}</div></div>
+          </div>
+        </div>
+        <div class="deduction-amount-row">
+          <div class="amount-input-wrap">
+            <span class="dollar-sign">$</span>
+            <input type="number" class="amount-input" id="amount-${ded.id}" placeholder="0" min="0" step="100"
+              value="${amount}" oninput="updateDeductionAmount('${ded.id}', this.value)">
+          </div>
+          <span style="font-size:0.75rem;color:var(--text-muted);">annual amount</span>
+        </div>
+      `;
+
+      panel.appendChild(item);
+    });
+
+    container.appendChild(panel);
+  });
+}
+
+// ─── Deduction Interactions ───
+
+function toggleDeduction(dedId) {
+  if (!appState.deductions[dedId]) {
+    appState.deductions[dedId] = { checked: false, amount: 0 };
+  }
+  appState.deductions[dedId].checked = !appState.deductions[dedId].checked;
+
+  const item = document.getElementById('item-' + dedId);
+  if (item) {
+    item.classList.toggle('checked', appState.deductions[dedId].checked);
+  }
+
+  // If unchecking, optionally keep the amount
+  updateTabCounts();
+  updateProgress();
+  recalculate();
+  saveState();
+}
+
+function updateDeductionAmount(dedId, value) {
+  if (!appState.deductions[dedId]) {
+    appState.deductions[dedId] = { checked: true, amount: 0 };
+  }
+  appState.deductions[dedId].amount = parseFloat(value) || 0;
+  recalculate();
+  debouncedSave();
+}
+
+const debouncedSave = debounce(() => saveState(), 500);
+
+function toggleAllInCategory(catId) {
+  const cat = CATEGORIES.find(c => c.id === catId);
+  if (!cat) return;
+
+  const allChecked = cat.deductions.every(d => appState.deductions[d.id]?.checked);
+
+  cat.deductions.forEach(d => {
+    if (!appState.deductions[d.id]) {
+      appState.deductions[d.id] = { checked: false, amount: 0 };
+    }
+    appState.deductions[d.id].checked = !allChecked;
+
+    const item = document.getElementById('item-' + d.id);
+    if (item) item.classList.toggle('checked', !allChecked);
+  });
+
+  // Update button text
+  const btn = document.querySelector(`[data-cat="${catId}"]`);
+  if (btn) btn.textContent = allChecked ? 'Check All' : 'Uncheck All';
+
+  updateTabCounts();
+  updateProgress();
+  recalculate();
+  saveState();
+}
+
+// ─── Presets ───
+
+function applyPreset(presetName) {
+  // Reset active state on buttons
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+
+  if (presetName === 'clear') {
+    // Clear all
+    Object.keys(appState.deductions).forEach(key => {
+      appState.deductions[key].checked = false;
+    });
+    document.querySelectorAll('.deduction-item').forEach(item => item.classList.remove('checked'));
+    showToast('All deductions cleared');
+  } else if (presetName === 'all') {
+    // Check everything
+    CATEGORIES.forEach(cat => {
+      cat.deductions.forEach(d => {
+        if (!appState.deductions[d.id]) {
+          appState.deductions[d.id] = { checked: false, amount: 0 };
+        }
+        appState.deductions[d.id].checked = true;
+        const item = document.getElementById('item-' + d.id);
+        if (item) item.classList.add('checked');
+      });
+    });
+    showToast('All deductions checked');
+    document.querySelector(`[data-preset="all"]`).classList.add('active');
+  } else {
+    // Apply specific preset
+    CATEGORIES.forEach(cat => {
+      cat.deductions.forEach(d => {
+        if (d.commonPresets && d.commonPresets.includes(presetName)) {
+          if (!appState.deductions[d.id]) {
+            appState.deductions[d.id] = { checked: false, amount: 0 };
+          }
+          appState.deductions[d.id].checked = true;
+          const item = document.getElementById('item-' + d.id);
+          if (item) item.classList.add('checked');
+        }
+      });
+    });
+
+    const presetLabels = {
+      home: 'Home office deductions checked',
+      travel: 'Travel deductions checked',
+      digital: 'Digital freelancer deductions checked'
+    };
+    showToast(presetLabels[presetName] || 'Preset applied');
+    const btn = document.querySelector(`[data-preset="${presetName}"]`);
+    if (btn) btn.classList.add('active');
+  }
+
+  updateTabCounts();
+  updateProgress();
+  recalculate();
+  saveState();
+}
+
+// ─── Progress Bar ───
+
+function updateProgress() {
+  let totalDeductions = 0;
+  let checkedCount = 0;
+
+  CATEGORIES.forEach(cat => {
+    cat.deductions.forEach(d => {
+      totalDeductions++;
+      if (appState.deductions[d.id]?.checked) checkedCount++;
+    });
+  });
+
+  const pct = totalDeductions > 0 ? Math.round((checkedCount / totalDeductions) * 100) : 0;
+
+  $('progress-fill').style.width = pct + '%';
+  $('progress-text').textContent = `${checkedCount} of ${totalDeductions} deductions reviewed`;
+  $('progress-pct').textContent = pct + '%';
+}
+
+// ─── Main Recalculation ───
+
+function recalculate() {
+  const income = parseFloat($('annual-income').value) || 0;
+  const filingStatus = $('filing-status').value;
+  const stateCode = $('state-select').value;
+  const bizType = $('biz-type').value;
+
+  appState.income = income;
+  appState.filingStatus = filingStatus;
+  appState.stateCode = stateCode;
+  appState.bizType = bizType;
+
+  const federalRate = getFederalBracket(income, filingStatus) / 100;
+  const stateRate = getStateRate(stateCode) / 100;
+  const seRate = 0.153; // Self-employment tax rate
+
+  // Calculate totals by category
+  let totalDeductions = 0;
+  let deductionCount = 0;
+  const categoryTotals = {};
+
+  CATEGORIES.forEach(cat => {
+    let catTotal = 0;
+    cat.deductions.forEach(d => {
+      if (appState.deductions[d.id]?.checked) {
+        let amt = appState.deductions[d.id]?.amount || 0;
+        // Apply 50% meal limit
+        if (d.mealDeduction) amt = amt * 0.5;
+        catTotal += amt;
+        deductionCount++;
+      }
+    });
+    categoryTotals[cat.id] = catTotal;
+    totalDeductions += catTotal;
+  });
+
+  // Calculate savings
+  const federalSavings = totalDeductions * federalRate;
+  const stateSavings = totalDeductions * stateRate;
+
+  // SE tax savings: deductions reduce SE income, saving 15.3%
+  // Not all deductions reduce SE tax (e.g., retirement contributions reduce income tax but
+  // SE tax is on net earnings). Simplification: use 92.35% of deductions * SE rate for estimate.
+  const seSavings = totalDeductions * 0.9235 * seRate * 0.5; // Half because deducting employer portion
+
+  const totalSavings = federalSavings + stateSavings + seSavings;
+
+  // Effective rate reduction
+  const rateReduction = income > 0 ? ((totalSavings / income) * 100) : 0;
+
+  // Update result cards
+  $('res-count').textContent = deductionCount;
+  $('res-total').textContent = formatCurrency(totalDeductions);
+  $('res-federal').textContent = formatCurrency(federalSavings);
+  $('res-combined').textContent = formatCurrency(totalSavings);
+
+  // Update savings breakdown
+  $('sb-federal').textContent = formatCurrency(federalSavings);
+  $('sb-state').textContent = formatCurrency(stateSavings);
+  $('sb-se').textContent = formatCurrency(seSavings);
+  $('sb-rate').textContent = rateReduction.toFixed(1) + '%';
+
+  // Update bar chart
+  updateBarChart(categoryTotals, totalDeductions);
+
+  // Update missing deductions
+  updateMissingDeductions();
+
+  // Update tax calendar
+  updateTaxCalendar(income, totalDeductions, federalRate, stateRate);
+
+  // Update receipt tips
+  updateReceiptTips();
+}
+
+// ─── Bar Chart ───
+
+function updateBarChart(categoryTotals, totalDeductions) {
+  const container = $('bar-chart');
+  container.innerHTML = '';
+
+  const maxVal = Math.max(...Object.values(categoryTotals), 1);
+
+  CATEGORIES.forEach(cat => {
+    const val = categoryTotals[cat.id] || 0;
+    const pct = maxVal > 0 ? (val / maxVal) * 100 : 0;
+
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <div class="bar-label">${cat.icon} ${cat.name}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width: ${pct}%"></div>
+      </div>
+      <div class="bar-value">${formatCurrency(val)}</div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+// ─── Missing Deductions ───
+
+function updateMissingDeductions() {
+  const container = $('missing-list');
+  container.innerHTML = '';
+
+  let missingItems = [];
+
+  CATEGORIES.forEach(cat => {
+    cat.deductions.forEach(d => {
+      if (!appState.deductions[d.id]?.checked && d.popularMissed) {
+        missingItems.push({ ...d, categoryName: cat.name, categoryId: cat.id });
+      }
+    });
+  });
+
+  if (missingItems.length === 0) {
+    container.innerHTML = '<p style="color:var(--success);font-size:0.9rem;padding:0.5rem;">Great job! You\'ve reviewed all commonly claimed deductions.</p>';
+    return;
+  }
+
+  missingItems.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'missing-item';
+    el.title = `Click to go to ${item.categoryName}`;
+    el.innerHTML = `<span class="missing-dot"></span>${item.name}`;
+    el.addEventListener('click', () => {
+      switchCategory(item.categoryId);
+      const dedItem = document.getElementById('item-' + item.id);
+      if (dedItem) {
+        dedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        dedItem.style.boxShadow = '0 0 0 2px var(--warning)';
+        setTimeout(() => dedItem.style.boxShadow = '', 2000);
+      }
+    });
+    container.appendChild(el);
+  });
+}
+
+// ─── Tax Calendar ───
+
+function updateTaxCalendar(income, deductions, federalRate, stateRate) {
+  const container = $('tax-calendar');
+  container.innerHTML = '';
+
+  const taxableIncome = Math.max(0, income - deductions);
+  const seTax = taxableIncome * 0.9235 * 0.153;
+  const federalTax = taxableIncome * federalRate;
+  const stateTax = taxableIncome * stateRate;
+  const totalTax = federalTax + stateTax + seTax;
+  const quarterlyPayment = totalTax / 4;
+
+  const quarters = [
+    { date: 'April 15, 2025', period: 'Q1: Jan 1 - Mar 31', note: 'Also annual tax return due date' },
+    { date: 'June 16, 2025', period: 'Q2: Apr 1 - May 31', note: '2-month period only' },
+    { date: 'Sept 15, 2025', period: 'Q3: Jun 1 - Aug 31', note: '3-month period' },
+    { date: 'Jan 15, 2026', period: 'Q4: Sep 1 - Dec 31', note: '4-month period' }
+  ];
+
+  quarters.forEach(q => {
+    const el = document.createElement('div');
+    el.className = 'cal-item';
+    el.innerHTML = `
+      <div class="cal-date">${q.date}</div>
+      <div class="cal-amount">${formatCurrency(quarterlyPayment)}</div>
+      <div class="cal-note">${q.period}</div>
+      <div class="cal-note" style="margin-top:0.2rem;font-style:italic;">${q.note}</div>
+    `;
+    container.appendChild(el);
+  });
+}
+
+// ─── Receipt Tips ───
+
+function updateReceiptTips() {
+  const container = $('tips-list');
+  container.innerHTML = '';
+
+  // Show tips for categories that have checked deductions
+  const activeCats = new Set();
+  CATEGORIES.forEach(cat => {
+    const hasChecked = cat.deductions.some(d => appState.deductions[d.id]?.checked);
+    if (hasChecked) activeCats.add(cat.id);
+  });
+
+  if (activeCats.size === 0) {
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="tip-icon">!</span> Check some deductions above to see category-specific receipt tracking tips.';
+    container.appendChild(li);
+    return;
+  }
+
+  // General tips first
+  const generalTips = [
+    'Use a separate business bank account and credit card for all business expenses.',
+    'Take photos of paper receipts immediately — ink fades over time.',
+    'Keep records for at least 3 years (7 years if you report losses or underreport income by >25%).',
+    'Use apps like Dext, Expensify, or Shoeboxed to auto-scan and categorize receipts.'
+  ];
+
+  generalTips.forEach(tip => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="tip-icon">&#10003;</span> ${tip}`;
+    container.appendChild(li);
+  });
+
+  // Category-specific tips
+  activeCats.forEach(catId => {
+    if (RECEIPT_TIPS[catId]) {
+      const cat = CATEGORIES.find(c => c.id === catId);
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="tip-icon">${cat.icon}</span> <strong>${cat.name}:</strong> ${RECEIPT_TIPS[catId]}`;
+      container.appendChild(li);
+    }
+  });
+}
+
+// ─── Export CSV ───
+
+function exportCSV() {
+  let csv = 'Category,Deduction,Checked,Amount\n';
+
+  CATEGORIES.forEach(cat => {
+    cat.deductions.forEach(d => {
+      const checked = appState.deductions[d.id]?.checked ? 'Yes' : 'No';
+      const amount = appState.deductions[d.id]?.amount || 0;
+      // Escape commas in names
+      const safeName = d.name.replace(/,/g, ';');
+      csv += `"${cat.name}","${safeName}",${checked},${amount}\n`;
+    });
+  });
+
+  // Add summary
+  csv += '\n';
+  csv += '"SUMMARY"\n';
+
+  const income = parseFloat($('annual-income').value) || 0;
+  const filingStatus = $('filing-status').value;
+  const stateCode = $('state-select').value;
+  const federalRate = getFederalBracket(income, filingStatus);
+  const stateRate = getStateRate(stateCode);
+
+  let totalDeductions = 0;
+  let deductionCount = 0;
+
+  CATEGORIES.forEach(cat => {
+    cat.deductions.forEach(d => {
+      if (appState.deductions[d.id]?.checked) {
+        let amt = appState.deductions[d.id]?.amount || 0;
+        if (d.mealDeduction) amt = amt * 0.5;
+        totalDeductions += amt;
+        deductionCount++;
+      }
+    });
+  });
+
+  csv += `"Filing Status","${filingStatus}"\n`;
+  csv += `"Annual Income","${income}"\n`;
+  csv += `"Federal Tax Bracket","${federalRate}%"\n`;
+  csv += `"State","${stateCode || 'Not selected'}"\n`;
+  csv += `"State Tax Rate","${stateRate}%"\n`;
+  csv += `"Total Deductions Found","${deductionCount}"\n`;
+  csv += `"Total Deduction Amount","${totalDeductions}"\n`;
+  csv += `"Estimated Federal Savings","${Math.round(totalDeductions * federalRate / 100)}"\n`;
+  csv += `"Estimated State Savings","${Math.round(totalDeductions * stateRate / 100)}"\n`;
+  csv += '\n"DISCLAIMER: This is for informational purposes only. Not tax advice. Consult a CPA."\n';
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'freelance-tax-deductions.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+
+  showToast('CSV downloaded successfully');
+}
+
+// ─── LocalStorage Persistence ───
+
+function saveState() {
+  try {
+    const data = {
+      deductions: appState.deductions,
+      income: $('annual-income').value,
+      filingStatus: $('filing-status').value,
+      taxBracket: $('tax-bracket').value,
+      stateCode: $('state-select').value,
+      bizType: $('biz-type').value,
+      savedAt: new Date().toISOString()
+    };
+    localStorage.setItem('freelanceos-tax-deductions', JSON.stringify(data));
+  } catch (e) {
+    // localStorage not available
+  }
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem('freelanceos-tax-deductions');
+    if (!raw) return false;
+
+    const data = JSON.parse(raw);
+    if (data.deductions) appState.deductions = data.deductions;
+    if (data.income) $('annual-income').value = data.income;
+    if (data.filingStatus) $('filing-status').value = data.filingStatus;
+    if (data.taxBracket) $('tax-bracket').value = data.taxBracket;
+    if (data.stateCode) $('state-select').value = data.stateCode;
+    if (data.bizType) $('biz-type').value = data.bizType;
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function restoreDeductionUI() {
+  // Restore checked states and amounts from appState
+  CATEGORIES.forEach(cat => {
+    cat.deductions.forEach(d => {
+      const state = appState.deductions[d.id];
+      if (state) {
+        const item = document.getElementById('item-' + d.id);
+        if (item && state.checked) {
+          item.classList.add('checked');
+        }
+        const amountInput = document.getElementById('amount-' + d.id);
+        if (amountInput && state.amount) {
+          amountInput.value = state.amount;
+        }
+      }
+    });
+  });
+}
+
+// ─── Event Listeners ───
+
+function attachSetupListeners() {
+  const inputs = ['filing-status', 'annual-income', 'tax-bracket', 'state-select', 'biz-type'];
+  inputs.forEach(id => {
+    const el = $(id);
+    if (el) {
+      el.addEventListener('change', () => {
+        recalculate();
+        saveState();
+      });
+      if (el.type === 'number') {
+        el.addEventListener('input', debounce(() => {
+          recalculate();
+          saveState();
+        }, 300));
+      }
+    }
+  });
+}
+
+// ─── Initialize ───
+
+function init() {
+  // Populate states dropdown
+  populateStates();
+
+  // Load saved state
+  const hadSavedState = loadState();
+
+  // Build UI
+  buildCategoryTabs();
+  buildDeductionPanels();
+
+  // Restore UI from state
+  if (hadSavedState) {
+    restoreDeductionUI();
+    showToast('Previous progress restored');
+  }
+
+  // Attach listeners
+  attachSetupListeners();
+
+  // Initial calculations
+  updateProgress();
+  recalculate();
+}
+
+// ─── Run on DOM ready ───
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

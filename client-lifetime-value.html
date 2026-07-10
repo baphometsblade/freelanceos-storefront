@@ -1,0 +1,2400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Lifetime Value Calculator — Free Tool for Freelancers | FreelanceOS</title>
+    <meta name="description" content="Calculate your client's true lifetime value including repeat work, referrals, upsells, and retention. Free CLV calculator for freelancers and agencies.">
+    <meta name="keywords" content="client lifetime value calculator, freelance CLV, client value calculator, freelancer tools, client retention, freelance business">
+    <meta name="author" content="FreelanceOS">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://freelanceos.pro/freelanceos-storefront/client-lifetime-value.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Client Lifetime Value Calculator — Free Tool for Freelancers">
+    <meta property="og:description" content="Stop guessing what your clients are worth. Calculate the TRUE lifetime value factoring in repeat work, referrals, upsells, and retention.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freelanceos.pro/freelanceos-storefront/client-lifetime-value.html">
+    <meta property="og:image" content="https://freelanceos.pro/og-image.png">
+    <meta property="og:site_name" content="FreelanceOS">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Client Lifetime Value Calculator — Free Tool for Freelancers">
+    <meta name="twitter:description" content="Stop guessing what your clients are worth. Calculate the TRUE lifetime value factoring in repeat work, referrals, upsells, and retention.">
+    <meta name="twitter:image" content="https://freelanceos.pro/og-image.png">
+    <meta name="twitter:site" content="@FreelanceOS">
+
+    <!-- Schema.org WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Client Lifetime Value Calculator",
+        "description": "Calculate your client's true lifetime value including repeat work, referrals, upsells, and retention. Free CLV calculator for freelancers.",
+        "url": "https://freelanceos.pro/freelanceos-storefront/client-lifetime-value.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "FreelanceOS",
+            "url": "https://freelanceos.pro"
+        }
+    }
+    </script>
+
+    <style>
+        /* ============================================
+           CSS VARIABLES & RESET
+           ============================================ */
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #a855f7;
+            --accent2: #ec4899;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(168, 85, 247, 0.1);
+            --border-hover: rgba(168, 85, 247, 0.3);
+            --glass-bg: rgba(15, 23, 42, 0.8);
+            --glass-blur: blur(20px);
+            --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --gradient-soft: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --radius-card: 16px;
+            --radius-btn: 12px;
+            --radius-sm: 8px;
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 40px rgba(168, 85, 247, 0.15);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           BACKGROUND EFFECTS
+           ============================================ */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-orb-1 {
+            width: 600px; height: 600px;
+            background: var(--accent);
+            top: -200px; right: -100px;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .bg-orb-2 {
+            width: 500px; height: 500px;
+            background: var(--accent2);
+            bottom: -150px; left: -100px;
+            animation: orbFloat 25s ease-in-out infinite reverse;
+        }
+
+        .bg-orb-3 {
+            width: 300px; height: 300px;
+            background: var(--accent);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -30px); }
+            66% { transform: translate(-20px, 20px); }
+        }
+
+        @keyframes orbPulse {
+            0%, 100% { opacity: 0.08; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* ============================================
+           LAYOUT
+           ============================================ */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .header {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: var(--gradient-soft);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .header-badge svg {
+            width: 16px; height: 16px;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -0.03em;
+        }
+
+        .header h1 .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           GLASS CARD
+           ============================================ */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title .icon {
+            width: 36px; height: 36px;
+            background: var(--gradient-soft);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        /* ============================================
+           FORM INPUTS
+           ============================================ */
+        .input-group {
+            margin-bottom: 28px;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .input-label label {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .input-label .value-display {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--gradient-soft);
+            padding: 4px 14px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .input-hint {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+
+        /* Custom range slider */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgba(100, 116, 139, 0.3);
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            background: var(--gradient);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            background: var(--gradient);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Upsell select */
+        .upsell-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .upsell-option {
+            padding: 12px 8px;
+            background: rgba(100, 116, 139, 0.1);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .upsell-option:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+
+        .upsell-option.active {
+            background: var(--gradient-soft);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .upsell-multiplier {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            margin-top: 2px;
+            font-weight: 400;
+        }
+
+        /* ============================================
+           CALCULATE BUTTON
+           ============================================ */
+        .calculate-btn {
+            width: 100%;
+            padding: 18px 32px;
+            background: var(--gradient);
+            border: none;
+            border-radius: var(--radius-btn);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .calculate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        .calculate-btn:hover::before {
+            left: 100%;
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           RESULTS SECTION
+           ============================================ */
+        #results-section {
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        #results-section.visible {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Giant CLV Reveal */
+        .clv-reveal {
+            text-align: center;
+            padding: 48px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clv-reveal::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--gradient-soft);
+            opacity: 0.5;
+            border-radius: var(--radius-card);
+        }
+
+        .clv-reveal-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .clv-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .clv-number {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            animation: countUp 0.8s ease-out;
+        }
+
+        .clv-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .clv-subtitle strong {
+            color: var(--text);
+        }
+
+        .tier-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-top: 20px;
+            border: 1px solid;
+        }
+
+        .tier-platinum {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.4);
+            color: #c084fc;
+        }
+        .tier-gold {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+        }
+        .tier-silver {
+            background: rgba(148, 163, 184, 0.15);
+            border-color: rgba(148, 163, 184, 0.4);
+            color: #cbd5e1;
+        }
+        .tier-bronze {
+            background: rgba(217, 119, 6, 0.15);
+            border-color: rgba(217, 119, 6, 0.4);
+            color: #f59e0b;
+        }
+        .tier-copper {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #f87171;
+        }
+
+        .tier-description {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 8px;
+        }
+
+        /* ============================================
+           BREAKDOWN CHART
+           ============================================ */
+        .breakdown-grid {
+            display: grid;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .breakdown-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .breakdown-label {
+            width: 140px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .breakdown-bar-container {
+            flex: 1;
+            height: 32px;
+            background: rgba(100, 116, 139, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .breakdown-bar {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s ease-out;
+            display: flex;
+            align-items: center;
+            padding-left: 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: white;
+            min-width: fit-content;
+        }
+
+        .bar-direct { background: linear-gradient(90deg, #a855f7, #9333ea); }
+        .bar-referral { background: linear-gradient(90deg, #ec4899, #db2777); }
+        .bar-upsell { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+        .bar-cost { background: linear-gradient(90deg, #ef4444, #dc2626); }
+
+        .breakdown-value {
+            width: 100px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 0.92rem;
+            flex-shrink: 0;
+        }
+
+        .value-positive { color: var(--success); }
+        .value-negative { color: var(--danger); }
+
+        /* ============================================
+           ROI CARD
+           ============================================ */
+        .roi-highlight {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .roi-stat {
+            text-align: center;
+            padding: 20px;
+            background: rgba(100, 116, 139, 0.08);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .roi-stat .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .roi-stat .stat-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ============================================
+           YEAR-BY-YEAR CHART
+           ============================================ */
+        .chart-container {
+            position: relative;
+            margin-top: 16px;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            height: 260px;
+            position: relative;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-y-labels {
+            position: absolute;
+            left: 0; top: 0; bottom: 30px;
+            width: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        .chart-x-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding-left: 70px;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .legend-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+
+        /* ============================================
+           WHAT-IF SCENARIOS
+           ============================================ */
+        .scenario-card {
+            padding: 16px 20px;
+            background: rgba(100, 116, 139, 0.06);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .scenario-card:hover {
+            border-color: var(--border-hover);
+            background: rgba(100, 116, 139, 0.1);
+        }
+
+        .scenario-card.active {
+            border-color: var(--accent);
+            background: var(--gradient-soft);
+        }
+
+        .scenario-left {
+            flex: 1;
+        }
+
+        .scenario-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .scenario-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .scenario-impact {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--success);
+            white-space: nowrap;
+            margin-left: 16px;
+        }
+
+        .scenario-toggle {
+            width: 44px; height: 24px;
+            background: rgba(100, 116, 139, 0.3);
+            border-radius: 12px;
+            position: relative;
+            margin-left: 16px;
+            transition: background 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .scenario-toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 18px; height: 18px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .scenario-card.active .scenario-toggle {
+            background: var(--gradient);
+        }
+
+        .scenario-card.active .scenario-toggle::after {
+            transform: translateX(20px);
+        }
+
+        .scenario-total {
+            text-align: center;
+            padding: 20px;
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: var(--radius-sm);
+            margin-top: 16px;
+        }
+
+        .scenario-total-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .scenario-total-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--success);
+        }
+
+        /* ============================================
+           ACTION PLAN
+           ============================================ */
+        .action-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .action-item {
+            display: flex;
+            gap: 14px;
+            padding: 16px;
+            background: rgba(100, 116, 139, 0.06);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: border-color 0.3s ease;
+        }
+
+        .action-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .action-number {
+            width: 32px; height: 32px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .action-content {
+            flex: 1;
+        }
+
+        .action-content strong {
+            display: block;
+            font-size: 0.92rem;
+            margin-bottom: 4px;
+        }
+
+        .action-content p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           SHARE SECTION
+           ============================================ */
+        .share-section {
+            text-align: center;
+            padding: 40px 32px;
+        }
+
+        .share-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-btn);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .share-btn-x {
+            background: #000;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .share-btn-x:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .share-btn-copy {
+            background: var(--gradient-soft);
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+
+        .share-btn-copy:hover {
+            border-color: var(--accent);
+        }
+
+        .share-btn-reset {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .share-btn-reset:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+
+        .copied-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--success);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 1000;
+            transition: transform 0.4s ease;
+            pointer-events: none;
+        }
+
+        .copied-toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ============================================
+           CTA SECTION
+           ============================================ */
+        .cta-section {
+            text-align: center;
+            margin: 48px 0;
+            padding: 40px 32px;
+            background: var(--gradient-soft);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(168,85,247,0.05), rgba(236,72,153,0.05));
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 100px;
+            color: #f87171;
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cta-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .cta-desc {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .cta-price-original {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            text-decoration: line-through;
+        }
+
+        .cta-price-sale {
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 40px;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-btn);
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        .cta-features {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cta-feature {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cta-feature svg {
+            color: var(--success);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            text-align: center;
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 24px;
+        }
+
+        .footer-tools {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer-tool-link {
+            padding: 8px 16px;
+            background: rgba(100, 116, 139, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-tool-link:hover {
+            border-color: var(--border-hover);
+            color: var(--accent);
+        }
+
+        .footer-disclaimer {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            max-width: 500px;
+            margin: 16px auto 0;
+        }
+
+        .footer-brand {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .footer-brand a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ============================================
+           PARTICLES (reveal effect)
+           ============================================ */
+        .particles-container {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: particleFly 1.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes particleFly {
+            0% { opacity: 1; transform: translate(0,0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+        }
+
+        /* ============================================
+           PROGRESS INDICATOR
+           ============================================ */
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 40px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            transition: color 0.3s ease;
+        }
+
+        .progress-step.active {
+            color: var(--accent);
+        }
+
+        .progress-step.completed {
+            color: var(--success);
+        }
+
+        .progress-dot {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--text-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .progress-dot {
+            border-color: var(--accent);
+            background: var(--gradient-soft);
+        }
+
+        .progress-step.completed .progress-dot {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.15);
+        }
+
+        .progress-line {
+            width: 60px;
+            height: 2px;
+            background: var(--text-dim);
+            margin: 0 12px;
+            transition: background 0.3s ease;
+        }
+
+        .progress-line.active {
+            background: var(--gradient);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 640px) {
+            .container { padding: 0 16px; }
+            .glass-card { padding: 24px 20px; }
+            .header { padding: 40px 0 24px; }
+            .upsell-options { grid-template-columns: repeat(2, 1fr); }
+            .roi-highlight { grid-template-columns: 1fr; }
+            .breakdown-label { width: 100px; font-size: 0.78rem; }
+            .breakdown-value { width: 80px; font-size: 0.82rem; }
+            .share-buttons { flex-direction: column; align-items: center; }
+            .share-btn { width: 100%; justify-content: center; }
+            .cta-features { flex-direction: column; align-items: center; }
+            .footer-tools { gap: 6px; }
+            .progress-line { width: 30px; margin: 0 6px; }
+            .progress-step span { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <!-- Copied Toast -->
+    <div class="copied-toast" id="copiedToast">Copied to clipboard!</div>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                Free Freelancer Tool
+            </div>
+            <h1>Client <span class="gradient-text">Lifetime Value</span> Calculator</h1>
+            <p>Stop looking at single projects. Discover the <strong>true worth</strong> of every client relationship over time.</p>
+        </header>
+
+        <!-- Progress Steps -->
+        <div class="progress-steps" id="progressSteps">
+            <div class="progress-step active" id="step1-indicator">
+                <div class="progress-dot">1</div>
+                <span>Input</span>
+            </div>
+            <div class="progress-line" id="line1-2"></div>
+            <div class="progress-step" id="step2-indicator">
+                <div class="progress-dot">2</div>
+                <span>Results</span>
+            </div>
+            <div class="progress-line" id="line2-3"></div>
+            <div class="progress-step" id="step3-indicator">
+                <div class="progress-dot">3</div>
+                <span>Share</span>
+            </div>
+        </div>
+
+        <!-- ============================================
+             STEP 1: CLIENT INPUT
+             ============================================ -->
+        <div id="input-section">
+
+            <!-- Core Project Details -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#128176;</div>
+                    Project Details
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="projectValue">Average Project Value</label>
+                        <div class="value-display" id="projectValueDisplay">$5,000</div>
+                    </div>
+                    <input type="range" id="projectValue" min="500" max="100000" step="500" value="5000">
+                    <div class="input-hint">What you typically charge this client per project</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="projectsPerYear">Projects Per Year</label>
+                        <div class="value-display" id="projectsPerYearDisplay">3</div>
+                    </div>
+                    <input type="range" id="projectsPerYear" min="1" max="12" step="1" value="3">
+                    <div class="input-hint">How many projects this client gives you annually</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="relationshipLength">Expected Relationship Length</label>
+                        <div class="value-display" id="relationshipLengthDisplay">3 years</div>
+                    </div>
+                    <input type="range" id="relationshipLength" min="1" max="10" step="1" value="3">
+                    <div class="input-hint">How long you expect to work with this client</div>
+                </div>
+            </div>
+
+            <!-- Referral & Upsell -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#128640;</div>
+                    Growth Potential
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="referralProbability">Referral Probability</label>
+                        <div class="value-display" id="referralProbabilityDisplay">30%</div>
+                    </div>
+                    <input type="range" id="referralProbability" min="0" max="100" step="5" value="30">
+                    <div class="input-hint">How likely this client refers another client to you each year</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="referralValue">Referral Value (% of project)</label>
+                        <div class="value-display" id="referralValueDisplay">75%</div>
+                    </div>
+                    <input type="range" id="referralValue" min="10" max="200" step="5" value="75">
+                    <div class="input-hint">Referred clients typically pay this percentage of your original project rate</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label>Upsell Potential</label>
+                    </div>
+                    <div class="upsell-options" id="upsellOptions">
+                        <div class="upsell-option" data-value="none" onclick="setUpsell('none')">
+                            None
+                            <span class="upsell-multiplier">+0%</span>
+                        </div>
+                        <div class="upsell-option" data-value="low" onclick="setUpsell('low')">
+                            Low
+                            <span class="upsell-multiplier">+15%</span>
+                        </div>
+                        <div class="upsell-option active" data-value="medium" onclick="setUpsell('medium')">
+                            Medium
+                            <span class="upsell-multiplier">+30%</span>
+                        </div>
+                        <div class="upsell-option" data-value="high" onclick="setUpsell('high')">
+                            High
+                            <span class="upsell-multiplier">+50%</span>
+                        </div>
+                    </div>
+                    <div class="input-hint">Can you sell additional services (maintenance, strategy, new phases)?</div>
+                </div>
+            </div>
+
+            <!-- Acquisition & Retention -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#127919;</div>
+                    Acquisition & Retention
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="acquisitionCost">Client Acquisition Cost</label>
+                        <div class="value-display" id="acquisitionCostDisplay">$200</div>
+                    </div>
+                    <input type="range" id="acquisitionCost" min="0" max="5000" step="50" value="200">
+                    <div class="input-hint">Time, ads, networking, proposals, etc. to land this client</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="retentionRate">Retention Rate Per Year</label>
+                        <div class="value-display" id="retentionRateDisplay">85%</div>
+                    </div>
+                    <input type="range" id="retentionRate" min="50" max="100" step="1" value="85">
+                    <div class="input-hint">Probability the client continues working with you each year</div>
+                </div>
+            </div>
+
+            <!-- Calculate Button -->
+            <button class="calculate-btn" onclick="calculateCLV()">
+                Calculate Client Lifetime Value &#10132;
+            </button>
+
+        </div>
+
+        <!-- ============================================
+             STEP 2: RESULTS DASHBOARD
+             ============================================ -->
+        <div id="results-section">
+
+            <!-- Giant CLV Reveal -->
+            <div class="glass-card clv-reveal" id="clvRevealCard">
+                <div class="particles-container" id="particlesContainer"></div>
+                <div class="clv-reveal-content">
+                    <div class="clv-label">This Client Is Worth</div>
+                    <div class="clv-number" id="clvNumber">$0</div>
+                    <div class="clv-subtitle" id="clvSubtitle">Over their lifetime</div>
+                    <div id="tierBadge"></div>
+                </div>
+            </div>
+
+            <!-- CLV Breakdown -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#128202;</div>
+                    CLV Breakdown
+                </div>
+                <div class="breakdown-grid" id="breakdownChart"></div>
+            </div>
+
+            <!-- ROI on Acquisition -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#128200;</div>
+                    Acquisition ROI
+                </div>
+                <div id="roiContent"></div>
+            </div>
+
+            <!-- Year-by-Year Projection -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#128197;</div>
+                    Year-by-Year Projection
+                </div>
+                <div class="chart-container" id="yearChartContainer"></div>
+            </div>
+
+            <!-- What-If Scenarios -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#128161;</div>
+                    "What If" Scenarios
+                </div>
+                <div id="scenarioCards"></div>
+                <div class="scenario-total" id="scenarioTotal" style="display:none;">
+                    <div class="scenario-total-label">Combined Impact of Active Scenarios</div>
+                    <div class="scenario-total-value" id="scenarioTotalValue">+$0</div>
+                </div>
+            </div>
+
+            <!-- Client Tier Classification -->
+            <div class="glass-card" id="tierCard">
+                <div class="card-title">
+                    <div class="icon">&#127942;</div>
+                    Client Tier Classification
+                </div>
+                <div id="tierContent"></div>
+            </div>
+
+            <!-- Action Plan -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <div class="icon">&#9989;</div>
+                    Your Personalized Action Plan
+                </div>
+                <div class="action-list" id="actionPlan"></div>
+            </div>
+
+            <!-- Share Section -->
+            <div class="glass-card share-section">
+                <div class="share-text" id="shareText">My client's lifetime value is $XX,XXX. What's yours?</div>
+                <div class="share-buttons">
+                    <button class="share-btn share-btn-x" onclick="shareToX()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        Share on X
+                    </button>
+                    <button class="share-btn share-btn-copy" onclick="copyToClipboard()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        Copy Result
+                    </button>
+                    <button class="share-btn share-btn-reset" onclick="resetCalculator()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                        Try Another Client
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================
+             CTA SECTION
+             ============================================ -->
+        <div class="cta-section">
+            <div class="cta-content">
+                <div class="cta-badge">&#9889; Flash Sale: 40% Off</div>
+                <div class="cta-title">Track Every Client's Value Automatically</div>
+                <div class="cta-desc">FreelanceOS Pro includes a built-in CRM, client tracker, revenue dashboards, and automated CLV tracking for all your clients.</div>
+                <div class="cta-price">
+                    <span class="cta-price-original">$29</span>
+                    <span class="cta-price-sale">$17.40</span>
+                </div>
+                <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="cta-button" target="_blank" rel="noopener">
+                    Get FreelanceOS Pro
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                </a>
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        CRM & Client Tracker
+                    </div>
+                    <div class="cta-feature">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Revenue Dashboards
+                    </div>
+                    <div class="cta-feature">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Notion Templates
+                    </div>
+                    <div class="cta-feature">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Use Code FLASH40
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-tools">
+                <a href="/freelanceos-storefront/fire-this-client.html" class="footer-tool-link">Should I Fire This Client?</a>
+                <a href="/freelanceos-storefront/client-red-flag-checker.html" class="footer-tool-link">Client Red Flag Checker</a>
+                <a href="/freelanceos-storefront/pricing-confidence.html" class="footer-tool-link">Pricing Confidence Score</a>
+                <a href="/freelanceos-storefront/income-projector.html" class="footer-tool-link">Income Projector</a>
+            </div>
+            <div class="footer-disclaimer">Calculations are estimates based on your inputs. Actual client value may vary based on market conditions, client behavior, and other factors not captured by this model.</div>
+            <div class="footer-brand">Built by <a href="https://freelanceos.pro" target="_blank" rel="noopener">FreelanceOS</a> &mdash; The operating system for freelancers</div>
+        </footer>
+
+    </div>
+
+    <!-- ============================================
+         JAVASCRIPT
+         ============================================ -->
+    <script>
+    (function() {
+        'use strict';
+
+        /* ============================================
+           STATE
+           ============================================ */
+        let currentUpsell = 'medium';
+        let calculationResults = null;
+        let activeScenarios = { retention: false, referral: false, upsell: false };
+
+        const upsellMultipliers = {
+            none: 0,
+            low: 0.15,
+            medium: 0.30,
+            high: 0.50
+        };
+
+        /* ============================================
+           SLIDER INITIALIZATION
+           ============================================ */
+        const sliders = [
+            { id: 'projectValue', displayId: 'projectValueDisplay', format: v => '$' + formatNumber(v) },
+            { id: 'projectsPerYear', displayId: 'projectsPerYearDisplay', format: v => v },
+            { id: 'relationshipLength', displayId: 'relationshipLengthDisplay', format: v => v + (v === 1 ? ' year' : ' years') },
+            { id: 'referralProbability', displayId: 'referralProbabilityDisplay', format: v => v + '%' },
+            { id: 'referralValue', displayId: 'referralValueDisplay', format: v => v + '%' },
+            { id: 'acquisitionCost', displayId: 'acquisitionCostDisplay', format: v => '$' + formatNumber(v) },
+            { id: 'retentionRate', displayId: 'retentionRateDisplay', format: v => v + '%' }
+        ];
+
+        sliders.forEach(s => {
+            const slider = document.getElementById(s.id);
+            const display = document.getElementById(s.displayId);
+            if (slider && display) {
+                slider.addEventListener('input', () => {
+                    display.textContent = s.format(parseFloat(slider.value));
+                    updateSliderTrack(slider);
+                });
+                updateSliderTrack(slider);
+            }
+        });
+
+        function updateSliderTrack(slider) {
+            const min = parseFloat(slider.min);
+            const max = parseFloat(slider.max);
+            const val = parseFloat(slider.value);
+            const pct = ((val - min) / (max - min)) * 100;
+            slider.style.background = `linear-gradient(to right, #a855f7 0%, #ec4899 ${pct}%, rgba(100,116,139,0.3) ${pct}%)`;
+        }
+
+        /* ============================================
+           UPSELL SELECTION
+           ============================================ */
+        window.setUpsell = function(value) {
+            currentUpsell = value;
+            document.querySelectorAll('.upsell-option').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.value === value);
+            });
+        };
+
+        /* ============================================
+           NUMBER FORMATTING
+           ============================================ */
+        function formatNumber(n) {
+            return Math.round(n).toLocaleString('en-US');
+        }
+
+        function formatCurrency(n) {
+            if (n >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+            return '$' + formatNumber(n);
+        }
+
+        /* ============================================
+           CORE CLV CALCULATION
+           ============================================ */
+        function computeCLV(params) {
+            const {
+                projectValue,
+                projectsPerYear,
+                years,
+                referralProb,
+                referralValuePct,
+                upsellMult,
+                acquisitionCost,
+                retentionRate
+            } = params;
+
+            let directRevenue = 0;
+            let referralRevenue = 0;
+            let upsellRevenue = 0;
+            let yearlyBreakdown = [];
+            let cumulativeRevenue = [];
+            let runningTotal = 0;
+
+            for (let y = 1; y <= years; y++) {
+                // Retention decay: probability client stays through year y
+                const retainProb = Math.pow(retentionRate / 100, y - 1);
+
+                // Direct revenue for this year
+                const yearDirect = projectValue * projectsPerYear * retainProb;
+                directRevenue += yearDirect;
+
+                // Referral revenue for this year
+                const yearReferral = (referralProb / 100) * (projectValue * referralValuePct / 100) * retainProb;
+                referralRevenue += yearReferral;
+
+                // Upsell revenue for this year (applied on top of direct)
+                const yearUpsell = yearDirect * upsellMult;
+                upsellRevenue += yearUpsell;
+
+                const yearTotal = yearDirect + yearReferral + yearUpsell;
+                runningTotal += yearTotal;
+
+                yearlyBreakdown.push({
+                    year: y,
+                    direct: yearDirect,
+                    referral: yearReferral,
+                    upsell: yearUpsell,
+                    total: yearTotal,
+                    retainProb: retainProb
+                });
+
+                cumulativeRevenue.push(runningTotal);
+            }
+
+            const grossCLV = directRevenue + referralRevenue + upsellRevenue;
+            const netCLV = grossCLV - acquisitionCost;
+
+            return {
+                directRevenue,
+                referralRevenue,
+                upsellRevenue,
+                acquisitionCost,
+                grossCLV,
+                netCLV,
+                yearlyBreakdown,
+                cumulativeRevenue,
+                roi: acquisitionCost > 0 ? ((netCLV / acquisitionCost) * 100) : Infinity,
+                params
+            };
+        }
+
+        /* ============================================
+           CALCULATE CLV (Main Action)
+           ============================================ */
+        window.calculateCLV = function() {
+            const params = {
+                projectValue: parseFloat(document.getElementById('projectValue').value),
+                projectsPerYear: parseFloat(document.getElementById('projectsPerYear').value),
+                years: parseFloat(document.getElementById('relationshipLength').value),
+                referralProb: parseFloat(document.getElementById('referralProbability').value),
+                referralValuePct: parseFloat(document.getElementById('referralValue').value),
+                upsellMult: upsellMultipliers[currentUpsell],
+                acquisitionCost: parseFloat(document.getElementById('acquisitionCost').value),
+                retentionRate: parseFloat(document.getElementById('retentionRate').value)
+            };
+
+            calculationResults = computeCLV(params);
+
+            // Update progress steps
+            document.getElementById('step1-indicator').classList.remove('active');
+            document.getElementById('step1-indicator').classList.add('completed');
+            document.getElementById('step2-indicator').classList.add('active');
+            document.getElementById('line1-2').classList.add('active');
+
+            // Show results
+            const resultsSection = document.getElementById('results-section');
+            resultsSection.classList.add('visible');
+
+            // Hide input section smoothly
+            document.getElementById('input-section').style.display = 'none';
+
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Render all result components
+            renderCLVReveal(calculationResults);
+            renderBreakdown(calculationResults);
+            renderROI(calculationResults);
+            renderYearChart(calculationResults);
+            renderScenarios(calculationResults);
+            renderTierClassification(calculationResults);
+            renderActionPlan(calculationResults);
+            updateShareText(calculationResults);
+
+            // Fire celebration particles
+            setTimeout(() => spawnParticles(), 400);
+        };
+
+        /* ============================================
+           ANIMATED CLV REVEAL
+           ============================================ */
+        function renderCLVReveal(results) {
+            const el = document.getElementById('clvNumber');
+            const subtitleEl = document.getElementById('clvSubtitle');
+            const finalValue = Math.round(results.netCLV);
+            const duration = 2000;
+            const startTime = performance.now();
+
+            el.textContent = '$0';
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Easing: ease-out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const currentValue = Math.round(finalValue * eased);
+
+                el.textContent = '$' + formatNumber(currentValue);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    el.textContent = '$' + formatNumber(finalValue);
+                }
+            }
+
+            requestAnimationFrame(animate);
+
+            const years = results.params.years;
+            subtitleEl.innerHTML = `Over <strong>${years} year${years > 1 ? 's' : ''}</strong> of working together`;
+
+            // Render tier badge
+            renderTierBadgeInReveal(results.netCLV);
+        }
+
+        function renderTierBadgeInReveal(clv) {
+            const container = document.getElementById('tierBadge');
+            let tier, className, emoji, description;
+
+            if (clv > 100000) {
+                tier = 'Platinum Client';
+                className = 'tier-platinum';
+                emoji = '&#128142;';
+                description = 'Protect this client at all costs';
+            } else if (clv > 50000) {
+                tier = 'Gold Client';
+                className = 'tier-gold';
+                emoji = '&#127942;';
+                description = 'High-value — invest in the relationship';
+            } else if (clv > 20000) {
+                tier = 'Silver Client';
+                className = 'tier-silver';
+                emoji = '&#129351;';
+                description = 'Solid client — room to grow';
+            } else if (clv > 5000) {
+                tier = 'Bronze Client';
+                className = 'tier-bronze';
+                emoji = '&#129352;';
+                description = 'Average — look for upsell opportunities';
+            } else {
+                tier = 'Copper Client';
+                className = 'tier-copper';
+                emoji = '&#128204;';
+                description = 'Low value — consider if worth your time';
+            }
+
+            container.innerHTML = `
+                <div class="tier-badge ${className}">
+                    <span>${emoji}</span> ${tier}
+                </div>
+                <span class="tier-description">${description}</span>
+            `;
+        }
+
+        /* ============================================
+           PARTICLES EFFECT
+           ============================================ */
+        function spawnParticles() {
+            const container = document.getElementById('particlesContainer');
+            container.innerHTML = '';
+            const colors = ['#a855f7', '#ec4899', '#3b82f6', '#22c55e', '#f59e0b'];
+
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 8 + 4;
+                const dx = (Math.random() - 0.5) * 400;
+                const dy = (Math.random() - 0.5) * 300;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    left: 50%;
+                    top: 50%;
+                    --dx: ${dx}px;
+                    --dy: ${dy}px;
+                    animation-delay: ${Math.random() * 0.5}s;
+                `;
+
+                container.appendChild(particle);
+            }
+
+            setTimeout(() => { container.innerHTML = ''; }, 2500);
+        }
+
+        /* ============================================
+           BREAKDOWN CHART
+           ============================================ */
+        function renderBreakdown(results) {
+            const container = document.getElementById('breakdownChart');
+            const maxVal = results.grossCLV;
+            const items = [
+                { label: 'Direct Revenue', value: results.directRevenue, barClass: 'bar-direct', positive: true },
+                { label: 'Referral Revenue', value: results.referralRevenue, barClass: 'bar-referral', positive: true },
+                { label: 'Upsell Revenue', value: results.upsellRevenue, barClass: 'bar-upsell', positive: true },
+                { label: 'Acquisition Cost', value: results.acquisitionCost, barClass: 'bar-cost', positive: false }
+            ];
+
+            let html = '';
+            items.forEach((item, idx) => {
+                const pct = maxVal > 0 ? Math.max((item.value / maxVal) * 100, item.value > 0 ? 8 : 0) : 0;
+                const valueClass = item.positive ? 'value-positive' : 'value-negative';
+                const sign = item.positive ? '+' : '-';
+                html += `
+                    <div class="breakdown-row" style="animation: fadeInUp 0.5s ease ${idx * 0.1}s both;">
+                        <div class="breakdown-label">${item.label}</div>
+                        <div class="breakdown-bar-container">
+                            <div class="breakdown-bar ${item.barClass}" style="width: 0%;" data-target-width="${pct}%">
+                                ${item.value > 0 ? '$' + formatNumber(item.value) : ''}
+                            </div>
+                        </div>
+                        <div class="breakdown-value ${valueClass}">${sign}$${formatNumber(item.value)}</div>
+                    </div>
+                `;
+            });
+
+            // Net Total row
+            html += `
+                <div style="border-top: 1px solid var(--border); padding-top: 16px; margin-top: 8px;">
+                    <div class="breakdown-row">
+                        <div class="breakdown-label" style="font-weight: 700; color: var(--text);">Net CLV</div>
+                        <div class="breakdown-bar-container">
+                            <div class="breakdown-bar" style="width: 100%; background: var(--gradient);">
+                                $${formatNumber(results.netCLV)}
+                            </div>
+                        </div>
+                        <div class="breakdown-value" style="color: var(--accent); font-size: 1rem;">$${formatNumber(results.netCLV)}</div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+
+            // Animate bars
+            setTimeout(() => {
+                container.querySelectorAll('.breakdown-bar[data-target-width]').forEach(bar => {
+                    bar.style.width = bar.dataset.targetWidth;
+                });
+            }, 100);
+        }
+
+        /* ============================================
+           ROI SECTION
+           ============================================ */
+        function renderROI(results) {
+            const container = document.getElementById('roiContent');
+            const acqCost = results.acquisitionCost;
+            const netCLV = results.netCLV;
+            const roi = acqCost > 0 ? ((netCLV / acqCost) * 100) : null;
+            const monthlyValue = netCLV / (results.params.years * 12);
+            const perProjectROI = acqCost > 0 ? (results.params.projectValue / acqCost) : null;
+
+            let roiText;
+            if (acqCost === 0) {
+                roiText = '<span style="color: var(--success); font-weight:700;">Infinite</span> (zero acquisition cost)';
+            } else {
+                roiText = formatNumber(roi) + '%';
+            }
+
+            let summaryHTML = '';
+            if (acqCost > 0) {
+                summaryHTML = `<p style="text-align:center; color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem;">
+                    You spent <strong style="color:var(--text);">$${formatNumber(acqCost)}</strong> to acquire a
+                    <strong style="color:var(--accent);">$${formatNumber(netCLV)}</strong> client.
+                    That's a <strong style="color:var(--success);">${formatNumber(roi)}% ROI</strong>.
+                </p>`;
+            } else {
+                summaryHTML = `<p style="text-align:center; color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem;">
+                    This client cost you nothing to acquire. Every dollar is pure return on an organic relationship.
+                </p>`;
+            }
+
+            container.innerHTML = `
+                ${summaryHTML}
+                <div class="roi-highlight">
+                    <div class="roi-stat">
+                        <div class="stat-value">${acqCost > 0 ? formatNumber(roi) + '%' : '∞'}</div>
+                        <div class="stat-label">Acquisition ROI</div>
+                    </div>
+                    <div class="roi-stat">
+                        <div class="stat-value">$${formatNumber(monthlyValue)}</div>
+                        <div class="stat-label">Average Monthly Value</div>
+                    </div>
+                    <div class="roi-stat">
+                        <div class="stat-value">${acqCost > 0 ? (netCLV / acqCost).toFixed(1) + 'x' : '∞x'}</div>
+                        <div class="stat-label">Return Multiple</div>
+                    </div>
+                    <div class="roi-stat">
+                        <div class="stat-value">$${formatNumber(netCLV / results.params.years)}</div>
+                        <div class="stat-label">Annual Client Value</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ============================================
+           YEAR-BY-YEAR LINE CHART (SVG)
+           ============================================ */
+        function renderYearChart(results) {
+            const container = document.getElementById('yearChartContainer');
+            const data = results.cumulativeRevenue;
+            const years = results.params.years;
+
+            if (years < 1) {
+                container.innerHTML = '<p style="text-align:center;color:var(--text-dim);">Need at least 1 year to show projection.</p>';
+                return;
+            }
+
+            const maxVal = Math.max(...data) * 1.1;
+            const chartW = 100; // percentage-based viewBox
+            const chartH = 70;
+            const padLeft = 18;
+            const padRight = 4;
+            const padTop = 6;
+            const padBottom = 12;
+            const plotW = chartW - padLeft - padRight;
+            const plotH = chartH - padTop - padBottom;
+
+            // Create baseline data (without referral/upsell)
+            let baselineData = [];
+            let cumBase = 0;
+            for (let y = 1; y <= years; y++) {
+                const retainProb = Math.pow(results.params.retentionRate / 100, y - 1);
+                cumBase += results.params.projectValue * results.params.projectsPerYear * retainProb;
+                baselineData.push(cumBase);
+            }
+
+            function toX(i) { return padLeft + (i / (years - 1 || 1)) * plotW; }
+            function toY(v) { return padTop + plotH - (v / maxVal) * plotH; }
+
+            // Build main line path
+            let mainPath = data.map((v, i) => {
+                const x = years === 1 ? padLeft + plotW / 2 : toX(i);
+                const y = toY(v);
+                return (i === 0 ? 'M' : 'L') + x.toFixed(2) + ',' + y.toFixed(2);
+            }).join(' ');
+
+            // Build fill area
+            let fillPath = mainPath;
+            if (years === 1) {
+                fillPath += ` L${(padLeft + plotW / 2).toFixed(2)},${(padTop + plotH).toFixed(2)}`;
+            } else {
+                fillPath += ` L${toX(years - 1).toFixed(2)},${(padTop + plotH).toFixed(2)} L${toX(0).toFixed(2)},${(padTop + plotH).toFixed(2)} Z`;
+            }
+
+            // Build baseline path
+            let basePath = baselineData.map((v, i) => {
+                const x = years === 1 ? padLeft + plotW / 2 : toX(i);
+                const y = toY(v);
+                return (i === 0 ? 'M' : 'L') + x.toFixed(2) + ',' + y.toFixed(2);
+            }).join(' ');
+
+            // Y-axis labels
+            const ySteps = 5;
+            let yLabelsHTML = '';
+            for (let i = 0; i <= ySteps; i++) {
+                const val = (maxVal / ySteps) * (ySteps - i);
+                const yPos = padTop + (i / ySteps) * plotH;
+                yLabelsHTML += `<text x="${padLeft - 2}" y="${yPos + 1}" text-anchor="end" fill="#64748b" font-size="2.8">${formatCurrency(val)}</text>`;
+                yLabelsHTML += `<line x1="${padLeft}" y1="${yPos}" x2="${padLeft + plotW}" y2="${yPos}" stroke="rgba(100,116,139,0.1)" stroke-width="0.3"/>`;
+            }
+
+            // X-axis labels
+            let xLabelsHTML = '';
+            for (let i = 0; i < years; i++) {
+                const x = years === 1 ? padLeft + plotW / 2 : toX(i);
+                xLabelsHTML += `<text x="${x}" y="${padTop + plotH + 6}" text-anchor="middle" fill="#64748b" font-size="2.8">Y${i + 1}</text>`;
+            }
+
+            // Data points
+            let dotsHTML = '';
+            data.forEach((v, i) => {
+                const x = years === 1 ? padLeft + plotW / 2 : toX(i);
+                const y = toY(v);
+                dotsHTML += `
+                    <circle cx="${x}" cy="${y}" r="1.5" fill="#a855f7" stroke="#020617" stroke-width="0.5"/>
+                    <title>Year ${i + 1}: $${formatNumber(v)}</title>
+                `;
+            });
+
+            container.innerHTML = `
+                <svg viewBox="0 0 ${chartW} ${chartH + 4}" class="chart-svg" style="width:100%;height:280px;">
+                    <defs>
+                        <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#a855f7"/>
+                            <stop offset="100%" stop-color="#ec4899"/>
+                        </linearGradient>
+                        <linearGradient id="fillGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="rgba(168,85,247,0.25)"/>
+                            <stop offset="100%" stop-color="rgba(168,85,247,0)"/>
+                        </linearGradient>
+                    </defs>
+                    ${yLabelsHTML}
+                    ${xLabelsHTML}
+                    <path d="${fillPath}" fill="url(#fillGrad)" />
+                    <path d="${basePath}" fill="none" stroke="#64748b" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.5"/>
+                    <path d="${mainPath}" fill="none" stroke="url(#lineGrad)" stroke-width="1" stroke-linecap="round"/>
+                    ${dotsHTML}
+                </svg>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--gradient);"></div>
+                        Total CLV (cumulative)
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #64748b;"></div>
+                        Direct Revenue Only (baseline)
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ============================================
+           WHAT-IF SCENARIOS
+           ============================================ */
+        function renderScenarios(results) {
+            const container = document.getElementById('scenarioCards');
+            activeScenarios = { retention: false, referral: false, upsell: false };
+
+            // Scenario 1: +10% retention
+            const newRetention = Math.min(results.params.retentionRate + 10, 100);
+            const scenRetention = computeCLV({ ...results.params, retentionRate: newRetention });
+            const retentionImpact = scenRetention.netCLV - results.netCLV;
+
+            // Scenario 2: +1 referral per year (bump referral prob by ~33% or to a meaningful increase)
+            const newReferralProb = Math.min(results.params.referralProb + 25, 100);
+            const scenReferral = computeCLV({ ...results.params, referralProb: newReferralProb });
+            const referralImpact = scenReferral.netCLV - results.netCLV;
+
+            // Scenario 3: Add one upsell tier
+            const upsellTiers = ['none', 'low', 'medium', 'high'];
+            const currentIdx = upsellTiers.indexOf(currentUpsell);
+            const nextTier = currentIdx < 3 ? upsellTiers[currentIdx + 1] : 'high';
+            const newUpsellMult = upsellMultipliers[nextTier];
+            const scenUpsell = computeCLV({ ...results.params, upsellMult: newUpsellMult });
+            const upsellImpact = scenUpsell.netCLV - results.netCLV;
+
+            const scenarios = [
+                {
+                    key: 'retention',
+                    title: 'Increase Retention by 10%',
+                    desc: `Retention goes from ${results.params.retentionRate}% to ${newRetention}%`,
+                    impact: retentionImpact
+                },
+                {
+                    key: 'referral',
+                    title: 'Boost Referral Rate by 25%',
+                    desc: `Referral probability goes from ${results.params.referralProb}% to ${newReferralProb}%`,
+                    impact: referralImpact
+                },
+                {
+                    key: 'upsell',
+                    title: `Upgrade Upsell to "${capitalize(nextTier)}"`,
+                    desc: currentUpsell === 'high'
+                        ? 'Already at highest upsell tier'
+                        : `Upsell potential moves from "${capitalize(currentUpsell)}" to "${capitalize(nextTier)}"`,
+                    impact: upsellImpact
+                }
+            ];
+
+            let html = '';
+            scenarios.forEach(s => {
+                html += `
+                    <div class="scenario-card" id="scenario-${s.key}" onclick="toggleScenario('${s.key}')">
+                        <div class="scenario-left">
+                            <div class="scenario-title">${s.title}</div>
+                            <div class="scenario-desc">${s.desc}</div>
+                        </div>
+                        <div class="scenario-impact">+$${formatNumber(s.impact)}</div>
+                        <div class="scenario-toggle"></div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            // Store scenario values for toggling
+            container.dataset.retentionImpact = retentionImpact;
+            container.dataset.referralImpact = referralImpact;
+            container.dataset.upsellImpact = upsellImpact;
+        }
+
+        window.toggleScenario = function(key) {
+            activeScenarios[key] = !activeScenarios[key];
+            const card = document.getElementById('scenario-' + key);
+            card.classList.toggle('active', activeScenarios[key]);
+
+            // Calculate total impact
+            const container = document.getElementById('scenarioCards');
+            let total = 0;
+            if (activeScenarios.retention) total += parseFloat(container.dataset.retentionImpact);
+            if (activeScenarios.referral) total += parseFloat(container.dataset.referralImpact);
+            if (activeScenarios.upsell) total += parseFloat(container.dataset.upsellImpact);
+
+            const totalEl = document.getElementById('scenarioTotal');
+            const totalValueEl = document.getElementById('scenarioTotalValue');
+
+            if (total > 0) {
+                totalEl.style.display = 'block';
+                totalValueEl.textContent = '+$' + formatNumber(total);
+
+                // Show new total CLV
+                const newCLV = calculationResults.netCLV + total;
+                totalEl.innerHTML = `
+                    <div class="scenario-total-label">With active scenarios, new CLV would be</div>
+                    <div class="scenario-total-value">$${formatNumber(newCLV)}</div>
+                    <div style="font-size:0.85rem;color:var(--success);margin-top:4px;">+$${formatNumber(total)} increase</div>
+                `;
+            } else {
+                totalEl.style.display = 'none';
+            }
+        };
+
+        /* ============================================
+           TIER CLASSIFICATION DETAIL
+           ============================================ */
+        function renderTierClassification(results) {
+            const container = document.getElementById('tierContent');
+            const clv = results.netCLV;
+
+            const tiers = [
+                { name: 'Platinum', min: 100000, color: '#c084fc', bgColor: 'rgba(168,85,247,0.08)', borderColor: 'rgba(168,85,247,0.3)', emoji: '&#128142;', desc: 'Protect this client at all costs. Provide white-glove service, priority scheduling, and proactive communication.' },
+                { name: 'Gold', min: 50000, color: '#fbbf24', bgColor: 'rgba(245,158,11,0.08)', borderColor: 'rgba(245,158,11,0.3)', emoji: '&#127942;', desc: 'High-value relationship. Invest in regular check-ins, surprise value-adds, and relationship deepening.' },
+                { name: 'Silver', min: 20000, color: '#cbd5e1', bgColor: 'rgba(148,163,184,0.08)', borderColor: 'rgba(148,163,184,0.3)', emoji: '&#129351;', desc: 'Solid client with room to grow. Focus on upselling additional services and increasing project frequency.' },
+                { name: 'Bronze', min: 5000, color: '#f59e0b', bgColor: 'rgba(217,119,6,0.08)', borderColor: 'rgba(217,119,6,0.3)', emoji: '&#129352;', desc: 'Average value. Look for upsell opportunities, referral potential, or ways to increase project scope.' },
+                { name: 'Copper', min: 0, color: '#f87171', bgColor: 'rgba(239,68,68,0.08)', borderColor: 'rgba(239,68,68,0.3)', emoji: '&#128204;', desc: 'Low value client. Consider if the relationship is worth maintaining, or if your time is better spent elsewhere.' }
+            ];
+
+            let html = '<div style="display:grid;gap:10px;">';
+            tiers.forEach(tier => {
+                const isActive = (clv >= tier.min && (tier.min === 100000 || clv < tiers[tiers.indexOf(tier) - 1]?.min));
+                const active = tier.name === getTierName(clv);
+
+                html += `
+                    <div style="
+                        padding: 16px 20px;
+                        background: ${active ? tier.bgColor : 'rgba(100,116,139,0.04)'};
+                        border: 1px solid ${active ? tier.borderColor : 'var(--border)'};
+                        border-radius: var(--radius-sm);
+                        opacity: ${active ? '1' : '0.5'};
+                        transition: all 0.3s ease;
+                        ${active ? 'transform: scale(1.02);' : ''}
+                    ">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                            <span style="font-size:1.2rem;">${tier.emoji}</span>
+                            <strong style="color:${active ? tier.color : 'var(--text-dim)'};">${tier.name}</strong>
+                            <span style="font-size:0.78rem;color:var(--text-dim);">
+                                ${tier.min >= 100000 ? '> $100K' : tier.min >= 50000 ? '$50K–$100K' : tier.min >= 20000 ? '$20K–$50K' : tier.min >= 5000 ? '$5K–$20K' : '< $5K'}
+                            </span>
+                            ${active ? '<span style="margin-left:auto;font-size:0.78rem;font-weight:700;color:' + tier.color + ';background:' + tier.bgColor + ';padding:3px 10px;border-radius:100px;">YOUR CLIENT</span>' : ''}
+                        </div>
+                        ${active ? '<p style="font-size:0.82rem;color:var(--text-muted);line-height:1.5;">' + tier.desc + '</p>' : ''}
+                    </div>
+                `;
+            });
+            html += '</div>';
+
+            container.innerHTML = html;
+        }
+
+        function getTierName(clv) {
+            if (clv > 100000) return 'Platinum';
+            if (clv > 50000) return 'Gold';
+            if (clv > 20000) return 'Silver';
+            if (clv > 5000) return 'Bronze';
+            return 'Copper';
+        }
+
+        /* ============================================
+           ACTION PLAN
+           ============================================ */
+        function renderActionPlan(results) {
+            const container = document.getElementById('actionPlan');
+            const tips = generateTips(results);
+
+            let html = '';
+            tips.forEach((tip, idx) => {
+                html += `
+                    <div class="action-item" style="animation: fadeInUp 0.4s ease ${idx * 0.1}s both;">
+                        <div class="action-number">${idx + 1}</div>
+                        <div class="action-content">
+                            <strong>${tip.title}</strong>
+                            <p>${tip.description}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function generateTips(results) {
+            const tips = [];
+            const p = results.params;
+
+            // Retention-based tips
+            if (p.retentionRate < 80) {
+                tips.push({
+                    title: 'Improve Client Retention',
+                    description: 'Your retention rate of ' + p.retentionRate + '% is below average. Schedule quarterly check-in calls, send project recap reports, and proactively suggest improvements. Even a 10% boost adds $' + formatNumber(computeCLV({ ...p, retentionRate: Math.min(p.retentionRate + 10, 100) }).netCLV - results.netCLV) + ' to this client\'s value.'
+                });
+            }
+
+            // Referral-based tips
+            if (p.referralProb < 40) {
+                tips.push({
+                    title: 'Create a Referral System',
+                    description: 'Only ' + p.referralProb + '% referral probability means you\'re leaving money on the table. Ask for referrals after every successful project delivery. Offer a 10% discount on the next project for every referral that converts.'
+                });
+            }
+
+            // Upsell-based tips
+            if (currentUpsell === 'none' || currentUpsell === 'low') {
+                tips.push({
+                    title: 'Develop Upsell Packages',
+                    description: 'Bundle complementary services: maintenance plans, strategy sessions, quarterly audits, or expanded project phases. Clients who already trust you are 60-70% more likely to buy additional services compared to new prospects.'
+                });
+            }
+
+            // Project value tips
+            if (p.projectValue < 5000) {
+                tips.push({
+                    title: 'Raise Your Project Rates',
+                    description: 'At $' + formatNumber(p.projectValue) + ' per project, consider value-based pricing instead of hourly rates. Frame your work in terms of ROI for the client — if your work generates $50K in revenue for them, a $5K fee is a bargain.'
+                });
+            }
+
+            // Frequency tips
+            if (p.projectsPerYear < 4) {
+                tips.push({
+                    title: 'Increase Project Frequency',
+                    description: 'You\'re doing ' + p.projectsPerYear + ' project' + (p.projectsPerYear > 1 ? 's' : '') + ' per year. Propose retainer agreements, monthly deliverables, or ongoing optimization work. Recurring revenue is more predictable and increases CLV dramatically.'
+                });
+            }
+
+            // Acquisition cost tips
+            if (p.acquisitionCost > 1000) {
+                tips.push({
+                    title: 'Reduce Acquisition Costs',
+                    description: 'At $' + formatNumber(p.acquisitionCost) + ' per client, explore lower-cost channels: content marketing, referral partnerships, and portfolio case studies. Your best clients should bring you more clients organically.'
+                });
+            }
+
+            // Relationship length tips
+            if (p.years < 3) {
+                tips.push({
+                    title: 'Extend the Relationship',
+                    description: 'A ' + p.years + '-year outlook is conservative. Build switching costs by deeply integrating into their workflow, documenting institutional knowledge, and becoming their go-to person. Long-term clients are the most profitable.'
+                });
+            }
+
+            // High-value client tips
+            if (results.netCLV > 50000) {
+                tips.push({
+                    title: 'VIP Treatment Protocol',
+                    description: 'This is a high-value client worth $' + formatNumber(results.netCLV) + '. Create a VIP experience: priority response times, dedicated communication channel, annual strategy reviews, and occasional complimentary value-adds.'
+                });
+            }
+
+            // General best practice
+            tips.push({
+                title: 'Track CLV for All Clients',
+                description: 'Run this calculation for every active client. Rank them by lifetime value and allocate your best time, energy, and ideas to your top-tier clients. This single shift in mindset can double your annual income.'
+            });
+
+            return tips.slice(0, 5);
+        }
+
+        /* ============================================
+           SHARE FUNCTIONALITY
+           ============================================ */
+        function updateShareText(results) {
+            const el = document.getElementById('shareText');
+            el.textContent = `My client's lifetime value is $${formatNumber(results.netCLV)}. What's yours?`;
+
+            // Update progress
+            document.getElementById('step2-indicator').classList.remove('active');
+            document.getElementById('step2-indicator').classList.add('completed');
+            document.getElementById('step3-indicator').classList.add('active');
+            document.getElementById('line2-3').classList.add('active');
+        }
+
+        window.shareToX = function() {
+            if (!calculationResults) return;
+            const text = `My client's lifetime value is $${formatNumber(calculationResults.netCLV)} — most freelancers only look at single project fees.\n\nCalculate yours:`;
+            const url = 'https://freelanceos.pro/freelanceos-storefront/client-lifetime-value.html';
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            window.open(twitterUrl, '_blank', 'width=600,height=400');
+        };
+
+        window.copyToClipboard = function() {
+            if (!calculationResults) return;
+            const r = calculationResults;
+            const text = [
+                `Client Lifetime Value: $${formatNumber(r.netCLV)}`,
+                `---`,
+                `Direct Revenue: $${formatNumber(r.directRevenue)}`,
+                `Referral Revenue: $${formatNumber(r.referralRevenue)}`,
+                `Upsell Revenue: $${formatNumber(r.upsellRevenue)}`,
+                `Acquisition Cost: -$${formatNumber(r.acquisitionCost)}`,
+                `---`,
+                `Tier: ${getTierName(r.netCLV)} Client`,
+                `ROI: ${r.acquisitionCost > 0 ? formatNumber(r.roi) + '%' : 'Infinite'}`,
+                '',
+                `Calculate yours: https://freelanceos.pro/freelanceos-storefront/client-lifetime-value.html`
+            ].join('\n');
+
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('copiedToast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            }).catch(() => {
+                // Fallback
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                const toast = document.getElementById('copiedToast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            });
+        };
+
+        /* ============================================
+           RESET CALCULATOR
+           ============================================ */
+        window.resetCalculator = function() {
+            // Hide results
+            document.getElementById('results-section').classList.remove('visible');
+            document.getElementById('results-section').style.display = 'none';
+
+            // Show inputs
+            document.getElementById('input-section').style.display = 'block';
+
+            // Reset progress
+            document.getElementById('step1-indicator').classList.add('active');
+            document.getElementById('step1-indicator').classList.remove('completed');
+            document.getElementById('step2-indicator').classList.remove('active', 'completed');
+            document.getElementById('step3-indicator').classList.remove('active', 'completed');
+            document.getElementById('line1-2').classList.remove('active');
+            document.getElementById('line2-3').classList.remove('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Clear stored results
+            calculationResults = null;
+            activeScenarios = { retention: false, referral: false, upsell: false };
+        };
+
+        /* ============================================
+           UTILITY
+           ============================================ */
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+    })();
+    </script>
+
+</body>
+</html>

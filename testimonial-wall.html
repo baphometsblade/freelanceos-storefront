@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testimonial Wall Builder | FreelanceOS Free Tools</title>
+<meta name="description" content="Collect, organize, and display client testimonials in beautiful layouts. Generate embeddable widgets, request templates, and social proof for your freelance business.">
+<meta property="og:title" content="Testimonial Wall Builder | FreelanceOS Free Tools">
+<meta property="og:description" content="Build stunning testimonial walls for your freelance business. 6 display layouts, request templates, social proof widgets, and export options.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.freelanceos.so/freelanceos-storefront/free-templates.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Testimonial Wall Builder | FreelanceOS Free Tools">
+<meta name="twitter:description" content="Build stunning testimonial walls for your freelance business. 6 display layouts, request templates, social proof widgets, and export options.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Testimonial Wall Builder",
+  "description": "Collect, organize, and display client testimonials in beautiful layouts with embeddable widgets and export options.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "creator": { "@type": "Organization", "name": "FreelanceOS" }
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --border: rgba(168,85,247,0.2);
+  --accent: linear-gradient(135deg, #a855f7, #ec4899);
+  --accent-solid: #a855f7;
+  --pink: #ec4899;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --glass: rgba(15,23,42,0.8);
+  --glass-border: rgba(168,85,247,0.15);
+}
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(168,85,247,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(236,72,153,0.06) 0%, transparent 50%);
+  z-index: 0;
+  pointer-events: none;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+/* Header */
+.header { padding: 40px 0 30px; text-align: center; }
+.header-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(168,85,247,0.15);
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: 100px;
+  font-size: 13px;
+  color: #c084fc;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+.header h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  background: var(--accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.header p { color: var(--text2); font-size: 17px; max-width: 600px; margin: 0 auto; }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tabs::-webkit-scrollbar { height: 0; }
+.tab-btn {
+  padding: 10px 18px;
+  background: transparent;
+  border: none;
+  color: var(--text2);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+.tab-btn:hover { color: var(--text); background: rgba(168,85,247,0.1); }
+.tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(20px);
+  transition: border-color 0.3s;
+}
+.card:hover { border-color: rgba(168,85,247,0.35); }
+.card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.card-desc { color: var(--text2); font-size: 14px; margin-bottom: 20px; }
+
+/* Forms */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.form-group label { font-size: 13px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+input[type="text"], input[type="url"], input[type="date"], input[type="email"], input[type="number"],
+select, textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(15,23,42,0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent-solid);
+  box-shadow: 0 0 0 3px rgba(168,85,247,0.15);
+}
+textarea { resize: vertical; min-height: 80px; }
+
+/* Star Rating */
+.star-rating { display: flex; gap: 4px; }
+.star-rating .star {
+  width: 32px; height: 32px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #334155;
+  transition: color 0.15s, transform 0.15s;
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+}
+.star-rating .star.active { color: #f59e0b; }
+.star-rating .star:hover { transform: scale(1.2); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(168,85,247,0.3); }
+.btn-secondary {
+  background: rgba(168,85,247,0.15);
+  color: #c084fc;
+  border: 1px solid rgba(168,85,247,0.3);
+}
+.btn-secondary:hover { background: rgba(168,85,247,0.25); }
+.btn-sm { padding: 8px 16px; font-size: 13px; }
+.btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Toggle */
+.toggle-wrap { display: flex; align-items: center; gap: 10px; }
+.toggle {
+  width: 44px; height: 24px;
+  background: #334155;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.25s;
+  border: none;
+  padding: 0;
+}
+.toggle.active { background: var(--accent-solid); }
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.25s;
+}
+.toggle.active::after { transform: translateX(20px); }
+.toggle-label { font-size: 14px; color: var(--text2); }
+
+/* Tab Panels */
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Testimonial List Items */
+.testimonial-item {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(15,23,42,0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  transition: all 0.25s;
+  position: relative;
+}
+.testimonial-item:hover { border-color: rgba(168,85,247,0.3); background: rgba(15,23,42,0.7); }
+.testimonial-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.testimonial-content { flex: 1; min-width: 0; }
+.testimonial-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+.testimonial-name { font-weight: 600; font-size: 15px; }
+.testimonial-role { color: var(--text2); font-size: 13px; }
+.testimonial-stars { color: #f59e0b; font-size: 13px; letter-spacing: 1px; }
+.testimonial-text { color: var(--text2); font-size: 14px; line-height: 1.6; margin-top: 6px; }
+.testimonial-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.testimonial-tag {
+  padding: 3px 10px;
+  background: rgba(168,85,247,0.12);
+  border-radius: 100px;
+  font-size: 11px;
+  color: #c084fc;
+}
+.testimonial-tag.featured { background: rgba(236,72,153,0.15); color: #f472b6; }
+.testimonial-actions {
+  display: flex;
+  gap: 6px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.testimonial-item:hover .testimonial-actions { opacity: 1; }
+.action-btn {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.action-btn:hover { border-color: var(--accent-solid); color: var(--accent-solid); }
+.action-btn.delete:hover { border-color: #ef4444; color: #ef4444; }
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-chip {
+  padding: 6px 14px;
+  background: rgba(15,23,42,0.6);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.filter-chip:hover, .filter-chip.active {
+  border-color: var(--accent-solid);
+  color: #c084fc;
+  background: rgba(168,85,247,0.1);
+}
+
+/* Template Cards */
+.template-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.template-card {
+  background: rgba(15,23,42,0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.template-card:hover { border-color: rgba(168,85,247,0.4); transform: translateY(-2px); }
+.template-card h4 { font-size: 15px; margin-bottom: 6px; }
+.template-card p { font-size: 13px; color: var(--text2); line-height: 1.5; }
+.template-card .template-icon { font-size: 24px; margin-bottom: 10px; }
+
+/* Layout Preview */
+.layout-selector { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.layout-option {
+  padding: 16px;
+  background: rgba(15,23,42,0.5);
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.layout-option:hover { border-color: rgba(168,85,247,0.4); }
+.layout-option.active { border-color: var(--accent-solid); background: rgba(168,85,247,0.08); }
+.layout-option .icon { font-size: 28px; margin-bottom: 8px; }
+.layout-option .name { font-size: 13px; font-weight: 600; }
+
+/* Preview Area */
+.preview-area {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+/* Masonry Layout */
+.masonry-grid { columns: 3; column-gap: 16px; }
+.masonry-grid .t-card {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+}
+
+/* Carousel */
+.carousel-wrap { position: relative; overflow: hidden; }
+.carousel-track { display: flex; transition: transform 0.5s ease; }
+.carousel-track .t-card {
+  min-width: 350px;
+  flex-shrink: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  margin-right: 16px;
+}
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+.carousel-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #334155;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+.carousel-dot.active { background: var(--accent-solid); width: 28px; border-radius: 5px; }
+
+/* Wall of Love */
+.wall-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.wall-grid .t-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  transition: transform 0.2s;
+}
+.wall-grid .t-card:hover { transform: scale(1.02); }
+
+/* Minimal List */
+.minimal-list .t-card {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+}
+.minimal-list .t-card:last-child { border-bottom: none; }
+
+/* Card Stack */
+.card-stack { position: relative; height: 300px; display: flex; align-items: center; justify-content: center; }
+.card-stack .t-card {
+  position: absolute;
+  width: 400px;
+  max-width: 90%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px;
+  text-align: center;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+/* Featured Spotlight */
+.spotlight-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.spotlight-layout .featured-card {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.1));
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align: center;
+}
+.spotlight-layout .t-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+}
+
+/* Common testimonial card inner */
+.t-card .t-stars { color: #f59e0b; font-size: 14px; margin-bottom: 10px; }
+.t-card .t-text { color: var(--text); font-size: 14px; line-height: 1.7; margin-bottom: 14px; }
+.t-card .t-author { display: flex; align-items: center; gap: 10px; }
+.t-card .t-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.t-card .t-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.t-card .t-name { font-weight: 600; font-size: 14px; }
+.t-card .t-role { font-size: 12px; color: var(--text2); }
+.t-card .t-highlight {
+  background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3));
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+/* Widget Preview */
+.widget-preview {
+  display: inline-block;
+  padding: 20px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+}
+.widget-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.widget-ticker {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 12px 0;
+}
+.widget-ticker-inner {
+  display: inline-block;
+  animation: ticker 20s linear infinite;
+}
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Code Block */
+.code-block {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 13px;
+  color: #a5f3fc;
+  overflow-x: auto;
+  position: relative;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.code-block .copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+/* Analytics */
+.analytics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px; }
+.stat-card {
+  background: rgba(15,23,42,0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  text-align: center;
+}
+.stat-value {
+  font-size: 32px;
+  font-weight: 800;
+  background: var(--accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+.theme-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.theme-chip {
+  padding: 4px 12px;
+  background: rgba(168,85,247,0.1);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 100px;
+  font-size: 12px;
+  color: #c084fc;
+}
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.modal h3 { font-size: 18px; margin-bottom: 16px; }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text2);
+}
+.empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+.empty-state p { font-size: 15px; }
+
+/* CTA Banner */
+.cta-banner {
+  background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.15));
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align: center;
+  margin: 40px 0;
+}
+.cta-banner h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: var(--accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cta-banner p { color: var(--text2); font-size: 15px; margin-bottom: 20px; }
+.cta-banner .btn-primary { padding: 14px 32px; font-size: 16px; text-decoration: none; display: inline-flex; }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+.footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 12px; }
+.footer-links a {
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: #c084fc; }
+.footer p { color: #475569; font-size: 13px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-row { grid-template-columns: 1fr; }
+  .layout-selector { grid-template-columns: repeat(3, 1fr); }
+  .template-grid { grid-template-columns: 1fr; }
+  .masonry-grid { columns: 1; }
+  .spotlight-layout { grid-template-columns: 1fr; }
+  .tabs { gap: 4px; }
+  .tab-btn { padding: 8px 12px; font-size: 13px; }
+  .carousel-track .t-card { min-width: 280px; }
+  .card { padding: 20px; }
+}
+@media (max-width: 480px) {
+  .layout-selector { grid-template-columns: repeat(2, 1fr); }
+  .analytics-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* Notification */
+.notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 14px 24px;
+  background: var(--card);
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  z-index: 2000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+.notification.show { transform: translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-badge">Free Tool #89</div>
+    <h1>Testimonial Wall Builder</h1>
+    <p>Collect, organize, and display client testimonials in beautiful layouts. Embed on your website or share on social.</p>
+  </header>
+
+  <!-- Tabs -->
+  <div class="tabs" id="mainTabs">
+    <button class="tab-btn active" data-tab="collect">Collect</button>
+    <button class="tab-btn" data-tab="templates">Templates</button>
+    <button class="tab-btn" data-tab="layouts">Layouts</button>
+    <button class="tab-btn" data-tab="widgets">Widgets</button>
+    <button class="tab-btn" data-tab="analytics">Analytics</button>
+    <button class="tab-btn" data-tab="export">Export</button>
+  </div>
+
+  <!-- Panel: Collect -->
+  <div class="panel active" id="panel-collect">
+    <div class="card">
+      <h2>Add Testimonial</h2>
+      <p class="card-desc">Enter your client's feedback to add it to your testimonial wall.</p>
+      <form id="testimonialForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Client Name *</label>
+            <input type="text" id="clientName" placeholder="e.g. Sarah Johnson" required>
+          </div>
+          <div class="form-group">
+            <label>Company</label>
+            <input type="text" id="clientCompany" placeholder="e.g. Acme Corp">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Role / Title</label>
+            <input type="text" id="clientRole" placeholder="e.g. Marketing Director">
+          </div>
+          <div class="form-group">
+            <label>Photo URL</label>
+            <input type="url" id="clientPhoto" placeholder="https://example.com/photo.jpg">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Project Type</label>
+            <select id="projectType">
+              <option value="">Select type...</option>
+              <option value="Web Design">Web Design</option>
+              <option value="Branding">Branding</option>
+              <option value="Development">Development</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Copywriting">Copywriting</option>
+              <option value="Consulting">Consulting</option>
+              <option value="Video">Video Production</option>
+              <option value="Photography">Photography</option>
+              <option value="SEO">SEO</option>
+              <option value="Social Media">Social Media</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="testimonialDate">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Star Rating</label>
+          <div class="star-rating" id="starRating">
+            <button type="button" class="star" data-value="1">&#9733;</button>
+            <button type="button" class="star" data-value="2">&#9733;</button>
+            <button type="button" class="star" data-value="3">&#9733;</button>
+            <button type="button" class="star" data-value="4">&#9733;</button>
+            <button type="button" class="star" data-value="5">&#9733;</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Testimonial Text *</label>
+          <textarea id="testimonialText" placeholder="Paste or type your client's testimonial here..." rows="4" required></textarea>
+        </div>
+        <div class="toggle-wrap" style="margin-bottom:20px;">
+          <button type="button" class="toggle" id="featuredToggle"></button>
+          <span class="toggle-label">Mark as Featured Testimonial</span>
+        </div>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">Add Testimonial</button>
+          <button type="button" class="btn btn-secondary" id="addSampleBtn">Add Sample Data</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Filters & List -->
+    <div class="card">
+      <h2>Your Testimonials</h2>
+      <div class="filters" id="filterBar"></div>
+      <div id="testimonialList"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Templates -->
+  <div class="panel" id="panel-templates">
+    <div class="card">
+      <h2>Request Templates</h2>
+      <p class="card-desc">Professional email templates to request testimonials from your clients. Click any template to customize and copy.</p>
+      <div class="template-grid" id="templateGrid"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Layouts -->
+  <div class="panel" id="panel-layouts">
+    <div class="card">
+      <h2>Display Layouts</h2>
+      <p class="card-desc">Choose a visual layout for your testimonial wall. Live preview updates as you select.</p>
+      <div class="layout-selector" id="layoutSelector"></div>
+    </div>
+    <div class="card">
+      <h3>Live Preview</h3>
+      <div class="preview-area" id="previewArea"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Widgets -->
+  <div class="panel" id="panel-widgets">
+    <div class="card">
+      <h2>Social Proof Widgets</h2>
+      <p class="card-desc">Generate embeddable widget code to add social proof anywhere on your site.</p>
+
+      <h3 style="margin-top:20px;">Floating Badge</h3>
+      <div class="widget-preview" id="badgePreview"></div>
+      <div class="code-block" id="badgeCode"></div>
+      <button class="btn btn-secondary btn-sm" style="margin-top:10px;" onclick="copyCode('badgeCode')">Copy Badge Code</button>
+
+      <h3 style="margin-top:30px;">Testimonial Ticker</h3>
+      <div class="widget-preview" style="width:100%;overflow:hidden;" id="tickerPreview"></div>
+      <div class="code-block" id="tickerCode" style="margin-top:12px;"></div>
+      <button class="btn btn-secondary btn-sm" style="margin-top:10px;" onclick="copyCode('tickerCode')">Copy Ticker Code</button>
+
+      <h3 style="margin-top:30px;">Mini Carousel</h3>
+      <div class="widget-preview" style="width:100%;" id="miniCarouselPreview"></div>
+      <div class="code-block" id="miniCarouselCode" style="margin-top:12px;"></div>
+      <button class="btn btn-secondary btn-sm" style="margin-top:10px;" onclick="copyCode('miniCarouselCode')">Copy Mini Carousel Code</button>
+    </div>
+  </div>
+
+  <!-- Panel: Analytics -->
+  <div class="panel" id="panel-analytics">
+    <div class="card">
+      <h2>Testimonial Analytics</h2>
+      <p class="card-desc">Insights from your collected testimonials.</p>
+      <div class="analytics-grid" id="analyticsGrid"></div>
+    </div>
+    <div class="card">
+      <h3>Rating Distribution</h3>
+      <div id="ratingDistribution" style="margin-top:12px;"></div>
+    </div>
+    <div class="card">
+      <h3>Top Positive Themes</h3>
+      <p class="card-desc">Most frequently mentioned positive words and phrases.</p>
+      <div class="theme-list" id="themeList"></div>
+    </div>
+  </div>
+
+  <!-- Panel: Export -->
+  <div class="panel" id="panel-export">
+    <div class="card">
+      <h2>Export Options</h2>
+      <p class="card-desc">Export your testimonials in various formats.</p>
+      <div class="btn-group" style="margin-bottom:24px;">
+        <button class="btn btn-primary" onclick="exportHTML()">Export HTML Page</button>
+        <button class="btn btn-secondary" onclick="exportCSV()">Export CSV</button>
+        <button class="btn btn-secondary" onclick="exportJSON()">Export JSON</button>
+      </div>
+      <h3>Layout for HTML Export</h3>
+      <div class="layout-selector" id="exportLayoutSelector" style="margin-top:12px;"></div>
+    </div>
+    <div class="card">
+      <h3>Embed Code Snippet</h3>
+      <p class="card-desc">Copy this code to embed testimonials on any webpage.</p>
+      <div class="code-block" id="embedCode"></div>
+      <button class="btn btn-secondary btn-sm" style="margin-top:10px;" onclick="copyCode('embedCode')">Copy Embed Code</button>
+    </div>
+    <div class="card">
+      <h3>Social Media Cards</h3>
+      <p class="card-desc">Generate image-ready testimonial cards for social media. Click a testimonial to generate its card.</p>
+      <div id="socialCardList"></div>
+    </div>
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <h3>Get the Complete FreelanceOS Pro System</h3>
+    <p>Templates, workflows, and tools to run your entire freelance business. 40% OFF with code FLASH40.</p>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" class="btn btn-primary">Claim 40% OFF Now</a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/freelanceos-storefront/free-templates.html">Free Tools Library</a>
+      <a href="/freelanceos-storefront/">FreelanceOS Storefront</a>
+    </div>
+    <p>FreelanceOS &mdash; Tools for independent professionals</p>
+  </footer>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Social Card Canvas (hidden) -->
+<canvas id="socialCanvas" width="1200" height="675" style="display:none;"></canvas>
+
+<!-- Notification -->
+<div class="notification" id="notification"></div>
+
+<script>
+/* ========================================
+   DATA LAYER
+   ======================================== */
+const STORAGE_KEY = 'twb_testimonials';
+const SETTINGS_KEY = 'twb_settings';
+
+function loadTestimonials() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { return []; }
+}
+function saveTestimonials(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+function loadSettings() {
+  try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || { layout: 'masonry', exportLayout: 'masonry' }; }
+  catch { return { layout: 'masonry', exportLayout: 'masonry' }; }
+}
+function saveSettings(s) { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }
+
+let testimonials = loadTestimonials();
+let settings = loadSettings();
+let currentRating = 5;
+let activeFilter = 'all';
+let editingId = null;
+
+/* ========================================
+   NOTIFICATION
+   ======================================== */
+function notify(msg) {
+  const el = document.getElementById('notification');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+/* ========================================
+   TABS
+   ======================================== */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'layouts') renderLayoutPreview();
+    if (btn.dataset.tab === 'widgets') renderWidgets();
+    if (btn.dataset.tab === 'analytics') renderAnalytics();
+    if (btn.dataset.tab === 'export') renderExport();
+  });
+});
+
+/* ========================================
+   STAR RATING
+   ======================================== */
+document.querySelectorAll('#starRating .star').forEach(star => {
+  star.addEventListener('click', () => {
+    currentRating = parseInt(star.dataset.value);
+    updateStars();
+  });
+});
+function updateStars() {
+  document.querySelectorAll('#starRating .star').forEach(s => {
+    s.classList.toggle('active', parseInt(s.dataset.value) <= currentRating);
+  });
+}
+updateStars();
+
+/* ========================================
+   FEATURED TOGGLE
+   ======================================== */
+document.getElementById('featuredToggle').addEventListener('click', function() {
+  this.classList.toggle('active');
+});
+
+/* ========================================
+   FORM SUBMISSION
+   ======================================== */
+document.getElementById('testimonialForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const t = {
+    id: editingId || Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+    name: document.getElementById('clientName').value.trim(),
+    company: document.getElementById('clientCompany').value.trim(),
+    role: document.getElementById('clientRole').value.trim(),
+    photo: document.getElementById('clientPhoto').value.trim(),
+    projectType: document.getElementById('projectType').value,
+    date: document.getElementById('testimonialDate').value || new Date().toISOString().split('T')[0],
+    rating: currentRating,
+    text: document.getElementById('testimonialText').value.trim(),
+    featured: document.getElementById('featuredToggle').classList.contains('active'),
+    createdAt: editingId ? (testimonials.find(x=>x.id===editingId)||{}).createdAt || Date.now() : Date.now()
+  };
+  if (editingId) {
+    const idx = testimonials.findIndex(x => x.id === editingId);
+    if (idx !== -1) testimonials[idx] = t;
+    editingId = null;
+    notify('Testimonial updated!');
+  } else {
+    testimonials.push(t);
+    notify('Testimonial added!');
+  }
+  saveTestimonials(testimonials);
+  this.reset();
+  currentRating = 5;
+  updateStars();
+  document.getElementById('featuredToggle').classList.remove('active');
+  renderTestimonialList();
+});
+
+/* ========================================
+   SAMPLE DATA
+   ======================================== */
+document.getElementById('addSampleBtn').addEventListener('click', () => {
+  const samples = [
+    { name:'Sarah Johnson', company:'TechFlow Inc', role:'CEO', photo:'', projectType:'Web Design', rating:5, text:'Working with this freelancer was an absolute game-changer. They delivered our new website in just 3 weeks, increasing our conversion rate by 47%. The attention to detail and communication throughout was exceptional.', featured:true },
+    { name:'Marcus Rivera', company:'GreenLeaf Studios', role:'Creative Director', photo:'', projectType:'Branding', rating:5, text:'Incredible branding work! They captured our vision perfectly and delivered a complete brand identity that our team loves. Revenue increased 30% after the rebrand. Highly recommend.', featured:false },
+    { name:'Emily Chen', company:'DataSync', role:'VP of Marketing', photo:'', projectType:'Marketing', rating:4, text:'Great marketing strategy that helped us reach 10,000 new users in our first month. Very data-driven approach and always available for questions. Will definitely work together again.', featured:true },
+    { name:'James Patterson', company:'CloudNine SaaS', role:'CTO', photo:'', projectType:'Development', rating:5, text:'Built our entire MVP in 6 weeks. Clean code, great documentation, and the app scaled to 50,000 users without any issues. Best developer I have hired on a freelance basis.', featured:false },
+    { name:'Priya Sharma', company:'Bloom & Co', role:'Founder', photo:'', projectType:'Copywriting', rating:5, text:'The copy they wrote for our landing page doubled our email signups overnight. Every word was intentional and on-brand. A true wordsmith who understands conversion.', featured:false },
+    { name:'David Kim', company:'NexGen Robotics', role:'Head of Product', photo:'', projectType:'Consulting', rating:4, text:'Provided invaluable strategic consulting for our product launch. Their frameworks and processes saved us months of trial and error. ROI was easily 10x the investment.', featured:false }
+  ];
+  samples.forEach(s => {
+    testimonials.push({
+      ...s,
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2,7),
+      date: new Date(Date.now() - Math.random()*90*86400000).toISOString().split('T')[0],
+      createdAt: Date.now()
+    });
+  });
+  saveTestimonials(testimonials);
+  renderTestimonialList();
+  notify('6 sample testimonials added!');
+});
+
+/* ========================================
+   SMART HIGHLIGHTS
+   ======================================== */
+function highlightText(text) {
+  const patterns = [
+    /\b\d+[\.,]?\d*\s*(%|percent|x|times|weeks?|months?|days?|hours?|years?|users?|clients?|dollars?|k|K|M)\b/gi,
+    /\b(increased|boosted|grew|doubled|tripled|improved|saved|reduced|generated|delivered|converted)\b/gi,
+    /\b(game-?changer|exceptional|incredible|amazing|outstanding|excellent|fantastic|remarkable|phenomenal|extraordinary|best|perfect)\b/gi,
+    /\b(ROI|revenue|conversion|growth|profit|results|performance|success)\b/gi,
+    /\$[\d,]+(?:\.\d{2})?/g
+  ];
+  let result = text;
+  const matches = [];
+  patterns.forEach(p => {
+    let m;
+    while ((m = p.exec(text)) !== null) {
+      matches.push({ start: m.index, end: m.index + m[0].length, text: m[0] });
+    }
+  });
+  matches.sort((a, b) => b.start - a.start);
+  const seen = new Set();
+  matches.forEach(m => {
+    const key = m.start + '-' + m.end;
+    if (!seen.has(key)) {
+      seen.add(key);
+      result = result.slice(0, m.start) + '<span class="t-highlight">' + result.slice(m.start, m.end) + '</span>' + result.slice(m.end);
+    }
+  });
+  return result;
+}
+
+/* ========================================
+   TESTIMONIAL LIST
+   ======================================== */
+function getInitials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+}
+function starsHTML(rating) {
+  return '&#9733;'.repeat(rating) + '<span style="color:#334155">' + '&#9733;'.repeat(5-rating) + '</span>';
+}
+
+function renderFilterBar() {
+  const types = [...new Set(testimonials.map(t => t.projectType).filter(Boolean))];
+  let html = '<button class="filter-chip ' + (activeFilter === 'all' ? 'active' : '') + '" onclick="setFilter(\'all\')">All (' + testimonials.length + ')</button>';
+  html += '<button class="filter-chip ' + (activeFilter === 'featured' ? 'active' : '') + '" onclick="setFilter(\'featured\')">Featured</button>';
+  html += '<button class="filter-chip ' + (activeFilter === '5star' ? 'active' : '') + '" onclick="setFilter(\'5star\')">5 Stars</button>';
+  types.forEach(type => {
+    html += '<button class="filter-chip ' + (activeFilter === type ? 'active' : '') + '" onclick="setFilter(\'' + type + '\')">' + type + '</button>';
+  });
+  document.getElementById('filterBar').innerHTML = html;
+}
+
+function setFilter(f) {
+  activeFilter = f;
+  renderTestimonialList();
+}
+
+function getFiltered() {
+  let list = [...testimonials];
+  if (activeFilter === 'featured') list = list.filter(t => t.featured);
+  else if (activeFilter === '5star') list = list.filter(t => t.rating === 5);
+  else if (activeFilter !== 'all') list = list.filter(t => t.projectType === activeFilter);
+  return list.sort((a,b) => b.createdAt - a.createdAt);
+}
+
+function renderTestimonialList() {
+  renderFilterBar();
+  const list = getFiltered();
+  const container = document.getElementById('testimonialList');
+  if (list.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="icon">&#128172;</div><p>No testimonials yet. Add your first one above!</p></div>';
+    return;
+  }
+  container.innerHTML = list.map(t => {
+    const avatar = t.photo
+      ? '<div class="testimonial-avatar"><img src="' + escapeHtml(t.photo) + '" alt="' + escapeHtml(t.name) + '" onerror="this.parentNode.innerHTML=\'' + getInitials(t.name) + '\'"></div>'
+      : '<div class="testimonial-avatar">' + getInitials(t.name) + '</div>';
+    const roleText = [t.role, t.company].filter(Boolean).join(' at ');
+    return '<div class="testimonial-item">' +
+      avatar +
+      '<div class="testimonial-content">' +
+        '<div class="testimonial-meta">' +
+          '<span class="testimonial-name">' + escapeHtml(t.name) + '</span>' +
+          (roleText ? '<span class="testimonial-role">' + escapeHtml(roleText) + '</span>' : '') +
+          '<span class="testimonial-stars">' + starsHTML(t.rating) + '</span>' +
+        '</div>' +
+        '<div class="testimonial-text">"' + highlightText(escapeHtml(t.text)) + '"</div>' +
+        '<div class="testimonial-tags">' +
+          (t.projectType ? '<span class="testimonial-tag">' + escapeHtml(t.projectType) + '</span>' : '') +
+          (t.featured ? '<span class="testimonial-tag featured">Featured</span>' : '') +
+          '<span class="testimonial-tag">' + formatDate(t.date) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="testimonial-actions">' +
+        '<button class="action-btn" onclick="editTestimonial(\'' + t.id + '\')" title="Edit">&#9998;</button>' +
+        '<button class="action-btn delete" onclick="deleteTestimonial(\'' + t.id + '\')" title="Delete">&#10005;</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  try { return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }); }
+  catch { return d; }
+}
+
+function editTestimonial(id) {
+  const t = testimonials.find(x => x.id === id);
+  if (!t) return;
+  editingId = id;
+  document.getElementById('clientName').value = t.name;
+  document.getElementById('clientCompany').value = t.company || '';
+  document.getElementById('clientRole').value = t.role || '';
+  document.getElementById('clientPhoto').value = t.photo || '';
+  document.getElementById('projectType').value = t.projectType || '';
+  document.getElementById('testimonialDate').value = t.date || '';
+  currentRating = t.rating;
+  updateStars();
+  document.getElementById('testimonialText').value = t.text;
+  if (t.featured) document.getElementById('featuredToggle').classList.add('active');
+  else document.getElementById('featuredToggle').classList.remove('active');
+  document.getElementById('clientName').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  notify('Editing testimonial from ' + t.name);
+}
+
+function deleteTestimonial(id) {
+  if (!confirm('Delete this testimonial?')) return;
+  testimonials = testimonials.filter(t => t.id !== id);
+  saveTestimonials(testimonials);
+  renderTestimonialList();
+  notify('Testimonial deleted');
+}
+
+/* ========================================
+   REQUEST TEMPLATES
+   ======================================== */
+const templates = [
+  {
+    icon: '&#9989;',
+    title: 'Post-Project Completion',
+    desc: 'Send right after wrapping up a successful project.',
+    subject: 'Quick favor? Share your experience working together',
+    body: `Hi [CLIENT NAME],
+
+Now that we've wrapped up [PROJECT NAME], I wanted to first say thank you for being such a great client to work with.
+
+I'm building out my portfolio and client testimonials page, and I'd love to feature your experience. Would you be willing to share a few sentences about:
+
+- What the project was about
+- What results or outcomes you saw
+- What it was like working together
+
+No pressure at all — even 2-3 sentences would be incredibly helpful. I can also draft something based on our conversations for you to approve if that's easier.
+
+Thank you so much!
+[YOUR NAME]`
+  },
+  {
+    icon: '&#127942;',
+    title: 'Post-Milestone',
+    desc: 'Perfect timing after hitting a major project milestone.',
+    subject: 'Celebrating our milestone — would love your feedback',
+    body: `Hi [CLIENT NAME],
+
+We just hit a major milestone on [PROJECT/METRIC] and I'm really proud of what we've accomplished together!
+
+Since we're riding this wave of success, I wanted to ask — would you be open to sharing a quick testimonial about our work together? It would mean a lot for my business.
+
+A few things that could be helpful to mention:
+- The specific results or improvements you've noticed
+- How the process felt from your end
+- Whether you'd recommend working together
+
+Happy to keep it short and sweet — even a few lines would be amazing.
+
+Best,
+[YOUR NAME]`
+  },
+  {
+    icon: '&#128197;',
+    title: 'Annual Check-In',
+    desc: 'Great for long-term clients during yearly reviews.',
+    subject: 'Checking in + a small request',
+    body: `Hi [CLIENT NAME],
+
+It's been [TIME PERIOD] since we started working together, and I just wanted to check in and say how much I value our partnership.
+
+As I update my website for the new year, I'd love to include a testimonial from you. You've been one of my favorite clients to work with, and your perspective would carry a lot of weight.
+
+Would you be willing to share a few thoughts on:
+- How our ongoing work has impacted your business
+- What you appreciate about our working relationship
+- Any specific outcomes or wins worth mentioning
+
+I know you're busy, so even a short quote would be incredibly helpful.
+
+Warmly,
+[YOUR NAME]`
+  },
+  {
+    icon: '&#129309;',
+    title: 'Referral Thank You',
+    desc: 'After a client refers someone new to you.',
+    subject: 'Thank you for the referral!',
+    body: `Hi [CLIENT NAME],
+
+I just connected with [REFERRED PERSON] and I wanted to thank you so much for the referral. It means the world to me that you'd recommend my work.
+
+Since you've clearly had a positive experience, would you be open to putting that into a brief testimonial I could feature? Your word-of-mouth is already helping me grow — having it in writing would take things to the next level.
+
+No pressure, and I'm happy to draft something for your approval if that's easier.
+
+Thanks again for the kind referral!
+[YOUR NAME]`
+  },
+  {
+    icon: '&#128218;',
+    title: 'Case Study Request',
+    desc: 'When you want to create an in-depth case study.',
+    subject: 'Would you be open to being featured as a case study?',
+    body: `Hi [CLIENT NAME],
+
+The results we achieved on [PROJECT NAME] were really impressive — [SPECIFIC METRIC/OUTCOME] — and I'd love to tell that story in a case study.
+
+This would involve:
+- A brief testimonial quote from you (2-3 sentences)
+- Permission to share before/after results
+- Optionally, a 15-minute interview for deeper insights
+
+The case study would highlight your company as a success story, which could also serve as great PR for [COMPANY NAME].
+
+Would you be interested? Happy to share examples of previous case studies I've done.
+
+Best,
+[YOUR NAME]`
+  },
+  {
+    icon: '&#128101;',
+    title: 'LinkedIn Recommendation',
+    desc: 'Request a LinkedIn recommendation from a client.',
+    subject: 'Would you write a LinkedIn recommendation?',
+    body: `Hi [CLIENT NAME],
+
+I'm updating my LinkedIn profile and focusing on building stronger social proof. Since we've had such a great experience working together, I was wondering if you'd be willing to write a brief recommendation on LinkedIn?
+
+Here's my profile link: [YOUR LINKEDIN URL]
+
+You can keep it short — even 2-3 sentences about:
+- What I helped you with
+- The quality of work or results
+- Whether you'd work with me again
+
+I'd be happy to write one for you in return!
+
+Thanks for considering it,
+[YOUR NAME]`
+  },
+  {
+    icon: '&#11088;',
+    title: 'Google Review Request',
+    desc: 'Ask clients to leave a review on Google.',
+    subject: 'Quick favor — 30-second Google review?',
+    body: `Hi [CLIENT NAME],
+
+I hope this finds you well! I have a quick favor to ask.
+
+Google reviews are incredibly important for freelancers like me to get found by new clients. Would you be willing to leave a brief review about your experience?
+
+Here's the direct link: [YOUR GOOGLE REVIEW LINK]
+
+Even just a star rating with one sentence would make a huge difference. Something like what the project was and whether you'd recommend me.
+
+Thank you so much — I really appreciate your support!
+
+Best,
+[YOUR NAME]`
+  },
+  {
+    icon: '&#127909;',
+    title: 'Video Testimonial Request',
+    desc: 'For high-impact video testimonials.',
+    body: `Hi [CLIENT NAME],
+
+I'm putting together a collection of video testimonials for my website, and I immediately thought of you. Your project with [RESULT/OUTCOME] is exactly the kind of story potential clients want to hear.
+
+It would be super simple:
+- Record a 30-60 second video on your phone
+- Share what we worked on and the results
+- Say whether you'd recommend working together
+
+You can literally do it at your desk — no fancy production needed. Authentic is better!
+
+If you're up for it, you can record and send it via [METHOD — email, Google Drive, etc.]. I can also hop on a quick Zoom call and record it as a casual interview if that feels easier.
+
+Would you be open to it?
+
+Thanks!
+[YOUR NAME]`,
+    subject: 'Would you record a quick 60-second video testimonial?',
+  }
+];
+
+function renderTemplates() {
+  document.getElementById('templateGrid').innerHTML = templates.map((t, i) => {
+    return '<div class="template-card" onclick="openTemplate(' + i + ')">' +
+      '<div class="template-icon">' + t.icon + '</div>' +
+      '<h4>' + t.title + '</h4>' +
+      '<p>' + t.desc + '</p>' +
+    '</div>';
+  }).join('');
+}
+
+function openTemplate(i) {
+  const t = templates[i];
+  document.getElementById('modalBody').innerHTML =
+    '<h3>' + t.icon + ' ' + t.title + '</h3>' +
+    '<div class="form-group"><label>Subject Line</label><input type="text" id="tplSubject" value="' + escapeHtml(t.subject) + '"></div>' +
+    '<div class="form-group"><label>Email Body</label><textarea id="tplBody" rows="16" style="min-height:300px;">' + escapeHtml(t.body) + '</textarea></div>' +
+    '<div class="btn-group">' +
+      '<button class="btn btn-primary" onclick="copyTemplate()">Copy to Clipboard</button>' +
+      '<button class="btn btn-secondary" onclick="closeModal()">Close</button>' +
+    '</div>';
+  openModal();
+}
+
+function copyTemplate() {
+  const subj = document.getElementById('tplSubject').value;
+  const body = document.getElementById('tplBody').value;
+  const text = 'Subject: ' + subj + '\n\n' + body;
+  navigator.clipboard.writeText(text).then(() => notify('Template copied to clipboard!')).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    notify('Template copied!');
+  });
+}
+
+/* ========================================
+   MODAL
+   ======================================== */
+function openModal() { document.getElementById('modalOverlay').classList.add('active'); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+/* ========================================
+   LAYOUT SYSTEM
+   ======================================== */
+const layouts = [
+  { id:'masonry', name:'Masonry Grid', icon:'&#9638;' },
+  { id:'carousel', name:'Carousel', icon:'&#9654;' },
+  { id:'wall', name:'Wall of Love', icon:'&#10084;' },
+  { id:'minimal', name:'Minimal List', icon:'&#9776;' },
+  { id:'stack', name:'Card Stack', icon:'&#128194;' },
+  { id:'spotlight', name:'Spotlight', icon:'&#9733;' }
+];
+
+function renderLayoutSelectors() {
+  ['layoutSelector','exportLayoutSelector'].forEach(containerId => {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    const settingsKey = containerId === 'exportLayoutSelector' ? 'exportLayout' : 'layout';
+    el.innerHTML = layouts.map(l => {
+      return '<div class="layout-option ' + (settings[settingsKey] === l.id ? 'active' : '') + '" data-layout="' + l.id + '" data-settings="' + settingsKey + '">' +
+        '<div class="icon">' + l.icon + '</div>' +
+        '<div class="name">' + l.name + '</div>' +
+      '</div>';
+    }).join('');
+    el.querySelectorAll('.layout-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        el.querySelectorAll('.layout-option').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        settings[opt.dataset.settings] = opt.dataset.layout;
+        saveSettings(settings);
+        if (containerId === 'layoutSelector') renderLayoutPreview();
+        if (containerId === 'exportLayoutSelector') renderEmbedCode();
+      });
+    });
+  });
+}
+
+function buildTestimonialCard(t, large) {
+  const avatar = t.photo
+    ? '<div class="t-avatar"><img src="' + escapeHtml(t.photo) + '" alt="" onerror="this.parentNode.innerHTML=\'' + getInitials(t.name) + '\'"></div>'
+    : '<div class="t-avatar">' + getInitials(t.name) + '</div>';
+  const fs = large ? 'font-size:16px;' : '';
+  return '<div class="t-stars">' + starsHTML(t.rating) + '</div>' +
+    '<div class="t-text" style="' + fs + '">"' + highlightText(escapeHtml(t.text)) + '"</div>' +
+    '<div class="t-author">' + avatar +
+      '<div><div class="t-name">' + escapeHtml(t.name) + '</div>' +
+      '<div class="t-role">' + escapeHtml([t.role, t.company].filter(Boolean).join(', ')) + '</div></div>' +
+    '</div>';
+}
+
+let carouselIdx = 0;
+let stackIdx = 0;
+
+function renderLayoutPreview() {
+  const area = document.getElementById('previewArea');
+  const list = getFiltered();
+  if (list.length === 0) {
+    area.innerHTML = '<div class="empty-state"><div class="icon">&#128065;</div><p>Add some testimonials first to see the preview.</p></div>';
+    return;
+  }
+  const layout = settings.layout;
+  let html = '';
+
+  if (layout === 'masonry') {
+    html = '<div class="masonry-grid">';
+    list.forEach(t => { html += '<div class="t-card">' + buildTestimonialCard(t) + '</div>'; });
+    html += '</div>';
+  }
+  else if (layout === 'carousel') {
+    carouselIdx = 0;
+    html = '<div class="carousel-wrap"><div class="carousel-track" id="carouselTrack">';
+    list.forEach(t => { html += '<div class="t-card">' + buildTestimonialCard(t) + '</div>'; });
+    html += '</div><div class="carousel-nav" id="carouselNav">';
+    list.forEach((_, i) => { html += '<button class="carousel-dot ' + (i === 0 ? 'active' : '') + '" onclick="goCarousel(' + i + ')"></button>'; });
+    html += '</div></div>';
+  }
+  else if (layout === 'wall') {
+    html = '<div class="wall-grid">';
+    list.forEach(t => { html += '<div class="t-card">' + buildTestimonialCard(t) + '</div>'; });
+    html += '</div>';
+  }
+  else if (layout === 'minimal') {
+    html = '<div class="minimal-list">';
+    list.forEach(t => { html += '<div class="t-card">' + buildTestimonialCard(t) + '</div>'; });
+    html += '</div>';
+  }
+  else if (layout === 'stack') {
+    stackIdx = 0;
+    html = '<div class="card-stack" id="cardStack">';
+    list.slice(0,5).forEach((t, i) => {
+      const offset = i * 6;
+      const scale = 1 - i * 0.04;
+      const opacity = i === 0 ? 1 : 0.7 - i * 0.15;
+      html += '<div class="t-card" style="z-index:' + (10-i) + ';transform:translateY(' + offset + 'px) scale(' + scale + ');opacity:' + opacity + ';" onclick="cycleStack()">' + buildTestimonialCard(t) + '</div>';
+    });
+    html += '</div>';
+    html += '<p style="text-align:center;color:var(--text2);font-size:13px;margin-top:8px;">Click a card to cycle through</p>';
+  }
+  else if (layout === 'spotlight') {
+    const featured = list.filter(t => t.featured);
+    const others = list.filter(t => !t.featured);
+    html = '<div class="spotlight-layout">';
+    if (featured.length > 0) {
+      html += '<div class="featured-card">' + buildTestimonialCard(featured[0], true) + '</div>';
+    }
+    (featured.length > 0 ? [...featured.slice(1), ...others] : others).forEach(t => {
+      html += '<div class="t-card">' + buildTestimonialCard(t) + '</div>';
+    });
+    html += '</div>';
+  }
+  area.innerHTML = html;
+}
+
+function goCarousel(idx) {
+  carouselIdx = idx;
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+  const card = track.querySelector('.t-card');
+  if (!card) return;
+  const w = card.offsetWidth + 16;
+  track.style.transform = 'translateX(-' + (idx * w) + 'px)';
+  document.querySelectorAll('#carouselNav .carousel-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
+  });
+}
+
+function cycleStack() {
+  const stack = document.getElementById('cardStack');
+  if (!stack) return;
+  const cards = stack.querySelectorAll('.t-card');
+  if (cards.length < 2) return;
+  const first = cards[0];
+  first.style.transform = 'translateX(-120%) rotate(-10deg)';
+  first.style.opacity = '0';
+  setTimeout(() => {
+    stack.appendChild(first);
+    const newCards = stack.querySelectorAll('.t-card');
+    newCards.forEach((c, i) => {
+      c.style.transform = 'translateY(' + (i*6) + 'px) scale(' + (1-i*0.04) + ')';
+      c.style.opacity = i === 0 ? '1' : '' + (0.7 - i*0.15);
+      c.style.zIndex = 10 - i;
+    });
+  }, 300);
+}
+
+/* ========================================
+   WIDGETS
+   ======================================== */
+function renderWidgets() {
+  const avg = testimonials.length ? (testimonials.reduce((s,t) => s + t.rating, 0) / testimonials.length).toFixed(1) : '0.0';
+  const count = testimonials.length;
+
+  // Badge
+  document.getElementById('badgePreview').innerHTML =
+    '<div class="widget-badge"><span style="color:#f59e0b;">&#9733;</span> ' + avg + '/5 from ' + count + ' clients</div>';
+
+  document.getElementById('badgeCode').textContent =
+`<div style="position:fixed;bottom:20px;right:20px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#0f172a;border:1px solid rgba(168,85,247,0.2);border-radius:100px;font-family:system-ui;font-size:14px;font-weight:600;color:#e2e8f0;box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+  <span style="color:#f59e0b;">&#9733;</span> ${avg}/5 from ${count} clients
+</div>`;
+
+  // Ticker
+  const tickerItems = testimonials.slice(0,8).map(t =>
+    '<span style="display:inline-flex;align-items:center;gap:8px;margin-right:40px;">' +
+    '<span style="color:#f59e0b;">&#9733;</span> "' + escapeHtml(t.text.slice(0,60)) + '..." &mdash; ' + escapeHtml(t.name) + '</span>'
+  ).join('');
+  document.getElementById('tickerPreview').innerHTML =
+    '<div class="widget-ticker"><div class="widget-ticker-inner">' + tickerItems + tickerItems + '</div></div>';
+
+  document.getElementById('tickerCode').textContent =
+`<div style="overflow:hidden;white-space:nowrap;padding:12px 0;background:#0f172a;border:1px solid rgba(168,85,247,0.2);border-radius:12px;font-family:system-ui;font-size:14px;color:#e2e8f0;">
+  <div style="display:inline-block;animation:ticker 20s linear infinite;">
+    ${testimonials.slice(0,6).map(t => '&star; "' + t.text.slice(0,50) + '..." - ' + t.name).join(' &nbsp;&nbsp;&nbsp;&nbsp; ')}
+  </div>
+</div>
+<style>@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}</style>`;
+
+  // Mini Carousel
+  if (testimonials.length > 0) {
+    const t = testimonials[0];
+    document.getElementById('miniCarouselPreview').innerHTML =
+      '<div style="background:#0f172a;border:1px solid rgba(168,85,247,0.2);border-radius:12px;padding:20px;max-width:350px;">' +
+      '<div style="color:#f59e0b;margin-bottom:8px;">' + starsHTML(t.rating) + '</div>' +
+      '<div style="font-size:14px;color:#e2e8f0;line-height:1.6;margin-bottom:12px;">"' + escapeHtml(t.text.slice(0,120)) + '..."</div>' +
+      '<div style="font-size:14px;font-weight:600;color:#e2e8f0;">' + escapeHtml(t.name) + '</div>' +
+      '<div style="font-size:12px;color:#94a3b8;">' + escapeHtml([t.role, t.company].filter(Boolean).join(', ')) + '</div>' +
+      '</div>';
+  } else {
+    document.getElementById('miniCarouselPreview').innerHTML = '<div style="color:var(--text2);font-size:14px;">Add testimonials to see preview</div>';
+  }
+
+  document.getElementById('miniCarouselCode').textContent =
+`<div id="testimonial-carousel" style="background:#0f172a;border:1px solid rgba(168,85,247,0.2);border-radius:12px;padding:20px;max-width:350px;font-family:system-ui;">
+  <div id="tc-content"></div>
+</div>
+<script>
+(function(){
+  var testimonials = ${JSON.stringify(testimonials.slice(0,6).map(t => ({name:t.name,role:t.role,company:t.company,rating:t.rating,text:t.text.slice(0,120)})))};
+  var idx = 0;
+  function render(){
+    var t = testimonials[idx];
+    var stars = '\\u2605'.repeat(t.rating) + '\\u2606'.repeat(5-t.rating);
+    document.getElementById('tc-content').innerHTML =
+      '<div style="color:#f59e0b;margin-bottom:8px;">' + stars + '</div>' +
+      '<div style="font-size:14px;color:#e2e8f0;line-height:1.6;margin-bottom:12px;">"' + t.text + '..."</div>' +
+      '<div style="font-size:14px;font-weight:600;color:#e2e8f0;">' + t.name + '</div>' +
+      '<div style="font-size:12px;color:#94a3b8;">' + [t.role,t.company].filter(Boolean).join(', ') + '</div>';
+    idx = (idx + 1) % testimonials.length;
+  }
+  render();
+  setInterval(render, 4000);
+})();
+<\/script>`;
+}
+
+function copyCode(id) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => notify('Code copied!')).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    notify('Code copied!');
+  });
+}
+
+/* ========================================
+   ANALYTICS
+   ======================================== */
+function renderAnalytics() {
+  const count = testimonials.length;
+  const avg = count ? (testimonials.reduce((s,t) => s + t.rating, 0) / count).toFixed(1) : '0.0';
+  const fiveStars = testimonials.filter(t => t.rating === 5).length;
+  const featured = testimonials.filter(t => t.featured).length;
+  const responseRate = count ? Math.min(100, Math.round((count / Math.max(count, count + 2)) * 100)) : 0;
+
+  document.getElementById('analyticsGrid').innerHTML =
+    '<div class="stat-card"><div class="stat-value">' + avg + '</div><div class="stat-label">Average Rating</div></div>' +
+    '<div class="stat-card"><div class="stat-value">' + count + '</div><div class="stat-label">Total Testimonials</div></div>' +
+    '<div class="stat-card"><div class="stat-value">' + fiveStars + '</div><div class="stat-label">5-Star Reviews</div></div>' +
+    '<div class="stat-card"><div class="stat-value">' + featured + '</div><div class="stat-label">Featured</div></div>';
+
+  // Rating distribution
+  const distEl = document.getElementById('ratingDistribution');
+  let distHTML = '';
+  for (let r = 5; r >= 1; r--) {
+    const c = testimonials.filter(t => t.rating === r).length;
+    const pct = count ? (c / count * 100) : 0;
+    distHTML += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">' +
+      '<span style="width:50px;font-size:14px;color:var(--text2);">' + r + ' &#9733;</span>' +
+      '<div style="flex:1;height:24px;background:rgba(15,23,42,0.6);border-radius:12px;overflow:hidden;">' +
+        '<div style="height:100%;width:' + pct + '%;background:var(--accent);border-radius:12px;transition:width 0.5s;"></div>' +
+      '</div>' +
+      '<span style="width:40px;text-align:right;font-size:13px;color:var(--text2);">' + c + '</span>' +
+    '</div>';
+  }
+  distEl.innerHTML = distHTML;
+
+  // Themes
+  const allText = testimonials.map(t => t.text.toLowerCase()).join(' ');
+  const positiveWords = [
+    'amazing','excellent','incredible','outstanding','exceptional','fantastic','professional','creative',
+    'responsive','reliable','innovative','efficient','thorough','talented','skilled','dedicated',
+    'results','growth','success','recommend','quality','beautiful','perfect','delivered','exceeded',
+    'communication','detail','fast','quick','timely','budget','value','above and beyond','love',
+    'impressive','transformative','expert','strategic','collaborative','supportive','insightful'
+  ];
+  const found = {};
+  positiveWords.forEach(w => {
+    const regex = new RegExp('\\b' + w + '\\b', 'gi');
+    const matches = allText.match(regex);
+    if (matches && matches.length > 0) found[w] = matches.length;
+  });
+  const sorted = Object.entries(found).sort((a,b) => b[1] - a[1]).slice(0,15);
+  document.getElementById('themeList').innerHTML = sorted.length > 0
+    ? sorted.map(([word, count]) => '<span class="theme-chip">' + word + ' (' + count + ')</span>').join('')
+    : '<span style="color:var(--text2);font-size:14px;">Add testimonials to see themes</span>';
+}
+
+/* ========================================
+   EXPORT
+   ======================================== */
+function renderExport() {
+  renderLayoutSelectors();
+  renderEmbedCode();
+  renderSocialCards();
+}
+
+function renderEmbedCode() {
+  const layout = settings.exportLayout || 'wall';
+  const list = testimonials;
+  let cardsCSS = '';
+  let cardsHTML = '';
+
+  if (layout === 'masonry') {
+    cardsCSS = '.twb-grid{columns:3;column-gap:16px;}.twb-card{break-inside:avoid;margin-bottom:16px;}@media(max-width:768px){.twb-grid{columns:1;}}';
+    cardsHTML = '<div class="twb-grid">' + list.map(t => '<div class="twb-card">' + embedCard(t) + '</div>').join('') + '</div>';
+  } else if (layout === 'wall') {
+    cardsCSS = '.twb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}';
+    cardsHTML = '<div class="twb-grid">' + list.map(t => '<div class="twb-card">' + embedCard(t) + '</div>').join('') + '</div>';
+  } else {
+    cardsCSS = '.twb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}';
+    cardsHTML = '<div class="twb-grid">' + list.map(t => '<div class="twb-card">' + embedCard(t) + '</div>').join('') + '</div>';
+  }
+
+  const embed = `<style>
+.twb-wall{font-family:system-ui,sans-serif;color:#e2e8f0;padding:20px;}
+${cardsCSS}
+.twb-card{background:#0f172a;border:1px solid rgba(168,85,247,0.2);border-radius:12px;padding:20px;}
+.twb-stars{color:#f59e0b;margin-bottom:8px;font-size:14px;}
+.twb-text{font-size:14px;line-height:1.7;margin-bottom:12px;color:#e2e8f0;}
+.twb-name{font-weight:600;font-size:14px;}
+.twb-role{font-size:12px;color:#94a3b8;}
+</style>
+<div class="twb-wall">${cardsHTML}</div>`;
+
+  document.getElementById('embedCode').textContent = embed;
+}
+
+function embedCard(t) {
+  const stars = '&#9733;'.repeat(t.rating) + '<span style="color:#334155;">' + '&#9733;'.repeat(5-t.rating) + '</span>';
+  return '<div class="twb-stars">' + stars + '</div>' +
+    '<div class="twb-text">"' + escapeHtml(t.text) + '"</div>' +
+    '<div class="twb-name">' + escapeHtml(t.name) + '</div>' +
+    '<div class="twb-role">' + escapeHtml([t.role, t.company].filter(Boolean).join(', ')) + '</div>';
+}
+
+function renderSocialCards() {
+  const container = document.getElementById('socialCardList');
+  if (testimonials.length === 0) {
+    container.innerHTML = '<div class="empty-state"><p>Add testimonials to generate social cards.</p></div>';
+    return;
+  }
+  container.innerHTML = testimonials.map(t =>
+    '<div class="testimonial-item" style="cursor:pointer;" onclick="generateSocialCard(\'' + t.id + '\')">' +
+      '<div class="testimonial-avatar">' + getInitials(t.name) + '</div>' +
+      '<div class="testimonial-content">' +
+        '<div class="testimonial-name">' + escapeHtml(t.name) + '</div>' +
+        '<div class="testimonial-text" style="max-height:40px;overflow:hidden;">"' + escapeHtml(t.text.slice(0,80)) + '..."</div>' +
+      '</div>' +
+      '<span style="color:var(--text2);font-size:12px;white-space:nowrap;">Click to generate</span>' +
+    '</div>'
+  ).join('');
+}
+
+function generateSocialCard(id) {
+  const t = testimonials.find(x => x.id === id);
+  if (!t) return;
+  const canvas = document.getElementById('socialCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = 1200, H = 675;
+  canvas.width = W;
+  canvas.height = H;
+
+  // Background
+  ctx.fillStyle = '#020617';
+  ctx.fillRect(0, 0, W, H);
+
+  // Gradient accent stripe
+  const grad = ctx.createLinearGradient(0, 0, W, 0);
+  grad.addColorStop(0, '#a855f7');
+  grad.addColorStop(1, '#ec4899');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, 6);
+
+  // Card background
+  ctx.fillStyle = '#0f172a';
+  roundRect(ctx, 60, 40, W-120, H-80, 20);
+  ctx.fill();
+
+  // Stars
+  ctx.fillStyle = '#f59e0b';
+  ctx.font = '28px system-ui';
+  ctx.fillText('★'.repeat(t.rating) + '☆'.repeat(5 - t.rating), 100, 110);
+
+  // Quote marks
+  ctx.fillStyle = 'rgba(168,85,247,0.3)';
+  ctx.font = '120px Georgia, serif';
+  ctx.fillText('“', 80, 200);
+
+  // Testimonial text
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = '24px system-ui';
+  const maxChars = 200;
+  const displayText = t.text.length > maxChars ? t.text.slice(0, maxChars) + '...' : t.text;
+  wrapText(ctx, '"' + displayText + '"', 100, 190, W - 200, 36);
+
+  // Author
+  const authorY = H - 120;
+  // Avatar circle
+  ctx.fillStyle = '#a855f7';
+  ctx.beginPath();
+  ctx.arc(130, authorY, 30, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 20px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText(getInitials(t.name), 130, authorY + 7);
+  ctx.textAlign = 'left';
+
+  // Name & role
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'bold 22px system-ui';
+  ctx.fillText(t.name, 175, authorY - 4);
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '16px system-ui';
+  ctx.fillText([t.role, t.company].filter(Boolean).join(', '), 175, authorY + 24);
+
+  // Download
+  canvas.toBlob(function(blob) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'testimonial-' + t.name.toLowerCase().replace(/\s+/g, '-') + '.png';
+    a.click();
+    URL.revokeObjectURL(url);
+    notify('Social card downloaded!');
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(' ');
+  let line = '';
+  let curY = y;
+  for (let i = 0; i < words.length; i++) {
+    const test = line + words[i] + ' ';
+    if (ctx.measureText(test).width > maxWidth && i > 0) {
+      ctx.fillText(line.trim(), x, curY);
+      line = words[i] + ' ';
+      curY += lineHeight;
+      if (curY > 460) { ctx.fillText(line.trim() + '...', x, curY); return; }
+    } else {
+      line = test;
+    }
+  }
+  ctx.fillText(line.trim(), x, curY);
+}
+
+/* ========================================
+   EXPORT FUNCTIONS
+   ======================================== */
+function exportHTML() {
+  const layout = settings.exportLayout || 'wall';
+  const list = testimonials;
+  if (list.length === 0) { notify('No testimonials to export'); return; }
+
+  let layoutCSS = '';
+  let layoutHTML = '';
+  const cardCSS = `.t-card{background:#0f172a;border:1px solid rgba(168,85,247,0.2);border-radius:12px;padding:24px;transition:transform .2s;}
+.t-card:hover{transform:translateY(-2px);}
+.t-stars{color:#f59e0b;margin-bottom:10px;font-size:14px;}
+.t-text{font-size:15px;line-height:1.7;margin-bottom:14px;color:#e2e8f0;}
+.t-author{display:flex;align-items:center;gap:10px;}
+.t-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#ec4899);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;}
+.t-name{font-weight:600;font-size:14px;color:#e2e8f0;}
+.t-role{font-size:12px;color:#94a3b8;}
+.t-highlight{background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(236,72,153,.3));padding:1px 4px;border-radius:4px;}`;
+
+  function cardHTML(t) {
+    return '<div class="t-stars">' + '★'.repeat(t.rating) + '<span style="color:#334155">' + '☆'.repeat(5-t.rating) + '</span></div>' +
+      '<div class="t-text">"' + highlightText(escapeHtml(t.text)) + '"</div>' +
+      '<div class="t-author"><div class="t-avatar">' + getInitials(t.name) + '</div><div><div class="t-name">' + escapeHtml(t.name) + '</div><div class="t-role">' + escapeHtml([t.role,t.company].filter(Boolean).join(', ')) + '</div></div></div>';
+  }
+
+  if (layout === 'masonry') {
+    layoutCSS = '.grid{columns:3;column-gap:16px;}.t-card{break-inside:avoid;margin-bottom:16px;}@media(max-width:768px){.grid{columns:1;}}';
+    layoutHTML = '<div class="grid">' + list.map(t => '<div class="t-card">' + cardHTML(t) + '</div>').join('') + '</div>';
+  } else if (layout === 'carousel') {
+    layoutCSS = '.carousel{overflow-x:auto;display:flex;gap:16px;padding-bottom:16px;scroll-snap-type:x mandatory;}.carousel .t-card{min-width:350px;flex-shrink:0;scroll-snap-align:start;}';
+    layoutHTML = '<div class="carousel">' + list.map(t => '<div class="t-card">' + cardHTML(t) + '</div>').join('') + '</div>';
+  } else if (layout === 'wall') {
+    layoutCSS = '.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}';
+    layoutHTML = '<div class="grid">' + list.map(t => '<div class="t-card">' + cardHTML(t) + '</div>').join('') + '</div>';
+  } else if (layout === 'minimal') {
+    layoutCSS = '.list .t-card{border-radius:0;border:none;border-bottom:1px solid rgba(168,85,247,.15);padding:24px 0;background:transparent;}.list .t-card:last-child{border-bottom:none;}';
+    layoutHTML = '<div class="list">' + list.map(t => '<div class="t-card">' + cardHTML(t) + '</div>').join('') + '</div>';
+  } else if (layout === 'stack') {
+    layoutCSS = '.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}';
+    layoutHTML = '<div class="grid">' + list.map(t => '<div class="t-card">' + cardHTML(t) + '</div>').join('') + '</div>';
+  } else if (layout === 'spotlight') {
+    const f = list.filter(t => t.featured);
+    const o = list.filter(t => !t.featured);
+    layoutCSS = `.spotlight{display:grid;grid-template-columns:1fr 1fr;gap:16px;}.featured{grid-column:1/-1;background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(236,72,153,.1));border:1px solid rgba(168,85,247,.3);border-radius:16px;padding:36px;text-align:center;}
+.featured .t-text{font-size:18px;}@media(max-width:768px){.spotlight{grid-template-columns:1fr;}}`;
+    layoutHTML = '<div class="spotlight">';
+    if (f.length > 0) layoutHTML += '<div class="featured">' + cardHTML(f[0]) + '</div>';
+    [...f.slice(1), ...o].forEach(t => { layoutHTML += '<div class="t-card">' + cardHTML(t) + '</div>'; });
+    layoutHTML += '</div>';
+  }
+
+  const avg = list.length ? (list.reduce((s,t)=>s+t.rating,0)/list.length).toFixed(1) : '0';
+  const fullHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Client Testimonials</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,-apple-system,sans-serif;background:#020617;color:#e2e8f0;min-height:100vh;padding:40px 20px;}
+.container{max-width:1100px;margin:0 auto;}
+.header{text-align:center;margin-bottom:40px;}
+.header h1{font-size:36px;font-weight:800;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
+.header p{color:#94a3b8;font-size:16px;}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:#0f172a;border:1px solid rgba(168,85,247,.2);border-radius:100px;font-size:15px;font-weight:600;margin-bottom:20px;}
+${cardCSS}
+${layoutCSS}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<div class="badge"><span style="color:#f59e0b;">★</span> ${avg}/5 from ${list.length} clients</div>
+<h1>What Our Clients Say</h1>
+<p>Real feedback from real projects</p>
+</div>
+${layoutHTML}
+</div>
+<script src="/freelanceos-storefront/exit-intent.js"></script>
+</body>
+</html>`;
+
+  downloadFile('testimonial-wall.html', fullHTML, 'text/html');
+  notify('HTML page exported!');
+}
+
+function exportCSV() {
+  if (testimonials.length === 0) { notify('No testimonials to export'); return; }
+  const headers = ['Name','Company','Role','Rating','Text','Project Type','Date','Featured'];
+  const rows = testimonials.map(t => [
+    '"' + (t.name||'').replace(/"/g,'""') + '"',
+    '"' + (t.company||'').replace(/"/g,'""') + '"',
+    '"' + (t.role||'').replace(/"/g,'""') + '"',
+    t.rating,
+    '"' + (t.text||'').replace(/"/g,'""') + '"',
+    '"' + (t.projectType||'').replace(/"/g,'""') + '"',
+    t.date,
+    t.featured ? 'Yes' : 'No'
+  ]);
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  downloadFile('testimonials.csv', csv, 'text/csv');
+  notify('CSV exported!');
+}
+
+function exportJSON() {
+  if (testimonials.length === 0) { notify('No testimonials to export'); return; }
+  downloadFile('testimonials.json', JSON.stringify(testimonials, null, 2), 'application/json');
+  notify('JSON exported!');
+}
+
+function downloadFile(name, content, type) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ========================================
+   INIT
+   ======================================== */
+function init() {
+  renderTestimonialList();
+  renderTemplates();
+  renderLayoutSelectors();
+}
+init();
+</script>
+<script src="/freelanceos-storefront/exit-intent.js"></script>
+</body>
+</html>

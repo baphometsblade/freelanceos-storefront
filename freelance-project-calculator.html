@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freelance Project Profitability Calculator — Is This Project Worth Taking?</title>
+  <meta name="description" content="Free freelance project profitability calculator. Enter your fee, hours, revisions and overhead to see your effective rate, take-home pay, and a Project Score from 0–100.">
+  <meta name="keywords" content="freelance project calculator, project profitability calculator, freelance hourly rate calculator, is this project worth it">
+  <link rel="canonical" href="https://freelanceos-storefront.vercel.app/freelance-project-calculator.html">
+  <meta property="og:title" content="Freelance Project Profitability Calculator">
+  <meta property="og:description" content="Know instantly if a project is worth taking. Calculate effective rate, take-home pay, and get a Project Score 0–100.">
+  <meta property="og:url" content="https://freelanceos-storefront.vercel.app/freelance-project-calculator.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0f0f0f;
+      --bg-card: #1a1a1a;
+      --bg-card2: #222;
+      --border: #2d2d2d;
+      --purple: #7c3aed;
+      --purple-light: #a78bfa;
+      --green: #10b981;
+      --yellow: #f59e0b;
+      --orange: #f97316;
+      --red: #ef4444;
+      --txt: #e5e7eb;
+      --txt2: #9ca3af;
+      --txt3: #6b7280;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--txt); min-height: 100vh; }
+    a { color: var(--purple-light); }
+
+    /* NAV */
+    nav { background: rgba(15,15,15,0.95); border-bottom: 1px solid var(--border); padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 800; font-size: 1.1rem; text-decoration: none; background: linear-gradient(135deg, #7c3aed, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-back { font-size: .85rem; color: var(--txt2); text-decoration: none; }
+    .nav-back:hover { color: var(--txt); }
+
+    /* HERO */
+    .hero { text-align: center; padding: 4rem 1.5rem 2rem; }
+    .hero-badge { display: inline-block; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: var(--purple-light); font-size: .8rem; font-weight: 600; padding: .3rem .9rem; border-radius: 2rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: .06em; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: .75rem; line-height: 1.15; }
+    .hero h1 span { background: linear-gradient(135deg, #7c3aed, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { color: var(--txt2); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+    /* LAYOUT */
+    .main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 768px) { .main { grid-template-columns: 1fr; } }
+
+    /* CARD */
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; }
+    .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--txt); display: flex; align-items: center; gap: .5rem; }
+    .card-title-icon { font-size: 1.2rem; }
+
+    /* INPUTS */
+    .field { margin-bottom: 1.1rem; }
+    label { display: block; font-size: .85rem; color: var(--txt2); margin-bottom: .4rem; font-weight: 500; }
+    .input-wrap { position: relative; }
+    .input-prefix { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); color: var(--txt3); font-size: .9rem; pointer-events: none; }
+    .input-suffix { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); color: var(--txt3); font-size: .85rem; pointer-events: none; }
+    input[type="number"], input[type="range"] { width: 100%; }
+    input[type="number"] {
+      background: var(--bg-card2); border: 1px solid var(--border); border-radius: .5rem;
+      color: var(--txt); font-size: 1rem; padding: .6rem .75rem .6rem 1.75rem;
+      transition: border-color .2s; -moz-appearance: textfield;
+    }
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+    input[type="number"]:focus { outline: none; border-color: var(--purple); }
+    input[type="number"].no-prefix { padding-left: .75rem; }
+    input[type="number"].has-suffix { padding-right: 2.5rem; }
+    input[type="range"] {
+      -webkit-appearance: none; height: 6px; border-radius: 3px;
+      background: linear-gradient(to right, var(--purple) 0%, var(--purple) var(--pct, 50%), var(--border) var(--pct, 50%));
+      outline: none; cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: var(--purple-light); border: 2px solid #fff; box-shadow: 0 2px 8px rgba(124,58,237,0.4);
+    }
+    .range-labels { display: flex; justify-content: space-between; font-size: .75rem; color: var(--txt3); margin-top: .3rem; }
+    .range-val { text-align: right; font-size: .85rem; color: var(--purple-light); font-weight: 600; margin-bottom: .35rem; }
+
+    /* SCORE GAUGE */
+    .gauge-wrap { text-align: center; margin-bottom: 1.5rem; }
+    .gauge-svg { width: 200px; height: 110px; overflow: visible; }
+    .gauge-track { fill: none; stroke: var(--border); stroke-width: 18; stroke-linecap: round; }
+    .gauge-fill { fill: none; stroke-width: 18; stroke-linecap: round; transition: stroke-dashoffset .6s cubic-bezier(.4,0,.2,1), stroke .4s; }
+    .gauge-num { font-size: 2.4rem; font-weight: 900; dominant-baseline: central; text-anchor: middle; transition: fill .4s; }
+    .gauge-label { font-size: .7rem; fill: var(--txt2); dominant-baseline: central; text-anchor: middle; }
+
+    /* RESULT ITEMS */
+    .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+    @media (max-width: 480px) { .results-grid { grid-template-columns: 1fr; } }
+    .result-item { background: var(--bg-card2); border-radius: .75rem; padding: 1rem; border: 1px solid var(--border); }
+    .result-label { font-size: .75rem; color: var(--txt3); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .4rem; }
+    .result-value { font-size: 1.5rem; font-weight: 800; transition: color .3s; }
+    .result-sub { font-size: .75rem; color: var(--txt3); margin-top: .2rem; }
+
+    /* SCORE TIER */
+    .score-tier { border-radius: .75rem; padding: 1rem 1.25rem; margin-bottom: 1.25rem; border: 1px solid; transition: background .4s, border-color .4s; }
+    .score-tier-icon { font-size: 1.4rem; margin-bottom: .3rem; }
+    .score-tier-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; }
+    .score-tier-sub { font-size: .85rem; opacity: .85; }
+
+    .tier-great { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: #10b981; }
+    .tier-decent { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: #f59e0b; }
+    .tier-borderline { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.3); color: #f97316; }
+    .tier-red { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: #ef4444; }
+
+    /* SUGGESTED PRICE */
+    .suggested-price { background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.25); border-radius: .75rem; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+    .suggested-price-label { font-size: .78rem; color: var(--purple-light); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .3rem; }
+    .suggested-price-val { font-size: 1.8rem; font-weight: 900; color: var(--purple-light); }
+    .suggested-price-sub { font-size: .8rem; color: var(--txt3); margin-top: .25rem; }
+
+    /* WHAT IF */
+    .whatif-section { margin-top: 1.5rem; }
+    .whatif-title { font-size: .85rem; font-weight: 700; color: var(--txt2); margin-bottom: .75rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* COMPARE MODE */
+    .compare-btn { display: inline-flex; align-items: center; gap: .4rem; background: var(--bg-card2); border: 1px solid var(--border); color: var(--txt2); font-size: .82rem; font-weight: 600; padding: .45rem 1rem; border-radius: 2rem; cursor: pointer; transition: border-color .2s, color .2s; }
+    .compare-btn:hover { border-color: var(--purple); color: var(--purple-light); }
+    .compare-section { display: none; margin-top: 1rem; }
+    .compare-section.open { display: block; }
+    .compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin-top: .75rem; }
+    @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-card { background: var(--bg-card2); border: 1px solid var(--border); border-radius: .75rem; padding: .85rem; }
+    .compare-card-title { font-size: .78rem; font-weight: 700; color: var(--txt2); margin-bottom: .6rem; text-transform: uppercase; letter-spacing: .05em; }
+    .compare-score { font-size: 1.4rem; font-weight: 900; }
+    .compare-rate { font-size: .85rem; color: var(--txt2); margin-top: .2rem; }
+
+    /* SHARE */
+    .share-btn { display: inline-flex; align-items: center; gap: .4rem; background: var(--bg-card2); border: 1px solid var(--border); color: var(--txt2); font-size: .82rem; font-weight: 600; padding: .45rem 1rem; border-radius: 2rem; cursor: pointer; transition: all .2s; }
+    .share-btn:hover { border-color: var(--purple); color: var(--purple-light); }
+    .share-btn.copied { border-color: var(--green); color: var(--green); }
+
+    /* EMAIL CAPTURE */
+    .email-section { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: 1rem; padding: 1.5rem; margin-top: 1.5rem; text-align: center; }
+    .email-section h3 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; }
+    .email-section p { font-size: .85rem; color: var(--txt2); margin-bottom: 1rem; }
+    .email-form { display: flex; gap: .5rem; max-width: 420px; margin: 0 auto; }
+    .email-input { flex: 1; background: var(--bg-card2); border: 1px solid var(--border); border-radius: .5rem; color: var(--txt); font-size: .9rem; padding: .6rem .9rem; }
+    .email-input:focus { outline: none; border-color: var(--purple); }
+    .email-submit { background: var(--purple); color: #fff; border: none; border-radius: .5rem; padding: .6rem 1.1rem; font-size: .9rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background .2s; }
+    .email-submit:hover { background: #6d28d9; }
+    .email-success { color: var(--green); font-size: .9rem; font-weight: 600; display: none; }
+
+    /* CTA */
+    .cta-section { grid-column: 1 / -1; background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(167,139,250,0.08)); border: 1px solid rgba(124,58,237,0.25); border-radius: 1rem; padding: 2rem; text-align: center; }
+    .cta-section h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: .6rem; }
+    .cta-section p { color: var(--txt2); font-size: .95rem; margin-bottom: 1.25rem; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .cta-btn { display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, #7c3aed, #a78bfa); color: #fff; text-decoration: none; padding: .8rem 1.75rem; border-radius: 2rem; font-weight: 700; font-size: .95rem; transition: transform .15s, box-shadow .2s; box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(124,58,237,0.5); }
+    .cta-sub { font-size: .8rem; color: var(--txt3); margin-top: .75rem; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--txt3); font-size: .82rem; }
+    footer a { color: var(--purple-light); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">FreelanceOS</a>
+    <a href="/" class="nav-back">← Back to all tools</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Free Tool</div>
+  <h1>Freelance Project <span>Profitability Calculator</span></h1>
+  <p>Know instantly whether a project is worth taking — before you say yes.</p>
+</div>
+
+<div class="main" id="mainGrid">
+
+  <!-- LEFT: INPUTS -->
+  <div>
+    <div class="card">
+      <div class="card-title"><span class="card-title-icon">📋</span> Project Details</div>
+
+      <div class="field">
+        <label for="fee">Project Fee</label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" id="fee" value="3000" min="0" step="50" oninput="calc()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="hours">Estimated Core Hours</label>
+        <div class="input-wrap">
+          <input type="number" id="hours" value="20" min="1" step="1" class="no-prefix" oninput="calc()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="revisions">Revision Rounds</label>
+        <div class="range-val"><span id="revisionsVal">2</span> rounds</div>
+        <input type="range" id="revisions" min="0" max="5" value="2" oninput="updateRange(this,'revisionsVal'); calc()">
+        <div class="range-labels"><span>0</span><span>5</span></div>
+      </div>
+
+      <div class="field">
+        <label for="revHours">Hours per Revision Round</label>
+        <div class="input-wrap">
+          <input type="number" id="revHours" value="3" min="0" step="0.5" class="no-prefix" oninput="calc()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="commHours">Client Communication Hours</label>
+        <div class="input-wrap">
+          <input type="number" id="commHours" value="4" min="0" step="0.5" class="no-prefix" oninput="calc()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="overhead">Overhead Allocation % <span style="color:var(--txt3);font-weight:400;">(taxes, software, etc.)</span></label>
+        <div class="range-val"><span id="overheadVal">30</span>%</div>
+        <input type="range" id="overhead" min="10" max="60" value="30" oninput="updateRange(this,'overheadVal'); calc()">
+        <div class="range-labels"><span>10%</span><span>60%</span></div>
+      </div>
+
+      <div class="field">
+        <label for="targetRate">Your Target Hourly Rate</label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" id="targetRate" value="75" min="1" step="5" oninput="calc()">
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT IF SLIDERS -->
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title"><span class="card-title-icon">🎛️</span> What-If Scenario</div>
+      <p style="font-size:.82rem;color:var(--txt3);margin-bottom:.9rem;">Drag to see how changes affect your score in real time.</p>
+
+      <div class="field">
+        <label>Adjust Hours ±</label>
+        <div class="range-val">+<span id="whatifHoursVal">0</span> hrs (total: <span id="whatifTotalHrs">20</span>)</div>
+        <input type="range" id="whatifHours" min="-15" max="30" value="0" oninput="updateWhatif()">
+        <div class="range-labels"><span>-15</span><span>+30</span></div>
+      </div>
+
+      <div class="field">
+        <label>Adjust Fee ±</label>
+        <div class="range-val">+$<span id="whatifFeeVal">0</span> (total: $<span id="whatifTotalFee">3000</span>)</div>
+        <input type="range" id="whatifFee" min="-1000" max="3000" value="0" step="50" oninput="updateWhatif()">
+        <div class="range-labels"><span>-$1k</span><span>+$3k</span></div>
+      </div>
+
+      <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:.75rem;padding:.85rem;text-align:center;">
+        <div style="font-size:.75rem;color:var(--txt3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem;">What-If Score</div>
+        <div id="whatifScore" style="font-size:2rem;font-weight:900;color:var(--purple-light);transition:color .3s;">—</div>
+        <div id="whatifRate" style="font-size:.85rem;color:var(--txt2);margin-top:.2rem;">—</div>
+      </div>
+    </div>
+
+    <!-- COMPARE MODE -->
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title"><span class="card-title-icon">⚖️</span> Compare Projects</div>
+      <p style="font-size:.82rem;color:var(--txt3);margin-bottom:.9rem;">Add up to 3 projects to compare side by side.</p>
+      <button class="compare-btn" onclick="addCompare()">+ Save current project</button>
+      <button class="compare-btn" style="margin-left:.5rem;" onclick="clearCompare()">Clear all</button>
+      <div class="compare-section open">
+        <div class="compare-grid" id="compareGrid">
+          <div style="color:var(--txt3);font-size:.82rem;grid-column:1/-1;text-align:center;padding:.75rem;">No saved projects yet. Fill in inputs and click "Save current project."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: RESULTS -->
+  <div>
+    <div class="card" id="resultsCard">
+      <div class="card-title"><span class="card-title-icon">📊</span> Live Dashboard</div>
+
+      <!-- GAUGE -->
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg">
+          <!-- Track: semicircle from 180° to 0°, cx=100, cy=100, r=80 -->
+          <!-- Arc length for r=80 semicircle = π*80 ≈ 251.3 -->
+          <path class="gauge-track" d="M 20,100 A 80,80 0 0,1 180,100" />
+          <path class="gauge-fill" id="gaugeFill" d="M 20,100 A 80,80 0 0,1 180,100" style="stroke-dasharray:251.3;stroke-dashoffset:251.3;stroke:#7c3aed;" />
+          <text class="gauge-num" id="gaugeNum" x="100" y="88" fill="#e5e7eb">0</text>
+          <text class="gauge-label" x="100" y="108" fill="#6b7280">PROJECT SCORE / 100</text>
+        </svg>
+      </div>
+
+      <!-- SCORE TIER -->
+      <div class="score-tier tier-red" id="scoreTier">
+        <div class="score-tier-icon">⏳</div>
+        <div class="score-tier-title">Enter your project details</div>
+        <div class="score-tier-sub">Your score will appear here</div>
+      </div>
+
+      <!-- RESULT GRID -->
+      <div class="results-grid">
+        <div class="result-item">
+          <div class="result-label">Effective Rate</div>
+          <div class="result-value" id="effectiveRate">$0/hr</div>
+          <div class="result-sub" id="effectiveRateSub">vs. $75 target</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Total Hours</div>
+          <div class="result-value" id="totalHours" style="color:var(--txt);">0 hrs</div>
+          <div class="result-sub" id="totalHoursSub">core + revisions + comms</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Take-Home Pay</div>
+          <div class="result-value" id="takeHome" style="color:var(--green);">$0</div>
+          <div class="result-sub" id="takeHomeSub">after 30% overhead</div>
+        </div>
+        <div class="result-item">
+          <div class="result-label">Hours Breakdown</div>
+          <div class="result-value" id="hoursBreak" style="color:var(--txt);font-size:1rem;">—</div>
+          <div class="result-sub">core / rev / comms</div>
+        </div>
+      </div>
+
+      <!-- SUGGESTED MIN PRICE -->
+      <div class="suggested-price">
+        <div class="suggested-price-label">Minimum Price to Hit Your Target</div>
+        <div class="suggested-price-val" id="minPrice">$0</div>
+        <div class="suggested-price-sub">Formula: (total hours × target rate) ÷ (1 − overhead%)</div>
+      </div>
+
+      <!-- EMAIL CAPTURE -->
+      <div class="email-section">
+        <h3>💾 Save Your Calculator Settings</h3>
+        <p>Get your results by email + our free <strong>Project Pricing Guide</strong> (27 pages).</p>
+        <div class="email-form">
+          <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
+          <button class="email-submit" onclick="submitEmail()">Send →</button>
+        </div>
+        <div class="email-success" id="emailSuccess">✓ Sent! Check your inbox.</div>
+        <p style="font-size:.75rem;color:var(--txt3);margin-top:.6rem;">No spam. Unsubscribe any time.</p>
+      </div>
+
+      <!-- SHARE -->
+      <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="share-btn" id="shareBtn" onclick="shareResult()">🔗 Share result</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA FULL WIDTH -->
+  <div class="cta-section">
+    <h3>Price every project with confidence</h3>
+    <p>FreelanceOS Pro includes a <strong>Project Pricing Database</strong> with 50+ pre-built rate templates by niche, so you never have to guess again. One-time payment, lifetime access.</p>
+    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="cta-btn">Get FreelanceOS Pro — 40% off →</a>
+    <div class="cta-sub">Use code <strong>FLASH40</strong> · $29 one-time · 30-day money-back guarantee</div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="/">FreelanceOS</a> · Free tools for freelancers ·
+  <a href="/free-templates.html">All free tools</a> ·
+  <a href="/freelance-rate-calculator.html">Rate Calculator</a>
+</footer>
+
+<script>
+  // Saved compare projects
+  let compareProjects = [];
+
+  function updateRange(el, valId) {
+    document.getElementById(valId).textContent = el.value;
+    const min = parseFloat(el.min), max = parseFloat(el.max), val = parseFloat(el.value);
+    const pct = ((val - min) / (max - min)) * 100;
+    el.style.setProperty('--pct', pct + '%');
+  }
+
+  function getInputs() {
+    const fee = parseFloat(document.getElementById('fee').value) || 0;
+    const hours = parseFloat(document.getElementById('hours').value) || 0;
+    const revisions = parseFloat(document.getElementById('revisions').value) || 0;
+    const revHours = parseFloat(document.getElementById('revHours').value) || 0;
+    const commHours = parseFloat(document.getElementById('commHours').value) || 0;
+    const overhead = parseFloat(document.getElementById('overhead').value) / 100 || 0.3;
+    const targetRate = parseFloat(document.getElementById('targetRate').value) || 75;
+    return { fee, hours, revisions, revHours, commHours, overhead, targetRate };
+  }
+
+  function computeMetrics(fee, hours, revisions, revHours, commHours, overhead, targetRate) {
+    const totalHours = hours + (revisions * revHours) + commHours;
+    const effectiveRate = totalHours > 0 ? fee / totalHours : 0;
+    const takeHome = fee * (1 - overhead);
+    const minPrice = totalHours > 0 ? (totalHours * targetRate) / (1 - overhead) : 0;
+    const effectiveAfterOverhead = totalHours > 0 ? takeHome / totalHours : 0;
+
+    // Score 0–100
+    // Rate component (0–50)
+    const rateRatio = targetRate > 0 ? effectiveRate / targetRate : 0;
+    const rateScore = Math.min(50, Math.round(rateRatio * 40));
+
+    // Take-home component (0–30)
+    const thRatio = (fee > 0) ? takeHome / fee : 0;
+    const thScore = Math.round(thRatio * 30);
+
+    // Hours bloat component (0–20) — penalize if revision hours > 50% of core
+    const revLoad = totalHours > 0 ? (revisions * revHours + commHours) / totalHours : 0;
+    const hScore = Math.round((1 - Math.min(revLoad, 0.8)) * 20);
+
+    const score = Math.min(100, Math.max(0, rateScore + thScore + hScore));
+    return { totalHours, effectiveRate, takeHome, minPrice, score };
+  }
+
+  function calc() {
+    const { fee, hours, revisions, revHours, commHours, overhead, targetRate } = getInputs();
+    const { totalHours, effectiveRate, takeHome, minPrice, score } = computeMetrics(fee, hours, revisions, revHours, commHours, overhead, targetRate);
+
+    // Gauge
+    const ARC = 251.3;
+    const offset = ARC - (score / 100) * ARC;
+    const fill = document.getElementById('gaugeFill');
+    fill.style.strokeDashoffset = offset;
+
+    // Score color
+    let scoreColor, tierClass, tierIcon, tierTitle, tierSub;
+    if (score >= 80) {
+      scoreColor = '#10b981'; tierClass = 'tier-great'; tierIcon = '🟢';
+      tierTitle = 'Great project — take it'; tierSub = 'Your rate, hours and take-home all look solid. Send that proposal.';
+    } else if (score >= 60) {
+      scoreColor = '#f59e0b'; tierClass = 'tier-decent'; tierIcon = '🟡';
+      tierTitle = 'Decent — negotiate scope or rate'; tierSub = 'Worth taking, but see if you can tighten revisions or increase the fee.';
+    } else if (score >= 40) {
+      scoreColor = '#f97316'; tierClass = 'tier-borderline'; tierIcon = '🟠';
+      tierTitle = 'Borderline — only if you have capacity'; tierSub = 'Margins are thin. Only accept if you have open bandwidth and a clear brief.';
+    } else {
+      scoreColor = '#ef4444'; tierClass = 'tier-red'; tierIcon = '🔴';
+      tierTitle = 'Red flag — pass or reprice'; tierSub = 'At this rate/scope, you\'ll likely work at a loss after overhead. Push back on price or pass.';
+    }
+
+    fill.style.stroke = scoreColor;
+    const gaugeNum = document.getElementById('gaugeNum');
+    gaugeNum.textContent = score;
+    gaugeNum.style.fill = scoreColor;
+
+    const tier = document.getElementById('scoreTier');
+    tier.className = 'score-tier ' + tierClass;
+    tier.innerHTML = `<div class="score-tier-icon">${tierIcon}</div><div class="score-tier-title">${tierTitle}</div><div class="score-tier-sub">${tierSub}</div>`;
+
+    // Effective rate
+    const erEl = document.getElementById('effectiveRate');
+    erEl.textContent = '$' + fmt(effectiveRate, 2) + '/hr';
+    erEl.style.color = effectiveRate >= targetRate ? '#10b981' : '#ef4444';
+    document.getElementById('effectiveRateSub').textContent = 'vs. $' + fmt(targetRate, 0) + ' target';
+
+    // Total hours
+    document.getElementById('totalHours').textContent = fmt(totalHours, 1) + ' hrs';
+    document.getElementById('hoursBreak').textContent = hours + ' / ' + fmt(revisions * revHours, 1) + ' / ' + commHours;
+
+    // Take-home
+    document.getElementById('takeHome').textContent = '$' + fmt(takeHome, 0);
+    document.getElementById('takeHomeSub').textContent = 'after ' + Math.round(overhead * 100) + '% overhead';
+
+    // Min price
+    document.getElementById('minPrice').textContent = '$' + fmt(minPrice, 0);
+
+    // What-if baseline update
+    updateWhatif();
+
+    // URL hash
+    const params = { fee, hours, revisions, revHours, commHours, overhead: Math.round(overhead * 100), targetRate };
+    history.replaceState(null, '', '#' + btoa(JSON.stringify(params)));
+  }
+
+  function updateWhatif() {
+    const { fee, hours, revisions, revHours, commHours, overhead, targetRate } = getInputs();
+    const wHours = parseInt(document.getElementById('whatifHours').value) || 0;
+    const wFee = parseInt(document.getElementById('whatifFee').value) || 0;
+
+    document.getElementById('whatifHoursVal').textContent = wHours >= 0 ? '+' + wHours : wHours;
+    document.getElementById('whatifFeeVal').textContent = wFee >= 0 ? '+' + wFee : wFee;
+    document.getElementById('whatifTotalHrs').textContent = Math.max(1, hours + wHours);
+    document.getElementById('whatifTotalFee').textContent = fmt(Math.max(0, fee + wFee), 0);
+
+    const adjHours = Math.max(1, hours + wHours);
+    const adjFee = Math.max(0, fee + wFee);
+    const { score, effectiveRate } = computeMetrics(adjFee, adjHours, revisions, revHours, commHours, overhead, targetRate);
+
+    const wsEl = document.getElementById('whatifScore');
+    wsEl.textContent = score;
+    const wc = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : score >= 40 ? '#f97316' : '#ef4444';
+    wsEl.style.color = wc;
+    document.getElementById('whatifRate').textContent = '$' + fmt(effectiveRate, 2) + '/hr effective';
+
+    // Update slider ranges
+    updateRangeStyle(document.getElementById('whatifHours'));
+    updateRangeStyle(document.getElementById('whatifFee'));
+  }
+
+  function updateRangeStyle(el) {
+    const min = parseFloat(el.min), max = parseFloat(el.max), val = parseFloat(el.value);
+    const pct = ((val - min) / (max - min)) * 100;
+    el.style.setProperty('--pct', pct + '%');
+  }
+
+  function fmt(n, decimals) {
+    return Number(n).toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function addCompare() {
+    if (compareProjects.length >= 3) { alert('Maximum 3 projects. Clear first.'); return; }
+    const { fee, hours, revisions, revHours, commHours, overhead, targetRate } = getInputs();
+    const { score, effectiveRate, takeHome } = computeMetrics(fee, hours, revisions, revHours, commHours, overhead, targetRate);
+    compareProjects.push({ fee, score, effectiveRate, takeHome, name: 'Project ' + (compareProjects.length + 1) });
+    renderCompare();
+  }
+
+  function clearCompare() { compareProjects = []; renderCompare(); }
+
+  function renderCompare() {
+    const grid = document.getElementById('compareGrid');
+    if (compareProjects.length === 0) {
+      grid.innerHTML = '<div style="color:var(--txt3);font-size:.82rem;grid-column:1/-1;text-align:center;padding:.75rem;">No saved projects yet. Fill in inputs and click "Save current project."</div>';
+      return;
+    }
+    grid.innerHTML = compareProjects.map(p => {
+      const c = p.score >= 80 ? '#10b981' : p.score >= 60 ? '#f59e0b' : p.score >= 40 ? '#f97316' : '#ef4444';
+      return `<div class="compare-card">
+        <div class="compare-card-title">${p.name}</div>
+        <div class="compare-score" style="color:${c}">${p.score}/100</div>
+        <div class="compare-rate">$${fmt(p.effectiveRate,2)}/hr · Take-home $${fmt(p.takeHome,0)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function shareResult() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('shareBtn');
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '🔗 Share result'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function submitEmail() {
+    const val = document.getElementById('emailInput').value;
+    if (!val || !val.includes('@')) { document.getElementById('emailInput').focus(); return; }
+    document.querySelector('.email-form').style.display = 'none';
+    document.getElementById('emailSuccess').style.display = 'block';
+  }
+
+  // Load from hash on start
+  function loadFromHash() {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    try {
+      const p = JSON.parse(atob(hash));
+      if (p.fee) document.getElementById('fee').value = p.fee;
+      if (p.hours) document.getElementById('hours').value = p.hours;
+      if (p.revisions !== undefined) { document.getElementById('revisions').value = p.revisions; document.getElementById('revisionsVal').textContent = p.revisions; }
+      if (p.revHours) document.getElementById('revHours').value = p.revHours;
+      if (p.commHours) document.getElementById('commHours').value = p.commHours;
+      if (p.overhead) { document.getElementById('overhead').value = p.overhead; document.getElementById('overheadVal').textContent = p.overhead; }
+      if (p.targetRate) document.getElementById('targetRate').value = p.targetRate;
+    } catch(e) {}
+  }
+
+  // Init all range styles
+  document.querySelectorAll('input[type="range"]').forEach(r => {
+    updateRangeStyle(r);
+  });
+
+  loadFromHash();
+  calc();
+</script>
+</body>
+</html>

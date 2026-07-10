@@ -1,0 +1,2227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Portfolio Grader — Free Assessment Tool | FreelanceOS</title>
+    <meta name="description" content="Get a free, brutally honest assessment of your freelance portfolio. Find out what's costing you clients and how to fix it in this weekend.">
+    <meta name="keywords" content="freelance portfolio review, portfolio grader, freelance tools, portfolio assessment, client conversion">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Freelance Portfolio Grader — Free Assessment Tool | FreelanceOS">
+    <meta property="og:description" content="Get a free, brutally honest assessment of your freelance portfolio. Find out what's costing you clients and revenue.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freelanceos.com/freelanceos-storefront/portfolio-grader.html">
+    <meta property="og:image" content="https://freelanceos.com/og-image.png">
+    <meta property="og:site_name" content="FreelanceOS">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Freelance Portfolio Grader — Free Assessment Tool | FreelanceOS">
+    <meta name="twitter:description" content="Get a free, brutally honest assessment of your freelance portfolio. Find out what's costing you clients.">
+    <meta name="twitter:image" content="https://freelanceos.com/og-image.png">
+
+    <!-- Schema.org WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Freelance Portfolio Grader",
+        "description": "Free interactive assessment tool that grades your freelance portfolio across 5 critical categories and provides actionable improvement recommendations.",
+        "url": "https://freelanceos.com/freelanceos-storefront/portfolio-grader.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "FreelanceOS"
+        }
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #a855f7;
+            --accent2: #ec4899;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(168, 85, 247, 0.1);
+            --border-hover: rgba(168, 85, 247, 0.3);
+            --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --gradient-subtle: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.15));
+            --glass-bg: rgba(15, 23, 42, 0.8);
+            --glass-blur: blur(20px);
+            --radius-card: 16px;
+            --radius-btn: 12px;
+            --radius-sm: 8px;
+            --shadow-glow: 0 0 30px rgba(168, 85, 247, 0.15);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(236, 72, 153, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 48px 0 40px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--gradient-subtle);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .header-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            margin-bottom: 32px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            transition: color 0.3s;
+        }
+
+        .progress-step.active {
+            color: var(--accent);
+        }
+
+        .progress-step.completed {
+            color: var(--accent2);
+        }
+
+        .progress-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--text-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .progress-step.active .progress-dot {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.2);
+            color: var(--accent);
+        }
+
+        .progress-step.completed .progress-dot {
+            border-color: var(--accent2);
+            background: var(--accent2);
+            color: #fff;
+        }
+
+        .progress-bar-track {
+            height: 4px;
+            background: rgba(100, 116, 139, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Glass card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            box-shadow: var(--shadow-card);
+            transition: border-color 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .form-label .question-number {
+            color: var(--accent);
+            margin-right: 6px;
+            font-size: 0.85rem;
+        }
+
+        select.form-select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            transition: border-color 0.3s;
+        }
+
+        select.form-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+        }
+
+        select.form-select option {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        /* Radio options */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.92rem;
+        }
+
+        .radio-option:hover {
+            border-color: var(--border-hover);
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .radio-option.selected {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.08);
+        }
+
+        .radio-circle {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--text-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .radio-option.selected .radio-circle {
+            border-color: var(--accent);
+            background: var(--accent);
+        }
+
+        .radio-circle::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .radio-option.selected .radio-circle::after {
+            opacity: 1;
+        }
+
+        /* Category header */
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--gradient-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .category-info h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .category-info p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border: none;
+            border-radius: var(--radius-btn);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: rgba(100, 116, 139, 0.15);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(100, 116, 139, 0.25);
+            color: var(--text);
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn-row .btn {
+            flex: 1;
+        }
+
+        /* Category progress in Step 2 */
+        .category-progress {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+        }
+
+        .cat-pip {
+            flex: 1;
+            height: 4px;
+            border-radius: 4px;
+            background: rgba(100, 116, 139, 0.2);
+            transition: background 0.3s;
+        }
+
+        .cat-pip.done {
+            background: var(--gradient);
+        }
+
+        .cat-pip.current {
+            background: rgba(168, 85, 247, 0.4);
+        }
+
+        /* ========== RESULTS SECTION ========== */
+
+        .results-section {
+            display: none;
+        }
+
+        /* Grade reveal */
+        .grade-reveal-container {
+            text-align: center;
+            padding: 48px 20px;
+            position: relative;
+        }
+
+        .grade-reveal-label {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .grade-letter {
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 1;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: scale(0.3) rotate(-15deg);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .grade-letter.revealed {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .grade-subtitle {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.4s;
+        }
+
+        .grade-subtitle.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .grade-tagline {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.6s ease 0.6s;
+        }
+
+        .grade-tagline.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .overall-score-num {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-top: 16px;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.8s;
+        }
+
+        .overall-score-num.revealed {
+            opacity: 1;
+        }
+
+        /* Glow ring behind grade */
+        .grade-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 1s ease 0.2s;
+            pointer-events: none;
+        }
+
+        .grade-glow.revealed {
+            opacity: 1;
+        }
+
+        /* Radar chart */
+        .radar-section {
+            margin-top: 36px;
+        }
+
+        .radar-section h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .radar-chart-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .radar-chart-wrapper svg {
+            max-width: 380px;
+            width: 100%;
+        }
+
+        /* Category scores */
+        .category-scores {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .cat-score-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .cat-score-label {
+            width: 130px;
+            min-width: 130px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .cat-score-bar-track {
+            flex: 1;
+            height: 8px;
+            background: rgba(100, 116, 139, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .cat-score-bar-fill {
+            height: 100%;
+            border-radius: 8px;
+            background: var(--gradient);
+            width: 0%;
+            transition: width 1.2s ease;
+        }
+
+        .cat-score-bar-fill.low { background: #ef4444; }
+        .cat-score-bar-fill.mid { background: linear-gradient(90deg, #f59e0b, #eab308); }
+        .cat-score-bar-fill.high { background: var(--gradient); }
+
+        .cat-score-value {
+            width: 44px;
+            text-align: right;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* Quick wins */
+        .quick-wins-section {
+            margin-top: 36px;
+        }
+
+        .quick-wins-section h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .quick-wins-section .section-desc {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .win-card {
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            margin-bottom: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .win-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient);
+        }
+
+        .win-card .win-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .win-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .win-card p {
+            font-size: 0.87rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .win-impact {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            padding: 4px 10px;
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* Strategic improvements */
+        .strategic-section {
+            margin-top: 36px;
+        }
+
+        .strategic-section h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .strategic-section .section-desc {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .strategic-item {
+            display: flex;
+            gap: 14px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(100, 116, 139, 0.1);
+        }
+
+        .strategic-item:last-child {
+            border-bottom: none;
+        }
+
+        .strategic-priority {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            min-width: 48px;
+        }
+
+        .priority-badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .priority-badge.high { background: rgba(239,68,68,0.15); color: #ef4444; }
+        .priority-badge.medium { background: rgba(245,158,11,0.15); color: #f59e0b; }
+        .priority-badge.low { background: rgba(34,197,94,0.15); color: #22c55e; }
+
+        .strategic-content h4 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .strategic-content p {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Lost clients calculator */
+        .lost-clients-section {
+            margin-top: 36px;
+        }
+
+        .lost-clients-card {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: var(--radius-card);
+            padding: 28px;
+            text-align: center;
+        }
+
+        .lost-clients-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ef4444;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .bounce-stat {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .bounce-box {
+            text-align: center;
+        }
+
+        .bounce-box .bounce-num {
+            font-size: 2.4rem;
+            font-weight: 800;
+        }
+
+        .bounce-box .bounce-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .bounce-now { color: #ef4444; }
+        .bounce-fixed { color: #22c55e; }
+
+        .bounce-arrow {
+            display: flex;
+            align-items: center;
+            color: var(--text-dim);
+            font-size: 1.6rem;
+        }
+
+        .revenue-loss {
+            padding: 16px 20px;
+            background: rgba(239, 68, 68, 0.08);
+            border-radius: var(--radius-sm);
+            margin-top: 16px;
+        }
+
+        .revenue-loss p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .revenue-loss .revenue-amount {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ef4444;
+        }
+
+        .revenue-loss .revenue-saved {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #22c55e;
+        }
+
+        /* Share section */
+        .share-section {
+            margin-top: 36px;
+            text-align: center;
+        }
+
+        .share-badge-card {
+            padding: 24px;
+            background: var(--gradient-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            margin-bottom: 16px;
+        }
+
+        .share-badge-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .share-badge-challenge {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: var(--radius-btn);
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .share-btn.twitter {
+            background: #1d9bf0;
+            color: #fff;
+        }
+
+        .share-btn.twitter:hover {
+            background: #1a8cd8;
+        }
+
+        .share-btn.copy {
+            background: rgba(100, 116, 139, 0.15);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .share-btn.copy:hover {
+            background: rgba(100, 116, 139, 0.25);
+            color: var(--text);
+        }
+
+        /* CTA section */
+        .cta-section {
+            margin-top: 40px;
+        }
+
+        .cta-card {
+            background: var(--gradient-subtle);
+            border: 1px solid var(--border-hover);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gradient);
+        }
+
+        .cta-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(236, 72, 153, 0.15);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent2);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 14px;
+        }
+
+        .cta-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cta-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .cta-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .cta-price .original {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            text-decoration: line-through;
+        }
+
+        .cta-price .sale {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--gradient);
+            color: #fff;
+            border-radius: var(--radius-btn);
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
+        }
+
+        .cta-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Restart */
+        .restart-section {
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(100, 116, 139, 0.1);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 20px;
+            margin-bottom: 16px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.82rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+
+        .footer-brand {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            margin-top: 10px;
+        }
+
+        .footer-brand a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.15); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.3); }
+        }
+
+        /* Radar polygon animation */
+        .radar-polygon {
+            transition: all 1.5s ease;
+        }
+
+        /* Confetti for high grades */
+        .confetti-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px 14px 48px;
+            }
+
+            .glass-card {
+                padding: 22px 18px;
+            }
+
+            .header {
+                padding: 32px 0 28px;
+            }
+
+            .grade-letter {
+                font-size: 5.5rem;
+            }
+
+            .bounce-stat {
+                gap: 16px;
+            }
+
+            .cat-score-label {
+                width: 100px;
+                min-width: 100px;
+                font-size: 0.78rem;
+            }
+
+            .btn-row {
+                flex-direction: column;
+            }
+        }
+
+        /* Smooth page transitions */
+        .step-panel {
+            display: none;
+        }
+
+        .step-panel.active {
+            display: block;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        /* Tooltip for copy */
+        .copy-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            padding: 10px 20px;
+            background: var(--card);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            color: var(--text);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 200;
+            pointer-events: none;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                Free Assessment Tool
+            </div>
+            <h1>Freelance Portfolio Grader</h1>
+            <p>Get a brutally honest assessment of your portfolio. Find out exactly what's costing you clients and how to fix it this weekend.</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="progress-step active" id="prog-step-1">
+                    <div class="progress-dot">1</div>
+                    <span>Basics</span>
+                </div>
+                <div class="progress-step" id="prog-step-2">
+                    <div class="progress-dot">2</div>
+                    <span>Audit</span>
+                </div>
+                <div class="progress-step" id="prog-step-3">
+                    <div class="progress-dot">3</div>
+                    <span>Report</span>
+                </div>
+            </div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- STEP 1: Basics -->
+        <div class="step-panel active" id="step-1">
+            <div class="glass-card">
+                <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:24px;">Tell us about your freelance portfolio</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Your niche</label>
+                    <select class="form-select" id="niche">
+                        <option value="">Select your niche...</option>
+                        <option value="Web Design">Web Design</option>
+                        <option value="UI/UX">UI/UX</option>
+                        <option value="Graphic Design">Graphic Design</option>
+                        <option value="Brand Identity">Brand Identity</option>
+                        <option value="Web Dev">Web Development</option>
+                        <option value="Mobile Dev">Mobile Development</option>
+                        <option value="Copywriting">Copywriting</option>
+                        <option value="Content Writing">Content Writing</option>
+                        <option value="Technical Writing">Technical Writing</option>
+                        <option value="SEO">SEO</option>
+                        <option value="Social Media">Social Media</option>
+                        <option value="Video">Video Production</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Illustration">Illustration</option>
+                        <option value="Marketing Consulting">Marketing Consulting</option>
+                        <option value="Business Consulting">Business Consulting</option>
+                        <option value="VA">Virtual Assistant</option>
+                        <option value="Bookkeeping">Bookkeeping</option>
+                        <option value="Translation">Translation</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Years of experience</label>
+                    <select class="form-select" id="experience">
+                        <option value="">Select experience level...</option>
+                        <option value="1-2">1-2 years</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="5-10">5-10 years</option>
+                        <option value="10+">10+ years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Where is your portfolio?</label>
+                    <select class="form-select" id="platform">
+                        <option value="">Select platform...</option>
+                        <option value="Personal website">Personal website</option>
+                        <option value="Behance/Dribbble">Behance / Dribbble</option>
+                        <option value="LinkedIn">LinkedIn</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="PDF">PDF</option>
+                        <option value="No portfolio yet">No portfolio yet</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">How many case studies/projects do you showcase?</label>
+                    <select class="form-select" id="case-studies">
+                        <option value="">Select number...</option>
+                        <option value="0">0 (none yet)</option>
+                        <option value="1-3">1-3</option>
+                        <option value="4-6">4-6</option>
+                        <option value="7-10">7-10</option>
+                        <option value="10+">10+</option>
+                    </select>
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" id="start-audit-btn" disabled onclick="goToStep2()">
+                        Start the Audit
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: Audit Questions -->
+        <div class="step-panel" id="step-2">
+            <div class="category-progress" id="cat-progress"></div>
+            <div class="glass-card" id="audit-card">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-secondary" id="prev-btn" onclick="prevCategory()">Back</button>
+                <button class="btn btn-primary" id="next-btn" disabled onclick="nextCategory()">
+                    Next Category
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Results -->
+        <div class="step-panel" id="step-3">
+            <!-- Grade Reveal -->
+            <div class="glass-card grade-reveal-container" id="grade-reveal-card">
+                <div class="grade-reveal-label">Your Portfolio Grade</div>
+                <div class="grade-glow" id="grade-glow"></div>
+                <div class="grade-letter" id="grade-letter"></div>
+                <div class="grade-subtitle" id="grade-subtitle"></div>
+                <div class="grade-tagline" id="grade-tagline"></div>
+                <div class="overall-score-num" id="overall-score-num"></div>
+            </div>
+
+            <!-- Radar Chart -->
+            <div class="glass-card radar-section">
+                <h3>Category Breakdown</h3>
+                <div class="radar-chart-wrapper">
+                    <svg id="radar-svg" viewBox="0 0 400 380" xmlns="http://www.w3.org/2000/svg"></svg>
+                </div>
+                <div class="category-scores" id="category-scores"></div>
+            </div>
+
+            <!-- Quick Wins -->
+            <div class="glass-card quick-wins-section" id="quick-wins-section">
+                <h3>Top 3 Quick Wins</h3>
+                <p class="section-desc">Do these this weekend for the biggest impact.</p>
+                <div id="quick-wins-list"></div>
+            </div>
+
+            <!-- Strategic Improvements -->
+            <div class="glass-card strategic-section" id="strategic-section">
+                <h3>Strategic Improvements</h3>
+                <p class="section-desc">Longer-term changes ranked by impact on your business.</p>
+                <div id="strategic-list"></div>
+            </div>
+
+            <!-- Lost Clients Calculator -->
+            <div class="lost-clients-section">
+                <div class="lost-clients-card" id="lost-clients-card">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+
+            <!-- Share -->
+            <div class="glass-card share-section">
+                <div class="share-badge-card">
+                    <div class="share-badge-text" id="share-text"></div>
+                    <div class="share-badge-challenge">Can yours beat it?</div>
+                </div>
+                <div class="share-buttons">
+                    <button class="share-btn twitter" onclick="shareTwitter()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        Share on X
+                    </button>
+                    <button class="share-btn copy" onclick="copyShareText()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section">
+                <div class="cta-card">
+                    <div class="cta-badge">Limited Time Offer</div>
+                    <h3>Fix Your Portfolio With FreelanceOS Pro</h3>
+                    <p>Includes portfolio templates, client onboarding checklists, case study frameworks, proposal generators, and 50+ more tools to build a premium freelance business.</p>
+                    <div class="cta-price">
+                        <span class="original">$29.00</span>
+                        <span class="sale">$17.40</span>
+                    </div>
+                    <a class="cta-link" href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">
+                        Get 40% Off with FLASH40
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Restart -->
+            <div class="restart-section">
+                <button class="btn btn-secondary" onclick="restartGrader()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 105.34-9.43L1 10"/></svg>
+                    Grade Another Portfolio
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-links">
+                    <a href="/freelanceos-storefront/freelance-score-card.html">Freelance Scorecard</a>
+                    <a href="/freelanceos-storefront/pricing-confidence.html">Pricing Confidence</a>
+                    <a href="/freelanceos-storefront/client-red-flag-checker.html">Client Red Flag Checker</a>
+                    <a href="/freelanceos-storefront/burnout-risk-assessment.html">Burnout Risk Assessment</a>
+                </div>
+                <div class="footer-disclaimer">This tool is for educational purposes only.</div>
+                <div class="footer-brand">Built by <a href="/">FreelanceOS</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copy toast -->
+    <div class="copy-toast" id="copy-toast">Copied to clipboard!</div>
+
+    <script>
+    /* ==============================================================
+       DATA: Categories and Questions
+    ============================================================== */
+    const CATEGORIES = [
+        {
+            id: 'first_impressions',
+            name: 'First Impressions',
+            icon: '\u{1F525}',
+            description: 'What visitors see in the first 5 seconds',
+            questions: [
+                {
+                    text: 'Does your portfolio load in under 3 seconds?',
+                    options: [
+                        { label: 'Yes', score: 10 },
+                        { label: 'I think so', score: 6 },
+                        { label: 'No', score: 2 },
+                        { label: 'No idea', score: 3 }
+                    ]
+                },
+                {
+                    text: 'Is your headline/tagline specific to your niche?',
+                    options: [
+                        { label: 'Yes, very specific', score: 10 },
+                        { label: 'Somewhat', score: 6 },
+                        { label: "It's generic", score: 3 },
+                        { label: "I don't have one", score: 0 }
+                    ]
+                },
+                {
+                    text: 'Can a visitor tell what you do within 5 seconds?',
+                    options: [
+                        { label: 'Absolutely', score: 10 },
+                        { label: 'Probably', score: 7 },
+                        { label: 'Maybe', score: 4 },
+                        { label: 'Definitely not', score: 1 }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'case_studies',
+            name: 'Case Studies & Work',
+            icon: '\u{1F4BC}',
+            description: 'How you present your best projects',
+            questions: [
+                {
+                    text: 'Do your case studies show the process, not just the final result?',
+                    options: [
+                        { label: 'All of them', score: 10 },
+                        { label: 'Most', score: 7 },
+                        { label: 'Some', score: 4 },
+                        { label: 'None', score: 1 },
+                        { label: 'What case studies?', score: 0 }
+                    ]
+                },
+                {
+                    text: 'Do you include measurable results or outcomes?',
+                    options: [
+                        { label: 'Yes, with specific numbers', score: 10 },
+                        { label: 'Yes, but vague', score: 5 },
+                        { label: 'No', score: 1 },
+                        { label: 'N/A', score: 3 }
+                    ]
+                },
+                {
+                    text: 'Are your projects from the last 2 years?',
+                    options: [
+                        { label: 'All recent', score: 10 },
+                        { label: 'Mostly', score: 7 },
+                        { label: 'Mixed old and new', score: 4 },
+                        { label: 'Mostly old', score: 1 }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'social_proof',
+            name: 'Social Proof & Credibility',
+            icon: '\u{2B50}',
+            description: 'Trust signals that close deals',
+            questions: [
+                {
+                    text: 'Do you display client testimonials?',
+                    options: [
+                        { label: 'Yes, with names and companies', score: 10 },
+                        { label: 'Yes, but anonymous', score: 5 },
+                        { label: 'No', score: 0 }
+                    ]
+                },
+                {
+                    text: 'Do you mention specific client names or brands?',
+                    options: [
+                        { label: 'Yes, prominently', score: 10 },
+                        { label: 'A few', score: 6 },
+                        { label: 'No, confidentiality reasons', score: 4 },
+                        { label: 'No portfolio clients yet', score: 1 }
+                    ]
+                },
+                {
+                    text: 'Do you have trust signals? (Certifications, awards, press mentions, etc.)',
+                    options: [
+                        { label: 'Multiple', score: 10 },
+                        { label: 'One or two', score: 6 },
+                        { label: 'None', score: 1 }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'conversion',
+            name: 'Conversion & CTA',
+            icon: '\u{1F3AF}',
+            description: 'How effectively you convert visitors to leads',
+            questions: [
+                {
+                    text: 'Is there a clear call-to-action on every page?',
+                    options: [
+                        { label: 'Yes, prominent', score: 10 },
+                        { label: 'Yes, subtle', score: 6 },
+                        { label: 'Only on contact page', score: 3 },
+                        { label: 'No CTA', score: 0 }
+                    ]
+                },
+                {
+                    text: 'Can someone contact you in under 2 clicks?',
+                    options: [
+                        { label: 'Yes', score: 10 },
+                        { label: '2-3 clicks', score: 6 },
+                        { label: "It's buried", score: 2 },
+                        { label: 'No contact method visible', score: 0 }
+                    ]
+                },
+                {
+                    text: 'Do you state your pricing or give a range?',
+                    options: [
+                        { label: 'Yes, clear pricing', score: 10 },
+                        { label: 'Starting-at prices', score: 7 },
+                        { label: '"Contact for quote"', score: 4 },
+                        { label: 'No mention of pricing', score: 1 }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'positioning',
+            name: 'Positioning & Strategy',
+            icon: '\u{1F9ED}',
+            description: 'Strategic choices that attract premium clients',
+            questions: [
+                {
+                    text: 'Does your portfolio target a specific type of client?',
+                    options: [
+                        { label: 'Yes, very targeted', score: 10 },
+                        { label: 'Somewhat', score: 5 },
+                        { label: "No, it's for everyone", score: 1 }
+                    ]
+                },
+                {
+                    text: 'Do you have an "About" page that tells your story?',
+                    options: [
+                        { label: 'Yes, compelling', score: 10 },
+                        { label: 'Yes, basic', score: 5 },
+                        { label: 'No', score: 0 }
+                    ]
+                },
+                {
+                    text: 'Is your portfolio mobile-friendly?',
+                    options: [
+                        { label: 'Yes, fully responsive', score: 10 },
+                        { label: 'Partially', score: 5 },
+                        { label: 'No', score: 1 },
+                        { label: "I haven't checked", score: 2 }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    /* ==============================================================
+       GRADING TABLES
+    ============================================================== */
+    const GRADE_TABLE = [
+        { min: 90, grade: 'A+', title: 'Portfolio Powerhouse', tagline: 'Your portfolio is a client magnet.' },
+        { min: 80, grade: 'A',  title: 'Almost Perfect', tagline: 'Minor tweaks from world-class.' },
+        { min: 70, grade: 'B+', title: 'Solid Foundation', tagline: "Good work, but you're blending in." },
+        { min: 60, grade: 'B',  title: 'Average', tagline: 'Your portfolio is costing you premium clients.' },
+        { min: 40, grade: 'C',  title: 'Needs Work', tagline: 'Major gaps are actively losing you money.' },
+        { min: 20, grade: 'D',  title: 'Portfolio Emergency', tagline: 'This is repelling clients.' },
+        { min: 0,  grade: 'F',  title: 'Start Over', tagline: "You'd get more clients with no portfolio than this one." }
+    ];
+
+    /* ==============================================================
+       QUICK WINS DATABASE — keyed by category
+    ============================================================== */
+    const QUICK_WINS = {
+        first_impressions: [
+            { title: 'Rewrite your headline to be niche-specific', desc: 'Replace generic headlines like "Creative Designer" with specific ones like "E-commerce UI Designer Who Increases Conversions." This takes 15 minutes and immediately tells visitors you solve their problem.', impact: 'Could increase inquiries by 25-40%' },
+            { title: 'Add a speed-optimized hero image', desc: 'Compress your hero image to under 200KB using tools like TinyPNG. A fast-loading portfolio keeps visitors from bouncing before they even see your work.', impact: 'Reduces bounce rate by 15-25%' },
+            { title: 'Add a clear one-liner above the fold', desc: "Within 5 seconds, visitors should know: what you do, who you do it for, and what results you deliver. Write a one-liner that covers all three.", impact: 'Could increase time-on-site by 30%' }
+        ],
+        case_studies: [
+            { title: 'Add process breakdowns to your top 3 projects', desc: "For each project, add: the client's challenge, your approach, key decisions, and the outcome. This shows thinking, not just output, which is what premium clients pay for.", impact: 'Could increase inquiries by 20-30%' },
+            { title: 'Add measurable results to every case study', desc: "Even rough numbers work: 'Increased conversions by ~35%' or 'Reduced load time from 8s to 2s.' If you don't have data, ask past clients for permission to share outcomes.", impact: 'Makes your portfolio 2-3x more persuasive' },
+            { title: 'Remove outdated projects and replace with recent work', desc: "Old work signals inactivity. Keep only your best projects from the last 18-24 months. Even personal projects count if they're recent and polished.", impact: 'Signals active expertise to potential clients' }
+        ],
+        social_proof: [
+            { title: 'Email 3 past clients for a testimonial today', desc: "Send a simple email: 'I'm updating my portfolio. Would you mind sharing a 2-3 sentence testimonial about our work together?' Include their name and company for maximum impact.", impact: 'Testimonials can increase conversions by 30-40%' },
+            { title: 'Add client logos or brand names', desc: 'Even small brands lend credibility. Create a simple logo bar showing companies you have worked with. If NDA-bound, use industry descriptions instead.', impact: 'Logo bars increase trust instantly' },
+            { title: 'Display any certifications or achievements', desc: "Google certificates, platform badges, awards, speaking engagements, or even 'Featured in...' mentions. These third-party validations reduce buyer hesitation.", impact: 'Could reduce sales cycle by 15-20%' }
+        ],
+        conversion: [
+            { title: 'Add a CTA button to every page', desc: "Every page should have a clear 'Get in Touch', 'Start a Project', or 'Book a Call' button. Don't make visitors hunt for how to hire you.", impact: 'Could increase inquiries by 20-35%' },
+            { title: 'Make your contact method visible in 1 click', desc: 'Add a sticky header or floating button with your contact CTA. The fewer clicks between interest and contact, the more leads you capture.', impact: 'Reduces friction and captures impulse inquiries' },
+            { title: 'Add starting-at pricing to your services', desc: "Even a range like 'Projects start at $2,500' pre-qualifies visitors and shows confidence. This filters out tire-kickers and attracts serious buyers.", impact: 'Pre-qualifies leads and saves time on discovery calls' }
+        ],
+        positioning: [
+            { title: 'Narrow your portfolio to one ideal client type', desc: "Remove projects that don't serve your target audience. A portfolio for 'SaaS startups' is infinitely more compelling than one for 'everyone.' Specialization commands premium rates.", impact: 'Specialists charge 30-50% more than generalists' },
+            { title: 'Write a compelling About page', desc: "Tell your story: why you do what you do, who you help, and what makes your approach different. Clients hire people, not portfolios. Make them connect with you.", impact: 'Builds emotional connection and trust' },
+            { title: 'Test your portfolio on mobile right now', desc: "Over 60% of portfolio visits come from mobile. Open your site on your phone and fix anything that looks broken. Pay attention to text size, tap targets, and image scaling.", impact: 'Prevents losing 60%+ of your traffic' }
+        ]
+    };
+
+    /* ==============================================================
+       STRATEGIC IMPROVEMENTS DATABASE
+    ============================================================== */
+    const STRATEGIC_IMPROVEMENTS = {
+        first_impressions: [
+            { title: 'Invest in professional portfolio photography or mockups', desc: 'High-quality visuals signal premium positioning. Use mockup tools like Figma or Cleanmock to present work in realistic device frames.', priority: 'high' },
+            { title: 'A/B test different headlines', desc: 'Use a simple tool to track which headline drives more contact form submissions. Small wording changes can double conversion rates.', priority: 'medium' }
+        ],
+        case_studies: [
+            { title: 'Create video case study walkthroughs', desc: 'Record 2-3 minute Loom videos walking through your best projects. Video builds trust faster than text and shows your communication skills.', priority: 'high' },
+            { title: 'Build a case study template you reuse', desc: 'Standardize your case study format: Context, Challenge, Process, Solution, Results. This makes creating new ones fast and consistent.', priority: 'medium' }
+        ],
+        social_proof: [
+            { title: 'Start collecting testimonials systematically after every project', desc: 'Build it into your offboarding process. Send a feedback form at project completion when satisfaction is highest.', priority: 'high' },
+            { title: 'Pursue one industry certification or award', desc: 'Apply for design awards, get platform-certified, or speak at a local meetup. These third-party signals compound over time.', priority: 'low' }
+        ],
+        conversion: [
+            { title: 'Add a lead magnet to capture emails', desc: 'Offer a free checklist, guide, or template related to your niche. This captures visitors who are not ready to hire yet but might be later.', priority: 'medium' },
+            { title: 'Build a structured intake form instead of a generic contact form', desc: 'Ask about budget, timeline, and project type upfront. This pre-qualifies leads and shows professionalism.', priority: 'high' }
+        ],
+        positioning: [
+            { title: 'Write blog posts or guides targeting your ideal client\'s problems', desc: 'Content marketing positions you as an expert. Even 2-3 solid articles can drive organic traffic from ideal clients searching for solutions.', priority: 'medium' },
+            { title: 'Create a "Who I Work With" page', desc: 'Explicitly describe your ideal client. This attracts the right people and repels bad-fit inquiries, saving you hours of unqualified calls.', priority: 'low' }
+        ]
+    };
+
+    /* ==============================================================
+       STATE
+    ============================================================== */
+    let currentStep = 1;
+    let currentCategory = 0;
+    let answers = {}; // { categoryId: [score, score, score] }
+    let basics = {};
+    let finalGrade = '';
+    let finalScore = 0;
+    let categoryScores = {};
+
+    /* ==============================================================
+       STEP 1 VALIDATION
+    ============================================================== */
+    const step1Fields = ['niche', 'experience', 'platform', 'case-studies'];
+    step1Fields.forEach(id => {
+        document.getElementById(id).addEventListener('change', validateStep1);
+    });
+
+    function validateStep1() {
+        const allFilled = step1Fields.every(id => document.getElementById(id).value !== '');
+        document.getElementById('start-audit-btn').disabled = !allFilled;
+    }
+
+    /* ==============================================================
+       NAVIGATION
+    ============================================================== */
+    function goToStep2() {
+        basics = {
+            niche: document.getElementById('niche').value,
+            experience: document.getElementById('experience').value,
+            platform: document.getElementById('platform').value,
+            caseStudies: document.getElementById('case-studies').value
+        };
+
+        // Apply bonus/penalty from basics
+        currentStep = 2;
+        currentCategory = 0;
+        answers = {};
+        CATEGORIES.forEach(c => { answers[c.id] = []; });
+
+        updateProgress();
+        showStep(2);
+        renderCategory();
+    }
+
+    function showStep(n) {
+        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('step-' + n).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateProgress() {
+        const steps = [1, 2, 3];
+        steps.forEach(s => {
+            const el = document.getElementById('prog-step-' + s);
+            el.classList.remove('active', 'completed');
+            if (s < currentStep) el.classList.add('completed');
+            else if (s === currentStep) el.classList.add('active');
+        });
+
+        let pct = 0;
+        if (currentStep === 1) pct = 0;
+        else if (currentStep === 2) {
+            const totalQ = CATEGORIES.reduce((sum, c) => sum + c.questions.length, 0);
+            const answeredQ = Object.values(answers).reduce((sum, arr) => sum + arr.length, 0);
+            pct = 10 + (answeredQ / totalQ) * 55;
+        }
+        else if (currentStep === 3) pct = 100;
+
+        document.getElementById('progress-fill').style.width = pct + '%';
+    }
+
+    /* ==============================================================
+       RENDER AUDIT CATEGORY
+    ============================================================== */
+    function renderCategory() {
+        const cat = CATEGORIES[currentCategory];
+        const card = document.getElementById('audit-card');
+
+        // Category progress pips
+        const pipsHTML = CATEGORIES.map((c, i) => {
+            let cls = 'cat-pip';
+            if (i < currentCategory) cls += ' done';
+            else if (i === currentCategory) cls += ' current';
+            return '<div class="' + cls + '"></div>';
+        }).join('');
+        document.getElementById('cat-progress').innerHTML = pipsHTML;
+
+        // Build questions HTML
+        let html = '<div class="category-header">';
+        html += '<div class="category-icon">' + cat.icon + '</div>';
+        html += '<div class="category-info"><h3>' + cat.name + '</h3>';
+        html += '<p>Category ' + (currentCategory + 1) + ' of 5 &mdash; ' + cat.description + '</p></div></div>';
+
+        cat.questions.forEach((q, qi) => {
+            const savedAnswer = answers[cat.id][qi];
+            html += '<div class="form-group">';
+            html += '<label class="form-label"><span class="question-number">Q' + (qi + 1) + '.</span> ' + q.text + '</label>';
+            html += '<div class="radio-group">';
+            q.options.forEach((opt, oi) => {
+                const selected = savedAnswer !== undefined && savedAnswer === opt.score ? ' selected' : '';
+                html += '<div class="radio-option' + selected + '" data-q="' + qi + '" data-score="' + opt.score + '" onclick="selectOption(this, ' + qi + ', ' + opt.score + ')">';
+                html += '<div class="radio-circle"></div>';
+                html += '<span>' + opt.label + '</span>';
+                html += '</div>';
+            });
+            html += '</div></div>';
+        });
+
+        card.innerHTML = html;
+
+        // Update buttons
+        document.getElementById('prev-btn').style.display = currentCategory === 0 ? 'none' : '';
+        const isLast = currentCategory === CATEGORIES.length - 1;
+        document.getElementById('next-btn').innerHTML = isLast
+            ? 'See My Grade <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>'
+            : 'Next Category <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>';
+
+        validateCategory();
+        updateProgress();
+    }
+
+    function selectOption(el, qi, score) {
+        // Deselect siblings
+        const siblings = el.parentElement.querySelectorAll('.radio-option');
+        siblings.forEach(s => s.classList.remove('selected'));
+        el.classList.add('selected');
+
+        const cat = CATEGORIES[currentCategory];
+        answers[cat.id][qi] = score;
+        validateCategory();
+        updateProgress();
+    }
+
+    function validateCategory() {
+        const cat = CATEGORIES[currentCategory];
+        const allAnswered = cat.questions.every((_, i) => answers[cat.id][i] !== undefined);
+        document.getElementById('next-btn').disabled = !allAnswered;
+    }
+
+    function nextCategory() {
+        if (currentCategory < CATEGORIES.length - 1) {
+            currentCategory++;
+            renderCategory();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            goToResults();
+        }
+    }
+
+    function prevCategory() {
+        if (currentCategory > 0) {
+            currentCategory--;
+            renderCategory();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            currentStep = 1;
+            updateProgress();
+            showStep(1);
+        }
+    }
+
+    /* ==============================================================
+       SCORING ENGINE
+    ============================================================== */
+    function calculateScores() {
+        categoryScores = {};
+        let totalPoints = 0;
+        let maxTotal = 0;
+
+        CATEGORIES.forEach(cat => {
+            const catAnswers = answers[cat.id];
+            const maxCat = cat.questions.length * 10;
+            const catTotal = catAnswers.reduce((s, v) => s + v, 0);
+            const pct = Math.round((catTotal / maxCat) * 100);
+            categoryScores[cat.id] = pct;
+            totalPoints += catTotal;
+            maxTotal += maxCat;
+        });
+
+        // Basics modifiers
+        let modifier = 0;
+        if (basics.platform === 'No portfolio yet') modifier -= 8;
+        if (basics.caseStudies === '0') modifier -= 5;
+        if (basics.caseStudies === '10+') modifier += 3;
+        if (basics.platform === 'Personal website') modifier += 2;
+
+        finalScore = Math.max(0, Math.min(100, Math.round((totalPoints / maxTotal) * 100) + modifier));
+
+        for (const g of GRADE_TABLE) {
+            if (finalScore >= g.min) {
+                finalGrade = g.grade;
+                break;
+            }
+        }
+    }
+
+    function getGradeInfo() {
+        for (const g of GRADE_TABLE) {
+            if (finalScore >= g.min) return g;
+        }
+        return GRADE_TABLE[GRADE_TABLE.length - 1];
+    }
+
+    /* ==============================================================
+       RESULTS RENDERING
+    ============================================================== */
+    function goToResults() {
+        calculateScores();
+        currentStep = 3;
+        updateProgress();
+        showStep(3);
+
+        // Delay reveals for drama
+        setTimeout(() => revealGrade(), 300);
+        setTimeout(() => renderRadarChart(), 800);
+        setTimeout(() => renderCategoryBars(), 1000);
+        setTimeout(() => renderQuickWins(), 1200);
+        setTimeout(() => renderStrategicImprovements(), 1400);
+        setTimeout(() => renderLostClients(), 1600);
+        setTimeout(() => renderShareSection(), 1800);
+
+        // Confetti for A+ or A
+        if (finalScore >= 80) {
+            setTimeout(() => launchConfetti(), 600);
+        }
+    }
+
+    function revealGrade() {
+        const info = getGradeInfo();
+        const letterEl = document.getElementById('grade-letter');
+        const subtitleEl = document.getElementById('grade-subtitle');
+        const taglineEl = document.getElementById('grade-tagline');
+        const scoreEl = document.getElementById('overall-score-num');
+        const glowEl = document.getElementById('grade-glow');
+
+        letterEl.textContent = info.grade;
+        subtitleEl.textContent = info.title;
+        taglineEl.textContent = info.tagline;
+        scoreEl.textContent = 'Overall Score: ' + finalScore + ' / 100';
+
+        requestAnimationFrame(() => {
+            letterEl.classList.add('revealed');
+            subtitleEl.classList.add('revealed');
+            taglineEl.classList.add('revealed');
+            scoreEl.classList.add('revealed');
+            glowEl.classList.add('revealed');
+        });
+    }
+
+    /* ==============================================================
+       SVG RADAR CHART
+    ============================================================== */
+    function renderRadarChart() {
+        const svg = document.getElementById('radar-svg');
+        const cx = 200, cy = 180, maxR = 140;
+        const cats = CATEGORIES.map(c => ({ name: c.name, score: categoryScores[c.id] }));
+        const n = cats.length;
+        const angleStep = (2 * Math.PI) / n;
+        const startAngle = -Math.PI / 2;
+
+        let html = '';
+
+        // Gradient definition
+        html += '<defs>';
+        html += '<linearGradient id="radarGrad" x1="0%" y1="0%" x2="100%" y2="100%">';
+        html += '<stop offset="0%" stop-color="#a855f7" stop-opacity="0.6"/>';
+        html += '<stop offset="100%" stop-color="#ec4899" stop-opacity="0.6"/>';
+        html += '</linearGradient>';
+        html += '<linearGradient id="radarStroke" x1="0%" y1="0%" x2="100%" y2="100%">';
+        html += '<stop offset="0%" stop-color="#a855f7"/>';
+        html += '<stop offset="100%" stop-color="#ec4899"/>';
+        html += '</linearGradient>';
+        html += '</defs>';
+
+        // Grid rings
+        const rings = [0.2, 0.4, 0.6, 0.8, 1.0];
+        rings.forEach(r => {
+            let ringPoints = [];
+            for (let i = 0; i < n; i++) {
+                const angle = startAngle + i * angleStep;
+                const rx = cx + Math.cos(angle) * maxR * r;
+                const ry = cy + Math.sin(angle) * maxR * r;
+                ringPoints.push(rx.toFixed(1) + ',' + ry.toFixed(1));
+            }
+            html += '<polygon points="' + ringPoints.join(' ') + '" fill="none" stroke="rgba(100,116,139,0.12)" stroke-width="1"/>';
+        });
+
+        // Axes
+        for (let i = 0; i < n; i++) {
+            const angle = startAngle + i * angleStep;
+            const ex = cx + Math.cos(angle) * maxR;
+            const ey = cy + Math.sin(angle) * maxR;
+            html += '<line x1="' + cx + '" y1="' + cy + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) + '" stroke="rgba(100,116,139,0.1)" stroke-width="1"/>';
+        }
+
+        // Data polygon — starts at center, animates out
+        const zeroPoints = [];
+        const dataPoints = [];
+        for (let i = 0; i < n; i++) {
+            const angle = startAngle + i * angleStep;
+            zeroPoints.push(cx + ',' + cy);
+            const pct = cats[i].score / 100;
+            const dx = cx + Math.cos(angle) * maxR * pct;
+            const dy = cy + Math.sin(angle) * maxR * pct;
+            dataPoints.push(dx.toFixed(1) + ',' + dy.toFixed(1));
+        }
+
+        html += '<polygon class="radar-polygon" id="radar-poly" points="' + zeroPoints.join(' ') + '" fill="url(#radarGrad)" stroke="url(#radarStroke)" stroke-width="2.5"/>';
+
+        // Data dots
+        for (let i = 0; i < n; i++) {
+            const angle = startAngle + i * angleStep;
+            const pct = cats[i].score / 100;
+            const dx = cx + Math.cos(angle) * maxR * pct;
+            const dy = cy + Math.sin(angle) * maxR * pct;
+            html += '<circle class="radar-dot" cx="' + cx + '" cy="' + cy + '" r="5" fill="#a855f7" stroke="#fff" stroke-width="2" data-tx="' + dx.toFixed(1) + '" data-ty="' + dy.toFixed(1) + '" style="transition: all 1.5s ease;"/>';
+        }
+
+        // Labels
+        const labelPadding = 22;
+        for (let i = 0; i < n; i++) {
+            const angle = startAngle + i * angleStep;
+            const lx = cx + Math.cos(angle) * (maxR + labelPadding);
+            const ly = cy + Math.sin(angle) * (maxR + labelPadding);
+            let anchor = 'middle';
+            if (Math.cos(angle) > 0.3) anchor = 'start';
+            else if (Math.cos(angle) < -0.3) anchor = 'end';
+            html += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anchor + '" dominant-baseline="middle" fill="#94a3b8" font-size="11" font-weight="600" font-family="system-ui,sans-serif">' + cats[i].name + '</text>';
+            html += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 15).toFixed(1) + '" text-anchor="' + anchor + '" dominant-baseline="middle" fill="' + getScoreColor(cats[i].score) + '" font-size="13" font-weight="700" font-family="system-ui,sans-serif">' + cats[i].score + '%</text>';
+        }
+
+        svg.innerHTML = html;
+
+        // Animate polygon
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                document.getElementById('radar-poly').setAttribute('points', dataPoints.join(' '));
+                document.querySelectorAll('.radar-dot').forEach(dot => {
+                    dot.setAttribute('cx', dot.dataset.tx);
+                    dot.setAttribute('cy', dot.dataset.ty);
+                });
+            }, 100);
+        });
+    }
+
+    function getScoreColor(score) {
+        if (score >= 70) return '#a855f7';
+        if (score >= 40) return '#f59e0b';
+        return '#ef4444';
+    }
+
+    /* ==============================================================
+       CATEGORY PROGRESS BARS
+    ============================================================== */
+    function renderCategoryBars() {
+        const container = document.getElementById('category-scores');
+        let html = '';
+
+        CATEGORIES.forEach(cat => {
+            const score = categoryScores[cat.id];
+            let colorClass = 'high';
+            if (score < 40) colorClass = 'low';
+            else if (score < 70) colorClass = 'mid';
+
+            html += '<div class="cat-score-row">';
+            html += '<span class="cat-score-label">' + cat.name + '</span>';
+            html += '<div class="cat-score-bar-track"><div class="cat-score-bar-fill ' + colorClass + '" data-width="' + score + '"></div></div>';
+            html += '<span class="cat-score-value">' + score + '%</span>';
+            html += '</div>';
+        });
+
+        container.innerHTML = html;
+
+        // Animate bars
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                container.querySelectorAll('.cat-score-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width + '%';
+                });
+            }, 100);
+        });
+    }
+
+    /* ==============================================================
+       QUICK WINS
+    ============================================================== */
+    function renderQuickWins() {
+        // Sort categories by score (lowest first)
+        const sorted = CATEGORIES.map(c => ({ id: c.id, score: categoryScores[c.id] }))
+            .sort((a, b) => a.score - b.score);
+
+        const wins = [];
+        const usedCats = new Set();
+        for (const s of sorted) {
+            if (wins.length >= 3) break;
+            const catWins = QUICK_WINS[s.id];
+            if (catWins && catWins.length > 0 && !usedCats.has(s.id)) {
+                wins.push(catWins[0]);
+                usedCats.add(s.id);
+            }
+        }
+        // Fill remaining if needed
+        for (const s of sorted) {
+            if (wins.length >= 3) break;
+            const catWins = QUICK_WINS[s.id];
+            if (catWins) {
+                for (let i = 1; i < catWins.length && wins.length < 3; i++) {
+                    wins.push(catWins[i]);
+                }
+            }
+        }
+
+        const list = document.getElementById('quick-wins-list');
+        let html = '';
+        wins.forEach((w, i) => {
+            html += '<div class="win-card fade-in-up" style="animation-delay:' + (i * 0.15) + 's">';
+            html += '<div class="win-number">' + (i + 1) + '</div>';
+            html += '<h4>' + w.title + '</h4>';
+            html += '<p>' + w.desc + '</p>';
+            html += '<div class="win-impact"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> ' + w.impact + '</div>';
+            html += '</div>';
+        });
+        list.innerHTML = html;
+    }
+
+    /* ==============================================================
+       STRATEGIC IMPROVEMENTS
+    ============================================================== */
+    function renderStrategicImprovements() {
+        const sorted = CATEGORIES.map(c => ({ id: c.id, score: categoryScores[c.id] }))
+            .sort((a, b) => a.score - b.score);
+
+        const items = [];
+        for (const s of sorted) {
+            const catImprovements = STRATEGIC_IMPROVEMENTS[s.id];
+            if (catImprovements) {
+                catImprovements.forEach(imp => {
+                    items.push(imp);
+                });
+            }
+        }
+
+        // Sort by priority
+        const priorityOrder = { high: 0, medium: 1, low: 2 };
+        items.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+
+        const list = document.getElementById('strategic-list');
+        let html = '';
+        items.slice(0, 6).forEach(item => {
+            html += '<div class="strategic-item">';
+            html += '<div class="strategic-priority"><span class="priority-badge ' + item.priority + '">' + item.priority + '</span></div>';
+            html += '<div class="strategic-content"><h4>' + item.title + '</h4><p>' + item.desc + '</p></div>';
+            html += '</div>';
+        });
+        list.innerHTML = html;
+    }
+
+    /* ==============================================================
+       LOST CLIENTS CALCULATOR
+    ============================================================== */
+    function renderLostClients() {
+        const convScore = categoryScores['conversion'] || 50;
+        const overallPct = finalScore;
+
+        // Estimate bounce: lower score = more bouncing
+        const bounceCurrent = Math.max(2, Math.min(9, Math.round(10 - (overallPct / 12))));
+        const bounceFixed = Math.max(1, Math.min(bounceCurrent - 2, Math.round(10 - ((overallPct + 25) / 12))));
+
+        // Revenue estimation based on niche and experience
+        const rateMap = {
+            '1-2': { low: 1500, high: 4000 },
+            '3-5': { low: 3000, high: 8000 },
+            '5-10': { low: 5000, high: 15000 },
+            '10+': { low: 8000, high: 25000 }
+        };
+        const rates = rateMap[basics.experience] || rateMap['3-5'];
+        const avgDealSize = Math.round((rates.low + rates.high) / 2);
+
+        // Assume 100 portfolio visits per month
+        const visitsPerMonth = 100;
+        const clientsLostPerMonth = Math.round(visitsPerMonth * (bounceCurrent - bounceFixed) / 10);
+        const revenuePerYear = clientsLostPerMonth * avgDealSize * 12;
+        const revenueLow = Math.round(revenuePerYear * 0.3);
+        const revenueHigh = Math.round(revenuePerYear * 0.8);
+
+        const card = document.getElementById('lost-clients-card');
+        let html = '';
+        html += '<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Clients You Are Losing</h3>';
+
+        html += '<div class="bounce-stat">';
+        html += '<div class="bounce-box"><div class="bounce-num bounce-now">' + bounceCurrent + '/10</div><div class="bounce-label">Leave now</div></div>';
+        html += '<div class="bounce-arrow">→</div>';
+        html += '<div class="bounce-box"><div class="bounce-num bounce-fixed">' + bounceFixed + '/10</div><div class="bounce-label">After fixes</div></div>';
+        html += '</div>';
+
+        html += '<p style="color:var(--text-muted);font-size:0.92rem;margin-bottom:16px;">With your current portfolio, approximately <strong style="color:#ef4444;">' + bounceCurrent + ' out of 10</strong> visitors leave without contacting you. Fixing the top 3 issues could bring that to <strong style="color:#22c55e;">' + bounceFixed + ' out of 10</strong>.</p>';
+
+        html += '<div class="revenue-loss">';
+        html += '<p>That is potentially <span class="revenue-amount">$' + formatNum(revenueLow) + ' – $' + formatNum(revenueHigh) + '</span> in lost revenue per year.</p>';
+        html += '<p style="margin-top:8px;font-size:0.85rem;">Fixing your top 3 quick wins could recover <span class="revenue-saved">$' + formatNum(Math.round(revenueLow * 0.4)) + ' – $' + formatNum(Math.round(revenueHigh * 0.5)) + '</span> of that annually.</p>';
+        html += '</div>';
+
+        card.innerHTML = html;
+    }
+
+    function formatNum(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    /* ==============================================================
+       SHARE
+    ============================================================== */
+    function renderShareSection() {
+        const shareText = 'My freelance portfolio scored ' + finalGrade + '. Can yours beat it?';
+        document.getElementById('share-text').textContent = shareText;
+    }
+
+    function shareTwitter() {
+        const text = encodeURIComponent('My freelance portfolio scored ' + finalGrade + '. Can yours beat it?\n\nGrade yours free:');
+        const url = encodeURIComponent('https://freelanceos.com/freelanceos-storefront/portfolio-grader.html');
+        window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank', 'width=550,height=420');
+    }
+
+    function copyShareText() {
+        const text = 'My freelance portfolio scored ' + finalGrade + '. Can yours beat it? Grade yours free: https://freelanceos.com/freelanceos-storefront/portfolio-grader.html';
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById('copy-toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2200);
+        });
+    }
+
+    /* ==============================================================
+       CONFETTI
+    ============================================================== */
+    function launchConfetti() {
+        const colors = ['#a855f7', '#ec4899', '#f59e0b', '#22c55e', '#3b82f6', '#fff'];
+        const particleCount = 60;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'confetti-particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = '-10px';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.width = (Math.random() * 8 + 4) + 'px';
+            particle.style.height = (Math.random() * 8 + 4) + 'px';
+            particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+            particle.style.opacity = Math.random() * 0.8 + 0.2;
+
+            document.body.appendChild(particle);
+
+            const duration = Math.random() * 2000 + 1500;
+            const xDrift = (Math.random() - 0.5) * 200;
+            const rotation = Math.random() * 720;
+
+            particle.animate([
+                { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+                { transform: 'translate(' + xDrift + 'px, ' + (window.innerHeight + 50) + 'px) rotate(' + rotation + 'deg)', opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+            }).onfinish = () => particle.remove();
+        }
+    }
+
+    /* ==============================================================
+       RESTART
+    ============================================================== */
+    function restartGrader() {
+        currentStep = 1;
+        currentCategory = 0;
+        answers = {};
+        basics = {};
+        finalGrade = '';
+        finalScore = 0;
+        categoryScores = {};
+
+        // Reset form
+        step1Fields.forEach(id => { document.getElementById(id).value = ''; });
+        document.getElementById('start-audit-btn').disabled = true;
+
+        // Reset reveal classes
+        document.getElementById('grade-letter').classList.remove('revealed');
+        document.getElementById('grade-subtitle').classList.remove('revealed');
+        document.getElementById('grade-tagline').classList.remove('revealed');
+        document.getElementById('overall-score-num').classList.remove('revealed');
+        document.getElementById('grade-glow').classList.remove('revealed');
+
+        updateProgress();
+        showStep(1);
+    }
+    </script>
+</body>
+</html>

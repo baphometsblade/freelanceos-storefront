@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Emergency Fund Calculator — Free Tool | FreelanceOS</title>
+    <meta name="description" content="Calculate exactly how much emergency fund you need as a freelancer. Get personalized risk assessment, runway analysis, and savings timeline. Free tool from FreelanceOS.">
+    <meta name="keywords" content="freelance emergency fund, freelancer savings calculator, freelance runway, freelance financial planning, emergency fund calculator">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Freelance Emergency Fund Calculator — Free Tool | FreelanceOS">
+    <meta property="og:description" content="Calculate exactly how much emergency fund you need as a freelancer. Personalized risk assessment, runway analysis, and savings plan.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://freelanceos.pro/freelanceos-storefront/emergency-fund.html">
+    <meta property="og:image" content="https://freelanceos.pro/og-image.png">
+    <meta property="og:site_name" content="FreelanceOS">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Freelance Emergency Fund Calculator — Free Tool | FreelanceOS">
+    <meta name="twitter:description" content="Calculate exactly how much emergency fund you need as a freelancer. Personalized risk assessment, runway analysis, and savings plan.">
+    <meta name="twitter:image" content="https://freelanceos.pro/og-image.png">
+
+    <!-- Schema.org WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Freelance Emergency Fund Calculator",
+        "description": "Calculate exactly how much emergency fund you need as a freelancer. Get personalized risk assessment, runway analysis, and savings timeline.",
+        "url": "https://freelanceos.pro/freelanceos-storefront/emergency-fund.html",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "FreelanceOS",
+            "url": "https://freelanceos.pro"
+        }
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #a855f7;
+            --accent2: #ec4899;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+            --glass-bg: rgba(15, 23, 42, 0.8);
+            --glass-border: rgba(168, 85, 247, 0.1);
+            --glass-border-hover: rgba(168, 85, 247, 0.25);
+            --radius-card: 16px;
+            --radius-btn: 12px;
+            --radius-sm: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .bg-orb-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-orb-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent2);
+            bottom: -150px;
+            left: -150px;
+            animation-delay: -7s;
+        }
+
+        .bg-orb-3 {
+            width: 400px;
+            height: 400px;
+            background: var(--info);
+            top: 40%;
+            left: 40%;
+            animation-delay: -14s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -40px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(40px, 30px) scale(1.02); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .header-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        h1 .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-sub {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Progress Steps */
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 0 auto 40px;
+            max-width: 500px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 2px solid var(--text-dim);
+            color: var(--text-dim);
+            transition: all 0.4s ease;
+            flex-shrink: 0;
+        }
+
+        .step-circle.active {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .step-circle.done {
+            border-color: var(--success);
+            background: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            display: none;
+        }
+
+        .progress-line {
+            width: 80px;
+            height: 2px;
+            background: var(--text-dim);
+            margin: 0 12px;
+            transition: background 0.4s ease;
+        }
+
+        .progress-line.active {
+            background: var(--gradient);
+        }
+
+        @media (min-width: 640px) {
+            .step-label { display: block; }
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: border-color 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--glass-border-hover);
+        }
+
+        /* Step Sections */
+        .step-section {
+            display: none;
+            animation: fadeSlideIn 0.5s ease;
+        }
+
+        .step-section.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-value {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.05rem;
+        }
+
+        /* Custom Slider */
+        .slider-track {
+            position: relative;
+            width: 100%;
+            height: 8px;
+            background: rgba(100, 116, 139, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .slider-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            margin: 0;
+        }
+
+        .slider-wrapper {
+            position: relative;
+        }
+
+        .slider-wrapper .slider-fill {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 8px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(100, 116, 139, 0.3);
+            border-radius: 4px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5), 0 2px 6px rgba(0,0,0,0.3);
+            margin-top: -7px;
+            cursor: grab;
+            transition: box-shadow 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.8), 0 2px 10px rgba(0,0,0,0.4);
+        }
+
+        input[type="range"]::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(100, 116, 139, 0.3);
+            border-radius: 4px;
+            border: none;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5), 0 2px 6px rgba(0,0,0,0.3);
+            border: none;
+            cursor: grab;
+        }
+
+        input[type="range"]::-moz-range-progress {
+            background: var(--gradient);
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        /* Select / Radio Group */
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 10px;
+        }
+
+        .option-card {
+            padding: 12px 16px;
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .option-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            color: var(--text);
+        }
+
+        .option-card.selected {
+            border-color: var(--accent);
+            background: rgba(168, 85, 247, 0.1);
+            color: white;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 32px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: var(--radius-btn);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 30px rgba(168, 85, 247, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(100, 116, 139, 0.2);
+            color: var(--text-muted);
+            border: 1px solid rgba(100, 116, 139, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(100, 116, 139, 0.3);
+            color: var(--text);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ============ RESULTS ============ */
+
+        /* Metric Cards */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 600px) {
+            .metric-grid { grid-template-columns: 1fr; }
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-card);
+            padding: 24px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease, border-color 0.3s ease;
+        }
+
+        .metric-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .metric-card:hover {
+            border-color: var(--glass-border-hover);
+        }
+
+        .metric-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .metric-sub {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .metric-card.danger .metric-value { color: var(--danger); }
+        .metric-card.warning .metric-value { color: var(--warning); }
+        .metric-card.success .metric-value { color: var(--success); }
+        .metric-card.accent .metric-value { color: var(--accent); }
+
+        /* Gauge */
+        .gauge-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .gauge-svg {
+            width: 280px;
+            height: 180px;
+        }
+
+        .gauge-label-zone {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .gauge-description {
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.95rem;
+            max-width: 400px;
+        }
+
+        .gauge-months {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-top: 4px;
+        }
+
+        /* Scenarios */
+        .scenario-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-card);
+            padding: 24px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            border-color: var(--glass-border-hover);
+            transform: translateX(4px);
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+            transition: margin-bottom 0.3s ease;
+        }
+
+        .scenario-card.open .scenario-header {
+            margin-bottom: 16px;
+        }
+
+        .scenario-title {
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scenario-toggle {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            transition: transform 0.3s ease;
+        }
+
+        .scenario-card.open .scenario-toggle {
+            transform: rotate(180deg);
+        }
+
+        .scenario-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .scenario-card.open .scenario-body {
+            max-height: 400px;
+        }
+
+        .scenario-compare {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .scenario-col {
+            text-align: center;
+        }
+
+        .scenario-col-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .scenario-col-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .scenario-col-sub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .scenario-arrow {
+            font-size: 1.5rem;
+            color: var(--text-dim);
+        }
+
+        .scenario-insight {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(239, 68, 68, 0.08);
+            border-left: 3px solid var(--danger);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .scenario-insight.positive {
+            background: rgba(34, 197, 94, 0.08);
+            border-left-color: var(--success);
+        }
+
+        /* SVG Chart */
+        .chart-container {
+            width: 100%;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .chart-container svg {
+            width: 100%;
+            min-width: 500px;
+            height: 320px;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .chart-eta {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        /* Action Plan */
+        .action-item {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            transition: border-color 0.3s ease;
+        }
+
+        .action-item:hover {
+            border-color: var(--glass-border-hover);
+        }
+
+        .action-priority {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .action-priority.critical {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .action-priority.high {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .action-priority.medium {
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .action-content {
+            flex: 1;
+        }
+
+        .action-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        .action-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Share Badge */
+        .share-badge-container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .share-badge {
+            display: inline-block;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-card);
+            padding: 32px 48px;
+            margin-bottom: 20px;
+        }
+
+        .share-badge-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .share-badge-sub {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 10px 24px;
+            border-radius: var(--radius-btn);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .share-btn-x {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .share-btn-x:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .share-btn-copy {
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .share-btn-copy:hover {
+            background: rgba(168, 85, 247, 0.25);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: var(--radius-card);
+            padding: 40px 32px;
+            text-align: center;
+            margin: 48px 0 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient);
+        }
+
+        .cta-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(236, 72, 153, 0.15);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent2);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .cta-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .cta-desc {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.95rem;
+        }
+
+        .cta-price {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .cta-price-original {
+            text-decoration: line-through;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        .cta-price-sale {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-code {
+            display: inline-block;
+            padding: 3px 10px;
+            background: rgba(168, 85, 247, 0.15);
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 40px;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-btn);
+            font-weight: 700;
+            font-size: 1.05rem;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            box-shadow: 0 8px 40px rgba(168, 85, 247, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 48px 0 32px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 24px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-disclaimer {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            max-width: 600px;
+            margin: 16px auto 0;
+            line-height: 1.5;
+        }
+
+        .footer-brand {
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .footer-brand a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Result Section Headers */
+        .result-section {
+            margin-bottom: 40px;
+        }
+
+        .result-section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .result-section-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .result-section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .result-section-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Tooltip */
+        .info-tip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(100, 116, 139, 0.3);
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: help;
+            margin-left: 6px;
+            position: relative;
+        }
+
+        .info-tip:hover::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 12px;
+            background: var(--card);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            white-space: nowrap;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        /* Risk question styling */
+        .risk-question {
+            margin-bottom: 28px;
+        }
+
+        .risk-question-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        /* Recalculate button */
+        .btn-restart {
+            background: none;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: var(--radius-btn);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-restart:hover {
+            border-color: var(--glass-border-hover);
+            color: var(--text);
+        }
+
+        /* Loading dots */
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .loading-dots span {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: loadBounce 1.2s ease infinite;
+        }
+
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes loadBounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Number counter animation */
+        .count-up {
+            display: inline-block;
+        }
+
+        /* Biggest client warning highlight */
+        .client-warning {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .client-warning.show {
+            display: block;
+        }
+
+        .client-warning strong {
+            color: var(--danger);
+        }
+
+        /* Results top banner */
+        .results-verdict-banner {
+            text-align: center;
+            padding: 32px 20px;
+            margin-bottom: 32px;
+        }
+
+        .verdict-emoji {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .verdict-headline {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .verdict-sub {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-effects">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                FreelanceOS Free Tool
+            </div>
+            <h1>Freelance <span class="gradient-text">Emergency Fund</span> Calculator</h1>
+            <p class="header-sub">Find out exactly how many months you could survive if all your clients disappeared tomorrow. Most freelancers can't answer this question.</p>
+        </header>
+
+        <!-- Progress -->
+        <div class="progress-bar">
+            <div class="progress-step" data-step="1">
+                <div class="step-circle active" id="step-circle-1">1</div>
+                <span class="step-label">Profile</span>
+            </div>
+            <div class="progress-line" id="progress-line-1"></div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle" id="step-circle-2">2</div>
+                <span class="step-label">Risk</span>
+            </div>
+            <div class="progress-line" id="progress-line-2"></div>
+            <div class="progress-step" data-step="3">
+                <div class="step-circle" id="step-circle-3">3</div>
+                <span class="step-label">Results</span>
+            </div>
+        </div>
+
+        <!-- ============ STEP 1: Financial Profile ============ -->
+        <div class="step-section active" id="step-1">
+            <div class="glass-card">
+                <h2 class="section-title">Your Financial Profile</h2>
+                <p class="section-subtitle">Let's get a clear picture of your freelance finances. Move the sliders to match your situation.</p>
+
+                <div class="form-group">
+                    <div class="form-label">
+                        <span>Monthly Business Expenses <span class="info-tip" data-tip="Tools, software, office, contractors, etc.">?</span></span>
+                        <span class="form-value" id="val-biz-expenses">$3,000</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" id="biz-expenses" min="500" max="20000" step="100" value="3000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label">
+                        <span>Monthly Personal Expenses <span class="info-tip" data-tip="Rent, food, utilities, insurance, etc.">?</span></span>
+                        <span class="form-value" id="val-personal-expenses">$3,000</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" id="personal-expenses" min="500" max="15000" step="100" value="3000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label">
+                        <span>Current Savings / Emergency Fund</span>
+                        <span class="form-value" id="val-savings">$10,000</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" id="savings" min="0" max="200000" step="500" value="10000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label">
+                        <span>Monthly Gross Income</span>
+                        <span class="form-value" id="val-income">$8,000</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" id="income" min="1000" max="50000" step="500" value="8000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label">
+                        <span>Number of Active Clients</span>
+                        <span class="form-value" id="val-clients">3</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" id="clients" min="1" max="20" step="1" value="3">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label">
+                        <span>Biggest Client % of Total Income <span class="info-tip" data-tip="If one client pays most of your bills, you're at risk">?</span></span>
+                        <span class="form-value" id="val-top-client">50%</span>
+                    </div>
+                    <div class="slider-wrapper">
+                        <input type="range" id="top-client" min="5" max="100" step="1" value="50">
+                    </div>
+                    <div class="client-warning" id="client-warning">
+                        <strong>Revenue concentration risk:</strong> If your biggest client accounts for more than 30% of your income, losing them could be devastating.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label">
+                        <span>How Do You Find New Clients?</span>
+                    </div>
+                    <div class="option-grid" id="lead-source">
+                        <div class="option-card" data-value="referrals">Referrals</div>
+                        <div class="option-card" data-value="inbound">Inbound</div>
+                        <div class="option-card" data-value="outbound">Outbound</div>
+                        <div class="option-card" data-value="platforms">Platforms</div>
+                        <div class="option-card selected" data-value="mix">Mix</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label">
+                        <span>Average Time to Land a New Client</span>
+                    </div>
+                    <div class="option-grid" id="time-to-client">
+                        <div class="option-card" data-value="1">1 week</div>
+                        <div class="option-card selected" data-value="2">2 weeks</div>
+                        <div class="option-card" data-value="4">1 month</div>
+                        <div class="option-card" data-value="8">2 months</div>
+                        <div class="option-card" data-value="12">3+ months</div>
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="goToStep(2)">Continue to Risk Assessment <span style="font-size:1.1rem">&#8594;</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ STEP 2: Risk Assessment ============ -->
+        <div class="step-section" id="step-2">
+            <div class="glass-card">
+                <h2 class="section-title">Risk Assessment</h2>
+                <p class="section-subtitle">These 6 questions determine how large your emergency fund needs to be. Be honest &mdash; this is for you.</p>
+
+                <div class="risk-question">
+                    <div class="risk-question-label">1. Do you have recurring / retainer clients?</div>
+                    <div class="option-grid" id="q-retainers">
+                        <div class="option-card" data-value="all">All retainer</div>
+                        <div class="option-card" data-value="mostly">Mostly</div>
+                        <div class="option-card" data-value="some">Some</div>
+                        <div class="option-card selected" data-value="none">All project-based</div>
+                    </div>
+                </div>
+
+                <div class="risk-question">
+                    <div class="risk-question-label">2. How stable is your industry?</div>
+                    <div class="option-grid" id="q-stability">
+                        <div class="option-card" data-value="very">Very stable</div>
+                        <div class="option-card selected" data-value="stable">Stable</div>
+                        <div class="option-card" data-value="cyclical">Cyclical</div>
+                        <div class="option-card" data-value="volatile">Volatile</div>
+                    </div>
+                </div>
+
+                <div class="risk-question">
+                    <div class="risk-question-label">3. Do you have health insurance?</div>
+                    <div class="option-grid" id="q-insurance">
+                        <div class="option-card" data-value="employer">Employer / spouse plan</div>
+                        <div class="option-card selected" data-value="marketplace">Marketplace</div>
+                        <div class="option-card" data-value="none">None</div>
+                    </div>
+                </div>
+
+                <div class="risk-question">
+                    <div class="risk-question-label">4. Do you have other income sources?</div>
+                    <div class="option-grid" id="q-other-income">
+                        <div class="option-card" data-value="significant">Yes, significant</div>
+                        <div class="option-card" data-value="small">Yes, small</div>
+                        <div class="option-card selected" data-value="none">No</div>
+                    </div>
+                </div>
+
+                <div class="risk-question">
+                    <div class="risk-question-label">5. Outstanding debt payments?</div>
+                    <div class="option-grid" id="q-debt">
+                        <div class="option-card" data-value="none">None</div>
+                        <div class="option-card selected" data-value="small">Small</div>
+                        <div class="option-card" data-value="moderate">Moderate</div>
+                        <div class="option-card" data-value="significant">Significant</div>
+                    </div>
+                </div>
+
+                <div class="risk-question">
+                    <div class="risk-question-label">6. Dependents?</div>
+                    <div class="option-grid" id="q-dependents">
+                        <div class="option-card selected" data-value="none">None</div>
+                        <div class="option-card" data-value="some">1-2</div>
+                        <div class="option-card" data-value="many">3+</div>
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-secondary" onclick="goToStep(1)"><span style="font-size:1.1rem">&#8592;</span> Back</button>
+                    <button class="btn btn-primary" onclick="calculateResults()">Calculate My Runway <span style="font-size:1.1rem">&#8594;</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ STEP 3: Results ============ -->
+        <div class="step-section" id="step-3">
+
+            <!-- Verdict Banner -->
+            <div class="results-verdict-banner animate-in" id="verdict-banner">
+                <div class="verdict-emoji" id="verdict-emoji"></div>
+                <div class="verdict-headline" id="verdict-headline"></div>
+                <div class="verdict-sub" id="verdict-sub"></div>
+            </div>
+
+            <!-- 1. Runway Dashboard -->
+            <div class="result-section animate-in" id="section-metrics">
+                <div class="result-section-header">
+                    <div class="result-section-icon" style="background:rgba(168,85,247,0.15);color:var(--accent);">&#x1F4CA;</div>
+                    <div>
+                        <div class="result-section-title">Runway Dashboard</div>
+                        <div class="result-section-subtitle">Your key financial safety numbers</div>
+                    </div>
+                </div>
+                <div class="metric-grid" id="metric-grid"></div>
+            </div>
+
+            <!-- 2. Emergency Fund Gauge -->
+            <div class="result-section animate-in" id="section-gauge">
+                <div class="glass-card" style="padding:20px;">
+                    <div class="result-section-header" style="margin-bottom:0;">
+                        <div class="result-section-icon" style="background:rgba(236,72,153,0.15);color:var(--accent2);">&#x1F3AF;</div>
+                        <div>
+                            <div class="result-section-title">Emergency Fund Gauge</div>
+                            <div class="result-section-subtitle">Where you stand right now</div>
+                        </div>
+                    </div>
+                    <div class="gauge-container" id="gauge-container"></div>
+                </div>
+            </div>
+
+            <!-- 3. Scenario Simulator -->
+            <div class="result-section animate-in" id="section-scenarios">
+                <div class="result-section-header">
+                    <div class="result-section-icon" style="background:rgba(59,130,246,0.15);color:var(--info);">&#x26A1;</div>
+                    <div>
+                        <div class="result-section-title">Scenario Simulator</div>
+                        <div class="result-section-subtitle">What happens when life throws curveballs</div>
+                    </div>
+                </div>
+                <div id="scenarios-list"></div>
+            </div>
+
+            <!-- 4. Savings Timeline -->
+            <div class="result-section animate-in" id="section-timeline">
+                <div class="glass-card">
+                    <div class="result-section-header" style="margin-bottom:0;">
+                        <div class="result-section-icon" style="background:rgba(34,197,94,0.15);color:var(--success);">&#x1F4C8;</div>
+                        <div>
+                            <div class="result-section-title">Savings Timeline</div>
+                            <div class="result-section-subtitle">Month-by-month projection to your target</div>
+                        </div>
+                    </div>
+                    <div class="chart-container" id="chart-container"></div>
+                    <div class="chart-eta" id="chart-eta"></div>
+                </div>
+            </div>
+
+            <!-- 5. Action Plan -->
+            <div class="result-section animate-in" id="section-actions">
+                <div class="result-section-header">
+                    <div class="result-section-icon" style="background:rgba(245,158,11,0.15);color:var(--warning);">&#x1F4DD;</div>
+                    <div>
+                        <div class="result-section-title">Your Action Plan</div>
+                        <div class="result-section-subtitle">Personalized steps to secure your business</div>
+                    </div>
+                </div>
+                <div id="action-plan"></div>
+            </div>
+
+            <!-- 6. Share Badge -->
+            <div class="result-section animate-in" id="section-share">
+                <div class="share-badge-container">
+                    <div class="share-badge">
+                        <div class="share-badge-text" id="share-text"></div>
+                        <div class="share-badge-sub">Built with FreelanceOS Emergency Fund Calculator</div>
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-btn share-btn-x" onclick="shareTwitter()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            Share on X
+                        </button>
+                        <button class="share-btn share-btn-copy" onclick="copyShareText()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span id="copy-label">Copy to Clipboard</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-banner animate-in" id="section-cta">
+                <div class="cta-badge">FLASH SALE &mdash; 40% OFF</div>
+                <div class="cta-title">Want real-time financial dashboards?</div>
+                <p class="cta-desc">FreelanceOS Pro includes revenue tracking, cash flow projections, tax estimates, and expense management &mdash; all inside Notion.</p>
+                <div class="cta-price">
+                    <span class="cta-price-original">$29</span>
+                    <span class="cta-price-sale">$17.40</span>
+                    <span class="cta-code">FLASH40</span>
+                </div>
+                <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" class="cta-button" target="_blank" rel="noopener">
+                    Get FreelanceOS Pro <span style="font-size:1.1rem">&#8594;</span>
+                </a>
+            </div>
+
+            <!-- Recalculate -->
+            <div style="text-align:center;margin:24px 0 0;">
+                <button class="btn-restart" onclick="goToStep(1)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                    Recalculate
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="/freelanceos-storefront/income-projector.html">Income Projector</a>
+                <a href="/freelanceos-storefront/tax-estimator.html">Tax Estimator</a>
+                <a href="/freelanceos-storefront/pricing-confidence.html">Pricing Confidence</a>
+                <a href="/freelanceos-storefront/burnout-risk-assessment.html">Burnout Risk</a>
+            </div>
+            <p class="footer-disclaimer">This tool provides estimates only and is not financial advice. Consult a financial advisor for personalized advice. Results are based on the information you provide and simplified assumptions about income stability and expenses.</p>
+            <p class="footer-brand">Built by <a href="https://freelanceos.pro" target="_blank" rel="noopener">FreelanceOS</a></p>
+        </footer>
+    </div>
+
+    <script>
+    /* ============================================================
+       STATE
+    ============================================================ */
+    const state = {
+        step: 1,
+        profile: {
+            bizExpenses: 3000,
+            personalExpenses: 3000,
+            savings: 10000,
+            income: 8000,
+            clients: 3,
+            topClientPct: 50,
+            leadSource: 'mix',
+            timeToClient: 2
+        },
+        risk: {
+            retainers: 'none',
+            stability: 'stable',
+            insurance: 'marketplace',
+            otherIncome: 'none',
+            debt: 'small',
+            dependents: 'none'
+        }
+    };
+
+    /* ============================================================
+       SLIDER & OPTION SETUP
+    ============================================================ */
+    function formatCurrency(v) {
+        return '$' + v.toLocaleString('en-US');
+    }
+
+    function setupSlider(id, stateKey, formatter) {
+        const slider = document.getElementById(id);
+        const display = document.getElementById('val-' + id);
+        if (!slider || !display) return;
+
+        const update = () => {
+            const v = Number(slider.value);
+            state.profile[stateKey] = v;
+            display.textContent = formatter ? formatter(v) : v;
+
+            // Gradient fill for webkit
+            const pct = ((v - slider.min) / (slider.max - slider.min)) * 100;
+            slider.style.background = `linear-gradient(to right, #a855f7 0%, #ec4899 ${pct}%, rgba(100,116,139,0.3) ${pct}%)`;
+        };
+
+        slider.addEventListener('input', update);
+        update();
+
+        // Client concentration warning
+        if (id === 'top-client') {
+            slider.addEventListener('input', () => {
+                const warn = document.getElementById('client-warning');
+                if (warn) warn.classList.toggle('show', state.profile.topClientPct > 30);
+            });
+            // Initialize
+            const warn = document.getElementById('client-warning');
+            if (warn) warn.classList.toggle('show', state.profile.topClientPct > 30);
+        }
+    }
+
+    function setupOptionGroup(containerId, stateObj, stateKey) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const cards = container.querySelectorAll('.option-card');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                cards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                stateObj[stateKey] = card.dataset.value;
+            });
+        });
+    }
+
+    // Initialize sliders
+    setupSlider('biz-expenses', 'bizExpenses', formatCurrency);
+    setupSlider('personal-expenses', 'personalExpenses', formatCurrency);
+    setupSlider('savings', 'savings', formatCurrency);
+    setupSlider('income', 'income', formatCurrency);
+    setupSlider('clients', 'clients', v => v);
+    setupSlider('top-client', 'topClientPct', v => v + '%');
+
+    // Initialize option groups
+    setupOptionGroup('lead-source', state.profile, 'leadSource');
+    setupOptionGroup('time-to-client', state.profile, 'timeToClient');
+    setupOptionGroup('q-retainers', state.risk, 'retainers');
+    setupOptionGroup('q-stability', state.risk, 'stability');
+    setupOptionGroup('q-insurance', state.risk, 'insurance');
+    setupOptionGroup('q-other-income', state.risk, 'otherIncome');
+    setupOptionGroup('q-debt', state.risk, 'debt');
+    setupOptionGroup('q-dependents', state.risk, 'dependents');
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    function goToStep(n) {
+        document.querySelectorAll('.step-section').forEach(s => s.classList.remove('active'));
+        document.getElementById('step-' + n).classList.add('active');
+
+        for (let i = 1; i <= 3; i++) {
+            const circle = document.getElementById('step-circle-' + i);
+            circle.classList.remove('active', 'done');
+            if (i < n) circle.classList.add('done');
+            if (i === n) circle.classList.add('active');
+        }
+
+        document.getElementById('progress-line-1').classList.toggle('active', n >= 2);
+        document.getElementById('progress-line-2').classList.toggle('active', n >= 3);
+
+        state.step = n;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ============================================================
+       CALCULATIONS
+    ============================================================ */
+    function computeRiskScore() {
+        let score = 0; // Higher = more risk, need more months
+
+        // Retainers
+        const retainerMap = { all: 0, mostly: 1, some: 2, none: 3 };
+        score += retainerMap[state.risk.retainers] || 0;
+
+        // Industry stability
+        const stabilityMap = { very: 0, stable: 1, cyclical: 2, volatile: 3 };
+        score += stabilityMap[state.risk.stability] || 0;
+
+        // Insurance
+        const insuranceMap = { employer: 0, marketplace: 1, none: 3 };
+        score += insuranceMap[state.risk.insurance] || 0;
+
+        // Other income
+        const otherIncomeMap = { significant: 0, small: 1, none: 2 };
+        score += otherIncomeMap[state.risk.otherIncome] || 0;
+
+        // Debt
+        const debtMap = { none: 0, small: 1, moderate: 2, significant: 3 };
+        score += debtMap[state.risk.debt] || 0;
+
+        // Dependents
+        const dependentsMap = { none: 0, some: 1, many: 2 };
+        score += dependentsMap[state.risk.dependents] || 0;
+
+        // Client concentration
+        if (state.profile.topClientPct > 60) score += 3;
+        else if (state.profile.topClientPct > 40) score += 2;
+        else if (state.profile.topClientPct > 30) score += 1;
+
+        // Few clients
+        if (state.profile.clients <= 1) score += 3;
+        else if (state.profile.clients <= 2) score += 2;
+        else if (state.profile.clients <= 3) score += 1;
+
+        // Lead source
+        const leadMap = { referrals: 1, inbound: 0, outbound: 1, platforms: 2, mix: 0 };
+        score += leadMap[state.profile.leadSource] || 0;
+
+        // Time to land client
+        const ttc = Number(state.profile.timeToClient);
+        if (ttc >= 12) score += 3;
+        else if (ttc >= 8) score += 2;
+        else if (ttc >= 4) score += 1;
+
+        return score; // Range roughly 0-28
+    }
+
+    function computeTargetMonths(riskScore) {
+        // Map risk score to recommended months
+        if (riskScore <= 4) return 6;
+        if (riskScore <= 8) return 8;
+        if (riskScore <= 12) return 9;
+        if (riskScore <= 16) return 10;
+        if (riskScore <= 20) return 11;
+        return 12;
+    }
+
+    function computeAll() {
+        const p = state.profile;
+        const monthlyBurn = p.bizExpenses + p.personalExpenses;
+        const currentRunwayMonths = monthlyBurn > 0 ? p.savings / monthlyBurn : 999;
+        const currentRunwayWhole = Math.floor(currentRunwayMonths);
+        const currentRunwayDays = Math.round((currentRunwayMonths - currentRunwayWhole) * 30);
+
+        // Lost biggest client
+        const topClientIncome = p.income * (p.topClientPct / 100);
+        const incomeAfterLoss = p.income - topClientIncome;
+        const netAfterLoss = incomeAfterLoss - monthlyBurn;
+        let runwayAfterLoss;
+        if (netAfterLoss >= 0) {
+            runwayAfterLoss = 999; // They can survive indefinitely
+        } else {
+            runwayAfterLoss = p.savings / Math.abs(netAfterLoss);
+        }
+
+        const riskScore = computeRiskScore();
+        const targetMonths = computeTargetMonths(riskScore);
+        const targetFund = targetMonths * monthlyBurn;
+
+        const monthlySavings = p.income - monthlyBurn;
+        const savingsGap = targetFund > p.savings ? targetFund - p.savings : 0;
+        const monthlyGap = savingsGap > 0 && monthlySavings > 0 ? Math.ceil(savingsGap / monthlySavings) : (savingsGap > 0 ? -1 : 0);
+        const additionalMonthlySavingsNeeded = monthlySavings <= 0 ? monthlyBurn * 0.2 : (savingsGap > 0 ? Math.ceil(savingsGap / 12) : 0);
+
+        return {
+            monthlyBurn,
+            currentRunwayMonths,
+            currentRunwayWhole,
+            currentRunwayDays,
+            topClientIncome,
+            incomeAfterLoss,
+            runwayAfterLoss: Math.min(runwayAfterLoss, 99),
+            riskScore,
+            targetMonths,
+            targetFund,
+            monthlySavings,
+            savingsGap,
+            monthsToTarget: monthlyGap,
+            additionalMonthlySavingsNeeded,
+            netAfterLoss
+        };
+    }
+
+    /* ============================================================
+       RENDER RESULTS
+    ============================================================ */
+    function calculateResults() {
+        goToStep(3);
+        const r = computeAll();
+
+        renderVerdict(r);
+        renderMetrics(r);
+        renderGauge(r);
+        renderScenarios(r);
+        renderTimeline(r);
+        renderActionPlan(r);
+        renderShare(r);
+
+        // Animate sections in sequence
+        setTimeout(() => {
+            const sections = document.querySelectorAll('#step-3 .animate-in');
+            sections.forEach((el, i) => {
+                setTimeout(() => el.classList.add('visible'), i * 150);
+            });
+        }, 100);
+
+        // Animate metric cards
+        setTimeout(() => {
+            document.querySelectorAll('.metric-card').forEach((card, i) => {
+                setTimeout(() => card.classList.add('visible'), i * 120 + 200);
+            });
+        }, 200);
+    }
+
+    /* ---------- Verdict Banner ---------- */
+    function renderVerdict(r) {
+        const months = r.currentRunwayMonths;
+        let emoji, headline, sub;
+
+        if (months < 1) {
+            emoji = '&#x1F6A8;';
+            headline = 'You have less than a month of runway.';
+            sub = 'This is a financial emergency. One late payment could cascade into disaster.';
+        } else if (months < 3) {
+            emoji = '&#x26A0;&#xFE0F;';
+            headline = 'Your runway is dangerously short.';
+            sub = 'You\'re one lost client away from a crisis. Let\'s fix this.';
+        } else if (months < 6) {
+            emoji = '&#x1F914;';
+            headline = 'You\'re surviving, but barely.';
+            sub = 'A rough quarter could wipe out your safety net. There\'s room to improve.';
+        } else if (months < 9) {
+            emoji = '&#x1F4AA;';
+            headline = 'You\'re building real resilience.';
+            sub = 'Good progress. A few more months of savings and you\'ll sleep much better.';
+        } else if (months < 12) {
+            emoji = '&#x1F389;';
+            headline = 'Solid financial foundation.';
+            sub = 'You can weather most storms. Keep building toward total financial freedom.';
+        } else {
+            emoji = '&#x1F3F0;';
+            headline = 'You\'ve built a financial fortress.';
+            sub = 'Most freelancers dream of this stability. Now you can take bigger bets.';
+        }
+
+        document.getElementById('verdict-emoji').innerHTML = emoji;
+        document.getElementById('verdict-headline').textContent = headline;
+        document.getElementById('verdict-sub').textContent = sub;
+    }
+
+    /* ---------- Metric Cards ---------- */
+    function renderMetrics(r) {
+        const grid = document.getElementById('metric-grid');
+
+        const runwayClass = r.currentRunwayMonths < 3 ? 'danger' : r.currentRunwayMonths < 6 ? 'warning' : 'success';
+        const lostClass = r.runwayAfterLoss < 3 ? 'danger' : r.runwayAfterLoss < 6 ? 'warning' : 'success';
+        const gapClass = r.savingsGap > 0 ? 'warning' : 'success';
+
+        const runwayDisplay = r.currentRunwayWhole >= 99 ? '99+ months' : `${r.currentRunwayWhole}mo ${r.currentRunwayDays}d`;
+        const lostDisplay = r.runwayAfterLoss >= 99 ? 'Indefinite' : `${Math.floor(r.runwayAfterLoss)}mo ${Math.round((r.runwayAfterLoss % 1) * 30)}d`;
+
+        grid.innerHTML = `
+            <div class="metric-card ${runwayClass}">
+                <div class="metric-icon">&#x23F1;&#xFE0F;</div>
+                <div class="metric-label">Current Runway</div>
+                <div class="metric-value">${runwayDisplay}</div>
+                <div class="metric-sub">at ${formatCurrency(r.monthlyBurn)}/mo burn rate</div>
+            </div>
+            <div class="metric-card ${lostClass}">
+                <div class="metric-icon">&#x1F4A3;</div>
+                <div class="metric-label">If You Lost Your Biggest Client</div>
+                <div class="metric-value">${lostDisplay}</div>
+                <div class="metric-sub">${state.profile.topClientPct}% of income gone</div>
+            </div>
+            <div class="metric-card accent">
+                <div class="metric-icon">&#x1F3AF;</div>
+                <div class="metric-label">Target Emergency Fund</div>
+                <div class="metric-value">${formatCurrency(r.targetFund)}</div>
+                <div class="metric-sub">${r.targetMonths} months of expenses</div>
+            </div>
+            <div class="metric-card ${gapClass}">
+                <div class="metric-icon">${r.savingsGap > 0 ? '&#x1F4B8;' : '&#x2705;'}</div>
+                <div class="metric-label">Monthly Savings Gap</div>
+                <div class="metric-value">${r.savingsGap > 0 ? formatCurrency(r.additionalMonthlySavingsNeeded) + '/mo' : 'On Track!'}</div>
+                <div class="metric-sub">${r.savingsGap > 0 ? formatCurrency(r.savingsGap) + ' total gap' : 'You\'ve hit your target'}</div>
+            </div>
+        `;
+    }
+
+    /* ---------- Gauge ---------- */
+    function renderGauge(r) {
+        const container = document.getElementById('gauge-container');
+        const months = Math.min(r.currentRunwayMonths, 15);
+
+        // Determine zone
+        let zoneColor, zoneLabel, zoneDesc;
+        if (months < 3) {
+            zoneColor = '#ef4444';
+            zoneLabel = 'DANGER ZONE';
+            zoneDesc = 'One bad month could end your business';
+        } else if (months < 6) {
+            zoneColor = '#f97316';
+            zoneLabel = 'VULNERABLE';
+            zoneDesc = 'You\'d survive, but barely';
+        } else if (months < 9) {
+            zoneColor = '#eab308';
+            zoneLabel = 'GETTING THERE';
+            zoneDesc = 'Building resilience';
+        } else if (months < 12) {
+            zoneColor = '#22c55e';
+            zoneLabel = 'SOLID';
+            zoneDesc = 'You can weather most storms';
+        } else {
+            zoneColor = '#3b82f6';
+            zoneLabel = 'FORTRESS';
+            zoneDesc = 'Financial freedom achieved';
+        }
+
+        const pct = Math.min(months / 15, 1);
+        const startAngle = Math.PI;
+        const endAngle = startAngle + Math.PI * pct;
+        const cx = 140, cy = 140, radius = 110;
+
+        const x1 = cx + radius * Math.cos(startAngle);
+        const y1 = cy + radius * Math.sin(startAngle);
+        const x2 = cx + radius * Math.cos(endAngle);
+        const y2 = cy + radius * Math.sin(endAngle);
+        const largeArc = pct > 0.5 ? 1 : 0;
+
+        // Zone arcs
+        function arcPath(startPct, endPct) {
+            const sa = Math.PI + Math.PI * startPct;
+            const ea = Math.PI + Math.PI * endPct;
+            const sx = cx + radius * Math.cos(sa);
+            const sy = cy + radius * Math.sin(sa);
+            const ex = cx + radius * Math.cos(ea);
+            const ey = cy + radius * Math.sin(ea);
+            const la = (endPct - startPct) > 0.5 ? 1 : 0;
+            return `M ${sx} ${sy} A ${radius} ${radius} 0 ${la} 1 ${ex} ${ey}`;
+        }
+
+        container.innerHTML = `
+            <svg class="gauge-svg" viewBox="0 0 280 170">
+                <!-- Background track -->
+                <path d="${arcPath(0, 1)}" fill="none" stroke="rgba(100,116,139,0.2)" stroke-width="18" stroke-linecap="round"/>
+                <!-- Zone colors -->
+                <path d="${arcPath(0, 0.2)}" fill="none" stroke="#ef4444" stroke-width="18" stroke-linecap="round" opacity="0.3"/>
+                <path d="${arcPath(0.2, 0.4)}" fill="none" stroke="#f97316" stroke-width="18" opacity="0.3"/>
+                <path d="${arcPath(0.4, 0.6)}" fill="none" stroke="#eab308" stroke-width="18" opacity="0.3"/>
+                <path d="${arcPath(0.6, 0.8)}" fill="none" stroke="#22c55e" stroke-width="18" opacity="0.3"/>
+                <path d="${arcPath(0.8, 1)}" fill="none" stroke="#3b82f6" stroke-width="18" stroke-linecap="round" opacity="0.3"/>
+                <!-- Active arc (animated) -->
+                <path d="${arcPath(0, pct)}" fill="none" stroke="${zoneColor}" stroke-width="18" stroke-linecap="round" class="gauge-active-arc"
+                    stroke-dasharray="${Math.PI * radius * pct}" stroke-dashoffset="${Math.PI * radius * pct}"
+                    style="animation: gaugeReveal 1.5s ease-out 0.5s forwards;"/>
+                <!-- Needle dot -->
+                <circle cx="${x2}" cy="${y2}" r="8" fill="${zoneColor}" opacity="0"
+                    style="animation: fadeIn 0.3s ease 1.8s forwards;"/>
+                <circle cx="${x2}" cy="${y2}" r="4" fill="white" opacity="0"
+                    style="animation: fadeIn 0.3s ease 1.8s forwards;"/>
+                <!-- Labels -->
+                <text x="20" y="160" fill="#64748b" font-size="10" font-family="system-ui">0</text>
+                <text x="126" y="22" fill="#64748b" font-size="10" font-family="system-ui" text-anchor="middle">7.5</text>
+                <text x="248" y="160" fill="#64748b" font-size="10" font-family="system-ui" text-anchor="end">15+</text>
+                <text x="140" y="115" fill="${zoneColor}" font-size="38" font-weight="800" font-family="system-ui" text-anchor="middle" opacity="0"
+                    style="animation: fadeIn 0.3s ease 1.2s forwards;">${months >= 15 ? '15+' : months.toFixed(1)}</text>
+                <text x="140" y="138" fill="#94a3b8" font-size="12" font-family="system-ui" text-anchor="middle" opacity="0"
+                    style="animation: fadeIn 0.3s ease 1.4s forwards;">months</text>
+            </svg>
+            <div class="gauge-label-zone" style="color:${zoneColor}">${zoneLabel}</div>
+            <div class="gauge-description">${zoneDesc}</div>
+        `;
+
+        // Add keyframes dynamically
+        if (!document.getElementById('gauge-keyframes')) {
+            const style = document.createElement('style');
+            style.id = 'gauge-keyframes';
+            style.textContent = `
+                @keyframes gaugeReveal {
+                    to { stroke-dashoffset: 0; }
+                }
+                @keyframes fadeIn {
+                    to { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    /* ---------- Scenarios ---------- */
+    function renderScenarios(r) {
+        const list = document.getElementById('scenarios-list');
+        const p = state.profile;
+
+        // Scenario 1: Lose biggest client
+        const loseClientBefore = r.currentRunwayMonths;
+        const loseClientAfter = r.runwayAfterLoss;
+        const loseClientDelta = loseClientAfter - loseClientBefore;
+
+        // Scenario 2: Sick for 2 months
+        const sickBurn = r.monthlyBurn * 2;
+        const savingsAfterSick = Math.max(0, p.savings - sickBurn);
+        const sickRunway = r.monthlyBurn > 0 ? savingsAfterSick / r.monthlyBurn : 0;
+
+        // Scenario 3: Raise rates 20%
+        const newIncome = p.income * 1.2;
+        const newMonthlySavings = newIncome - r.monthlyBurn;
+        const currentMonthlySavings = r.monthlySavings;
+        const monthsToTargetCurrent = r.monthsToTarget;
+        let monthsToTargetRaised = -1;
+        if (newMonthlySavings > 0 && r.savingsGap > 0) {
+            monthsToTargetRaised = Math.ceil(r.savingsGap / newMonthlySavings);
+        } else if (r.savingsGap <= 0) {
+            monthsToTargetRaised = 0;
+        }
+
+        function fmtMo(m) {
+            if (m >= 99) return '99+ mo';
+            return Math.floor(m) + 'mo ' + Math.round((m % 1) * 30) + 'd';
+        }
+
+        list.innerHTML = `
+            <div class="scenario-card" onclick="toggleScenario(this)">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        <span style="font-size:1.3rem">&#x1F4A3;</span>
+                        What if you lose your biggest client?
+                    </div>
+                    <div class="scenario-toggle">&#x25BC;</div>
+                </div>
+                <div class="scenario-body">
+                    <div class="scenario-compare">
+                        <div class="scenario-col">
+                            <div class="scenario-col-label">Current Runway</div>
+                            <div class="scenario-col-value" style="color:var(--success)">${fmtMo(loseClientBefore)}</div>
+                            <div class="scenario-col-sub">${formatCurrency(p.income)}/mo income</div>
+                        </div>
+                        <div class="scenario-arrow">&#x27A1;&#xFE0F;</div>
+                        <div class="scenario-col">
+                            <div class="scenario-col-label">After Losing Client</div>
+                            <div class="scenario-col-value" style="color:${loseClientAfter < 3 ? 'var(--danger)' : loseClientAfter < 6 ? 'var(--warning)' : 'var(--success)'}">${fmtMo(loseClientAfter)}</div>
+                            <div class="scenario-col-sub">${formatCurrency(r.incomeAfterLoss)}/mo income</div>
+                        </div>
+                    </div>
+                    <div class="scenario-insight">
+                        ${loseClientAfter < 3
+                            ? `<strong>Critical:</strong> Losing your top client (${p.topClientPct}% of income = ${formatCurrency(r.topClientIncome)}/mo) would leave you with only ${fmtMo(loseClientAfter)} of runway. You need to diversify immediately.`
+                            : loseClientAfter < 6
+                            ? `<strong>Warning:</strong> You'd lose ${formatCurrency(r.topClientIncome)}/mo and have about ${fmtMo(loseClientAfter)} to find replacements. That's tight.`
+                            : `You'd lose ${formatCurrency(r.topClientIncome)}/mo but still have ${fmtMo(loseClientAfter)} of breathing room. Good position.`
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card" onclick="toggleScenario(this)">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        <span style="font-size:1.3rem">&#x1F912;</span>
+                        What if you get sick for 2 months?
+                    </div>
+                    <div class="scenario-toggle">&#x25BC;</div>
+                </div>
+                <div class="scenario-body">
+                    <div class="scenario-compare">
+                        <div class="scenario-col">
+                            <div class="scenario-col-label">Current Savings</div>
+                            <div class="scenario-col-value" style="color:var(--accent)">${formatCurrency(p.savings)}</div>
+                            <div class="scenario-col-sub">today</div>
+                        </div>
+                        <div class="scenario-arrow">&#x27A1;&#xFE0F;</div>
+                        <div class="scenario-col">
+                            <div class="scenario-col-label">After 2 Months Sick</div>
+                            <div class="scenario-col-value" style="color:${savingsAfterSick < r.monthlyBurn * 2 ? 'var(--danger)' : 'var(--warning)'}">${formatCurrency(savingsAfterSick)}</div>
+                            <div class="scenario-col-sub">${fmtMo(sickRunway)} remaining</div>
+                        </div>
+                    </div>
+                    <div class="scenario-insight${sickRunway >= 3 ? ' positive' : ''}">
+                        ${sickRunway < 1
+                            ? `<strong>Emergency:</strong> Two months of illness would burn through ${formatCurrency(sickBurn)} in expenses with zero income. You'd be left with ${formatCurrency(savingsAfterSick)} &mdash; less than a month's burn.`
+                            : sickRunway < 3
+                            ? `<strong>Tight:</strong> You'd burn ${formatCurrency(sickBurn)} while unable to work, leaving ${formatCurrency(savingsAfterSick)} &mdash; only ${fmtMo(sickRunway)} of runway to recover.`
+                            : `You could survive 2 months offline and still have ${fmtMo(sickRunway)} of runway. Consider disability insurance for extra protection.`
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card" onclick="toggleScenario(this)">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        <span style="font-size:1.3rem">&#x1F4B0;</span>
+                        What if you raise your rates 20%?
+                    </div>
+                    <div class="scenario-toggle">&#x25BC;</div>
+                </div>
+                <div class="scenario-body">
+                    <div class="scenario-compare">
+                        <div class="scenario-col">
+                            <div class="scenario-col-label">Current Monthly Savings</div>
+                            <div class="scenario-col-value" style="color:${currentMonthlySavings > 0 ? 'var(--accent)' : 'var(--danger)'}">${formatCurrency(currentMonthlySavings)}</div>
+                            <div class="scenario-col-sub">${monthsToTargetCurrent > 0 ? (monthsToTargetCurrent < 0 ? 'Never' : monthsToTargetCurrent + ' months to target') : 'Target reached'}</div>
+                        </div>
+                        <div class="scenario-arrow">&#x27A1;&#xFE0F;</div>
+                        <div class="scenario-col">
+                            <div class="scenario-col-label">With 20% Rate Increase</div>
+                            <div class="scenario-col-value" style="color:var(--success)">${formatCurrency(newMonthlySavings)}</div>
+                            <div class="scenario-col-sub">${monthsToTargetRaised === 0 ? 'Already there' : monthsToTargetRaised < 0 ? 'Still negative' : monthsToTargetRaised + ' months to target'}</div>
+                        </div>
+                    </div>
+                    <div class="scenario-insight positive">
+                        A 20% rate increase means ${formatCurrency(newIncome - p.income)} more per month. That's ${formatCurrency((newIncome - p.income) * 12)} extra per year going straight to your safety net. ${monthsToTargetRaised > 0 && monthsToTargetCurrent > 0 ? `You'd hit your target ${monthsToTargetCurrent - monthsToTargetRaised} months sooner.` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Auto-open the biggest client scenario (viral moment)
+        setTimeout(() => {
+            const first = list.querySelector('.scenario-card');
+            if (first) first.classList.add('open');
+        }, 800);
+    }
+
+    function toggleScenario(el) {
+        el.classList.toggle('open');
+    }
+
+    /* ---------- Timeline Chart (SVG) ---------- */
+    function renderTimeline(r) {
+        const container = document.getElementById('chart-container');
+        const eta = document.getElementById('chart-eta');
+        const p = state.profile;
+
+        const monthlySave = r.monthlySavings;
+        const target = r.targetFund;
+        const startSavings = p.savings;
+
+        // Project 24 months or until target is hit
+        let months = [];
+        let val = startSavings;
+        const maxMonths = 24;
+        let hitMonth = -1;
+
+        for (let i = 0; i <= maxMonths; i++) {
+            months.push({ month: i, value: val });
+            if (val >= target && hitMonth === -1 && i > 0) hitMonth = i;
+            val = Math.max(0, val + monthlySave);
+        }
+
+        const maxVal = Math.max(target * 1.1, ...months.map(m => m.value)) || 1;
+
+        // SVG dimensions
+        const svgW = 820, svgH = 280;
+        const padL = 70, padR = 20, padT = 30, padB = 50;
+        const chartW = svgW - padL - padR;
+        const chartH = svgH - padT - padB;
+
+        const barW = Math.max(8, Math.min(24, (chartW / months.length) - 4));
+        const gap = (chartW - barW * months.length) / (months.length);
+
+        function xPos(i) {
+            return padL + i * (barW + gap) + gap / 2;
+        }
+
+        function yPos(v) {
+            return padT + chartH - (v / maxVal) * chartH;
+        }
+
+        const targetY = yPos(target);
+
+        let bars = '';
+        months.forEach((m, i) => {
+            const x = xPos(i);
+            const barH = Math.max(2, (m.value / maxVal) * chartH);
+            const y = padT + chartH - barH;
+            const color = m.value >= target ? '#22c55e' : (m.value >= target * 0.6 ? '#eab308' : '#a855f7');
+            const opacity = m.value >= target ? 1 : 0.7;
+
+            bars += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="4" fill="${color}" opacity="${opacity}">
+                <animate attributeName="height" from="0" to="${barH}" dur="0.5s" begin="${i * 0.04}s" fill="freeze"/>
+                <animate attributeName="y" from="${padT + chartH}" to="${y}" dur="0.5s" begin="${i * 0.04}s" fill="freeze"/>
+            </rect>`;
+
+            // Month label (every 3rd)
+            if (i % 3 === 0) {
+                bars += `<text x="${x + barW / 2}" y="${svgH - 10}" fill="#64748b" font-size="10" font-family="system-ui" text-anchor="middle">M${i}</text>`;
+            }
+        });
+
+        // Y-axis labels
+        const ySteps = 5;
+        let yLabels = '';
+        for (let i = 0; i <= ySteps; i++) {
+            const v = (maxVal / ySteps) * i;
+            const y = yPos(v);
+            yLabels += `<text x="${padL - 10}" y="${y + 4}" fill="#64748b" font-size="10" font-family="system-ui" text-anchor="end">$${(v / 1000).toFixed(0)}k</text>`;
+            yLabels += `<line x1="${padL}" y1="${y}" x2="${svgW - padR}" y2="${y}" stroke="rgba(100,116,139,0.1)" stroke-width="1"/>`;
+        }
+
+        container.innerHTML = `
+            <svg viewBox="0 0 ${svgW} ${svgH}">
+                ${yLabels}
+                <!-- Target line -->
+                <line x1="${padL}" y1="${targetY}" x2="${svgW - padR}" y2="${targetY}" stroke="#ec4899" stroke-width="2" stroke-dasharray="6 4"/>
+                <text x="${svgW - padR}" y="${targetY - 8}" fill="#ec4899" font-size="11" font-family="system-ui" text-anchor="end" font-weight="600">Target: ${formatCurrency(target)}</text>
+                <!-- Bars -->
+                ${bars}
+                <!-- Starting point label -->
+                <text x="${xPos(0) + barW / 2}" y="${yPos(startSavings) - 10}" fill="#94a3b8" font-size="10" font-family="system-ui" text-anchor="middle">Today</text>
+            </svg>
+        `;
+
+        // ETA text
+        if (startSavings >= target) {
+            eta.innerHTML = '<span style="color:var(--success)">&#x2705; You\'ve already reached your target emergency fund!</span>';
+        } else if (hitMonth > 0) {
+            eta.innerHTML = `<span style="color:var(--success)">You'll hit your target in <strong>${hitMonth} month${hitMonth !== 1 ? 's' : ''}</strong> at your current savings rate.</span>`;
+        } else if (monthlySave <= 0) {
+            eta.innerHTML = `<span style="color:var(--danger)">&#x26A0; At this rate, you'll never hit your target. You're spending more than you earn (${formatCurrency(monthlySave)}/mo net).</span>`;
+        } else {
+            const needed = Math.ceil((target - startSavings) / monthlySave);
+            eta.innerHTML = `<span style="color:var(--warning)">At ${formatCurrency(monthlySave)}/mo savings, you'll reach your target in <strong>${needed} months</strong> (${(needed / 12).toFixed(1)} years).</span>`;
+        }
+    }
+
+    /* ---------- Action Plan ---------- */
+    function renderActionPlan(r) {
+        const plan = document.getElementById('action-plan');
+        const p = state.profile;
+        const actions = [];
+
+        // Revenue concentration
+        if (p.topClientPct > 30) {
+            actions.push({
+                priority: 'critical',
+                title: `Diversify: Your biggest client is ${p.topClientPct}% of income`,
+                desc: `Target: no single client over 30% of revenue. Start pitching new clients immediately. If this client leaves, you're looking at ${Math.floor(r.runwayAfterLoss)} months of runway.`
+            });
+        }
+
+        // No insurance
+        if (state.risk.insurance === 'none') {
+            actions.push({
+                priority: 'critical',
+                title: 'Get health insurance immediately',
+                desc: 'A health emergency without insurance is a business-ending event. Even a marketplace plan with a high deductible protects against catastrophe.'
+            });
+        }
+
+        // Low savings
+        if (r.currentRunwayMonths < 3) {
+            actions.push({
+                priority: 'critical',
+                title: `Emergency: Save ${formatCurrency(r.additionalMonthlySavingsNeeded)}/mo minimum`,
+                desc: `Open a separate high-yield savings account today. Auto-transfer ${Math.round(r.additionalMonthlySavingsNeeded / p.income * 100)}% of every invoice. Your current ${Math.floor(r.currentRunwayMonths)} months of runway is dangerously low.`
+            });
+        } else if (r.savingsGap > 0) {
+            actions.push({
+                priority: 'high',
+                title: `Save ${formatCurrency(Math.ceil(r.savingsGap / 12))}/mo to hit your target in 12 months`,
+                desc: `You need ${formatCurrency(r.savingsGap)} more. Set up automatic transfers from your business account on invoice payment days.`
+            });
+        }
+
+        // All project-based
+        if (state.risk.retainers === 'none') {
+            actions.push({
+                priority: 'high',
+                title: 'Convert your best client to a retainer',
+                desc: 'Retainers provide predictable monthly income. Offer a 10-15% discount for a 3-month minimum commitment. Even one retainer stabilizes your cash flow.'
+            });
+        }
+
+        // Spending more than earning
+        if (r.monthlySavings <= 0) {
+            actions.push({
+                priority: 'critical',
+                title: `You\'re losing ${formatCurrency(Math.abs(r.monthlySavings))}/mo`,
+                desc: `Your expenses (${formatCurrency(r.monthlyBurn)}) exceed your income (${formatCurrency(p.income)}). Raise your rates, cut expenses, or take on another client. This is unsustainable.`
+            });
+        }
+
+        // One client
+        if (p.clients <= 1) {
+            actions.push({
+                priority: 'critical',
+                title: 'Single client dependency is extremely risky',
+                desc: 'If your only client ends the contract, you have zero income instantly. Dedicate 20% of your time to business development until you have at least 3 clients.'
+            });
+        } else if (p.clients <= 2) {
+            actions.push({
+                priority: 'high',
+                title: 'Add more clients to reduce concentration risk',
+                desc: `With only ${p.clients} clients, losing one is devastating. Aim for 4-6 active clients for stability.`
+            });
+        }
+
+        // Slow to find clients
+        if (Number(p.timeToClient) >= 8) {
+            actions.push({
+                priority: 'high',
+                title: 'Build your pipeline before you need it',
+                desc: `It takes you ${p.timeToClient >= 12 ? '3+' : '2'} months to land a new client. Start prospecting NOW, not when a client leaves. Maintain a warm pipeline of 5+ leads.`
+            });
+        }
+
+        // Debt
+        if (state.risk.debt === 'significant' || state.risk.debt === 'moderate') {
+            actions.push({
+                priority: 'high',
+                title: 'Tackle debt to free up savings capacity',
+                desc: `${state.risk.debt === 'significant' ? 'Significant' : 'Moderate'} debt payments eat into your ability to save. Consider debt consolidation or accelerated repayment to free up cash flow.`
+            });
+        }
+
+        // Dependents with low runway
+        if (state.risk.dependents !== 'none' && r.currentRunwayMonths < 6) {
+            actions.push({
+                priority: 'critical',
+                title: 'With dependents, you need a bigger safety net',
+                desc: `Supporting ${state.risk.dependents === 'many' ? '3+' : '1-2'} dependents means your expenses are harder to cut in a crisis. Target at least ${r.targetMonths} months of expenses.`
+            });
+        }
+
+        // Rate increase suggestion
+        if (r.monthlySavings > 0 && r.monthlySavings < p.income * 0.2) {
+            actions.push({
+                priority: 'medium',
+                title: 'Raise your rates to accelerate savings',
+                desc: `A 20% rate increase would add ${formatCurrency(p.income * 0.2)}/mo to your savings. Most freelancers undercharge. If you haven't raised rates in 12 months, you're effectively taking a pay cut.`
+            });
+        }
+
+        // Fallback if few actions
+        if (actions.length < 5) {
+            actions.push({
+                priority: 'medium',
+                title: 'Review expenses quarterly',
+                desc: 'Schedule a quarterly review of both business and personal expenses. Cancel unused subscriptions and renegotiate contracts. Small savings compound quickly.'
+            });
+        }
+
+        if (actions.length < 5) {
+            actions.push({
+                priority: 'medium',
+                title: 'Build multiple income streams',
+                desc: 'Consider productized services, digital products, or passive income sources. Each additional stream reduces your reliance on active client work.'
+            });
+        }
+
+        // Render
+        plan.innerHTML = actions.slice(0, 7).map((a, i) => `
+            <div class="action-item">
+                <div class="action-priority ${a.priority}">${i + 1}</div>
+                <div class="action-content">
+                    <div class="action-title">${a.title}</div>
+                    <div class="action-desc">${a.desc}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    /* ---------- Share ---------- */
+    function renderShare(r) {
+        const months = r.currentRunwayMonths;
+        let text;
+        if (months < 1) {
+            text = 'My freelance runway is less than 1 month. What\'s yours?';
+        } else if (months >= 99) {
+            text = 'My freelance runway is 99+ months. What\'s yours?';
+        } else {
+            text = `My freelance runway is ${months.toFixed(1)} months. What's yours?`;
+        }
+        document.getElementById('share-text').textContent = text;
+        state.shareText = text + '\n\nCheck yours free: https://freelanceos.pro/freelanceos-storefront/emergency-fund.html';
+    }
+
+    function shareTwitter() {
+        const text = encodeURIComponent(state.shareText || 'Check your freelance runway');
+        window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank', 'width=550,height=420');
+    }
+
+    function copyShareText() {
+        const text = state.shareText || '';
+        navigator.clipboard.writeText(text).then(() => {
+            const label = document.getElementById('copy-label');
+            label.textContent = 'Copied!';
+            setTimeout(() => { label.textContent = 'Copy to Clipboard'; }, 2000);
+        }).catch(() => {
+            // Fallback
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            const label = document.getElementById('copy-label');
+            label.textContent = 'Copied!';
+            setTimeout(() => { label.textContent = 'Copy to Clipboard'; }, 2000);
+        });
+    }
+
+    /* ============================================================
+       INTERSECTION OBSERVER FOR ANIMATIONS
+    ============================================================ */
+    function setupScrollAnimations() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-in').forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    /* ============================================================
+       INIT
+    ============================================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+        setupScrollAnimations();
+
+        // Initialize client warning
+        const warn = document.getElementById('client-warning');
+        if (warn && state.profile.topClientPct > 30) {
+            warn.classList.add('show');
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Client Feedback Collector | FreelanceOS</title>
+<meta name="description" content="Collect, analyze, and showcase client feedback with this free tool. Build custom feedback forms, track NPS scores, extract testimonials, and export data. Built for freelancers.">
+<meta property="og:title" content="Free Client Feedback Collector | FreelanceOS">
+<meta property="og:description" content="Collect, analyze, and showcase client feedback. Build custom forms, track NPS, extract testimonials. Free forever.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freelanceos-storefront.vercel.app/client-feedback-collector.html">
+<meta property="og:site_name" content="FreelanceOS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Client Feedback Collector | FreelanceOS">
+<meta name="twitter:description" content="Collect, analyze, and showcase client feedback. Build custom forms, track NPS, extract testimonials.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="FreelanceOS">
+<link rel="canonical" href="https://freelanceos-storefront.vercel.app/client-feedback-collector.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Client Feedback Collector",
+  "description": "Collect, analyze, and showcase client feedback with custom forms, NPS tracking, testimonial extraction, and CSV export.",
+  "url": "https://freelanceos-storefront.vercel.app/client-feedback-collector.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "FreelanceOS"
+  }
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #020617;
+  --card: #0f172a;
+  --card-hover: #1e293b;
+  --border: rgba(168,85,247,0.2);
+  --border-solid: #1e293b;
+  --text: #e2e8f0;
+  --text-heading: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --accent: #a855f7;
+  --accent2: #ec4899;
+  --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+  --gradient-subtle: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.15));
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* CTA Banner */
+.cta-banner {
+  background: var(--gradient);
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.cta-banner:hover { opacity: 0.92; }
+.cta-banner a { color: #fff; text-decoration: none; }
+.cta-banner .cta-code {
+  background: rgba(255,255,255,0.25);
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+/* Layout */
+.app-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.header {
+  text-align: center;
+  padding: 48px 20px 32px;
+}
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gradient-subtle);
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.header-badge .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.header h1 {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text-heading);
+  background: linear-gradient(135deg, #fff 0%, #a855f7 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header p {
+  color: var(--text-muted);
+  font-size: 17px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 6px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.nav-tab {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  text-align: center;
+  font-family: var(--font);
+}
+.nav-tab:hover { color: var(--text); background: rgba(168,85,247,0.08); }
+.nav-tab.active {
+  background: var(--gradient);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(168,85,247,0.3);
+}
+.nav-tab .tab-icon { margin-right: 6px; }
+
+/* Panels */
+.panel { display: none; animation: fadeUp 0.4s ease; }
+.panel.active { display: block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+.card:hover { border-color: rgba(168,85,247,0.35); }
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+.card-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  font-family: var(--font);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: var(--gradient);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(168,85,247,0.3);
+}
+.btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 24px rgba(168,85,247,0.4);
+}
+.btn-secondary {
+  background: var(--card-hover);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--accent); }
+.btn-sm { padding: 8px 14px; font-size: 13px; }
+.btn-danger { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+.btn-danger:hover { background: rgba(239,68,68,0.25); }
+.btn-success { background: rgba(34,197,94,0.15); color: var(--success); border: 1px solid rgba(34,197,94,0.3); }
+.btn-success:hover { background: rgba(34,197,94,0.25); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  padding: 8px 12px;
+}
+.btn-ghost:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+/* Inputs */
+.form-group { margin-bottom: 20px; }
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: #1e293b;
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 15px;
+  font-family: var(--font);
+  transition: all 0.3s ease;
+  outline: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(168,85,247,0.15);
+}
+.form-input::placeholder, .form-textarea::placeholder {
+  color: var(--text-dim);
+}
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.form-select option { background: #1e293b; color: var(--text); }
+.form-textarea { resize: vertical; min-height: 100px; }
+
+/* Grid layouts */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* Stats */
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.stat-card:hover { border-color: rgba(168,85,247,0.4); transform: translateY(-2px); }
+.stat-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-heading);
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.stat-change {
+  font-size: 12px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+.stat-change.positive { color: var(--success); }
+.stat-change.negative { color: var(--danger); }
+
+/* Tags/Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-purple { background: rgba(168,85,247,0.15); color: var(--accent); }
+.badge-green { background: rgba(34,197,94,0.15); color: var(--success); }
+.badge-yellow { background: rgba(245,158,11,0.15); color: var(--warning); }
+.badge-red { background: rgba(239,68,68,0.15); color: var(--danger); }
+.badge-blue { background: rgba(59,130,246,0.15); color: var(--info); }
+
+/* Toast */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+  backdrop-filter: blur(20px);
+  max-width: 360px;
+}
+.toast.success { border-color: rgba(34,197,94,0.4); }
+.toast.error { border-color: rgba(239,68,68,0.4); }
+.toast.info { border-color: rgba(59,130,246,0.4); }
+@keyframes slideIn { from{opacity:0;transform:translateX(100px)} to{opacity:1;transform:translateX(0)} }
+@keyframes slideOut { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(100px)} }
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 8px;
+}
+.modal-desc { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+/* Star Rating */
+.star-rating { display: flex; gap: 6px; }
+.star-rating .star {
+  font-size: 32px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  filter: grayscale(1) opacity(0.3);
+  user-select: none;
+}
+.star-rating .star.active { filter: none; }
+.star-rating .star:hover { transform: scale(1.2); }
+
+/* NPS Scale */
+.nps-scale { display: flex; gap: 4px; flex-wrap: wrap; }
+.nps-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 2px solid var(--border-solid);
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font);
+}
+.nps-btn:hover { border-color: var(--accent); background: rgba(168,85,247,0.1); }
+.nps-btn.active { border-color: var(--accent); background: var(--gradient); color: #fff; }
+.nps-btn.detractor.active { background: var(--danger); border-color: var(--danger); }
+.nps-btn.passive.active { background: var(--warning); border-color: var(--warning); }
+.nps-btn.promoter.active { background: var(--success); border-color: var(--success); }
+.nps-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* Emoji Scale */
+.emoji-scale { display: flex; gap: 8px; }
+.emoji-btn {
+  font-size: 36px;
+  background: none;
+  border: 3px solid transparent;
+  border-radius: 14px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  filter: grayscale(0.6) opacity(0.5);
+}
+.emoji-btn:hover { transform: scale(1.15); filter: none; }
+.emoji-btn.active { filter: none; border-color: var(--accent); background: rgba(168,85,247,0.1); }
+
+/* Toggle Switch */
+.toggle-wrap { display: flex; gap: 16px; }
+.toggle-option {
+  flex: 1;
+  padding: 16px 24px;
+  background: var(--card-hover);
+  border: 2px solid var(--border-solid);
+  border-radius: var(--radius);
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+.toggle-option:hover { border-color: var(--accent); }
+.toggle-option.active { border-color: var(--accent); background: rgba(168,85,247,0.15); color: var(--accent); }
+
+/* Template Cards */
+.template-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.template-card:hover {
+  border-color: rgba(168,85,247,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(168,85,247,0.15);
+}
+.template-icon { font-size: 36px; margin-bottom: 12px; }
+.template-name { font-size: 16px; font-weight: 700; color: var(--text-heading); margin-bottom: 6px; }
+.template-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+.template-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.template-tag {
+  padding: 3px 10px;
+  background: rgba(168,85,247,0.1);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Question Builder */
+.question-item {
+  background: var(--card-hover);
+  border: 1px solid var(--border-solid);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 12px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.question-item:hover { border-color: rgba(168,85,247,0.3); }
+.question-item .q-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.question-item .q-type {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+.question-item .q-actions { display: flex; gap: 4px; }
+.question-item .q-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+.drag-handle {
+  cursor: grab;
+  color: var(--text-dim);
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+/* Client List */
+.client-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--card-hover);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+.client-row:hover { background: rgba(168,85,247,0.08); }
+.client-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.client-info { flex: 1; min-width: 0; }
+.client-name { font-weight: 600; color: var(--text-heading); font-size: 15px; }
+.client-meta { font-size: 13px; color: var(--text-muted); }
+
+/* NPS Gauge */
+.gauge-container {
+  position: relative;
+  width: 200px;
+  height: 120px;
+  margin: 0 auto;
+}
+.gauge-svg { width: 100%; height: 100%; }
+.gauge-value {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+.gauge-label {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Sentiment Bars */
+.sentiment-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.sentiment-label { width: 90px; font-size: 13px; color: var(--text-muted); text-align: right; flex-shrink: 0; }
+.sentiment-bar {
+  flex: 1;
+  height: 28px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+.sentiment-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 1s cubic-bezier(0.4,0,0.2,1);
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+.sentiment-fill.positive { background: linear-gradient(90deg, #22c55e, #4ade80); }
+.sentiment-fill.neutral { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.sentiment-fill.negative { background: linear-gradient(90deg, #ef4444, #f87171); }
+.sentiment-pct { width: 50px; font-size: 14px; font-weight: 700; color: var(--text); text-align: right; flex-shrink: 0; }
+
+/* Feedback Feed */
+.feedback-item {
+  background: var(--card-hover);
+  border: 1px solid var(--border-solid);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+.feedback-item:hover { border-color: rgba(168,85,247,0.3); }
+.feedback-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.feedback-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.feedback-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* Testimonial Card */
+.testimonial-card {
+  background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(236,72,153,0.08));
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.testimonial-quote {
+  font-size: 16px;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.testimonial-quote::before { content: '\201C'; font-size: 48px; color: var(--accent); line-height: 0; vertical-align: -16px; margin-right: 4px; }
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-copy {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+/* Form Preview */
+.form-preview {
+  background: #0c1222;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.form-preview-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-solid);
+}
+.form-preview-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-heading);
+  margin-bottom: 8px;
+}
+.form-preview-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.form-preview .question-block {
+  margin-bottom: 28px;
+}
+.form-preview .question-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-heading);
+  margin-bottom: 12px;
+}
+.form-preview .question-required {
+  color: var(--danger);
+  margin-left: 4px;
+}
+
+/* Category Chart */
+.category-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.category-name {
+  width: 120px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: right;
+  flex-shrink: 0;
+}
+.category-bar-track {
+  flex: 1;
+  height: 24px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.category-bar-fill {
+  height: 100%;
+  background: var(--gradient);
+  border-radius: 6px;
+  transition: width 1s ease;
+}
+.category-value {
+  width: 40px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-dim);
+}
+.empty-state .empty-icon { font-size: 64px; margin-bottom: 16px; }
+.empty-state h3 { font-size: 20px; color: var(--text-muted); margin-bottom: 8px; }
+.empty-state p { font-size: 14px; max-width: 400px; margin: 0 auto 20px; }
+
+/* Keyboard Shortcut Hints */
+.kbd {
+  display: inline-flex;
+  padding: 2px 8px;
+  background: var(--card-hover);
+  border: 1px solid var(--border-solid);
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: monospace;
+  color: var(--text-dim);
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1e293b;
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: var(--radius);
+  padding: 4px 16px;
+}
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 14px;
+  padding: 10px 0;
+  outline: none;
+  font-family: var(--font);
+}
+.search-bar input::placeholder { color: var(--text-dim); }
+.search-icon { color: var(--text-dim); font-size: 16px; }
+
+/* Multiple choice option editor */
+.mc-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.mc-option input {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border-solid);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  font-family: var(--font);
+}
+.mc-option input:focus { border-color: var(--accent); }
+.mc-option .mc-remove {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  transition: color 0.2s;
+}
+.mc-option .mc-remove:hover { color: var(--danger); }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 60px;
+  padding: 40px 20px;
+  text-align: center;
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-disclaimer {
+  font-size: 12px;
+  color: var(--text-dim);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Glassmorphism panel */
+.glass-panel {
+  background: rgba(15,23,42,0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-solid); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .card { padding: 20px; }
+  .modal { padding: 24px; margin: 10px; }
+  .form-preview { padding: 24px; }
+  .nav-tabs { gap: 2px; padding: 4px; }
+  .nav-tab { padding: 10px 12px; font-size: 12px; min-width: 90px; }
+  .header { padding: 32px 16px 24px; }
+  .nps-btn { width: 36px; height: 36px; font-size: 14px; }
+  .emoji-btn { font-size: 28px; padding: 6px; }
+  .star-rating .star { font-size: 28px; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .cta-banner { font-size: 12px; padding: 10px 12px; }
+  .stat-value { font-size: 26px; }
+}
+
+/* Transition helpers */
+.fade-enter { opacity: 0; transform: translateY(8px); }
+.fade-enter-active { opacity: 1; transform: translateY(0); transition: all 0.3s ease; }
+
+/* Print styles */
+@media print {
+  .cta-banner, .nav-tabs, .btn, .site-footer { display: none !important; }
+  body { background: #fff; color: #333; }
+  .card, .stat-card { border: 1px solid #ddd; background: #fff; }
+}
+</style>
+</head>
+<body>
+
+<!-- CTA Banner -->
+<div class="cta-banner" onclick="window.open('https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40','_blank')">
+  <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+    Get FreelanceOS Pro &mdash; 40% OFF with code <span class="cta-code">FLASH40</span> &rarr;
+  </a>
+</div>
+
+<div class="app-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge"><span class="dot"></span> Free Tool #48</div>
+    <h1>Client Feedback Collector</h1>
+    <p>Build custom feedback forms, track NPS scores, extract testimonials, and turn client feedback into business growth.</p>
+  </div>
+
+  <!-- Nav Tabs -->
+  <div class="nav-tabs" id="navTabs">
+    <button class="nav-tab active" data-tab="forms" onclick="switchTab('forms')">
+      <span class="tab-icon">&#x1F4CB;</span> Forms
+    </button>
+    <button class="nav-tab" data-tab="clients" onclick="switchTab('clients')">
+      <span class="tab-icon">&#x1F465;</span> Clients
+    </button>
+    <button class="nav-tab" data-tab="collect" onclick="switchTab('collect')">
+      <span class="tab-icon">&#x1F4E5;</span> Collect
+    </button>
+    <button class="nav-tab" data-tab="analytics" onclick="switchTab('analytics')">
+      <span class="tab-icon">&#x1F4CA;</span> Analytics
+    </button>
+    <button class="nav-tab" data-tab="testimonials" onclick="switchTab('testimonials')">
+      <span class="tab-icon">&#x2B50;</span> Testimonials
+    </button>
+  </div>
+
+  <!-- Panel: Forms -->
+  <div class="panel active" id="panel-forms">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Feedback Forms</div>
+          <div class="card-subtitle">Create custom forms or use a pre-built template</div>
+        </div>
+        <button class="btn btn-primary" onclick="openNewFormModal()">+ New Form</button>
+      </div>
+
+      <!-- Templates Section -->
+      <div style="margin-bottom: 28px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <h3 style="font-size:16px;font-weight:700;color:var(--text-heading);">Pre-built Templates</h3>
+          <button class="btn btn-ghost btn-sm" onclick="toggleTemplates()" id="toggleTemplatesBtn">Show All</button>
+        </div>
+        <div class="grid-3" id="templateGrid">
+          <!-- Templates rendered by JS -->
+        </div>
+      </div>
+
+      <!-- My Forms -->
+      <div>
+        <h3 style="font-size:16px;font-weight:700;color:var(--text-heading);margin-bottom:16px;">My Forms</h3>
+        <div id="formsList">
+          <!-- Forms rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel: Clients -->
+  <div class="panel" id="panel-clients">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Client Directory</div>
+          <div class="card-subtitle">Manage your clients and their feedback history</div>
+        </div>
+        <button class="btn btn-primary" onclick="openClientModal()">+ Add Client</button>
+      </div>
+
+      <div class="search-bar" style="margin-bottom:20px;">
+        <span class="search-icon">&#x1F50D;</span>
+        <input type="text" placeholder="Search clients by name, company, or email..." id="clientSearch" oninput="renderClients()">
+      </div>
+
+      <div id="clientsList">
+        <!-- Clients rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel: Collect -->
+  <div class="panel" id="panel-collect">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Collect Feedback</div>
+          <div class="card-subtitle">Preview forms, share with clients, or enter feedback manually</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="form-group">
+          <label class="form-label">Select Form</label>
+          <select class="form-select" id="collectFormSelect" onchange="renderFormPreview()">
+            <option value="">Choose a form...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Select Client</label>
+          <select class="form-select" id="collectClientSelect">
+            <option value="">Choose a client...</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;">
+        <button class="btn btn-secondary" onclick="previewForm()">&#x1F441; Preview Form</button>
+        <button class="btn btn-secondary" onclick="copyShareLink()">&#x1F517; Copy Share Link</button>
+        <button class="btn btn-primary" onclick="openManualEntryModal()">&#x270D; Manual Entry</button>
+      </div>
+
+      <div id="formPreviewContainer">
+        <!-- Form preview rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel: Analytics -->
+  <div class="panel" id="panel-analytics">
+    <!-- Stats Overview -->
+    <div class="grid-4" style="margin-bottom:20px;" id="analyticsStats">
+      <!-- Stats rendered by JS -->
+    </div>
+
+    <div class="grid-2" style="margin-bottom:20px;">
+      <!-- NPS Gauge -->
+      <div class="card">
+        <div class="card-title" style="margin-bottom:20px;">NPS Score</div>
+        <div id="npsGauge">
+          <!-- Gauge rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Sentiment Breakdown -->
+      <div class="card">
+        <div class="card-title" style="margin-bottom:20px;">Sentiment Breakdown</div>
+        <div id="sentimentChart">
+          <!-- Sentiment rendered by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Ratings -->
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-header">
+        <div class="card-title">Category-wise Ratings</div>
+        <button class="btn btn-secondary btn-sm" onclick="exportCSV()">&#x1F4E5; Export CSV</button>
+      </div>
+      <div id="categoryChart">
+        <!-- Category chart rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Recent Feedback Feed -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Recent Feedback</div>
+        <div class="search-bar" style="width:280px;">
+          <span class="search-icon">&#x1F50D;</span>
+          <input type="text" placeholder="Filter feedback..." id="feedbackFilter" oninput="renderFeedbackFeed()">
+        </div>
+      </div>
+      <div id="feedbackFeed">
+        <!-- Feedback feed rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel: Testimonials -->
+  <div class="panel" id="panel-testimonials">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Testimonial Extractor</div>
+          <div class="card-subtitle">Auto-detected positive feedback formatted as testimonials</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="exportTestimonials()">&#x1F4CB; Copy All</button>
+      </div>
+      <div id="testimonialsList">
+        <!-- Testimonials rendered by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="/freelanceos-storefront/free-templates.html">Free Templates</a>
+    <a href="/freelanceos-storefront/">All Tools</a>
+    <a href="https://buy.stripe.com/eVa9Ek5OOaGF1EkcMM?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get Pro (40% OFF)</a>
+  </div>
+  <p class="footer-disclaimer">This tool is for informational purposes only. Your data is stored locally in your browser and never sent to any server. &copy; 2026 FreelanceOS. All rights reserved.</p>
+</footer>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Modal Container -->
+<div id="modalContainer"></div>
+
+<script>
+/* =========================================================
+   CLIENT FEEDBACK COLLECTOR - FreelanceOS Tool #48
+   ========================================================= */
+
+// ---- DATA STORE ----
+const STORAGE_KEY = 'freelanceos_feedback_collector';
+
+const DEFAULT_TEMPLATES = [
+  {
+    id: 'tpl_project_completion',
+    name: 'Project Completion Review',
+    icon: '&#x2705;',
+    description: 'Comprehensive post-project review covering deliverables, communication, and overall satisfaction.',
+    tags: ['Post-Project', 'Comprehensive'],
+    questions: [
+      { id: 'q1', type: 'star', text: 'How would you rate the overall quality of the deliverables?', required: true },
+      { id: 'q2', type: 'star', text: 'How satisfied are you with the project timeline?', required: true },
+      { id: 'q3', type: 'nps', text: 'How likely are you to recommend our services to a colleague?', required: true },
+      { id: 'q4', type: 'emoji', text: 'How was your overall experience working with us?', required: true },
+      { id: 'q5', type: 'multiple', text: 'What aspects exceeded your expectations?', required: false, options: ['Quality', 'Speed', 'Communication', 'Creativity', 'Value for money'] },
+      { id: 'q6', type: 'long_text', text: 'What could we improve for future projects?', required: false },
+      { id: 'q7', type: 'long_text', text: 'Would you like to share a testimonial we can use on our website?', required: false }
+    ]
+  },
+  {
+    id: 'tpl_mid_project',
+    name: 'Mid-Project Check-in',
+    icon: '&#x1F504;',
+    description: 'Quick pulse check during an active project to catch issues early.',
+    tags: ['Mid-Project', 'Quick'],
+    questions: [
+      { id: 'q1', type: 'emoji', text: 'How are you feeling about the project progress so far?', required: true },
+      { id: 'q2', type: 'star', text: 'How clear has communication been?', required: true },
+      { id: 'q3', type: 'yesno', text: 'Are we meeting your expectations so far?', required: true },
+      { id: 'q4', type: 'short_text', text: 'Any concerns or adjustments needed?', required: false },
+      { id: 'q5', type: 'multiple', text: 'Which areas need more attention?', required: false, options: ['Design', 'Functionality', 'Timeline', 'Budget', 'Communication'] }
+    ]
+  },
+  {
+    id: 'tpl_communication',
+    name: 'Communication Quality',
+    icon: '&#x1F4AC;',
+    description: 'Evaluate responsiveness, clarity, and professionalism of communication.',
+    tags: ['Communication', 'Service'],
+    questions: [
+      { id: 'q1', type: 'star', text: 'How responsive were we to your messages and requests?', required: true },
+      { id: 'q2', type: 'star', text: 'How clear and professional was our communication?', required: true },
+      { id: 'q3', type: 'star', text: 'How well did we listen to and understand your needs?', required: true },
+      { id: 'q4', type: 'emoji', text: 'How would you rate the overall communication experience?', required: true },
+      { id: 'q5', type: 'multiple', text: 'Which communication channels worked best?', required: false, options: ['Email', 'Slack/Chat', 'Video Calls', 'Phone', 'Project Management Tool'] },
+      { id: 'q6', type: 'long_text', text: 'Any suggestions to improve our communication?', required: false }
+    ]
+  },
+  {
+    id: 'tpl_deliverable',
+    name: 'Deliverable Quality',
+    icon: '&#x1F3AF;',
+    description: 'Focused review of the quality, accuracy, and impact of deliverables.',
+    tags: ['Quality', 'Deliverables'],
+    questions: [
+      { id: 'q1', type: 'star', text: 'How would you rate the quality of the final deliverable?', required: true },
+      { id: 'q2', type: 'star', text: 'How well did the deliverable match your brief/requirements?', required: true },
+      { id: 'q3', type: 'yesno', text: 'Did the deliverable meet your business objectives?', required: true },
+      { id: 'q4', type: 'star', text: 'How would you rate the attention to detail?', required: true },
+      { id: 'q5', type: 'nps', text: 'How likely would you be to hire us again for similar work?', required: true },
+      { id: 'q6', type: 'long_text', text: 'What did you like most about the deliverable?', required: false }
+    ]
+  },
+  {
+    id: 'tpl_experience',
+    name: 'Overall Experience',
+    icon: '&#x1F31F;',
+    description: 'End-to-end experience evaluation from onboarding to delivery.',
+    tags: ['End-to-End', 'Experience'],
+    questions: [
+      { id: 'q1', type: 'star', text: 'How was the onboarding process?', required: true },
+      { id: 'q2', type: 'star', text: 'How satisfied are you with the project management?', required: true },
+      { id: 'q3', type: 'star', text: 'How would you rate the value for money?', required: true },
+      { id: 'q4', type: 'nps', text: 'How likely are you to recommend us to others?', required: true },
+      { id: 'q5', type: 'emoji', text: 'Sum up your experience in one emoji:', required: true },
+      { id: 'q6', type: 'multiple', text: 'What did we do best?', required: false, options: ['Onboarding', 'Communication', 'Quality', 'Speed', 'Support', 'Professionalism'] },
+      { id: 'q7', type: 'long_text', text: 'Anything else you would like to share?', required: false }
+    ]
+  },
+  {
+    id: 'tpl_testimonial',
+    name: 'Testimonial Request',
+    icon: '&#x1F4DD;',
+    description: 'Short and sweet — designed to collect quotable testimonials.',
+    tags: ['Testimonial', 'Short'],
+    questions: [
+      { id: 'q1', type: 'star', text: 'How would you rate your experience working with us?', required: true },
+      { id: 'q2', type: 'long_text', text: 'What problem did we help you solve?', required: true },
+      { id: 'q3', type: 'long_text', text: 'What results or outcomes did you achieve?', required: false },
+      { id: 'q4', type: 'long_text', text: 'Would you recommend us? If so, what would you say?', required: true },
+      { id: 'q5', type: 'yesno', text: 'May we use your feedback as a testimonial on our website?', required: true }
+    ]
+  }
+];
+
+function getDefaultData() {
+  return {
+    forms: [],
+    clients: [],
+    feedback: [],
+    settings: {
+      businessName: 'My Freelance Business',
+      templateCount: 3
+    }
+  };
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const d = JSON.parse(raw);
+      if (!d.forms) d.forms = [];
+      if (!d.clients) d.clients = [];
+      if (!d.feedback) d.feedback = [];
+      if (!d.settings) d.settings = { businessName: 'My Freelance Business', templateCount: 3 };
+      return d;
+    }
+  } catch(e) { console.error('Load error', e); }
+  return getDefaultData();
+}
+
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+  } catch(e) { console.error('Save error', e); }
+}
+
+let appData = loadData();
+
+// ---- UTILITY FUNCTIONS ----
+function genId(prefix) {
+  return prefix + '_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function formatDateShort(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function getInitials(name) {
+  if (!name) return '??';
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function getAvatarColor(name) {
+  const colors = ['#a855f7', '#ec4899', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+  let hash = 0;
+  for (let i = 0; i < (name || '').length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return colors[Math.abs(hash) % colors.length];
+}
+
+// ---- TOAST NOTIFICATIONS ----
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${icons[type] || ''}</span> ${escapeHtml(message)}`;
+  container.appendChild(toast);
+  setTimeout(() => { if (toast.parentNode) toast.remove(); }, 3000);
+}
+
+// ---- TAB NAVIGATION ----
+function switchTab(tabName) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  const tab = document.querySelector(`.nav-tab[data-tab="${tabName}"]`);
+  const panel = document.getElementById(`panel-${tabName}`);
+  if (tab) tab.classList.add('active');
+  if (panel) panel.classList.add('active');
+
+  if (tabName === 'analytics') renderAnalytics();
+  if (tabName === 'testimonials') renderTestimonials();
+  if (tabName === 'collect') populateCollectSelects();
+  if (tabName === 'clients') renderClients();
+  if (tabName === 'forms') { renderTemplates(); renderForms(); }
+}
+
+// ---- MODAL SYSTEM ----
+function openModal(html) {
+  const container = document.getElementById('modalContainer');
+  container.innerHTML = `<div class="modal-overlay" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`;
+}
+function closeModal() {
+  document.getElementById('modalContainer').innerHTML = '';
+}
+
+// ---- TEMPLATE RENDERING ----
+function renderTemplates() {
+  const grid = document.getElementById('templateGrid');
+  const showCount = appData.settings.templateCount || 3;
+  const templates = DEFAULT_TEMPLATES.slice(0, showCount);
+  const btn = document.getElementById('toggleTemplatesBtn');
+  btn.textContent = showCount >= DEFAULT_TEMPLATES.length ? 'Show Less' : 'Show All';
+
+  grid.innerHTML = templates.map(t => `
+    <div class="template-card" onclick="useTemplate('${t.id}')">
+      <div class="template-icon">${t.icon}</div>
+      <div class="template-name">${escapeHtml(t.name)}</div>
+      <div class="template-desc">${escapeHtml(t.description)}</div>
+      <div class="template-tags">${t.tags.map(tag => `<span class="template-tag">${escapeHtml(tag)}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+function toggleTemplates() {
+  if (appData.settings.templateCount >= DEFAULT_TEMPLATES.length) {
+    appData.settings.templateCount = 3;
+  } else {
+    appData.settings.templateCount = DEFAULT_TEMPLATES.length;
+  }
+  saveData();
+  renderTemplates();
+}
+
+function useTemplate(templateId) {
+  const template = DEFAULT_TEMPLATES.find(t => t.id === templateId);
+  if (!template) return;
+  const newForm = {
+    id: genId('form'),
+    name: template.name,
+    description: template.description,
+    questions: JSON.parse(JSON.stringify(template.questions)).map(q => ({ ...q, id: genId('q') })),
+    createdAt: Date.now(),
+    updatedAt: Date.now()
+  };
+  appData.forms.push(newForm);
+  saveData();
+  renderForms();
+  showToast(`Form "${template.name}" created from template`);
+}
+
+// ---- FORM MANAGEMENT ----
+function renderForms() {
+  const container = document.getElementById('formsList');
+  if (appData.forms.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">&#x1F4CB;</div>
+        <h3>No Forms Yet</h3>
+        <p>Create a custom form or use one of the templates above to get started.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = appData.forms.map(form => {
+    const feedbackCount = appData.feedback.filter(f => f.formId === form.id).length;
+    return `
+      <div class="question-item">
+        <div class="q-header">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:24px;">&#x1F4CB;</span>
+            <div>
+              <div class="q-text">${escapeHtml(form.name)}</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:2px;">
+                ${form.questions.length} questions &middot; ${feedbackCount} responses &middot; Updated ${formatDate(form.updatedAt)}
+              </div>
+            </div>
+          </div>
+          <div class="q-actions">
+            <button class="btn btn-ghost btn-sm" onclick="editForm('${form.id}')" title="Edit">&#x270F;</button>
+            <button class="btn btn-ghost btn-sm" onclick="duplicateForm('${form.id}')" title="Duplicate">&#x1F4CB;</button>
+            <button class="btn btn-ghost btn-sm" onclick="deleteForm('${form.id}')" title="Delete" style="color:var(--danger);">&#x1F5D1;</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openNewFormModal() {
+  openModal(`
+    <div class="modal-title">Create New Form</div>
+    <div class="modal-desc">Build a custom feedback form with the question types you need.</div>
+    <div class="form-group">
+      <label class="form-label">Form Name</label>
+      <input type="text" class="form-input" id="newFormName" placeholder="e.g., Q4 Project Review" autofocus>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-textarea" id="newFormDesc" placeholder="Brief description of this feedback form..." rows="2"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="createNewForm()">Create Form</button>
+    </div>
+  `);
+  setTimeout(() => { const el = document.getElementById('newFormName'); if (el) el.focus(); }, 100);
+}
+
+function createNewForm() {
+  const name = document.getElementById('newFormName').value.trim();
+  const desc = document.getElementById('newFormDesc').value.trim();
+  if (!name) { showToast('Please enter a form name', 'error'); return; }
+  const form = {
+    id: genId('form'),
+    name: name,
+    description: desc,
+    questions: [],
+    createdAt: Date.now(),
+    updatedAt: Date.now()
+  };
+  appData.forms.push(form);
+  saveData();
+  closeModal();
+  renderForms();
+  showToast(`Form "${name}" created`);
+  editForm(form.id);
+}
+
+function editForm(formId) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+
+  const questionTypeOptions = `
+    <option value="star">Star Rating (1-5)</option>
+    <option value="nps">NPS Score (0-10)</option>
+    <option value="emoji">Emoji Reaction</option>
+    <option value="multiple">Multiple Choice</option>
+    <option value="short_text">Short Text</option>
+    <option value="long_text">Long Text</option>
+    <option value="yesno">Yes/No Toggle</option>
+  `;
+
+  function renderQuestionList() {
+    return form.questions.map((q, i) => {
+      const typeLabels = {
+        star: 'Star Rating', nps: 'NPS Score', emoji: 'Emoji Reaction',
+        multiple: 'Multiple Choice', short_text: 'Short Text',
+        long_text: 'Long Text', yesno: 'Yes/No'
+      };
+      const optionsHtml = q.type === 'multiple' ? `
+        <div style="margin-top:10px;">
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px;">Options:</div>
+          ${(q.options || []).map((opt, oi) => `
+            <div class="mc-option">
+              <input type="text" value="${escapeHtml(opt)}" onchange="updateFormOption('${formId}',${i},${oi},this.value)">
+              <button class="mc-remove" onclick="removeFormOption('${formId}',${i},${oi})">&times;</button>
+            </div>
+          `).join('')}
+          <button class="btn btn-ghost btn-sm" onclick="addFormOption('${formId}',${i})" style="margin-top:4px;">+ Add Option</button>
+        </div>
+      ` : '';
+
+      return `
+        <div class="question-item" data-idx="${i}">
+          <div class="q-header">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="drag-handle">&#x2630;</span>
+              <span class="q-type">${typeLabels[q.type] || q.type}</span>
+              ${q.required ? '<span class="badge badge-red" style="font-size:10px;">Required</span>' : ''}
+            </div>
+            <div class="q-actions">
+              <button class="btn btn-ghost btn-sm" onclick="toggleRequired('${formId}',${i})" title="Toggle required">${q.required ? '&#x2705;' : '&#x26AA;'}</button>
+              <button class="btn btn-ghost btn-sm" onclick="moveQuestion('${formId}',${i},-1)" title="Move up">&uarr;</button>
+              <button class="btn btn-ghost btn-sm" onclick="moveQuestion('${formId}',${i},1)" title="Move down">&darr;</button>
+              <button class="btn btn-ghost btn-sm" onclick="removeQuestion('${formId}',${i})" title="Remove" style="color:var(--danger);">&times;</button>
+            </div>
+          </div>
+          <input type="text" class="form-input" value="${escapeHtml(q.text)}" onchange="updateQuestionText('${formId}',${i},this.value)" style="margin-bottom:4px;" placeholder="Enter your question text...">
+          ${optionsHtml}
+        </div>
+      `;
+    }).join('');
+  }
+
+  openModal(`
+    <div class="modal-title">Edit Form: ${escapeHtml(form.name)}</div>
+    <div class="modal-desc">${escapeHtml(form.description || 'Add questions to your feedback form')}</div>
+
+    <div class="form-group">
+      <label class="form-label">Form Name</label>
+      <input type="text" class="form-input" value="${escapeHtml(form.name)}" onchange="updateFormName('${formId}',this.value)">
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3 style="font-size:15px;font-weight:700;color:var(--text-heading);">Questions (${form.questions.length})</h3>
+    </div>
+
+    <div id="editQuestionList">
+      ${renderQuestionList()}
+    </div>
+
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <select class="form-select" id="addQuestionType" style="width:200px;">${questionTypeOptions}</select>
+      <button class="btn btn-secondary" onclick="addQuestion('${formId}')">+ Add Question</button>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeModal();renderForms();">Done</button>
+    </div>
+  `);
+}
+
+function updateFormName(formId, value) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (form) { form.name = value; form.updatedAt = Date.now(); saveData(); }
+}
+
+function addQuestion(formId) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  const type = document.getElementById('addQuestionType').value;
+  const q = {
+    id: genId('q'),
+    type: type,
+    text: '',
+    required: false
+  };
+  if (type === 'multiple') q.options = ['Option 1', 'Option 2', 'Option 3'];
+  form.questions.push(q);
+  form.updatedAt = Date.now();
+  saveData();
+  editForm(formId);
+}
+
+function removeQuestion(formId, idx) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  form.questions.splice(idx, 1);
+  form.updatedAt = Date.now();
+  saveData();
+  editForm(formId);
+}
+
+function moveQuestion(formId, idx, dir) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= form.questions.length) return;
+  const tmp = form.questions[idx];
+  form.questions[idx] = form.questions[newIdx];
+  form.questions[newIdx] = tmp;
+  form.updatedAt = Date.now();
+  saveData();
+  editForm(formId);
+}
+
+function toggleRequired(formId, idx) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  form.questions[idx].required = !form.questions[idx].required;
+  form.updatedAt = Date.now();
+  saveData();
+  editForm(formId);
+}
+
+function updateQuestionText(formId, idx, value) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  form.questions[idx].text = value;
+  form.updatedAt = Date.now();
+  saveData();
+}
+
+function updateFormOption(formId, qIdx, optIdx, value) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  form.questions[qIdx].options[optIdx] = value;
+  form.updatedAt = Date.now();
+  saveData();
+}
+
+function addFormOption(formId, qIdx) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  if (!form.questions[qIdx].options) form.questions[qIdx].options = [];
+  form.questions[qIdx].options.push('New Option');
+  form.updatedAt = Date.now();
+  saveData();
+  editForm(formId);
+}
+
+function removeFormOption(formId, qIdx, optIdx) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  form.questions[qIdx].options.splice(optIdx, 1);
+  form.updatedAt = Date.now();
+  saveData();
+  editForm(formId);
+}
+
+function duplicateForm(formId) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  const copy = JSON.parse(JSON.stringify(form));
+  copy.id = genId('form');
+  copy.name = form.name + ' (Copy)';
+  copy.createdAt = Date.now();
+  copy.updatedAt = Date.now();
+  copy.questions = copy.questions.map(q => ({ ...q, id: genId('q') }));
+  appData.forms.push(copy);
+  saveData();
+  renderForms();
+  showToast(`Form duplicated as "${copy.name}"`);
+}
+
+function deleteForm(formId) {
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  openModal(`
+    <div class="modal-title">Delete Form</div>
+    <div class="modal-desc">Are you sure you want to delete "${escapeHtml(form.name)}"? This action cannot be undone. Associated feedback will be kept.</div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDeleteForm('${formId}')">Delete</button>
+    </div>
+  `);
+}
+
+function confirmDeleteForm(formId) {
+  appData.forms = appData.forms.filter(f => f.id !== formId);
+  saveData();
+  closeModal();
+  renderForms();
+  showToast('Form deleted');
+}
+
+// ---- CLIENT MANAGEMENT ----
+function renderClients() {
+  const container = document.getElementById('clientsList');
+  const search = (document.getElementById('clientSearch')?.value || '').toLowerCase();
+  let clients = appData.clients;
+
+  if (search) {
+    clients = clients.filter(c =>
+      (c.name || '').toLowerCase().includes(search) ||
+      (c.company || '').toLowerCase().includes(search) ||
+      (c.email || '').toLowerCase().includes(search)
+    );
+  }
+
+  if (clients.length === 0) {
+    const msg = search ? 'No clients match your search.' : 'Add your first client to start collecting feedback.';
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">&#x1F465;</div>
+        <h3>${search ? 'No Results' : 'No Clients Yet'}</h3>
+        <p>${msg}</p>
+        ${!search ? '<button class="btn btn-primary" onclick="openClientModal()">+ Add First Client</button>' : ''}
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = clients.map(c => {
+    const feedbackCount = appData.feedback.filter(f => f.clientId === c.id).length;
+    const avgRating = getClientAvgRating(c.id);
+    return `
+      <div class="client-row">
+        <div class="client-avatar" style="background:${getAvatarColor(c.name)}">${getInitials(c.name)}</div>
+        <div class="client-info">
+          <div class="client-name">${escapeHtml(c.name)}</div>
+          <div class="client-meta">${escapeHtml(c.company || '')}${c.company && c.email ? ' &middot; ' : ''}${escapeHtml(c.email || '')}</div>
+          ${c.project ? `<div class="client-meta" style="margin-top:2px;">Project: ${escapeHtml(c.project)}</div>` : ''}
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-size:14px;font-weight:700;color:var(--text-heading);">${feedbackCount} feedback${feedbackCount !== 1 ? 's' : ''}</div>
+          ${avgRating ? `<div style="font-size:12px;color:var(--warning);">${'★'.repeat(Math.round(avgRating))} ${avgRating.toFixed(1)}</div>` : '<div style="font-size:12px;color:var(--text-dim);">No ratings</div>'}
+        </div>
+        <div class="q-actions">
+          <button class="btn btn-ghost btn-sm" onclick="editClient('${c.id}')" title="Edit">&#x270F;</button>
+          <button class="btn btn-ghost btn-sm" onclick="deleteClient('${c.id}')" title="Delete" style="color:var(--danger);">&#x1F5D1;</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function getClientAvgRating(clientId) {
+  const fb = appData.feedback.filter(f => f.clientId === clientId);
+  let total = 0, count = 0;
+  fb.forEach(f => {
+    if (f.answers) {
+      Object.values(f.answers).forEach(a => {
+        if (a.type === 'star' && typeof a.value === 'number') { total += a.value; count++; }
+      });
+    }
+  });
+  return count > 0 ? total / count : 0;
+}
+
+function openClientModal(clientId) {
+  const client = clientId ? appData.clients.find(c => c.id === clientId) : null;
+  const title = client ? 'Edit Client' : 'Add Client';
+  openModal(`
+    <div class="modal-title">${title}</div>
+    <div class="modal-desc">Enter client details for feedback tracking.</div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Client Name *</label>
+        <input type="text" class="form-input" id="clientName" value="${escapeHtml(client?.name || '')}" placeholder="John Doe">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Company</label>
+        <input type="text" class="form-input" id="clientCompany" value="${escapeHtml(client?.company || '')}" placeholder="Acme Inc.">
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" id="clientEmail" value="${escapeHtml(client?.email || '')}" placeholder="john@acme.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Project Name</label>
+        <input type="text" class="form-input" id="clientProject" value="${escapeHtml(client?.project || '')}" placeholder="Website Redesign">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveClient('${clientId || ''}')">${client ? 'Update' : 'Add'} Client</button>
+    </div>
+  `);
+  setTimeout(() => { const el = document.getElementById('clientName'); if (el) el.focus(); }, 100);
+}
+
+function editClient(clientId) { openClientModal(clientId); }
+
+function saveClient(clientId) {
+  const name = document.getElementById('clientName').value.trim();
+  const company = document.getElementById('clientCompany').value.trim();
+  const email = document.getElementById('clientEmail').value.trim();
+  const project = document.getElementById('clientProject').value.trim();
+  if (!name) { showToast('Client name is required', 'error'); return; }
+
+  if (clientId) {
+    const client = appData.clients.find(c => c.id === clientId);
+    if (client) {
+      client.name = name;
+      client.company = company;
+      client.email = email;
+      client.project = project;
+      client.updatedAt = Date.now();
+    }
+  } else {
+    appData.clients.push({
+      id: genId('client'),
+      name, company, email, project,
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    });
+  }
+  saveData();
+  closeModal();
+  renderClients();
+  showToast(clientId ? 'Client updated' : `Client "${name}" added`);
+}
+
+function deleteClient(clientId) {
+  const client = appData.clients.find(c => c.id === clientId);
+  if (!client) return;
+  openModal(`
+    <div class="modal-title">Delete Client</div>
+    <div class="modal-desc">Are you sure you want to delete "${escapeHtml(client.name)}"? Their feedback history will be preserved.</div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDeleteClient('${clientId}')">Delete</button>
+    </div>
+  `);
+}
+
+function confirmDeleteClient(clientId) {
+  appData.clients = appData.clients.filter(c => c.id !== clientId);
+  saveData();
+  closeModal();
+  renderClients();
+  showToast('Client deleted');
+}
+
+// ---- COLLECT FEEDBACK ----
+function populateCollectSelects() {
+  const formSelect = document.getElementById('collectFormSelect');
+  const clientSelect = document.getElementById('collectClientSelect');
+
+  const currentForm = formSelect.value;
+  const currentClient = clientSelect.value;
+
+  formSelect.innerHTML = '<option value="">Choose a form...</option>' +
+    appData.forms.map(f => `<option value="${f.id}" ${f.id === currentForm ? 'selected' : ''}>${escapeHtml(f.name)}</option>`).join('');
+
+  clientSelect.innerHTML = '<option value="">Choose a client...</option>' +
+    appData.clients.map(c => `<option value="${c.id}" ${c.id === currentClient ? 'selected' : ''}>${escapeHtml(c.name)}${c.company ? ` (${escapeHtml(c.company)})` : ''}</option>`).join('');
+}
+
+function renderFormPreview() {
+  const formId = document.getElementById('collectFormSelect').value;
+  const container = document.getElementById('formPreviewContainer');
+  if (!formId) { container.innerHTML = ''; return; }
+
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) { container.innerHTML = ''; return; }
+
+  container.innerHTML = buildFormPreviewHtml(form);
+}
+
+function buildFormPreviewHtml(form, interactive) {
+  const prefix = interactive ? 'live' : 'preview';
+  return `
+    <div class="form-preview">
+      <div class="form-preview-header">
+        <div class="form-preview-title">${escapeHtml(form.name)}</div>
+        <div class="form-preview-desc">${escapeHtml(form.description || 'We value your feedback. Please take a moment to share your experience.')}</div>
+      </div>
+      ${form.questions.map((q, i) => renderQuestionPreview(q, i, prefix, interactive)).join('')}
+      ${interactive ? `<button class="btn btn-primary" style="width:100%;margin-top:16px;" onclick="submitManualFeedback('${form.id}')">Submit Feedback</button>` : ''}
+    </div>
+  `;
+}
+
+function renderQuestionPreview(q, idx, prefix, interactive) {
+  let inputHtml = '';
+  const fieldId = `${prefix}_q_${idx}`;
+
+  switch(q.type) {
+    case 'star':
+      inputHtml = `<div class="star-rating" id="${fieldId}">
+        ${[1,2,3,4,5].map(n => `<span class="star" data-val="${n}" onclick="setStarRating('${fieldId}',${n})" onmouseenter="hoverStar('${fieldId}',${n})" onmouseleave="unhoverStar('${fieldId}')">&#x2605;</span>`).join('')}
+      </div>`;
+      break;
+    case 'nps':
+      inputHtml = `<div>
+        <div class="nps-scale" id="${fieldId}">
+          ${Array.from({length:11},(_, n) => {
+            const cls = n <= 6 ? 'detractor' : n <= 8 ? 'passive' : 'promoter';
+            return `<button class="nps-btn ${cls}" data-val="${n}" onclick="setNps('${fieldId}',${n})">${n}</button>`;
+          }).join('')}
+        </div>
+        <div class="nps-labels"><span>Not at all likely</span><span>Extremely likely</span></div>
+      </div>`;
+      break;
+    case 'emoji':
+      const emojis = ['😡', '😞', '😐', '😊', '😍'];
+      inputHtml = `<div class="emoji-scale" id="${fieldId}">
+        ${emojis.map((e, i) => `<button class="emoji-btn" data-val="${i+1}" onclick="setEmoji('${fieldId}',${i+1})">${e}</button>`).join('')}
+      </div>`;
+      break;
+    case 'multiple':
+      inputHtml = `<div id="${fieldId}" style="display:flex;flex-direction:column;gap:8px;">
+        ${(q.options || []).map((opt, oi) => `
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 14px;background:var(--bg);border:1px solid var(--border-solid);border-radius:8px;transition:all 0.2s;" onmouseenter="this.style.borderColor='rgba(168,85,247,0.4)'" onmouseleave="this.style.borderColor='var(--border-solid)'">
+            <input type="checkbox" value="${escapeHtml(opt)}" style="accent-color:var(--accent);width:18px;height:18px;">
+            <span style="font-size:14px;">${escapeHtml(opt)}</span>
+          </label>
+        `).join('')}
+      </div>`;
+      break;
+    case 'short_text':
+      inputHtml = `<input type="text" class="form-input" id="${fieldId}" placeholder="Your answer...">`;
+      break;
+    case 'long_text':
+      inputHtml = `<textarea class="form-textarea" id="${fieldId}" placeholder="Share your thoughts..." rows="3"></textarea>`;
+      break;
+    case 'yesno':
+      inputHtml = `<div class="toggle-wrap" id="${fieldId}">
+        <div class="toggle-option" data-val="yes" onclick="setToggle('${fieldId}','yes')">&#x1F44D; Yes</div>
+        <div class="toggle-option" data-val="no" onclick="setToggle('${fieldId}','no')">&#x1F44E; No</div>
+      </div>`;
+      break;
+  }
+
+  return `
+    <div class="question-block">
+      <div class="question-label">
+        ${escapeHtml(q.text)}${q.required ? '<span class="question-required">*</span>' : ''}
+      </div>
+      ${inputHtml}
+    </div>
+  `;
+}
+
+// Interactive rating helpers
+function setStarRating(containerId, val) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.dataset.value = val;
+  el.querySelectorAll('.star').forEach(s => {
+    s.classList.toggle('active', parseInt(s.dataset.val) <= val);
+  });
+}
+function hoverStar(containerId, val) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.querySelectorAll('.star').forEach(s => {
+    s.classList.toggle('active', parseInt(s.dataset.val) <= val);
+  });
+}
+function unhoverStar(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const current = parseInt(el.dataset.value) || 0;
+  el.querySelectorAll('.star').forEach(s => {
+    s.classList.toggle('active', parseInt(s.dataset.val) <= current);
+  });
+}
+function setNps(containerId, val) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.dataset.value = val;
+  el.querySelectorAll('.nps-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.val) === val);
+  });
+}
+function setEmoji(containerId, val) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.dataset.value = val;
+  el.querySelectorAll('.emoji-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.val) === val);
+  });
+}
+function setToggle(containerId, val) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.dataset.value = val;
+  el.querySelectorAll('.toggle-option').forEach(o => {
+    o.classList.toggle('active', o.dataset.val === val);
+  });
+}
+
+function previewForm() {
+  const formId = document.getElementById('collectFormSelect').value;
+  if (!formId) { showToast('Please select a form first', 'error'); return; }
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+
+  openModal(`
+    <div style="margin:-32px;padding:0;">
+      <div style="padding:20px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-solid);">
+        <div class="modal-title" style="margin:0;">Form Preview</div>
+        <button class="btn btn-ghost" onclick="closeModal()">&times; Close</button>
+      </div>
+      <div style="padding:24px;max-height:70vh;overflow-y:auto;">
+        ${buildFormPreviewHtml(form, false)}
+      </div>
+    </div>
+  `);
+}
+
+function copyShareLink() {
+  const formId = document.getElementById('collectFormSelect').value;
+  if (!formId) { showToast('Please select a form first', 'error'); return; }
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+  const link = window.location.href.split('?')[0] + '?form=' + formId;
+  navigator.clipboard.writeText(link).then(() => {
+    showToast('Share link copied to clipboard! (Note: form data is local to this browser)');
+  }).catch(() => {
+    showToast('Share link concept generated. Data is stored locally.', 'info');
+  });
+}
+
+function openManualEntryModal() {
+  const formId = document.getElementById('collectFormSelect').value;
+  const clientId = document.getElementById('collectClientSelect').value;
+  if (!formId) { showToast('Please select a form first', 'error'); return; }
+  if (!clientId) { showToast('Please select a client first', 'error'); return; }
+
+  const form = appData.forms.find(f => f.id === formId);
+  if (!form) return;
+
+  openModal(`
+    <div style="margin:-32px;padding:0;">
+      <div style="padding:20px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-solid);">
+        <div>
+          <div class="modal-title" style="margin:0;">Manual Feedback Entry</div>
+          <div class="modal-desc" style="margin:0;margin-top:4px;">Enter feedback received via phone or in-person meeting</div>
+        </div>
+        <button class="btn btn-ghost" onclick="closeModal()">&times;</button>
+      </div>
+      <div style="padding:24px;max-height:70vh;overflow-y:auto;">
+        ${buildFormPreviewHtml(form, true)}
+      </div>
+    </div>
+  `);
+}
+
+function submitManualFeedback(formId) {
+  const form = appData.forms.find(f => f.id === formId);
+  const clientId = document.getElementById('collectClientSelect')?.value;
+  if (!form) return;
+
+  const answers = {};
+  let valid = true;
+
+  form.questions.forEach((q, i) => {
+    const fieldId = `live_q_${i}`;
+    let value = null;
+
+    switch(q.type) {
+      case 'star':
+      case 'nps':
+      case 'emoji': {
+        const el = document.getElementById(fieldId);
+        value = el ? parseInt(el.dataset.value) || null : null;
+        break;
+      }
+      case 'yesno': {
+        const el = document.getElementById(fieldId);
+        value = el ? el.dataset.value || null : null;
+        break;
+      }
+      case 'short_text':
+      case 'long_text': {
+        const el = document.getElementById(fieldId);
+        value = el ? el.value.trim() || null : null;
+        break;
+      }
+      case 'multiple': {
+        const el = document.getElementById(fieldId);
+        if (el) {
+          const checked = [];
+          el.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => checked.push(cb.value));
+          value = checked.length > 0 ? checked : null;
+        }
+        break;
+      }
+    }
+
+    if (q.required && (value === null || value === undefined)) {
+      valid = false;
+    }
+
+    answers[q.id] = { type: q.type, text: q.text, value: value };
+  });
+
+  if (!valid) {
+    showToast('Please answer all required questions', 'error');
+    return;
+  }
+
+  const feedback = {
+    id: genId('fb'),
+    formId: formId,
+    formName: form.name,
+    clientId: clientId || null,
+    clientName: clientId ? (appData.clients.find(c => c.id === clientId)?.name || 'Unknown') : 'Anonymous',
+    answers: answers,
+    submittedAt: Date.now(),
+    source: 'manual'
+  };
+
+  appData.feedback.push(feedback);
+  saveData();
+  closeModal();
+  showToast('Feedback submitted successfully!');
+}
+
+// ---- ANALYTICS DASHBOARD ----
+function renderAnalytics() {
+  renderAnalyticsStats();
+  renderNpsGauge();
+  renderSentimentChart();
+  renderCategoryChart();
+  renderFeedbackFeed();
+}
+
+function renderAnalyticsStats() {
+  const container = document.getElementById('analyticsStats');
+  const fb = appData.feedback;
+  const totalFeedback = fb.length;
+  const totalClients = appData.clients.length;
+
+  // Average star rating
+  let starTotal = 0, starCount = 0;
+  fb.forEach(f => {
+    Object.values(f.answers || {}).forEach(a => {
+      if (a.type === 'star' && typeof a.value === 'number') { starTotal += a.value; starCount++; }
+    });
+  });
+  const avgStar = starCount > 0 ? (starTotal / starCount).toFixed(1) : '--';
+
+  // Response rate
+  const clientsWithFeedback = new Set(fb.filter(f => f.clientId).map(f => f.clientId)).size;
+  const responseRate = totalClients > 0 ? Math.round((clientsWithFeedback / totalClients) * 100) : 0;
+
+  // NPS
+  const nps = calculateNps();
+
+  container.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-value">${totalFeedback}</div>
+      <div class="stat-label">Total Responses</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${avgStar !== '--' ? avgStar + '/5' : avgStar}</div>
+      <div class="stat-label">Avg Star Rating</div>
+      ${avgStar !== '--' ? `<div style="color:var(--warning);font-size:14px;margin-top:4px;">${'★'.repeat(Math.round(parseFloat(avgStar)))}</div>` : ''}
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:${nps !== null ? (nps >= 50 ? 'var(--success)' : nps >= 0 ? 'var(--warning)' : 'var(--danger)') : 'var(--text-heading)'}">${nps !== null ? (nps > 0 ? '+' : '') + nps : '--'}</div>
+      <div class="stat-label">NPS Score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${responseRate}%</div>
+      <div class="stat-label">Response Rate</div>
+    </div>
+  `;
+}
+
+function calculateNps() {
+  let npsValues = [];
+  appData.feedback.forEach(f => {
+    Object.values(f.answers || {}).forEach(a => {
+      if (a.type === 'nps' && typeof a.value === 'number') npsValues.push(a.value);
+    });
+  });
+  if (npsValues.length === 0) return null;
+  const promoters = npsValues.filter(v => v >= 9).length;
+  const detractors = npsValues.filter(v => v <= 6).length;
+  return Math.round(((promoters - detractors) / npsValues.length) * 100);
+}
+
+function renderNpsGauge() {
+  const container = document.getElementById('npsGauge');
+  const nps = calculateNps();
+  if (nps === null) {
+    container.innerHTML = '<div class="empty-state" style="padding:20px;"><div class="empty-icon" style="font-size:40px;">&#x1F4CA;</div><p>No NPS data yet</p></div>';
+    return;
+  }
+
+  const normalizedAngle = ((nps + 100) / 200) * 180;
+  const radians = (normalizedAngle - 180) * (Math.PI / 180);
+  const r = 80;
+  const cx = 100;
+  const cy = 95;
+  const x = cx + r * Math.cos(radians);
+  const y = cy + r * Math.sin(radians);
+
+  const color = nps >= 50 ? '#22c55e' : nps >= 0 ? '#f59e0b' : '#ef4444';
+  const label = nps >= 50 ? 'Excellent' : nps >= 0 ? 'Good' : 'Needs Improvement';
+
+  container.innerHTML = `
+    <div class="gauge-container">
+      <svg class="gauge-svg" viewBox="0 0 200 120">
+        <path d="M 20 95 A 80 80 0 0 1 180 95" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14" stroke-linecap="round"/>
+        <path d="M 20 95 A 80 80 0 0 1 ${x.toFixed(1)} ${y.toFixed(1)}" fill="none" stroke="${color}" stroke-width="14" stroke-linecap="round">
+          <animate attributeName="d" from="M 20 95 A 80 80 0 0 1 20 95" to="M 20 95 A 80 80 0 ${normalizedAngle > 180 ? '1' : '0'} 1 ${x.toFixed(1)} ${y.toFixed(1)}" dur="1s" fill="freeze"/>
+        </path>
+        <text x="20" y="115" fill="#64748b" font-size="10" text-anchor="middle">-100</text>
+        <text x="100" y="15" fill="#64748b" font-size="10" text-anchor="middle">0</text>
+        <text x="180" y="115" fill="#64748b" font-size="10" text-anchor="middle">+100</text>
+      </svg>
+      <div class="gauge-value" style="color:${color}">${nps > 0 ? '+' : ''}${nps}</div>
+    </div>
+    <div class="gauge-label">${label}</div>
+    <div style="display:flex;justify-content:center;gap:16px;margin-top:12px;">
+      ${renderNpsBreakdown()}
+    </div>
+  `;
+}
+
+function renderNpsBreakdown() {
+  let npsValues = [];
+  appData.feedback.forEach(f => {
+    Object.values(f.answers || {}).forEach(a => {
+      if (a.type === 'nps' && typeof a.value === 'number') npsValues.push(a.value);
+    });
+  });
+  if (npsValues.length === 0) return '';
+  const total = npsValues.length;
+  const promoters = npsValues.filter(v => v >= 9).length;
+  const passives = npsValues.filter(v => v >= 7 && v <= 8).length;
+  const detractors = npsValues.filter(v => v <= 6).length;
+  return `
+    <div style="text-align:center;"><div style="font-size:16px;font-weight:700;color:var(--success);">${Math.round((promoters/total)*100)}%</div><div style="font-size:11px;color:var(--text-dim);">Promoters</div></div>
+    <div style="text-align:center;"><div style="font-size:16px;font-weight:700;color:var(--warning);">${Math.round((passives/total)*100)}%</div><div style="font-size:11px;color:var(--text-dim);">Passives</div></div>
+    <div style="text-align:center;"><div style="font-size:16px;font-weight:700;color:var(--danger);">${Math.round((detractors/total)*100)}%</div><div style="font-size:11px;color:var(--text-dim);">Detractors</div></div>
+  `;
+}
+
+function renderSentimentChart() {
+  const container = document.getElementById('sentimentChart');
+  const fb = appData.feedback;
+  if (fb.length === 0) {
+    container.innerHTML = '<div class="empty-state" style="padding:20px;"><div class="empty-icon" style="font-size:40px;">&#x1F4CA;</div><p>No feedback data yet</p></div>';
+    return;
+  }
+
+  let positive = 0, neutral = 0, negative = 0;
+  fb.forEach(f => {
+    const sentiment = analyzeSentiment(f);
+    if (sentiment === 'positive') positive++;
+    else if (sentiment === 'neutral') neutral++;
+    else negative++;
+  });
+  const total = positive + neutral + negative;
+
+  container.innerHTML = `
+    <div class="sentiment-row">
+      <span class="sentiment-label">Positive</span>
+      <div class="sentiment-bar"><div class="sentiment-fill positive" style="width:${(positive/total)*100}%">${positive}</div></div>
+      <span class="sentiment-pct">${Math.round((positive/total)*100)}%</span>
+    </div>
+    <div class="sentiment-row">
+      <span class="sentiment-label">Neutral</span>
+      <div class="sentiment-bar"><div class="sentiment-fill neutral" style="width:${(neutral/total)*100}%">${neutral}</div></div>
+      <span class="sentiment-pct">${Math.round((neutral/total)*100)}%</span>
+    </div>
+    <div class="sentiment-row">
+      <span class="sentiment-label">Negative</span>
+      <div class="sentiment-bar"><div class="sentiment-fill negative" style="width:${(negative/total)*100}%">${negative}</div></div>
+      <span class="sentiment-pct">${Math.round((negative/total)*100)}%</span>
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-solid);">
+      <div style="display:flex;justify-content:space-between;font-size:13px;">
+        <span style="color:var(--text-dim);">Total Responses</span>
+        <span style="font-weight:700;color:var(--text-heading);">${total}</span>
+      </div>
+    </div>
+  `;
+}
+
+function analyzeSentiment(feedback) {
+  let scores = [];
+  Object.values(feedback.answers || {}).forEach(a => {
+    if (a.type === 'star' && typeof a.value === 'number') {
+      scores.push(a.value / 5);
+    }
+    if (a.type === 'nps' && typeof a.value === 'number') {
+      scores.push(a.value / 10);
+    }
+    if (a.type === 'emoji' && typeof a.value === 'number') {
+      scores.push(a.value / 5);
+    }
+    if (a.type === 'yesno') {
+      scores.push(a.value === 'yes' ? 1 : 0);
+    }
+  });
+  if (scores.length === 0) return 'neutral';
+  const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+  if (avg >= 0.7) return 'positive';
+  if (avg >= 0.4) return 'neutral';
+  return 'negative';
+}
+
+function renderCategoryChart() {
+  const container = document.getElementById('categoryChart');
+  const fb = appData.feedback;
+  if (fb.length === 0) {
+    container.innerHTML = '<div class="empty-state" style="padding:20px;"><p>Submit feedback to see category ratings</p></div>';
+    return;
+  }
+
+  // Group star ratings by question text
+  const categories = {};
+  fb.forEach(f => {
+    Object.values(f.answers || {}).forEach(a => {
+      if (a.type === 'star' && typeof a.value === 'number') {
+        const key = a.text || 'General';
+        if (!categories[key]) categories[key] = { total: 0, count: 0 };
+        categories[key].total += a.value;
+        categories[key].count++;
+      }
+    });
+  });
+
+  const entries = Object.entries(categories).map(([name, data]) => ({
+    name: name.length > 30 ? name.substring(0, 30) + '...' : name,
+    avg: data.total / data.count
+  })).sort((a, b) => b.avg - a.avg);
+
+  if (entries.length === 0) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-dim);">No star ratings collected yet</div>';
+    return;
+  }
+
+  container.innerHTML = entries.map(e => `
+    <div class="category-row">
+      <span class="category-name" title="${escapeHtml(e.name)}">${escapeHtml(e.name)}</span>
+      <div class="category-bar-track"><div class="category-bar-fill" style="width:${(e.avg/5)*100}%"></div></div>
+      <span class="category-value">${e.avg.toFixed(1)}</span>
+    </div>
+  `).join('');
+}
+
+function renderFeedbackFeed() {
+  const container = document.getElementById('feedbackFeed');
+  const filter = (document.getElementById('feedbackFilter')?.value || '').toLowerCase();
+  let fb = [...appData.feedback].sort((a, b) => b.submittedAt - a.submittedAt);
+
+  if (filter) {
+    fb = fb.filter(f =>
+      (f.clientName || '').toLowerCase().includes(filter) ||
+      (f.formName || '').toLowerCase().includes(filter) ||
+      Object.values(f.answers || {}).some(a =>
+        typeof a.value === 'string' && a.value.toLowerCase().includes(filter)
+      )
+    );
+  }
+
+  if (fb.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state" style="padding:30px;">
+        <div class="empty-icon" style="font-size:48px;">&#x1F4E5;</div>
+        <h3>${filter ? 'No Matching Feedback' : 'No Feedback Yet'}</h3>
+        <p>${filter ? 'Try adjusting your search.' : 'Go to the Collect tab to start gathering feedback.'}</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = fb.slice(0, 20).map(f => {
+    const sentiment = analyzeSentiment(f);
+    const sentimentBadge = {
+      positive: '<span class="badge badge-green">Positive</span>',
+      neutral: '<span class="badge badge-yellow">Neutral</span>',
+      negative: '<span class="badge badge-red">Negative</span>'
+    }[sentiment];
+
+    // Extract a text snippet
+    let snippet = '';
+    Object.values(f.answers || {}).forEach(a => {
+      if ((a.type === 'long_text' || a.type === 'short_text') && a.value && !snippet) {
+        snippet = a.value.length > 140 ? a.value.substring(0, 140) + '...' : a.value;
+      }
+    });
+
+    // Extract ratings summary
+    let ratings = [];
+    Object.values(f.answers || {}).forEach(a => {
+      if (a.type === 'star' && typeof a.value === 'number') ratings.push('★'.repeat(a.value));
+      if (a.type === 'nps' && typeof a.value === 'number') ratings.push(`NPS: ${a.value}`);
+      if (a.type === 'emoji' && typeof a.value === 'number') {
+        const emojis = ['😡', '😞', '😐', '😊', '😍'];
+        ratings.push(emojis[a.value - 1] || '');
+      }
+    });
+
+    return `
+      <div class="feedback-item">
+        <div class="feedback-header">
+          <div class="client-avatar" style="width:36px;height:36px;font-size:13px;background:${getAvatarColor(f.clientName)}">${getInitials(f.clientName)}</div>
+          <div style="flex:1;">
+            <div style="font-weight:600;color:var(--text-heading);font-size:14px;">${escapeHtml(f.clientName)}</div>
+            <div style="font-size:12px;color:var(--text-dim);">${escapeHtml(f.formName)} &middot; ${formatDate(f.submittedAt)}</div>
+          </div>
+          ${sentimentBadge}
+        </div>
+        ${ratings.length > 0 ? `<div style="margin-bottom:8px;font-size:14px;">${ratings.join(' &middot; ')}</div>` : ''}
+        ${snippet ? `<div class="feedback-text">"${escapeHtml(snippet)}"</div>` : ''}
+        <div class="feedback-meta">
+          <span>Source: ${f.source === 'manual' ? 'Manual Entry' : 'Form'}</span>
+          <button class="btn btn-ghost btn-sm" onclick="viewFeedbackDetail('${f.id}')">View Details</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function viewFeedbackDetail(feedbackId) {
+  const fb = appData.feedback.find(f => f.id === feedbackId);
+  if (!fb) return;
+
+  const answersHtml = Object.values(fb.answers || {}).map(a => {
+    let valueHtml = '';
+    switch(a.type) {
+      case 'star':
+        valueHtml = `<span style="color:var(--warning);font-size:20px;">${'★'.repeat(a.value || 0)}${'&#x2606;'.repeat(5 - (a.value || 0))}</span> <span style="font-weight:700;">${a.value || 0}/5</span>`;
+        break;
+      case 'nps':
+        const npsColor = a.value >= 9 ? 'var(--success)' : a.value >= 7 ? 'var(--warning)' : 'var(--danger)';
+        const npsLabel = a.value >= 9 ? 'Promoter' : a.value >= 7 ? 'Passive' : 'Detractor';
+        valueHtml = `<span style="font-size:24px;font-weight:800;color:${npsColor};">${a.value}</span> <span class="badge" style="background:${npsColor}20;color:${npsColor};">${npsLabel}</span>`;
+        break;
+      case 'emoji': {
+        const emojis = ['😡', '😞', '😐', '😊', '😍'];
+        valueHtml = `<span style="font-size:32px;">${emojis[(a.value || 1) - 1]}</span>`;
+        break;
+      }
+      case 'yesno':
+        valueHtml = a.value === 'yes'
+          ? '<span class="badge badge-green">&#x1F44D; Yes</span>'
+          : '<span class="badge badge-red">&#x1F44E; No</span>';
+        break;
+      case 'multiple':
+        valueHtml = Array.isArray(a.value) ? a.value.map(v => `<span class="badge badge-purple">${escapeHtml(v)}</span>`).join(' ') : '--';
+        break;
+      default:
+        valueHtml = `<div style="padding:12px;background:var(--bg);border-radius:8px;font-size:14px;line-height:1.6;">${escapeHtml(a.value || '--')}</div>`;
+    }
+    return `
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px;">${escapeHtml(a.text || 'Question')}</div>
+        ${valueHtml}
+      </div>
+    `;
+  }).join('');
+
+  openModal(`
+    <div style="margin:-32px;padding:0;">
+      <div style="padding:20px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-solid);">
+        <div>
+          <div class="modal-title" style="margin:0;">Feedback Details</div>
+          <div class="modal-desc" style="margin:0;margin-top:4px;">${escapeHtml(fb.clientName)} &middot; ${formatDate(fb.submittedAt)}</div>
+        </div>
+        <button class="btn btn-ghost" onclick="closeModal()">&times;</button>
+      </div>
+      <div style="padding:24px 32px;max-height:70vh;overflow-y:auto;">
+        <div style="display:flex;gap:12px;margin-bottom:24px;">
+          <span class="badge badge-purple">${escapeHtml(fb.formName)}</span>
+          <span class="badge badge-blue">${fb.source === 'manual' ? 'Manual Entry' : 'Form Submission'}</span>
+        </div>
+        ${answersHtml}
+      </div>
+      <div style="padding:16px 32px;border-top:1px solid var(--border-solid);display:flex;gap:12px;justify-content:flex-end;">
+        <button class="btn btn-danger btn-sm" onclick="deleteFeedback('${fb.id}')">&#x1F5D1; Delete</button>
+        <button class="btn btn-secondary btn-sm" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  `);
+}
+
+function deleteFeedback(fbId) {
+  appData.feedback = appData.feedback.filter(f => f.id !== fbId);
+  saveData();
+  closeModal();
+  renderAnalytics();
+  showToast('Feedback deleted');
+}
+
+// ---- TESTIMONIAL EXTRACTOR ----
+function renderTestimonials() {
+  const container = document.getElementById('testimonialsList');
+  const fb = appData.feedback;
+
+  // Find highly positive feedback with text
+  const testimonials = [];
+  fb.forEach(f => {
+    const sentiment = analyzeSentiment(f);
+    if (sentiment !== 'positive') return;
+
+    // Find text answers that could be testimonials
+    Object.values(f.answers || {}).forEach(a => {
+      if ((a.type === 'long_text' || a.type === 'short_text') && a.value && a.value.length > 20) {
+        // Check for testimonial-like content
+        const text = a.value.toLowerCase();
+        const isTestimonial = text.length > 30 ||
+          text.includes('recommend') || text.includes('great') || text.includes('excellent') ||
+          text.includes('amazing') || text.includes('best') || text.includes('love') ||
+          text.includes('fantastic') || text.includes('outstanding') || text.includes('professional') ||
+          text.includes('helped') || text.includes('thank') || text.includes('impressed');
+
+        if (isTestimonial || a.text?.toLowerCase().includes('testimonial') || a.text?.toLowerCase().includes('recommend')) {
+          testimonials.push({
+            id: f.id + '_' + a.text,
+            text: a.value,
+            clientName: f.clientName,
+            clientId: f.clientId,
+            date: f.submittedAt,
+            formName: f.formName,
+            rating: getAnswerRating(f)
+          });
+        }
+      }
+    });
+  });
+
+  if (testimonials.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">&#x2B50;</div>
+        <h3>No Testimonials Yet</h3>
+        <p>Collect positive feedback with text responses to auto-generate testimonials. The extractor looks for highly rated feedback with substantial text comments.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = testimonials.map(t => {
+    const client = t.clientId ? appData.clients.find(c => c.id === t.clientId) : null;
+    const company = client?.company || '';
+    const ratingStars = t.rating ? '★'.repeat(Math.round(t.rating)) : '';
+
+    return `
+      <div class="testimonial-card">
+        <button class="btn btn-ghost btn-sm testimonial-copy" onclick="copyTestimonial(\`${escapeHtml(t.text).replace(/`/g, '\\`')}\`, '${escapeHtml(t.clientName)}', '${escapeHtml(company)}')" title="Copy testimonial">&#x1F4CB; Copy</button>
+        <div class="testimonial-quote">${escapeHtml(t.text)}</div>
+        <div class="testimonial-author">
+          <div class="client-avatar" style="width:40px;height:40px;font-size:14px;background:${getAvatarColor(t.clientName)}">${getInitials(t.clientName)}</div>
+          <div>
+            <div style="font-weight:600;color:var(--text-heading);font-size:15px;">${escapeHtml(t.clientName)}</div>
+            <div style="font-size:12px;color:var(--text-muted);">${company ? escapeHtml(company) + ' &middot; ' : ''}${formatDate(t.date)}</div>
+          </div>
+          ${ratingStars ? `<div style="margin-left:auto;color:var(--warning);font-size:16px;">${ratingStars}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function getAnswerRating(feedback) {
+  let total = 0, count = 0;
+  Object.values(feedback.answers || {}).forEach(a => {
+    if (a.type === 'star' && typeof a.value === 'number') { total += a.value; count++; }
+  });
+  return count > 0 ? total / count : null;
+}
+
+function copyTestimonial(text, name, company) {
+  const formatted = `"${text}"\n\n-- ${name}${company ? ', ' + company : ''}`;
+  navigator.clipboard.writeText(formatted).then(() => {
+    showToast('Testimonial copied to clipboard');
+  }).catch(() => {
+    showToast('Failed to copy', 'error');
+  });
+}
+
+function exportTestimonials() {
+  const fb = appData.feedback;
+  const testimonials = [];
+  fb.forEach(f => {
+    const sentiment = analyzeSentiment(f);
+    if (sentiment !== 'positive') return;
+    Object.values(f.answers || {}).forEach(a => {
+      if ((a.type === 'long_text' || a.type === 'short_text') && a.value && a.value.length > 20) {
+        const client = f.clientId ? appData.clients.find(c => c.id === f.clientId) : null;
+        testimonials.push(`"${a.value}"\n-- ${f.clientName}${client?.company ? ', ' + client.company : ''}\n`);
+      }
+    });
+  });
+
+  if (testimonials.length === 0) {
+    showToast('No testimonials to copy', 'info');
+    return;
+  }
+
+  navigator.clipboard.writeText(testimonials.join('\n---\n\n')).then(() => {
+    showToast(`${testimonials.length} testimonials copied to clipboard`);
+  }).catch(() => {
+    showToast('Failed to copy', 'error');
+  });
+}
+
+// ---- CSV EXPORT ----
+function exportCSV() {
+  const fb = appData.feedback;
+  if (fb.length === 0) {
+    showToast('No feedback data to export', 'info');
+    return;
+  }
+
+  // Build header columns
+  const allQuestions = new Set();
+  fb.forEach(f => {
+    Object.values(f.answers || {}).forEach(a => {
+      allQuestions.add(a.text || 'Unknown');
+    });
+  });
+  const questionCols = Array.from(allQuestions);
+
+  const headers = ['Feedback ID', 'Client Name', 'Form Name', 'Date', 'Source', 'Sentiment', ...questionCols];
+
+  const rows = fb.map(f => {
+    const sentiment = analyzeSentiment(f);
+    const base = [
+      f.id,
+      f.clientName || 'Anonymous',
+      f.formName || '',
+      new Date(f.submittedAt).toISOString(),
+      f.source || 'form',
+      sentiment
+    ];
+
+    const answers = {};
+    Object.values(f.answers || {}).forEach(a => {
+      const key = a.text || 'Unknown';
+      if (Array.isArray(a.value)) {
+        answers[key] = a.value.join('; ');
+      } else {
+        answers[key] = a.value != null ? String(a.value) : '';
+      }
+    });
+
+    const qValues = questionCols.map(q => answers[q] || '');
+    return [...base, ...qValues];
+  });
+
+  const csvContent = [headers, ...rows]
+    .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+    .join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `client-feedback-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`Exported ${fb.length} feedback entries to CSV`);
+}
+
+// ---- KEYBOARD SHORTCUTS ----
+document.addEventListener('keydown', function(e) {
+  // Don't intercept if user is typing in an input
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+
+  // Escape to close modal
+  if (e.key === 'Escape') {
+    const modal = document.querySelector('.modal-overlay');
+    if (modal) { closeModal(); e.preventDefault(); return; }
+  }
+
+  // Tab shortcuts with number keys
+  if (e.key === '1') { switchTab('forms'); e.preventDefault(); }
+  if (e.key === '2') { switchTab('clients'); e.preventDefault(); }
+  if (e.key === '3') { switchTab('collect'); e.preventDefault(); }
+  if (e.key === '4') { switchTab('analytics'); e.preventDefault(); }
+  if (e.key === '5') { switchTab('testimonials'); e.preventDefault(); }
+
+  // N for new (context-dependent)
+  if (e.key === 'n' && !e.ctrlKey && !e.metaKey) {
+    const activeTab = document.querySelector('.nav-tab.active')?.dataset.tab;
+    if (activeTab === 'forms') { openNewFormModal(); e.preventDefault(); }
+    if (activeTab === 'clients') { openClientModal(); e.preventDefault(); }
+  }
+
+  // E for export
+  if (e.key === 'e' && !e.ctrlKey && !e.metaKey) {
+    const activeTab = document.querySelector('.nav-tab.active')?.dataset.tab;
+    if (activeTab === 'analytics') { exportCSV(); e.preventDefault(); }
+  }
+
+  // ? for keyboard shortcuts help
+  if (e.key === '?') {
+    showKeyboardHelp();
+    e.preventDefault();
+  }
+});
+
+function showKeyboardHelp() {
+  openModal(`
+    <div class="modal-title">Keyboard Shortcuts</div>
+    <div class="modal-desc">Navigate quickly with these shortcuts</div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:12px 20px;align-items:center;">
+      <kbd class="kbd">1</kbd><span>Forms tab</span>
+      <kbd class="kbd">2</kbd><span>Clients tab</span>
+      <kbd class="kbd">3</kbd><span>Collect tab</span>
+      <kbd class="kbd">4</kbd><span>Analytics tab</span>
+      <kbd class="kbd">5</kbd><span>Testimonials tab</span>
+      <kbd class="kbd">N</kbd><span>New form / New client</span>
+      <kbd class="kbd">E</kbd><span>Export CSV (Analytics tab)</span>
+      <kbd class="kbd">Esc</kbd><span>Close modal</span>
+      <kbd class="kbd">?</kbd><span>Show this help</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeModal()">Got it</button>
+    </div>
+  `);
+}
+
+// ---- DEMO DATA (for first-time users) ----
+function seedDemoData() {
+  if (appData.clients.length > 0 || appData.feedback.length > 0) return;
+
+  // Add sample clients
+  const demoClients = [
+    { id: genId('client'), name: 'Sarah Chen', company: 'TechVision Labs', email: 'sarah@techvision.co', project: 'Brand Redesign', createdAt: Date.now() - 86400000 * 30, updatedAt: Date.now() },
+    { id: genId('client'), name: 'Marcus Rodriguez', company: 'GreenLeaf Studio', email: 'marcus@greenleaf.com', project: 'E-commerce Platform', createdAt: Date.now() - 86400000 * 25, updatedAt: Date.now() },
+    { id: genId('client'), name: 'Emily Watson', company: 'Brightside Marketing', email: 'emily@brightside.io', project: 'Marketing Website', createdAt: Date.now() - 86400000 * 20, updatedAt: Date.now() },
+    { id: genId('client'), name: 'James Park', company: 'Nova Consulting', email: 'james@nova.co', project: 'Dashboard App', createdAt: Date.now() - 86400000 * 15, updatedAt: Date.now() },
+    { id: genId('client'), name: 'Lisa Thompson', company: '', email: 'lisa.t@gmail.com', project: 'Portfolio Website', createdAt: Date.now() - 86400000 * 10, updatedAt: Date.now() }
+  ];
+  appData.clients = demoClients;
+
+  // Create a sample form from template
+  const tpl = DEFAULT_TEMPLATES[0];
+  const sampleForm = {
+    id: genId('form'),
+    name: tpl.name,
+    description: tpl.description,
+    questions: JSON.parse(JSON.stringify(tpl.questions)).map(q => ({ ...q, id: genId('q') })),
+    createdAt: Date.now() - 86400000 * 28,
+    updatedAt: Date.now()
+  };
+  appData.forms.push(sampleForm);
+
+  // Also add the testimonial form
+  const tpl2 = DEFAULT_TEMPLATES[5];
+  const sampleForm2 = {
+    id: genId('form'),
+    name: tpl2.name,
+    description: tpl2.description,
+    questions: JSON.parse(JSON.stringify(tpl2.questions)).map(q => ({ ...q, id: genId('q') })),
+    createdAt: Date.now() - 86400000 * 14,
+    updatedAt: Date.now()
+  };
+  appData.forms.push(sampleForm2);
+
+  // Add sample feedback
+  const demoFeedback = [
+    {
+      id: genId('fb'), formId: sampleForm.id, formName: sampleForm.name,
+      clientId: demoClients[0].id, clientName: 'Sarah Chen',
+      answers: {
+        [sampleForm.questions[0].id]: { type: 'star', text: sampleForm.questions[0].text, value: 5 },
+        [sampleForm.questions[1].id]: { type: 'star', text: sampleForm.questions[1].text, value: 4 },
+        [sampleForm.questions[2].id]: { type: 'nps', text: sampleForm.questions[2].text, value: 9 },
+        [sampleForm.questions[3].id]: { type: 'emoji', text: sampleForm.questions[3].text, value: 5 },
+        [sampleForm.questions[4].id]: { type: 'multiple', text: sampleForm.questions[4].text, value: ['Quality', 'Communication', 'Creativity'] },
+        [sampleForm.questions[5].id]: { type: 'long_text', text: sampleForm.questions[5].text, value: 'The only suggestion would be to provide a bit more detailed progress updates during the middle phase of the project.' },
+        [sampleForm.questions[6].id]: { type: 'long_text', text: sampleForm.questions[6].text, value: 'Working with this team was an absolute game-changer for our brand. The creative direction exceeded our expectations, and the attention to detail was remarkable. I would highly recommend them to anyone looking for top-tier design work.' }
+      },
+      submittedAt: Date.now() - 86400000 * 5, source: 'manual'
+    },
+    {
+      id: genId('fb'), formId: sampleForm.id, formName: sampleForm.name,
+      clientId: demoClients[1].id, clientName: 'Marcus Rodriguez',
+      answers: {
+        [sampleForm.questions[0].id]: { type: 'star', text: sampleForm.questions[0].text, value: 5 },
+        [sampleForm.questions[1].id]: { type: 'star', text: sampleForm.questions[1].text, value: 5 },
+        [sampleForm.questions[2].id]: { type: 'nps', text: sampleForm.questions[2].text, value: 10 },
+        [sampleForm.questions[3].id]: { type: 'emoji', text: sampleForm.questions[3].text, value: 5 },
+        [sampleForm.questions[4].id]: { type: 'multiple', text: sampleForm.questions[4].text, value: ['Quality', 'Speed', 'Value for money'] },
+        [sampleForm.questions[5].id]: { type: 'long_text', text: sampleForm.questions[5].text, value: 'Honestly, nothing major. Everything was handled professionally from start to finish.' },
+        [sampleForm.questions[6].id]: { type: 'long_text', text: sampleForm.questions[6].text, value: 'Our e-commerce platform went from concept to a fully functional, beautiful store in record time. The team delivered exactly what we needed and the results speak for themselves - our conversion rate improved by 40% in the first month.' }
+      },
+      submittedAt: Date.now() - 86400000 * 8, source: 'manual'
+    },
+    {
+      id: genId('fb'), formId: sampleForm.id, formName: sampleForm.name,
+      clientId: demoClients[2].id, clientName: 'Emily Watson',
+      answers: {
+        [sampleForm.questions[0].id]: { type: 'star', text: sampleForm.questions[0].text, value: 4 },
+        [sampleForm.questions[1].id]: { type: 'star', text: sampleForm.questions[1].text, value: 3 },
+        [sampleForm.questions[2].id]: { type: 'nps', text: sampleForm.questions[2].text, value: 7 },
+        [sampleForm.questions[3].id]: { type: 'emoji', text: sampleForm.questions[3].text, value: 4 },
+        [sampleForm.questions[4].id]: { type: 'multiple', text: sampleForm.questions[4].text, value: ['Quality'] },
+        [sampleForm.questions[5].id]: { type: 'long_text', text: sampleForm.questions[5].text, value: 'The timeline was a bit tight and there were a couple of delays. Better project scheduling would help.' },
+        [sampleForm.questions[6].id]: { type: 'long_text', text: sampleForm.questions[6].text, value: 'Good work on the website design. The final product looked great and our team is happy with the results.' }
+      },
+      submittedAt: Date.now() - 86400000 * 12, source: 'manual'
+    },
+    {
+      id: genId('fb'), formId: sampleForm.id, formName: sampleForm.name,
+      clientId: demoClients[3].id, clientName: 'James Park',
+      answers: {
+        [sampleForm.questions[0].id]: { type: 'star', text: sampleForm.questions[0].text, value: 5 },
+        [sampleForm.questions[1].id]: { type: 'star', text: sampleForm.questions[1].text, value: 5 },
+        [sampleForm.questions[2].id]: { type: 'nps', text: sampleForm.questions[2].text, value: 10 },
+        [sampleForm.questions[3].id]: { type: 'emoji', text: sampleForm.questions[3].text, value: 5 },
+        [sampleForm.questions[4].id]: { type: 'multiple', text: sampleForm.questions[4].text, value: ['Quality', 'Speed', 'Communication', 'Creativity'] },
+        [sampleForm.questions[5].id]: { type: 'long_text', text: sampleForm.questions[5].text, value: 'Can\'t think of anything - it was a fantastic experience all around.' },
+        [sampleForm.questions[6].id]: { type: 'long_text', text: sampleForm.questions[6].text, value: 'The dashboard app they built for us has completely transformed how our consulting team operates. The intuitive design and powerful analytics features have saved us hours every week. An absolutely professional and talented team that I recommend without hesitation.' }
+      },
+      submittedAt: Date.now() - 86400000 * 3, source: 'manual'
+    },
+    {
+      id: genId('fb'), formId: sampleForm.id, formName: sampleForm.name,
+      clientId: demoClients[4].id, clientName: 'Lisa Thompson',
+      answers: {
+        [sampleForm.questions[0].id]: { type: 'star', text: sampleForm.questions[0].text, value: 4 },
+        [sampleForm.questions[1].id]: { type: 'star', text: sampleForm.questions[1].text, value: 4 },
+        [sampleForm.questions[2].id]: { type: 'nps', text: sampleForm.questions[2].text, value: 8 },
+        [sampleForm.questions[3].id]: { type: 'emoji', text: sampleForm.questions[3].text, value: 4 },
+        [sampleForm.questions[4].id]: { type: 'multiple', text: sampleForm.questions[4].text, value: ['Communication', 'Creativity'] },
+        [sampleForm.questions[5].id]: { type: 'long_text', text: sampleForm.questions[5].text, value: 'Maybe a few more revision rounds would be nice, but overall very satisfied.' },
+        [sampleForm.questions[6].id]: { type: 'long_text', text: sampleForm.questions[6].text, value: 'My portfolio site looks amazing and I have already gotten compliments from potential clients. Very happy with the work done.' }
+      },
+      submittedAt: Date.now() - 86400000 * 1, source: 'manual'
+    }
+  ];
+
+  appData.feedback = demoFeedback;
+  saveData();
+}
+
+// ---- INITIALIZATION ----
+function init() {
+  seedDemoData();
+  renderTemplates();
+  renderForms();
+  renderClients();
+
+  // Animate stat bars on intersection
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.sentiment-fill, .category-bar-fill').forEach(el => {
+            const w = el.style.width;
+            el.style.width = '0';
+            requestAnimationFrame(() => { el.style.width = w; });
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.card').forEach(card => observer.observe(card));
+  }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', init);
+
+// ---- BACKGROUND ANIMATION ----
+(function addBackgroundEffect() {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;opacity:0.4;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function createParticles() {
+    particles = [];
+    const count = Math.min(40, Math.floor(w * h / 30000));
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 2 + 0.5,
+        alpha: Math.random() * 0.3 + 0.05
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(168, 85, 247, ${p.alpha})`;
+      ctx.fill();
+    });
+
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(168, 85, 247, ${0.06 * (1 - dist / 150)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  createParticles();
+  draw();
+  window.addEventListener('resize', () => { resize(); createParticles(); });
+})();
+</script>
+
+</body>
+</html>

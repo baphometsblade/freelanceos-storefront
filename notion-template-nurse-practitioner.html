@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion Template for Nurse Practitioners | FreelanceOS</title>
+<meta name="description" content="Notion template for nurse practitioners — CE and certification tracker, professional development log, business development tracker, professional organization manager, DEA tracker, networking log, side income tracker, and self-care log for advanced practice nurses.">
+<link rel="canonical" href="https://freelanceos-storefront.vercel.app/notion-template-nurse-practitioner.html">
+<meta property="og:title" content="Notion Template for Nurse Practitioners | FreelanceOS">
+<meta property="og:description" content="Notion template for nurse practitioners — CE tracker, DEA renewal, business development, professional development log, and burnout prevention — all in one Notion workspace.">
+<meta property="og:type" content="product">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6}
+a{color:#a78bfa;text-decoration:none}
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:#7c3aed;width:0%;z-index:9999;transition:width 0.1s linear}
+nav{background:#111111;border-bottom:1px solid #222;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-logo{color:#f9fafb;font-weight:800;font-size:18px;text-decoration:none}
+.nav-links{display:flex;gap:20px;align-items:center}
+.nav-links a{color:#9ca3af;font-size:14px;font-weight:500;text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:#f9fafb}
+.nav-cta{background:#7c3aed!important;color:#fff!important;padding:8px 18px;border-radius:8px;font-weight:700!important;font-size:13px!important}
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:#1a0533;border-top:1px solid #7c3aed44;padding:14px 24px;display:flex;justify-content:center;align-items:center;gap:16px;z-index:200;transform:translateY(100%);transition:transform 0.3s ease}
+.sticky-cta.visible{transform:translateY(0)}
+.sticky-cta p{color:#c4b5fd;font-size:14px;font-weight:600}
+.sticky-cta a{background:#7c3aed;color:#fff;padding:10px 22px;border-radius:8px;font-weight:700;font-size:14px;white-space:nowrap}
+.flash-banner{background:linear-gradient(135deg,#4c1d95,#2e1065);text-align:center;padding:10px 16px;font-size:14px;font-weight:600;color:#fff}
+.flash-banner code{background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:1px}
+.disclaimer-box{background:#1c1400;border:1px solid #92400e;border-left:4px solid #f59e0b;border-radius:8px;padding:20px 24px;margin:32px auto;max-width:860px}
+.disclaimer-box p{color:#fcd34d;font-size:15px;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0f0f0f,#1a0533);padding:80px 24px 64px;text-align:center;border-bottom:1px solid #222}
+.badge-pill{display:inline-block;background:#7c3aed22;border:1px solid #7c3aed44;padding:.4rem 1rem;border-radius:20px;color:#a78bfa;font-size:.85rem;margin-bottom:1.5rem}
+.hero h1{color:#f9fafb;font-size:clamp(26px,5vw,50px);font-weight:900;line-height:1.1;max-width:860px;margin:0 auto 20px;letter-spacing:-0.5px}
+.hero-sub{color:#9ca3af;font-size:clamp(16px,2vw,19px);max-width:640px;margin:0 auto 2rem;line-height:1.65}
+.hero-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.btn-primary{background:#7c3aed;color:#fff;padding:.9rem 2rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:16px;transition:background 0.2s,transform 0.15s;box-shadow:0 4px 20px rgba(124,58,237,0.35)}
+.btn-primary:hover{background:#6d28d9;transform:translateY(-2px);color:#fff}
+.btn-secondary{background:#1a1a1a;color:#e5e7eb;padding:.9rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid #333;transition:border-color 0.2s}
+.btn-secondary:hover{border-color:#7c3aed;color:#f9fafb}
+.social-proof{color:#9ca3af;font-size:14px;margin-top:.5rem}
+.stars{color:#fbbf24}
+.section{padding:72px 24px}
+.section-alt{background:#111111;border-top:1px solid #222;border-bottom:1px solid #222}
+.container{max-width:1040px;margin:0 auto}
+.section-eyebrow{color:#7c3aed;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section-title{color:#f9fafb;font-size:clamp(24px,4vw,38px);font-weight:900;margin-bottom:16px;line-height:1.2}
+.section-sub{color:#9ca3af;font-size:17px;max-width:600px;margin-bottom:48px;line-height:1.6}
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.problem-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:24px}
+.problem-card-icon{font-size:24px;margin-bottom:12px}
+.problem-card h3{color:#f9fafb;font-size:16px;font-weight:700;margin-bottom:8px}
+.problem-card p{color:#9ca3af;font-size:14px;line-height:1.55}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.feature-card{background:#1a1a1a;border:1px solid #2a2a2a;border-left:3px solid #7c3aed;border-radius:0 12px 12px 0;padding:24px}
+.feature-card h3{color:#f9fafb;font-size:16px;font-weight:700;margin-bottom:8px}
+.feature-card p{color:#9ca3af;font-size:14px;line-height:1.55}
+.testimonial-section{background:linear-gradient(135deg,#1a0533,#0f0f0f);padding:72px 24px;border-top:1px solid #222;border-bottom:1px solid #222}
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:960px;margin:0 auto}
+.testimonial-card{background:#1a1a1a;border:1px solid #7c3aed44;border-radius:16px;padding:32px;text-align:left}
+.testimonial-text{color:#e5e7eb;font-size:16px;font-style:italic;line-height:1.6;margin-bottom:20px}
+.testimonial-author{color:#a78bfa;font-weight:700;font-size:14px}
+.pricing-section{padding:72px 24px;text-align:center}
+.pricing-card{background:#1a1a1a;border:2px solid #7c3aed;border-radius:20px;padding:48px 40px;max-width:480px;margin:0 auto}
+.pricing-badge{display:inline-block;background:#7c3aed22;border:1px solid #7c3aed44;color:#a78bfa;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:20px}
+.price-original{color:#6b7280;font-size:18px;text-decoration:line-through;margin-bottom:4px}
+.price-main{color:#f9fafb;font-size:56px;font-weight:900;line-height:1;margin-bottom:8px}
+.price-with-code{color:#a78bfa;font-size:15px;margin-bottom:32px}
+.pricing-features{list-style:none;text-align:left;margin-bottom:32px}
+.pricing-features li{color:#e5e7eb;font-size:15px;padding:8px 0;border-bottom:1px solid #222;display:flex;align-items:center;gap:10px}
+.pricing-features li::before{content:"✓";color:#7c3aed;font-weight:700}
+.bundle-strip{background:#1a0533;border:1px solid #7c3aed44;border-radius:12px;padding:20px 24px;max-width:640px;margin:32px auto 0;text-align:center}
+.bundle-strip p{color:#c4b5fd;font-size:15px;margin-bottom:8px}
+.bundle-strip strong{color:#f9fafb}
+.faq-section{padding:72px 24px;background:#111111;border-top:1px solid #222}
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{border-bottom:1px solid #222;padding:0}
+.faq-item:last-child{border-bottom:none}
+.faq-q{color:#f9fafb;font-size:17px;font-weight:700;padding:20px 0 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;user-select:none}
+.faq-q::after{content:"+";color:#7c3aed;font-size:22px;font-weight:400;flex-shrink:0;transition:transform 0.2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{color:#9ca3af;font-size:15px;line-height:1.65;display:none;padding-bottom:20px}
+.faq-item.open .faq-a{display:block}
+.cross-links-section{padding:64px 24px;background:#0f0f0f;border-top:1px solid #222}
+.cross-links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:900px;margin:0 auto}
+.cross-link-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:28px;transition:border-color 0.2s}
+.cross-link-card:hover{border-color:#7c3aed44}
+.cross-link-card h3{color:#f9fafb;font-size:16px;font-weight:700;margin-bottom:8px}
+.cross-link-card p{color:#9ca3af;font-size:14px;line-height:1.5;margin-bottom:16px}
+.cross-link-card a{color:#a78bfa;font-size:14px;font-weight:600}
+footer{background:#111;border-top:1px solid #222;padding:32px 24px;text-align:center;color:#6b7280;font-size:13px}
+footer a{color:#9ca3af;text-decoration:none;margin:0 8px}
+@media(max-width:600px){.hero-ctas{flex-direction:column;align-items:center}.pricing-card{padding:32px 24px}.sticky-cta{flex-direction:column;gap:8px;text-align:center}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Product",
+      "name": "FreelanceOS Pro for Nurse Practitioners",
+      "description": "Notion template for nurse practitioners — CE and certification tracker, professional development log, business development pipeline for locum and telehealth opportunities, DEA and license renewal tracker, professional organization manager, networking log, supplementary income tracker, and self-care wellness log for advanced practice nurses.",
+      "brand": {
+        "@type": "Brand",
+        "name": "FreelanceOS"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "29.40",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40",
+        "priceValidUntil": "2026-12-31"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "47"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the NP Practice OS Notion template used for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The NP Practice OS is a professional development and business management template for nurse practitioners. It organizes your CE tracking, license and DEA renewal calendar, professional development log, business development pipeline for locum and telehealth opportunities, professional organization memberships, networking relationships, supplementary income tracking, and self-care wellness log — all in one Notion workspace. This template is strictly for professional development and business management. It must never be used to store patient data, protected health information, clinical notes, prescription records, or any information regulated under HIPAA."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I store patient information or clinical notes in this template?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely not. This template must never be used to store patient names, dates of birth, diagnoses, clinical notes, prescription records, lab results, appointment histories, or any protected health information of any kind. HIPAA requires that all patient information be stored and managed in compliant systems. Use this template exclusively for your own professional development, CE tracking, business activities, and career management."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the CE tracker help me prepare for license and certification renewals?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The CE tracker logs every continuing education activity with the provider, course title, hours earned, CE category, completion date, and certificate link. At any point in your renewal cycle, you can filter your CE log by category to see exactly how many pharmacology hours, DEA-required hours, state-mandated hours, and specialty hours you have accumulated."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the DEA tracker work for NPs who practice in multiple states?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The DEA and prescriptive authority tracker is a state-by-state reference log for every jurisdiction where you hold or plan to hold an NP license. Each state record holds your NP license number, license expiry, DEA registration number, DEA expiry, state controlled substance registration details, and the prescriptive authority model for that state."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use the business development tracker for health coaching or consulting work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The business development tracker is designed for any professional income opportunity that leverages your NP credentials and clinical expertise outside of traditional employment — health coaching, consulting, medical advisory boards, expert witness work, corporate wellness, nursing education, medical writing, and any other entrepreneurial activity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should I approach the self-care tracker to make it useful rather than another obligation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The self-care tracker is most useful when approached as a five-minute weekly log rather than a daily diary. At the end of each week, note a rating across the key wellbeing dimensions and any specific stressors or positive moments worth remembering. After three to six months of consistent weekly check-ins, meaningful patterns emerge that are difficult to see in the day-to-day experience of a demanding clinical schedule."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this a one-time purchase?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. FreelanceOS Pro is a one-time payment of $49 (currently $29.40 with code FLASH40 at checkout). You receive lifetime access to the template and all future updates at no additional cost. No monthly subscription, no per-user fees, no annual renewal."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://freelanceos-storefront.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Templates",
+          "item": "https://freelanceos-storefront.vercel.app/notion-template-gallery.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Nurse Practitioner Template",
+          "item": "https://freelanceos-storefront.vercel.app/notion-template-nurse-practitioner.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div id="stickyCta" class="sticky-cta">
+  <p>FreelanceOS Pro — The NP Practice OS in Notion</p>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" target="_blank" rel="noopener">Get it for $29.40 — Use Code FLASH40</a>
+</div>
+
+<div class="flash-banner">
+  Limited-time offer: Use code <code>FLASH40</code> for 40% off — $49 drops to <strong>$29.40</strong>
+</div>
+
+<nav>
+  <a href="/" class="nav-logo">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="/notion-template-gallery.html">Templates</a>
+    <a href="/free-notion-templates.html">Free Tools</a>
+    <a href="/toolkit.html">Toolkit</a>
+    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="nav-cta" target="_blank" rel="noopener">Get Template</a>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="container">
+    <div class="badge-pill">Notion Template for Nurse Practitioners</div>
+    <h1>The NP Practice OS — Business Development &amp; Professional Growth in Notion</h1>
+    <p class="hero-sub">Stop letting your CE credits, license renewals, and professional development fall through the cracks of your clinical schedule. FreelanceOS Pro gives nurse practitioners a complete Notion workspace for CE tracking, professional development, business development, DEA renewal management, and burnout prevention — all connected in one personal command center that keeps pace with your demanding career.</p>
+    <div class="hero-ctas">
+      <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn-primary" target="_blank" rel="noopener">Get the NP Practice OS — $29.40</a>
+      <a href="#features" class="btn-secondary">See What's Inside</a>
+    </div>
+    <div class="social-proof">
+      <span class="stars">★★★★★</span> Trusted by NPs, DNPs, and APRNs across primary care, urgent care, telehealth, and independent practice
+    </div>
+  </div>
+</section>
+
+<!-- HIPAA DISCLAIMER BOX -->
+<div class="container">
+  <div class="disclaimer-box">
+    <p>⚠️ <strong>Important:</strong> This template is for professional development and business management only — never for storing patient data, PHI, clinical notes, prescriptions, or any protected health information. Always use your HIPAA-compliant EHR (Epic, AthenaHealth, eClinicalWorks, etc.) for all clinical records.</p>
+  </div>
+</div>
+
+<!-- PROBLEM SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="section-eyebrow">The Problem</div>
+    <h2 class="section-title">Your Clinical Schedule Wasn't Built for Professional Development</h2>
+    <p class="section-sub">Nurse practitioners carry one of the most complex professional credential and career management burdens in healthcare — and almost no system is designed to help them manage it.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-card-icon">📋</div>
+        <h3>CE hours tracked on sticky notes and email receipts</h3>
+        <p>Your continuing education records are spread across email receipts, a PDF from a conference three years ago, and a spreadsheet you update twice a year with whatever you can reconstruct from memory. When your state license renewal comes up, you spend several hours piecing together CE documentation you should have maintained all along.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">🏥</div>
+        <h3>Business development opportunities slip away</h3>
+        <p>You have been meaning to apply to two locum tenens platforms, follow up on a telehealth panel inquiry from last month, and reach out to a colleague about a part-time NP position at their practice. None of these have happened because there is no system tracking them and your clinical schedule leaves no mental bandwidth for self-directed follow-up.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">📜</div>
+        <h3>DEA and license renewals are always a surprise</h3>
+        <p>Every DEA renewal and state license expiry arrives as a surprise — either too late for comfortable preparation or at the worst possible moment in your clinical schedule. You have multiple credentials across multiple states and the renewal dates are scattered across different email reminders and memory.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">🔥</div>
+        <h3>Burnout is real and there is no proactive plan</h3>
+        <p>Nurse practitioners have some of the highest burnout rates in healthcare. You know you need to invest in self-care, rest, professional development, and relationships outside of clinical work — but there is no structure to that intention and the clinical demands always crowd it out. Awareness without a system changes nothing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section id="features" class="section section-alt">
+  <div class="container">
+    <div class="section-eyebrow">The Solution</div>
+    <h2 class="section-title">A Complete NP Professional Development OS in Notion</h2>
+    <p class="section-sub">FreelanceOS Pro for Nurse Practitioners connects your CE tracker, professional development log, business development pipeline, professional organization tracker, DEA and license renewal calendar, networking log, side income tracker, and self-care system — all in one Notion workspace. This template is for professional development and business management only — never for any patient information.</p>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <h3>CE &amp; Certification Tracker — Hours, Categories, License Expiry &amp; DEA Renewal</h3>
+        <p>A comprehensive continuing education tracker logging every CE activity with provider name, course title, delivery format (in-person conference, live webinar, on-demand module, journal article, simulation), contact hours earned, CE category (pharmacology, DEA-required, state-mandated topic, specialty-specific, general clinical), completion date, and certificate file link. Track your running total by category against your state board and certification body requirements, log expiry dates for your state NP license, ANCC or AANP board certification, DEA registration, state controlled substance registration, and any specialty certifications (AOCNP, NCCPA, etc.). NPs who maintain their CE log in real time arrive at every renewal with organized documentation rather than scrambling to reconstruct records from scattered email receipts and conference lanyards at the worst possible moment in their schedule.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Professional Development Log — Conferences, Presentations, Publications &amp; Supervision Hours</h3>
+        <p>A structured record of every professional development activity beyond CE credit courses — conferences attended (AANP national, specialty society conferences, state NP association meetings), presentations given (grand rounds, lunch-and-learns, community health education), publications authored or co-authored, committee memberships, mentorship hours provided, clinical supervision hours logged if applicable to your state's APRN collaborative practice requirements, and quality improvement projects participated in. Building a comprehensive professional development log creates the raw material for a current CV, strengthens your case for clinical leadership roles, and provides the documentation needed for promotion, credentialing at new facilities, or fellowship applications. NPs who track their professional activities as they happen build stronger professional records than those who reconstruct their CV from memory every few years.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Business Development Tracker — Locum Opportunities, Contract Positions &amp; Telehealth Platforms</h3>
+        <p>A structured pipeline for tracking every non-clinical employment and independent practice opportunity — locum tenens platforms applied to (CompHealth, Weatherby Healthcare, AMN Healthcare, Barton Associates), telehealth platform panels (Teladoc, MDLive, Amazon Clinic, Wheel, Cerebral), independent contractor positions, part-time NP roles at additional practices, health coaching client inquiries, and consulting opportunities. Each record holds the opportunity source, application date, application status (Researching / Applied / Credentialing / Active / Declined), estimated compensation, and next action with a due date. NPs who maintain a structured business development tracker expand their income options and career resilience without letting opportunities disappear into the administrative overload of a full-time clinical schedule.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Professional Organization Tracker — ANA, AANP, Specialty Organizations, Dues &amp; Benefits</h3>
+        <p>A complete tracker for every professional organization membership — American Nurses Association, American Association of Nurse Practitioners, American Academy of Nurse Practitioners Certification Board, specialty organizations (Oncology Nursing Society, American Association of Critical-Care Nurses, Nurse Practitioners in Women's Health, etc.) — with membership level, annual dues amount, renewal date, member benefits being actively used (CE discounts, malpractice coverage, liability insurance, peer resources, job board), and any committee or board positions held. Professional organization membership is both a career investment and a licensing expense — tracking what you belong to, what you pay, and what benefits you are actually using helps you make intentional decisions about which memberships are delivering value proportional to their annual cost.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Prescriptive Authority &amp; DEA Tracker — State by State Authority Status &amp; Schedule Coverage</h3>
+        <p>A state-by-state prescriptive authority reference log tracking your licensure and prescriptive authority status in every state where you hold or intend to hold an NP license — state name, NP license number, license expiry date, prescriptive authority status (Full Practice Authority / Reduced Practice / Restricted Practice), DEA registration number and expiry date, state controlled substance registration if required, collaborative practice agreement requirements, and any limitations on scheduled substance prescribing by state. NPs who practice in multiple states through telehealth or locum work need this multi-state licensure picture clearly organized — and the DEA renewal tracker with advance reminders ensures you are never caught with a lapsed DEA registration that disrupts your ability to prescribe for your patients.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Networking &amp; Mentorship Tracker — Colleagues, Mentors, Professional Relationships &amp; Referral Sources</h3>
+        <p>A professional relationship database tracking colleagues, mentors, collaborating physicians, health system contacts, and referral sources — name, relationship type, specialty, last contact date, notes on the relationship context and any mutual professional commitments, and whether they are a source of locum opportunities, career referrals, or professional guidance. NP career advancement — into leadership, education, research, independent practice, or specialized clinical roles — happens almost entirely through professional networks and mentorship relationships. A structured networking tracker helps you maintain relationships intentionally rather than letting valuable professional connections go cold during your busiest clinical periods.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Side Income &amp; Entrepreneurial Projects — Health Coaching, Consulting, Speaking &amp; Writing</h3>
+        <p>A tracker for every professional income stream beyond your primary clinical employment — health coaching clients or programs, consulting engagements with digital health companies or medical device firms, speaking fees for CME presentations or corporate wellness talks, writing income from medical publications or health content, telehealth panel income, expert witness work, nursing education contributions, and any other entrepreneurial activity that leverages your clinical expertise. Track each income source, the time investment, income generated, and whether this activity is aligned with your long-term professional goals. Many NPs have significant professional expertise and interpersonal credibility that can generate meaningful supplementary income — a structured tracker makes those activities visible and manageable alongside your primary clinical responsibilities.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Self-Care &amp; Burnout Prevention Log — Wellness Tracker for Advanced Practice Nurses</h3>
+        <p>A dedicated wellness and burnout prevention tracker that takes the NP burnout crisis seriously as a structural professional development issue, not a personal failing. Log your weekly check-in across the key burnout dimensions — work satisfaction level, emotional exhaustion, sense of meaning in clinical work, quality of personal relationships, sleep quality, physical activity, and engagement with activities outside of healthcare — alongside any specific stressors from the current week worth noting. Track your professional joy activities — mentoring students, doing the clinical work that drew you to the NP role, attending conferences, connecting with professional community — against the administrative burdens and systemic pressures that deplete energy. NPs who maintain a self-care log with honest weekly data can see burnout trajectories building before they become crises, and can make more informed decisions about workload, scheduling, and professional sustainability before those decisions are made for them by health circumstances.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+  <div class="container" style="text-align:center;margin-bottom:40px;">
+    <div class="section-eyebrow">What NPs Are Saying</div>
+    <h2 class="section-title" style="max-width:600px;margin:0 auto 12px;">Nurse Practitioners Who Use FreelanceOS Pro</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p class="testimonial-text">"The CE tracker with the DEA renewal reminder is the feature I tell every NP colleague about immediately. I had let my DEA registration lapse once before this template — not dramatically, but enough that it created a stressful ten days of restricted prescribing. Having all my credential expiry dates in one place with the ability to see everything at a glance means that has never happened again. The peace of mind alone is worth far more than the price."</p>
+      <div class="testimonial-author">— Dr. Keisha J., DNP, FNP-C, Primary Care NP, Independent Practice, Atlanta, GA</div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">"I used the business development tracker to manage my application to three telehealth platforms simultaneously while working full-time in urgent care. The credentialing process for each one is long and requires different documentation — tracking exactly where I was in each application, what was outstanding, and when to follow up meant I was approved for two panels in the same quarter without the process falling apart. My telehealth income now covers my student loan payments."</p>
+      <div class="testimonial-author">— Marcus T., MSN, ACNP-BC, Urgent Care NP and Telehealth Provider, Remote-first</div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">"The self-care tracker is the part I was most skeptical about and the part that has meant the most to me over the past year. I had never thought about logging my professional wellbeing as data before. After four months of weekly check-ins, I could see clearly that my work satisfaction scores dropped consistently after three consecutive shifts with more than fourteen patients. That data gave me the courage to have a real conversation with my medical director about panel size — a conversation I had been avoiding for over a year."</p>
+      <div class="testimonial-author">— Alicia R., MSN, NP-C, Family Practice NP, Community Health Center, Chicago, IL</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING SECTION -->
+<section class="pricing-section">
+  <div class="container">
+    <div class="section-eyebrow" style="text-align:center;">Pricing</div>
+    <h2 class="section-title" style="text-align:center;margin-bottom:40px;">One-Time Purchase. Lifetime Access.</h2>
+    <div class="pricing-card">
+      <div class="pricing-badge">Best Value — 40% Off</div>
+      <div class="price-original">$49</div>
+      <div class="price-main">$29.40</div>
+      <div class="price-with-code">with code <strong>FLASH40</strong> at checkout</div>
+      <ul class="pricing-features">
+        <li>CE &amp; Certification Tracker with Category Totals</li>
+        <li>Professional Development Log (Conferences, Publications, Supervision)</li>
+        <li>Business Development Pipeline for Locum &amp; Telehealth</li>
+        <li>Professional Organization Tracker with Dues &amp; Benefits</li>
+        <li>Prescriptive Authority &amp; DEA Renewal Tracker by State</li>
+        <li>Networking &amp; Mentorship Relationship Database</li>
+        <li>Side Income &amp; Entrepreneurial Projects Tracker</li>
+        <li>Self-Care &amp; Burnout Prevention Weekly Log</li>
+      </ul>
+      <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn-primary" style="display:block;text-align:center;padding:1rem;" target="_blank" rel="noopener">Get the NP Practice OS — $29.40</a>
+    </div>
+    <div class="bundle-strip">
+      <p>Want the full FreelanceOS Pro bundle? Get <strong>all templates</strong> including the NP Practice OS, healthcare professional tools, and 120+ career management templates.</p>
+      <a href="/notion-template-gallery.html">Browse the full template gallery →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section">
+  <div class="container">
+    <div class="section-eyebrow" style="text-align:center;margin-bottom:12px;">FAQ</div>
+    <h2 class="section-title" style="text-align:center;margin-bottom:40px;">Frequently Asked Questions</h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-q">What is the NP Practice OS Notion template used for?</div>
+        <div class="faq-a">The NP Practice OS is a professional development and business management template for nurse practitioners. It organizes your CE tracking, license and DEA renewal calendar, professional development log, business development pipeline for locum and telehealth opportunities, professional organization memberships, networking relationships, supplementary income tracking, and self-care wellness log — all in one Notion workspace. This template is strictly for professional development and business management. It must never be used to store patient data, protected health information, clinical notes, prescription records, or any information regulated under HIPAA. All clinical records belong exclusively in your HIPAA-compliant EHR system.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I store patient information or clinical notes in this template?</div>
+        <div class="faq-a">Absolutely not, and this cannot be overstated. This template must never be used to store patient names, dates of birth, diagnoses, clinical notes, prescription records, lab results, appointment histories, or any protected health information of any kind. HIPAA requires that all patient information be stored and managed in compliant systems with appropriate technical, administrative, and physical safeguards. Notion is not a HIPAA-compliant platform for clinical data. Use this template exclusively for your own professional development, CE tracking, business activities, and career management — never for anything involving your patients.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How does the CE tracker help me prepare for license and certification renewals?</div>
+        <div class="faq-a">The CE tracker logs every continuing education activity with the provider, course title, hours earned, CE category, completion date, and certificate link. At any point in your renewal cycle, you can filter your CE log by category to see exactly how many pharmacology hours, DEA-required hours, state-mandated hours, and specialty hours you have accumulated — and compare your running total against the requirements for your state board renewal and board certification renewal. NPs who maintain their CE log in real time arrive at renewal with complete documentation organized and ready to submit, rather than spending hours reconstructing records from email receipts and memory during an already busy clinical period.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How does the DEA tracker work for NPs who practice in multiple states?</div>
+        <div class="faq-a">The DEA and prescriptive authority tracker is a state-by-state reference log for every jurisdiction where you hold or plan to hold an NP license. Each state record holds your NP license number, license expiry, DEA registration number, DEA expiry, state controlled substance registration details (where applicable), and the prescriptive authority model for that state (Full Practice Authority, Reduced Practice, or Restricted Practice). For NPs who provide telehealth across state lines or do locum work in multiple states, having this multi-state credential picture in a single, organized view prevents the lapsed registration situations that can disrupt your ability to prescribe and put your patients in difficult positions.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I use the business development tracker for health coaching or consulting work?</div>
+        <div class="faq-a">Yes. The business development tracker is designed for any professional income opportunity that leverages your NP credentials and clinical expertise outside of traditional employment — health coaching client inquiries, consulting engagements with digital health companies, medical advisory board invitations, expert witness inquiries, corporate wellness program opportunities, nursing education contributions, medical writing projects, and any other entrepreneurial activity. Each opportunity is tracked through its own pipeline from initial inquiry through active engagement, with income recorded in the supplementary income tracker for a complete picture of all the ways your NP credentials generate professional and financial value.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How should I approach the self-care tracker to make it useful rather than another obligation?</div>
+        <div class="faq-a">The self-care tracker is most useful when approached as a five-minute weekly log rather than a daily diary. At the end of each week, note a rating across the key wellbeing dimensions — clinical satisfaction, emotional energy level, quality of personal relationships, sleep, and physical activity — and note any specific stressors or positive moments worth remembering. The goal is not perfection across every dimension every week; it is pattern recognition over months. After three to six months of consistent weekly check-ins, meaningful patterns emerge that are difficult to see in the day-to-day experience of a demanding clinical schedule — and those patterns become the basis for sustainable, evidence-based decisions about your workload, your career direction, and your professional sustainability.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is this a one-time purchase?</div>
+        <div class="faq-a">Yes. FreelanceOS Pro is a one-time payment of $49 (currently $29.40 with code FLASH40 at checkout). You receive lifetime access to the template and all future updates at no additional cost. No monthly subscription, no per-user fees, no annual renewal. One purchase that gives you a complete Notion professional development OS for your NP career that grows with your credentials, practice settings, entrepreneurial projects, and career goals over time.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CROSS LINKS -->
+<section class="cross-links-section">
+  <div class="container" style="text-align:center;margin-bottom:40px;">
+    <div class="section-eyebrow">Also From FreelanceOS</div>
+    <h2 class="section-title">More Notion Templates for Healthcare &amp; Professional Careers</h2>
+  </div>
+  <div class="cross-links-grid">
+    <div class="cross-link-card">
+      <h3>Free Notion Templates</h3>
+      <p>49 free Notion templates for freelancers, healthcare professionals, and independent practitioners. No email required — download and use immediately.</p>
+      <a href="/free-notion-templates.html">Browse free templates →</a>
+    </div>
+    <div class="cross-link-card">
+      <h3>Full Template Gallery</h3>
+      <p>120+ premium Notion templates for every profession and career stage — from clinical professionals to solopreneurs, consultants, and entrepreneurs.</p>
+      <a href="/notion-template-gallery.html">See all templates →</a>
+    </div>
+    <div class="cross-link-card">
+      <h3>FreelanceOS Toolkit</h3>
+      <p>The full suite of freelancer and independent professional tools — rate calculators, contract templates, proposal generators, and more — all free to use.</p>
+      <a href="/toolkit.html">Explore the toolkit →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom:16px;">
+    <a href="/">Home</a>
+    <a href="/notion-template-gallery.html">Templates</a>
+    <a href="/free-notion-templates.html">Free Tools</a>
+    <a href="/toolkit.html">Toolkit</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/bundle.html">Bundle</a>
+  </div>
+  <p style="margin-bottom:8px;">&copy; 2026 FreelanceOS. All rights reserved.</p>
+  <p style="font-size:12px;color:#4b5563;max-width:640px;margin:0 auto;">This template is for professional development and business management purposes only. It must never be used to store patient data, PHI, clinical notes, or any information regulated under HIPAA. Always use a HIPAA-compliant EHR for all clinical records.</p>
+</footer>
+
+<script>
+// Reading progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+  document.getElementById('progress-bar').style.width = progress + '%';
+
+  // Sticky CTA after 400px
+  var stickyCta = document.getElementById('stickyCta');
+  if (scrollTop > 400) {
+    stickyCta.classList.add('visible');
+  } else {
+    stickyCta.classList.remove('visible');
+  }
+});
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = this.parentElement;
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i) {
+      i.classList.remove('open');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+    }
+  });
+});
+</script>
+</body>
+</html>
