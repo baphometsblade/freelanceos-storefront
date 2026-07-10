@@ -15,73 +15,254 @@
   <meta name="twitter:description" content="Master Notion formulas with 20 real examples. Learn IF/AND/OR logic, date formulas, text functions, rollup combos, and fix common errors.">
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html#article",
-        "headline": "Notion Formulas: Complete Guide with 20 Examples (2025)",
-        "description": "Master Notion formulas with 20 real examples. Learn IF/AND/OR logic, date formulas, text functions, rollup combos, and fix common errors.",
-        "url": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html",
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-07-05",
-        "author": {"@type": "Organization","name": "FreelanceOS"},
-        "publisher": {"@type": "Organization","name": "FreelanceOS","url": "https://freelanceos-storefront.vercel.app/"},
-        "mainEntityOfPage": {"@type": "WebPage","@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html"}
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html#article",
+      "headline": "Notion Formulas: Complete Guide with 20 Examples (2025)",
+      "description": "Master Notion formulas with 20 real examples. Learn IF/AND/OR logic, date formulas, text functions, rollup combos, and fix common errors.",
+      "url": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html",
+      "datePublished": "2025-01-01",
+      "dateModified": "2025-07-05",
+      "author": {
+        "@type": "Organization",
+        "name": "FreelanceOS"
       },
-      {
-        "@type": "ItemList",
-        "@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html#formulas",
-        "name": "20 Notion Formula Examples",
-        "numberOfItems": 20,
-        "itemListElement": [
-          {"@type":"ListItem","position":1,"name":"Checkbox From Status","description":"if(prop(\"Status\") == \"Done\", true, false)"},
-          {"@type":"ListItem","position":2,"name":"Client Tier Label","description":"if(and(prop(\"Revenue\") > 1000, prop(\"Status\") == \"Active\"), \"High Value\", \"Standard\")"},
-          {"@type":"ListItem","position":3,"name":"Urgency Flag","description":"if(or(prop(\"Priority\") == \"High\", prop(\"Overdue\") == true), \"Urgent\", \"Normal\")"},
-          {"@type":"ListItem","position":4,"name":"Deadline Check","description":"if(empty(prop(\"Due Date\")), \"No deadline\", \"Has deadline\")"},
-          {"@type":"ListItem","position":5,"name":"Budget Alert","description":"if(prop(\"Hours Logged\") >= prop(\"Hours Estimated\"), \"Over budget\", \"On track\")"},
-          {"@type":"ListItem","position":6,"name":"Add 7 Days","description":"dateAdd(prop(\"Start Date\"), 7, \"days\")"},
-          {"@type":"ListItem","position":7,"name":"Days Until Due","description":"dateBetween(prop(\"Due Date\"), now(), \"days\")"},
-          {"@type":"ListItem","position":8,"name":"Record Age","description":"dateBetween(now(), prop(\"Created\"), \"days\")"},
-          {"@type":"ListItem","position":9,"name":"30 Days From Today","description":"format(dateAdd(now(), 30, \"days\"))"},
-          {"@type":"ListItem","position":10,"name":"Overdue Flag","description":"if(dateBetween(prop(\"Due Date\"), now(), \"days\") < 0, \"Overdue\", \"On time\")"},
-          {"@type":"ListItem","position":11,"name":"Full Name","description":"concat(prop(\"First Name\"), \" \", prop(\"Last Name\"))"},
-          {"@type":"ListItem","position":12,"name":"Uppercase Name","description":"upper(prop(\"Name\"))"},
-          {"@type":"ListItem","position":13,"name":"Truncate to 100 Chars","description":"slice(prop(\"Notes\"), 0, 100)"},
-          {"@type":"ListItem","position":14,"name":"Character Count","description":"length(prop(\"Description\"))"},
-          {"@type":"ListItem","position":15,"name":"Strip HTTPS","description":"replaceAll(prop(\"URL\"), \"https://\", \"\")"},
-          {"@type":"ListItem","position":16,"name":"30% Tax Estimate","description":"round(prop(\"Revenue\") * 0.3)"},
-          {"@type":"ListItem","position":17,"name":"Total Project Value","description":"prop(\"Rate\") * prop(\"Hours\")"},
-          {"@type":"ListItem","position":18,"name":"Net Profit","description":"prop(\"Revenue\") - prop(\"Expenses\")"},
-          {"@type":"ListItem","position":19,"name":"Progress Percentage","description":"if(prop(\"Tasks Done\") == prop(\"Total Tasks\"), \"Complete\", format(round(prop(\"Tasks Done\") / prop(\"Total Tasks\") * 100)) + \"% done\")"},
-          {"@type":"ListItem","position":20,"name":"Client Rating Tier","description":"if(prop(\"Rating\") >= 4, \"Top Client\", if(prop(\"Rating\") >= 2, \"Regular\", \"At Risk\"))"}
-        ]
+      "publisher": {
+        "@type": "Organization",
+        "name": "FreelanceOS",
+        "url": "https://freelanceos-storefront.vercel.app/"
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html#faq",
-        "mainEntity": [
-          {"@type":"Question","name":"Why are my Notion formulas showing errors?","acceptedAnswer":{"@type":"Answer","text":"Notion formula errors usually come from a type mismatch, referencing a property name that does not exist, or unbalanced parentheses. Check that prop() names exactly match column names and that you are comparing the right data types."}},
-          {"@type":"Question","name":"Can Notion formulas reference other databases?","acceptedAnswer":{"@type":"Answer","text":"Not directly. Use a Relation to link databases, then a Rollup to pull in aggregated values. Once the Rollup property exists, your formula can reference it like any other property."}},
-          {"@type":"Question","name":"How do I use IF statements in Notion?","acceptedAnswer":{"@type":"Answer","text":"Syntax: if(condition, value_if_true, value_if_false). Nest multiple IFs by placing another if() in the false position."}},
-          {"@type":"Question","name":"What is the difference between a rollup and a formula in Notion?","acceptedAnswer":{"@type":"Answer","text":"A Rollup aggregates data from a related database. A Formula computes values within the same row. They work together: Rollup brings in external data, Formula processes it further."}},
-          {"@type":"Question","name":"Can I use formulas in Notion database filters?","acceptedAnswer":{"@type":"Answer","text":"Yes. Formula properties can be used as filter criteria in any database view, just like any other property type."}},
-          {"@type":"Question","name":"How do I calculate the number of days between two dates in Notion?","acceptedAnswer":{"@type":"Answer","text":"Use dateBetween(date1, date2, unit). For days until due: dateBetween(prop(\"Due Date\"), now(), \"days\"). For record age: dateBetween(now(), prop(\"Created\"), \"days\")."}},
-          {"@type":"Question","name":"Can Notion formulas do conditional formatting?","acceptedAnswer":{"@type":"Answer","text":"Not with cell colors. You can output emoji or text labels based on conditions and use those labels in filtered views for a visual indicator effect."}},
-          {"@type":"Question","name":"Are Notion formulas the same as Excel formulas?","acceptedAnswer":{"@type":"Answer","text":"No. Notion formulas reference properties by name using prop(), not cell addresses. They only operate on data within the current row and have a smaller function library than Excel."}}
-        ]
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html#breadcrumb",
-        "itemListElement": [
-          {"@type":"ListItem","position":1,"name":"Home","item":"https://freelanceos-storefront.vercel.app/"},
-          {"@type":"ListItem","position":2,"name":"Blog","item":"https://freelanceos-storefront.vercel.app/blog/"},
-          {"@type":"ListItem","position":3,"name":"Notion Formulas Guide","item":"https://freelanceos-storefront.vercel.app/blog/notion-formulas.html"}
-        ]
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html"
       }
-    ]
-  }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html#formulas",
+      "name": "20 Notion Formula Examples",
+      "numberOfItems": 20,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Checkbox From Status",
+          "description": "if(prop(\"Status\") == \"Done\", true, false)"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Client Tier Label",
+          "description": "if(and(prop(\"Revenue\") > 1000, prop(\"Status\") == \"Active\"), \"High Value\", \"Standard\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Urgency Flag",
+          "description": "if(or(prop(\"Priority\") == \"High\", prop(\"Overdue\") == true), \"Urgent\", \"Normal\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Deadline Check",
+          "description": "if(empty(prop(\"Due Date\")), \"No deadline\", \"Has deadline\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Budget Alert",
+          "description": "if(prop(\"Hours Logged\") >= prop(\"Hours Estimated\"), \"Over budget\", \"On track\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Add 7 Days",
+          "description": "dateAdd(prop(\"Start Date\"), 7, \"days\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Days Until Due",
+          "description": "dateBetween(prop(\"Due Date\"), now(), \"days\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "Record Age",
+          "description": "dateBetween(now(), prop(\"Created\"), \"days\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "name": "30 Days From Today",
+          "description": "format(dateAdd(now(), 30, \"days\"))"
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "name": "Overdue Flag",
+          "description": "if(dateBetween(prop(\"Due Date\"), now(), \"days\") < 0, \"Overdue\", \"On time\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "name": "Full Name",
+          "description": "concat(prop(\"First Name\"), \" \", prop(\"Last Name\"))"
+        },
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "name": "Uppercase Name",
+          "description": "upper(prop(\"Name\"))"
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "name": "Truncate to 100 Chars",
+          "description": "slice(prop(\"Notes\"), 0, 100)"
+        },
+        {
+          "@type": "ListItem",
+          "position": 14,
+          "name": "Character Count",
+          "description": "length(prop(\"Description\"))"
+        },
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "name": "Strip HTTPS",
+          "description": "replaceAll(prop(\"URL\"), \"https://\", \"\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 16,
+          "name": "30% Tax Estimate",
+          "description": "round(prop(\"Revenue\") * 0.3)"
+        },
+        {
+          "@type": "ListItem",
+          "position": 17,
+          "name": "Total Project Value",
+          "description": "prop(\"Rate\") * prop(\"Hours\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 18,
+          "name": "Net Profit",
+          "description": "prop(\"Revenue\") - prop(\"Expenses\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 19,
+          "name": "Progress Percentage",
+          "description": "if(prop(\"Tasks Done\") == prop(\"Total Tasks\"), \"Complete\", format(round(prop(\"Tasks Done\") / prop(\"Total Tasks\") * 100)) + \"% done\")"
+        },
+        {
+          "@type": "ListItem",
+          "position": 20,
+          "name": "Client Rating Tier",
+          "description": "if(prop(\"Rating\") >= 4, \"Top Client\", if(prop(\"Rating\") >= 2, \"Regular\", \"At Risk\"))"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why are my Notion formulas showing errors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Notion formula errors usually come from a type mismatch, referencing a property name that does not exist, or unbalanced parentheses. Check that prop() names exactly match column names and that you are comparing the right data types."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Notion formulas reference other databases?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not directly. Use a Relation to link databases, then a Rollup to pull in aggregated values. Once the Rollup property exists, your formula can reference it like any other property."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use IF statements in Notion?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Syntax: if(condition, value_if_true, value_if_false). Nest multiple IFs by placing another if() in the false position."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between a rollup and a formula in Notion?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Rollup aggregates data from a related database. A Formula computes values within the same row. They work together: Rollup brings in external data, Formula processes it further."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use formulas in Notion database filters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Formula properties can be used as filter criteria in any database view, just like any other property type."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate the number of days between two dates in Notion?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use dateBetween(date1, date2, unit). For days until due: dateBetween(prop(\"Due Date\"), now(), \"days\"). For record age: dateBetween(now(), prop(\"Created\"), \"days\")."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Notion formulas do conditional formatting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not with cell colors. You can output emoji or text labels based on conditions and use those labels in filtered views for a visual indicator effect."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Notion formulas the same as Excel formulas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Notion formulas reference properties by name using prop(), not cell addresses. They only operate on data within the current row and have a smaller function library than Excel."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://freelanceos-storefront.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://freelanceos-storefront.vercel.app/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Notion Formulas Guide",
+          "item": "https://freelanceos-storefront.vercel.app/blog/notion-formulas.html"
+        }
+      ]
+    }
+  ]
+}
   </script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7}
@@ -423,7 +604,7 @@
   <div class="cta-box">
     <h3>Pre-Built Formulas Included in FreelanceOS Pro</h3>
     <p>FreelanceOS Pro comes with 20+ pre-configured Notion formulas across 12 databases &mdash; revenue trackers, deadline countdowns, project status automations, and client health scores. Use FLASH40 for 40% off.</p>
-    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro &mdash; 40% Off</a>
+    <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro &mdash; 40% Off</a>
   </div>
 
   <h2 id="real-world-examples">Real-World Formula Examples</h2>
@@ -562,7 +743,7 @@
   <div class="cta-box">
     <h3>Pre-Built Formulas Included in FreelanceOS Pro</h3>
     <p>FreelanceOS Pro comes with 20+ pre-configured Notion formulas across 12 databases &mdash; revenue trackers, deadline countdowns, project status automations, and client health scores. Use FLASH40 for 40% off.</p>
-    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro &mdash; 40% Off</a>
+    <a href="https://buy.stripe.com/fZueVd3sxgvTb2f2Ls6kg0v?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro &mdash; 40% Off</a>
   </div>
 
 </article>
@@ -571,5 +752,6 @@
   <p>&copy; 2025 FreelanceOS &middot; <a href="https://freelanceos-storefront.vercel.app/">Home</a> &middot; <a href="https://freelanceos-storefront.vercel.app/blog/">Blog</a> &middot; <a href="https://freelanceos-storefront.vercel.app/free-download.html">Free Templates</a></p>
 </footer>
 
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
