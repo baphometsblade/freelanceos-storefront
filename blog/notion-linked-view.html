@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion Linked View: How to Filter and Display Databases Across Pages (2026)</title>
+<meta name="description" content="Complete guide to Notion linked view — how to create a linked database view, apply filters so each page shows only relevant entries, use linked views for project dashboards, client portals, and team wikis, and the difference between a linked view and a synced view.">
+<meta property="og:title" content="Notion Linked View: Display Any Database on Any Page with Custom Filters">
+<meta property="og:description" content="Learn how to use Notion linked views to show filtered database data anywhere in your workspace — project dashboards, client pages, personal dashboards, and team wikis.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-linked-view">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f0f;color:#e5e7eb;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.7}
+nav{background:#111827;border-bottom:1px solid #374151;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-logo{color:#a78bfa;font-weight:700;font-size:1.2rem;text-decoration:none}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{color:#e5e7eb;text-decoration:none;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:#a78bfa}
+.hero{background:linear-gradient(135deg,#111827 0%,#1f1035 100%);padding:4rem 2rem;text-align:center}
+.hero-badge{background:#7c3aed20;color:#a78bfa;border:1px solid #7c3aed40;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;display:inline-block;margin-bottom:1rem}
+h1{color:#a78bfa;font-size:2.2rem;max-width:800px;margin:0 auto 1rem;line-height:1.3}
+.hero-meta{color:#9ca3af;font-size:.9rem;margin-bottom:1.5rem}
+.hero-meta span{margin:0 .5rem}
+.container{max-width:860px;margin:0 auto;padding:2rem}
+h2{color:#a78bfa;font-size:1.5rem;margin:2.5rem 0 1rem;padding-top:1rem}
+h3{color:#c4b5fd;font-size:1.15rem;margin:1.8rem 0 .7rem}
+p{margin-bottom:1rem;color:#d1d5db}
+ul,ol{margin:1rem 0 1rem 1.5rem;color:#d1d5db}
+li{margin-bottom:.5rem}
+.callout{background:#1f2937;border-left:4px solid #a78bfa;padding:1.2rem 1.5rem;border-radius:0 8px 8px 0;margin:1.5rem 0}
+.callout p{margin:0;color:#e5e7eb}
+.callout.green{border-left-color:#10b981}
+.step-box{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.5rem;margin:1rem 0}
+.step-box h4{color:#10b981;margin-bottom:.5rem;font-size:1rem}
+.use-case-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem;margin:1.5rem 0}
+.use-case-card{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.4rem}
+.use-case-card .icon{font-size:1.8rem;margin-bottom:.6rem}
+.use-case-card h4{color:#a78bfa;margin-bottom:.5rem;font-size:1rem}
+.use-case-card p{color:#9ca3af;font-size:.9rem;margin:0}
+.compare-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.9rem}
+.compare-table th{background:#1f2937;color:#a78bfa;padding:.8rem 1rem;text-align:left;border-bottom:2px solid #374151}
+.compare-table td{padding:.7rem 1rem;border-bottom:1px solid #374151;color:#d1d5db}
+.compare-table tr:nth-child(even) td{background:#1a1a2e}
+.cta-box{background:linear-gradient(135deg,#1f1035,#111827);border:1px solid #7c3aed40;border-radius:16px;padding:2.5rem;text-align:center;margin:3rem 0}
+.cta-box h3{color:#a78bfa;font-size:1.4rem;margin-bottom:.8rem}
+.cta-box p{color:#d1d5db;margin-bottom:1.5rem}
+.btn{background:#7c3aed;color:#fff;padding:.9rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;transition:background .2s}
+.btn:hover{background:#6d28d9}
+.btn-outline{background:transparent;border:1px solid #7c3aed;color:#a78bfa;margin-left:.8rem}
+.faq-item{border:1px solid #374151;border-radius:10px;padding:1.2rem 1.5rem;margin:.8rem 0;background:#1f2937}
+.faq-q{color:#a78bfa;font-weight:600;margin-bottom:.5rem}
+.faq-a{color:#d1d5db;margin:0}
+.tip-list{list-style:none;margin-left:0}
+.tip-list li{padding:.6rem 0;border-bottom:1px solid #374151;padding-left:1.5rem;position:relative}
+.tip-list li::before{content:"→";color:#10b981;position:absolute;left:0}
+footer{background:#111827;border-top:1px solid #374151;padding:2rem;text-align:center;color:#6b7280;font-size:.85rem;margin-top:4rem}
+footer a{color:#a78bfa;text-decoration:none}
+@media(max-width:640px){h1{font-size:1.6rem}.container{padding:1rem}.btn-outline{margin-left:0;margin-top:.5rem}.use-case-grid{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Notion Linked View: How to Filter and Display Databases Across Pages (2026)",
+      "description": "Complete guide to Notion linked views — create filtered views of any database on any page, build project dashboards and client portals, and understand the difference between linked views and synced blocks.",
+      "datePublished": "2026-07-11",
+      "dateModified": "2026-07-11",
+      "author": {"@type": "Organization", "name": "FreelanceOS"},
+      "publisher": {"@type": "Organization", "name": "FreelanceOS", "url": "https://baphometsblade.github.io/freelanceos-storefront/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://baphometsblade.github.io/freelanceos-storefront/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "Notion Linked View Guide", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/notion-linked-view"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a Notion linked view?",
+          "acceptedAnswer": {"@type": "Answer", "text": "A Notion linked view (also called a linked database) is a display of an existing database that you embed on any page in your workspace. The linked view shows all the data from the original database but lets you apply independent filters, sorts, and layout choices. Changes made through a linked view update the source database. It is a window into a database, not a copy of it."}
+        },
+        {
+          "@type": "Question",
+          "name": "How do I create a linked database view in Notion?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Type /linked or /link in any Notion page, then select 'Create linked view of database' and choose your database. The full database appears. Click the view name to access layout options (table, board, gallery, etc.), then add filters and sorts to show only the data relevant to that page."}
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between a Notion linked view and a synced block?",
+          "acceptedAnswer": {"@type": "Answer", "text": "A linked view connects to a database and lets you filter and display its entries. A synced block copies a block of page content and keeps it identical across multiple pages — it syncs the visual appearance. Use linked views for databases, use synced blocks for repeating content like templates or notices."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I filter a Notion linked view differently than the source database?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes — this is the primary benefit of linked views. You can apply filters to a linked view that don't affect the source database or any other linked view. For example, a Projects database can have a linked view on a Client A page filtered to show only Client A's projects, and a separate linked view on a 'This Week' dashboard filtered to show only this week's deadlines."}
+        },
+        {
+          "@type": "Question",
+          "name": "Does editing a linked view change the original database?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Editing data (properties, page content, adding or removing entries) through a linked view does affect the source database — a linked view is a live window into the same data, not a copy. However, changing the view's layout, filters, or sorts only affects how data appears in that linked view and does not change the source database or other views."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<nav>
+  <a href="/freelanceos-storefront/" class="nav-logo">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="/freelanceos-storefront/freelanceos.html">Templates</a>
+    <a href="/freelanceos-storefront/blog/">Blog</a>
+    <a href="/freelanceos-storefront/freelanceos.html">Get FreelanceOS</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Notion Deep Dive 2026</div>
+  <h1>Notion Linked View: Display Any Database on Any Page with Custom Filters</h1>
+  <div class="hero-meta">
+    <span>By FreelanceOS</span>
+    <span>&middot;</span>
+    <span>July 2026</span>
+    <span>&middot;</span>
+    <span>7 min read</span>
+  </div>
+</div>
+
+<div class="container">
+
+<h2>What Is a Notion Linked View?</h2>
+<p>A Notion linked view (also called a "linked database") is a powerful display of an existing database that you can embed on any page in your workspace. Think of it as a window into a database — you're not copying the data, you're creating a filtered, custom display of it that lives anywhere you want.</p>
+<p>The key advantage: each linked view can have its own independent filters, sorts, and layout choices, completely separate from the source database and from other linked views. You can show the same database 10 different ways on 10 different pages, and all those views pull from the exact same underlying data.</p>
+
+<div class="callout green">
+  <p><strong>The "one database, many views" pattern:</strong> Build one master Tasks database. Create linked views on your Weekly Dashboard (filtered to this week), your Project pages (filtered to each project), your Team page (grouped by assignee), and your Done page (filtered to completed). Same data — four focused windows into it.</p>
+</div>
+
+<h2>Linked View vs. Synced Block: What's the Difference?</h2>
+
+<table class="compare-table">
+  <thead>
+    <tr><th>Feature</th><th>Linked View</th><th>Synced Block</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>What it connects to</td><td>A database</td><td>A block of page content</td></tr>
+    <tr><td>Can be filtered independently</td><td>Yes</td><td>No — content is identical everywhere</td></tr>
+    <tr><td>Editing source data updates all instances</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Layout can vary per instance</td><td>Yes</td><td>No</td></tr>
+    <tr><td>Best for</td><td>Dashboards, project pages, client views</td><td>Templates, repeated notices, shared headers</td></tr>
+  </tbody>
+</table>
+
+<p>Use linked views for database data you want to display with context-specific filters. Use synced blocks for non-database content that should look identical everywhere — like a recurring meeting agenda, a team notice, or a template header.</p>
+
+<h2>How to Create a Linked View in Notion</h2>
+
+<div class="step-box">
+  <h4>Step 1 — Open the page where you want the linked view</h4>
+  <p>Navigate to any Notion page — a project page, a client page, your dashboard, or any doc. Click into the page body where you want the database to appear.</p>
+</div>
+
+<div class="step-box">
+  <h4>Step 2 — Type the linked view command</h4>
+  <p>Type <strong>/linked</strong> or <strong>/link</strong> and select <strong>"Create linked view of database"</strong> from the menu that appears. A search box opens — type the name of the database you want to link.</p>
+</div>
+
+<div class="step-box">
+  <h4>Step 3 — Select your database</h4>
+  <p>Click the database from the search results. Notion embeds a full view of that database on your page, defaulting to a table layout showing all entries with all default properties visible.</p>
+</div>
+
+<div class="step-box">
+  <h4>Step 4 — Choose a layout</h4>
+  <p>Click the view name at the top left of the linked database → "+ Add a view" to change to a different layout: table, board, calendar, list, gallery, or timeline. Choose the layout that makes most sense for the context of this page.</p>
+</div>
+
+<div class="step-box">
+  <h4>Step 5 — Apply filters specific to this page</h4>
+  <p>Click <strong>Filter</strong> → <strong>+ Add filter</strong>. For example, on a project page, filter to show only entries where Project = "[this project name]." On a "This Week" dashboard, filter to show only entries where Due Date is within the next 7 days. These filters only apply to this linked view — the source database and other linked views are unaffected.</p>
+</div>
+
+<div class="step-box">
+  <h4>Step 6 — Adjust visible properties and hide clutter</h4>
+  <p>Click <strong>Properties</strong> to toggle which columns appear in this view. On a project page, you might show Task Name, Assignee, Status, and Due Date — and hide all the other properties that are only relevant in a master overview. Cleaner view = faster scanning = better decisions.</p>
+</div>
+
+<h2>6 Powerful Ways to Use Linked Views</h2>
+
+<div class="use-case-grid">
+  <div class="use-case-card">
+    <div class="icon">🗂️</div>
+    <h4>Project Dashboard</h4>
+    <p>Embed your Tasks database on every project page, filtered to show only tasks for that project. One database drives all project task lists.</p>
+  </div>
+  <div class="use-case-card">
+    <div class="icon">👤</div>
+    <h4>Client Portal Pages</h4>
+    <p>Embed your Projects database on each client's page, filtered to their projects only. Client-specific views built from one master database.</p>
+  </div>
+  <div class="use-case-card">
+    <div class="icon">📅</div>
+    <h4>This Week Dashboard</h4>
+    <p>Link all your databases on a single weekly dashboard with date filters set to the current week. Your entire agenda in one place, auto-updated.</p>
+  </div>
+  <div class="use-case-card">
+    <div class="icon">✅</div>
+    <h4>In-Progress Status Board</h4>
+    <p>Link your Projects database in board view, filtered to Status = "In Progress." Sees only active work — completed and backlog items hidden.</p>
+  </div>
+  <div class="use-case-card">
+    <div class="icon">💰</div>
+    <h4>Outstanding Invoices View</h4>
+    <p>Link your Invoices database on your Finance page, filtered to Payment Status = "Unpaid." Never miss a follow-up.</p>
+  </div>
+  <div class="use-case-card">
+    <div class="icon">📝</div>
+    <h4>Recent Meeting Notes</h4>
+    <p>Embed your Meeting Notes database on a client page, filtered to that client, sorted newest-first. All meeting history in context.</p>
+  </div>
+</div>
+
+<h2>Filtering a Linked View for Maximum Usefulness</h2>
+<p>Filters are what make linked views genuinely powerful. A linked view without filters is just a duplicate of the source database. A linked view with well-chosen filters turns a general database into a precise, context-specific tool.</p>
+
+<h3>Common Filter Patterns</h3>
+<ul>
+  <li><strong>Filter by Relation property</strong> — if your Tasks database has a "Client" relation property, filter linked views on each client page to show only that client's tasks. This is the most powerful pattern in Notion system design.</li>
+  <li><strong>Filter by date range</strong> — show items due this week, this month, or overdue. Date filters are dynamic — they update automatically as time passes.</li>
+  <li><strong>Filter by Status or Select property</strong> — show only active items, in-progress projects, or unpaid invoices. Status filters turn a full database into a focused action list.</li>
+  <li><strong>Filter by Assignee / Person property</strong> — useful for team workspaces to show only each person's assigned tasks on their profile page.</li>
+  <li><strong>Multi-condition filters</strong> — combine filters with AND/OR logic. Example: (Status = "In Progress" AND Due Date = This Week) shows only urgent active tasks. (Client = "Acme" OR Client = "Beta Corp") shows two clients on a shared agency overview.</li>
+</ul>
+
+<div class="callout">
+  <p><strong>Filter tip:</strong> When building a linked view filtered by a Relation property, the filter is usually "Client → is → [specific client page]." This requires the relation already exists in your database schema. Design your database relations first — linked views become dramatically more useful when your data is well-connected.</p>
+</div>
+
+<h2>Linked Views in a Freelance Notion System</h2>
+<p>For a solo freelancer running their business in Notion, linked views are the difference between a collection of separate databases and a connected, navigable system.</p>
+
+<p>A well-designed freelance Notion workspace uses linked views like this:</p>
+<ul class="tip-list">
+  <li><strong>Client page</strong> — links Projects (filtered to that client), Invoices (filtered to that client), Meeting Notes (filtered to that client), and a Contacts view showing all contacts at that company</li>
+  <li><strong>Project page</strong> — links Tasks (filtered to that project), Files and Deliverables (filtered to that project), and Time Log entries (filtered to that project)</li>
+  <li><strong>Weekly Dashboard</strong> — links Tasks (due this week), upcoming Meetings (this week), pending Invoices (unpaid), and active Projects (in progress)</li>
+  <li><strong>Finance Hub</strong> — links Invoices (all time, sorted by date), Expenses (all time), and a linked view filtered to Overdue invoices only</li>
+</ul>
+
+<p>The result: every page in your workspace shows exactly the relevant data for that context. You never need to search for information — it's always on the page you're already on.</p>
+
+<div class="cta-box">
+  <h3>Get a Freelance Notion System Built on Linked Views</h3>
+  <p>FreelanceOS Pro is a complete Notion workspace for freelancers — with client pages, project pages, a weekly dashboard, and finance hub all wired up with linked views from the start. No system design required — just plug in your data and start working.</p>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro &mdash; 40% Off with FLASH40</a>
+  <br><br>
+  <a href="/freelanceos-storefront/freelanceos.html" class="btn btn-outline">See What's Included</a>
+</div>
+
+<h2>Common Mistakes with Linked Views</h2>
+<ul class="tip-list">
+  <li><strong>Forgetting to apply filters</strong> — an unfiltered linked view shows everything in the source database, which is almost never what you want. Always set at least one filter after creating a linked view.</li>
+  <li><strong>Creating too many separate databases instead of linked views</strong> — a common beginner mistake is creating a new Tasks database for every project. Build one Tasks database with a Project relation property and use linked views to see each project's tasks. One database = one source of truth.</li>
+  <li><strong>Confusing layout changes with data changes</strong> — changing a linked view from table to gallery layout doesn't change the data or affect other views. It only changes how this specific linked view displays. Data changes (editing property values, adding entries) do affect the source database.</li>
+  <li><strong>Not hiding irrelevant properties</strong> — in the linked view settings, hide properties that aren't useful in this specific context. A task list on a project page doesn't need to show the Client property — the client is implied by the page context.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq-item">
+  <div class="faq-q">What is a Notion linked view?</div>
+  <div class="faq-a">A Notion linked view (also called a linked database) is a display of an existing database embedded on any page in your workspace. It shows data from the source database but can have its own independent filters, sorts, and layout — giving you a custom view of the same data in any context. Changes to data made through a linked view update the source database immediately.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">How do I create a linked database view in Notion?</div>
+  <div class="faq-a">Type /linked on any Notion page and select "Create linked view of database." Search for and select the database you want to display. The full database appears. Then apply filters, choose a layout (table, board, gallery, etc.), and toggle visible properties to customize the view for that specific page's context.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">What is the difference between a Notion linked view and a synced block?</div>
+  <div class="faq-a">A linked view connects to a database and lets you apply filters to display a subset of its entries in any layout. A synced block copies non-database content (text, images, embeds) and keeps it visually identical across multiple pages. Use linked views for database data with context-specific filters; use synced blocks for repeating content like meeting templates or team notices.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Can I filter a Notion linked view differently than the source database?</div>
+  <div class="faq-a">Yes — this is the core benefit. Each linked view has completely independent filters, sorts, and layout settings. The source database can show all 200 tasks unfiltered, while a linked view on your weekly dashboard shows only tasks due this week, and a linked view on a client page shows only that client's tasks. All three pull from the same database; none affects the others' filters.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Does editing through a linked view change the original database?</div>
+  <div class="faq-a">Yes — editing property values, adding entries, or deleting entries through a linked view modifies the source database and those changes appear everywhere the database or its linked views are displayed. Changing the layout, filters, or visible properties of a linked view only affects that specific view instance — it does not modify the source database structure or other linked views.</div>
+</div>
+
+<div class="cta-box">
+  <h3>Build a Connected Freelance System in Notion</h3>
+  <p>FreelanceOS Pro includes a pre-built Notion workspace with 15+ linked databases, client pages, project dashboards, and a weekly hub — all wired together with the right linked views from day one.</p>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro &mdash; FLASH40 saves 40%</a>
+</div>
+
+</div>
+<footer>
+  <p>&copy; 2026 FreelanceOS. <a href="/freelanceos-storefront/">Home</a> &middot; <a href="/freelanceos-storefront/blog/">Blog</a> &middot; <a href="/freelanceos-storefront/freelanceos.html">FreelanceOS Pro</a></p>
+</footer>
+</body>
+</html>
