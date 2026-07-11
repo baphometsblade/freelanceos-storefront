@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion Checkboxes: How to Create Task Lists and Track Progress in Notion (2026)</title>
+<meta name="description" content="Complete guide to Notion checkboxes — how to create checkbox to-do lists in pages, use checkbox database properties, filter by checkbox, calculate completion percentages with formulas, and build a full task tracking system in Notion.">
+<meta property="og:title" content="Notion Checkboxes: Complete Guide to Task Lists and Progress Tracking in Notion">
+<meta property="og:description" content="Learn every way to use checkboxes in Notion — to-do blocks, database properties, filter by checked/unchecked, completion formulas, and building a full task system.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-checkbox">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f0f;color:#e5e7eb;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.7}
+nav{background:#111827;border-bottom:1px solid #374151;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-logo{color:#a78bfa;font-weight:700;font-size:1.2rem;text-decoration:none}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{color:#e5e7eb;text-decoration:none;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:#a78bfa}
+.hero{background:linear-gradient(135deg,#111827 0%,#1f1035 100%);padding:4rem 2rem;text-align:center}
+.hero-badge{background:#7c3aed20;color:#a78bfa;border:1px solid #7c3aed40;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;display:inline-block;margin-bottom:1rem}
+h1{color:#a78bfa;font-size:2.2rem;max-width:820px;margin:0 auto 1rem;line-height:1.3}
+.hero-meta{color:#9ca3af;font-size:.9rem;margin-bottom:1.5rem}
+.hero-meta span{margin:0 .5rem}
+.container{max-width:860px;margin:0 auto;padding:2rem}
+h2{color:#a78bfa;font-size:1.5rem;margin:2.5rem 0 1rem;padding-top:1rem}
+h3{color:#c4b5fd;font-size:1.15rem;margin:1.8rem 0 .7rem}
+p{margin-bottom:1rem;color:#d1d5db}
+ul,ol{margin:1rem 0 1rem 1.5rem;color:#d1d5db}
+li{margin-bottom:.5rem}
+.callout{background:#1f2937;border-left:4px solid #a78bfa;padding:1.2rem 1.5rem;border-radius:0 8px 8px 0;margin:1.5rem 0}
+.callout p{margin:0;color:#e5e7eb}
+.callout.green{border-color:#10b981}
+.callout.green p{color:#d1fae5}
+.table-wrap{overflow-x:auto;margin:1.5rem 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#1f2937;color:#a78bfa;padding:.8rem 1rem;text-align:left;border-bottom:2px solid #374151}
+td{padding:.7rem 1rem;border-bottom:1px solid #374151;color:#d1d5db;vertical-align:top}
+tr:nth-child(even) td{background:#1a1a2e}
+.kbd{background:#374151;color:#e5e7eb;border:1px solid #4b5563;border-radius:4px;padding:.15rem .5rem;font-family:'Courier New',monospace;font-size:.85rem;white-space:nowrap}
+.cta-box{background:linear-gradient(135deg,#1f1035,#111827);border:1px solid #7c3aed40;border-radius:16px;padding:2.5rem;text-align:center;margin:3rem 0}
+.cta-box h3{color:#a78bfa;font-size:1.4rem;margin-bottom:.8rem}
+.cta-box p{color:#d1d5db;margin-bottom:1.5rem}
+.btn{background:#7c3aed;color:#fff;padding:.9rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;transition:background .2s}
+.btn:hover{background:#6d28d9}
+.btn-outline{background:transparent;border:1px solid #7c3aed;color:#a78bfa;margin-left:.8rem}
+.faq-item{border:1px solid #374151;border-radius:10px;padding:1.2rem 1.5rem;margin:.8rem 0;background:#1f2937}
+.faq-q{color:#a78bfa;font-weight:600;margin-bottom:.5rem}
+.faq-a{color:#d1d5db;margin:0}
+.check-card{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.2rem 1.5rem;margin:.8rem 0}
+.check-card h4{color:#c4b5fd;font-size:1rem;margin-bottom:.5rem}
+.check-card p{margin:0;color:#d1d5db;font-size:.95rem}
+.code-block{background:#111827;border:1px solid #374151;border-radius:8px;padding:1rem 1.2rem;font-family:'Courier New',monospace;font-size:.85rem;color:#10b981;margin:1rem 0;overflow-x:auto}
+.step-list{counter-reset:steps;list-style:none;margin:1rem 0}
+.step-list li{counter-increment:steps;padding:.7rem .7rem .7rem 3rem;border-bottom:1px solid #374151;position:relative;color:#d1d5db}
+.step-list li:last-child{border-bottom:none}
+.step-list li::before{content:counter(steps);position:absolute;left:.5rem;top:.7rem;background:#7c3aed;color:#fff;width:1.6rem;height:1.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.checklist-preview{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.2rem 1.5rem;margin:1.2rem 0}
+.checklist-preview h4{color:#c4b5fd;font-size:.9rem;margin-bottom:.8rem;text-transform:uppercase;letter-spacing:.05em}
+.checklist-item{display:flex;align-items:center;gap:.8rem;padding:.4rem 0;border-bottom:1px solid #374151;font-size:.9rem;color:#d1d5db}
+.checklist-item:last-child{border-bottom:none}
+.checklist-item.done{text-decoration:line-through;color:#6b7280}
+.check-icon{width:1.1rem;height:1.1rem;border-radius:3px;border:2px solid #374151;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.check-icon.checked{background:#7c3aed;border-color:#7c3aed;color:#fff;font-size:.7rem}
+.two-types-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.2rem 0}
+.type-card{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.2rem}
+.type-card .type-label{color:#a78bfa;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+.type-card .type-name{color:#e5e7eb;font-size:1.05rem;font-weight:600;margin-bottom:.5rem}
+.type-card p{color:#9ca3af;font-size:.85rem;margin:0}
+.progress-bar-demo{background:#374151;border-radius:4px;height:8px;margin:.5rem 0;overflow:hidden}
+.progress-bar-fill{background:linear-gradient(90deg,#7c3aed,#10b981);height:100%}
+footer{background:#111827;border-top:1px solid #374151;padding:2rem;text-align:center;color:#6b7280;font-size:.85rem;margin-top:4rem}
+footer a{color:#a78bfa;text-decoration:none}
+@media(max-width:640px){h1{font-size:1.6rem}.container{padding:1rem}.two-types-grid{grid-template-columns:1fr}.btn-outline{margin-left:0;margin-top:.5rem}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Notion Checkboxes: Complete Guide to Task Lists and Progress Tracking in Notion",
+      "description": "Complete guide to Notion checkboxes — to-do blocks, database checkbox properties, filter by checkbox, completion formulas, and building a full task system.",
+      "datePublished": "2026-07-11",
+      "dateModified": "2026-07-11",
+      "author": {"@type": "Organization", "name": "FreelanceOS"},
+      "publisher": {"@type": "Organization", "name": "FreelanceOS", "url": "https://baphometsblade.github.io/freelanceos-storefront/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://baphometsblade.github.io/freelanceos-storefront/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "Notion Checkboxes Guide", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/notion-checkbox"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "How do I create a checkbox in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "Type [] followed by a space on a blank line in a Notion page — it automatically converts to a checkbox to-do item. You can also type /todo or /checkbox and press Enter. Click the checkbox to mark it as done (it turns purple and adds a strikethrough). For database properties, add a Checkbox property type to any database."}},
+        {"@type": "Question", "name": "How do I filter a Notion database by checkbox?", "acceptedAnswer": {"@type": "Answer", "text": "Click Filter at the top of the database, add a filter, select your Checkbox property, and choose either 'Is checked' or 'Is unchecked'. 'Is checked' shows only entries where the checkbox is ticked. 'Is unchecked' shows only entries where it's not ticked — useful for filtering to incomplete tasks."}},
+        {"@type": "Question", "name": "Can I calculate a completion percentage from checkboxes in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, using a combination of a Rollup and a Formula. Create a Rollup property that counts all related sub-tasks and counts checked ones using 'Percent checked'. Or use a Formula: divide the count of related checked items by total items and multiply by 100. FreelanceOS Pro includes pre-built completion trackers with progress bars."}},
+        {"@type": "Question", "name": "What is the keyboard shortcut for a checkbox in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "Type [] (square brackets with no space between them) followed by a space on a blank line to create a checkbox. To check or uncheck an existing checkbox, press Enter when the cursor is on that block, or click it directly. There is no keyboard shortcut to toggle an existing checkbox from anywhere — you must click it or use the mouse."}},
+        {"@type": "Question", "name": "How do I use a checkbox property in a Notion database?", "acceptedAnswer": {"@type": "Answer", "text": "In any database, click the + button to add a new property, select Checkbox as the type, and name it (e.g., 'Done', 'Verified', 'Signed'). The property appears as a column with a checkbox in every row. Click any checkbox to toggle it. You can then filter by 'Is checked' or 'Is unchecked' and use it in formulas and rollups."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<nav>
+  <a href="/freelanceos-storefront/" class="nav-logo">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="/freelanceos-storefront/freelanceos.html">Templates</a>
+    <a href="/freelanceos-storefront/blog/">Blog</a>
+    <a href="/freelanceos-storefront/freelanceos.html">Get FreelanceOS</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Notion Fundamentals</div>
+  <h1>Notion Checkboxes: Complete Guide to Task Lists and Progress Tracking</h1>
+  <div class="hero-meta">
+    <span>8 min read</span>
+    <span>•</span>
+    <span>Updated July 2026</span>
+    <span>•</span>
+    <span>FreelanceOS Team</span>
+  </div>
+  <p style="color:#9ca3af;max-width:640px;margin:0 auto">Everything you need to know about checkboxes in Notion — from simple to-do lists to database properties, smart filters, completion formulas, and building a full task management system.</p>
+</div>
+
+<div class="container">
+
+<h2>Two Types of Checkboxes in Notion</h2>
+<p>Notion has two distinct checkbox features that serve very different purposes. Understanding the difference is the foundation of using them effectively:</p>
+
+<div class="two-types-grid">
+  <div class="type-card">
+    <div class="type-label">Type 1</div>
+    <div class="type-name">To-Do Block</div>
+    <p>A checkbox item inside a Notion page — like a line on a handwritten checklist. Lives in page content. No database required. Check it off and the text gets a strikethrough. Best for: quick checklists, project notes, meeting agendas, SOPs.</p>
+  </div>
+  <div class="type-card">
+    <div class="type-label">Type 2</div>
+    <div class="type-name">Checkbox Property</div>
+    <p>A true/false column in a Notion database. Every row has this property set to checked or unchecked. Filterable, sortable, formula-usable. Best for: task databases, tracking completion status on projects, contracts, and deliverables.</p>
+  </div>
+</div>
+
+<p>Most Notion beginners start with To-Do blocks because they're instant and simple. Power users migrate to Checkbox properties in databases because they're filterable, linkable, and formula-capable. This guide covers both.</p>
+
+<h2>Creating Checkbox To-Do Blocks in Pages</h2>
+<p>To-Do blocks are the quickest way to create an interactive checklist inside any Notion page — no database needed.</p>
+
+<h3>Three Ways to Create a To-Do Block</h3>
+<div class="table-wrap">
+<table>
+  <tr><th>Method</th><th>How to Do It</th></tr>
+  <tr><td>Markdown shortcut</td><td>Type <span class="kbd">[]</span> (left bracket, right bracket — no space between) then press Space on a blank line</td></tr>
+  <tr><td>Slash command</td><td>Type <span class="kbd">/todo</span> or <span class="kbd">/checkbox</span> and press Enter</td></tr>
+  <tr><td>Slash command (alt)</td><td>Type <span class="kbd">/task</span> — also opens the to-do block</td></tr>
+</table>
+</div>
+
+<p>Once you have a to-do item, press Enter to create the next item in the same list. The next line automatically becomes another to-do block. Press Enter twice (on a blank to-do line) to exit the list and return to a regular text block.</p>
+
+<h3>What Happens When You Check a To-Do Item</h3>
+<p>Click the checkbox to mark it done. The item's text immediately gets a strikethrough and the checkbox turns purple. Click again to uncheck it. Checked items stay in the list in place — they don't move or disappear.</p>
+
+<div class="checklist-preview">
+  <h4>Example: Client Onboarding Checklist</h4>
+  <div class="checklist-item">
+    <div class="check-icon checked">✓</div>
+    <span class="done">Send welcome email with next steps</span>
+  </div>
+  <div class="checklist-item">
+    <div class="check-icon checked">✓</div>
+    <span class="done">Share contract via DocuSign</span>
+  </div>
+  <div class="checklist-item">
+    <div class="check-icon checked">✓</div>
+    <span class="done">Collect brand assets (logos, fonts, colors)</span>
+  </div>
+  <div class="checklist-item">
+    <div class="check-icon"></div>
+    <span>Schedule kickoff call</span>
+  </div>
+  <div class="checklist-item">
+    <div class="check-icon"></div>
+    <span>Set up shared Notion workspace</span>
+  </div>
+  <div class="checklist-item">
+    <div class="check-icon"></div>
+    <span>Add client to billing system</span>
+  </div>
+</div>
+
+<h3>Nesting To-Do Items</h3>
+<p>Press <span class="kbd">Tab</span> on a to-do block to indent it (making it a sub-item under the previous item). Press <span class="kbd">Shift+Tab</span> to unindent. Sub-items can be checked independently of their parent — checking the parent doesn't auto-check sub-items.</p>
+<p>Nesting is useful for: breaking big tasks into sub-tasks, adding notes below a checklist item without creating a new item, grouping related items with a header item.</p>
+
+<div class="callout">
+  <p><strong>Limitation of To-Do blocks:</strong> You can't filter, sort, or query the checked/unchecked state of To-Do blocks the way you can with database Checkbox properties. If you need to filter tasks by completion, use a database with a Checkbox property instead.</p>
+</div>
+
+<h2>Checkbox Database Properties</h2>
+<p>A Checkbox property is a true/false column in a Notion database. It's the property type you add to a database when you want to track binary status (done/not done, signed/unsigned, verified/unverified, active/inactive) on every entry.</p>
+
+<h3>How to Add a Checkbox Property to a Database</h3>
+<ol class="step-list">
+  <li>Open any Notion database in Table view</li>
+  <li>Click the <strong>+</strong> button to the right of the last column header</li>
+  <li>Select <strong>Checkbox</strong> from the property type list</li>
+  <li>Name the property (e.g., "Done", "Signed", "Paid", "Reviewed")</li>
+  <li>Press Enter — the property appears as a checkbox column on every row</li>
+  <li>Click any row's checkbox to toggle it between checked and unchecked</li>
+</ol>
+
+<h3>Good Names for Checkbox Properties</h3>
+<div class="table-wrap">
+<table>
+  <tr><th>Database Type</th><th>Checkbox Property Name</th><th>What Checked Means</th></tr>
+  <tr><td>Tasks database</td><td>Done ✓</td><td>Task is complete</td></tr>
+  <tr><td>Client database</td><td>Contract Signed</td><td>Contract is executed</td></tr>
+  <tr><td>Invoice tracker</td><td>Paid</td><td>Invoice has been paid</td></tr>
+  <tr><td>Content calendar</td><td>Published</td><td>Post is live</td></tr>
+  <tr><td>Lead tracker</td><td>Contacted</td><td>Initial outreach sent</td></tr>
+  <tr><td>Reading list</td><td>Read</td><td>Article has been read</td></tr>
+  <tr><td>Onboarding checklist</td><td>Completed</td><td>Step is done</td></tr>
+  <tr><td>Product database</td><td>Active</td><td>Product is currently available</td></tr>
+</table>
+</div>
+
+<h3>Checkbox Property vs. Select "Done/Not Done"</h3>
+<p>A question that comes up often: why use a Checkbox property instead of a Select property with options "Done" and "Not Done"? Use Checkbox when the state is strictly binary (true/false, yes/no, done/not done) — it's one click to toggle and simpler to filter. Use Select when there are more than two states (e.g., Not Started / In Progress / In Review / Done) — that's a workflow, not a binary flag.</p>
+
+<h2>Filtering by Checkbox</h2>
+<p>Filtering a database by a Checkbox property is one of the most useful things you can do with it — it lets you instantly show only incomplete items or only completed items.</p>
+
+<h3>Show Only Unchecked (Incomplete) Tasks</h3>
+<ol class="step-list">
+  <li>Click <strong>Filter</strong> at the top of the database</li>
+  <li>Click <strong>Add filter</strong></li>
+  <li>Select your Checkbox property (e.g., "Done")</li>
+  <li>Choose condition: <strong>Is unchecked</strong></li>
+</ol>
+<p>The database now shows only tasks where "Done" is unchecked — your active task list. Completed items (where Done is checked) disappear from view. When you check off a task, it vanishes from this filtered view automatically.</p>
+
+<h3>Show Only Checked (Completed) Tasks</h3>
+<p>Same process, but choose condition: <strong>Is checked</strong>. Use this to build a "Completed" view of your database — a running log of everything you've finished.</p>
+
+<h3>Saving Checkbox Filters as Views</h3>
+<p>Create two named views for any database with a Done/Completed checkbox property:</p>
+<ul>
+  <li><strong>Active</strong> — filter: Done is unchecked. This is your working view.</li>
+  <li><strong>Completed</strong> — filter: Done is checked. This is your accomplishment log.</li>
+</ul>
+<p>Switch between them with one click. Never manually hunt through a long list to find what's still outstanding.</p>
+
+<div class="callout green">
+  <p><strong>Combined filter example:</strong> Done is unchecked AND Due Date within the next 7 days AND Assignee = Me → shows only your incomplete tasks due this week. A ready-made weekly focus view.</p>
+</div>
+
+<h2>Checkbox Formulas: Calculate Completion Percentage</h2>
+<p>One of the most impressive Notion database setups is a completion percentage tracker — showing what percentage of a project's tasks are done. This requires a Rollup property and optionally a Formula property.</p>
+
+<h3>Method 1: Rollup — Percent Checked</h3>
+<p>If you have a parent-child relationship between two databases (e.g., Projects → Tasks, with a Relation property), you can use a Rollup to track how many tasks are done:</p>
+<ol class="step-list">
+  <li>In your Projects database, add a Rollup property</li>
+  <li>Set Relation to your Tasks relation property</li>
+  <li>Set Property to the "Done" checkbox in Tasks</li>
+  <li>Set Calculate to <strong>Percent checked</strong></li>
+</ol>
+<p>This shows the percentage of related tasks with "Done" checked — e.g., "67%" means 4 of 6 tasks are complete. No formula needed.</p>
+
+<h3>Method 2: Formula — Completion Status</h3>
+<p>You can use a formula to convert a checkbox's true/false value into something more descriptive:</p>
+<div class="code-block">if(prop("Done"), "✅ Complete", "🔄 In Progress")</div>
+<p>Or use a checkbox rollup value (returned as a number 0–1) to create a human-readable label:</p>
+<div class="code-block">if(prop("Task Completion") == 1, "✅ All Done",
+  if(prop("Task Completion") >= 0.5, "🔄 More than half done",
+    "⚠️ Just getting started"))</div>
+
+<h3>Visual Progress Bar via Formula</h3>
+<p>This formula turns a completion percentage into a visual progress bar using emoji blocks:</p>
+<div class="code-block">let(p, round(prop("Task Completion") * 10),
+  replaceAll(replaceAll("##########", "#", "▓", p), "#", "░")
+  + " " + format(round(prop("Task Completion") * 100)) + "%")</div>
+<p>Result: <span style="font-family:monospace;color:#10b981">▓▓▓▓▓▓▓░░░ 70%</span></p>
+
+<div class="checklist-preview">
+  <h4>Project Completion Tracker — Preview</h4>
+  <div style="display:flex;align-items:center;gap:1rem;padding:.5rem 0;border-bottom:1px solid #374151">
+    <div style="flex:1;color:#e5e7eb;font-size:.9rem">Client Website Redesign</div>
+    <div style="width:120px">
+      <div class="progress-bar-demo"><div class="progress-bar-fill" style="width:75%"></div></div>
+    </div>
+    <div style="color:#a78bfa;font-size:.85rem;min-width:40px">75%</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:1rem;padding:.5rem 0;border-bottom:1px solid #374151">
+    <div style="flex:1;color:#e5e7eb;font-size:.9rem">Brand Identity Package</div>
+    <div style="width:120px">
+      <div class="progress-bar-demo"><div class="progress-bar-fill" style="width:40%"></div></div>
+    </div>
+    <div style="color:#a78bfa;font-size:.85rem;min-width:40px">40%</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:1rem;padding:.5rem 0">
+    <div style="flex:1;color:#e5e7eb;font-size:.9rem">Social Media Setup</div>
+    <div style="width:120px">
+      <div class="progress-bar-demo"><div class="progress-bar-fill" style="width:100%"></div></div>
+    </div>
+    <div style="color:#10b981;font-size:.85rem;min-width:40px">100% ✓</div>
+  </div>
+</div>
+
+<h2>Building a Full Task List System with Checkboxes</h2>
+<p>Here's a complete Notion task system architecture using checkboxes as the core completion tracker:</p>
+
+<h3>The Core Database Setup</h3>
+<p><strong>Tasks Database properties:</strong></p>
+<ul>
+  <li>Task Name (Title)</li>
+  <li>Done ✓ (Checkbox) — the completion flag</li>
+  <li>Due Date (Date)</li>
+  <li>Project (Relation → Projects database)</li>
+  <li>Priority (Select: High / Medium / Low)</li>
+  <li>Notes (Text) — for quick context</li>
+</ul>
+
+<p><strong>Projects Database properties:</strong></p>
+<ul>
+  <li>Project Name (Title)</li>
+  <li>Client (Relation → Clients database)</li>
+  <li>Tasks (Relation → Tasks database, with back-relation)</li>
+  <li>Task Completion (Rollup → Tasks → Done → Percent checked)</li>
+  <li>Progress (Formula → visual bar using Task Completion rollup)</li>
+  <li>Status (Select: Active / On Hold / Complete)</li>
+</ul>
+
+<h3>The Filtered Views to Create</h3>
+<div class="table-wrap">
+<table>
+  <tr><th>View Name</th><th>Filter</th><th>Purpose</th></tr>
+  <tr><td>📋 All Tasks</td><td>None</td><td>Full task list, add new items</td></tr>
+  <tr><td>✅ Active</td><td>Done is unchecked</td><td>Today's working list</td></tr>
+  <tr><td>🔥 Due Today</td><td>Done is unchecked + Due Date = today</td><td>Daily focus view</td></tr>
+  <tr><td>📅 This Week</td><td>Done is unchecked + Due Date within 7 days</td><td>Weekly planning</td></tr>
+  <tr><td>⚠️ Overdue</td><td>Done is unchecked + Due Date before today</td><td>Catch what slipped</td></tr>
+  <tr><td>🏆 Completed</td><td>Done is checked</td><td>Accomplishment log</td></tr>
+</table>
+</div>
+
+<div class="cta-box">
+  <h3>Task System, Pre-Built and Ready to Go</h3>
+  <p>FreelanceOS Pro includes a complete task management system with checkbox tracking, project completion bars, filtered weekly views, and a client pipeline — pre-built in Notion so you can start using it today instead of spending hours building it.</p>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro — 40% Off →</a>
+  <a href="/freelanceos-storefront/freelanceos.html" class="btn btn-outline">See What's Included</a>
+  <p style="margin-top:.8rem;font-size:.8rem;color:#6b7280">One-time purchase · Instant Notion access · Use code FLASH40 at checkout</p>
+</div>
+
+<h2>Checkbox Shortcuts and Markdown</h2>
+<p>Key shortcuts for working with checkboxes in Notion:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Action</th><th>Shortcut / Method</th></tr>
+  <tr><td>Create to-do block</td><td>Type <span class="kbd">[]</span> + Space at line start, or <span class="kbd">/todo</span></td></tr>
+  <tr><td>Check/uncheck a to-do block</td><td>Click the checkbox, or press <span class="kbd">Cmd/Ctrl + Enter</span> when cursor is on the block</td></tr>
+  <tr><td>Create next to-do item</td><td>Press <span class="kbd">Enter</span> at the end of a to-do block</td></tr>
+  <tr><td>Exit to-do list</td><td>Press <span class="kbd">Enter</span> twice on a blank to-do item</td></tr>
+  <tr><td>Indent a to-do item</td><td>Press <span class="kbd">Tab</span></td></tr>
+  <tr><td>Unindent a to-do item</td><td>Press <span class="kbd">Shift+Tab</span></td></tr>
+  <tr><td>Move to-do block up/down</td><td>Press <span class="kbd">Cmd/Ctrl+Shift+↑/↓</span></td></tr>
+</table>
+</div>
+
+<div class="callout">
+  <p><strong>Markdown note:</strong> The <span class="kbd">[]</span> shortcut only works at the <em>beginning</em> of a line (or a fresh line). Typing <span class="kbd">[]</span> in the middle of text won't trigger it — you'll just see literal brackets. This is intentional behavior.</p>
+</div>
+
+<h2>Common Checkbox Use Cases and Best Practices</h2>
+
+<div class="check-card">
+  <h4>Client Onboarding Checklist (To-Do Blocks)</h4>
+  <p>Create a template page with all your onboarding steps as to-do items. Duplicate this page for each new client. Work through it step by step — checking items as you go gives visible progress and nothing gets missed.</p>
+</div>
+
+<div class="check-card">
+  <h4>Weekly Review Checklist (To-Do Blocks)</h4>
+  <p>Build a recurring weekly review template with checkboxes for each review step: check financials, review active projects, update task priorities, send outstanding invoices, schedule next week's focus time. Duplicate each week and check off as you go.</p>
+</div>
+
+<div class="check-card">
+  <h4>Contract Signed Tracker (Database Property)</h4>
+  <p>Add a "Contract Signed" checkbox property to your Clients database. Filter to "Is unchecked" to see clients who still need a contract. Filter to "Is checked" to see all confirmed clients. Simple, binary, and filterable.</p>
+</div>
+
+<div class="check-card">
+  <h4>Invoice Paid Tracker (Database Property)</h4>
+  <p>Add "Paid" checkbox to your Invoices database. Filter to "Is unchecked" for your outstanding invoices view — the one you check before chasing payments. Filter to "Is checked" for your income log.</p>
+</div>
+
+<div class="check-card">
+  <h4>Content Publishing Status (Database Property)</h4>
+  <p>Add "Published" checkbox to your content calendar database. Filter to "Is unchecked" for your drafts and scheduled content — what still needs to go live. Filter to "Is checked" for a published content archive.</p>
+</div>
+
+<div class="check-card">
+  <h4>Project Completion with Rollup (Advanced)</h4>
+  <p>Use a Rollup set to "Percent checked" to show project completion percentage based on related task checkboxes. At a glance, see which projects are 20% done vs. 90% done — without counting tasks manually.</p>
+</div>
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq-item">
+  <div class="faq-q">How do I create a checkbox in Notion?</div>
+  <div class="faq-a">Type <span class="kbd">[]</span> (left and right bracket, no space) followed by a space on a blank line — it automatically converts to a checkbox to-do item. You can also type <span class="kbd">/todo</span> and press Enter. For a database checkbox property, click the + button in the database header, choose Checkbox as the property type, and name it (e.g., "Done" or "Signed").</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">How do I filter a Notion database by checkbox?</div>
+  <div class="faq-a">Click <strong>Filter</strong> at the top of the database, click <strong>Add filter</strong>, select your Checkbox property, and choose either <strong>Is checked</strong> (shows only ticked items) or <strong>Is unchecked</strong> (shows only unticked items). "Is unchecked" is particularly useful for building a live "active tasks" view — completed items automatically drop out when their checkbox is ticked.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Can I calculate a completion percentage from checkboxes in Notion?</div>
+  <div class="faq-a">Yes. If you have a parent database (e.g., Projects) related to a child database (e.g., Tasks) that has a Checkbox property, add a Rollup property to the parent. Set it to roll up the Checkbox property using <strong>Percent checked</strong>. This shows the percentage of related tasks that are checked — your project completion percentage, updated automatically as you check off tasks.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">What is the keyboard shortcut for a checkbox in Notion?</div>
+  <div class="faq-a">Type <span class="kbd">[]</span> followed by a space at the start of a line to create a new checkbox to-do block. To check or uncheck an existing checkbox block, press <span class="kbd">Cmd+Enter</span> (Mac) or <span class="kbd">Ctrl+Enter</span> (Windows) when the text cursor is inside that block. You can also simply click the checkbox square directly.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">How do I use a checkbox property in a Notion database?</div>
+  <div class="faq-a">In any database view, click the <strong>+</strong> icon to add a new property and select <strong>Checkbox</strong> as the type. Name it something descriptive ("Done", "Paid", "Published"). The property appears as a checkbox column in every row — click any checkbox to toggle it. You can then filter by it (Is checked / Is unchecked), sort by it, and use it in formulas and rollups.</div>
+</div>
+
+</div>
+
+<footer>
+  <p><a href="/freelanceos-storefront/">FreelanceOS</a> · <a href="/freelanceos-storefront/blog/">Blog</a> · <a href="/freelanceos-storefront/freelanceos.html">Templates</a> · Built for freelancers who work smarter</p>
+  <p style="margin-top:.5rem">© 2026 FreelanceOS. All rights reserved.</p>
+</footer>
+</body>
+</html>
