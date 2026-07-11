@@ -12,9 +12,8 @@
 
 // ---------------------------------------------------------------------------
 // Product catalog
-// Notion URLs: go to each page in Notion → Share → Publish to web → confirm
-// the page is publicly accessible, then the URL below should work for buyers.
-// If buyers see a login page, the template page is not yet published to web.
+// Notion URLs auto-populated from workspace. Ensure each page is published:
+//   Notion → open page → Share → Publish to web (toggle on).
 // ---------------------------------------------------------------------------
 const PRODUCTS = {
   'FreelanceOS Pro': {
@@ -471,19 +470,13 @@ function buildEmailHtml(toEmail, product) {
             </td>
           </tr>
 
-          <!-- CTA Button(s) -->
+          <!-- CTA Button -->
           <tr>
             <td style="padding: 0 40px 32px; text-align: center;">
               <a href="${product.notion_url}"
                  style="display: inline-block; background: linear-gradient(135deg, #7c3aed, #4f46e5); color: #ffffff; font-size: 17px; font-weight: 700; text-decoration: none; padding: 18px 48px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);">
-                ${product.notion_url_2 ? 'Access FreelanceOS Pro →' : 'Access Your Template →'}
+                Access Your Template →
               </a>
-              ${product.notion_url_2 ? `
-              <br/><br/>
-              <a href="${product.notion_url_2}"
-                 style="display: inline-block; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #ffffff; font-size: 17px; font-weight: 700; text-decoration: none; padding: 18px 48px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);">
-                Access CreatorHQ Pro →
-              </a>` : ''}
             </td>
           </tr>
 
@@ -590,17 +583,14 @@ function buildEmailHtml(toEmail, product) {
 }
 
 function buildEmailText(toEmail, product) {
-  const accessSection = product.notion_url_2
-    ? `ACCESS YOUR TEMPLATES:\n\nFreelanceOS Pro:\n${product.notion_url}\n\nCreatorHQ Pro:\n${product.notion_url_2}`
-    : `ACCESS YOUR TEMPLATE:\n${product.notion_url}`;
-
   return `Your ${product.name} is ready!
 
 Hi there,
 
 Thanks for your purchase. Your ${product.name} template is ready to use.
 
-${accessSection}
+ACCESS YOUR TEMPLATE:
+${product.notion_url}
 
 GETTING STARTED IN 3 STEPS:
 
