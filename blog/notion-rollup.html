@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion Rollup: How to Use Rollup Properties in Notion (Complete 2026 Guide)</title>
+  <meta name="description" content="Complete guide to Notion rollup properties — how to create a rollup, what rollup functions do (count, sum, average, earliest date, latest date), rollup with filters, and practical rollup examples for freelancers and project managers. 2026 guide.">
+  <link rel="canonical" href="https://freelanceos-storefront.vercel.app/blog/notion-rollup.html">
+  <meta property="og:title" content="Notion Rollup: How to Use Rollup Properties in Notion (2026)">
+  <meta property="og:description" content="How to create a Notion rollup property, all rollup functions explained, rollup with filters, and practical examples for project management and freelance workflows.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://freelanceos-storefront.vercel.app/blog/notion-rollup.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Notion Rollup: How to Use Rollup Properties in Notion (Complete 2026 Guide)",
+        "description": "Complete guide to Notion rollup properties — how to create a rollup, what rollup functions do, rollup with filters, and practical rollup examples for freelancers and project managers.",
+        "author": {"@type": "Organization", "name": "FreelanceOS"},
+        "publisher": {"@type": "Organization", "name": "FreelanceOS", "url": "https://freelanceos-storefront.vercel.app/"},
+        "datePublished": "2026-07-11",
+        "dateModified": "2026-07-11",
+        "mainEntityOfPage": "https://freelanceos-storefront.vercel.app/blog/notion-rollup.html"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://freelanceos-storefront.vercel.app/"},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://freelanceos-storefront.vercel.app/blog/"},
+          {"@type": "ListItem", "position": 3, "name": "Notion Rollup Guide"}
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a rollup in Notion?",
+            "acceptedAnswer": {"@type": "Answer", "text": "A Notion rollup is a database property that reads data from pages in a related database and calculates or displays that data in the current database. It requires a Relation property to exist first — the rollup uses the relation as its data source. For example: if your Projects database has a relation to a Tasks database, a rollup property can count how many tasks each project has, sum the estimated hours, or show the earliest due date across all tasks."}
+          },
+          {
+            "@type": "Question",
+            "name": "How do I create a rollup in Notion?",
+            "acceptedAnswer": {"@type": "Answer", "text": "To create a Notion rollup: (1) Make sure you have a Relation property in your database linking to another database. (2) Click the + icon to add a new property. (3) Select Rollup as the property type. (4) In the rollup configuration: set Relation to your existing relation property, set Property to the field in the related database you want to calculate on, set Calculate to your desired function (Count, Sum, Average, etc.). The rollup property now displays calculated data from your related pages."}
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between a Notion relation and a rollup?",
+            "acceptedAnswer": {"@type": "Answer", "text": "A Notion Relation property creates a link between two databases — it shows which pages are connected. A Rollup property reads data from those connected pages and calculates or aggregates it. You need a Relation before you can create a Rollup. Think of it this way: the Relation is the link; the Rollup is what you do with the data on the other end of that link."}
+          },
+          {
+            "@type": "Question",
+            "name": "Can I filter a Notion rollup?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Yes. Notion rollups support filters that limit which related pages are included in the calculation. When configuring a rollup, click 'Filter' in the rollup settings to add filter conditions based on properties of the related pages. For example: a rollup that counts tasks can be filtered to count only tasks with Status = 'In Progress' — giving you an 'Active Tasks' count rather than a total count."}
+          },
+          {
+            "@type": "Question",
+            "name": "What can rollup properties calculate in Notion?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Notion rollup calculation options include: Count All (total number of related pages), Count Values (count of non-empty values), Count Unique Values, Count Empty, Count Not Empty, Percent Empty, Percent Not Empty, Sum (total of number values), Average, Median, Min, Max, Range (max minus min), Earliest Date, Latest Date, Date Range, Show Original, Show Unique Values. The available calculations depend on the property type you are rolling up."}
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#0f0f0f;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7}
+    a{color:#a78bfa;text-decoration:none}a:hover{color:#7c3aed}
+    nav{background:#111827;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #374151;position:sticky;top:0;z-index:100}
+    .nav-logo{font-weight:700;font-size:1.2rem;color:#a78bfa;text-decoration:none}
+    .nav-links a{color:#e5e7eb;margin-left:20px;font-size:.9rem;text-decoration:none;transition:color .2s}
+    .nav-links a:hover{color:#a78bfa}
+    .nav-cta{background:#7c3aed;color:#fff!important;padding:8px 16px;border-radius:6px;font-weight:600}
+    .hero{background:linear-gradient(135deg,#1a1a2e 0%,#0f0f23 100%);padding:80px 24px;text-align:center}
+    .hero h1{font-size:2.3rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;line-height:1.2}
+    .hero-sub{font-size:1.1rem;color:#9ca3af;max-width:660px;margin:0 auto 24px}
+    .meta{font-size:.85rem;color:#6b7280;margin-top:12px}
+    .container{max-width:860px;margin:0 auto;padding:40px 24px}
+    .breadcrumb{font-size:.85rem;color:#6b7280;margin-bottom:32px}
+    .breadcrumb a{color:#9ca3af}.breadcrumb span{margin:0 8px}
+    h2{font-size:1.75rem;font-weight:700;color:#a78bfa;margin:48px 0 16px}
+    h3{font-size:1.2rem;font-weight:600;color:#e5e7eb;margin:28px 0 10px}
+    p{color:#d1d5db;margin-bottom:16px}
+    ul,ol{padding-left:24px;margin-bottom:16px}li{color:#d1d5db;margin-bottom:8px}
+    strong{color:#e5e7eb}
+    .card{background:#1f2937;border:1px solid #374151;border-radius:12px;padding:28px;margin:20px 0}
+    .highlight{background:#1e1b4b;border-left:4px solid #7c3aed;border-radius:0 8px 8px 0;padding:20px 24px;margin:24px 0}
+    .code-block{background:#111827;border:1px solid #374151;border-radius:8px;padding:16px 20px;font-family:'Courier New',monospace;font-size:.88rem;color:#a78bfa;margin:16px 0;overflow-x:auto;white-space:pre}
+    .cta-box{background:linear-gradient(135deg,#1e1b4b,#312e81);border:2px solid #7c3aed;border-radius:16px;padding:48px 40px;text-align:center;margin:56px 0}
+    .cta-box h2{color:#a78bfa!important;margin-top:0!important}
+    .cta-box p{color:#c4b5fd}
+    .cta-btn{display:inline-block;background:#7c3aed;color:#fff;padding:16px 44px;border-radius:8px;font-weight:700;font-size:1.1rem;margin-top:20px;text-decoration:none;transition:background .2s}
+    .cta-btn:hover{background:#6d28d9}
+    .step-box{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:24px;margin:16px 0;display:flex;gap:20px;align-items:flex-start}
+    .step-num{background:#7c3aed;color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0;margin-top:2px}
+    .step-content h3{margin-top:0}
+    .example-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+    .example-card{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:20px}
+    .example-label{font-size:.75rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .example-title{font-weight:700;color:#e5e7eb;margin-bottom:6px;font-size:.95rem}
+    .example-desc{font-size:.85rem;color:#9ca3af;line-height:1.5}
+    table{width:100%;border-collapse:collapse;margin:24px 0}
+    th{background:#1e1b4b;color:#a78bfa;padding:12px 16px;text-align:left;font-size:.9rem}
+    td{padding:12px 16px;border-bottom:1px solid #374151;color:#d1d5db;font-size:.9rem}
+    tr:hover td{background:#1f2937}
+    .faq-item{border-bottom:1px solid #374151;padding:20px 0}
+    .faq-q{font-weight:600;color:#e5e7eb;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
+    .faq-q:after{content:'+';color:#a78bfa;font-size:1.4rem;font-weight:400;margin-left:12px}
+    .faq-q.open:after{content:'-'}
+    .faq-a{color:#9ca3af;margin-top:12px;display:none;line-height:1.7}
+    .faq-a.show{display:block}
+    footer{background:#111827;border-top:1px solid #374151;padding:40px 24px;text-align:center;color:#6b7280;margin-top:80px}
+    footer a{color:#a78bfa}
+    @media(max-width:768px){.hero h1{font-size:1.6rem}.container{padding:24px 16px}.nav-links{display:none}.cta-box{padding:32px 20px}.step-box{flex-direction:column}.example-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-logo">FreelanceOS</a>
+    <div class="nav-links">
+      <a href="/blog/">Blog</a>
+      <a href="/freelanceos.html">Templates</a>
+      <a href="/freelance-tools.html">Tools</a>
+      <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="nav-cta">Get Pro</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Notion Rollup: The Complete Guide to Rollup Properties in Notion</h1>
+    <p class="hero-sub">Notion rollups let you aggregate data across related databases — count tasks, sum hours, find earliest deadlines, and build dashboards that update automatically. Here is how they work.</p>
+    <div class="meta">8 min read &nbsp;·&nbsp; July 2026 &nbsp;·&nbsp; FreelanceOS Team</div>
+  </div>
+
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a><span>&rsaquo;</span><a href="/blog/">Blog</a><span>&rsaquo;</span>Notion Rollup
+    </div>
+
+    <p>Once you start using Notion's database relations to connect pages across multiple databases, you quickly hit the next question: how do you see aggregate data across those relationships? How many tasks does each project have? What is the total estimated time for all the tasks in this project? What is the earliest due date across all related items?</p>
+
+    <p>That is exactly what Notion rollups are for. A rollup reads data from related pages and calculates or aggregates it — counts, sums, averages, dates, and more. They are one of the most powerful features in Notion's database toolkit, and one of the most underused. This guide covers how rollups work, how to create one, every available rollup function, filtering rollups, and practical examples you can implement today.</p>
+
+    <div class="highlight">
+      <strong>Prerequisite:</strong> Rollups require a Relation property to already exist in your database. You cannot create a rollup without a relation — the rollup uses the relation as its data source. If you have not set up a relation between your databases yet, do that first, then come back to create rollups on top of it.
+    </div>
+
+    <h2>What Is a Notion Rollup?</h2>
+    <p>A Notion rollup is a database property that reads data from pages in a related database and performs a calculation on that data. It then displays the result in the current database as a property on each row.</p>
+
+    <p>The key conceptual model: imagine you have a Projects database and a Tasks database, linked by a relation (each project is related to several tasks). Without a rollup, you can see which tasks are linked to each project — but to know how many tasks there are, you have to count them manually each time you look. A rollup does that counting automatically and shows the result as a column in your Projects database. Every time a task is added to a project, the rollup count updates automatically.</p>
+
+    <p>Common rollup use cases:</p>
+    <ul>
+      <li><strong>Count tasks per project</strong> — how many tasks does each project have total</li>
+      <li><strong>Count incomplete tasks per project</strong> — how many tasks are still Not Done (with a filter)</li>
+      <li><strong>Sum estimated hours</strong> — total estimated time across all tasks in a project</li>
+      <li><strong>Earliest due date</strong> — the nearest deadline across all related tasks</li>
+      <li><strong>Average invoice value per client</strong> — across all invoices linked to each client</li>
+      <li><strong>Sum revenue per project</strong> — total value of all related invoice line items</li>
+    </ul>
+
+    <h2>Relation vs. Rollup — What Is the Difference?</h2>
+    <p>These two properties are often confused because they work together, but they do different things:</p>
+
+    <table>
+      <thead>
+        <tr><th>Property</th><th>What It Does</th><th>What It Shows</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Relation</strong></td><td>Links pages between two databases</td><td>The linked page names (clickable links)</td></tr>
+        <tr><td><strong>Rollup</strong></td><td>Aggregates data from linked pages</td><td>A calculated value (count, sum, date, etc.)</td></tr>
+      </tbody>
+    </table>
+
+    <p>A relation is the connection. A rollup is what you do with the data on the other end of that connection. You need the relation to exist before you can create a rollup. You can have multiple rollup properties on a single relation, each calculating something different — for example, a relation to Tasks could have three rollup properties: Total Tasks (count), Estimated Hours (sum), and Next Due Date (earliest date).</p>
+
+    <h2>How to Create a Rollup in Notion</h2>
+    <p>Here is the step-by-step process to add a rollup property to any database:</p>
+
+    <div class="step-box">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Confirm You Have a Relation Property</h3>
+        <p>Open the database where you want to add the rollup. Make sure there is already a Relation property that links to another database. If not, add one first: click the + icon to add a property, select "Relation," choose the target database, and configure the relation settings.</p>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Add a Rollup Property</h3>
+        <p>Click the + icon to add a new property to your database. In the property type list, scroll down to find <strong>Rollup</strong> and select it. A rollup property appears in your database with a configuration panel.</p>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Configure the Relation</h3>
+        <p>In the rollup configuration panel, click <strong>Relation</strong> and select which relation property to use as the data source. If your database has multiple relations (linking to different databases), choose the one you want this rollup to pull data from.</p>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Choose the Property to Roll Up</h3>
+        <p>Click <strong>Property</strong> and select which property from the related database to calculate on. For a task count rollup, you might select the task's Name property. For a sum of hours, select the estimated hours number property. For earliest date, select the due date property.</p>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>Set the Calculate Function</h3>
+        <p>Click <strong>Calculate</strong> and choose the aggregation function. For a count of tasks, choose "Count All." For a total of hours, choose "Sum." For the nearest deadline, choose "Earliest Date." The rollup property now shows the calculated result for each row in your database, updating automatically as related pages change.</p>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h3>Name Your Rollup Property</h3>
+        <p>Give the rollup a descriptive name that makes clear what it shows. Good names: "Task Count," "Total Hours," "Next Deadline," "Open Tasks," "Revenue." Poor names: "Rollup," "Property 4." Clear names make your database immediately readable without having to inspect the property settings.</p>
+      </div>
+    </div>
+
+    <h2>Rollup Calculate Functions — All Options Explained</h2>
+    <p>The available rollup functions depend on the type of property you are rolling up. Here are all the options and what they calculate:</p>
+
+    <h3>For All Property Types</h3>
+    <table>
+      <thead>
+        <tr><th>Function</th><th>What It Returns</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Count All</td><td>Total number of related pages (including empty values)</td></tr>
+        <tr><td>Count Values</td><td>Number of related pages with a non-empty value for the selected property</td></tr>
+        <tr><td>Count Unique Values</td><td>Number of distinct values across all related pages</td></tr>
+        <tr><td>Count Empty</td><td>Number of related pages where the selected property is empty</td></tr>
+        <tr><td>Count Not Empty</td><td>Number of related pages where the selected property has any value</td></tr>
+        <tr><td>Percent Empty</td><td>Percentage of related pages where the property is empty</td></tr>
+        <tr><td>Percent Not Empty</td><td>Percentage of related pages where the property has a value</td></tr>
+        <tr><td>Show Original</td><td>Display the raw values from all related pages</td></tr>
+        <tr><td>Show Unique Values</td><td>Display only the distinct values from related pages</td></tr>
+      </tbody>
+    </table>
+
+    <h3>For Number Properties</h3>
+    <table>
+      <thead>
+        <tr><th>Function</th><th>What It Returns</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Sum</td><td>Total of all number values across related pages</td></tr>
+        <tr><td>Average</td><td>Mean of all number values</td></tr>
+        <tr><td>Median</td><td>Middle value when all numbers are sorted</td></tr>
+        <tr><td>Min</td><td>Lowest number across all related pages</td></tr>
+        <tr><td>Max</td><td>Highest number across all related pages</td></tr>
+        <tr><td>Range</td><td>Max minus Min</td></tr>
+      </tbody>
+    </table>
+
+    <h3>For Date Properties</h3>
+    <table>
+      <thead>
+        <tr><th>Function</th><th>What It Returns</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Earliest Date</td><td>The oldest or nearest upcoming date across all related pages</td></tr>
+        <tr><td>Latest Date</td><td>The most recent or furthest future date across all related pages</td></tr>
+        <tr><td>Date Range</td><td>The span from earliest to latest date</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Filtering Rollups</h2>
+    <p>One of the most powerful — and underused — rollup features is the filter. By default, a rollup aggregates all related pages. But you can add filter conditions to limit which related pages are included in the calculation. This lets you create much more specific rollup properties.</p>
+
+    <p>To add a filter to a rollup: click on the rollup property settings, then click <strong>Filter</strong>. A filter configuration panel appears. Add filter conditions based on any property of the related pages. Only pages that match the filter will be included in the rollup calculation.</p>
+
+    <div class="card">
+      <h3>Practical Filter Examples</h3>
+      <ul>
+        <li><strong>"Open Tasks" rollup</strong> — Count All, filtered to Status does not equal "Done." Shows only incomplete tasks per project.</li>
+        <li><strong>"Completed Tasks" rollup</strong> — Count All, filtered to Status equals "Done." Shows completed task count.</li>
+        <li><strong>"High Priority Hours" rollup</strong> — Sum of Estimated Hours, filtered to Priority equals "High." Total hours just for high-priority tasks.</li>
+        <tr><td><strong>"This Week's Deadlines" rollup</strong></td> — Earliest Date on Due Date, filtered to Due Date is within the next 7 days. Shows the soonest upcoming deadline this week.</li>
+        <li><strong>"Blocked Tasks" rollup</strong> — Count All, filtered to Status equals "Blocked." Surfaces blocked tasks directly in the project view.</li>
+      </ul>
+    </div>
+
+    <div class="highlight">
+      <strong>Filtered vs. unfiltered rollups on the same relation:</strong> You can have multiple rollup properties on the same relation with different filters. For example: "Total Tasks" (no filter), "Open Tasks" (filter: status not done), "Completed Tasks" (filter: status done). These three rollups together give you a task completion picture directly in your Projects database without opening each project.
+    </div>
+
+    <h2>Practical Rollup Examples for Freelancers</h2>
+    <p>Here are ready-to-implement rollup configurations for common freelance workflow setups:</p>
+
+    <div class="example-grid">
+      <div class="example-card">
+        <div class="example-label">Projects + Tasks</div>
+        <div class="example-title">Task Completion Dashboard</div>
+        <div class="example-desc">Three rollups on a Tasks relation: Total Tasks (Count All), Open Tasks (Count All, filter: Status not Done), Next Deadline (Earliest Date on Due Date). Instantly see project health in the project list view.</div>
+      </div>
+      <div class="example-card">
+        <div class="example-label">Clients + Invoices</div>
+        <div class="example-title">Revenue Per Client</div>
+        <div class="example-desc">Sum rollup on invoice Amount field. Shows total billed per client. Add a second rollup filtered to Status equals "Paid" for total collected revenue. Filter to Status equals "Unpaid" for outstanding balance.</div>
+      </div>
+      <div class="example-card">
+        <div class="example-label">Projects + Time Logs</div>
+        <div class="example-title">Total Hours Tracked</div>
+        <div class="example-desc">Sum rollup on Hours Logged field across all time entries related to each project. Compare against Estimated Hours property on the project to see if you are over or under budget in real time.</div>
+      </div>
+      <div class="example-card">
+        <div class="example-label">Clients + Projects</div>
+        <div class="example-title">Active Projects Per Client</div>
+        <div class="example-desc">Count rollup on Project Name, filtered to Status equals "Active." Immediately see which clients have the most concurrent active work — useful for capacity planning and workload balancing.</div>
+      </div>
+    </div>
+
+    <h2>Using Rollups Inside Formulas</h2>
+    <p>Rollup properties can be referenced inside Notion formula properties — this is where things get genuinely powerful. Once you have a rollup that calculates a value, you can use that value in a formula to derive further calculations or conditional logic.</p>
+
+    <p>Example: you have a Project database with these properties:</p>
+    <ul>
+      <li><strong>Total Tasks</strong> (rollup — Count All of related tasks)</li>
+      <li><strong>Completed Tasks</strong> (rollup — Count All, filtered to Status = Done)</li>
+      <li><strong>Completion %</strong> (formula — calculate from the two rollups)</li>
+    </ul>
+
+    <p>The formula for Completion %:</p>
+    <div class="code-block">if(prop("Total Tasks") > 0,
+  round((prop("Completed Tasks") / prop("Total Tasks")) * 100),
+  0)</div>
+
+    <p>This gives you a real-time completion percentage for each project, calculated automatically from your task data. Build a progress bar visualization in Notion using this number property to get a visual completion indicator on each project row.</p>
+
+    <h2>Common Rollup Problems and Solutions</h2>
+
+    <div class="card">
+      <h3>Rollup shows "Calculate" but no value</h3>
+      <p>This usually means no related pages exist for that row, or the selected property has no values on the related pages. Check that: (1) the row actually has related pages in the relation property, and (2) the property you are rolling up has values on those related pages.</p>
+    </div>
+
+    <div class="card">
+      <h3>Rollup shows all values instead of a calculated result</h3>
+      <p>You likely selected "Show Original" or "Show Unique Values" as the calculate function. Change the Calculate setting to Count All, Sum, Earliest Date, or whichever aggregation you intended.</p>
+    </div>
+
+    <div class="card">
+      <h3>Sum rollup shows 0 even though related pages have numbers</h3>
+      <p>The property you selected in the rollup configuration might be a formula property that displays a number but is technically a formula type. Rollups on formula properties work differently — try selecting the underlying number property instead, or use a Formula property that references the rollup after you confirm the data is visible.</p>
+    </div>
+
+    <div class="card">
+      <h3>Rollup filter is not excluding the right pages</h3>
+      <p>Double-check that the filter condition is referencing the correct property from the <em>related</em> database (not the current database). Rollup filters operate on the properties of the linked pages — check the property names and values in your related database to confirm they match what you are filtering on.</p>
+    </div>
+
+    <div class="cta-box">
+      <h2>Get a Notion System Built With Rollups</h2>
+      <p>FreelanceOS Pro includes a pre-built Notion workspace with relations and rollups already configured — project task counts, client revenue tracking, time log summaries, and a complete freelance dashboard. Ready to use on day one.</p>
+      <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="cta-btn">Get FreelanceOS Pro &mdash; $29 (Save 40% with FLASH40)</a>
+    </div>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">What is a rollup in Notion?</div>
+      <div class="faq-a">A Notion rollup is a database property that reads data from pages in a related database and calculates or displays that data in the current database. It requires a Relation property to exist first — the rollup uses the relation as its data source. For example: if your Projects database has a relation to a Tasks database, a rollup property can count how many tasks each project has, sum the estimated hours, or show the earliest due date across all related tasks. Rollup values update automatically as related pages change.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I create a rollup in Notion?</div>
+      <div class="faq-a">To create a Notion rollup: (1) Make sure you have a Relation property in your database linking to another database. (2) Click the + icon to add a new property. (3) Select Rollup as the property type. (4) In the rollup configuration: set Relation to your existing relation property, set Property to the field in the related database you want to calculate on, set Calculate to your desired function (Count All, Sum, Average, Earliest Date, etc.). The rollup property now displays the calculated data from your related pages, updating automatically.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the difference between a Notion relation and a rollup?</div>
+      <div class="faq-a">A Notion Relation property creates a link between two databases — it shows which pages are connected to each row. A Rollup property reads data from those connected pages and calculates or aggregates it. You need a Relation before you can create a Rollup. Think of it this way: the Relation is the link; the Rollup is what you calculate with the data on the other end of that link. You can have multiple rollup properties on a single relation, each calculating something different.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I filter a Notion rollup?</div>
+      <div class="faq-a">Yes. Notion rollups support filters that limit which related pages are included in the calculation. When configuring a rollup, click "Filter" in the rollup settings to add filter conditions based on properties of the related pages. For example: a rollup that counts tasks can be filtered to count only tasks with Status not equal to "Done" — giving you an open task count rather than a total task count. You can add multiple rollups on the same relation with different filters to see multiple slices of the same data.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What can rollup properties calculate in Notion?</div>
+      <div class="faq-a">Notion rollup calculation options include: Count All (total number of related pages), Count Values, Count Unique Values, Count Empty, Count Not Empty, Percent Empty, Percent Not Empty, Show Original, Show Unique Values. For number properties additionally: Sum, Average, Median, Min, Max, Range. For date properties additionally: Earliest Date, Latest Date, Date Range. The available calculations depend on which property type you are rolling up in the related database.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 FreelanceOS. Built for freelancers, by freelancers.</p>
+    <p style="margin-top:10px"><a href="/">Home</a> &nbsp;&middot;&nbsp; <a href="/blog/">Blog</a> &nbsp;&middot;&nbsp; <a href="/freelanceos.html">FreelanceOS Pro</a> &nbsp;&middot;&nbsp; <a href="/freelance-tools.html">Free Tools</a></p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        q.classList.toggle('open');
+        q.nextElementSibling.classList.toggle('show');
+      });
+    });
+  </script>
+</body>
+</html>
