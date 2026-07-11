@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion Group By: How to Group Database Views for Better Organization (2026)</title>
+<meta name="description" content="Complete guide to Notion's Group By feature — how to group databases by select, date, person, checkbox, and other properties. Board view grouping, sub-grouping, hiding empty groups, and combining Group By with filters and sorts.">
+<meta property="og:title" content="Notion Group By: Organize Your Database with Groups and Sub-Groups">
+<meta property="og:description" content="Learn how to use Notion's Group By feature to organize databases by status, date, person, or any property. Includes Board view, sub-grouping, and dashboard building.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-group-by">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f0f;color:#e5e7eb;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.7}
+nav{background:#111827;border-bottom:1px solid #374151;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-logo{color:#a78bfa;font-weight:700;font-size:1.2rem;text-decoration:none}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{color:#e5e7eb;text-decoration:none;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:#a78bfa}
+.hero{background:linear-gradient(135deg,#111827 0%,#1f1035 100%);padding:4rem 2rem;text-align:center}
+.hero-badge{background:#7c3aed20;color:#a78bfa;border:1px solid #7c3aed40;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;display:inline-block;margin-bottom:1rem}
+h1{color:#a78bfa;font-size:2.2rem;max-width:820px;margin:0 auto 1rem;line-height:1.3}
+.hero-meta{color:#9ca3af;font-size:.9rem;margin-bottom:1.5rem}
+.hero-meta span{margin:0 .5rem}
+.container{max-width:860px;margin:0 auto;padding:2rem}
+h2{color:#a78bfa;font-size:1.5rem;margin:2.5rem 0 1rem;padding-top:1rem}
+h3{color:#c4b5fd;font-size:1.15rem;margin:1.8rem 0 .7rem}
+p{margin-bottom:1rem;color:#d1d5db}
+ul,ol{margin:1rem 0 1rem 1.5rem;color:#d1d5db}
+li{margin-bottom:.5rem}
+.callout{background:#1f2937;border-left:4px solid #a78bfa;padding:1.2rem 1.5rem;border-radius:0 8px 8px 0;margin:1.5rem 0}
+.callout p{margin:0;color:#e5e7eb}
+.callout.green{border-color:#10b981}
+.callout.green p{color:#d1fae5}
+.table-wrap{overflow-x:auto;margin:1.5rem 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#1f2937;color:#a78bfa;padding:.8rem 1rem;text-align:left;border-bottom:2px solid #374151}
+td{padding:.7rem 1rem;border-bottom:1px solid #374151;color:#d1d5db;vertical-align:top}
+tr:nth-child(even) td{background:#1a1a2e}
+.kbd{background:#374151;color:#e5e7eb;border:1px solid #4b5563;border-radius:4px;padding:.15rem .5rem;font-family:'Courier New',monospace;font-size:.85rem;white-space:nowrap}
+.cta-box{background:linear-gradient(135deg,#1f1035,#111827);border:1px solid #7c3aed40;border-radius:16px;padding:2.5rem;text-align:center;margin:3rem 0}
+.cta-box h3{color:#a78bfa;font-size:1.4rem;margin-bottom:.8rem}
+.cta-box p{color:#d1d5db;margin-bottom:1.5rem}
+.btn{background:#7c3aed;color:#fff;padding:.9rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;transition:background .2s}
+.btn:hover{background:#6d28d9}
+.btn-outline{background:transparent;border:1px solid #7c3aed;color:#a78bfa;margin-left:.8rem}
+.faq-item{border:1px solid #374151;border-radius:10px;padding:1.2rem 1.5rem;margin:.8rem 0;background:#1f2937}
+.faq-q{color:#a78bfa;font-weight:600;margin-bottom:.5rem}
+.faq-a{color:#d1d5db;margin:0}
+.group-card{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.2rem 1.5rem;margin:.8rem 0}
+.group-card h4{color:#c4b5fd;font-size:1rem;margin-bottom:.5rem}
+.group-card p{margin:0;color:#d1d5db;font-size:.95rem}
+.group-example{background:#111827;border-left:3px solid #10b981;padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:.8rem 0;font-size:.9rem;color:#d1fae5}
+.step-list{counter-reset:steps;list-style:none;margin:1rem 0}
+.step-list li{counter-increment:steps;padding:.7rem .7rem .7rem 3rem;border-bottom:1px solid #374151;position:relative;color:#d1d5db}
+.step-list li:last-child{border-bottom:none}
+.step-list li::before{content:counter(steps);position:absolute;left:.5rem;top:.7rem;background:#7c3aed;color:#fff;width:1.6rem;height:1.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.view-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1.2rem 0}
+.view-item{background:#1f2937;border:1px solid #374151;border-radius:8px;padding:1rem}
+.view-item .view-name{color:#a78bfa;font-weight:600;margin-bottom:.4rem;font-size:.95rem}
+.view-item .view-desc{color:#9ca3af;font-size:.85rem}
+.kanban-preview{background:#111827;border:1px solid #374151;border-radius:10px;padding:1rem;margin:1.2rem 0;display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.kanban-col{background:#1f2937;border-radius:8px;padding:.8rem}
+.kanban-col-header{color:#a78bfa;font-weight:600;font-size:.85rem;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:1px solid #374151}
+.kanban-card{background:#111827;border:1px solid #374151;border-radius:6px;padding:.5rem .7rem;margin:.4rem 0;font-size:.8rem;color:#d1d5db}
+footer{background:#111827;border-top:1px solid #374151;padding:2rem;text-align:center;color:#6b7280;font-size:.85rem;margin-top:4rem}
+footer a{color:#a78bfa;text-decoration:none}
+@media(max-width:640px){h1{font-size:1.6rem}.container{padding:1rem}.view-grid{grid-template-columns:1fr}.kanban-preview{grid-template-columns:1fr}.btn-outline{margin-left:0;margin-top:.5rem}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Notion Group By: Organize Your Database with Groups and Sub-Groups",
+      "description": "Complete guide to Notion's Group By feature — how to group databases by select, date, person, checkbox, and other properties. Board view, sub-grouping, and dashboards.",
+      "datePublished": "2026-07-11",
+      "dateModified": "2026-07-11",
+      "author": {"@type": "Organization", "name": "FreelanceOS"},
+      "publisher": {"@type": "Organization", "name": "FreelanceOS", "url": "https://baphometsblade.github.io/freelanceos-storefront/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://baphometsblade.github.io/freelanceos-storefront/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "Notion Group By Guide", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/notion-group-by"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "How do I group a Notion database?", "acceptedAnswer": {"@type": "Answer", "text": "Open any database view, click the Group button in the toolbar (or go to View options), then select the property you want to group by. Entries will immediately be organized into collapsible groups based on that property's values."}},
+        {"@type": "Question", "name": "What is the difference between Group By and Filter in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "Group By organizes visible entries into labeled sections based on a property value — all entries remain visible, just sorted into groups. Filter hides entries that don't match the condition — only matching entries are shown. You can use both together: filter to narrow what's visible, then group to organize what remains."}},
+        {"@type": "Question", "name": "Can I group by a date in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. When you group by a date property, Notion offers grouping options including by day, week, month, quarter, and year. This is useful for creating timeline views of tasks, content, or projects organized by when they're due or when they were created."}},
+        {"@type": "Question", "name": "How do I hide empty groups in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "Click the Group button or open View options, then toggle off 'Show empty groups'. This hides any group that currently has no entries, keeping your view clean. Empty groups reappear automatically if an entry is added with that group's value."}},
+        {"@type": "Question", "name": "What views support Group By in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "Group By works in Table, List, Gallery, and Board views. Board view always uses Group By as its core structure (defaulting to Status). Calendar view groups by date natively. Timeline view uses date ranges. Group By is not available in the Calendar view's group settings, but date-based grouping is inherent to how Calendar works."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<nav>
+  <a href="/freelanceos-storefront/" class="nav-logo">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="/freelanceos-storefront/freelanceos.html">Templates</a>
+    <a href="/freelanceos-storefront/blog/">Blog</a>
+    <a href="/freelanceos-storefront/freelanceos.html">Get FreelanceOS</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Notion Database Mastery</div>
+  <h1>Notion Group By: Organize Your Database Views for Better Clarity</h1>
+  <div class="hero-meta">
+    <span>9 min read</span>
+    <span>•</span>
+    <span>Updated July 2026</span>
+    <span>•</span>
+    <span>FreelanceOS Team</span>
+  </div>
+  <p style="color:#9ca3af;max-width:640px;margin:0 auto">Learn how Notion's Group By feature transforms flat database lists into organized, scannable views — grouped by status, date, person, client, or any other property you choose.</p>
+</div>
+
+<div class="container">
+
+<h2>What Is Notion Group By?</h2>
+<p>Group By is a Notion database feature that organizes your entries into labeled sections based on a property value — turning a flat list of items into structured, scannable groups without hiding any data.</p>
+<p><strong>The classic example:</strong> a Tasks database grouped by Status automatically sorts your tasks into sections like "Not Started", "In Progress", "In Review", and "Done" — each section collapsible, each showing a count of entries inside.</p>
+<p>This is different from filtering (which <em>hides</em> non-matching entries) and sorting (which <em>reorders</em> entries within a flat list). Group By <em>organizes</em> entries into named buckets while keeping everything visible.</p>
+
+<h3>Group By vs. Filter vs. Sort — When to Use Each</h3>
+<div class="table-wrap">
+<table>
+  <tr><th>Feature</th><th>What It Does</th><th>Use When</th></tr>
+  <tr><td><strong>Group By</strong></td><td>Organizes entries into labeled sections by property value</td><td>You want to see all data organized by category, status, or owner</td></tr>
+  <tr><td><strong>Filter</strong></td><td>Hides entries that don't match the filter condition</td><td>You only want to see a subset of your data</td></tr>
+  <tr><td><strong>Sort</strong></td><td>Reorders entries within each group (or within the flat list)</td><td>You want items in a specific order (by date, priority, alphabetical)</td></tr>
+</table>
+</div>
+<p>You can use all three together: filter to show only active tasks, group by client, sort by due date within each client group.</p>
+
+<h2>How to Enable Group By on Any Database View</h2>
+<ol class="step-list">
+  <li>Open any Notion database in Table, Board, Gallery, or List view</li>
+  <li>Click the <strong>Group</strong> button in the view toolbar (or click <strong>...</strong> → View options → Group by)</li>
+  <li>Select the property you want to group by from the dropdown</li>
+  <li>Entries immediately reorganize into labeled group sections</li>
+  <li>Each group section shows the group name and an entry count in parentheses</li>
+  <li>Groups are collapsible — click the arrow next to a group header to collapse it</li>
+</ol>
+<p>To remove grouping: click Group → select <strong>No grouping</strong> from the top of the property list. The database returns to a flat list.</p>
+
+<div class="callout">
+  <p><strong>Board view note:</strong> Board view always uses Group By as its core structure — you can't turn off grouping in Board view, only change which property groups the columns. The default is usually Status.</p>
+</div>
+
+<h2>Grouping by Select Property (Most Common)</h2>
+<p>Grouping by a Select property is the most common use — and the most useful for day-to-day project management. Each unique option in the Select property becomes a group.</p>
+
+<h3>Grouping by Status</h3>
+<p>Your Tasks or Projects database likely has a Status property with options like Not Started, In Progress, In Review, Done, Blocked. Grouping by Status gives you a Kanban-style view of your workflow:</p>
+
+<div class="kanban-preview">
+  <div class="kanban-col">
+    <div class="kanban-col-header">Not Started (3)</div>
+    <div class="kanban-card">Write proposal draft</div>
+    <div class="kanban-card">Research competitor pricing</div>
+    <div class="kanban-card">Set up invoice template</div>
+  </div>
+  <div class="kanban-col">
+    <div class="kanban-col-header">In Progress (2)</div>
+    <div class="kanban-card">Client homepage redesign</div>
+    <div class="kanban-card">Monthly report — Acme</div>
+  </div>
+  <div class="kanban-col">
+    <div class="kanban-col-header">Done (5)</div>
+    <div class="kanban-card">Logo revision v3</div>
+    <div class="kanban-card">Contract signed — Acme</div>
+    <div class="kanban-card">Onboarding call notes</div>
+  </div>
+</div>
+
+<p>This is exactly what Board view uses by default. You can replicate it in Table or List view by enabling Group By → Status.</p>
+
+<h3>Grouping by Priority</h3>
+<p>If you have a Priority property (High / Medium / Low), grouping by it creates urgency sections — instantly showing you what needs attention first at the top of your view.</p>
+
+<h3>Grouping by Client or Project (Relation)</h3>
+<p>If you have a Relation property connecting tasks to a Clients database, you can group tasks by client. Each client becomes a group header — all their tasks underneath. This is ideal for client work management and weekly status reviews.</p>
+
+<div class="group-example">
+  📁 Acme Corp (4 tasks)<br>
+  📁 BrightLine Agency (2 tasks)<br>
+  📁 Solo Project (6 tasks)<br>
+  📁 No Client (1 task)
+</div>
+
+<h2>Grouping by Date Property</h2>
+<p>When you group by a date property, Notion offers granularity options — choose how to bucket the dates:</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Date Grouping</th><th>Result</th><th>Best For</th></tr>
+  <tr><td>Day</td><td>One group per calendar day</td><td>Content calendars, daily task view</td></tr>
+  <tr><td>Week</td><td>One group per week (Mon–Sun)</td><td>Weekly sprint planning</td></tr>
+  <tr><td>Month</td><td>One group per month</td><td>Monthly invoicing, content scheduling</td></tr>
+  <tr><td>Quarter</td><td>Q1/Q2/Q3/Q4 groups</td><td>Quarterly goal and project tracking</td></tr>
+  <tr><td>Year</td><td>One group per year</td><td>Annual archives, long-term planning</td></tr>
+</table>
+</div>
+
+<h3>Date Grouping in Practice</h3>
+<p><strong>Content calendar by week:</strong> Group your content database by Publish Date → Week. You see each week as a collapsible section with all content due that week — how many pieces, what they are, their status.</p>
+<p><strong>Monthly invoice tracker:</strong> Group invoices by Invoice Date → Month. Quickly see totals due each month without needing a rollup formula view.</p>
+<p><strong>Project timeline by quarter:</strong> Group a projects database by Start Date → Quarter. Visualize your pipeline across Q1, Q2, Q3, Q4.</p>
+
+<div class="callout green">
+  <p><strong>Pro tip:</strong> Combine date grouping with a sort (sort by Due Date within each group — earliest first). This gives you chronologically ordered tasks within each week or month section.</p>
+</div>
+
+<h2>Grouping by Person / Assignee</h2>
+<p>If you use a Person property to assign tasks to team members (or to yourself), grouping by it creates per-person task sections:</p>
+
+<div class="group-example">
+  👤 Mark (8 tasks)<br>
+  👤 Sarah (5 tasks)<br>
+  👤 Jordan (3 tasks)<br>
+  👤 Unassigned (2 tasks)
+</div>
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li>Workload review: see at a glance if one person has too much on their plate</li>
+  <li>Daily standup: pull up the board grouped by person to discuss each member's tasks</li>
+  <li>Sprint planning: balance task assignment across the team before kicking off a sprint</li>
+</ul>
+<p>Grouping by Person works best in Table or List view. In Board view, you'd typically group by Status, then use Person as a secondary filter or sort.</p>
+
+<h2>Grouping by Checkbox</h2>
+<p>Grouping by a checkbox property creates exactly two groups: <strong>Checked</strong> and <strong>Unchecked</strong>. This is a simple but powerful pattern:</p>
+
+<div class="group-example">
+  ☑ Completed (12 items)<br>
+  ☐ Not Done (5 items)
+</div>
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li>To-do list database: group by a "Done?" checkbox to separate completed and pending tasks</li>
+  <li>Onboarding checklist: group by a "Verified?" checkbox to see what's been confirmed vs. outstanding</li>
+  <li>Contract tracker: group by "Signed?" to see signed vs. unsigned contracts at a glance</li>
+</ul>
+
+<h2>Sub-Grouping: Group By + Sub-Group By</h2>
+<p>Notion supports a second level of grouping — a sub-group within each primary group. This is available in Table and List views (not Board view).</p>
+
+<h3>How to Add Sub-Grouping</h3>
+<ol class="step-list">
+  <li>Enable Group By for your primary grouping (e.g., Status)</li>
+  <li>Click Group again → look for the <strong>Sub-group by</strong> option</li>
+  <li>Select a secondary property (e.g., Priority)</li>
+</ol>
+<p>Now each Status group is further subdivided by Priority:</p>
+<div class="group-example">
+  📂 In Progress<br>
+  &nbsp;&nbsp;&nbsp;🔴 High (2 tasks)<br>
+  &nbsp;&nbsp;&nbsp;🟡 Medium (3 tasks)<br>
+  &nbsp;&nbsp;&nbsp;🟢 Low (1 task)<br>
+  📂 Not Started<br>
+  &nbsp;&nbsp;&nbsp;🔴 High (1 task)<br>
+  &nbsp;&nbsp;&nbsp;🟡 Medium (4 tasks)
+</div>
+<p>Sub-grouping is powerful for complex databases where you need two-dimensional organization — for example, tasks grouped by Phase (primary) then Priority (secondary), or content grouped by Month (primary) then Status (secondary).</p>
+
+<h2>Hiding Empty Groups</h2>
+<p>By default, Notion shows all groups — including empty ones (groups with no entries). This can be cluttered if you have a Status property with 8 options but most entries only use 3.</p>
+
+<h3>How to Hide Empty Groups</h3>
+<ol class="step-list">
+  <li>Click the <strong>Group</strong> button in the toolbar</li>
+  <li>Toggle off <strong>Show empty groups</strong></li>
+</ol>
+<p>Empty groups disappear immediately. When a new entry is added with a value matching a previously hidden group, that group automatically reappears.</p>
+
+<div class="callout">
+  <p><strong>When to keep empty groups visible:</strong> If you're using Board view as a Kanban board for a team workflow, keeping empty groups visible (like a "Done" column even when nothing is done yet) serves as a visual reminder of workflow stages and makes it easy to drag items into any column.</p>
+</div>
+
+<h2>Group By Across Different Notion Views</h2>
+<div class="view-grid">
+  <div class="view-item">
+    <div class="view-name">Board View</div>
+    <div class="view-desc">Group By is the core mechanism — columns ARE groups. Default group is Status. Change it to any Select property to create a different Kanban board. Can't disable grouping in Board view.</div>
+  </div>
+  <div class="view-item">
+    <div class="view-name">Table View</div>
+    <div class="view-desc">Most flexible. Group By adds collapsible section headers between rows. Supports sub-grouping. All properties visible per entry. Best for dense data views.</div>
+  </div>
+  <div class="view-item">
+    <div class="view-name">Gallery View</div>
+    <div class="view-desc">Group By adds section headers above card grids. Useful for visual asset databases grouped by category or status. Each section shows a card grid.</div>
+  </div>
+  <div class="view-item">
+    <div class="view-name">List View</div>
+    <div class="view-desc">Simplest view — minimal columns. Group By adds section headers. Good for reading lists, link databases, reference lists where you want category sections.</div>
+  </div>
+  <div class="view-item">
+    <div class="view-name">Calendar View</div>
+    <div class="view-desc">Grouping by date is inherent to Calendar — entries appear on their date. An additional "Group by" option lets you create multiple rows per date property within the calendar.</div>
+  </div>
+  <div class="view-item">
+    <div class="view-name">Timeline View</div>
+    <div class="view-desc">Group By creates multiple rows in the timeline, one per group value. Group by Client or Project to see each client's/project's timeline as a separate horizontal row.</div>
+  </div>
+</div>
+
+<h2>Combining Group By with Filters and Sorts</h2>
+<p>Group By, Filter, and Sort work independently and combine freely — enabling highly specific views:</p>
+
+<h3>Example 1: Client Workload This Week</h3>
+<p>Filter: Due Date within next 7 days + Status ≠ Done. Group By: Client. Sort (within groups): Due Date ascending.</p>
+<p>Result: Only this week's active tasks, organized by client, earliest due date first within each client section.</p>
+
+<h3>Example 2: Content Calendar by Status</h3>
+<p>Filter: Publish Date within next 30 days. Group By: Status. Sort: Publish Date ascending.</p>
+<p>Result: Next 30 days of content, grouped into "Draft", "In Review", "Scheduled", "Published" sections — instantly shows what's stuck and what's ready.</p>
+
+<h3>Example 3: Overdue Tasks by Priority</h3>
+<p>Filter: Due Date before today + Status ≠ Done. Group By: Priority (High/Medium/Low). Sort: Due Date ascending within each group.</p>
+<p>Result: All overdue tasks, organized by urgency, most overdue item in each priority level shown first.</p>
+
+<div class="cta-box">
+  <h3>Pre-Built Databases With Group By Already Configured</h3>
+  <p>FreelanceOS Pro includes a full client management system with Kanban board (grouped by status), content calendar (grouped by publish week), and project tracker (grouped by client) — all pre-configured and ready to use.</p>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro — 40% Off →</a>
+  <a href="/freelanceos-storefront/freelanceos.html" class="btn btn-outline">See What's Included</a>
+  <p style="margin-top:.8rem;font-size:.8rem;color:#6b7280">One-time purchase · Instant Notion access · Use code FLASH40 at checkout</p>
+</div>
+
+<h2>Group By Best Practices</h2>
+
+<div class="group-card">
+  <h4>Choose Your Primary Group Property Carefully</h4>
+  <p>Group By works best with Select properties that have 3–8 distinct values. Too few groups (2 options) is barely useful. Too many groups (20+ options like tags) creates a cluttered view. Status, Priority, Client, Category, and Phase are ideal grouping properties.</p>
+</div>
+
+<div class="group-card">
+  <h4>Create Separate Views for Different Groupings</h4>
+  <p>Don't switch Group By settings in a single view — create multiple named views instead. "By Status" grouped by Status, "By Client" grouped by Client, "By Priority" grouped by Priority. Switch between them with one click.</p>
+</div>
+
+<div class="group-card">
+  <h4>Use Group By Counts as Progress Tracking</h4>
+  <p>The entry count shown in each group header doubles as a progress indicator. A "Done (0)" vs "Done (12)" comparison tells you immediately how much has been completed without needing a separate tracker.</p>
+</div>
+
+<div class="group-card">
+  <h4>Reorder Group Columns in Board View</h4>
+  <p>In Board view, you can drag and drop column headers to reorder your groups. Arrange them to match your actual workflow — e.g., "Not Started → In Progress → In Review → Done" from left to right for a natural Kanban flow.</p>
+</div>
+
+<div class="group-card">
+  <h4>Add New Entries Directly Into Groups</h4>
+  <p>In any grouped view, click the <strong>+ New</strong> button inside a specific group section — the new entry is automatically assigned that group's property value. In a Status-grouped view, clicking + inside "In Progress" creates a task already set to "In Progress".</p>
+</div>
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq-item">
+  <div class="faq-q">How do I group a Notion database?</div>
+  <div class="faq-a">Open any database view, click <strong>Group</strong> in the view toolbar (or go to View options → Group by), then select the property you want to group by. Entries immediately reorganize into collapsible sections labeled with each property value. To remove grouping, click Group → select <strong>No grouping</strong>.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">What is the difference between Group By and Filter in Notion?</div>
+  <div class="faq-a">Group By <em>organizes</em> all visible entries into labeled sections without hiding any data. Filter <em>hides</em> entries that don't match the filter condition — only matching entries are shown. You can use both together: filter to narrow what's visible, then group to organize what remains. For example, filter to "active tasks only" then group by client.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Can I group by a date in Notion?</div>
+  <div class="faq-a">Yes. When you group by a date property, Notion offers grouping granularity: by Day, Week, Month, Quarter, or Year. Choose the level that makes sense for your use case — Week is great for sprint planning, Month for content calendars and invoicing, Quarter for project and goal tracking.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">How do I hide empty groups in Notion?</div>
+  <div class="faq-a">Click the <strong>Group</strong> button in the toolbar, then toggle off <strong>Show empty groups</strong>. Sections with no entries disappear immediately. They automatically reappear when an entry with that group's value is added. This keeps your view clean when many Select options exist but only a few are currently in use.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">What views support Group By in Notion?</div>
+  <div class="faq-a">Group By works in Table, Board, Gallery, and List views. Board view requires grouping — you can change the property but can't disable it. Table and List views support sub-grouping (a secondary Group By). Calendar view groups by date inherently. Timeline view supports Group By to create multiple rows per property value.</div>
+</div>
+
+</div>
+
+<footer>
+  <p><a href="/freelanceos-storefront/">FreelanceOS</a> · <a href="/freelanceos-storefront/blog/">Blog</a> · <a href="/freelanceos-storefront/freelanceos.html">Templates</a> · Built for freelancers who work smarter</p>
+  <p style="margin-top:.5rem">© 2026 FreelanceOS. All rights reserved.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion Filters: The Complete Guide to Filtering Notion Databases (2026)</title>
+<meta name="description" content="Learn how to filter Notion databases — add filters, combine multiple filters with AND/OR, save filtered views, filter by date, filter by property, and build custom views for your most important Notion workflows. 2026.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-filter">
+<meta property="og:title" content="Notion Filters: The Complete Guide to Filtering Notion Databases (2026)">
+<meta property="og:description" content="Master Notion filters — add conditions, combine AND/OR logic, filter by date, save filtered views, and build workflows that surface exactly what you need. 2026.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-filter">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://baphometsblade.github.io/freelanceos-storefront/blog/notion-filter#article",
+      "headline": "Notion Filters: How to Filter, Sort, and Find Anything in Notion",
+      "description": "The complete guide to filtering Notion databases — from basic single-property filters to advanced AND/OR filter groups, date filters, and saved views.",
+      "datePublished": "2026-07-11",
+      "dateModified": "2026-07-11",
+      "author": {"@type": "Organization", "name": "FreelanceOS"},
+      "publisher": {"@type": "Organization", "name": "FreelanceOS", "url": "https://baphometsblade.github.io/freelanceos-storefront/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://baphometsblade.github.io/freelanceos-storefront/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "Notion Filters Guide", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/notion-filter"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I filter a Notion database?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Open a Notion database, click the Filter button at the top right of the view, click Add Filter, select a property, choose a condition (like 'contains' or 'is'), and enter a value. The filter applies immediately and only shows rows that match the condition."}
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use OR in Notion filters?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Click Filter, add your first condition, then click Add Filter again. You'll see an option to switch between AND and OR. To create an OR group: click Add Filter Rule Group, which creates a separate group of conditions. Rows matching ANY group are shown with OR logic. Within a group, AND logic applies by default."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I save filtered views in Notion?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. Set your filters, then click Add View (the + next to the view tabs at the top of the database), give it a descriptive name like 'This Week' or 'My Active Tasks', and the filters are saved with the view. Every time you switch to that view, the filters are automatically applied."}
+        },
+        {
+          "@type": "Question",
+          "name": "How do I filter by date in Notion?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Click Filter → Add Filter → select your date property → choose a condition: 'is', 'is before', 'is after', 'is within the next week', 'is within the past month', etc. The 'is within' conditions are dynamic — 'next week' always means the next 7 days from today, so the filter stays relevant without manual updating."}
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between Notion filter and search?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Notion filters apply to a specific database view and show/hide rows based on property values — they're persistent and saveable. Notion search (Cmd+P or Ctrl+P) does full-text search across your entire workspace, finding pages by their content or title. Use filters for ongoing curated views of your databases; use search for one-off lookups."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f0f0f; color: #e5e7eb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 17px; line-height: 1.75; }
+  a { color: #a78bfa; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  nav { background: #111827; border-bottom: 1px solid #374151; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  nav .logo { font-weight: 700; font-size: 1.2rem; color: #a78bfa; }
+  nav .nav-links a { color: #e5e7eb; margin-left: 24px; font-size: 0.95rem; }
+  .container { max-width: 820px; margin: 0 auto; padding: 48px 24px; }
+  .breadcrumb { font-size: 0.85rem; color: #9ca3af; margin-bottom: 32px; }
+  .breadcrumb a { color: #9ca3af; }
+  .meta { display: flex; gap: 16px; color: #9ca3af; font-size: 0.9rem; margin-bottom: 32px; flex-wrap: wrap; }
+  .tag { background: #1f2937; border: 1px solid #374151; border-radius: 4px; padding: 2px 10px; font-size: 0.8rem; color: #a78bfa; }
+  h1 { font-size: 2.2rem; line-height: 1.25; color: #a78bfa; margin-bottom: 24px; }
+  h2 { font-size: 1.5rem; color: #a78bfa; margin: 48px 0 16px; border-bottom: 1px solid #374151; padding-bottom: 8px; }
+  h3 { font-size: 1.15rem; color: #c4b5fd; margin: 32px 0 12px; }
+  p { margin-bottom: 18px; color: #e5e7eb; }
+  ul, ol { margin: 0 0 20px 28px; color: #e5e7eb; }
+  li { margin-bottom: 8px; }
+  code { background: #1f2937; border: 1px solid #374151; border-radius: 4px; padding: 2px 7px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 0.88em; color: #10b981; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 0.93rem; }
+  th { background: #1f2937; color: #a78bfa; text-align: left; padding: 10px 14px; border: 1px solid #374151; font-weight: 600; }
+  td { padding: 10px 14px; border: 1px solid #374151; color: #e5e7eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #111827; }
+  .cta-box { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); border: 1px solid #7c3aed; border-radius: 12px; padding: 36px; text-align: center; margin: 48px 0; }
+  .cta-box h3 { color: #a78bfa; font-size: 1.4rem; margin-bottom: 12px; margin-top: 0; }
+  .cta-box p { color: #d1d5db; margin-bottom: 8px; }
+  .cta-box .price-note { color: #10b981; font-size: 0.9rem; margin-bottom: 24px; }
+  .btn { display: inline-block; background: #7c3aed; color: #fff; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 1.05rem; text-decoration: none; transition: background 0.2s; }
+  .btn:hover { background: #6d28d9; text-decoration: none; }
+  .callout { background: #1f2937; border-left: 4px solid #a78bfa; border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 24px 0; }
+  .callout.green { border-left-color: #10b981; }
+  .callout.yellow { border-left-color: #f59e0b; }
+  .step-box { background: #1f2937; border: 1px solid #374151; border-radius: 10px; padding: 20px 24px; margin: 20px 0; }
+  .step-box .step-num { color: #a78bfa; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .view-card { background: #1f2937; border: 1px solid #374151; border-radius: 10px; padding: 18px 20px; margin: 16px 0; }
+  .view-card .view-name { color: #10b981; font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+  .filter-example { background: #111827; border: 1px solid #374151; border-radius: 8px; padding: 16px 20px; margin: 16px 0; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 0.88rem; color: #e5e7eb; }
+  .filter-example .filter-line { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .filter-example .filter-line:last-child { margin-bottom: 0; }
+  .filter-chip { background: #374151; border-radius: 4px; padding: 3px 10px; color: #c4b5fd; font-size: 0.85rem; }
+  .filter-chip.condition { color: #f59e0b; }
+  .filter-chip.value { color: #10b981; }
+  .filter-chip.logic { color: #a78bfa; font-weight: 700; }
+  .faq-item { background: #1f2937; border: 1px solid #374151; border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+  .faq-item h3 { color: #a78bfa; margin: 0 0 10px; font-size: 1.05rem; }
+  .faq-item p { margin: 0; color: #d1d5db; }
+  footer { background: #111827; border-top: 1px solid #374151; padding: 40px 24px; text-align: center; color: #6b7280; font-size: 0.9rem; margin-top: 80px; }
+  footer a { color: #9ca3af; }
+  @media (max-width: 640px) { h1 { font-size: 1.6rem; } h2 { font-size: 1.25rem; } .container { padding: 32px 16px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="/freelanceos.html">Templates</a>
+    <a href="/blog/">Blog</a>
+    <a href="/freelanceos.html#pricing">Pricing</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="breadcrumb">
+    <a href="/">Home</a> › <a href="/blog/">Blog</a> › Notion Filters Guide
+  </div>
+
+  <div class="meta">
+    <span>📅 July 2026</span>
+    <span>⏱ 12 min read</span>
+    <span class="tag">Notion Tips</span>
+    <span class="tag">Database Filters</span>
+  </div>
+
+  <h1>Notion Filters: How to Filter, Sort, and Find Anything in Notion</h1>
+
+  <p>A Notion database without filters is like a spreadsheet where every row is always visible — useful, but overwhelming. Filters are how you transform a raw database into a focused, actionable view that shows exactly what matters right now: your active tasks, this week's deliverables, overdue invoices, or hot prospects.</p>
+
+  <p>This guide covers everything about Notion filters: how to add them, how to combine multiple conditions with AND/OR logic, how to filter by date dynamically, how to save filtered views so they're always one click away, and the difference between filtering and searching. By the end, your databases will surface exactly the right information at the right time.</p>
+
+  <h2>1. What Are Notion Filters?</h2>
+
+  <p>A Notion filter is a rule you apply to a database view that hides rows not matching the rule. Filters are:</p>
+
+  <ul>
+    <li><strong>Non-destructive:</strong> The hidden rows still exist in your database — filters only hide them from the current view. Switch to an unfiltered view and everything is there.</li>
+    <li><strong>View-specific:</strong> Filters apply per view. The same database can have a "All Tasks" view with no filters and a "My Active Tasks" view with two filters — the underlying data is the same.</li>
+    <li><strong>Saveable:</strong> You can save a filtered view and come back to it anytime. The filters are stored with the view.</li>
+    <li><strong>Dynamic:</strong> Date filters like "is within the next week" or "is in the past month" update automatically based on today's date — you don't need to update them manually.</li>
+  </ul>
+
+  <p><strong>Two types of Notion filters:</strong></p>
+  <ol>
+    <li><strong>Simple filters:</strong> A single condition on one property (e.g., Status is "In Progress")</li>
+    <li><strong>Filter groups with AND/OR logic:</strong> Multiple conditions combined with AND (all must match) or OR (any must match) logic — or a mix of both using filter groups</li>
+  </ol>
+
+  <h2>2. Adding Your First Notion Filter</h2>
+
+  <p>Adding a filter takes three clicks:</p>
+
+  <div class="step-box">
+    <div class="step-num">Step 1</div>
+    <strong>Open a database in any view (table, board, gallery, list, or calendar)</strong>
+    <p style="margin:8px 0 0;">Filters work in every Notion database view. Make sure you're in a database — not a simple bulleted list.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Step 2</div>
+    <strong>Click the "Filter" button at the top right of the view</strong>
+    <p style="margin:8px 0 0;">The Filter button appears in the database toolbar alongside Sort, Group, and Properties. If you don't see it, hover over the database to reveal the toolbar.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">Step 3</div>
+    <strong>Click "Add Filter" → Select a property → Select a condition → Enter a value</strong>
+    <p style="margin:8px 0 0;">The filter applies immediately as you configure it. You'll see the database update in real-time as rows are shown or hidden.</p>
+  </div>
+
+  <div class="callout green">
+    <strong>Quick filter tip:</strong> After clicking Filter, Notion often suggests common filters based on your database properties. You can click a suggestion to apply it instantly instead of building it from scratch. For example, if your database has a Person property, Notion may suggest "Assigned to me" as a quick filter.
+  </div>
+
+  <h2>3. Filter Conditions by Property Type</h2>
+
+  <p>Different property types have different available filter conditions. Here's a comprehensive reference:</p>
+
+  <table>
+    <tr><th>Property Type</th><th>Available Filter Conditions</th></tr>
+    <tr><td><strong>Title / Text / Rich Text</strong></td><td>contains, does not contain, is, is not, starts with, ends with, is empty, is not empty</td></tr>
+    <tr><td><strong>Number</strong></td><td>= (equals), ≠ (does not equal), &gt; (greater than), &lt; (less than), ≥, ≤, is empty, is not empty</td></tr>
+    <tr><td><strong>Select</strong></td><td>is, is not, is empty, is not empty</td></tr>
+    <tr><td><strong>Multi-select</strong></td><td>contains, does not contain, is empty, is not empty</td></tr>
+    <tr><td><strong>Status</strong></td><td>is, is not, is empty, is not empty</td></tr>
+    <tr><td><strong>Date / Created Time / Last Edited</strong></td><td>is, is before, is after, is on or before, is on or after, is within (past week / past month / past year / next week / next month / next year), is empty, is not empty</td></tr>
+    <tr><td><strong>Checkbox</strong></td><td>is checked, is unchecked</td></tr>
+    <tr><td><strong>Person</strong></td><td>contains, does not contain, is empty, is not empty</td></tr>
+    <tr><td><strong>Relation</strong></td><td>contains, does not contain, is empty, is not empty</td></tr>
+    <tr><td><strong>Formula</strong></td><td>Depends on output type: text formulas get text conditions, number formulas get number conditions, etc.</td></tr>
+    <tr><td><strong>URL / Email / Phone</strong></td><td>contains, does not contain, is, is not, is empty, is not empty</td></tr>
+    <tr><td><strong>Files & Media</strong></td><td>is empty, is not empty</td></tr>
+  </table>
+
+  <p>The condition you need drives the property choice. If you want to filter tasks due this week, you need a Date property. If you want to filter by who's responsible, you need a Person property. Build your database properties with filtering in mind from the start.</p>
+
+  <h2>4. Using AND vs. OR Logic in Notion Filters</h2>
+
+  <p>When you add more than one filter condition, you need to decide whether rows must match ALL conditions or ANY condition. This is the AND vs. OR choice.</p>
+
+  <h3>AND Logic (Default)</h3>
+
+  <p>Every condition must be true for a row to show. Adding a second filter to an existing filter panel defaults to AND:</p>
+
+  <div class="filter-example">
+    <div class="filter-line">
+      <span class="filter-chip">Status</span>
+      <span class="filter-chip condition">is</span>
+      <span class="filter-chip value">"In Progress"</span>
+    </div>
+    <div class="filter-line">
+      <span class="filter-chip logic">AND</span>
+      <span class="filter-chip">Assigned To</span>
+      <span class="filter-chip condition">contains</span>
+      <span class="filter-chip value">Me</span>
+    </div>
+  </div>
+
+  <p>This shows only tasks that are BOTH In Progress AND assigned to you. A task assigned to you that's "Done" is hidden. A task that's "In Progress" assigned to someone else is also hidden.</p>
+
+  <h3>OR Logic</h3>
+
+  <p>Any condition being true is enough for a row to show. To use OR, after adding your first filter, look for the option to change the logic from AND to OR within the filter panel:</p>
+
+  <div class="filter-example">
+    <div class="filter-line">
+      <span class="filter-chip">Status</span>
+      <span class="filter-chip condition">is</span>
+      <span class="filter-chip value">"In Progress"</span>
+    </div>
+    <div class="filter-line">
+      <span class="filter-chip logic">OR</span>
+      <span class="filter-chip">Status</span>
+      <span class="filter-chip condition">is</span>
+      <span class="filter-chip value">"In Review"</span>
+    </div>
+  </div>
+
+  <p>This shows tasks that are either In Progress OR In Review — effectively combining two status values into one filter view.</p>
+
+  <h3>Mixed AND/OR Logic Using Filter Groups</h3>
+
+  <p>For more complex filtering, Notion supports filter groups — independent groups of conditions combined with OR between groups, and AND within each group:</p>
+
+  <div class="filter-example">
+    <div style="border-left:3px solid #a78bfa; padding-left:12px; margin-bottom:8px;">
+      <div class="filter-line">
+        <span style="color:#a78bfa; font-size:0.8rem; margin-bottom:4px;">GROUP 1</span>
+      </div>
+      <div class="filter-line">
+        <span class="filter-chip">Status</span>
+        <span class="filter-chip condition">is</span>
+        <span class="filter-chip value">"In Progress"</span>
+      </div>
+      <div class="filter-line">
+        <span class="filter-chip logic">AND</span>
+        <span class="filter-chip">Assignee</span>
+        <span class="filter-chip condition">contains</span>
+        <span class="filter-chip value">Me</span>
+      </div>
+    </div>
+    <div style="margin:8px 0; color:#f59e0b; font-weight:700; font-size:0.9rem;">OR</div>
+    <div style="border-left:3px solid #a78bfa; padding-left:12px;">
+      <div class="filter-line">
+        <span style="color:#a78bfa; font-size:0.8rem; margin-bottom:4px;">GROUP 2</span>
+      </div>
+      <div class="filter-line">
+        <span class="filter-chip">Priority</span>
+        <span class="filter-chip condition">is</span>
+        <span class="filter-chip value">"Urgent"</span>
+      </div>
+    </div>
+  </div>
+
+  <p>This shows: (tasks that are In Progress AND assigned to me) OR (tasks that are Urgent regardless of assignee or status). Filter groups let you build sophisticated views that would be impossible with simple AND/OR alone.</p>
+
+  <h2>5. Filter by Date — 5 Common Use Cases</h2>
+
+  <p>Date filters are the most powerful Notion filters because the "is within" conditions are dynamic — they always calculate relative to today's date. You set them once and they stay current forever.</p>
+
+  <table>
+    <tr><th>What You Want to See</th><th>Property</th><th>Condition</th><th>Value</th></tr>
+    <tr><td>Tasks due this week</td><td>Due Date</td><td>is within</td><td>the next week</td></tr>
+    <tr><td>Today's agenda</td><td>Due Date</td><td>is</td><td>today</td></tr>
+    <tr><td>Overdue tasks</td><td>Due Date</td><td>is before</td><td>today</td></tr>
+    <tr><td>This month's projects</td><td>Start Date</td><td>is within</td><td>the past month</td></tr>
+    <tr><td>Items created this year</td><td>Created time</td><td>is within</td><td>the past year</td></tr>
+    <tr><td>Follow-ups needed soon</td><td>Next Follow-Up</td><td>is on or before</td><td>in 3 days (manual date)</td></tr>
+    <tr><td>Invoices from last quarter</td><td>Invoice Date</td><td>is within</td><td>the past 3 months (manual date)</td></tr>
+    <tr><td>Upcoming deadlines</td><td>Deadline</td><td>is within</td><td>the next month</td></tr>
+  </table>
+
+  <div class="callout">
+    <strong>Overdue filter nuance:</strong> To show overdue tasks (past due date AND not done), combine two filters: Due Date is before today AND Done checkbox is unchecked. Without the second condition, completed tasks that happened to be done late would also show.
+  </div>
+
+  <h3>The "Is Empty" Date Filter</h3>
+
+  <p>The "is empty" condition for date properties is extremely useful. It shows all rows where the date hasn't been set — perfect for finding tasks without a due date ("What's missing a deadline?") or contacts without a next follow-up date ("Who am I neglecting?").</p>
+
+  <h2>6. Saving Filtered Views in Notion</h2>
+
+  <p>A filter you have to re-apply every time provides only half the value. Saved views make your filters permanent and one-click accessible — the real power of Notion databases.</p>
+
+  <h3>How to Save a Filtered View</h3>
+
+  <ol>
+    <li>Set up your filters the way you want them</li>
+    <li>Click the <strong>+</strong> button next to the existing view tabs at the top of the database</li>
+    <li>Choose the view layout (Table, Board, Calendar, Gallery, or List)</li>
+    <li>Notion creates a new view — add the same filters to this view</li>
+    <li>Double-click the view tab name and rename it to something descriptive</li>
+  </ol>
+
+  <p>Now the view is permanently saved with those filters. Click the tab anytime to instantly see the filtered results.</p>
+
+  <h3>8 Saved Views Every Freelancer Should Have</h3>
+
+  <div class="view-card">
+    <div class="view-name">My Active Tasks (Table view)</div>
+    <p style="margin:0; color:#9ca3af; font-size:0.9rem;">Filter: Assignee = Me AND Status ≠ Done. Sort: Due Date ascending. Shows everything on your plate in deadline order.</p>
+  </div>
+
+  <div class="view-card">
+    <div class="view-name">Due This Week (Table view)</div>
+    <p style="margin:0; color:#9ca3af; font-size:0.9rem;">Filter: Due Date is within the next week AND Done is unchecked. Sort: Due Date ascending. Your weekly planning view.</p>
+  </div>
+
+  <div class="view-card">
+    <div class="view-name">Overdue (Table view)</div>
+    <p style="margin:0; color:#9ca3af; font-size:0.9rem;">Filter: Due Date is before today AND Done is unchecked. Sort: Due Date ascending. The "fix this now" view — should be empty at all times.</p>
+  </div>
+
+  <div class="view-card">
+    <div class="view-name">Hot Prospects (Board view)</div>
+    <p style="margin:0; color:#9ca3af; font-size:0.9rem;">Filter: Type = Prospect AND Status ≠ Lost. Group by: Pipeline Stage. Your sales pipeline focused on live opportunities.</p>
+  </div>
+
+  <div class="view-card">
+    <div class="view-name">Active Clients (Gallery view)</div>
+    <p style="margin:0; color:#9ca3af; font-size:0.9rem;">Filter: Status = Active. Gallery with client logo or cover. Visual quick-access to active client pages.</p>
+  </div>
+
+  <div class="view-card">
+    <div class="view-name">Unpaid Invoices (Table view)</div>
+    <p style="margin:0; color:#9ca3af; font-size:0.9rem;">Filter: Payment Status = Unpaid OR Payment Status = Overdue. Sort: Invoice Date ascending. Know who owes you money at a glance.</p>
+  </div>
+
+  <div class="view-card">
+    <div class="view-name">In Review (Board view)</div>
+    <p style="margin:0; color:#9ca3af; font-size:0.9rem;">Filter: Status = In Review or Awaiting Feedback. Shows everything waiting for client input so nothing falls through the cracks.</p>
+  </div>
+
+  <div class="view-card">
+    <div class="view-name">Today (Calendar view)</div>
+    <p style="margin:0; color:#9ca3af; font-size:0.9rem;">No filter needed — the calendar view scoped to Day automatically shows only today. Your daily agenda view.</p>
+  </div>
+
+  <div class="cta-box">
+    <h3>Stop Starting From Scratch</h3>
+    <p>FreelanceOS Pro includes a pre-built freelance Notion workspace with all the right databases and views already set up — client CRM, project tracker, invoice log, and task system with saved filtered views for "Active Projects", "Unpaid Invoices", "Hot Prospects", and more.</p>
+    <p class="price-note">Use code FLASH40 for 40% off</p>
+    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro →</a>
+  </div>
+
+  <h2>7. Combining Filters with Sorts</h2>
+
+  <p>Filters and sorts work together — filters decide WHAT shows, sorts decide in what ORDER it shows. Always use them together for the most useful views.</p>
+
+  <p>The most powerful combinations:</p>
+
+  <table>
+    <tr><th>Goal</th><th>Filter</th><th>Sort</th></tr>
+    <tr><td>Urgent deadlines first</td><td>Due Date is within next week AND Done = false</td><td>Due Date ascending</td></tr>
+    <tr><td>Highest-value prospects</td><td>Status = Prospect AND Stage = Proposal Sent</td><td>Deal Value descending</td></tr>
+    <tr><td>Newest invoices</td><td>Payment Status = Unpaid</td><td>Invoice Date descending</td></tr>
+    <tr><td>Most recently active clients</td><td>Status = Active</td><td>Last Edited Time descending</td></tr>
+    <tr><td>Oldest follow-ups needed</td><td>Next Follow-Up is on or before today</td><td>Next Follow-Up ascending</td></tr>
+  </table>
+
+  <p>To add a sort: click the <strong>Sort</strong> button in the database toolbar → click <strong>Add Sort</strong> → select a property → choose ascending or descending. Sorts stack — you can sort by priority first, then by due date as a tiebreaker.</p>
+
+  <h2>8. Filter vs. Search in Notion</h2>
+
+  <p>Notion beginners often confuse filters with Notion's search feature. They serve completely different purposes:</p>
+
+  <table>
+    <tr><th>Feature</th><th>Notion Filter</th><th>Notion Search (Cmd+P)</th></tr>
+    <tr><td><strong>What it searches</strong></td><td>Properties of rows in a specific database</td><td>Content and titles of all pages in your workspace</td></tr>
+    <tr><td><strong>Scope</strong></td><td>One database view</td><td>Entire workspace</td></tr>
+    <tr><td><strong>Persistence</strong></td><td>Saved with a view, always active</td><td>One-off — clears when closed</td></tr>
+    <tr><td><strong>What it can match</strong></td><td>Property values, checkboxes, dates, people, status</td><td>Any text inside any page or database row</td></tr>
+    <tr><td><strong>Best for</strong></td><td>Ongoing curated views ("show me active projects")</td><td>Finding a specific page by keyword ("where did I write about client X?")</td></tr>
+    <tr><td><strong>Updates automatically</strong></td><td>Yes — dynamic date filters always recalculate</td><td>N/A — you type a new query each time</td></tr>
+  </table>
+
+  <div class="callout">
+    <strong>Use filters for your daily workflows. Use search for one-off lookups.</strong> If you find yourself re-typing the same search query regularly, that's a sign you should build a saved filtered view instead.
+  </div>
+
+  <h3>Filtering Within Search Results</h3>
+
+  <p>Notion's search (Cmd+P) has its own basic filter options — you can narrow results to a specific database or page. But these are search filters (narrowing search results), not database view filters (hiding rows in a view). Don't confuse the two.</p>
+
+  <h2>9. Advanced Filter Tips for Power Users</h2>
+
+  <h3>Filter by Formula Output</h3>
+
+  <p>Formula properties output a value (text, number, boolean, or date) that you can filter on. Create a formula that calculates something (e.g., days until deadline, or a priority score), then filter by that formula's output. For example:</p>
+
+  <ul>
+    <li>Formula: <code>dateBetween(prop("Due Date"), now(), "days")</code> → outputs number of days until due</li>
+    <li>Filter: Formula &lt; 7 → shows only tasks due within 7 days</li>
+  </ul>
+
+  <h3>Filter Linked Databases on a Hub Page</h3>
+
+  <p>When you embed a linked database view on a hub page (like a client page showing that client's projects), you can add filters that automatically scope it to just that client's records. Use a Relation property filter: "Client contains [current page]" — when set up correctly, each client page shows only their projects.</p>
+
+  <h3>Sharing Filters with Guests</h3>
+
+  <p>When you share a Notion page with a guest or the public, they see the database with whichever view is active when they view the page. You can create a specific "Public View" with filters that show only published or approved records, and share only that view. Guests cannot see other views unless they have edit access.</p>
+
+  <h3>Filter + Group = Ultimate Board View</h3>
+
+  <p>Combining filters with the Group By option creates powerful Kanban-style boards scoped to exactly what matters. Example: filter by Assignee = Me, then group by Status. You see your personal Kanban board — nobody else's tasks, just yours, organized by stage.</p>
+
+  <h2>FAQ: Notion Filters</h2>
+
+  <div class="faq-item">
+    <h3>How do I filter a Notion database?</h3>
+    <p>Open a Notion database, click the Filter button at the top right of the view, click Add Filter, select a property, choose a condition (like "contains" or "is"), and enter a value. The filter applies immediately and only shows rows that match the condition. You can add multiple filters and save the view for future use.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>How do I use OR in Notion filters?</h3>
+    <p>Click Filter, add your first condition, then click Add Filter again. By default, new filters use AND logic. To switch to OR, look for the "And" text between filter conditions — you can click it to toggle to "Or". For more complex OR logic across groups of conditions, use the Add Filter Group option to create separate filter groups that are combined with OR between groups.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Can I save filtered views in Notion?</h3>
+    <p>Yes. Set your filters, then create a new view by clicking the + next to the view tabs. Add the same filters to that view and rename it descriptively — "This Week", "My Active Tasks", "Overdue Invoices". The filters are permanently saved with the view, so clicking the tab always applies them instantly.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>How do I filter by date in Notion?</h3>
+    <p>Click Filter → Add Filter → select your date property → choose a condition: "is before today" for overdue, "is within the next week" for upcoming, "is" for a specific date. The "is within" conditions are dynamic — "next week" always means the next 7 days from today, so the filter stays accurate without manual updating.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>What is the difference between Notion filter and search?</h3>
+    <p>Notion filters apply to a specific database view and show/hide rows based on property values — they're persistent, saveable, and update dynamically. Notion search (Cmd+P or Ctrl+P) does full-text search across your entire workspace, finding pages by their content or title. Use filters for ongoing curated views; use search for one-off lookups when you're trying to find a specific page.</p>
+  </div>
+
+  <div class="cta-box">
+    <h3>A Notion System That Works From Day One</h3>
+    <p>FreelanceOS Pro gives you a complete Notion workspace with all the databases, views, and filters you need as a freelancer — already built and ready to use. CRM, project tracker, invoice log, task board, client hub. Just duplicate and fill in your data.</p>
+    <p class="price-note">Code FLASH40 = 40% off — limited time</p>
+    <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro — 40% Off →</a>
+    <p style="margin-top:16px; font-size:0.85rem; color:#9ca3af;">Instant Notion template delivery. One-time payment. No subscription.</p>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 FreelanceOS. <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/freelanceos.html">Templates</a></p>
+</footer>
+
+</body>
+</html>

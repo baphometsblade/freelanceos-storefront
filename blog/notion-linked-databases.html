@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion Linked Databases: How to Use Linked Views and Relations in Notion</title>
+<meta name="description" content="Learn how to use Notion linked databases — creating relations between databases, rollup properties, linked views, synced databases, and how to build powerful multi-database systems in Notion in 2026.">
+<meta property="og:title" content="Notion Linked Databases: The Complete Guide to Relations, Rollups, and Linked Views">
+<meta property="og:description" content="Master Notion linked databases — relations, rollups, linked views, and synced blocks. Build a 3-database freelance system in Notion in 2026.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://baphometsblade.github.io/freelanceos-storefront/blog/notion-linked-databases">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f0f;color:#e5e7eb;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.7}
+nav{background:#111827;border-bottom:1px solid #374151;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-logo{color:#a78bfa;font-weight:700;font-size:1.2rem;text-decoration:none}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{color:#e5e7eb;text-decoration:none;font-size:.9rem;transition:color .2s}
+.nav-links a:hover{color:#a78bfa}
+.hero{background:linear-gradient(135deg,#111827 0%,#1f1035 100%);padding:4rem 2rem;text-align:center}
+.hero-badge{background:#7c3aed20;color:#a78bfa;border:1px solid #7c3aed40;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;display:inline-block;margin-bottom:1rem}
+h1{color:#a78bfa;font-size:2.2rem;max-width:800px;margin:0 auto 1rem;line-height:1.3}
+.hero-meta{color:#9ca3af;font-size:.9rem;margin-bottom:1.5rem}
+.hero-meta span{margin:0 .5rem}
+.container{max-width:860px;margin:0 auto;padding:2rem}
+h2{color:#a78bfa;font-size:1.5rem;margin:2.5rem 0 1rem;padding-top:1rem}
+h3{color:#c4b5fd;font-size:1.15rem;margin:1.8rem 0 .7rem}
+p{margin-bottom:1rem;color:#d1d5db}
+ul,ol{margin:1rem 0 1rem 1.5rem;color:#d1d5db}
+li{margin-bottom:.5rem}
+.callout{background:#1f2937;border-left:4px solid #a78bfa;padding:1.2rem 1.5rem;border-radius:0 8px 8px 0;margin:1.5rem 0}
+.callout p{margin:0;color:#e5e7eb}
+.callout.green{border-left-color:#10b981}
+.step-box{background:#1f2937;border:1px solid #374151;border-radius:10px;padding:1.5rem;margin:1rem 0}
+.step-box h4{color:#10b981;margin-bottom:.5rem;font-size:1rem}
+.table-wrap{overflow-x:auto;margin:1.5rem 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#1f2937;color:#a78bfa;padding:.8rem 1rem;text-align:left;border-bottom:2px solid #374151}
+td{padding:.7rem 1rem;border-bottom:1px solid #374151;color:#d1d5db}
+tr:nth-child(even) td{background:#1a1a2e}
+.cta-box{background:linear-gradient(135deg,#1f1035,#111827);border:1px solid #7c3aed40;border-radius:16px;padding:2.5rem;text-align:center;margin:3rem 0}
+.cta-box h3{color:#a78bfa;font-size:1.4rem;margin-bottom:.8rem}
+.cta-box p{color:#d1d5db;margin-bottom:1.5rem}
+.btn{background:#7c3aed;color:#fff;padding:.9rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;transition:background .2s}
+.btn:hover{background:#6d28d9}
+.btn-outline{background:transparent;border:1px solid #7c3aed;color:#a78bfa;margin-left:.8rem}
+.faq-item{border:1px solid #374151;border-radius:10px;padding:1.2rem 1.5rem;margin:.8rem 0;background:#1f2937}
+.faq-q{color:#a78bfa;font-weight:600;margin-bottom:.5rem}
+.faq-a{color:#d1d5db;margin:0}
+.diagram{background:#1a1a2e;border:1px solid #374151;border-radius:10px;padding:1.5rem;margin:1.5rem 0;font-family:'Courier New',monospace;font-size:.85rem;color:#a78bfa;text-align:center}
+.diagram .arrow{color:#10b981;font-size:1.2rem}
+.db-card{background:#1f2937;border:1px solid #374151;border-radius:8px;padding:.8rem 1.2rem;display:inline-block;min-width:140px;text-align:center;color:#e5e7eb;font-weight:600}
+.db-row{display:flex;justify-content:center;align-items:center;gap:1rem;flex-wrap:wrap;margin:.8rem 0}
+footer{background:#111827;border-top:1px solid #374151;padding:2rem;text-align:center;color:#6b7280;font-size:.85rem;margin-top:4rem}
+footer a{color:#a78bfa;text-decoration:none}
+@media(max-width:640px){h1{font-size:1.6rem}.container{padding:1rem}.btn-outline{margin-left:0;margin-top:.5rem}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Notion Linked Databases: The Complete Guide to Relations, Rollups, and Linked Views",
+      "description": "Learn how to use Notion linked databases — relations, rollup properties, linked views, synced blocks, and how to build multi-database systems in Notion in 2026.",
+      "datePublished": "2026-07-11",
+      "dateModified": "2026-07-11",
+      "author": {"@type": "Organization", "name": "FreelanceOS"},
+      "publisher": {"@type": "Organization", "name": "FreelanceOS", "url": "https://baphometsblade.github.io/freelanceos-storefront/"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://baphometsblade.github.io/freelanceos-storefront/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "Notion Linked Databases Guide", "item": "https://baphometsblade.github.io/freelanceos-storefront/blog/notion-linked-databases"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "What is a Notion linked database?", "acceptedAnswer": {"@type": "Answer", "text": "A Notion linked database can mean two things: (1) a Linked View — a view of an existing database placed on a different Notion page, showing the same data without duplication; or (2) a Relation — a property that connects two separate databases so items in one can reference items in the other."}},
+        {"@type": "Question", "name": "How do I create a relation in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "Open a database, click the + button to add a new property, select Relation as the property type, then choose the database you want to link to. Notion creates a bidirectional relation — the linked database gets a matching relation property pointing back to yours."}},
+        {"@type": "Question", "name": "What is a rollup in Notion?", "acceptedAnswer": {"@type": "Answer", "text": "A Rollup is a property type that calculates a value based on items in a related database. For example, a Project database can have a rollup that counts the number of related Tasks, or sums the Hours Logged across all related time entries."}},
+        {"@type": "Question", "name": "Can I link two Notion databases?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — use a Relation property to link two Notion databases. Once linked, items in each database can reference items in the other. You can then add Rollup properties to calculate aggregated values (counts, sums, earliest dates, etc.) from the related database."}},
+        {"@type": "Question", "name": "What is the difference between a synced block and a linked database?", "acceptedAnswer": {"@type": "Answer", "text": "A synced block duplicates a specific block's content across multiple pages — edits to one copy automatically update all copies. A linked database (linked view) is a different view of an existing database placed on another page. Synced blocks are for static content like headers; linked databases are for dynamic data."}},
+        {"@type": "Question", "name": "How do I show related items on a Notion page?", "acceptedAnswer": {"@type": "Answer", "text": "Add a linked database view to the page using /linked or /create linked view. Set a filter on the linked view using 'Project equals this page' (or similar) to show only items related to the current page. This is the standard pattern for project pages showing their related tasks."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<nav>
+  <a href="/freelanceos-storefront/" class="nav-logo">FreelanceOS</a>
+  <div class="nav-links">
+    <a href="/freelanceos-storefront/freelanceos.html">Templates</a>
+    <a href="/freelanceos-storefront/blog/">Blog</a>
+    <a href="/freelanceos-storefront/freelanceos.html">Get FreelanceOS</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Notion Deep Dive 2026</div>
+  <h1>Notion Linked Databases: The Complete Guide to Relations, Rollups, and Linked Views</h1>
+  <div class="hero-meta">
+    <span>15 min read</span>
+    <span>•</span>
+    <span>Updated July 2026</span>
+    <span>•</span>
+    <span>FreelanceOS Team</span>
+  </div>
+  <p style="color:#9ca3af;max-width:600px;margin:0 auto">Relations, rollups, linked views, and synced blocks — the four features that turn Notion from a note-taking tool into a relational database system. Master all of them here.</p>
+</div>
+
+<div class="container">
+
+<h2>What Are Notion Linked Databases?</h2>
+<p>The term "linked databases" in Notion covers two distinct but related features — and it's worth knowing the difference from the start:</p>
+
+<ul>
+  <li><strong>Relations</strong> — a property that connects individual pages in two different databases. A Task can be linked to its Project. A Project can be linked to its Client. This connection lets data flow between databases.</li>
+  <li><strong>Linked Views (Linked Database Views)</strong> — a view of an existing database placed on a different Notion page. The data is identical to the source database — you're just showing it in a new context, typically with a filter applied.</li>
+</ul>
+
+<p>Both features are the foundation of sophisticated Notion systems. Without them, Notion is a collection of disconnected lists. With them, Notion becomes a fully relational workspace where everything connects.</p>
+
+<div class="callout">
+  <p><strong>Real-world example:</strong> A freelancer's Notion system connects three databases: Clients → Projects → Tasks. Each Task links to a Project. Each Project links to a Client. A rollup on Projects counts open tasks. A rollup on Clients sums total project revenue. One workspace, fully connected.</p>
+</div>
+
+<h2>Understanding Database Relations</h2>
+<p>A Relation property in Notion creates a direct link between pages in two databases. Think of it like a foreign key in a traditional SQL database — except it's visual, clickable, and requires no code.</p>
+
+<h3>One-to-Many vs. Many-to-Many</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Relation Type</th><th>Example</th><th>Notion Setting</th></tr></thead>
+  <tbody>
+    <tr><td>One-to-many</td><td>One project has many tasks. Each task belongs to one project.</td><td>Default (no change needed)</td></tr>
+    <tr><td>Many-to-many</td><td>One task can belong to multiple projects. One project has many tasks.</td><td>Also default in Notion — just link multiple items</td></tr>
+    <tr><td>One-to-one</td><td>Each invoice belongs to exactly one project.</td><td>Convention only — Notion doesn't enforce cardinality</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Notion creates bidirectional relations by default. When you add a Relation property to Database A pointing to Database B, Notion automatically adds a matching relation property on Database B pointing back to Database A. You can rename or hide either side, but both are always present.</p>
+
+<h2>Step-by-Step: Build Your First Notion Relation</h2>
+
+<div class="step-box">
+  <h4>Step 1 — Create a Tasks database</h4>
+  <p>In your Notion workspace, create a new page and add a database (full page or inline). Name it <strong>Tasks</strong>. Add properties: Name (title), Status (Select), Due Date (Date).</p>
+</div>
+
+<div class="step-box">
+  <h4>Step 2 — Create a Projects database</h4>
+  <p>Create another database on a different page. Name it <strong>Projects</strong>. Add properties: Project Name (title), Client (text), Status (Select), Start Date (Date).</p>
+</div>
+
+<div class="step-box">
+  <h4>Step 3 — Add a Relation property to Tasks</h4>
+  <p>In your Tasks database, click <strong>+ Add a property</strong>. Select <strong>Relation</strong> as the property type. A dropdown appears asking which database to link to — select <strong>Projects</strong>. Click <strong>Add relation</strong>.</p>
+</div>
+
+<div class="step-box">
+  <h4>Step 4 — Add a task and link it to a project</h4>
+  <p>Create a new task row. Click the <strong>Project</strong> relation field. A search popup appears — type the name of a project and select it. The task is now linked to that project.</p>
+</div>
+
+<div class="step-box">
+  <h4>Step 5 — See the link on both sides</h4>
+  <p>Open your Projects database. Notice Notion has added a <strong>Tasks</strong> relation property automatically. Click on a project row — it shows all tasks linked to that project. The connection is bidirectional.</p>
+</div>
+
+<h2>Rollup Properties Explained</h2>
+<p>A Rollup property reads data from related pages and calculates a value. It's how you answer questions like "how many tasks does this project have?" or "what's the total revenue from this client?" — all automatically, always up to date.</p>
+
+<h3>Setting Up a Rollup</h3>
+<ol>
+  <li>In your database, click <strong>+ Add a property</strong></li>
+  <li>Choose <strong>Rollup</strong> as the property type</li>
+  <li>In the rollup settings, select the <strong>Relation</strong> property to pull data from (e.g., "Tasks")</li>
+  <li>Select the <strong>property</strong> from the related database to roll up (e.g., "Status")</li>
+  <li>Select the <strong>calculation function</strong>:</li>
+</ol>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Rollup Function</th><th>What It Calculates</th><th>Best For</th></tr></thead>
+  <tbody>
+    <tr><td>Count all</td><td>Total number of related items</td><td>Task count per project</td></tr>
+    <tr><td>Count values</td><td>Number of related items with a value in the property</td><td>Tasks with due dates assigned</td></tr>
+    <tr><td>Count unique values</td><td>Number of distinct values</td><td>Number of unique clients in a project</td></tr>
+    <tr><td>Sum</td><td>Total of a number property</td><td>Total revenue per client</td></tr>
+    <tr><td>Average</td><td>Mean of a number property</td><td>Average task duration</td></tr>
+    <tr><td>Min</td><td>Smallest value</td><td>Earliest deadline in a project</td></tr>
+    <tr><td>Max</td><td>Largest value</td><td>Latest deadline, highest invoice</td></tr>
+    <tr><td>Date range</td><td>Earliest to latest date</td><td>Project timeline from task dates</td></tr>
+    <tr><td>Show original</td><td>Displays all related values</td><td>List of all assignees on a project</td></tr>
+    <tr><td>Percent checked</td><td>% of checkboxes that are true</td><td>Task completion percentage</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>6 Practical Relation + Rollup Combinations</h2>
+<p>These are the most common relation+rollup patterns used in professional Notion systems. Copy any of these directly into your workspace.</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Use Case</th><th>Database Pair</th><th>Rollup Property</th><th>Function</th><th>Result</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Task count per project</td><td>Tasks → Projects</td><td>Task Name</td><td>Count all</td><td>"14 tasks"</td></tr>
+    <tr><td>Total invoiced per client</td><td>Invoices → Clients</td><td>Amount</td><td>Sum</td><td>"$8,400"</td></tr>
+    <tr><td>Latest activity per client</td><td>Activities → Clients</td><td>Date</td><td>Max date</td><td>"July 8, 2026"</td></tr>
+    <tr><td>Posts per content category</td><td>Posts → Categories</td><td>Post Name</td><td>Count all</td><td>"23 posts"</td></tr>
+    <tr><td>Total hours per contractor</td><td>Time Logs → People</td><td>Hours</td><td>Sum</td><td>"47.5 hrs"</td></tr>
+    <tr><td>Project completion %</td><td>Tasks → Projects</td><td>Done (checkbox)</td><td>Percent checked</td><td>"68%"</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- MID CTA -->
+<div class="cta-box">
+  <h3>All 3 Databases. Pre-Built and Connected.</h3>
+  <p>FreelanceOS Pro includes a fully wired Clients → Projects → Tasks system with relations, rollups, and linked views already configured. No setup required — open the template and start adding your data.</p>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro — Save 40% →</a>
+  <p style="margin-top:.8rem;font-size:.8rem;color:#6b7280">Code FLASH40 already applied · One-time purchase · Instant Notion access</p>
+</div>
+
+<h2>Linked Views vs. Filtered Views</h2>
+<p>This is one of the most misunderstood distinctions in Notion. Both involve showing a subset of database data — but they work differently.</p>
+
+<h3>Filtered Views (in the Source Database)</h3>
+<p>A filter applied to a view within the original database page. Shows a subset of the same data. Both the filter and the data live in the same place.</p>
+
+<h3>Linked Database Views (on a Different Page)</h3>
+<p>A copy of the database view placed on a <em>different</em> Notion page. The underlying data is the same database — no duplication — but the view appears in a new context with its own filters and layout.</p>
+
+<div class="callout class">
+  <p><strong>The killer use case:</strong> Open a Project page. Add a linked view of your Tasks database. Set a filter: "Project equals this page." Now every Project page automatically shows only its own tasks — no manual sorting, no data entry. This is the backbone of professional Notion project management.</p>
+</div>
+
+<h3>How to Add a Linked Database View</h3>
+<ol>
+  <li>Navigate to the page where you want the linked view (e.g., a specific Project page)</li>
+  <li>Type <strong>/create linked view of database</strong> or <strong>/linked</strong></li>
+  <li>Search for and select your Tasks database</li>
+  <li>The database appears on the page — now add a filter: "Project → is → [this page]"</li>
+  <li>The view now shows only tasks linked to this specific project</li>
+</ol>
+
+<h2>Synced Blocks</h2>
+<p>Synced blocks are different from linked databases — they're for content, not data. A synced block lets you write a block of content once and have it appear identically on multiple pages. Edit one copy and all copies update automatically.</p>
+
+<h3>When to Use Synced Blocks</h3>
+<ul>
+  <li>Navigation headers that appear on multiple pages in a Notion section</li>
+  <li>Legal disclaimers or standard terms that need to be identical everywhere</li>
+  <li>Recurring weekly check-in prompts shared across team member pages</li>
+  <li>Product descriptions shared between a sales page and a project page</li>
+</ul>
+
+<h3>How to Create a Synced Block</h3>
+<ol>
+  <li>Write any block (or group of blocks) on a Notion page</li>
+  <li>Click the six-dot handle on the left of the block</li>
+  <li>Select <strong>Turn into synced block</strong></li>
+  <li>The block turns red — this is the "source" synced block</li>
+  <li>Copy it (<span style="font-family:monospace;color:#10b981">Cmd+C</span>) and paste on another page — it appears with a red border, synced to the original</li>
+</ol>
+
+<h2>Building a 3-Database System: Clients → Projects → Tasks</h2>
+<p>The classic freelance OS structure connects three databases in sequence. Here's the complete setup:</p>
+
+<div class="diagram">
+  <div class="db-row">
+    <div class="db-card">Clients DB</div>
+    <div class="arrow">→ relation</div>
+    <div class="db-card">Projects DB</div>
+    <div class="arrow">→ relation</div>
+    <div class="db-card">Tasks DB</div>
+  </div>
+  <div style="margin-top:.5rem;font-size:.75rem;color:#9ca3af">Each database connects to the next via a Relation property</div>
+</div>
+
+<h3>Clients Database Properties</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>Client Name</td><td>Title</td><td>Primary identifier</td></tr>
+    <tr><td>Status</td><td>Select</td><td>Active / Past / Prospect</td></tr>
+    <tr><td>Contact Email</td><td>Email</td><td>Primary contact</td></tr>
+    <tr><td>Projects</td><td>Relation → Projects DB</td><td>Links to all their projects</td></tr>
+    <tr><td>Total Revenue</td><td>Rollup (Projects → Invoice Total, Sum)</td><td>All-time revenue from this client</td></tr>
+    <tr><td>Active Projects</td><td>Rollup (Projects → Status, Count where Active)</td><td>How many live projects</td></tr>
+    <tr><td>Last Activity</td><td>Rollup (Projects → Last Edited, Max)</td><td>When you last touched their work</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Projects Database Properties</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>Project Name</td><td>Title</td><td>Primary identifier</td></tr>
+    <tr><td>Client</td><td>Relation → Clients DB</td><td>Which client owns this project</td></tr>
+    <tr><td>Status</td><td>Select</td><td>Discovery / Active / Review / Done</td></tr>
+    <tr><td>Start / End Date</td><td>Date</td><td>Project timeline</td></tr>
+    <tr><td>Invoice Total</td><td>Number</td><td>Value of this project</td></tr>
+    <tr><td>Tasks</td><td>Relation → Tasks DB</td><td>Links to all tasks in this project</td></tr>
+    <tr><td>Task Count</td><td>Rollup (Tasks → Name, Count)</td><td>Total tasks</td></tr>
+    <tr><td>Completion %</td><td>Rollup (Tasks → Done checkbox, Percent checked)</td><td>Progress at a glance</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Tasks Database Properties</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>Task Name</td><td>Title</td><td>Primary identifier</td></tr>
+    <tr><td>Project</td><td>Relation → Projects DB</td><td>Which project this task belongs to</td></tr>
+    <tr><td>Status</td><td>Status</td><td>To Do / In Progress / Done</td></tr>
+    <tr><td>Due Date</td><td>Date</td><td>Deadline</td></tr>
+    <tr><td>Priority</td><td>Select</td><td>High / Medium / Low</td></tr>
+    <tr><td>Done</td><td>Checkbox</td><td>Used by rollup for completion %</td></tr>
+    <tr><td>Estimated Hours</td><td>Number</td><td>Time estimate</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq-item">
+  <div class="faq-q">What is a Notion linked database?</div>
+  <div class="faq-a">A Notion linked database can mean two things: (1) a <strong>Linked View</strong> — a view of an existing database placed on a different Notion page, showing the same data without duplication; or (2) a <strong>Relation</strong> — a property that connects two separate databases so items in one can reference items in the other.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">How do I create a relation in Notion?</div>
+  <div class="faq-a">Open a database, click the + button to add a new property, select <strong>Relation</strong> as the property type, then choose the database you want to link to. Notion creates a bidirectional relation automatically — the linked database gets a matching relation property pointing back to yours. You can then click any relation field to search and select related pages.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">What is a rollup in Notion?</div>
+  <div class="faq-a">A Rollup is a property type that calculates a value based on items in a related database. For example, a Projects database can have a rollup that counts the number of related Tasks, or a Clients database can roll up the sum of all project invoices. Rollups update automatically whenever the related data changes.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Can I link two Notion databases?</div>
+  <div class="faq-a">Yes — use a Relation property to link two Notion databases. Once linked, items in each database can reference items in the other. You can then add Rollup properties to calculate aggregated values from the related database, like counts, sums, averages, or earliest/latest dates.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">What is the difference between a synced block and a linked database?</div>
+  <div class="faq-a">A synced block duplicates a block's content across multiple pages — edits to one copy automatically update all copies. It's for static content like headers and disclaimers. A linked database view is a filtered view of a database placed on another page — it shows dynamic data that updates as the database changes. They solve completely different problems.</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">How do I show related items on a Notion page?</div>
+  <div class="faq-a">Add a linked database view to the page by typing /linked or /create linked view of database. Select your database, then set a filter condition like "Project equals this page." The linked view will then show only items related to that specific project page — the standard pattern for project management in Notion.</div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="cta-box">
+  <h3>Skip the Setup. Get the System.</h3>
+  <p>FreelanceOS Pro is a complete Notion workspace with Clients → Projects → Tasks fully wired with relations, rollups, and linked views. Everything covered in this guide — already built and ready to use.</p>
+  <a href="https://buy.stripe.com/3cs5nS3pl9Xp7RSdQQ?prefilled_promo_code=FLASH40" class="btn">Get FreelanceOS Pro — 40% Off →</a>
+  <a href="/freelanceos-storefront/freelanceos.html" class="btn btn-outline">See What's Included</a>
+  <p style="margin-top:.8rem;font-size:.8rem;color:#6b7280">One-time purchase · Instant Notion template delivery · Free plan compatible</p>
+</div>
+
+</div>
+
+<footer>
+  <p><a href="/freelanceos-storefront/">FreelanceOS</a> · <a href="/freelanceos-storefront/blog/">Blog</a> · <a href="/freelanceos-storefront/freelanceos.html">Templates</a> · Built for freelancers who work smarter</p>
+  <p style="margin-top:.5rem">© 2026 FreelanceOS. All rights reserved.</p>
+</footer>
+</body>
+</html>
