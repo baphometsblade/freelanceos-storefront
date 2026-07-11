@@ -470,13 +470,19 @@ function buildEmailHtml(toEmail, product) {
             </td>
           </tr>
 
-          <!-- CTA Button -->
+          <!-- CTA Button(s) -->
           <tr>
             <td style="padding: 0 40px 32px; text-align: center;">
               <a href="${product.notion_url}"
                  style="display: inline-block; background: linear-gradient(135deg, #7c3aed, #4f46e5); color: #ffffff; font-size: 17px; font-weight: 700; text-decoration: none; padding: 18px 48px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);">
-                Access Your Template →
+                ${product.notion_url_2 ? 'Access FreelanceOS Pro →' : 'Access Your Template →'}
               </a>
+              ${product.notion_url_2 ? `
+              <br/><br/>
+              <a href="${product.notion_url_2}"
+                 style="display: inline-block; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #ffffff; font-size: 17px; font-weight: 700; text-decoration: none; padding: 18px 48px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);">
+                Access CreatorHQ Pro →
+              </a>` : ''}
             </td>
           </tr>
 
@@ -583,14 +589,17 @@ function buildEmailHtml(toEmail, product) {
 }
 
 function buildEmailText(toEmail, product) {
+  const accessSection = product.notion_url_2
+    ? `ACCESS YOUR TEMPLATES:\n\nFreelanceOS Pro:\n${product.notion_url}\n\nCreatorHQ Pro:\n${product.notion_url_2}`
+    : `ACCESS YOUR TEMPLATE:\n${product.notion_url}`;
+
   return `Your ${product.name} is ready!
 
 Hi there,
 
 Thanks for your purchase. Your ${product.name} template is ready to use.
 
-ACCESS YOUR TEMPLATE:
-${product.notion_url}
+${accessSection}
 
 GETTING STARTED IN 3 STEPS:
 
