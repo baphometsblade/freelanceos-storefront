@@ -26,12 +26,12 @@ class MonetizationTracker:
 
     def _load(self, filepath):
         try:
-            return json.loads(filepath.read_text())
+            return json.loads(filepath.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, FileNotFoundError):
             return {} if "status" in filepath.name else []
 
     def _save(self, filepath, data):
-        filepath.write_text(json.dumps(data, indent=2, default=str))
+        filepath.write_text(json.dumps(data, indent=2, default=str), encoding="utf-8")
 
     def log_upload(self, upload_info):
         log = self._load(self.uploads_log)
@@ -69,8 +69,16 @@ class MonetizationTracker:
             actual_watch_hours = watch_hours
             hours_source = "analytics_api"
         else:
-            actual_watch_hours = current["total_views"] * 0.05
-            hours_source = "estimated"
+            # A failed Analytics call must NOT overwrite a real measured value with a
+            # views*0.05 guess -- channels_status.json keeps no history, so the true
+            # figure is destroyed (e.g. 403h -> 9,262h, faking the YPP watch-hour gate).
+            _prev = (current.get("monetization") or {})
+            if _prev.get("watch_hours_source") == "analytics_api":
+                actual_watch_hours = _prev.get("watch_hours", 0.0)
+                hours_source = "analytics_api_stale"
+            else:
+                actual_watch_hours = current["total_views"] * 0.05
+                hours_source = "estimated"
 
         current["monetization"] = {
             "subscribers_progress": min(subs / 1000 * 100, 100),
@@ -113,7 +121,7 @@ class MonetizationTracker:
         if not perf_file.exists():
             perf_file.write_text("[]")
         try:
-            records = json.loads(perf_file.read_text())
+            records = json.loads(perf_file.read_text(encoding="utf-8"))
             if not isinstance(records, list):
                 records = []
         except (json.JSONDecodeError, FileNotFoundError):
@@ -133,7 +141,7 @@ class MonetizationTracker:
             "is_short": bool(video_info.get("is_short", False)),
         }
         records.append(record)
-        perf_file.write_text(json.dumps(records, indent=2, default=str))
+        perf_file.write_text(json.dumps(records, indent=2, default=str), encoding="utf-8")
         logger.info(f"Logged video performance: {record['video_id']} ({record['channel_id']})")
 
     def generate_daily_report(self, date_str: str = None) -> dict:
@@ -146,7 +154,7 @@ class MonetizationTracker:
 
         perf_file = self.data_dir / "video_performance.json"
         try:
-            all_records = json.loads(perf_file.read_text()) if perf_file.exists() else []
+            all_records = json.loads(perf_file.read_text(encoding="utf-8")) if perf_file.exists() else []
             if not isinstance(all_records, list):
                 all_records = []
         except (json.JSONDecodeError, FileNotFoundError):
@@ -214,7 +222,7 @@ class MonetizationTracker:
         }
 
         report_file = self.data_dir / f"daily_report_{date_str}.json"
-        report_file.write_text(json.dumps(report, indent=2, default=str))
+        report_file.write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
         logger.info(f"Daily report saved: {report_file}")
         return report
 

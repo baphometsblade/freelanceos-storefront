@@ -1,6 +1,8 @@
 {
   "global": {
-    "ollama_model": "llama3.2:3b",
+    "llm_provider": "ollama",
+    "gemini_model": "gemini-2.5-flash",
+    "ollama_model": "qwen2.5:7b",
     "ollama_host": "http://localhost:11434",
     "kokoro_path": "~/kokoro-tts",
     "fooocus_path": "~/Fooocus",
@@ -11,19 +13,64 @@
     "log_dir": "./logs",
     "max_concurrent_renders": 2,
     "upload_hour": 10,
-    "shorts_per_video": 3,
+    "shorts_per_video": 2,
+    "disclose_synthetic_media": true,
     "youtube_api_credentials": "./config/client_secret.json",
-    "youtube_tokens_dir": "./config/tokens/"
+    "youtube_tokens_dir": "./config/tokens/",
+    "ltx_video_enabled": false,
+    "ltx_use_distilled": true,
+    "images_per_section": 4,
+    "visual_change_seconds": 5,
+    "video_encoder": "h264_nvenc",
+    "nvenc_preset": "p6",
+    "nvenc_cq": 23,
+    "nvenc_cq_final": 19,
+    "nvenc_bitrate": "8M",
+    "nvenc_bitrate_final": "10M",
+    "nvenc_maxrate": "12M",
+    "nvenc_maxrate_final": "14M",
+    "fps": 30,
+    "localization_languages": [
+      "es",
+      "hi",
+      "pt",
+      "id",
+      "fr"
+    ],
+    "intro_enabled": false,
+    "outro_enabled": false,
+    "stock_video_enabled": true,
+    "stock_video_provider": "pexels",
+    "stock_video_ratio": 1.0,
+    "stock_video_min_width": 1280,
+    "stock_video_orientation": "landscape",
+    "stock_video_out_width": 1280,
+    "stock_video_out_height": 720,
+    "stock_video_fps": 30,
+    "tts_speed": 1.06,
+    "tts_provider": "kokoro",
+    "elevenlabs_model": "eleven_turbo_v2_5",
+    "stock_video_clips_per_section": 3,
+    "stock_video_clip_seconds": 5.0,
+    "chatterbox_enabled": true,
+    "chatterbox_python": "E:\\chatterbox-venv\\Scripts\\python.exe",
+    "chatterbox_exaggeration": 0.4,
+    "chatterbox_cfg_weight": 0.1,
+    "chatterbox_timeout": 1200,
+    "chatterbox_voice_ref": "config/voice_refs/matrix.wav",
+    "chatterbox_denoise": true,
+    "chatterbox_voicefix": true,
+    "chatterbox_voicefix_mode": 0
   },
   "channels": [
     {
       "id": "tech-ai",
-      "name": "AI Insider Daily",
+      "name": "Matrix Monster",
       "niche": "tech_ai",
       "description": "Daily AI news, tool reviews, and tutorials",
       "upload_schedule": "daily",
       "target_length_minutes": 8,
-      "voice": "af_heart",
+      "voice": "matrix",
       "style_preset": "futuristic, neon, digital art, tech aesthetic",
       "music_prompt": "ambient electronic, tech background, subtle and modern",
       "tags_base": [
@@ -49,7 +96,9 @@
       },
       "playlist_title": "AI Insider Daily",
       "youtube_channel_id": "UCaz6kBVMKvKQhrJb7lHacFA",
-      "youtube_channel_title": "Matrix monster"
+      "youtube_channel_title": "Matrix monster",
+      "chatterbox_cfg_weight": 0.5,
+      "chatterbox_exaggeration": 0.55
     },
     {
       "id": "finance",
@@ -57,7 +106,7 @@
       "niche": "finance",
       "description": "Personal finance, investing strategies, and market analysis",
       "upload_schedule": "daily",
-      "target_length_minutes": 10,
+      "target_length_minutes": 8,
       "voice": "am_adam",
       "style_preset": "professional, clean, finance charts, green and gold",
       "music_prompt": "corporate background music, inspirational, clean",
@@ -83,8 +132,10 @@
         "status": "growing"
       },
       "playlist_title": "Wealth Decoded",
-      "youtube_channel_id": "UCaz6kBVMKvKQhrJb7lHacFA",
-      "youtube_channel_title": "Matrix monster"
+      "youtube_channel_id": "UCpnL-DutJvoBFDWDwYdjQUA",
+      "youtube_channel_title": "MakeMoneyMatrix",
+      "chatterbox_cfg_weight": 0.5,
+      "chatterbox_exaggeration": 0.55
     },
     {
       "id": "motivation",
@@ -92,7 +143,7 @@
       "niche": "motivation",
       "description": "Daily motivation, mindset shifts, and productivity hacks",
       "upload_schedule": "daily",
-      "target_length_minutes": 6,
+      "target_length_minutes": 7,
       "voice": "am_michael",
       "style_preset": "epic, cinematic, dark moody, motivational, silhouette",
       "music_prompt": "epic orchestral, motivational, building intensity, cinematic",
@@ -118,8 +169,10 @@
         "status": "growing"
       },
       "playlist_title": "Rise & Grind Daily",
-      "youtube_channel_id": "UCaz6kBVMKvKQhrJb7lHacFA",
-      "youtube_channel_title": "Matrix monster"
+      "youtube_channel_id": "UC9ofs6TSk4CKnNDifQjjdSg",
+      "youtube_channel_title": "Stoic Sanctuary",
+      "chatterbox_cfg_weight": 0.5,
+      "chatterbox_exaggeration": 0.55
     },
     {
       "id": "history-mystery",
@@ -127,7 +180,7 @@
       "niche": "history",
       "description": "Untold stories, mysteries, and fascinating historical events",
       "upload_schedule": "daily",
-      "target_length_minutes": 12,
+      "target_length_minutes": 9,
       "voice": "bf_emma",
       "style_preset": "vintage, sepia, historical painting, dramatic, mysterious",
       "music_prompt": "mysterious ambient, historical documentary, subtle tension",
@@ -153,8 +206,10 @@
         "status": "growing"
       },
       "playlist_title": "Hidden History Vault",
-      "youtube_channel_id": "UCaz6kBVMKvKQhrJb7lHacFA",
-      "youtube_channel_title": "Matrix monster"
+      "youtube_channel_id": "UCFF4i1QchTB_4B2nVmM8N-w",
+      "youtube_channel_title": "Ancient Mysteries Unearthed",
+      "chatterbox_cfg_weight": 0.5,
+      "chatterbox_exaggeration": 0.55
     },
     {
       "id": "science-facts",
@@ -162,7 +217,7 @@
       "niche": "science",
       "description": "Mind-blowing science facts, experiments, and explainers",
       "upload_schedule": "daily",
-      "target_length_minutes": 7,
+      "target_length_minutes": 8,
       "voice": "af_heart",
       "style_preset": "cosmic, space, colorful science visualization, CGI style",
       "music_prompt": "wonder and curiosity, soft electronic, science documentary",
@@ -177,7 +232,7 @@
       "thumbnail_style": "vibrant colors, mind-blown expression, cosmic background",
       "shorts_enabled": true,
       "upload_enabled": true,
-        "monetization": {
+      "monetization": {
         "enabled": true,
         "upload_enabled": true,
         "subscribers": 330,
@@ -189,8 +244,10 @@
         "status": "growing"
       },
       "playlist_title": "MindBlown Science",
-      "youtube_channel_id": "UCaz6kBVMKvKQhrJb7lHacFA",
-      "youtube_channel_title": "Matrix monster"
+      "youtube_channel_id": "UCnanYPW0HhqKUN_ofGx17ng",
+      "youtube_channel_title": "Science Mysteries",
+      "chatterbox_cfg_weight": 0.5,
+      "chatterbox_exaggeration": 0.55
     }
   ]
 }

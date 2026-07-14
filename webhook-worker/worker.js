@@ -12,22 +12,20 @@
 
 // ---------------------------------------------------------------------------
 // Product catalog
-// Notion URLs auto-populated from workspace. Ensure each page is published:
-//   Notion → open page → Share → Publish to web (toggle on).
+// TODO: Replace every notion_url value with your real Notion share link.
+//   In Notion: open the template page → Share → Publish to web → copy link.
 // ---------------------------------------------------------------------------
 const PRODUCTS = {
   'FreelanceOS Pro': {
-    notion_url: 'https://www.notion.so/33eec0f953c480cea52ce1a1dc856caf',
-    notion_url_2: null,
+    notion_url: 'https://www.notion.so/FreelanceOS-Pro-33eec0f953c480cea52ce1a1dc856caf',
     pdf_url: 'https://baphometsblade.github.io/freelanceos-storefront/downloads/freelanceos-pro-guide.pdf',
     price_amount: 2900,
     name: 'FreelanceOS Pro',
     description: 'Complete Notion workspace for freelancers',
-    stripe_product_id: null, // TODO: confirm prod_xxx from Stripe dashboard → Products
+    stripe_product_id: null, // add prod_xxx once confirmed
   },
   'FreelanceOS Quick Start': {
-    notion_url: 'https://www.notion.so/33cec0f953c4803ab41bf4d32820e9fe',
-    notion_url_2: null,
+    notion_url: 'https://www.notion.so/FreelanceOS-Quick-Start-33cec0f953c4803ab41bf4d32820e9fe',
     pdf_url: null,
     price_amount: 900,
     name: 'FreelanceOS Quick Start',
@@ -35,40 +33,20 @@ const PRODUCTS = {
     stripe_product_id: 'prod_UStEgKWq8MapsL',
   },
   'CreatorHQ Pro': {
-    notion_url: 'https://www.notion.so/34bec0f953c480479378e2a6ac05d08a',
-    notion_url_2: null,
+    notion_url: 'https://www.notion.so/CreatorHQ-Pro-34bec0f953c480479378e2a6ac05d08a',
     pdf_url: null,
     price_amount: 2900,
     name: 'CreatorHQ Pro',
     description: 'Content creator command center in Notion',
-    stripe_product_id: null, // TODO: confirm prod_xxx from Stripe dashboard → Products
+    stripe_product_id: null, // add prod_xxx once confirmed
   },
   'Ultimate Creator Bundle': {
-    notion_url: 'https://www.notion.so/33eec0f953c480cea52ce1a1dc856caf',
-    notion_url_2: 'https://www.notion.so/34bec0f953c480479378e2a6ac05d08a',
+    notion_url: 'https://www.notion.so/Ultimate-Creator-Bundle-34bec0f953c480479378e2a6ac05d08a',
     pdf_url: null,
     price_amount: 4900,
     name: 'FreelanceOS Pro + CreatorHQ Pro Bundle',
     description: 'Both premium Notion template systems',
     stripe_product_id: 'prod_USCv63WOhsqWRr',
-  },
-  'SoloFounderOS Pro': {
-    notion_url: 'TODO_ADD_SOLOFOUNDEROS_NOTION_URL',
-    notion_url_2: null,
-    pdf_url: null,
-    price_amount: 3900,
-    name: 'SoloFounderOS Pro',
-    description: 'Notion OS for indie hackers & solopreneurs',
-    stripe_product_id: 'prod_UrSUMtHU0YAjo6',
-  },
-  'AgencyOS Pro': {
-    notion_url: 'TODO_ADD_AGENCYOS_NOTION_URL',
-    notion_url_2: null,
-    pdf_url: null,
-    price_amount: 4900,
-    name: 'AgencyOS Pro',
-    description: 'Notion system for agency owners',
-    stripe_product_id: null, // TODO: find prod_xxx from Stripe dashboard
   },
 };
 
@@ -218,6 +196,34 @@ export default {
         delivery_status: 'failed_no_email',
       });
       return jsonResponse({ received: true, action: 'failed_no_email', session_id: sessionId }, 200);
+    }
+
+    // -----------------------------------------------------------------------
+    // Guard: reject placeholder Notion URLs
+    // -----------------------------------------------------------------------
+    if (!product.notion_url || product.notion_url.startsWith('TODO_')) {
+      console.error(`Product ${product.name} has no configured Notion URL for session ${sessionId}`);
+      await logDeliveryToD1(env.DB, {
+        stripe_session_id: sessionId,
+        customer_email: customerEmail,
+        product_name: product.name,
+        notion_url: null,
+        amount_paid: amountPaid,
+        currency,
+        delivery_status: 'pending_notion_url',
+      });
+      try {
+        await sendAdminAlert(env, {
+          customerEmail,
+          productName: product.name,
+          sessionId,
+          amountPaid,
+          currency,
+        });
+      } catch (alertErr) {
+        console.error('Admin alert failed:', alertErr.message);
+      }
+      return jsonResponse({ received: true, action: 'pending_manual_fulfillment', session_id: sessionId }, 200);
     }
 
     // -----------------------------------------------------------------------
@@ -412,6 +418,30 @@ async function sendDeliveryEmail(toEmail, product) {
 }
 
 // ---------------------------------------------------------------------------
+// Admin alert email for missing Notion URLs (manual fulfillment needed)
+// ---------------------------------------------------------------------------
+async function sendAdminAlert(env, { customerEmail, productName, sessionId, amountPaid, currency }) {
+  const amount = ((amountPaid || 0) / 100).toFixed(2);
+  const payload = {
+    personalizations: [{ to: [{ email: SUPPORT_EMAIL }] }],
+    from: { email: FROM_EMAIL, name: FROM_NAME },
+    subject: `[ACTION REQUIRED] Manual fulfillment needed: ${productName}`,
+    content: [{
+      type: 'text/plain',
+      value: `A customer purchased ${productName} but the Notion template URL is not yet configured.\n\nDetails:\n- Session ID: ${sessionId}\n- Customer Email: ${customerEmail}\n- Amount Paid: ${currency?.toUpperCase()} ${amount}\n\nPlease manually send the customer their template link.\n\nTo fix permanently, add the Notion URL to worker.js PRODUCTS config and redeploy.`,
+    }],
+  };
+  const resp = await fetch('https://api.mailchannels.net/tx/v1/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (resp.status !== 202 && resp.status !== 200) {
+    throw new Error(`MailChannels admin alert: ${resp.status}`);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // HTML email template
 // ---------------------------------------------------------------------------
 function buildEmailHtml(toEmail, product) {
@@ -470,19 +500,13 @@ function buildEmailHtml(toEmail, product) {
             </td>
           </tr>
 
-          <!-- CTA Button(s) -->
+          <!-- CTA Button -->
           <tr>
             <td style="padding: 0 40px 32px; text-align: center;">
               <a href="${product.notion_url}"
                  style="display: inline-block; background: linear-gradient(135deg, #7c3aed, #4f46e5); color: #ffffff; font-size: 17px; font-weight: 700; text-decoration: none; padding: 18px 48px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);">
-                ${product.notion_url_2 ? 'Access FreelanceOS Pro →' : 'Access Your Template →'}
+                Access Your Template →
               </a>
-              ${product.notion_url_2 ? `
-              <br/><br/>
-              <a href="${product.notion_url_2}"
-                 style="display: inline-block; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #ffffff; font-size: 17px; font-weight: 700; text-decoration: none; padding: 18px 48px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);">
-                Access CreatorHQ Pro →
-              </a>` : ''}
             </td>
           </tr>
 
@@ -589,17 +613,14 @@ function buildEmailHtml(toEmail, product) {
 }
 
 function buildEmailText(toEmail, product) {
-  const accessSection = product.notion_url_2
-    ? `ACCESS YOUR TEMPLATES:\n\nFreelanceOS Pro:\n${product.notion_url}\n\nCreatorHQ Pro:\n${product.notion_url_2}`
-    : `ACCESS YOUR TEMPLATE:\n${product.notion_url}`;
-
   return `Your ${product.name} is ready!
 
 Hi there,
 
 Thanks for your purchase. Your ${product.name} template is ready to use.
 
-${accessSection}
+ACCESS YOUR TEMPLATE:
+${product.notion_url}
 
 GETTING STARTED IN 3 STEPS:
 
