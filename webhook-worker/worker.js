@@ -12,20 +12,22 @@
 
 // ---------------------------------------------------------------------------
 // Product catalog
-// TODO: Replace every notion_url value with your real Notion share link.
-//   In Notion: open the template page → Share → Publish to web → copy link.
+// Notion URLs auto-populated from workspace. Ensure each page is published:
+//   Notion → open page → Share → Publish to web (toggle on).
 // ---------------------------------------------------------------------------
 const PRODUCTS = {
   'FreelanceOS Pro': {
-    notion_url: 'TODO_REPLACE_WITH_REAL_NOTION_SHARE_URL',
+    notion_url: 'https://www.notion.so/33eec0f953c480cea52ce1a1dc856caf',
+    notion_url_2: null,
     pdf_url: 'https://baphometsblade.github.io/freelanceos-storefront/downloads/freelanceos-pro-guide.pdf',
     price_amount: 2900,
     name: 'FreelanceOS Pro',
     description: 'Complete Notion workspace for freelancers',
-    stripe_product_id: null, // add prod_xxx once confirmed
+    stripe_product_id: null, // TODO: confirm prod_xxx from Stripe dashboard → Products
   },
   'FreelanceOS Quick Start': {
-    notion_url: 'TODO_REPLACE_WITH_REAL_NOTION_SHARE_URL',
+    notion_url: 'https://www.notion.so/33cec0f953c4803ab41bf4d32820e9fe',
+    notion_url_2: null,
     pdf_url: null,
     price_amount: 900,
     name: 'FreelanceOS Quick Start',
@@ -33,20 +35,40 @@ const PRODUCTS = {
     stripe_product_id: 'prod_UStEgKWq8MapsL',
   },
   'CreatorHQ Pro': {
-    notion_url: 'TODO_REPLACE_WITH_REAL_NOTION_SHARE_URL',
+    notion_url: 'https://www.notion.so/34bec0f953c480479378e2a6ac05d08a',
+    notion_url_2: null,
     pdf_url: null,
     price_amount: 2900,
     name: 'CreatorHQ Pro',
     description: 'Content creator command center in Notion',
-    stripe_product_id: null, // add prod_xxx once confirmed
+    stripe_product_id: null, // TODO: confirm prod_xxx from Stripe dashboard → Products
   },
   'Ultimate Creator Bundle': {
-    notion_url: 'TODO_REPLACE_WITH_REAL_NOTION_SHARE_URL',
+    notion_url: 'https://www.notion.so/33eec0f953c480cea52ce1a1dc856caf',
+    notion_url_2: 'https://www.notion.so/34bec0f953c480479378e2a6ac05d08a',
     pdf_url: null,
     price_amount: 4900,
     name: 'FreelanceOS Pro + CreatorHQ Pro Bundle',
     description: 'Both premium Notion template systems',
     stripe_product_id: 'prod_USCv63WOhsqWRr',
+  },
+  'SoloFounderOS Pro': {
+    notion_url: 'TODO_ADD_SOLOFOUNDEROS_NOTION_URL',
+    notion_url_2: null,
+    pdf_url: null,
+    price_amount: 3900,
+    name: 'SoloFounderOS Pro',
+    description: 'Notion OS for indie hackers & solopreneurs',
+    stripe_product_id: 'prod_UrSUMtHU0YAjo6',
+  },
+  'AgencyOS Pro': {
+    notion_url: 'TODO_ADD_AGENCYOS_NOTION_URL',
+    notion_url_2: null,
+    pdf_url: null,
+    price_amount: 4900,
+    name: 'AgencyOS Pro',
+    description: 'Notion system for agency owners',
+    stripe_product_id: null, // TODO: find prod_xxx from Stripe dashboard
   },
 };
 
@@ -448,13 +470,19 @@ function buildEmailHtml(toEmail, product) {
             </td>
           </tr>
 
-          <!-- CTA Button -->
+          <!-- CTA Button(s) -->
           <tr>
             <td style="padding: 0 40px 32px; text-align: center;">
               <a href="${product.notion_url}"
                  style="display: inline-block; background: linear-gradient(135deg, #7c3aed, #4f46e5); color: #ffffff; font-size: 17px; font-weight: 700; text-decoration: none; padding: 18px 48px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);">
-                Access Your Template →
+                ${product.notion_url_2 ? 'Access FreelanceOS Pro →' : 'Access Your Template →'}
               </a>
+              ${product.notion_url_2 ? `
+              <br/><br/>
+              <a href="${product.notion_url_2}"
+                 style="display: inline-block; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #ffffff; font-size: 17px; font-weight: 700; text-decoration: none; padding: 18px 48px; border-radius: 12px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);">
+                Access CreatorHQ Pro →
+              </a>` : ''}
             </td>
           </tr>
 
@@ -561,14 +589,17 @@ function buildEmailHtml(toEmail, product) {
 }
 
 function buildEmailText(toEmail, product) {
+  const accessSection = product.notion_url_2
+    ? `ACCESS YOUR TEMPLATES:\n\nFreelanceOS Pro:\n${product.notion_url}\n\nCreatorHQ Pro:\n${product.notion_url_2}`
+    : `ACCESS YOUR TEMPLATE:\n${product.notion_url}`;
+
   return `Your ${product.name} is ready!
 
 Hi there,
 
 Thanks for your purchase. Your ${product.name} template is ready to use.
 
-ACCESS YOUR TEMPLATE:
-${product.notion_url}
+${accessSection}
 
 GETTING STARTED IN 3 STEPS:
 
